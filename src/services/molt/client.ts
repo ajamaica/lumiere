@@ -10,9 +10,8 @@ import {
   AgentParams,
   AgentEvent,
   GatewayError,
-  MIN_PROTOCOL,
-  MAX_PROTOCOL,
 } from './types';
+import { protocolConfig, clientConfig } from '../../config/gateway.config';
 
 type EventListener = (event: EventFrame) => void;
 type ResponseHandler = (response: ResponseFrame) => void;
@@ -78,14 +77,9 @@ export class MoltGatewayClient {
 
   private async performHandshake(): Promise<ConnectResponse> {
     const params: any = {
-      minProtocol: MIN_PROTOCOL,
-      maxProtocol: MAX_PROTOCOL,
-      client: {
-        id: 'cli',
-        mode: 'cli',
-        version: '1.0.0',
-        platform: 'ios',
-      },
+      minProtocol: protocolConfig.minProtocol,
+      maxProtocol: protocolConfig.maxProtocol,
+      client: clientConfig,
       auth: {
         token: this.config.token,
       },

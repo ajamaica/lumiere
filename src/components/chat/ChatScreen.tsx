@@ -11,6 +11,7 @@ import {
 import { ChatMessage, Message } from './ChatMessage';
 import { ChatInput } from './ChatInput';
 import { useMoltGateway, AgentEvent } from '../../services/molt';
+import { agentConfig } from '../../config/gateway.config';
 
 interface ChatScreenProps {
   gatewayUrl: string;
@@ -59,7 +60,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         {
           message: text,
           idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
-          agentId: 'main',
+          agentId: agentConfig.defaultAgentId,
         },
         (event: AgentEvent) => {
           if (event.type === 'text') {

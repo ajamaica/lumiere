@@ -6,9 +6,7 @@ export interface MoltConfig {
   clientId?: string;
 }
 
-// Protocol versions
-export const MIN_PROTOCOL = 3;
-export const MAX_PROTOCOL = 3;
+// Protocol versions (now configured in gateway.config.ts)
 
 // Frame types
 export type FrameType = 'req' | 'res' | 'event';
