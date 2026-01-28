@@ -7,8 +7,8 @@ export interface MoltConfig {
 }
 
 // Protocol versions
-export const MIN_PROTOCOL = 1;
-export const MAX_PROTOCOL = 1;
+export const MIN_PROTOCOL = 3;
+export const MAX_PROTOCOL = 3;
 
 // Frame types
 export type FrameType = 'req' | 'res' | 'event';
@@ -111,9 +111,10 @@ export interface Attachment {
 
 // Agent params
 export interface AgentParams {
-  prompt: string;
-  context?: string;
-  stream?: boolean;
+  message: string;
+  idempotencyKey: string;
+  agentId?: string;
+  sessionKey?: string;
 }
 
 // Agent events

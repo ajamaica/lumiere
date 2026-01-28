@@ -57,8 +57,9 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     try {
       await sendAgentRequest(
         {
-          prompt: text,
-          stream: true,
+          message: text,
+          idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
+          agentId: 'main',
         },
         (event: AgentEvent) => {
           if (event.type === 'text') {

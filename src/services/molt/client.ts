@@ -81,8 +81,8 @@ export class MoltGatewayClient {
       minProtocol: MIN_PROTOCOL,
       maxProtocol: MAX_PROTOCOL,
       client: {
-        id: 'agent:main:main',
-        mode: 'standalone',
+        id: 'cli',
+        mode: 'cli',
         version: '1.0.0',
         platform: 'ios',
       },
