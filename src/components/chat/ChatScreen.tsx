@@ -55,6 +55,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     setIsAgentResponding(true);
     setCurrentAgentMessage('');
 
+    let accumulatedText = '';
+
     try {
       await sendAgentRequest(
         {
@@ -63,22 +65,22 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           agentId: agentConfig.defaultAgentId,
         },
         (event: AgentEvent) => {
-          if (event.type === 'text') {
-            setCurrentAgentMessage((prev) => prev + event.text);
-          } else if (event.type === 'done') {
+          console.log('Agent event:', event);
+
+          if (event.stream === 'assistant' && event.data.delta) {
+            accumulatedText += event.data.delta;
+            setCurrentAgentMessage(accumulatedText);
+          } else if (event.stream === 'lifecycle' && event.data.phase === 'end') {
             const agentMessage: Message = {
               id: `msg-${Date.now()}`,
-              text: currentAgentMessage,
+              text: accumulatedText,
               sender: 'agent',
               timestamp: new Date(),
             };
             setMessages((prev) => [...prev, agentMessage]);
             setCurrentAgentMessage('');
             setIsAgentResponding(false);
-          } else if (event.type === 'error') {
-            console.error('Agent error:', event.error);
-            setIsAgentResponding(false);
-            setCurrentAgentMessage('');
+            accumulatedText = '';
           }
         }
       );

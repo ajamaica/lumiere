@@ -167,18 +167,23 @@ export class MoltGatewayClient {
     onEvent?: (event: AgentEvent) => void
   ): Promise<unknown> {
     if (onEvent) {
-      const unsubscribe = this.addEventListener((frame) => {
+      let unsubscribe: (() => void) | null = null;
+
+      unsubscribe = this.addEventListener((frame) => {
         if (frame.event === 'agent') {
-          onEvent(frame.payload as AgentEvent);
+          const agentEvent = frame.payload as AgentEvent;
+          onEvent(agentEvent);
+
+          // Unsubscribe after receiving the end event
+          if (agentEvent.stream === 'lifecycle' && agentEvent.data.phase === 'end') {
+            if (unsubscribe) {
+              unsubscribe();
+            }
+          }
         }
       });
 
-      try {
-        const result = await this.request('agent', params);
-        return result;
-      } finally {
-        unsubscribe();
-      }
+      return await this.request('agent', params);
     } else {
       return await this.request('agent', params);
     }

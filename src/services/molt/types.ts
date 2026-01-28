@@ -116,13 +116,20 @@ export interface AgentParams {
 }
 
 // Agent events
-export type AgentEvent =
-  | { type: 'text'; text: string }
-  | { type: 'tool_use'; name: string; input: unknown }
-  | { type: 'tool_result'; content: string }
-  | { type: 'thinking'; thinking: string }
-  | { type: 'error'; error: GatewayError }
-  | { type: 'done' };
+export type AgentEvent = {
+  data: {
+    delta?: string;
+    text?: string;
+    phase?: 'start' | 'end';
+    startedAt?: number;
+    endedAt?: number;
+  };
+  runId: string;
+  seq: number;
+  sessionKey: string;
+  stream: 'assistant' | 'lifecycle' | 'tool';
+  ts: number;
+};
 
 // Event types
 export type GatewayEvent =
