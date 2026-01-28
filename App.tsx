@@ -1,20 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ChatScreen } from './src/components/chat';
+
+const GATEWAY_URL = 'wss://ajamaica-standardpc.tail185e2.ts.net';
+const GATEWAY_TOKEN = 'a4b48356b80d2e02bf40cf6a1cfdc1bbd0341db58b072325';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <>
+      <ChatScreen gatewayUrl={GATEWAY_URL} gatewayToken={GATEWAY_TOKEN} />
       <StatusBar style="auto" />
-    </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
