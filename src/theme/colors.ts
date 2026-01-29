@@ -3,7 +3,7 @@ export const lightColors = {
   primaryLight: '#5AC8FA',
   primaryDark: '#0051D5',
 
-  background: '#FFFFFF',
+  background: '#fde9c9',
   surface: '#F2F2F7',
   surfaceVariant: '#E5E5EA',
 
@@ -38,7 +38,7 @@ export const darkColors = {
   primaryLight: '#64D2FF',
   primaryDark: '#0066CC',
 
-  background: '#000000',
+  background: '#343434',
   surface: '#1C1C1E',
   surfaceVariant: '#2C2C2E',
 
