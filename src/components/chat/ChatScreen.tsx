@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
+import { useAtom } from 'jotai';
 import { Ionicons } from '@expo/vector-icons';
 import { ChatMessage, Message } from './ChatMessage';
 import { ChatInput } from './ChatInput';
@@ -15,6 +16,7 @@ import { SessionModal } from './SessionModal';
 import { useMoltGateway, AgentEvent } from '../../services/molt';
 import { agentConfig } from '../../config/gateway.config';
 import { useTheme } from '../../theme';
+import { currentSessionKeyAtom } from '../../store';
 
 interface ChatScreenProps {
   gatewayUrl: string;
@@ -26,7 +28,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('');
   const [isAgentResponding, setIsAgentResponding] = useState(false);
-  const [currentSessionKey, setCurrentSessionKey] = useState<string>(agentConfig.defaultSessionKey);
+  const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom);
   const [isSessionModalVisible, setIsSessionModalVisible] = useState(false);
   const [sessions, setSessions] = useState<any[]>([]);
   const flatListRef = useRef<FlatList>(null);
