@@ -25,6 +25,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('');
   const [isAgentResponding, setIsAgentResponding] = useState(false);
+  const [currentSessionKey, setCurrentSessionKey] = useState<string>(agentConfig.defaultSessionKey);
   const flatListRef = useRef<FlatList>(null);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -37,6 +38,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     disconnect,
     sendAgentRequest,
     getChatHistory,
+    resetSession,
   } = useMoltGateway({
     url: gatewayUrl,
     token: gatewayToken,
@@ -60,7 +62,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
   const loadChatHistory = async () => {
     try {
-      const history = await getChatHistory(agentConfig.defaultSessionKey, 100);
+      const history = await getChatHistory(currentSessionKey, 100);
       console.log('Chat history:', history);
 
       if (history && Array.isArray((history as any).messages)) {
@@ -110,6 +112,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           message: text,
           idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
           agentId: agentConfig.defaultAgentId,
+          sessionKey: currentSessionKey,
         },
         (event: AgentEvent) => {
           console.log('Agent event:', event);
@@ -138,7 +141,32 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     }
   };
 
+  const handleResetSession = async () => {
+    try {
+      // Reset the current session on the server (clears history but keeps session key)
+      await resetSession(currentSessionKey);
+      console.log('Session reset successfully');
+
+      // Clear local state
+      setMessages([]);
+      setCurrentAgentMessage('');
+      setIsAgentResponding(false);
+    } catch (err) {
+      console.error('Failed to reset session:', err);
+      // Still clear local state even if server reset fails
+      setMessages([]);
+      setCurrentAgentMessage('');
+      setIsAgentResponding(false);
+    }
+  };
+
   const handleNewSession = () => {
+    // Create a new session with a new session key
+    const newSessionKey = `agent:main:${Date.now()}`;
+    setCurrentSessionKey(newSessionKey);
+    console.log('Created new session:', newSessionKey);
+
+    // Clear local state
     setMessages([]);
     setCurrentAgentMessage('');
     setIsAgentResponding(false);
@@ -246,6 +274,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       <ChatInput
         onSend={handleSend}
         onNewSession={handleNewSession}
+        onResetSession={handleResetSession}
         disabled={!connected || isAgentResponding}
       />
     </SafeAreaView>

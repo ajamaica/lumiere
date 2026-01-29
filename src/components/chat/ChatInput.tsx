@@ -13,10 +13,11 @@ import { useTheme } from '../../theme';
 interface ChatInputProps {
   onSend: (text: string) => void;
   onNewSession?: () => void;
+  onResetSession?: () => void;
   disabled?: boolean;
 }
 
-export function ChatInput({ onSend, onNewSession, disabled = false }: ChatInputProps) {
+export function ChatInput({ onSend, onNewSession, onResetSession, disabled = false }: ChatInputProps) {
   const { theme } = useTheme();
   const [text, setText] = useState('');
 
@@ -35,8 +36,14 @@ export function ChatInput({ onSend, onNewSession, disabled = false }: ChatInputP
     }
   };
 
+  const handleResetSession = () => {
+    if (onResetSession && !disabled) {
+      onResetSession();
+    }
+  };
+
   const sendButtonColor = !text.trim() || disabled ? theme.colors.text.tertiary : theme.colors.primary;
-  const newSessionColor = disabled ? theme.colors.text.tertiary : theme.colors.primary;
+  const actionButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.primary;
 
   return (
     <KeyboardAvoidingView
@@ -56,13 +63,22 @@ export function ChatInput({ onSend, onNewSession, disabled = false }: ChatInputP
           onSubmitEditing={handleSend}
           blurOnSubmit={false}
         />
+        {onResetSession && (
+          <TouchableOpacity
+            style={[styles.actionButton, disabled && styles.buttonDisabled]}
+            onPress={handleResetSession}
+            disabled={disabled}
+          >
+            <Ionicons name="refresh-outline" size={24} color={actionButtonColor} />
+          </TouchableOpacity>
+        )}
         {onNewSession && (
           <TouchableOpacity
-            style={[styles.newSessionButton, disabled && styles.buttonDisabled]}
+            style={[styles.actionButton, disabled && styles.buttonDisabled]}
             onPress={handleNewSession}
             disabled={disabled}
           >
-            <Ionicons name="add-circle-outline" size={24} color={newSessionColor} />
+            <Ionicons name="add-circle-outline" size={24} color={actionButtonColor} />
           </TouchableOpacity>
         )}
         <TouchableOpacity
@@ -99,7 +115,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     marginRight: theme.spacing.sm,
     color: theme.colors.text.primary,
   },
-  newSessionButton: {
+  actionButton: {
     width: 40,
     height: 40,
     borderRadius: theme.borderRadius.xxl,

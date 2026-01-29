@@ -24,6 +24,8 @@ export interface UseMoltGatewayResult {
     onEvent?: (event: AgentEvent) => void
   ) => Promise<unknown>;
   getChatHistory: (sessionKey: string, limit?: number) => Promise<unknown>;
+  resetSession: (sessionKey: string) => Promise<unknown>;
+  listSessions: () => Promise<unknown>;
 }
 
 export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
@@ -117,6 +119,26 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     [client]
   );
 
+  const resetSession = useCallback(
+    async (sessionKey: string) => {
+      if (!client) {
+        throw new Error('Client not connected');
+      }
+      return await client.resetSession(sessionKey);
+    },
+    [client]
+  );
+
+  const listSessions = useCallback(
+    async () => {
+      if (!client) {
+        throw new Error('Client not connected');
+      }
+      return await client.listSessions();
+    },
+    [client]
+  );
+
   useEffect(() => {
     return () => {
       if (clientRef.current) {
@@ -136,5 +158,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     sendMessage,
     sendAgentRequest,
     getChatHistory,
+    resetSession,
+    listSessions,
   };
 }
