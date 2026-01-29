@@ -1,25 +1,23 @@
 import { Ionicons } from '@expo/vector-icons'
 import { Tabs } from 'expo-router'
 import { useAtom } from 'jotai'
-import { useColorScheme } from 'react-native'
 
 import { OnboardingScreen } from '../src/screens/OnboardingScreen'
 import { onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
 
 function TabsLayout() {
-  const colorScheme = useColorScheme()
-  const isDark = colorScheme === 'dark'
+  const { theme } = useTheme()
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: isDark ? '#0A84FF' : '#007AFF',
-        tabBarInactiveTintColor: '#8E8E93',
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.text.secondary,
         tabBarStyle: {
-          backgroundColor: isDark ? '#1C1C1E' : '#F2F2F7',
-          borderTopColor: isDark ? '#38383A' : '#E5E5EA',
+          backgroundColor: theme.colors.background,
+          borderTopColor: theme.colors.border,
         },
       }}
     >
