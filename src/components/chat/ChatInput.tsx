@@ -12,12 +12,11 @@ import { useTheme } from '../../theme';
 
 interface ChatInputProps {
   onSend: (text: string) => void;
-  onNewSession?: () => void;
-  onResetSession?: () => void;
+  onOpenSessionMenu?: () => void;
   disabled?: boolean;
 }
 
-export function ChatInput({ onSend, onNewSession, onResetSession, disabled = false }: ChatInputProps) {
+export function ChatInput({ onSend, onOpenSessionMenu, disabled = false }: ChatInputProps) {
   const { theme } = useTheme();
   const [text, setText] = useState('');
 
@@ -30,20 +29,8 @@ export function ChatInput({ onSend, onNewSession, onResetSession, disabled = fal
     }
   };
 
-  const handleNewSession = () => {
-    if (onNewSession && !disabled) {
-      onNewSession();
-    }
-  };
-
-  const handleResetSession = () => {
-    if (onResetSession && !disabled) {
-      onResetSession();
-    }
-  };
-
   const sendButtonColor = !text.trim() || disabled ? theme.colors.text.tertiary : theme.colors.primary;
-  const actionButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.primary;
+  const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary;
 
   return (
     <KeyboardAvoidingView
@@ -63,22 +50,13 @@ export function ChatInput({ onSend, onNewSession, onResetSession, disabled = fal
           onSubmitEditing={handleSend}
           blurOnSubmit={false}
         />
-        {onResetSession && (
+        {onOpenSessionMenu && (
           <TouchableOpacity
-            style={[styles.actionButton, disabled && styles.buttonDisabled]}
-            onPress={handleResetSession}
+            style={[styles.menuButton, disabled && styles.buttonDisabled]}
+            onPress={onOpenSessionMenu}
             disabled={disabled}
           >
-            <Ionicons name="refresh-outline" size={24} color={actionButtonColor} />
-          </TouchableOpacity>
-        )}
-        {onNewSession && (
-          <TouchableOpacity
-            style={[styles.actionButton, disabled && styles.buttonDisabled]}
-            onPress={handleNewSession}
-            disabled={disabled}
-          >
-            <Ionicons name="add-circle-outline" size={24} color={actionButtonColor} />
+            <Ionicons name="ellipsis-vertical" size={24} color={menuButtonColor} />
           </TouchableOpacity>
         )}
         <TouchableOpacity
@@ -115,7 +93,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     marginRight: theme.spacing.sm,
     color: theme.colors.text.primary,
   },
-  actionButton: {
+  menuButton: {
     width: 40,
     height: 40,
     borderRadius: theme.borderRadius.xxl,

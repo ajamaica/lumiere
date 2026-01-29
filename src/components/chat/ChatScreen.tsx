@@ -11,6 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { ChatMessage, Message } from './ChatMessage';
 import { ChatInput } from './ChatInput';
+import { SessionModal } from './SessionModal';
 import { useMoltGateway, AgentEvent } from '../../services/molt';
 import { agentConfig } from '../../config/gateway.config';
 import { useTheme } from '../../theme';
@@ -26,6 +27,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('');
   const [isAgentResponding, setIsAgentResponding] = useState(false);
   const [currentSessionKey, setCurrentSessionKey] = useState<string>(agentConfig.defaultSessionKey);
+  const [isSessionModalVisible, setIsSessionModalVisible] = useState(false);
+  const [sessions, setSessions] = useState<any[]>([]);
   const flatListRef = useRef<FlatList>(null);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -39,6 +42,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     sendAgentRequest,
     getChatHistory,
     resetSession,
+    listSessions,
   } = useMoltGateway({
     url: gatewayUrl,
     token: gatewayToken,
@@ -172,6 +176,57 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     setIsAgentResponding(false);
   };
 
+  const handleOpenSessionMenu = async () => {
+    setIsSessionModalVisible(true);
+    // Fetch sessions when opening modal
+    try {
+      const sessionData = await listSessions();
+      console.log('Sessions:', sessionData);
+
+      // Parse sessions data
+      if (sessionData && Array.isArray((sessionData as any).sessions)) {
+        setSessions((sessionData as any).sessions);
+      }
+    } catch (err) {
+      console.error('Failed to fetch sessions:', err);
+    }
+  };
+
+  const handleSelectSession = async (sessionKey: string) => {
+    setCurrentSessionKey(sessionKey);
+    console.log('Switched to session:', sessionKey);
+
+    // Clear current messages
+    setMessages([]);
+    setCurrentAgentMessage('');
+    setIsAgentResponding(false);
+
+    // Load history for selected session
+    try {
+      const history = await getChatHistory(sessionKey, 100);
+      if (history && Array.isArray((history as any).messages)) {
+        const historyMessages = (history as any).messages
+          .filter((msg: any) => msg.role === 'user' || msg.role === 'assistant')
+          .map((msg: any, index: number) => {
+            const textContent = msg.content.find((c: any) => c.type === 'text');
+            const text = textContent?.text || '';
+            if (!text) return null;
+            return {
+              id: `history-${msg.timestamp}-${index}`,
+              text,
+              sender: msg.role === 'user' ? 'user' : 'agent',
+              timestamp: new Date(msg.timestamp),
+            } as Message;
+          })
+          .filter((msg: Message | null) => msg !== null);
+
+        setMessages(historyMessages);
+      }
+    } catch (err) {
+      console.error('Failed to load session history:', err);
+    }
+  };
+
   const handleThemeToggle = () => {
     const modes = ['light', 'dark', 'system'] as const;
     const currentIndex = modes.indexOf(themeMode);
@@ -273,9 +328,17 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       />
       <ChatInput
         onSend={handleSend}
+        onOpenSessionMenu={handleOpenSessionMenu}
+        disabled={!connected || isAgentResponding}
+      />
+      <SessionModal
+        visible={isSessionModalVisible}
+        onClose={() => setIsSessionModalVisible(false)}
         onNewSession={handleNewSession}
         onResetSession={handleResetSession}
-        disabled={!connected || isAgentResponding}
+        onSelectSession={handleSelectSession}
+        sessions={sessions}
+        currentSessionKey={currentSessionKey}
       />
     </SafeAreaView>
   );
