@@ -1,6 +1,14 @@
 import { useSetAtom } from 'jotai'
 import React from 'react'
-import { Alert,SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 import {
   clientIdAtom,
@@ -74,6 +82,8 @@ export default function SettingsScreen() {
     },
     content: {
       flex: 1,
+    },
+    scrollContent: {
       padding: theme.spacing.lg,
     },
     section: {
@@ -120,7 +130,7 @@ export default function SettingsScreen() {
       <View style={styles.header}>
         <Text style={styles.title}>Settings</Text>
       </View>
-      <View style={styles.content}>
+      <ScrollView style={styles.content} contentContainerStyle={styles.scrollContent}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Appearance</Text>
           <View style={styles.settingItem}>
@@ -171,7 +181,7 @@ export default function SettingsScreen() {
             <Text style={styles.logoutButtonText}>Logout</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
