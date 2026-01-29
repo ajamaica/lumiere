@@ -26,29 +26,19 @@ export function ChatMessage({ message }: ChatMessageProps) {
     [theme, isUser],
   )
 
-  const rules = useMemo(
-    () => ({
-      link: (node: any, children: any, parent: any, styles: any) => {
-        const { href } = node.attributes
-        return (
-          <TouchableOpacity
-            key={node.key}
-            onPress={() => {
-              Linking.openURL(href).catch((err) => console.error('Failed to open URL:', err))
-            }}
-          >
-            <Text style={styles.link}>{children}</Text>
-          </TouchableOpacity>
-        )
-      },
-    }),
-    [],
-  )
+  const handleLinkPress = (url: string) => {
+    console.log('Link pressed:', url)
+    Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err))
+  }
 
   return (
     <View style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}>
       <View style={[styles.bubble, isUser ? styles.userBubble : styles.agentBubble]}>
-        <Markdown style={markdownStyles} rules={rules}>
+        <Markdown
+          style={markdownStyles}
+          onLinkPress={handleLinkPress}
+          mergeStyle={true}
+        >
           {message.text}
         </Markdown>
         {message.streaming && <Text style={styles.streamingIndicator}>...</Text>}
