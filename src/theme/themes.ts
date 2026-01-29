@@ -1,13 +1,13 @@
-import { lightColors, darkColors, Colors } from './colors';
-import { typography, Typography } from './typography';
-import { spacing, borderRadius, Spacing, BorderRadius } from './spacing';
+import { lightColors, darkColors, Colors } from './colors'
+import { typography, Typography } from './typography'
+import { spacing, borderRadius, Spacing, BorderRadius } from './spacing'
 
 export interface Theme {
-  colors: Colors;
-  typography: Typography;
-  spacing: Spacing;
-  borderRadius: BorderRadius;
-  isDark: boolean;
+  colors: Colors
+  typography: Typography
+  spacing: Spacing
+  borderRadius: BorderRadius
+  isDark: boolean
 }
 
 export const lightTheme: Theme = {
@@ -16,7 +16,7 @@ export const lightTheme: Theme = {
   spacing,
   borderRadius,
   isDark: false,
-};
+}
 
 export const darkTheme: Theme = {
   colors: darkColors,
@@ -24,6 +24,6 @@ export const darkTheme: Theme = {
   spacing,
   borderRadius,
   isDark: true,
-};
+}
 
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = 'light' | 'dark' | 'system'

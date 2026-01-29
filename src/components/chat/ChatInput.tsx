@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react'
 import {
   View,
   TextInput,
@@ -6,31 +6,32 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../../theme';
+} from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
+import { useTheme } from '../../theme'
 
 interface ChatInputProps {
-  onSend: (text: string) => void;
-  onOpenSessionMenu?: () => void;
-  disabled?: boolean;
+  onSend: (text: string) => void
+  onOpenSessionMenu?: () => void
+  disabled?: boolean
 }
 
 export function ChatInput({ onSend, onOpenSessionMenu, disabled = false }: ChatInputProps) {
-  const { theme } = useTheme();
-  const [text, setText] = useState('');
+  const { theme } = useTheme()
+  const [text, setText] = useState('')
 
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const styles = useMemo(() => createStyles(theme), [theme])
 
   const handleSend = () => {
     if (text.trim() && !disabled) {
-      onSend(text.trim());
-      setText('');
+      onSend(text.trim())
+      setText('')
     }
-  };
+  }
 
-  const sendButtonColor = !text.trim() || disabled ? theme.colors.text.tertiary : theme.colors.primary;
-  const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary;
+  const sendButtonColor =
+    !text.trim() || disabled ? theme.colors.text.tertiary : theme.colors.primary
+  const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
 
   return (
     <KeyboardAvoidingView
@@ -68,49 +69,50 @@ export function ChatInput({ onSend, onOpenSessionMenu, disabled = false }: ChatI
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-  );
+  )
 }
 
-const createStyles = (theme: any) => StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.sm,
-    backgroundColor: theme.colors.background,
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.border,
-  },
-  input: {
-    flex: 1,
-    minHeight: 40,
-    maxHeight: 120,
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.borderRadius.xxl,
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.sm + 2,
-    fontSize: theme.typography.fontSize.base,
-    marginRight: theme.spacing.sm,
-    color: theme.colors.text.primary,
-  },
-  menuButton: {
-    width: 40,
-    height: 40,
-    borderRadius: theme.borderRadius.xxl,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 2,
-    marginRight: theme.spacing.xs,
-  },
-  sendButton: {
-    width: 40,
-    height: 40,
-    borderRadius: theme.borderRadius.xxl,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 2,
-  },
-  buttonDisabled: {
-    opacity: 0.5,
-  },
-});
+const createStyles = (theme: any) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
+      backgroundColor: theme.colors.background,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.border,
+    },
+    input: {
+      flex: 1,
+      minHeight: 40,
+      maxHeight: 120,
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.xxl,
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.sm + 2,
+      fontSize: theme.typography.fontSize.base,
+      marginRight: theme.spacing.sm,
+      color: theme.colors.text.primary,
+    },
+    menuButton: {
+      width: 40,
+      height: 40,
+      borderRadius: theme.borderRadius.xxl,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 2,
+      marginRight: theme.spacing.xs,
+    },
+    sendButton: {
+      width: 40,
+      height: 40,
+      borderRadius: theme.borderRadius.xxl,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 2,
+    },
+    buttonDisabled: {
+      opacity: 0.5,
+    },
+  })

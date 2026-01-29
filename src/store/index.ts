@@ -8,4 +8,4 @@ export {
   gatewayConnectedAtom,
   gatewayConnectingAtom,
   gatewayErrorAtom,
-} from './atoms';
+} from './atoms'

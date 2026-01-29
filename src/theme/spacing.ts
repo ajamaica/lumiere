@@ -6,7 +6,7 @@ export const spacing = {
   xl: 24,
   xxl: 32,
   xxxl: 48,
-};
+}
 
 export const borderRadius = {
   sm: 4,
@@ -15,7 +15,7 @@ export const borderRadius = {
   xl: 16,
   xxl: 20,
   full: 9999,
-};
+}
 
-export type Spacing = typeof spacing;
-export type BorderRadius = typeof borderRadius;
+export type Spacing = typeof spacing
+export type BorderRadius = typeof borderRadius

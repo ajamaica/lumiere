@@ -1,1 +1,1 @@
-export * from './gateway.config';
+export * from './gateway.config'

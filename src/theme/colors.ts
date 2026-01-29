@@ -31,7 +31,7 @@ export const lightColors = {
   border: '#E5E5EA',
   divider: '#C7C7CC',
   shadow: 'rgba(0, 0, 0, 0.1)',
-};
+}
 
 export const darkColors = {
   primary: '#0A84FF',
@@ -66,6 +66,6 @@ export const darkColors = {
   border: '#38383A',
   divider: '#48484A',
   shadow: 'rgba(0, 0, 0, 0.3)',
-};
+}
 
-export type Colors = typeof lightColors;
+export type Colors = typeof lightColors

@@ -1,29 +1,22 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../../theme';
+import React from 'react'
+import { View, Text, Modal, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
+import { useTheme } from '../../theme'
 
 interface Session {
-  key: string;
-  lastActivity?: number;
-  messageCount?: number;
+  key: string
+  lastActivity?: number
+  messageCount?: number
 }
 
 interface SessionModalProps {
-  visible: boolean;
-  onClose: () => void;
-  onNewSession: () => void;
-  onResetSession: () => void;
-  onSelectSession: (sessionKey: string) => void;
-  sessions: Session[];
-  currentSessionKey: string;
+  visible: boolean
+  onClose: () => void
+  onNewSession: () => void
+  onResetSession: () => void
+  onSelectSession: (sessionKey: string) => void
+  sessions: Session[]
+  currentSessionKey: string
 }
 
 export function SessionModal({
@@ -35,7 +28,7 @@ export function SessionModal({
   sessions,
   currentSessionKey,
 }: SessionModalProps) {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   const styles = StyleSheet.create({
     overlay: {
@@ -123,27 +116,22 @@ export function SessionModal({
       textAlign: 'center',
       padding: theme.spacing.lg,
     },
-  });
+  })
 
   const formatSessionKey = (key: string) => {
     // Extract readable part from session key
-    const parts = key.split(':');
-    return parts[parts.length - 1] || key;
-  };
+    const parts = key.split(':')
+    return parts[parts.length - 1] || key
+  }
 
   const formatDate = (timestamp?: number) => {
-    if (!timestamp) return '';
-    const date = new Date(timestamp);
-    return date.toLocaleString();
-  };
+    if (!timestamp) return ''
+    const date = new Date(timestamp)
+    return date.toLocaleString()
+  }
 
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="fade"
-      onRequestClose={onClose}
-    >
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={onClose}>
         <TouchableOpacity activeOpacity={1} onPress={(e) => e.stopPropagation()}>
           <View style={styles.modal}>
@@ -160,8 +148,8 @@ export function SessionModal({
               <TouchableOpacity
                 style={styles.actionButton}
                 onPress={() => {
-                  onNewSession();
-                  onClose();
+                  onNewSession()
+                  onClose()
                 }}
               >
                 <Ionicons
@@ -176,8 +164,8 @@ export function SessionModal({
               <TouchableOpacity
                 style={styles.actionButton}
                 onPress={() => {
-                  onResetSession();
-                  onClose();
+                  onResetSession()
+                  onClose()
                 }}
               >
                 <Ionicons
@@ -195,14 +183,14 @@ export function SessionModal({
               <ScrollView style={styles.sessionList}>
                 {sessions.length > 0 ? (
                   sessions.map((session) => {
-                    const isActive = session.key === currentSessionKey;
+                    const isActive = session.key === currentSessionKey
                     return (
                       <TouchableOpacity
                         key={session.key}
                         style={[styles.sessionItem, isActive && styles.activeSession]}
                         onPress={() => {
-                          onSelectSession(session.key);
-                          onClose();
+                          onSelectSession(session.key)
+                          onClose()
                         }}
                       >
                         <View style={{ flex: 1 }}>
@@ -211,9 +199,7 @@ export function SessionModal({
                             {isActive && ' (Active)'}
                           </Text>
                           {session.messageCount !== undefined && (
-                            <Text style={styles.sessionMeta}>
-                              {session.messageCount} messages
-                            </Text>
+                            <Text style={styles.sessionMeta}>{session.messageCount} messages</Text>
                           )}
                         </View>
                         <Ionicons
@@ -222,7 +208,7 @@ export function SessionModal({
                           color={isActive ? theme.colors.primary : theme.colors.text.tertiary}
                         />
                       </TouchableOpacity>
-                    );
+                    )
                   })
                 ) : (
                   <Text style={styles.emptyText}>No sessions available</Text>
@@ -233,5 +219,5 @@ export function SessionModal({
         </TouchableOpacity>
       </TouchableOpacity>
     </Modal>
-  );
+  )
 }

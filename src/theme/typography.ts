@@ -21,6 +21,6 @@ export const typography = {
     normal: 1.5,
     relaxed: 1.75,
   },
-};
+}
 
-export type Typography = typeof typography;
+export type Typography = typeof typography

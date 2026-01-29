@@ -1,14 +1,14 @@
-import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { useAtom } from 'jotai';
-import { ThemeProvider, useTheme } from '../src/theme';
-import { useColorScheme } from 'react-native';
-import { onboardingCompletedAtom } from '../src/store';
-import { OnboardingScreen } from '../src/screens/OnboardingScreen';
+import { Tabs } from 'expo-router'
+import { Ionicons } from '@expo/vector-icons'
+import { useAtom } from 'jotai'
+import { ThemeProvider, useTheme } from '../src/theme'
+import { useColorScheme } from 'react-native'
+import { onboardingCompletedAtom } from '../src/store'
+import { OnboardingScreen } from '../src/screens/OnboardingScreen'
 
 function TabsLayout() {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const colorScheme = useColorScheme()
+  const isDark = colorScheme === 'dark'
 
   return (
     <Tabs
@@ -26,32 +26,28 @@ function TabsLayout() {
         name="index"
         options={{
           title: 'Chat',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="chatbubble" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <Ionicons name="chatbubble" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color} />,
         }}
       />
     </Tabs>
-  );
+  )
 }
 
 function AppContent() {
-  const [onboardingCompleted] = useAtom(onboardingCompletedAtom);
+  const [onboardingCompleted] = useAtom(onboardingCompletedAtom)
 
   if (!onboardingCompleted) {
-    return <OnboardingScreen />;
+    return <OnboardingScreen />
   }
 
-  return <TabsLayout />;
+  return <TabsLayout />
 }
 
 export default function RootLayout() {
@@ -59,5 +55,5 @@ export default function RootLayout() {
     <ThemeProvider>
       <AppContent />
     </ThemeProvider>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react'
 import {
   View,
   Text,
@@ -9,39 +9,38 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-} from 'react-native';
-import { useAtom } from 'jotai';
-import { useTheme } from '../theme';
-import {
-  gatewayUrlAtom,
-  gatewayTokenAtom,
-  clientIdAtom,
-  onboardingCompletedAtom,
-} from '../store';
+} from 'react-native'
+import { useAtom } from 'jotai'
+import { useTheme } from '../theme'
+import { gatewayUrlAtom, gatewayTokenAtom, clientIdAtom, onboardingCompletedAtom } from '../store'
 
 export function OnboardingScreen() {
-  const { theme } = useTheme();
-  const [gatewayUrl, setGatewayUrl] = useAtom(gatewayUrlAtom);
-  const [gatewayToken, setGatewayToken] = useAtom(gatewayTokenAtom);
-  const [clientId, setClientId] = useAtom(clientIdAtom);
-  const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom);
+  const { theme } = useTheme()
+  const [gatewayUrl, setGatewayUrl] = useAtom(gatewayUrlAtom)
+  const [gatewayToken, setGatewayToken] = useAtom(gatewayTokenAtom)
+  const [clientId, setClientId] = useAtom(clientIdAtom)
+  const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
 
-  const [localUrl, setLocalUrl] = useState(gatewayUrl || 'wss://ajamaica-standardpc.tail185e2.ts.net');
-  const [localToken, setLocalToken] = useState(gatewayToken || 'a4b48356b80d2e02bf40cf6a1cfdc1bbd0341db58b072325');
-  const [localClientId, setLocalClientId] = useState(clientId || 'lumiere-mobile');
+  const [localUrl, setLocalUrl] = useState(
+    gatewayUrl || 'wss://ajamaica-standardpc.tail185e2.ts.net'
+  )
+  const [localToken, setLocalToken] = useState(
+    gatewayToken || 'a4b48356b80d2e02bf40cf6a1cfdc1bbd0341db58b072325'
+  )
+  const [localClientId, setLocalClientId] = useState(clientId || 'lumiere-mobile')
 
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const styles = useMemo(() => createStyles(theme), [theme])
 
   const handleComplete = () => {
     if (localUrl.trim() && localToken.trim()) {
-      setGatewayUrl(localUrl.trim());
-      setGatewayToken(localToken.trim());
-      setClientId(localClientId.trim());
-      setOnboardingCompleted(true);
+      setGatewayUrl(localUrl.trim())
+      setGatewayToken(localToken.trim())
+      setClientId(localClientId.trim())
+      setOnboardingCompleted(true)
     }
-  };
+  }
 
-  const isValid = localUrl.trim().length > 0 && localToken.trim().length > 0;
+  const isValid = localUrl.trim().length > 0 && localToken.trim().length > 0
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,9 +54,7 @@ export function OnboardingScreen() {
         >
           <View style={styles.header}>
             <Text style={styles.title}>Welcome to Lumiere</Text>
-            <Text style={styles.subtitle}>
-              Configure your AI gateway to get started
-            </Text>
+            <Text style={styles.subtitle}>Configure your AI gateway to get started</Text>
           </View>
 
           <View style={styles.form}>
@@ -73,9 +70,7 @@ export function OnboardingScreen() {
                 autoCorrect={false}
                 keyboardType="url"
               />
-              <Text style={styles.hint}>
-                The URL of your Molt Gateway server
-              </Text>
+              <Text style={styles.hint}>The URL of your Molt Gateway server</Text>
             </View>
 
             <View style={styles.inputGroup}>
@@ -90,9 +85,7 @@ export function OnboardingScreen() {
                 autoCorrect={false}
                 secureTextEntry
               />
-              <Text style={styles.hint}>
-                Your authentication token for the gateway
-              </Text>
+              <Text style={styles.hint}>Your authentication token for the gateway</Text>
             </View>
 
             <View style={styles.inputGroup}>
@@ -106,9 +99,7 @@ export function OnboardingScreen() {
                 autoCapitalize="none"
                 autoCorrect={false}
               />
-              <Text style={styles.hint}>
-                Identifier for this device (default: lumiere-mobile)
-              </Text>
+              <Text style={styles.hint}>Identifier for this device (default: lumiere-mobile)</Text>
             </View>
           </View>
 
@@ -122,7 +113,7 @@ export function OnboardingScreen() {
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
-  );
+  )
 }
 
 const createStyles = (theme: any) =>
@@ -195,4 +186,4 @@ const createStyles = (theme: any) =>
       fontWeight: theme.typography.fontWeight.semibold,
       color: theme.colors.text.inverse,
     },
-  });
+  })

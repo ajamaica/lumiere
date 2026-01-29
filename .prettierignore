@@ -1,0 +1,31 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build output
+dist
+build
+.expo
+.expo-shared
+
+# Cache
+.metro-cache
+.cache
+
+# iOS
+ios/Pods
+*.xcworkspace
+*.xcuserstate
+
+# Android
+android/app/build
+android/.gradle
+
+# Generated files
+*.log
+.DS_Store
+
+# Config
+pnpm-lock.yaml
+package-lock.json
+yarn.lock

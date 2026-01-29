@@ -1,33 +1,33 @@
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
-import { useSetAtom } from 'jotai';
-import { useTheme } from '../src/theme';
+import React from 'react'
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from 'react-native'
+import { useSetAtom } from 'jotai'
+import { useTheme } from '../src/theme'
 import {
   onboardingCompletedAtom,
   gatewayUrlAtom,
   gatewayTokenAtom,
   clientIdAtom,
-} from '../src/store';
+} from '../src/store'
 
 export default function SettingsScreen() {
-  const { theme, themeMode, setThemeMode } = useTheme();
-  const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom);
-  const setGatewayUrl = useSetAtom(gatewayUrlAtom);
-  const setGatewayToken = useSetAtom(gatewayTokenAtom);
-  const setClientId = useSetAtom(clientIdAtom);
+  const { theme, themeMode, setThemeMode } = useTheme()
+  const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
+  const setGatewayUrl = useSetAtom(gatewayUrlAtom)
+  const setGatewayToken = useSetAtom(gatewayTokenAtom)
+  const setClientId = useSetAtom(clientIdAtom)
 
   const getThemeLabel = () => {
     switch (themeMode) {
       case 'light':
-        return 'Light';
+        return 'Light'
       case 'dark':
-        return 'Dark';
+        return 'Dark'
       case 'system':
-        return 'System';
+        return 'System'
       default:
-        return 'System';
+        return 'System'
     }
-  };
+  }
 
   const handleLogout = () => {
     Alert.alert(
@@ -42,15 +42,15 @@ export default function SettingsScreen() {
           text: 'Logout',
           style: 'destructive',
           onPress: () => {
-            setOnboardingCompleted(false);
-            setGatewayUrl('');
-            setGatewayToken('');
-            setClientId('lumiere-mobile');
+            setOnboardingCompleted(false)
+            setGatewayUrl('')
+            setGatewayToken('')
+            setClientId('lumiere-mobile')
           },
         },
       ]
-    );
-  };
+    )
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -109,7 +109,7 @@ export default function SettingsScreen() {
       fontWeight: theme.typography.fontWeight.semibold,
       color: theme.colors.text.inverse,
     },
-  });
+  })
 
   return (
     <SafeAreaView style={styles.container}>
@@ -153,5 +153,5 @@ export default function SettingsScreen() {
         </View>
       </View>
     </SafeAreaView>
-  );
+  )
 }
