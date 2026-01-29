@@ -31,14 +31,22 @@ export default function SessionsScreen() {
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
 
-  const { connect, disconnect, listSessions, resetSession } = useMoltGateway({
+  const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
     url: gatewayUrl,
     token: gatewayToken,
   })
 
   useEffect(() => {
+    connect()
+    return () => {
+      disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
     const loadSessions = async () => {
-      await connect()
+      if (!connected) return
+
       try {
         const sessionData = await listSessions()
         if (sessionData && Array.isArray((sessionData as any).sessions)) {
@@ -52,10 +60,7 @@ export default function SessionsScreen() {
     }
 
     loadSessions()
-    return () => {
-      disconnect()
-    }
-  }, [])
+  }, [connected])
 
   const handleNewSession = () => {
     const newSessionKey = `agent:main:${Date.now()}`
