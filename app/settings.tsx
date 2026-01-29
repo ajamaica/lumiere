@@ -4,6 +4,7 @@ import { Alert,SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 're
 
 import {
   clientIdAtom,
+  currentSessionKeyAtom,
   gatewayTokenAtom,
   gatewayUrlAtom,
   onboardingCompletedAtom,
@@ -16,6 +17,7 @@ export default function SettingsScreen() {
   const setGatewayUrl = useSetAtom(gatewayUrlAtom)
   const setGatewayToken = useSetAtom(gatewayTokenAtom)
   const setClientId = useSetAtom(clientIdAtom)
+  const setCurrentSessionKey = useSetAtom(currentSessionKeyAtom)
 
   const getThemeLabel = () => {
     switch (themeMode) {
@@ -47,6 +49,7 @@ export default function SettingsScreen() {
             setGatewayUrl('')
             setGatewayToken('')
             setClientId('lumiere-mobile')
+            setCurrentSessionKey('')
           },
         },
       ],

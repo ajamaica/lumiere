@@ -12,7 +12,13 @@ import {
   View,
 } from 'react-native'
 
-import { clientIdAtom, gatewayTokenAtom, gatewayUrlAtom, onboardingCompletedAtom } from '../store'
+import {
+  clientIdAtom,
+  currentSessionKeyAtom,
+  gatewayTokenAtom,
+  gatewayUrlAtom,
+  onboardingCompletedAtom,
+} from '../store'
 import { useTheme } from '../theme'
 
 export function OnboardingScreen() {
@@ -20,6 +26,7 @@ export function OnboardingScreen() {
   const [gatewayUrl, setGatewayUrl] = useAtom(gatewayUrlAtom)
   const [gatewayToken, setGatewayToken] = useAtom(gatewayTokenAtom)
   const [clientId, setClientId] = useAtom(clientIdAtom)
+  const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
 
   const [localUrl, setLocalUrl] = useState(
@@ -37,6 +44,7 @@ export function OnboardingScreen() {
       setGatewayUrl(localUrl.trim())
       setGatewayToken(localToken.trim())
       setClientId(localClientId.trim())
+      setCurrentSessionKey('agent:main:main')
       setOnboardingCompleted(true)
     }
   }

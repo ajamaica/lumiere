@@ -13,24 +13,12 @@ export const themeModeAtom = atomWithStorage<'light' | 'dark' | 'system'>(
 )
 
 // Current session key atom with AsyncStorage persistence
-export const currentSessionKeyAtom = atomWithStorage<string>(
-  'currentSessionKey',
-  'agent:main:main',
-  storage,
-)
+export const currentSessionKeyAtom = atomWithStorage<string>('currentSessionKey', '', storage)
 
 // Gateway configuration atoms with AsyncStorage persistence
-export const gatewayUrlAtom = atomWithStorage<string>(
-  'gatewayUrl',
-  'wss://ajamaica-standardpc.tail185e2.ts.net',
-  storage,
-)
+export const gatewayUrlAtom = atomWithStorage<string>('gatewayUrl', '', storage)
 
-export const gatewayTokenAtom = atomWithStorage<string>(
-  'gatewayToken',
-  'a4b48356b80d2e02bf40cf6a1cfdc1bbd0341db58b072325',
-  storage,
-)
+export const gatewayTokenAtom = atomWithStorage<string>('gatewayToken', '', storage)
 
 export const clientIdAtom = atomWithStorage<string>('clientId', 'lumiere-mobile', storage)
 
