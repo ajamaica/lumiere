@@ -1,9 +1,10 @@
-import React, { createContext, useContext, useEffect, ReactNode, useMemo } from 'react'
-import { useColorScheme } from 'react-native'
-import { useAtom } from 'jotai'
 import * as SystemUI from 'expo-system-ui'
-import { lightTheme, darkTheme, Theme, ThemeMode } from './themes'
+import { useAtom } from 'jotai'
+import React, { createContext, ReactNode, useContext, useEffect, useMemo } from 'react'
+import { useColorScheme } from 'react-native'
+
 import { themeModeAtom } from '../store'
+import { darkTheme, lightTheme, Theme, ThemeMode } from './themes'
 
 interface ThemeContextType {
   theme: Theme

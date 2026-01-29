@@ -1,17 +1,17 @@
+import { clientConfig,protocolConfig } from '../../config/gateway.config'
 import {
+  AgentEvent,
+  AgentParams,
+  ConnectParams,
+  ConnectResponse,
+  EventFrame,
+  GatewayError,
+  HealthStatus,
   MoltConfig,
   RequestFrame,
   ResponseFrame,
-  EventFrame,
-  ConnectParams,
-  ConnectResponse,
-  HealthStatus,
   SendMessageParams,
-  AgentParams,
-  AgentEvent,
-  GatewayError,
 } from './types'
-import { protocolConfig, clientConfig } from '../../config/gateway.config'
 
 type EventListener = (event: EventFrame) => void
 type ResponseHandler = (response: ResponseFrame) => void

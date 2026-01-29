@@ -1,13 +1,14 @@
-import React, { useState, useMemo } from 'react'
+import { Ionicons } from '@expo/vector-icons'
+import React, { useMemo,useState } from 'react'
 import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+
 import { useTheme } from '../../theme'
 
 interface ChatInputProps {

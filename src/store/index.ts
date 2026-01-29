@@ -1,11 +1,11 @@
 export {
-  themeModeAtom,
-  currentSessionKeyAtom,
-  gatewayUrlAtom,
-  gatewayTokenAtom,
   clientIdAtom,
-  onboardingCompletedAtom,
+  currentSessionKeyAtom,
   gatewayConnectedAtom,
   gatewayConnectingAtom,
   gatewayErrorAtom,
+  gatewayTokenAtom,
+  gatewayUrlAtom,
+  onboardingCompletedAtom,
+  themeModeAtom,
 } from './atoms'

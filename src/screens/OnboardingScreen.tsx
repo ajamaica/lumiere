@@ -1,18 +1,19 @@
-import React, { useState, useMemo } from 'react'
+import { useAtom } from 'jotai'
+import React, { useMemo,useState } from 'react'
 import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  SafeAreaView,
   ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import { useAtom } from 'jotai'
+
+import { clientIdAtom, gatewayTokenAtom, gatewayUrlAtom, onboardingCompletedAtom } from '../store'
 import { useTheme } from '../theme'
-import { gatewayUrlAtom, gatewayTokenAtom, clientIdAtom, onboardingCompletedAtom } from '../store'
 
 export function OnboardingScreen() {
   const { theme } = useTheme()

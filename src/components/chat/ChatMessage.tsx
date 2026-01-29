@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { StyleSheet,Text, View } from 'react-native'
+
 import { useTheme } from '../../theme'
 
 export interface Message {

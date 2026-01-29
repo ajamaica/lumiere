@@ -1,22 +1,23 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
-import {
-  View,
-  FlatList,
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native'
-import { useAtom } from 'jotai'
 import { Ionicons } from '@expo/vector-icons'
-import { ChatMessage, Message } from './ChatMessage'
-import { ChatInput } from './ChatInput'
-import { SessionModal } from './SessionModal'
-import { useMoltGateway, AgentEvent } from '../../services/molt'
+import { useAtom } from 'jotai'
+import React, { useEffect, useMemo,useRef, useState } from 'react'
+import {
+  ActivityIndicator,
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+
 import { agentConfig } from '../../config/gateway.config'
-import { useTheme } from '../../theme'
+import { AgentEvent,useMoltGateway } from '../../services/molt'
 import { currentSessionKeyAtom } from '../../store'
+import { useTheme } from '../../theme'
+import { ChatInput } from './ChatInput'
+import { ChatMessage, Message } from './ChatMessage'
+import { SessionModal } from './SessionModal'
 
 interface ChatScreenProps {
   gatewayUrl: string
@@ -50,22 +51,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     token: gatewayToken,
   })
 
-  useEffect(() => {
-    connect()
-    return () => {
-      disconnect()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (connected) {
-      // Small delay to ensure WebSocket is fully ready
-      setTimeout(() => {
-        loadChatHistory()
-      }, 500)
-    }
-  }, [connected])
-
   const loadChatHistory = async () => {
     try {
       const history = await getChatHistory(currentSessionKey, 100)
@@ -97,6 +82,22 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       console.error('Failed to load chat history:', err)
     }
   }
+
+  useEffect(() => {
+    connect()
+    return () => {
+      disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (connected) {
+      // Small delay to ensure WebSocket is fully ready
+      setTimeout(() => {
+        loadChatHistory()
+      }, 500)
+    }
+  }, [connected, loadChatHistory])
 
   const handleSend = async (text: string) => {
     const userMessage: Message = {

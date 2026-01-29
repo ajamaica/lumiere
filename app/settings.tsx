@@ -1,13 +1,14 @@
-import React from 'react'
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from 'react-native'
 import { useSetAtom } from 'jotai'
-import { useTheme } from '../src/theme'
+import React from 'react'
+import { Alert,SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
 import {
-  onboardingCompletedAtom,
-  gatewayUrlAtom,
-  gatewayTokenAtom,
   clientIdAtom,
+  gatewayTokenAtom,
+  gatewayUrlAtom,
+  onboardingCompletedAtom,
 } from '../src/store'
+import { useTheme } from '../src/theme'
 
 export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode } = useTheme()

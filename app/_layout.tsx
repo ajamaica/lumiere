@@ -1,10 +1,11 @@
-import { Tabs } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
+import { Tabs } from 'expo-router'
 import { useAtom } from 'jotai'
-import { ThemeProvider, useTheme } from '../src/theme'
 import { useColorScheme } from 'react-native'
-import { onboardingCompletedAtom } from '../src/store'
+
 import { OnboardingScreen } from '../src/screens/OnboardingScreen'
+import { onboardingCompletedAtom } from '../src/store'
+import { ThemeProvider, useTheme } from '../src/theme'
 
 function TabsLayout() {
   const colorScheme = useColorScheme()

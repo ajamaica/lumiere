@@ -1,6 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { atom } from 'jotai'
 import { atomWithStorage, createJSONStorage } from 'jotai/utils'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // Create AsyncStorage adapter for Jotai
 const storage = createJSONStorage<any>(() => AsyncStorage)

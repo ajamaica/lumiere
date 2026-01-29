@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai'
+
 import { ChatScreen } from '../src/components/chat'
-import { gatewayUrlAtom, gatewayTokenAtom } from '../src/store'
+import { gatewayTokenAtom,gatewayUrlAtom } from '../src/store'
 
 export default function HomeScreen() {
   const gatewayUrl = useAtomValue(gatewayUrlAtom)

@@ -1,13 +1,14 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef,useState } from 'react'
+
 import { MoltGatewayClient } from './client'
 import {
-  MoltConfig,
-  ConnectResponse,
-  HealthStatus,
-  SendMessageParams,
-  AgentParams,
   AgentEvent,
+  AgentParams,
+  ConnectResponse,
   EventFrame,
+  HealthStatus,
+  MoltConfig,
+  SendMessageParams,
 } from './types'
 
 export interface UseMoltGatewayResult {
