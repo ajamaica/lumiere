@@ -1,9 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
-import React, { useEffect, useMemo,useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import {
+  ActionSheetIOS,
   ActivityIndicator,
   FlatList,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -12,12 +15,11 @@ import {
 } from 'react-native'
 
 import { agentConfig } from '../../config/gateway.config'
-import { AgentEvent,useMoltGateway } from '../../services/molt'
+import { AgentEvent, useMoltGateway } from '../../services/molt'
 import { currentSessionKeyAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
-import { SessionModal } from './SessionModal'
 
 interface ChatScreenProps {
   gatewayUrl: string
@@ -26,12 +28,11 @@ interface ChatScreenProps {
 
 export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const { theme, themeMode, setThemeMode } = useTheme()
+  const router = useRouter()
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
   const [isAgentResponding, setIsAgentResponding] = useState(false)
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
-  const [isSessionModalVisible, setIsSessionModalVisible] = useState(false)
-  const [sessions, setSessions] = useState<any[]>([])
   const flatListRef = useRef<FlatList>(null)
 
   const styles = useMemo(() => createStyles(theme), [theme])
@@ -45,7 +46,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     sendAgentRequest,
     getChatHistory,
     resetSession,
-    listSessions,
   } = useMoltGateway({
     url: gatewayUrl,
     token: gatewayToken,
@@ -179,54 +179,30 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     setIsAgentResponding(false)
   }
 
-  const handleOpenSessionMenu = async () => {
-    setIsSessionModalVisible(true)
-    // Fetch sessions when opening modal
-    try {
-      const sessionData = await listSessions()
-      console.log('Sessions:', sessionData)
-
-      // Parse sessions data
-      if (sessionData && Array.isArray((sessionData as any).sessions)) {
-        setSessions((sessionData as any).sessions)
-      }
-    } catch (err) {
-      console.error('Failed to fetch sessions:', err)
-    }
-  }
-
-  const handleSelectSession = async (sessionKey: string) => {
-    setCurrentSessionKey(sessionKey)
-    console.log('Switched to session:', sessionKey)
-
-    // Clear current messages
-    setMessages([])
-    setCurrentAgentMessage('')
-    setIsAgentResponding(false)
-
-    // Load history for selected session
-    try {
-      const history = await getChatHistory(sessionKey, 100)
-      if (history && Array.isArray((history as any).messages)) {
-        const historyMessages = (history as any).messages
-          .filter((msg: any) => msg.role === 'user' || msg.role === 'assistant')
-          .map((msg: any, index: number) => {
-            const textContent = msg.content.find((c: any) => c.type === 'text')
-            const text = textContent?.text || ''
-            if (!text) return null
-            return {
-              id: `history-${msg.timestamp}-${index}`,
-              text,
-              sender: msg.role === 'user' ? 'user' : 'agent',
-              timestamp: new Date(msg.timestamp),
-            } as Message
-          })
-          .filter((msg: Message | null) => msg !== null)
-
-        setMessages(historyMessages)
-      }
-    } catch (err) {
-      console.error('Failed to load session history:', err)
+  const handleOpenSessionMenu = () => {
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: ['Cancel', 'Manage Sessions', 'New Session', 'Reset Current Session'],
+          cancelButtonIndex: 0,
+          destructiveButtonIndex: 3,
+        },
+        (buttonIndex) => {
+          if (buttonIndex === 1) {
+            // Manage Sessions
+            router.push('/sessions')
+          } else if (buttonIndex === 2) {
+            // New Session
+            handleNewSession()
+          } else if (buttonIndex === 3) {
+            // Reset Current Session
+            handleResetSession()
+          }
+        },
+      )
+    } else {
+      // For Android, navigate directly to sessions screen
+      router.push('/sessions')
     }
   }
 
@@ -333,15 +309,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         onSend={handleSend}
         onOpenSessionMenu={handleOpenSessionMenu}
         disabled={!connected || isAgentResponding}
-      />
-      <SessionModal
-        visible={isSessionModalVisible}
-        onClose={() => setIsSessionModalVisible(false)}
-        onNewSession={handleNewSession}
-        onResetSession={handleResetSession}
-        onSelectSession={handleSelectSession}
-        sessions={sessions}
-        currentSessionKey={currentSessionKey}
       />
     </SafeAreaView>
   )
