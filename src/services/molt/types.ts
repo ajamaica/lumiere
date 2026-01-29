@@ -126,6 +126,7 @@ export interface AgentParams {
   idempotencyKey: string;
   agentId?: string;
   sessionKey?: string;
+  model?: string;
 }
 
 // Agent events

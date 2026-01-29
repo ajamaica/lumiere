@@ -21,4 +21,5 @@ export const protocolConfig = {
 export const agentConfig = {
   defaultAgentId: 'main',
   defaultSessionKey: 'agent:main:main',
+  defaultModel: 'claude-sonnet-4-5',
 } as const;
