@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
 import { useTheme } from '../../theme'
@@ -26,10 +26,31 @@ export function ChatMessage({ message }: ChatMessageProps) {
     [theme, isUser],
   )
 
+  const rules = useMemo(
+    () => ({
+      link: (node: any, children: any, parent: any, styles: any) => {
+        const { href } = node.attributes
+        return (
+          <TouchableOpacity
+            key={node.key}
+            onPress={() => {
+              Linking.openURL(href).catch((err) => console.error('Failed to open URL:', err))
+            }}
+          >
+            <Text style={styles.link}>{children}</Text>
+          </TouchableOpacity>
+        )
+      },
+    }),
+    [],
+  )
+
   return (
     <View style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}>
       <View style={[styles.bubble, isUser ? styles.userBubble : styles.agentBubble]}>
-        <Markdown style={markdownStyles}>{message.text}</Markdown>
+        <Markdown style={markdownStyles} rules={rules}>
+          {message.text}
+        </Markdown>
         {message.streaming && <Text style={styles.streamingIndicator}>...</Text>}
       </View>
       <Text style={styles.timestamp}>
