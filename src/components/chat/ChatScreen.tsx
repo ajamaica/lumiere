@@ -371,7 +371,7 @@ const createStyles = (theme: any) =>
       marginLeft: theme.spacing.md,
     },
     connectedBar: {
-      backgroundColor: theme.isDark ? '#1B3A26' : '#E8F5E9',
+      backgroundColor: 'transparent',
     },
     errorBar: {
       backgroundColor: theme.isDark ? '#3A1B1B' : '#FFEBEE',

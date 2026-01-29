@@ -1,7 +1,7 @@
 export const lightColors = {
-  primary: '#007AFF',
-  primaryLight: '#5AC8FA',
-  primaryDark: '#0051D5',
+  primary: '#f07b49',
+  primaryLight: '#f59d6f',
+  primaryDark: '#d4612c',
 
   background: '#fde9c9',
   surface: '#F2F2F7',
@@ -15,10 +15,10 @@ export const lightColors = {
   },
 
   message: {
-    user: '#007AFF',
-    agent: '#E9E9EB',
+    user: '#f2af4c',
+    agent: '#343434',
     userText: '#FFFFFF',
-    agentText: '#000000',
+    agentText: '#FFFFFF',
   },
 
   status: {
@@ -34,9 +34,9 @@ export const lightColors = {
 }
 
 export const darkColors = {
-  primary: '#0A84FF',
-  primaryLight: '#64D2FF',
-  primaryDark: '#0066CC',
+  primary: '#f07b49',
+  primaryLight: '#f59d6f',
+  primaryDark: '#d4612c',
 
   background: '#343434',
   surface: '#1C1C1E',
@@ -50,7 +50,7 @@ export const darkColors = {
   },
 
   message: {
-    user: '#0A84FF',
+    user: '#f2af4c',
     agent: '#2C2C2E',
     userText: '#FFFFFF',
     agentText: '#FFFFFF',
