@@ -1,9 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
+import { useSetAtom } from 'jotai';
 import { useTheme } from '../src/theme';
+import {
+  onboardingCompletedAtom,
+  gatewayUrlAtom,
+  gatewayTokenAtom,
+  clientIdAtom,
+} from '../src/store';
 
 export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode } = useTheme();
+  const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom);
+  const setGatewayUrl = useSetAtom(gatewayUrlAtom);
+  const setGatewayToken = useSetAtom(gatewayTokenAtom);
+  const setClientId = useSetAtom(clientIdAtom);
 
   const getThemeLabel = () => {
     switch (themeMode) {
@@ -16,6 +27,29 @@ export default function SettingsScreen() {
       default:
         return 'System';
     }
+  };
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout? You will need to reconfigure your gateway settings.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Logout',
+          style: 'destructive',
+          onPress: () => {
+            setOnboardingCompleted(false);
+            setGatewayUrl('');
+            setGatewayToken('');
+            setClientId('lumiere-mobile');
+          },
+        },
+      ]
+    );
   };
 
   const styles = StyleSheet.create({
@@ -63,6 +97,18 @@ export default function SettingsScreen() {
       fontSize: theme.typography.fontSize.sm,
       color: theme.colors.text.secondary,
     },
+    logoutButton: {
+      paddingVertical: theme.spacing.lg,
+      borderRadius: theme.borderRadius.md,
+      backgroundColor: theme.colors.status.error,
+      alignItems: 'center',
+      marginTop: theme.spacing.md,
+    },
+    logoutButtonText: {
+      fontSize: theme.typography.fontSize.base,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.text.inverse,
+    },
   });
 
   return (
@@ -97,6 +143,13 @@ export default function SettingsScreen() {
             <Text style={styles.settingLabel}>Version</Text>
             <Text style={styles.settingValue}>1.0.0</Text>
           </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Account</Text>
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+            <Text style={styles.logoutButtonText}>Logout</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

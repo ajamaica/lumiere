@@ -1,7 +1,10 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useAtom } from 'jotai';
 import { ThemeProvider, useTheme } from '../src/theme';
 import { useColorScheme } from 'react-native';
+import { onboardingCompletedAtom } from '../src/store';
+import { OnboardingScreen } from '../src/screens/OnboardingScreen';
 
 function TabsLayout() {
   const colorScheme = useColorScheme();
@@ -41,10 +44,20 @@ function TabsLayout() {
   );
 }
 
+function AppContent() {
+  const [onboardingCompleted] = useAtom(onboardingCompletedAtom);
+
+  if (!onboardingCompleted) {
+    return <OnboardingScreen />;
+  }
+
+  return <TabsLayout />;
+}
+
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <TabsLayout />
+      <AppContent />
     </ThemeProvider>
   );
 }

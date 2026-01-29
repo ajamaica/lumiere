@@ -19,6 +19,32 @@ export const currentSessionKeyAtom = atomWithStorage<string>(
   storage
 );
 
+// Gateway configuration atoms with AsyncStorage persistence
+export const gatewayUrlAtom = atomWithStorage<string>(
+  'gatewayUrl',
+  '',
+  storage
+);
+
+export const gatewayTokenAtom = atomWithStorage<string>(
+  'gatewayToken',
+  '',
+  storage
+);
+
+export const clientIdAtom = atomWithStorage<string>(
+  'clientId',
+  'lumiere-mobile',
+  storage
+);
+
+// Onboarding completion status
+export const onboardingCompletedAtom = atomWithStorage<boolean>(
+  'onboardingCompleted',
+  false,
+  storage
+);
+
 // Gateway connection state
 export const gatewayConnectedAtom = atom<boolean>(false);
 export const gatewayConnectingAtom = atom<boolean>(false);
