@@ -48,7 +48,7 @@ export default function SettingsScreen() {
             setClientId('lumiere-mobile')
           },
         },
-      ]
+      ],
     )
   }
 

@@ -176,7 +176,7 @@ export class MoltGatewayClient {
 
   async sendAgentRequest(
     params: AgentParams,
-    onEvent?: (event: AgentEvent) => void
+    onEvent?: (event: AgentEvent) => void,
   ): Promise<unknown> {
     if (onEvent) {
       let unsubscribe: (() => void) | null = null

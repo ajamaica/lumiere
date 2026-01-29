@@ -9,27 +9,27 @@ const storage = createJSONStorage<any>(() => AsyncStorage)
 export const themeModeAtom = atomWithStorage<'light' | 'dark' | 'system'>(
   'themeMode',
   'system',
-  storage
+  storage,
 )
 
 // Current session key atom with AsyncStorage persistence
 export const currentSessionKeyAtom = atomWithStorage<string>(
   'currentSessionKey',
   'agent:main:main',
-  storage
+  storage,
 )
 
 // Gateway configuration atoms with AsyncStorage persistence
 export const gatewayUrlAtom = atomWithStorage<string>(
   'gatewayUrl',
   'wss://ajamaica-standardpc.tail185e2.ts.net',
-  storage
+  storage,
 )
 
 export const gatewayTokenAtom = atomWithStorage<string>(
   'gatewayToken',
   'a4b48356b80d2e02bf40cf6a1cfdc1bbd0341db58b072325',
-  storage
+  storage,
 )
 
 export const clientIdAtom = atomWithStorage<string>('clientId', 'lumiere-mobile', storage)
@@ -38,7 +38,7 @@ export const clientIdAtom = atomWithStorage<string>('clientId', 'lumiere-mobile'
 export const onboardingCompletedAtom = atomWithStorage<boolean>(
   'onboardingCompleted',
   false,
-  storage
+  storage,
 )
 
 // Gateway connection state

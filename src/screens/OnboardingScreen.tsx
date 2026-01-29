@@ -22,10 +22,10 @@ export function OnboardingScreen() {
   const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
 
   const [localUrl, setLocalUrl] = useState(
-    gatewayUrl || 'wss://ajamaica-standardpc.tail185e2.ts.net'
+    gatewayUrl || 'wss://ajamaica-standardpc.tail185e2.ts.net',
   )
   const [localToken, setLocalToken] = useState(
-    gatewayToken || 'a4b48356b80d2e02bf40cf6a1cfdc1bbd0341db58b072325'
+    gatewayToken || 'a4b48356b80d2e02bf40cf6a1cfdc1bbd0341db58b072325',
   )
   const [localClientId, setLocalClientId] = useState(clientId || 'lumiere-mobile')
 

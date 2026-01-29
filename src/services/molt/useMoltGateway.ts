@@ -93,7 +93,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       }
       return await client.sendMessage(params)
     },
-    [client]
+    [client],
   )
 
   const sendAgentRequest = useCallback(
@@ -103,7 +103,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       }
       return await client.sendAgentRequest(params, onEvent)
     },
-    [client]
+    [client],
   )
 
   const getChatHistory = useCallback(
@@ -113,7 +113,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       }
       return await client.getChatHistory(sessionKey, limit)
     },
-    [client]
+    [client],
   )
 
   const resetSession = useCallback(
@@ -123,7 +123,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       }
       return await client.resetSession(sessionKey)
     },
-    [client]
+    [client],
   )
 
   const listSessions = useCallback(async () => {

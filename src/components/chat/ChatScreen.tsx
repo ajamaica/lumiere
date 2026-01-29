@@ -138,7 +138,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
             setIsAgentResponding(false)
             accumulatedText = ''
           }
-        }
+        },
       )
     } catch (err) {
       console.error('Failed to send message:', err)
