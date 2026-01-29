@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
   FlatList,
@@ -8,10 +8,12 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { ChatMessage, Message } from './ChatMessage';
 import { ChatInput } from './ChatInput';
 import { useMoltGateway, AgentEvent } from '../../services/molt';
 import { agentConfig } from '../../config/gateway.config';
+import { useTheme } from '../../theme';
 
 interface ChatScreenProps {
   gatewayUrl: string;
@@ -19,10 +21,13 @@ interface ChatScreenProps {
 }
 
 export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
+  const { theme, themeMode, setThemeMode } = useTheme();
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('');
   const [isAgentResponding, setIsAgentResponding] = useState(false);
   const flatListRef = useRef<FlatList>(null);
+
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
   const {
     connected,
@@ -133,12 +138,37 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     }
   };
 
+  const handleThemeToggle = () => {
+    const modes = ['light', 'dark', 'system'] as const;
+    const currentIndex = modes.indexOf(themeMode);
+    const nextIndex = (currentIndex + 1) % modes.length;
+    setThemeMode(modes[nextIndex]);
+  };
+
+  const getThemeIcon = () => {
+    switch (themeMode) {
+      case 'light':
+        return 'sunny';
+      case 'dark':
+        return 'moon';
+      case 'system':
+        return 'phone-portrait';
+      default:
+        return 'sunny';
+    }
+  };
+
   const renderConnectionStatus = () => {
     if (connecting) {
       return (
         <View style={styles.statusBar}>
-          <ActivityIndicator size="small" color="#007AFF" />
-          <Text style={styles.statusText}>Connecting...</Text>
+          <View style={styles.statusContent}>
+            <ActivityIndicator size="small" color={theme.colors.primary} />
+            <Text style={styles.statusText}>Connecting...</Text>
+          </View>
+          <TouchableOpacity onPress={handleThemeToggle} style={styles.themeButton}>
+            <Ionicons name={getThemeIcon()} size={20} color={theme.colors.text.secondary} />
+          </TouchableOpacity>
         </View>
       );
     }
@@ -146,9 +176,14 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     if (error) {
       return (
         <View style={[styles.statusBar, styles.errorBar]}>
-          <Text style={styles.errorText}>Connection failed: {error}</Text>
-          <TouchableOpacity onPress={connect} style={styles.retryButton}>
-            <Text style={styles.retryText}>Retry</Text>
+          <View style={styles.statusContent}>
+            <Text style={styles.errorText}>Connection failed: {error}</Text>
+            <TouchableOpacity onPress={connect} style={styles.retryButton}>
+              <Text style={styles.retryText}>Retry</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity onPress={handleThemeToggle} style={styles.themeButton}>
+            <Ionicons name={getThemeIcon()} size={20} color={theme.colors.text.secondary} />
           </TouchableOpacity>
         </View>
       );
@@ -157,8 +192,13 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     if (connected) {
       return (
         <View style={[styles.statusBar, styles.connectedBar]}>
-          <View style={styles.connectedDot} />
-          <Text style={styles.connectedText}>Connected</Text>
+          <View style={styles.statusContent}>
+            <View style={styles.connectedDot} />
+            <Text style={styles.connectedText}>Connected</Text>
+          </View>
+          <TouchableOpacity onPress={handleThemeToggle} style={styles.themeButton}>
+            <Ionicons name={getThemeIcon()} size={20} color={theme.colors.text.secondary} />
+          </TouchableOpacity>
         </View>
       );
     }
@@ -202,59 +242,68 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: theme.colors.background,
   },
   statusBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    backgroundColor: '#F2F2F7',
+    justifyContent: 'space-between',
+    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.lg,
+    backgroundColor: theme.colors.surface,
+  },
+  statusContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  themeButton: {
+    padding: theme.spacing.xs,
+    marginLeft: theme.spacing.md,
   },
   connectedBar: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: theme.isDark ? '#1B3A26' : '#E8F5E9',
   },
   errorBar: {
-    backgroundColor: '#FFEBEE',
+    backgroundColor: theme.isDark ? '#3A1B1B' : '#FFEBEE',
   },
   statusText: {
-    fontSize: 14,
-    color: '#007AFF',
-    marginLeft: 8,
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.primary,
+    marginLeft: theme.spacing.sm,
   },
   connectedText: {
-    fontSize: 14,
-    color: '#4CAF50',
-    marginLeft: 8,
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.status.success,
+    marginLeft: theme.spacing.sm,
   },
   connectedDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#4CAF50',
+    backgroundColor: theme.colors.status.success,
   },
   errorText: {
-    fontSize: 14,
-    color: '#D32F2F',
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.status.error,
     flex: 1,
   },
   retryButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    backgroundColor: '#007AFF',
-    borderRadius: 4,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.xs + 2,
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.borderRadius.sm,
   },
   retryText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '600',
+    color: theme.colors.text.inverse,
+    fontSize: theme.typography.fontSize.sm,
+    fontWeight: theme.typography.fontWeight.semibold,
   },
   messageList: {
-    paddingVertical: 8,
+    paddingVertical: theme.spacing.sm,
   },
   emptyContainer: {
     flex: 1,
@@ -263,8 +312,8 @@ const styles = StyleSheet.create({
     paddingVertical: 60,
   },
   emptyText: {
-    fontSize: 16,
-    color: '#8E8E93',
+    fontSize: theme.typography.fontSize.base,
+    color: theme.colors.text.secondary,
     textAlign: 'center',
   },
 });

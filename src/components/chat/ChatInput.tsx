@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   TextInput,
@@ -8,6 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../../theme';
 
 interface ChatInputProps {
   onSend: (text: string) => void;
@@ -15,7 +16,10 @@ interface ChatInputProps {
 }
 
 export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
+  const { theme } = useTheme();
   const [text, setText] = useState('');
+
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
   const handleSend = () => {
     if (text.trim() && !disabled) {
@@ -23,6 +27,8 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
       setText('');
     }
   };
+
+  const sendButtonColor = !text.trim() || disabled ? theme.colors.text.tertiary : theme.colors.primary;
 
   return (
     <KeyboardAvoidingView
@@ -35,7 +41,7 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
           value={text}
           onChangeText={setText}
           placeholder="Type a message..."
-          placeholderTextColor="#8E8E93"
+          placeholderTextColor={theme.colors.text.secondary}
           multiline
           maxLength={2000}
           editable={!disabled}
@@ -47,42 +53,39 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
           onPress={handleSend}
           disabled={!text.trim() || disabled}
         >
-          <Ionicons
-            name="send"
-            size={24}
-            color={!text.trim() || disabled ? '#C7C7CC' : '#007AFF'}
-          />
+          <Ionicons name="send" size={24} color={sendButtonColor} />
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    backgroundColor: '#FFFFFF',
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
+    backgroundColor: theme.colors.background,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5EA',
+    borderTopColor: theme.colors.border,
   },
   input: {
     flex: 1,
     minHeight: 40,
     maxHeight: 120,
-    backgroundColor: '#F2F2F7',
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    fontSize: 16,
-    marginRight: 8,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.xxl,
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: theme.spacing.sm + 2,
+    fontSize: theme.typography.fontSize.base,
+    marginRight: theme.spacing.sm,
+    color: theme.colors.text.primary,
   },
   sendButton: {
     width: 40,
     height: 40,
-    borderRadius: 20,
+    borderRadius: theme.borderRadius.xxl,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 2,

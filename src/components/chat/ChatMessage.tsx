@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTheme } from '../../theme';
 
 export interface Message {
   id: string;
@@ -14,7 +15,10 @@ interface ChatMessageProps {
 }
 
 export function ChatMessage({ message }: ChatMessageProps) {
+  const { theme } = useTheme();
   const isUser = message.sender === 'user';
+
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
   return (
     <View style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}>
@@ -33,10 +37,10 @@ export function ChatMessage({ message }: ChatMessageProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
-    marginVertical: 4,
-    marginHorizontal: 12,
+    marginVertical: theme.spacing.xs,
+    marginHorizontal: theme.spacing.md,
   },
   userContainer: {
     alignItems: 'flex-end',
@@ -46,37 +50,37 @@ const styles = StyleSheet.create({
   },
   bubble: {
     maxWidth: '80%',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 20,
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: theme.spacing.sm + 2,
+    borderRadius: theme.borderRadius.xxl,
   },
   userBubble: {
-    backgroundColor: '#007AFF',
-    borderBottomRightRadius: 4,
+    backgroundColor: theme.colors.message.user,
+    borderBottomRightRadius: theme.borderRadius.sm,
   },
   agentBubble: {
-    backgroundColor: '#E9E9EB',
-    borderBottomLeftRadius: 4,
+    backgroundColor: theme.colors.message.agent,
+    borderBottomLeftRadius: theme.borderRadius.sm,
   },
   text: {
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: theme.typography.fontSize.base,
+    lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
   },
   userText: {
-    color: '#FFFFFF',
+    color: theme.colors.message.userText,
   },
   agentText: {
-    color: '#000000',
+    color: theme.colors.message.agentText,
   },
   timestamp: {
-    fontSize: 11,
-    color: '#8E8E93',
-    marginTop: 4,
-    marginHorizontal: 4,
+    fontSize: theme.typography.fontSize.xs,
+    color: theme.colors.text.secondary,
+    marginTop: theme.spacing.xs,
+    marginHorizontal: theme.spacing.xs,
   },
   streamingIndicator: {
-    color: '#8E8E93',
-    fontSize: 12,
-    marginTop: 4,
+    color: theme.colors.text.secondary,
+    fontSize: theme.typography.fontSize.sm,
+    marginTop: theme.spacing.xs,
   },
 });
