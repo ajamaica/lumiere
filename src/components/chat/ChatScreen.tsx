@@ -3,10 +3,8 @@ import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import {
-  ActionSheetIOS,
   ActivityIndicator,
   FlatList,
-  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -180,30 +178,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   }
 
   const handleOpenSessionMenu = () => {
-    if (Platform.OS === 'ios') {
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          options: ['Cancel', 'Manage Sessions', 'New Session', 'Reset Current Session'],
-          cancelButtonIndex: 0,
-          destructiveButtonIndex: 3,
-        },
-        (buttonIndex) => {
-          if (buttonIndex === 1) {
-            // Manage Sessions
-            router.push('/sessions')
-          } else if (buttonIndex === 2) {
-            // New Session
-            handleNewSession()
-          } else if (buttonIndex === 3) {
-            // Reset Current Session
-            handleResetSession()
-          }
-        },
-      )
-    } else {
-      // For Android, navigate directly to sessions screen
-      router.push('/sessions')
-    }
+    router.push('/sessions')
   }
 
   const handleThemeToggle = () => {
