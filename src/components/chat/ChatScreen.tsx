@@ -138,6 +138,12 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     }
   };
 
+  const handleNewSession = () => {
+    setMessages([]);
+    setCurrentAgentMessage('');
+    setIsAgentResponding(false);
+  };
+
   const handleThemeToggle = () => {
     const modes = ['light', 'dark', 'system'] as const;
     const currentIndex = modes.indexOf(themeMode);
@@ -237,7 +243,11 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           </View>
         }
       />
-      <ChatInput onSend={handleSend} disabled={!connected || isAgentResponding} />
+      <ChatInput
+        onSend={handleSend}
+        onNewSession={handleNewSession}
+        disabled={!connected || isAgentResponding}
+      />
     </SafeAreaView>
   );
 }

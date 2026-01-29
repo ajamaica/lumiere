@@ -12,10 +12,11 @@ import { useTheme } from '../../theme';
 
 interface ChatInputProps {
   onSend: (text: string) => void;
+  onNewSession?: () => void;
   disabled?: boolean;
 }
 
-export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
+export function ChatInput({ onSend, onNewSession, disabled = false }: ChatInputProps) {
   const { theme } = useTheme();
   const [text, setText] = useState('');
 
@@ -28,7 +29,14 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
     }
   };
 
+  const handleNewSession = () => {
+    if (onNewSession && !disabled) {
+      onNewSession();
+    }
+  };
+
   const sendButtonColor = !text.trim() || disabled ? theme.colors.text.tertiary : theme.colors.primary;
+  const newSessionColor = disabled ? theme.colors.text.tertiary : theme.colors.primary;
 
   return (
     <KeyboardAvoidingView
@@ -48,8 +56,17 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
           onSubmitEditing={handleSend}
           blurOnSubmit={false}
         />
+        {onNewSession && (
+          <TouchableOpacity
+            style={[styles.newSessionButton, disabled && styles.buttonDisabled]}
+            onPress={handleNewSession}
+            disabled={disabled}
+          >
+            <Ionicons name="add-circle-outline" size={24} color={newSessionColor} />
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
-          style={[styles.sendButton, (!text.trim() || disabled) && styles.sendButtonDisabled]}
+          style={[styles.sendButton, (!text.trim() || disabled) && styles.buttonDisabled]}
           onPress={handleSend}
           disabled={!text.trim() || disabled}
         >
@@ -82,6 +99,15 @@ const createStyles = (theme: any) => StyleSheet.create({
     marginRight: theme.spacing.sm,
     color: theme.colors.text.primary,
   },
+  newSessionButton: {
+    width: 40,
+    height: 40,
+    borderRadius: theme.borderRadius.xxl,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 2,
+    marginRight: theme.spacing.xs,
+  },
   sendButton: {
     width: 40,
     height: 40,
@@ -90,7 +116,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 2,
   },
-  sendButtonDisabled: {
+  buttonDisabled: {
     opacity: 0.5,
   },
 });
