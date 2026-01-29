@@ -22,13 +22,13 @@ export const currentSessionKeyAtom = atomWithStorage<string>(
 // Gateway configuration atoms with AsyncStorage persistence
 export const gatewayUrlAtom = atomWithStorage<string>(
   'gatewayUrl',
-  '',
+  'wss://ajamaica-standardpc.tail185e2.ts.net',
   storage
 );
 
 export const gatewayTokenAtom = atomWithStorage<string>(
   'gatewayToken',
-  '',
+  'a4b48356b80d2e02bf40cf6a1cfdc1bbd0341db58b072325',
   storage
 );
 
