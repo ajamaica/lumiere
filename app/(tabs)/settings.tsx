@@ -16,8 +16,8 @@ import {
   gatewayTokenAtom,
   gatewayUrlAtom,
   onboardingCompletedAtom,
-} from '../src/store'
-import { useTheme } from '../src/theme'
+} from '../../src/store'
+import { useTheme } from '../../src/theme'
 
 export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode } = useTheme()
