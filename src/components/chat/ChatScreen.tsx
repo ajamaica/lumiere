@@ -31,6 +31,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     connect,
     disconnect,
     sendAgentRequest,
+    getChatHistory,
   } = useMoltGateway({
     url: gatewayUrl,
     token: gatewayToken,
@@ -42,6 +43,47 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (connected) {
+      // Small delay to ensure WebSocket is fully ready
+      setTimeout(() => {
+        loadChatHistory();
+      }, 500);
+    }
+  }, [connected]);
+
+  const loadChatHistory = async () => {
+    try {
+      const history = await getChatHistory(agentConfig.defaultSessionKey, 100);
+      console.log('Chat history:', history);
+
+      if (history && Array.isArray((history as any).messages)) {
+        const historyMessages = (history as any).messages
+          .filter((msg: any) => msg.role === 'user' || msg.role === 'assistant')
+          .map((msg: any, index: number) => {
+            const textContent = msg.content.find((c: any) => c.type === 'text');
+            const text = textContent?.text || '';
+
+            // Skip empty messages
+            if (!text) return null;
+
+            return {
+              id: `history-${msg.timestamp}-${index}`,
+              text,
+              sender: msg.role === 'user' ? 'user' : 'agent',
+              timestamp: new Date(msg.timestamp),
+            } as Message;
+          })
+          .filter((msg: Message | null) => msg !== null);
+
+        setMessages(historyMessages);
+        console.log(`Loaded ${historyMessages.length} messages from history`);
+      }
+    } catch (err) {
+      console.error('Failed to load chat history:', err);
+    }
+  };
 
   const handleSend = async (text: string) => {
     const userMessage: Message = {

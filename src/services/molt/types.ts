@@ -100,6 +100,19 @@ export interface SendMessageParams {
   attachments?: Attachment[];
 }
 
+// Chat history params
+export interface ChatHistoryParams {
+  sessionKey: string;
+  limit?: number;
+}
+
+// Chat message from history
+export interface ChatHistoryMessage {
+  role: 'user' | 'assistant';
+  content: Array<{ type: string; text?: string }>;
+  timestamp: number;
+}
+
 export interface Attachment {
   type: 'image' | 'audio' | 'document';
   url?: string;

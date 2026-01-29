@@ -162,6 +162,10 @@ export class MoltGatewayClient {
     return await this.request('send', params);
   }
 
+  async getChatHistory(sessionKey: string, limit?: number): Promise<unknown> {
+    return await this.request('chat.history', { sessionKey, limit });
+  }
+
   async sendAgentRequest(
     params: AgentParams,
     onEvent?: (event: AgentEvent) => void

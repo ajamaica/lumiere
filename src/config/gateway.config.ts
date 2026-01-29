@@ -20,4 +20,5 @@ export const protocolConfig = {
 
 export const agentConfig = {
   defaultAgentId: 'main',
+  defaultSessionKey: 'agent:main:main',
 } as const;
