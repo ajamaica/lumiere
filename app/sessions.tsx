@@ -2,16 +2,9 @@ import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
-import {
-  Alert,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 
+import { ActionRow, ScreenHeader, Section, Text } from '../src/components/ui'
 import { useMoltGateway } from '../src/services/molt'
 import { currentSessionKeyAtom, gatewayTokenAtom, gatewayUrlAtom } from '../src/store'
 import { useTheme } from '../src/theme'
@@ -100,62 +93,13 @@ export default function SessionsScreen() {
     return parts[parts.length - 1] || key
   }
 
-  const formatDate = (timestamp?: number) => {
-    if (!timestamp) return ''
-    const date = new Date(timestamp)
-    return date.toLocaleString()
-  }
-
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: theme.spacing.lg,
-      paddingTop: theme.spacing.xl * 1.5,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.colors.border,
-    },
-    backButton: {
-      marginRight: theme.spacing.md,
-    },
-    title: {
-      fontSize: theme.typography.fontSize.xxl,
-      fontWeight: theme.typography.fontWeight.bold,
-      color: theme.colors.text.primary,
-    },
     scrollContent: {
       padding: theme.spacing.lg,
-    },
-    section: {
-      marginBottom: theme.spacing.xl,
-    },
-    sectionTitle: {
-      fontSize: theme.typography.fontSize.sm,
-      fontWeight: theme.typography.fontWeight.semibold,
-      color: theme.colors.text.secondary,
-      marginBottom: theme.spacing.md,
-      textTransform: 'uppercase',
-      letterSpacing: 0.5,
-    },
-    actionButton: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: theme.spacing.md,
-      backgroundColor: theme.colors.surface,
-      borderRadius: theme.borderRadius.md,
-      marginBottom: theme.spacing.sm,
-    },
-    actionIcon: {
-      marginRight: theme.spacing.md,
-    },
-    actionText: {
-      fontSize: theme.typography.fontSize.base,
-      color: theme.colors.text.primary,
-      flex: 1,
     },
     sessionItem: {
       flexDirection: 'row',
@@ -170,62 +114,27 @@ export default function SessionsScreen() {
       borderWidth: 1,
       borderColor: theme.colors.primary,
     },
-    sessionText: {
-      fontSize: theme.typography.fontSize.base,
-      color: theme.colors.text.primary,
-      flex: 1,
-    },
-    sessionMeta: {
-      fontSize: theme.typography.fontSize.sm,
-      color: theme.colors.text.secondary,
-      marginTop: 2,
-    },
-    emptyText: {
-      fontSize: theme.typography.fontSize.base,
-      color: theme.colors.text.secondary,
-      textAlign: 'center',
-      padding: theme.spacing.lg,
-    },
   })
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color={theme.colors.text.primary} />
-        </TouchableOpacity>
-        <Text style={styles.title}>Sessions</Text>
-      </View>
+      <ScreenHeader title="Sessions" showBack />
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Actions</Text>
+        <Section title="Actions">
+          <ActionRow icon="add-circle-outline" label="New Session" onPress={handleNewSession} />
+          <ActionRow
+            icon="refresh-outline"
+            label="Reset Current Session"
+            onPress={handleResetSession}
+          />
+        </Section>
 
-          <TouchableOpacity style={styles.actionButton} onPress={handleNewSession}>
-            <Ionicons
-              name="add-circle-outline"
-              size={24}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>New Session</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.actionButton} onPress={handleResetSession}>
-            <Ionicons
-              name="refresh-outline"
-              size={24}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>Reset Current Session</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Available Sessions</Text>
+        <Section title="Available Sessions">
           {loading ? (
-            <Text style={styles.emptyText}>Loading sessions...</Text>
+            <Text color="secondary" center>
+              Loading sessions...
+            </Text>
           ) : sessions.length > 0 ? (
             sessions.map((session) => {
               const isActive = session.key === currentSessionKey
@@ -236,12 +145,12 @@ export default function SessionsScreen() {
                   onPress={() => handleSelectSession(session.key)}
                 >
                   <View style={{ flex: 1 }}>
-                    <Text style={styles.sessionText}>
+                    <Text variant="body">
                       {formatSessionKey(session.key)}
                       {isActive && ' (Active)'}
                     </Text>
                     {session.messageCount !== undefined && (
-                      <Text style={styles.sessionMeta}>{session.messageCount} messages</Text>
+                      <Text variant="caption">{session.messageCount} messages</Text>
                     )}
                   </View>
                   <Ionicons
@@ -253,9 +162,11 @@ export default function SessionsScreen() {
               )
             })
           ) : (
-            <Text style={styles.emptyText}>No sessions available</Text>
+            <Text color="secondary" center>
+              No sessions available
+            </Text>
           )}
-        </View>
+        </Section>
       </ScrollView>
     </SafeAreaView>
   )
