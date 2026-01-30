@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons'
 import { useAtom } from 'jotai'
 import React, { useMemo,useState } from 'react'
 import {
@@ -36,6 +37,8 @@ export function OnboardingScreen() {
     gatewayToken
   )
   const [localClientId, setLocalClientId] = useState(clientId || 'lumiere-mobile')
+  const [localSessionKey, setLocalSessionKey] = useState('agent:main:main')
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
@@ -44,7 +47,7 @@ export function OnboardingScreen() {
       setGatewayUrl(localUrl.trim())
       setGatewayToken(localToken.trim())
       setClientId(localClientId.trim())
-      setCurrentSessionKey('agent:main:main')
+      setCurrentSessionKey(localSessionKey.trim())
       setOnboardingCompleted(true)
     }
   }
@@ -97,19 +100,49 @@ export function OnboardingScreen() {
               <Text style={styles.hint}>Your authentication token for the gateway</Text>
             </View>
 
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Client ID</Text>
-              <TextInput
-                style={styles.input}
-                value={localClientId}
-                onChangeText={setLocalClientId}
-                placeholder="lumiere-mobile"
-                placeholderTextColor={theme.colors.text.tertiary}
-                autoCapitalize="none"
-                autoCorrect={false}
+            <TouchableOpacity
+              style={styles.advancedToggle}
+              onPress={() => setShowAdvanced(!showAdvanced)}
+            >
+              <Text style={styles.advancedToggleText}>Advanced</Text>
+              <Ionicons
+                name={showAdvanced ? 'chevron-up' : 'chevron-down'}
+                size={20}
+                color={theme.colors.text.secondary}
               />
-              <Text style={styles.hint}>Identifier for this device (default: lumiere-mobile)</Text>
-            </View>
+            </TouchableOpacity>
+
+            {showAdvanced && (
+              <>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>Client ID</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={localClientId}
+                    onChangeText={setLocalClientId}
+                    placeholder="lumiere-mobile"
+                    placeholderTextColor={theme.colors.text.tertiary}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                  <Text style={styles.hint}>Identifier for this device (default: lumiere-mobile)</Text>
+                </View>
+
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>Default Session Key</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={localSessionKey}
+                    onChangeText={setLocalSessionKey}
+                    placeholder="agent:main:main"
+                    placeholderTextColor={theme.colors.text.tertiary}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                  <Text style={styles.hint}>Session key for chat conversations (default: agent:main:main)</Text>
+                </View>
+              </>
+            )}
           </View>
 
           <TouchableOpacity
@@ -180,6 +213,18 @@ const createStyles = (theme: any) =>
       fontSize: theme.typography.fontSize.sm,
       color: theme.colors.text.secondary,
       marginTop: theme.spacing.xs,
+    },
+    advancedToggle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingVertical: theme.spacing.md,
+      marginBottom: theme.spacing.md,
+    },
+    advancedToggleText: {
+      fontSize: theme.typography.fontSize.base,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.text.secondary,
     },
     button: {
       backgroundColor: theme.colors.primary,
