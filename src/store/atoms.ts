@@ -61,3 +61,6 @@ export const gatewayErrorAtom = atom<string | null>(null)
 
 // Message queue (in-memory only, not persisted)
 export const messageQueueAtom = atom<string[]>([])
+
+// Trigger to clear messages and reload history (in-memory only)
+export const clearMessagesAtom = atom<number>(0)

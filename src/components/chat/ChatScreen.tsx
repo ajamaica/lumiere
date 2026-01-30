@@ -19,7 +19,7 @@ import {
 import { agentConfig } from '../../config/gateway.config'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
 import { useMoltGateway } from '../../services/molt'
-import { currentSessionKeyAtom } from '../../store'
+import { clearMessagesAtom, currentSessionKeyAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
@@ -45,6 +45,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
   const [currentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
   const flatListRef = useRef<FlatList>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
@@ -134,6 +135,16 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       }, 500)
     }
   }, [connected, loadChatHistory])
+
+  // Clear messages when reset session is triggered
+  useEffect(() => {
+    if (clearMessagesTrigger > 0 && connected) {
+      setMessages([])
+      setCurrentAgentMessage('')
+      hasScrolledOnLoadRef.current = false
+      loadChatHistory()
+    }
+  }, [clearMessagesTrigger, connected, loadChatHistory])
 
   // Scroll to bottom on initial load when messages are first populated
   useEffect(() => {
