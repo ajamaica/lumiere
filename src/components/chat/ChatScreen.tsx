@@ -387,7 +387,7 @@ const createStyles = (theme: any) =>
     },
     scrollToBottomButton: {
       position: 'absolute',
-      bottom: 80,
+      bottom: 100,
       left: '50%',
       marginLeft: -24,
       width: 48,
@@ -404,5 +404,6 @@ const createStyles = (theme: any) =>
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
       elevation: 5,
+      zIndex: 1000,
     },
   })
