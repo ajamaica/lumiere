@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 
 import { Button, Text, TextInput } from '../components/ui'
+import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
 import { onboardingCompletedAtom, serverSessionsAtom } from '../store'
 import { useTheme } from '../theme'
@@ -26,7 +27,7 @@ export function OnboardingScreen() {
   const [localUrl, setLocalUrl] = useState('')
   const [localToken, setLocalToken] = useState('')
   const [localClientId, setLocalClientId] = useState('lumiere-mobile')
-  const [localSessionKey, setLocalSessionKey] = useState('agent:main:main')
+  const [localSessionKey, setLocalSessionKey] = useState(DEFAULT_SESSION_KEY)
   const [showAdvanced, setShowAdvanced] = useState(false)
 
   const styles = StyleSheet.create({
@@ -77,8 +78,8 @@ export function OnboardingScreen() {
       switchToServer(serverId)
 
       // Set initial session for this server (optional - will use default if not set)
-      // The currentSessionKeyAtom will return 'agent:main:main' by default if no session exists
-      const sessionKey = localSessionKey.trim() || 'agent:main:main'
+      // The currentSessionKeyAtom will return DEFAULT_SESSION_KEY if no session exists
+      const sessionKey = localSessionKey.trim() || DEFAULT_SESSION_KEY
       setServerSessions((prev) => ({
         ...prev,
         [serverId]: sessionKey,
@@ -163,10 +164,10 @@ export function OnboardingScreen() {
                   label="Default Session Key"
                   value={localSessionKey}
                   onChangeText={setLocalSessionKey}
-                  placeholder="agent:main:main"
+                  placeholder={DEFAULT_SESSION_KEY}
                   autoCapitalize="none"
                   autoCorrect={false}
-                  hint="Session key for chat conversations (default: agent:main:main)"
+                  hint={`Session key for chat conversations (default: ${DEFAULT_SESSION_KEY})`}
                 />
               </>
             )}

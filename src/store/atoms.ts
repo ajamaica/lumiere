@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { atom } from 'jotai'
 import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 
+import { DEFAULT_SESSION_KEY } from '../constants'
+
 // Create AsyncStorage adapter for Jotai
 const storage = createJSONStorage<any>(() => AsyncStorage)
 
@@ -37,11 +39,8 @@ export const currentServerIdAtom = atomWithStorage<string>('currentServerId', ''
 
 export const serverSessionsAtom = atomWithStorage<ServerSessions>('serverSessions', {}, storage)
 
-// Default session key used when no session exists for current server
-const DEFAULT_SESSION_KEY = 'agent:main:main'
-
 // Derived atom for current session key (backward compatible interface)
-// Returns default session key if none exists for current server
+// Returns DEFAULT_SESSION_KEY if none exists for current server
 export const currentSessionKeyAtom = atom(
   (get) => {
     const currentServerId = get(currentServerIdAtom)
