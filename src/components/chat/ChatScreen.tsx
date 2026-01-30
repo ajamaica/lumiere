@@ -404,7 +404,8 @@ const createStyles = (theme: any) =>
     scrollToBottomButton: {
       position: 'absolute',
       bottom: 80,
-      right: 20,
+      left: '50%',
+      marginLeft: -24,
       width: 48,
       height: 48,
       borderRadius: 24,
