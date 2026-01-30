@@ -39,22 +39,12 @@ export const currentServerIdAtom = atomWithStorage<string>('currentServerId', ''
 
 export const serverSessionsAtom = atomWithStorage<ServerSessions>('serverSessions', {}, storage)
 
-// Derived atom for current session key (backward compatible interface)
-// Returns DEFAULT_SESSION_KEY if none exists for current server
-export const currentSessionKeyAtom = atom(
-  (get) => {
-    const currentServerId = get(currentServerIdAtom)
-    const sessions = get(serverSessionsAtom)
-    return sessions[currentServerId] || DEFAULT_SESSION_KEY
-  },
-  (get, set, newValue: string) => {
-    const currentServerId = get(currentServerIdAtom)
-    const sessions = get(serverSessionsAtom)
-    set(serverSessionsAtom, {
-      ...sessions,
-      [currentServerId]: newValue,
-    })
-  },
+// Current session key with persistent storage
+// Stores whatever session key is set during onboarding or session selection
+export const currentSessionKeyAtom = atomWithStorage<string>(
+  'currentSessionKey',
+  DEFAULT_SESSION_KEY,
+  storage,
 )
 
 // Onboarding completion status
