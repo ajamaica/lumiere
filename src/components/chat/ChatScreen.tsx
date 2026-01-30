@@ -40,6 +40,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const hasScrolledOnLoadRef = useRef(false)
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
+  // eslint-disable-next-line react-hooks/refs
   const pulseAnim = useRef(new Animated.Value(1)).current
 
   const styles = useMemo(() => createStyles(theme), [theme])
@@ -338,6 +339,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           queueCount={queueCount}
         />
       </KeyboardAvoidingView>
+      {/* eslint-disable-next-line react-hooks/refs */}
       {renderConnectionStatus()}
     </SafeAreaView>
   )

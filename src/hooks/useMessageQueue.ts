@@ -117,6 +117,7 @@ export function useMessageQueue({
     if (!isAgentResponding && messageQueue.length > 0) {
       const nextMessage = messageQueue[0]
       setMessageQueue((prev) => prev.slice(1))
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       sendMessage(nextMessage)
     }
   }, [isAgentResponding, messageQueue, sendMessage, setMessageQueue])

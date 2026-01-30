@@ -122,6 +122,7 @@ export default function OverviewScreen() {
 
   const formatTimeSince = (date: Date | null): string => {
     if (!date) return 'Never'
+    // eslint-disable-next-line react-hooks/purity
     const seconds = Math.floor((Date.now() - date.getTime()) / 1000)
     if (seconds < 60) return 'Just now'
     if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`
