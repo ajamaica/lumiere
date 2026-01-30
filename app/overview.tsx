@@ -12,16 +12,18 @@ import {
 } from 'react-native'
 
 import { Button, Card, ScreenHeader, Section, StatCard, Text } from '../src/components/ui'
+import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { currentSessionKeyAtom, gatewayTokenAtom, gatewayUrlAtom } from '../src/store'
+import { currentSessionKeyAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
 export default function OverviewScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const [gatewayUrl] = useAtom(gatewayUrlAtom)
-  const [gatewayToken] = useAtom(gatewayTokenAtom)
+  const { getCurrentMoltConfig, currentServer } = useServers()
   const [currentSessionKey] = useAtom(currentSessionKeyAtom)
+  const config = getCurrentMoltConfig()
+
   const [password, setPassword] = useState('')
   const [uptime, setUptime] = useState(0)
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null)
@@ -32,8 +34,8 @@ export default function OverviewScreen() {
 
   const { connected, connecting, error, snapshot, connect, refreshHealth, listSessions } =
     useMoltGateway({
-      url: gatewayUrl,
-      token: gatewayToken,
+      url: config?.url || '',
+      token: config?.token || '',
     })
 
   useEffect(() => {
@@ -206,6 +208,32 @@ export default function OverviewScreen() {
       marginBottom: theme.spacing.md,
     },
   })
+
+  if (!config) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ScreenHeader title="Overview" showBack />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: theme.spacing.xl,
+          }}
+        >
+          <Text variant="heading2" style={{ marginBottom: theme.spacing.md }}>
+            No Server Configured
+          </Text>
+          <Text color="secondary" center style={{ marginBottom: theme.spacing.xl }}>
+            Please add a server in Settings to get started.
+          </Text>
+          <Button title="Go to Settings" onPress={() => router.push('/settings')} />
+        </View>
+      </SafeAreaView>
+    )
+  }
+
+  const { url: gatewayUrl, token: gatewayToken } = config
 
   return (
     <SafeAreaView style={styles.container}>

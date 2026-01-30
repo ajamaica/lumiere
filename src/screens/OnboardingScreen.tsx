@@ -13,26 +13,19 @@ import {
 } from 'react-native'
 
 import { Button, Text, TextInput } from '../components/ui'
-import {
-  clientIdAtom,
-  currentSessionKeyAtom,
-  gatewayTokenAtom,
-  gatewayUrlAtom,
-  onboardingCompletedAtom,
-} from '../store'
+import { useServers } from '../hooks/useServers'
+import { onboardingCompletedAtom, serverSessionsAtom } from '../store'
 import { useTheme } from '../theme'
 
 export function OnboardingScreen() {
   const { theme } = useTheme()
-  const [gatewayUrl, setGatewayUrl] = useAtom(gatewayUrlAtom)
-  const [gatewayToken, setGatewayToken] = useAtom(gatewayTokenAtom)
-  const [clientId, setClientId] = useAtom(clientIdAtom)
-  const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const { addServer, switchToServer } = useServers()
+  const [, setServerSessions] = useAtom(serverSessionsAtom)
   const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
 
-  const [localUrl, setLocalUrl] = useState(gatewayUrl)
-  const [localToken, setLocalToken] = useState(gatewayToken)
-  const [localClientId, setLocalClientId] = useState(clientId || 'lumiere-mobile')
+  const [localUrl, setLocalUrl] = useState('')
+  const [localToken, setLocalToken] = useState('')
+  const [localClientId, setLocalClientId] = useState('lumiere-mobile')
   const [localSessionKey, setLocalSessionKey] = useState('agent:main:main')
   const [showAdvanced, setShowAdvanced] = useState(false)
 
@@ -72,10 +65,23 @@ export function OnboardingScreen() {
 
   const handleComplete = () => {
     if (localUrl.trim() && localToken.trim()) {
-      setGatewayUrl(localUrl.trim())
-      setGatewayToken(localToken.trim())
-      setClientId(localClientId.trim())
-      setCurrentSessionKey(localSessionKey.trim())
+      // Create new server
+      const serverId = addServer({
+        name: 'My Server',
+        url: localUrl.trim(),
+        token: localToken.trim(),
+        clientId: localClientId.trim() || 'lumiere-mobile',
+      })
+
+      // Set as current server (done automatically in addServer if first)
+      switchToServer(serverId)
+
+      // Set initial session for this server
+      setServerSessions({
+        [serverId]: localSessionKey.trim(),
+      })
+
+      // Mark onboarding complete
       setOnboardingCompleted(true)
     }
   }

@@ -1,26 +1,19 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
 import { useSetAtom } from 'jotai'
 import React from 'react'
 import { Alert, SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow } from '../src/components/ui'
-import {
-  clientIdAtom,
-  currentSessionKeyAtom,
-  gatewayTokenAtom,
-  gatewayUrlAtom,
-  onboardingCompletedAtom,
-} from '../src/store'
+import { useServers } from '../src/hooks/useServers'
+import { onboardingCompletedAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
 export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode } = useTheme()
   const router = useRouter()
+  const { currentServer, serversList } = useServers()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
-  const setGatewayUrl = useSetAtom(gatewayUrlAtom)
-  const setGatewayToken = useSetAtom(gatewayTokenAtom)
-  const setClientId = useSetAtom(clientIdAtom)
-  const setCurrentSessionKey = useSetAtom(currentSessionKeyAtom)
 
   const getThemeLabel = () => {
     switch (themeMode) {
@@ -45,7 +38,7 @@ export default function SettingsScreen() {
   const handleLogout = () => {
     Alert.alert(
       'Logout',
-      'Are you sure you want to logout? You will need to reconfigure your gateway settings.',
+      'Are you sure you want to logout? All servers and settings will be cleared.',
       [
         {
           text: 'Cancel',
@@ -54,12 +47,14 @@ export default function SettingsScreen() {
         {
           text: 'Logout',
           style: 'destructive',
-          onPress: () => {
+          onPress: async () => {
+            await AsyncStorage.multiRemove([
+              'servers',
+              'currentServerId',
+              'serverSessions',
+              'onboardingCompleted',
+            ])
             setOnboardingCompleted(false)
-            setGatewayUrl('')
-            setGatewayToken('')
-            setClientId('lumiere-mobile')
-            setCurrentSessionKey('')
           },
         },
       ],
@@ -82,6 +77,19 @@ export default function SettingsScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Section title="Appearance">
           <SettingRow label="Theme" value={getThemeLabel()} onPress={handleThemeToggle} />
+        </Section>
+
+        <Section title="Servers">
+          <SettingRow
+            label="Current Server"
+            value={currentServer?.name || 'None'}
+            onPress={() => router.push('/servers')}
+          />
+          <SettingRow
+            label="Total Servers"
+            value={serversList.length.toString()}
+            onPress={() => router.push('/servers')}
+          />
         </Section>
 
         <Section title="Control">

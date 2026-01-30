@@ -4,9 +4,10 @@ import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-import { ActionRow, ScreenHeader, Section, Text } from '../src/components/ui'
+import { ActionRow, Button, ScreenHeader, Section, Text } from '../src/components/ui'
+import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { currentSessionKeyAtom, gatewayTokenAtom, gatewayUrlAtom } from '../src/store'
+import { currentSessionKeyAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
 interface Session {
@@ -18,15 +19,16 @@ interface Session {
 export default function SessionsScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const [gatewayUrl] = useAtom(gatewayUrlAtom)
-  const [gatewayToken] = useAtom(gatewayTokenAtom)
+  const { getCurrentMoltConfig } = useServers()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const config = getCurrentMoltConfig()
+
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
 
   const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
-    url: gatewayUrl,
-    token: gatewayToken,
+    url: config?.url || '',
+    token: config?.token || '',
   })
 
   useEffect(() => {
@@ -115,6 +117,30 @@ export default function SessionsScreen() {
       borderColor: theme.colors.primary,
     },
   })
+
+  if (!config) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ScreenHeader title="Sessions" showBack />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: theme.spacing.lg,
+          }}
+        >
+          <Text variant="heading2" style={{ marginBottom: theme.spacing.md }}>
+            No Server Configured
+          </Text>
+          <Text color="secondary" center style={{ marginBottom: theme.spacing.xl }}>
+            Please add a server in Settings to get started.
+          </Text>
+          <Button title="Go to Settings" onPress={() => router.push('/settings')} />
+        </View>
+      </SafeAreaView>
+    )
+  }
 
   return (
     <SafeAreaView style={styles.container}>
