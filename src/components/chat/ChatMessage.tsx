@@ -1,4 +1,6 @@
-import React, { useMemo } from 'react'
+import { Ionicons } from '@expo/vector-icons'
+import * as Clipboard from 'expo-clipboard'
+import React, { useMemo, useState } from 'react'
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
@@ -19,6 +21,7 @@ interface ChatMessageProps {
 export function ChatMessage({ message }: ChatMessageProps) {
   const { theme } = useTheme()
   const isUser = message.sender === 'user'
+  const [copied, setCopied] = useState(false)
 
   const styles = useMemo(() => createStyles(theme), [theme])
   const markdownStyles = useMemo(
@@ -29,6 +32,12 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const handleLinkPress = (url: string) => {
     console.log('Link pressed:', url)
     Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err))
+  }
+
+  const handleCopy = async () => {
+    await Clipboard.setStringAsync(message.text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   return (
@@ -43,6 +52,17 @@ export function ChatMessage({ message }: ChatMessageProps) {
         </Markdown>
         {message.streaming && <Text style={styles.streamingIndicator}>...</Text>}
       </View>
+      {!isUser && !message.streaming && (
+        <View style={styles.actionButtons}>
+          <TouchableOpacity style={styles.actionButton} onPress={handleCopy}>
+            <Ionicons
+              name={copied ? 'checkmark' : 'copy-outline'}
+              size={18}
+              color={theme.colors.text.secondary}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
       <Text style={styles.timestamp}>
         {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
       </Text>
@@ -63,18 +83,29 @@ const createStyles = (theme: any) =>
       alignItems: 'flex-start',
     },
     bubble: {
-      maxWidth: '80%',
       paddingHorizontal: theme.spacing.lg,
       paddingVertical: theme.spacing.sm + 2,
       borderRadius: theme.borderRadius.xxl,
     },
     userBubble: {
+      maxWidth: '80%',
       backgroundColor: theme.colors.message.user,
       borderBottomRightRadius: theme.borderRadius.sm,
     },
     agentBubble: {
+      width: '100%',
       backgroundColor: theme.colors.message.agent,
       borderBottomLeftRadius: theme.borderRadius.sm,
+    },
+    actionButtons: {
+      flexDirection: 'row',
+      marginTop: theme.spacing.sm,
+      marginLeft: theme.spacing.xs,
+      gap: theme.spacing.xs,
+    },
+    actionButton: {
+      padding: theme.spacing.xs,
+      borderRadius: theme.borderRadius.sm,
     },
     text: {
       fontSize: theme.typography.fontSize.base,
