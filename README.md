@@ -10,6 +10,7 @@
 
 <p align="center">
   <a href="#features">Features</a> •
+  <a href="#screenshots">Screenshots</a> •
   <a href="#getting-started">Getting Started</a> •
   <a href="#architecture">Architecture</a> •
   <a href="#configuration">Configuration</a> •
@@ -21,14 +22,24 @@
 
 ## Features
 
+- **Multi-server support** — Connect and manage multiple Molt Gateway servers simultaneously
 - **Real-time streaming chat** — WebSocket connection to Molt Gateway with streamed AI responses
 - **Message queue** — Queue messages while the agent is responding for continuous conversation flow
 - **Slash commands** — 30+ built-in commands with autocomplete across core, model, execution, and admin categories
 - **Session management** — Create, switch, and reset independent chat sessions
 - **Cron scheduler** — Schedule and manage recurring agent tasks
 - **Gateway monitoring** — Live health checks, uptime, and connection status
-- **Light & dark themes** — System-aware theming with manual override
+- **Light & dark themes** — System-aware theming with manual override and dark mode support
 - **Onboarding flow** — Guided first-time setup for gateway credentials
+
+## Screenshots
+
+<p align="center">
+  <img src="assets/screenshots/onboarding.png" alt="Onboarding" width="200" />
+  <img src="assets/screenshots/chat.png" alt="Chat Interface" width="200" />
+  <img src="assets/screenshots/overview.png" alt="Gateway Overview" width="200" />
+  <img src="assets/screenshots/chat-conversation.png" alt="Chat Conversation" width="200" />
+</p>
 
 ## Getting Started
 
@@ -42,6 +53,7 @@
 
 ### Gateway Management
 
+- Multi-server support for connecting to multiple Molt Gateway instances
 - WebSocket connection status monitoring
 - Health checks and uptime tracking
 - Session and instance count monitoring
