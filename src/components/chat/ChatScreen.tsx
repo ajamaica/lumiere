@@ -196,24 +196,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     router.push('/sessions')
   }
 
-  const handleThemeToggle = () => {
-    const modes = ['light', 'dark', 'system'] as const
-    const currentIndex = modes.indexOf(themeMode)
-    const nextIndex = (currentIndex + 1) % modes.length
-    setThemeMode(modes[nextIndex])
-  }
-
-  const getThemeIcon = () => {
-    switch (themeMode) {
-      case 'light':
-        return 'sunny'
-      case 'dark':
-        return 'moon'
-      case 'system':
-        return 'phone-portrait'
-      default:
-        return 'sunny'
-    }
+  const handleOpenSettings = () => {
+    router.push('/settings')
   }
 
   const renderConnectionStatus = () => {
@@ -224,8 +208,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
             <ActivityIndicator size="small" color={theme.colors.primary} />
             <Text style={styles.statusText}>Connecting...</Text>
           </View>
-          <TouchableOpacity onPress={handleThemeToggle} style={styles.themeButton}>
-            <Ionicons name={getThemeIcon()} size={20} color={theme.colors.text.secondary} />
+          <TouchableOpacity onPress={handleOpenSettings} style={styles.settingsButton}>
+            <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
           </TouchableOpacity>
         </View>
       )
@@ -240,8 +224,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
               <Text style={styles.retryText}>Retry</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={handleThemeToggle} style={styles.themeButton}>
-            <Ionicons name={getThemeIcon()} size={20} color={theme.colors.text.secondary} />
+          <TouchableOpacity onPress={handleOpenSettings} style={styles.settingsButton}>
+            <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
           </TouchableOpacity>
         </View>
       )
@@ -254,8 +238,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
             <View style={styles.connectedDot} />
             <Text style={styles.connectedText}>Connected</Text>
           </View>
-          <TouchableOpacity onPress={handleThemeToggle} style={styles.themeButton}>
-            <Ionicons name={getThemeIcon()} size={20} color={theme.colors.text.secondary} />
+          <TouchableOpacity onPress={handleOpenSettings} style={styles.settingsButton}>
+            <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
           </TouchableOpacity>
         </View>
       )
@@ -345,7 +329,7 @@ const createStyles = (theme: any) =>
       alignItems: 'center',
       flex: 1,
     },
-    themeButton: {
+    settingsButton: {
       padding: theme.spacing.xs,
       marginLeft: theme.spacing.md,
     },

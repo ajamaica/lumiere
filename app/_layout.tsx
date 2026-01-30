@@ -18,7 +18,15 @@ function AppContent() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="settings"
+        options={{
+          presentation: 'modal',
+          animation: 'slide_from_bottom',
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="sessions"
         options={{
@@ -29,6 +37,14 @@ function AppContent() {
       />
       <Stack.Screen
         name="overview"
+        options={{
+          presentation: 'modal',
+          animation: 'slide_from_bottom',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="scheduler"
         options={{
           presentation: 'modal',
           animation: 'slide_from_bottom',
