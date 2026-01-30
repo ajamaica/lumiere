@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import * as Clipboard from 'expo-clipboard'
 import React, { useMemo, useState } from 'react'
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Linking, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
 import { useTheme } from '../../theme'
@@ -18,6 +18,33 @@ interface ChatMessageProps {
   message: Message
 }
 
+// Convert plain URLs to markdown links
+const linkifyText = (text: string): string => {
+  // First, protect existing markdown links by temporarily replacing them
+  const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
+  const placeholders: string[] = []
+  let placeholderIndex = 0
+
+  // Replace markdown links with placeholders
+  let protectedText = text.replace(markdownLinkRegex, (match) => {
+    const placeholder = `__MDLINK_${placeholderIndex}__`
+    placeholders[placeholderIndex] = match
+    placeholderIndex++
+    return placeholder
+  })
+
+  // Now linkify plain URLs
+  const urlRegex = /(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/g
+  protectedText = protectedText.replace(urlRegex, (url) => `[${url}](${url})`)
+
+  // Restore markdown links
+  placeholders.forEach((original, index) => {
+    protectedText = protectedText.replace(`__MDLINK_${index}__`, original)
+  })
+
+  return protectedText
+}
+
 export function ChatMessage({ message }: ChatMessageProps) {
   const { theme } = useTheme()
   const isUser = message.sender === 'user'
@@ -28,6 +55,11 @@ export function ChatMessage({ message }: ChatMessageProps) {
     () => createMarkdownStyles(theme, isUser),
     [theme, isUser],
   )
+
+  const handleLinkPress = (url: string) => {
+    console.log('Link pressed:', url)
+    Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err))
+  }
 
   const markdownRules = useMemo(
     () => ({
@@ -81,20 +113,27 @@ export function ChatMessage({ message }: ChatMessageProps) {
           {children}
         </Text>
       ),
+      link: (node: any, children: any, parent: any, styles: any) => {
+        const url = node.attributes?.href || ''
+        return (
+          <Pressable key={node.key} onPress={() => handleLinkPress(url)}>
+            <Text style={styles.link} selectable={true}>
+              {children}
+            </Text>
+          </Pressable>
+        )
+      },
     }),
-    [],
+    [handleLinkPress],
   )
-
-  const handleLinkPress = (url: string) => {
-    console.log('Link pressed:', url)
-    Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err))
-  }
 
   const handleCopy = async () => {
     await Clipboard.setStringAsync(message.text)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
+
+  const processedText = useMemo(() => linkifyText(message.text), [message.text])
 
   return (
     <View style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}>
@@ -105,7 +144,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           mergeStyle={true}
           rules={markdownRules}
         >
-          {message.text}
+          {processedText}
         </Markdown>
         {message.streaming && <Text style={styles.streamingIndicator}>...</Text>}
       </View>
@@ -305,8 +344,9 @@ const createMarkdownStyles = (theme: any, isUser: boolean) => {
       marginRight: theme.spacing.sm,
     },
     link: {
-      color: textColor,
+      color: theme.colors.primary,
       textDecorationLine: 'underline',
+      fontWeight: theme.typography.fontWeight.medium,
     },
     hr: {
       backgroundColor: textColor,
