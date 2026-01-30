@@ -174,6 +174,34 @@ export class MoltGatewayClient {
     return await this.request('sessions.list')
   }
 
+  async getSchedulerStatus(): Promise<unknown> {
+    return await this.request('cron.status')
+  }
+
+  async listCronJobs(): Promise<unknown> {
+    return await this.request('cron.list')
+  }
+
+  async disableCronJob(jobName: string): Promise<unknown> {
+    return await this.request('cron.update', { name: jobName, enabled: false })
+  }
+
+  async enableCronJob(jobName: string): Promise<unknown> {
+    return await this.request('cron.update', { name: jobName, enabled: true })
+  }
+
+  async runCronJob(jobName: string): Promise<unknown> {
+    return await this.request('cron.run', { name: jobName })
+  }
+
+  async removeCronJob(jobName: string): Promise<unknown> {
+    return await this.request('cron.remove', { name: jobName })
+  }
+
+  async getCronJobRuns(jobName: string): Promise<unknown> {
+    return await this.request('cron.runs', { name: jobName })
+  }
+
   async sendAgentRequest(
     params: AgentParams,
     onEvent?: (event: AgentEvent) => void,

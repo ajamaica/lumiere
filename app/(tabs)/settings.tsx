@@ -149,7 +149,10 @@ export default function SettingsScreen() {
           >
             <Text style={styles.settingLabel}>Overview</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.settingItem}>
+          <TouchableOpacity
+            style={styles.settingItem}
+            onPress={() => router.push('/scheduler')}
+          >
             <Text style={styles.settingLabel}>Cron Jobs</Text>
           </TouchableOpacity>
         </View>

@@ -28,6 +28,13 @@ export interface UseMoltGatewayResult {
   getChatHistory: (sessionKey: string, limit?: number) => Promise<unknown>
   resetSession: (sessionKey: string) => Promise<unknown>
   listSessions: () => Promise<unknown>
+  getSchedulerStatus: () => Promise<unknown>
+  listCronJobs: () => Promise<unknown>
+  disableCronJob: (jobName: string) => Promise<unknown>
+  enableCronJob: (jobName: string) => Promise<unknown>
+  runCronJob: (jobName: string) => Promise<unknown>
+  removeCronJob: (jobName: string) => Promise<unknown>
+  getCronJobRuns: (jobName: string) => Promise<unknown>
 }
 
 export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
@@ -157,6 +164,70 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     return await client.listSessions()
   }, [client])
 
+  const getSchedulerStatus = useCallback(async () => {
+    if (!client) {
+      throw new Error('Client not connected')
+    }
+    return await client.getSchedulerStatus()
+  }, [client])
+
+  const listCronJobs = useCallback(async () => {
+    if (!client) {
+      throw new Error('Client not connected')
+    }
+    return await client.listCronJobs()
+  }, [client])
+
+  const disableCronJob = useCallback(
+    async (jobName: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.disableCronJob(jobName)
+    },
+    [client],
+  )
+
+  const enableCronJob = useCallback(
+    async (jobName: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.enableCronJob(jobName)
+    },
+    [client],
+  )
+
+  const runCronJob = useCallback(
+    async (jobName: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.runCronJob(jobName)
+    },
+    [client],
+  )
+
+  const removeCronJob = useCallback(
+    async (jobName: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.removeCronJob(jobName)
+    },
+    [client],
+  )
+
+  const getCronJobRuns = useCallback(
+    async (jobName: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.getCronJobRuns(jobName)
+    },
+    [client],
+  )
+
   useEffect(() => {
     return () => {
       if (clientRef.current) {
@@ -181,5 +252,12 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     getChatHistory,
     resetSession,
     listSessions,
+    getSchedulerStatus,
+    listCronJobs,
+    disableCronJob,
+    enableCronJob,
+    runCronJob,
+    removeCronJob,
+    getCronJobRuns,
   }
 }
