@@ -28,6 +28,7 @@ export default function OverviewScreen() {
   const [connectedAt, setConnectedAt] = useState<Date | null>(null)
   const [instanceCount, setInstanceCount] = useState(0)
   const [sessionCount, setSessionCount] = useState(0)
+  const [showSecrets, setShowSecrets] = useState(false)
 
   const { connected, connecting, error, snapshot, connect, refreshHealth, listSessions } =
     useMoltGateway({
@@ -150,6 +151,11 @@ export default function OverviewScreen() {
     return 'Disconnected'
   }
 
+  const maskSecret = (value: string) => {
+    if (showSecrets || !value) return value
+    return '•'.repeat(Math.min(value.length, 32))
+  }
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -177,13 +183,30 @@ export default function OverviewScreen() {
     section: {
       marginBottom: theme.spacing.xl,
     },
+    sectionHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: theme.spacing.md,
+    },
     sectionTitle: {
       fontSize: theme.typography.fontSize.sm,
       fontWeight: theme.typography.fontWeight.semibold,
       color: theme.colors.text.secondary,
-      marginBottom: theme.spacing.md,
       textTransform: 'uppercase',
       letterSpacing: 0.5,
+    },
+    showButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.sm,
+      paddingVertical: theme.spacing.xs,
+    },
+    showButtonText: {
+      fontSize: theme.typography.fontSize.xs,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.primary,
+      marginLeft: theme.spacing.xs,
     },
     card: {
       backgroundColor: theme.colors.surface,
@@ -313,19 +336,32 @@ export default function OverviewScreen() {
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Gateway Access</Text>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Gateway Access</Text>
+            <TouchableOpacity
+              style={styles.showButton}
+              onPress={() => setShowSecrets(!showSecrets)}
+            >
+              <Ionicons
+                name={showSecrets ? 'eye-off-outline' : 'eye-outline'}
+                size={16}
+                color={theme.colors.primary}
+              />
+              <Text style={styles.showButtonText}>{showSecrets ? 'Hide' : 'Show'}</Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.card}>
             <View style={styles.fieldGroup}>
               <Text style={styles.fieldLabel}>WebSocket URL</Text>
               <Text style={styles.fieldValue} numberOfLines={1} ellipsizeMode="middle">
-                {gatewayUrl}
+                {maskSecret(gatewayUrl)}
               </Text>
             </View>
 
             <View style={styles.fieldGroup}>
               <Text style={styles.fieldLabel}>Gateway Token</Text>
               <Text style={styles.fieldValue} numberOfLines={1} ellipsizeMode="middle">
-                {gatewayToken}
+                {maskSecret(gatewayToken)}
               </Text>
             </View>
 
@@ -337,15 +373,8 @@ export default function OverviewScreen() {
                 onChangeText={setPassword}
                 placeholder="Enter password (not functional)"
                 placeholderTextColor={theme.colors.text.tertiary}
-                secureTextEntry
+                secureTextEntry={!showSecrets}
               />
-            </View>
-
-            <View style={styles.fieldGroup}>
-              <Text style={styles.fieldLabel}>Default Session Key</Text>
-              <Text style={styles.fieldValue} numberOfLines={1} ellipsizeMode="middle">
-                {currentSessionKey || 'Not set'}
-              </Text>
             </View>
 
             <View style={styles.buttonRow}>
