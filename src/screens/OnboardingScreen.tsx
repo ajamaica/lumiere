@@ -15,13 +15,18 @@ import {
 import { Button, Text, TextInput } from '../components/ui'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
-import { currentSessionKeyAtom, onboardingCompletedAtom } from '../store'
+import {
+  currentSessionKeyAtom,
+  onboardingCompletedAtom,
+  serverSessionsAtom,
+} from '../store'
 import { useTheme } from '../theme'
 
 export function OnboardingScreen() {
   const { theme } = useTheme()
   const { addServer, switchToServer } = useServers()
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [, setServerSessions] = useAtom(serverSessionsAtom)
   const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
 
   const [localUrl, setLocalUrl] = useState('')
@@ -79,7 +84,16 @@ export function OnboardingScreen() {
 
       // Set session key from onboarding (persists to AsyncStorage)
       const sessionKey = localSessionKey.trim() || DEFAULT_SESSION_KEY
+
+      // Store in both places:
+      // 1. currentSessionKeyAtom - current active session key
       setCurrentSessionKey(sessionKey)
+
+      // 2. serverSessionsAtom - track session key per server
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
 
       // Mark onboarding complete
       setOnboardingCompleted(true)
