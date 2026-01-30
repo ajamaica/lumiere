@@ -88,7 +88,15 @@ export function useMessageQueue({
         onAgentMessageUpdate('')
       }
     },
-    [sendAgentRequest, currentSessionKey, agentId, onMessageAdd, onAgentMessageUpdate, onAgentMessageComplete, onSendStart],
+    [
+      sendAgentRequest,
+      currentSessionKey,
+      agentId,
+      onMessageAdd,
+      onAgentMessageUpdate,
+      onAgentMessageComplete,
+      onSendStart,
+    ],
   )
 
   const handleSend = useCallback(

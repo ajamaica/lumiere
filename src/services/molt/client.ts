@@ -1,4 +1,4 @@
-import { clientConfig,protocolConfig } from '../../config/gateway.config'
+import { clientConfig, protocolConfig } from '../../config/gateway.config'
 import {
   AgentEvent,
   AgentParams,

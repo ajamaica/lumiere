@@ -52,10 +52,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const [copied, setCopied] = useState(false)
 
   const styles = useMemo(() => createStyles(theme), [theme])
-  const markdownStyles = useMemo(
-    () => createMarkdownStyles(theme, isUser),
-    [theme, isUser],
-  )
+  const markdownStyles = useMemo(() => createMarkdownStyles(theme, isUser), [theme, isUser])
 
   const handleLinkPress = async (url: string) => {
     console.log('Link pressed:', url)
