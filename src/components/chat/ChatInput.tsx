@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useMemo, useState } from 'react'
 import {
+  FlatList,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -10,6 +11,7 @@ import {
   View,
 } from 'react-native'
 
+import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useTheme } from '../../theme'
 
 interface ChatInputProps {
@@ -27,6 +29,7 @@ export function ChatInput({
 }: ChatInputProps) {
   const { theme } = useTheme()
   const [text, setText] = useState('')
+  const { suggestions, hasInput } = useSlashCommands(text)
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
@@ -37,12 +40,35 @@ export function ChatInput({
     }
   }
 
+  const handleSelectCommand = (command: string) => {
+    setText(command + ' ')
+  }
+
   const sendButtonColor =
     !text.trim() || disabled ? theme.colors.text.tertiary : theme.colors.primary
   const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      {hasInput && suggestions.length > 0 && (
+        <FlatList
+          data={suggestions}
+          keyExtractor={(item) => item.command}
+          style={styles.autocomplete}
+          keyboardShouldPersistTaps="handled"
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.autocompleteItem}
+              onPress={() => handleSelectCommand(item.command)}
+            >
+              <Text style={styles.commandText}>{item.command}</Text>
+              <Text style={styles.commandDescription} numberOfLines={1}>
+                {item.description}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
+      )}
       <View style={styles.container}>
         <TextInput
           style={styles.input}
@@ -147,5 +173,27 @@ const createStyles = (theme: any) =>
     },
     buttonDisabled: {
       opacity: 0.5,
+    },
+    autocomplete: {
+      maxHeight: 200,
+      backgroundColor: theme.colors.surface,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.border,
+    },
+    autocompleteItem: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.md,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    commandText: {
+      fontSize: theme.typography.fontSize.base,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.primary,
+      marginBottom: theme.spacing.xs,
+    },
+    commandDescription: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.secondary,
     },
   })
