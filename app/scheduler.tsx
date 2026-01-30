@@ -18,19 +18,32 @@ import { useTheme } from '../src/theme'
 
 interface SchedulerStatus {
   enabled: boolean
-  jobsCount: number
-  nextWake: number | null
+  jobs: number
+  nextWakeAtMs: number | null
+  storePath?: string
 }
 
 interface CronJob {
+  id: string
   name: string
-  cron: string
-  system: string
-  agent: string
   enabled: boolean
-  nextRun: number | null
-  lastRun: number | null
-  tags?: string[]
+  agentId: string
+  sessionTarget: string
+  wakeMode: string
+  schedule?: {
+    cron?: string
+  }
+  payload?: {
+    system?: string
+    [key: string]: any
+  }
+  state?: {
+    nextRunAtMs?: number
+    lastRunAtMs?: number
+    tags?: string[]
+  }
+  createdAtMs: number
+  updatedAtMs: number
 }
 
 export default function SchedulerScreen() {
@@ -74,14 +87,11 @@ export default function SchedulerScreen() {
         listCronJobs(),
       ])
 
-      console.log('Scheduler status:', statusData)
-      console.log('Cron jobs:', jobsData)
-
       if (statusData) {
         setSchedulerStatus(statusData as SchedulerStatus)
       }
 
-      if (jobsData && Array.isArray((jobsData as any).jobs)) {
+      if (jobsData && (jobsData as any).jobs) {
         setCronJobs((jobsData as any).jobs)
       }
     } catch (err) {
@@ -373,17 +383,17 @@ export default function SchedulerScreen() {
 
             <View style={styles.statCard}>
               <Text style={styles.statLabel}>JOBS</Text>
-              <Text style={styles.statValue}>{schedulerStatus?.jobsCount ?? 0}</Text>
+              <Text style={styles.statValue}>{schedulerStatus?.jobs ?? 0}</Text>
             </View>
           </View>
 
           <View style={[styles.statCard, { marginBottom: theme.spacing.md }]}>
             <Text style={styles.statLabel}>NEXT WAKE</Text>
             <Text style={styles.statValueLarge}>
-              {formatDateTime(schedulerStatus?.nextWake ?? null)}
+              {formatDateTime(schedulerStatus?.nextWakeAtMs ?? null)}
             </Text>
             <Text style={styles.statTime}>
-              {getRelativeTime(schedulerStatus?.nextWake ?? null)}
+              {getRelativeTime(schedulerStatus?.nextWakeAtMs ?? null)}
             </Text>
           </View>
 
@@ -404,27 +414,40 @@ export default function SchedulerScreen() {
             </View>
           ) : (
             cronJobs.map((job) => (
-              <View key={job.name} style={styles.jobCard}>
+              <View key={job.id} style={styles.jobCard}>
                 <View style={styles.jobHeader}>
                   <Text style={styles.jobName}>{job.name}</Text>
-                  <Text style={styles.jobInfo}>Cron {job.cron}</Text>
-                  <Text style={styles.jobMeta}>System: {job.system}</Text>
-                  <Text style={styles.jobMeta}>Agent: {job.agent}</Text>
+                  {job.schedule?.cron && (
+                    <Text style={styles.jobInfo}>Cron {job.schedule.cron}</Text>
+                  )}
+                  {job.payload?.system && (
+                    <Text style={styles.jobMeta}>System: {job.payload.system}</Text>
+                  )}
+                  <Text style={styles.jobMeta}>Agent: {job.agentId}</Text>
                   <Text style={styles.jobTiming}>
-                    n/a • next {formatDateTime(job.nextRun)} • last{' '}
-                    {job.lastRun ? formatDateTime(job.lastRun) : 'n/a'}
+                    n/a • next {formatDateTime(job.state?.nextRunAtMs ?? null)} • last{' '}
+                    {job.state?.lastRunAtMs ? formatDateTime(job.state.lastRunAtMs) : 'n/a'}
                   </Text>
                 </View>
 
-                {job.tags && job.tags.length > 0 && (
-                  <View style={styles.jobTags}>
-                    {job.tags.map((tag) => (
-                      <View key={tag} style={styles.tag}>
-                        <Text style={styles.tagText}>{tag}</Text>
-                      </View>
-                    ))}
+                <View style={styles.jobTags}>
+                  {job.enabled && (
+                    <View style={styles.tag}>
+                      <Text style={styles.tagText}>enabled</Text>
+                    </View>
+                  )}
+                  <View style={styles.tag}>
+                    <Text style={styles.tagText}>{job.agentId}</Text>
                   </View>
-                )}
+                  <View style={styles.tag}>
+                    <Text style={styles.tagText}>{job.wakeMode}</Text>
+                  </View>
+                  {job.state?.tags?.map((tag) => (
+                    <View key={tag} style={styles.tag}>
+                      <Text style={styles.tagText}>{tag}</Text>
+                    </View>
+                  ))}
+                </View>
 
                 <View style={styles.jobActions}>
                   <TouchableOpacity
