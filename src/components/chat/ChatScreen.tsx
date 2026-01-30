@@ -32,6 +32,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const [isAgentResponding, setIsAgentResponding] = useState(false)
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const flatListRef = useRef<FlatList>(null)
+  const shouldAutoScrollRef = useRef(true)
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
@@ -108,6 +109,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     setMessages((prev) => [...prev, userMessage])
     setIsAgentResponding(true)
     setCurrentAgentMessage('')
+    shouldAutoScrollRef.current = true
 
     let accumulatedText = ''
 
@@ -273,7 +275,17 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <ChatMessage message={item} />}
         contentContainerStyle={styles.messageList}
-        onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+        onContentSizeChange={() => {
+          if (shouldAutoScrollRef.current) {
+            flatListRef.current?.scrollToEnd({ animated: true })
+          }
+        }}
+        onScroll={(event) => {
+          const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
+          const isNearBottom = contentOffset.y + layoutMeasurement.height >= contentSize.height - 50
+          shouldAutoScrollRef.current = isNearBottom
+        }}
+        scrollEventThrottle={16}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>Start a conversation with the AI agent</Text>
