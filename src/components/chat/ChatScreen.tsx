@@ -15,8 +15,9 @@ import {
 } from 'react-native'
 
 import { agentConfig } from '../../config/gateway.config'
-import { AgentEvent, useMoltGateway } from '../../services/molt'
-import { currentSessionKeyAtom, messageQueueAtom } from '../../store'
+import { useMoltGateway } from '../../services/molt'
+import { useMessageQueue } from '../../hooks/useMessageQueue'
+import { currentSessionKeyAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
@@ -31,9 +32,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const router = useRouter()
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
-  const [isAgentResponding, setIsAgentResponding] = useState(false)
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
-  const [messageQueue, setMessageQueue] = useAtom(messageQueueAtom)
   const flatListRef = useRef<FlatList>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
@@ -56,6 +55,22 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     token: gatewayToken,
   })
 
+  const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
+    sendAgentRequest,
+    currentSessionKey,
+    agentId: agentConfig.defaultAgentId,
+    onMessageAdd: (message) => setMessages((prev) => [...prev, message]),
+    onAgentMessageUpdate: (text) => setCurrentAgentMessage(text),
+    onAgentMessageComplete: (message) => {
+      setMessages((prev) => [...prev, message])
+      setCurrentAgentMessage('')
+    },
+    onSendStart: () => {
+      shouldAutoScrollRef.current = true
+    },
+  })
+
+  // Load chat history on mount
   const loadChatHistory = useCallback(async () => {
     try {
       const history = await getChatHistory(currentSessionKey, 100)
@@ -155,75 +170,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       }).start()
     }
   }, [isAgentResponding, pulseAnim])
-
-  // Process message queue when agent finishes responding
-  useEffect(() => {
-    if (!isAgentResponding && messageQueue.length > 0) {
-      const nextMessage = messageQueue[0]
-      setMessageQueue((prev) => prev.slice(1))
-      sendMessage(nextMessage)
-    }
-  }, [isAgentResponding, messageQueue])
-
-  const sendMessage = async (text: string) => {
-    const userMessage: Message = {
-      id: `msg-${Date.now()}`,
-      text,
-      sender: 'user',
-      timestamp: new Date(),
-    }
-
-    setMessages((prev) => [...prev, userMessage])
-    setIsAgentResponding(true)
-    setCurrentAgentMessage('')
-    shouldAutoScrollRef.current = true
-
-    let accumulatedText = ''
-
-    try {
-      await sendAgentRequest(
-        {
-          message: text,
-          idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
-          agentId: agentConfig.defaultAgentId,
-          sessionKey: currentSessionKey,
-        },
-        (event: AgentEvent) => {
-          console.log('Agent event:', event)
-
-          if (event.stream === 'assistant' && event.data.delta) {
-            accumulatedText += event.data.delta
-            setCurrentAgentMessage(accumulatedText)
-          } else if (event.stream === 'lifecycle' && event.data.phase === 'end') {
-            const agentMessage: Message = {
-              id: `msg-${Date.now()}`,
-              text: accumulatedText,
-              sender: 'agent',
-              timestamp: new Date(),
-            }
-            setMessages((prev) => [...prev, agentMessage])
-            setCurrentAgentMessage('')
-            setIsAgentResponding(false)
-            accumulatedText = ''
-          }
-        },
-      )
-    } catch (err) {
-      console.error('Failed to send message:', err)
-      setIsAgentResponding(false)
-      setCurrentAgentMessage('')
-    }
-  }
-
-  const handleSend = async (text: string) => {
-    if (isAgentResponding) {
-      // Add to queue if agent is currently responding
-      setMessageQueue((prev) => [...prev, text])
-    } else {
-      // Send immediately if agent is not responding
-      await sendMessage(text)
-    }
-  }
 
   const handleResetSession = async () => {
     try {
@@ -370,7 +316,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         onSend={handleSend}
         onOpenSessionMenu={handleOpenSessionMenu}
         disabled={!connected}
-        queueCount={messageQueue.length}
+        queueCount={queueCount}
       />
       {renderConnectionStatus()}
     </SafeAreaView>
