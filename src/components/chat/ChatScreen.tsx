@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   ActivityIndicator,
   FlatList,
@@ -33,6 +33,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const flatListRef = useRef<FlatList>(null)
   const shouldAutoScrollRef = useRef(true)
+  const hasScrolledOnLoadRef = useRef(false)
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
@@ -50,7 +51,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     token: gatewayToken,
   })
 
-  const loadChatHistory = async () => {
+  const loadChatHistory = useCallback(async () => {
     try {
       const history = await getChatHistory(currentSessionKey, 100)
       console.log('Chat history:', history)
@@ -77,15 +78,18 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         setMessages(historyMessages)
         console.log(`Loaded ${historyMessages.length} messages from history`)
 
-        // Scroll to bottom after loading history
-        setTimeout(() => {
-          flatListRef.current?.scrollToEnd({ animated: false })
-        }, 100)
+        // Scroll to bottom only on initial load
+        if (!hasScrolledOnLoadRef.current) {
+          hasScrolledOnLoadRef.current = true
+          setTimeout(() => {
+            flatListRef.current?.scrollToEnd({ animated: false })
+          }, 100)
+        }
       }
     } catch (err) {
       console.error('Failed to load chat history:', err)
     }
-  }
+  }, [getChatHistory, currentSessionKey])
 
   useEffect(() => {
     connect()
