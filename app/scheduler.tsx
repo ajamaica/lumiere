@@ -152,6 +152,36 @@ export default function SchedulerScreen() {
     )
   }
 
+  const handleViewRuns = async (job: CronJob) => {
+    try {
+      const runsData = await getCronJobRuns(job.name)
+      console.log('Job runs:', runsData)
+
+      // Format the runs data for display
+      const runs = (runsData as any)?.runs ?? []
+      if (runs.length === 0) {
+        Alert.alert('Job Runs', `No run history for "${job.name}"`)
+      } else {
+        const runsList = runs
+          .slice(0, 5)
+          .map((run: any, idx: number) => {
+            const status = run.success ? '✓' : '✗'
+            const time = new Date(run.startedAtMs).toLocaleString()
+            return `${status} ${time}`
+          })
+          .join('\n')
+
+        Alert.alert(
+          `Recent Runs - ${job.name}`,
+          `${runsList}\n\nShowing ${Math.min(runs.length, 5)} of ${runs.length} runs`,
+        )
+      }
+    } catch (err) {
+      console.error('Failed to fetch job runs:', err)
+      Alert.alert('Error', 'Failed to fetch job run history')
+    }
+  }
+
   const formatDateTime = (timestamp: number | null): string => {
     if (!timestamp) return 'n/a'
     const date = new Date(timestamp)
@@ -461,7 +491,7 @@ export default function SchedulerScreen() {
                   <TouchableOpacity style={styles.actionButton} onPress={() => handleRunJob(job)}>
                     <Text style={styles.actionButtonText}>Run</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.actionButton}>
+                  <TouchableOpacity style={styles.actionButton} onPress={() => handleViewRuns(job)}>
                     <Text style={styles.actionButtonText}>Runs</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
