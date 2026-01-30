@@ -6,6 +6,7 @@ import {
   AgentParams,
   ConnectResponse,
   EventFrame,
+  GatewaySnapshot,
   HealthStatus,
   MoltConfig,
   SendMessageParams,
@@ -17,8 +18,11 @@ export interface UseMoltGatewayResult {
   connecting: boolean
   error: string | null
   health: HealthStatus | null
+  snapshot: GatewaySnapshot | null
+  connectResponse: ConnectResponse | null
   connect: () => Promise<void>
   disconnect: () => void
+  refreshHealth: () => Promise<void>
   sendMessage: (params: SendMessageParams) => Promise<unknown>
   sendAgentRequest: (params: AgentParams, onEvent?: (event: AgentEvent) => void) => Promise<unknown>
   getChatHistory: (sessionKey: string, limit?: number) => Promise<unknown>
@@ -32,6 +36,8 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
   const [connecting, setConnecting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [health, setHealth] = useState<HealthStatus | null>(null)
+  const [snapshot, setSnapshot] = useState<GatewaySnapshot | null>(null)
+  const [connectResponse, setConnectResponse] = useState<ConnectResponse | null>(null)
   const clientRef = useRef<MoltGatewayClient | null>(null)
 
   const connect = useCallback(async () => {
@@ -51,6 +57,8 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
 
       setClient(newClient)
       setConnected(true)
+      setConnectResponse(response)
+      setSnapshot(response.snapshot || null)
 
       // Set up event listeners
       newClient.addEventListener((event: EventFrame) => {
@@ -85,7 +93,22 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     setClient(null)
     setConnected(false)
     setHealth(null)
+    setSnapshot(null)
+    setConnectResponse(null)
   }, [])
+
+  const refreshHealth = useCallback(async () => {
+    if (!client) {
+      throw new Error('Client not connected')
+    }
+    try {
+      const healthStatus = await client.getHealth()
+      setHealth(healthStatus)
+    } catch (err) {
+      console.error('Failed to refresh health:', err)
+      throw err
+    }
+  }, [client])
 
   const sendMessage = useCallback(
     async (params: SendMessageParams) => {
@@ -148,8 +171,11 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     connecting,
     error,
     health,
+    snapshot,
+    connectResponse,
     connect,
     disconnect,
+    refreshHealth,
     sendMessage,
     sendAgentRequest,
     getChatHistory,

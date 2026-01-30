@@ -66,6 +66,14 @@ export interface ConnectParams {
   locale?: string
 }
 
+// Gateway snapshot
+export interface GatewaySnapshot {
+  tickInterval?: number
+  lastChannelsRefresh?: number
+  connectedAt?: number
+  uptime?: number
+}
+
 // Connect response
 export interface ConnectResponse {
   protocol: number
@@ -73,7 +81,7 @@ export interface ConnectResponse {
     version: string
     capabilities?: string[]
   }
-  snapshot?: unknown
+  snapshot?: GatewaySnapshot
 }
 
 // Health status

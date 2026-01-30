@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router'
 import { useSetAtom } from 'jotai'
 import React from 'react'
 import {
@@ -21,6 +22,7 @@ import { useTheme } from '../../src/theme'
 
 export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode } = useTheme()
+  const router = useRouter()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
   const setGatewayUrl = useSetAtom(gatewayUrlAtom)
   const setGatewayToken = useSetAtom(gatewayTokenAtom)
@@ -153,7 +155,10 @@ export default function SettingsScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Control</Text>
-          <TouchableOpacity style={styles.settingItem}>
+          <TouchableOpacity
+            style={styles.settingItem}
+            onPress={() => router.push('/overview')}
+          >
             <Text style={styles.settingLabel}>Overview</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.settingItem}>

@@ -1,3 +1,5 @@
+import { Platform } from 'react-native'
+
 export const typography = {
   fontSize: {
     xs: 11,
@@ -20,6 +22,11 @@ export const typography = {
     tight: 1.2,
     normal: 1.5,
     relaxed: 1.75,
+  },
+
+  fontFamily: {
+    regular: 'System',
+    monospace: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
   },
 }
 
