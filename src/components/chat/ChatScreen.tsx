@@ -423,7 +423,9 @@ const createStyles = (theme: Theme) =>
       fontWeight: theme.typography.fontWeight.semibold,
     },
     messageList: {
-      paddingVertical: theme.spacing.sm,
+      paddingTop: 55,
+      paddingBottom: theme.spacing.sm,
+      paddingHorizontal: theme.spacing.sm,
     },
     emptyContainer: {
       flex: 1,
