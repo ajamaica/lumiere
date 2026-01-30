@@ -20,7 +20,7 @@ import { agentConfig } from '../../config/gateway.config'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
 import { useMoltGateway } from '../../services/molt'
 import { currentSessionKeyAtom } from '../../store'
-import { useTheme } from '../../theme'
+import { Theme, useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
 
@@ -40,17 +40,16 @@ interface ChatScreenProps {
  * if none exists. This ensures a valid session key is always available.
  */
 export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
-  const { theme, themeMode, setThemeMode } = useTheme()
+  const { theme } = useTheme()
   const router = useRouter()
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
-  const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [currentSessionKey] = useAtom(currentSessionKeyAtom)
   const flatListRef = useRef<FlatList>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
-  // eslint-disable-next-line react-hooks/refs
   const pulseAnim = useRef(new Animated.Value(1)).current
 
   const styles = useMemo(() => createStyles(theme), [theme])
@@ -63,7 +62,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     disconnect,
     sendAgentRequest,
     getChatHistory,
-    resetSession,
   } = useMoltGateway({
     url: gatewayUrl,
     token: gatewayToken,
@@ -90,6 +88,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       const history = await getChatHistory(currentSessionKey, 100)
       console.log('Chat history:', history)
 
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       if (history && Array.isArray((history as any).messages)) {
         const historyMessages = (history as any).messages
           .filter((msg: any) => msg.role === 'user' || msg.role === 'assistant')
@@ -108,6 +107,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
             } as Message
           })
           .filter((msg: Message | null) => msg !== null)
+        /* eslint-enable @typescript-eslint/no-explicit-any */
 
         setMessages(historyMessages)
         console.log(`Loaded ${historyMessages.length} messages from history`)
@@ -122,6 +122,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     return () => {
       disconnect()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -190,37 +191,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       }).start()
     }
   }, [isAgentResponding, pulseAnim])
-
-  const handleResetSession = async () => {
-    try {
-      // Reset the current session on the server (clears history but keeps session key)
-      await resetSession(currentSessionKey)
-      console.log('Session reset successfully')
-
-      // Clear local state
-      setMessages([])
-      setCurrentAgentMessage('')
-      setIsAgentResponding(false)
-    } catch (err) {
-      console.error('Failed to reset session:', err)
-      // Still clear local state even if server reset fails
-      setMessages([])
-      setCurrentAgentMessage('')
-      setIsAgentResponding(false)
-    }
-  }
-
-  const handleNewSession = () => {
-    // Create a new session with a new session key
-    const newSessionKey = `agent:main:${Date.now()}`
-    setCurrentSessionKey(newSessionKey)
-    console.log('Created new session:', newSessionKey)
-
-    // Clear local state
-    setMessages([])
-    setCurrentAgentMessage('')
-    setIsAgentResponding(false)
-  }
 
   const handleOpenSessionMenu = () => {
     router.push('/sessions')
@@ -349,13 +319,13 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           queueCount={queueCount}
         />
       </KeyboardAvoidingView>
-      {/* eslint-disable-next-line react-hooks/refs */}
       {renderConnectionStatus()}
     </SafeAreaView>
   )
 }
 
-const createStyles = (theme: any) =>
+/* eslint-disable react-native/no-unused-styles */
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,

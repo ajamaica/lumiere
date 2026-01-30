@@ -6,7 +6,6 @@ import {
   ServerConfig,
   serversAtom,
   ServersDict,
-  serverSessionsAtom,
 } from '../store'
 
 export interface MoltConfig {

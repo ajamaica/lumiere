@@ -37,6 +37,7 @@ export function Text({
 }: TextProps) {
   const { theme } = useTheme()
 
+  /* eslint-disable react-native/no-unused-styles */
   const variantStyles = StyleSheet.create({
     body: {
       fontSize: theme.typography.fontSize.base,

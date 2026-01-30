@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react'
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 import { useSlashCommands } from '../../hooks/useSlashCommands'
-import { useTheme } from '../../theme'
+import { Theme, useTheme } from '../../theme'
 
 interface ChatInputProps {
   onSend: (text: string) => void
@@ -101,7 +101,8 @@ export function ChatInput({
   )
 }
 
-const createStyles = (theme: any) =>
+/* eslint-disable react-native/no-unused-styles */
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flexDirection: 'row',

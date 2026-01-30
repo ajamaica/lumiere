@@ -1,5 +1,4 @@
 import { useRouter } from 'expo-router'
-import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 
@@ -27,7 +26,7 @@ interface CronJob {
   }
   payload?: {
     system?: string
-    [key: string]: any
+    [key: string]: unknown
   }
   state?: {
     nextRunAtMs?: number
@@ -46,7 +45,7 @@ export default function SchedulerScreen() {
 
   const [schedulerStatus, setSchedulerStatus] = useState<SchedulerStatus | null>(null)
   const [cronJobs, setCronJobs] = useState<CronJob[]>([])
-  const [loading, setLoading] = useState(true)
+  const [_loading, setLoading] = useState(true)
 
   const {
     connected,
@@ -64,12 +63,14 @@ export default function SchedulerScreen() {
 
   useEffect(() => {
     connect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     if (connected) {
       fetchSchedulerData()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected])
 
   const fetchSchedulerData = async () => {
@@ -81,8 +82,8 @@ export default function SchedulerScreen() {
         setSchedulerStatus(statusData as SchedulerStatus)
       }
 
-      if (jobsData && (jobsData as any).jobs) {
-        setCronJobs((jobsData as any).jobs)
+      if (jobsData && (jobsData as { jobs?: CronJob[] }).jobs) {
+        setCronJobs((jobsData as { jobs?: CronJob[] }).jobs!)
       }
     } catch (err) {
       console.error('Failed to fetch scheduler data:', err)

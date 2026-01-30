@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import {
   SafeAreaView,
@@ -14,14 +13,12 @@ import {
 import { Button, Card, ScreenHeader, Section, StatCard, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { currentSessionKeyAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
 export default function OverviewScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { getCurrentMoltConfig, currentServer } = useServers()
-  const [currentSessionKey] = useAtom(currentSessionKeyAtom)
+  const { getCurrentMoltConfig } = useServers()
   const config = getCurrentMoltConfig()
 
   const [password, setPassword] = useState('')
@@ -40,6 +37,7 @@ export default function OverviewScreen() {
 
   useEffect(() => {
     connect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -60,8 +58,8 @@ export default function OverviewScreen() {
       try {
         if (!snapshot?.health?.sessions?.count) {
           const sessionsData = await listSessions()
-          if (sessionsData && Array.isArray((sessionsData as any).sessions)) {
-            setSessionCount((sessionsData as any).sessions.length)
+          if (sessionsData && Array.isArray((sessionsData as { sessions?: unknown[] }).sessions)) {
+            setSessionCount((sessionsData as { sessions?: unknown[] }).sessions!.length)
           }
         }
       } catch (err) {
@@ -80,6 +78,7 @@ export default function OverviewScreen() {
       setConnectedAt(null)
       setUptime(0)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected])
 
   useEffect(() => {
@@ -108,8 +107,8 @@ export default function OverviewScreen() {
       setLastRefresh(new Date())
 
       const sessionsData = await listSessions()
-      if (sessionsData && Array.isArray((sessionsData as any).sessions)) {
-        setSessionCount((sessionsData as any).sessions.length)
+      if (sessionsData && Array.isArray((sessionsData as { sessions?: unknown[] }).sessions)) {
+        setSessionCount((sessionsData as { sessions?: unknown[] }).sessions!.length)
       }
     } catch (err) {
       console.error('Failed to refresh:', err)
@@ -124,7 +123,6 @@ export default function OverviewScreen() {
 
   const formatTimeSince = (date: Date | null): string => {
     if (!date) return 'Never'
-    // eslint-disable-next-line react-hooks/purity
     const seconds = Math.floor((Date.now() - date.getTime()) / 1000)
     if (seconds < 60) return 'Just now'
     if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`

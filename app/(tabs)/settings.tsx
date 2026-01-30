@@ -14,7 +14,7 @@ import {
 import { useTheme } from '../../src/theme'
 
 export default function SettingsScreen() {
-  const { theme, themeMode, setThemeMode } = useTheme()
+  const { theme, themeMode } = useTheme()
   const router = useRouter()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
   const setGatewayUrl = useSetAtom(gatewayUrlAtom)

@@ -50,6 +50,7 @@ export function Button({
     },
   }
 
+  /* eslint-disable react-native/no-unused-styles */
   const variantStyles = StyleSheet.create({
     primary: {
       backgroundColor: theme.colors.primary,

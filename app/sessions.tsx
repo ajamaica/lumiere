@@ -36,6 +36,7 @@ export default function SessionsScreen() {
     return () => {
       disconnect()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -44,8 +45,8 @@ export default function SessionsScreen() {
 
       try {
         const sessionData = await listSessions()
-        if (sessionData && Array.isArray((sessionData as any).sessions)) {
-          setSessions((sessionData as any).sessions)
+        if (sessionData && Array.isArray((sessionData as { sessions?: Session[] }).sessions)) {
+          setSessions((sessionData as { sessions?: Session[] }).sessions!)
         }
       } catch (err) {
         console.error('Failed to fetch sessions:', err)
@@ -55,6 +56,7 @@ export default function SessionsScreen() {
     }
 
     loadSessions()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected])
 
   const handleNewSession = () => {

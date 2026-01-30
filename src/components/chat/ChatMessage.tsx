@@ -1,11 +1,11 @@
 import { Ionicons } from '@expo/vector-icons'
 import * as Clipboard from 'expo-clipboard'
 import * as WebBrowser from 'expo-web-browser'
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
-import { useTheme } from '../../theme'
+import { Theme, useTheme } from '../../theme'
 
 export interface Message {
   id: string
@@ -54,7 +54,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const styles = useMemo(() => createStyles(theme), [theme])
   const markdownStyles = useMemo(() => createMarkdownStyles(theme, isUser), [theme, isUser])
 
-  const handleLinkPress = async (url: string) => {
+  const handleLinkPress = useCallback(async (url: string) => {
     console.log('Link pressed:', url)
     try {
       await WebBrowser.openBrowserAsync(url, {
@@ -64,8 +64,9 @@ export function ChatMessage({ message }: ChatMessageProps) {
     } catch (err) {
       console.error('Failed to open URL:', err)
     }
-  }
+  }, [theme.colors.primary])
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const markdownRules = useMemo(
     () => ({
       text: (node: any, children: any, parent: any, styles: any) => (
@@ -131,6 +132,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
     }),
     [handleLinkPress],
   )
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
   const handleCopy = async () => {
     await Clipboard.setStringAsync(message.text)
@@ -171,7 +173,8 @@ export function ChatMessage({ message }: ChatMessageProps) {
   )
 }
 
-const createStyles = (theme: any) =>
+/* eslint-disable react-native/no-unused-styles */
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       marginVertical: theme.spacing.xs,
@@ -231,9 +234,9 @@ const createStyles = (theme: any) =>
     },
   })
 
-const createMarkdownStyles = (theme: any, isUser: boolean) => {
+const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
   const textColor = isUser ? theme.colors.message.userText : theme.colors.message.agentText
-  const backgroundColor = isUser ? theme.colors.message.user : theme.colors.message.agent
+  const _backgroundColor = isUser ? theme.colors.message.user : theme.colors.message.agent
 
   return {
     body: {
