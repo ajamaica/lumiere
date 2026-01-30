@@ -29,6 +29,62 @@ export function ChatMessage({ message }: ChatMessageProps) {
     [theme, isUser],
   )
 
+  const markdownRules = useMemo(
+    () => ({
+      text: (node: any, children: any, parent: any, styles: any) => (
+        <Text key={node.key} style={styles.text} selectable={true}>
+          {node.content}
+        </Text>
+      ),
+      paragraph: (node: any, children: any, parent: any, styles: any) => (
+        <Text key={node.key} style={styles.paragraph} selectable={true}>
+          {children}
+        </Text>
+      ),
+      strong: (node: any, children: any, parent: any, styles: any) => (
+        <Text key={node.key} style={styles.strong} selectable={true}>
+          {children}
+        </Text>
+      ),
+      em: (node: any, children: any, parent: any, styles: any) => (
+        <Text key={node.key} style={styles.em} selectable={true}>
+          {children}
+        </Text>
+      ),
+      code_inline: (node: any, children: any, parent: any, styles: any) => (
+        <Text key={node.key} style={styles.code_inline} selectable={true}>
+          {node.content}
+        </Text>
+      ),
+      fence: (node: any, children: any, parent: any, styles: any) => (
+        <Text key={node.key} style={styles.fence} selectable={true}>
+          {node.content}
+        </Text>
+      ),
+      code_block: (node: any, children: any, parent: any, styles: any) => (
+        <Text key={node.key} style={styles.code_block} selectable={true}>
+          {node.content}
+        </Text>
+      ),
+      heading1: (node: any, children: any, parent: any, styles: any) => (
+        <Text key={node.key} style={styles.heading1} selectable={true}>
+          {children}
+        </Text>
+      ),
+      heading2: (node: any, children: any, parent: any, styles: any) => (
+        <Text key={node.key} style={styles.heading2} selectable={true}>
+          {children}
+        </Text>
+      ),
+      heading3: (node: any, children: any, parent: any, styles: any) => (
+        <Text key={node.key} style={styles.heading3} selectable={true}>
+          {children}
+        </Text>
+      ),
+    }),
+    [],
+  )
+
   const handleLinkPress = (url: string) => {
     console.log('Link pressed:', url)
     Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err))
@@ -47,6 +103,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           style={markdownStyles}
           onLinkPress={handleLinkPress}
           mergeStyle={true}
+          rules={markdownRules}
         >
           {message.text}
         </Markdown>
