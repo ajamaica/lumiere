@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   ActivityIndicator,
   FlatList,
+  Keyboard,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -110,6 +111,19 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       }, 300)
     }
   }, [messages.length])
+
+  // Scroll to bottom when keyboard opens
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setTimeout(() => {
+        flatListRef.current?.scrollToEnd({ animated: true })
+      }, 100)
+    })
+
+    return () => {
+      keyboardDidShowListener.remove()
+    }
+  }, [])
 
   const handleSend = async (text: string) => {
     const userMessage: Message = {
