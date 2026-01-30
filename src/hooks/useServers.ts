@@ -1,13 +1,7 @@
 import { useAtom } from 'jotai'
 import { useCallback, useMemo } from 'react'
 
-import {
-  currentServerIdAtom,
-  ServerConfig,
-  serversAtom,
-  ServersDict,
-  serverSessionsAtom,
-} from '../store'
+import { currentServerIdAtom, ServerConfig, serversAtom, ServersDict } from '../store'
 
 export interface MoltConfig {
   url: string

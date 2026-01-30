@@ -101,7 +101,23 @@ export function ChatInput({
   )
 }
 
-const createStyles = (theme: any) =>
+interface Theme {
+  colors: {
+    background: string
+    border: string
+    surface: string
+    text: { primary: string; secondary: string; tertiary: string; inverse: string }
+    primary: string
+  }
+  spacing: { xs: number; sm: number; md: number; lg: number }
+  borderRadius: { xs: number; sm: number; xxl: number }
+  typography: {
+    fontSize: { xs: number; base: number }
+    fontWeight: { semibold: string }
+  }
+}
+
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flexDirection: 'row',
