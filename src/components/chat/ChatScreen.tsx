@@ -77,14 +77,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
         setMessages(historyMessages)
         console.log(`Loaded ${historyMessages.length} messages from history`)
-
-        // Scroll to bottom only on initial load
-        if (!hasScrolledOnLoadRef.current) {
-          hasScrolledOnLoadRef.current = true
-          setTimeout(() => {
-            flatListRef.current?.scrollToEnd({ animated: false })
-          }, 100)
-        }
       }
     } catch (err) {
       console.error('Failed to load chat history:', err)
@@ -106,6 +98,17 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       }, 500)
     }
   }, [connected, loadChatHistory])
+
+  // Scroll to bottom on initial load when messages are first populated
+  useEffect(() => {
+    if (messages.length > 0 && !hasScrolledOnLoadRef.current) {
+      hasScrolledOnLoadRef.current = true
+      // Use a longer timeout to ensure FlatList has rendered
+      setTimeout(() => {
+        flatListRef.current?.scrollToEnd({ animated: false })
+      }, 300)
+    }
+  }, [messages.length])
 
   const handleSend = async (text: string) => {
     const userMessage: Message = {
