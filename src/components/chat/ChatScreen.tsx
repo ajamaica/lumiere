@@ -34,6 +34,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const flatListRef = useRef<FlatList>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
+  const [showScrollButton, setShowScrollButton] = useState(false)
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
@@ -296,6 +297,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
           const isNearBottom = contentOffset.y + layoutMeasurement.height >= contentSize.height - 50
           shouldAutoScrollRef.current = isNearBottom
+          setShowScrollButton(!isNearBottom)
         }}
         scrollEventThrottle={16}
         ListEmptyComponent={
@@ -304,6 +306,17 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           </View>
         }
       />
+      {showScrollButton && (
+        <TouchableOpacity
+          style={styles.scrollToBottomButton}
+          onPress={() => {
+            flatListRef.current?.scrollToEnd({ animated: true })
+            setShowScrollButton(false)
+          }}
+        >
+          <Ionicons name="chevron-down" size={24} color={theme.colors.text.inverse} />
+        </TouchableOpacity>
+      )}
       <ChatInput
         onSend={handleSend}
         onOpenSessionMenu={handleOpenSessionMenu}
@@ -387,5 +400,24 @@ const createStyles = (theme: any) =>
       fontSize: theme.typography.fontSize.base,
       color: theme.colors.text.secondary,
       textAlign: 'center',
+    },
+    scrollToBottomButton: {
+      position: 'absolute',
+      bottom: 80,
+      right: 20,
+      width: 48,
+      height: 48,
+      borderRadius: 24,
+      backgroundColor: theme.colors.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
   })
