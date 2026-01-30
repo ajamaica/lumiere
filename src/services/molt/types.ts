@@ -72,8 +72,17 @@ export interface GatewaySnapshot {
   lastChannelsRefresh?: number
   connectedAt?: number
   uptime?: number
-  instances?: number
-  sessions?: number
+  uptimeMs?: number
+  health?: {
+    sessions?: {
+      count?: number
+    }
+  }
+  presence?: Array<{
+    host?: string
+    ts?: number
+    mode?: string
+  }>
 }
 
 // Connect response

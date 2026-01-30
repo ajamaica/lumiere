@@ -42,23 +42,26 @@ export default function OverviewScreen() {
   // Update resource counts from snapshot
   useEffect(() => {
     if (snapshot) {
-      if (snapshot.instances !== undefined) {
-        setInstanceCount(snapshot.instances)
+      console.log('Gateway snapshot data:', snapshot)
+      // Get instances count from presence array
+      if (snapshot.presence) {
+        setInstanceCount(snapshot.presence.length)
       }
-      if (snapshot.sessions !== undefined) {
-        setSessionCount(snapshot.sessions)
+      // Get sessions count from health.sessions.count
+      if (snapshot.health?.sessions?.count !== undefined) {
+        setSessionCount(snapshot.health.sessions.count)
       }
     }
   }, [snapshot])
 
-  // Fetch resource counts when connected
+  // Fetch resource counts when connected (fallback if not in snapshot)
   useEffect(() => {
     const fetchResourceCounts = async () => {
       if (!connected) return
 
       try {
         // Fetch session count from API if not in snapshot
-        if (!snapshot?.sessions) {
+        if (!snapshot?.health?.sessions?.count) {
           const sessionsData = await listSessions()
           if (sessionsData && Array.isArray((sessionsData as any).sessions)) {
             setSessionCount((sessionsData as any).sessions.length)
@@ -69,7 +72,9 @@ export default function OverviewScreen() {
       }
     }
 
-    fetchResourceCounts()
+    // Add a small delay to ensure WebSocket is fully ready
+    const timer = setTimeout(fetchResourceCounts, 1000)
+    return () => clearTimeout(timer)
   }, [connected, listSessions, snapshot])
 
   useEffect(() => {
