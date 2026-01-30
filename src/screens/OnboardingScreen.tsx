@@ -76,14 +76,14 @@ export function OnboardingScreen() {
         name: 'My Server',
         url: localUrl.trim(),
         token: localToken.trim(),
-        clientId: localClientId.trim() || 'lumiere-mobile',
+        clientId: localClientId.trim(),
       })
 
       // Set as current server (done automatically in addServer if first)
       switchToServer(serverId)
 
       // Set session key from onboarding (persists to AsyncStorage)
-      const sessionKey = localSessionKey.trim() || DEFAULT_SESSION_KEY
+      const sessionKey = localSessionKey.trim()
 
       // Store in both places:
       // 1. currentSessionKeyAtom - current active session key
