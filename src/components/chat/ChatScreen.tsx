@@ -17,8 +17,8 @@ import {
 } from 'react-native'
 
 import { agentConfig } from '../../config/gateway.config'
-import { useMoltGateway } from '../../services/molt'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
+import { useMoltGateway } from '../../services/molt'
 import { currentSessionKeyAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
@@ -306,7 +306,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           onScroll={(event) => {
             const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
             const threshold = layoutMeasurement.height * 0.3 // 30% of screen height
-            const isNearBottom = contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
+            const isNearBottom =
+              contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
             shouldAutoScrollRef.current = isNearBottom
             setShowScrollButton(!isNearBottom)
           }}
@@ -318,7 +319,10 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           }
         />
         <TouchableOpacity
-          style={[styles.scrollToBottomButton, { opacity: showScrollButton && !isKeyboardVisible ? 1 : 0 }]}
+          style={[
+            styles.scrollToBottomButton,
+            { opacity: showScrollButton && !isKeyboardVisible ? 1 : 0 },
+          ]}
           onPress={() => {
             flatListRef.current?.scrollToEnd({ animated: true })
             setShowScrollButton(false)

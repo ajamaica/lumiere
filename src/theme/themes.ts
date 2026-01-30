@@ -1,6 +1,6 @@
-import { Colors,darkColors, lightColors } from './colors'
-import { BorderRadius,borderRadius, Spacing, spacing } from './spacing'
-import { Typography,typography } from './typography'
+import { Colors, darkColors, lightColors } from './colors'
+import { BorderRadius, borderRadius, Spacing, spacing } from './spacing'
+import { Typography, typography } from './typography'
 
 export interface Theme {
   colors: Colors

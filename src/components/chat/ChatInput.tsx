@@ -1,13 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useMemo, useState } from 'react'
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useTheme } from '../../theme'
