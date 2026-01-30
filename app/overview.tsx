@@ -26,6 +26,8 @@ export default function OverviewScreen() {
   const [uptime, setUptime] = useState(0)
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null)
   const [connectedAt, setConnectedAt] = useState<Date | null>(null)
+  const [instanceCount, setInstanceCount] = useState(0)
+  const [sessionCount, setSessionCount] = useState(0)
 
   const { connected, connecting, error, snapshot, connect, refreshHealth } = useMoltGateway({
     url: gatewayUrl,
@@ -226,6 +228,33 @@ export default function OverviewScreen() {
       marginTop: theme.spacing.md,
       lineHeight: theme.typography.fontSize.sm * theme.typography.lineHeight.normal,
     },
+    statCard: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.md,
+      padding: theme.spacing.lg,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      marginBottom: theme.spacing.md,
+    },
+    statCardLabel: {
+      fontSize: theme.typography.fontSize.xs,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.text.secondary,
+      marginBottom: theme.spacing.xs,
+      textTransform: 'uppercase',
+      letterSpacing: 0.5,
+    },
+    statCardValue: {
+      fontSize: theme.typography.fontSize.xxxl,
+      fontWeight: theme.typography.fontWeight.bold,
+      color: theme.colors.text.primary,
+      marginBottom: theme.spacing.xs,
+    },
+    statCardDescription: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.secondary,
+      lineHeight: theme.typography.fontSize.sm * theme.typography.lineHeight.normal,
+    },
   })
 
   return (
@@ -321,6 +350,30 @@ export default function OverviewScreen() {
               Channel integrations provide real-time communication with various services. Use the
               Refresh button to update channel status information.
             </Text>
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Resources</Text>
+
+          <View style={styles.statCard}>
+            <Text style={styles.statCardLabel}>INSTANCES</Text>
+            <Text style={styles.statCardValue}>{instanceCount}</Text>
+            <Text style={styles.statCardDescription}>Presence beacons in the last 5 minutes.</Text>
+          </View>
+
+          <View style={styles.statCard}>
+            <Text style={styles.statCardLabel}>SESSIONS</Text>
+            <Text style={styles.statCardValue}>{sessionCount}</Text>
+            <Text style={styles.statCardDescription}>
+              Recent session keys tracked by the gateway.
+            </Text>
+          </View>
+
+          <View style={styles.statCard}>
+            <Text style={styles.statCardLabel}>CRON</Text>
+            <Text style={styles.statCardValue}>Enabled</Text>
+            <Text style={styles.statCardDescription}>Next wake n/a</Text>
           </View>
         </View>
       </ScrollView>
