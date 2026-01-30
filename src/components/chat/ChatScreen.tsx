@@ -64,6 +64,15 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   // Track keyboard position in real-time for smooth interactive dismissal
   const { height: keyboardHeight } = useReanimatedKeyboardAnimation()
 
+  // Animated style for resizing the list when keyboard opens
+  const listContainerStyle = useAnimatedStyle(() => {
+    'worklet'
+    return {
+      flex: 1,
+      marginBottom: -keyboardHeight.value,
+    }
+  })
+
   // Animated style for moving the input with keyboard
   // Position absolutely at bottom, moving up with keyboard height
   const inputContainerStyle = useAnimatedStyle(() => {
@@ -295,7 +304,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
+        <Animated.View style={listContainerStyle}>
           <FlatList
             ref={flatListRef}
             data={allMessages}
@@ -324,7 +333,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
               </View>
             }
           />
-        </View>
+        </Animated.View>
         <TouchableOpacity
           style={[
             styles.scrollToBottomButton,
