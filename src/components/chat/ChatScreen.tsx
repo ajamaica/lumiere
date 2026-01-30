@@ -32,32 +32,20 @@ interface ChatScreenProps {
 /**
  * ChatScreen Component
  *
- * SESSION KEY ARCHITECTURE & RACE CONDITION WORKAROUND:
+ * SESSION KEY ARCHITECTURE:
  *
  * Session keys are stored per-server in the serverSessionsAtom, which uses AsyncStorage
  * for persistence. The currentSessionKeyAtom is a derived atom that looks up the session
  * key for the current server, returning an empty string if none exists.
  *
- * RACE CONDITION:
- * During onboarding, when a user completes setup:
- * 1. OnboardingScreen calls setServerSessions() to save the session key
- * 2. setServerSessions() triggers an async AsyncStorage write operation
- * 3. OnboardingScreen calls setOnboardingCompleted(true)
- * 4. App immediately re-renders and mounts ChatScreen
- * 5. ChatScreen may mount before AsyncStorage write completes
- * 6. currentSessionKey reads as empty string from the atom
- * 7. loadChatHistory() would fail with API validation error
+ * RACE CONDITION FIX:
+ * The OnboardingScreen now directly writes to AsyncStorage and awaits persistence
+ * before marking onboarding complete. This ensures the session key is available
+ * when ChatScreen mounts.
  *
- * WORKAROUND:
- * A useEffect in this component automatically initializes a default session key
- * (agent:main:main) if currentSessionKey is empty when the component mounts.
- * This ensures chat history can be loaded immediately after onboarding without
- * requiring manual session selection.
- *
- * PROPER FIX (Future):
- * - Make OnboardingScreen async and await AsyncStorage persistence before completing
- * - OR use atomEffect to await storage writes before navigation
- * - OR refactor to use a synchronous state management solution for session keys
+ * DEFENSIVE FALLBACK:
+ * A useEffect below still auto-initializes a default session key if empty, serving
+ * as a defensive measure for edge cases (manual data deletion, server switching, etc).
  */
 export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const { theme, themeMode, setThemeMode } = useTheme()
@@ -75,19 +63,17 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
-  // WORKAROUND: Initialize default session key if not set
-  // This handles a race condition during onboarding where the ChatScreen mounts
-  // before AsyncStorage has finished persisting the session key set in OnboardingScreen.
-  // The OnboardingScreen sets the session key via setServerSessions(), which uses
-  // atomWithStorage and persists to AsyncStorage asynchronously. When onboarding
-  // completes and setOnboardingCompleted(true) is called, the app immediately
-  // re-renders and mounts ChatScreen, but the session key may not be available yet.
-  // This effect ensures a default session key is always available when the component
-  // loads, preventing API errors when attempting to load chat history.
+  // DEFENSIVE FALLBACK: Initialize default session key if not set
+  // OnboardingScreen now awaits AsyncStorage persistence before navigation,
+  // so this should rarely trigger during normal onboarding flow.
+  // However, this serves as a defensive measure for edge cases like:
+  // - Manual AsyncStorage data deletion
+  // - Server switching before session is initialized
+  // - Direct navigation to ChatScreen via deep links
   useEffect(() => {
     if (!currentSessionKey) {
       const defaultSessionKey = 'agent:main:main'
-      console.log('Initializing default session key:', defaultSessionKey)
+      console.log('Initializing default session key (fallback):', defaultSessionKey)
       setCurrentSessionKey(defaultSessionKey)
     }
   }, [currentSessionKey, setCurrentSessionKey])

@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Ionicons } from '@expo/vector-icons'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
@@ -28,6 +29,7 @@ export function OnboardingScreen() {
   const [localClientId, setLocalClientId] = useState('lumiere-mobile')
   const [localSessionKey, setLocalSessionKey] = useState('agent:main:main')
   const [showAdvanced, setShowAdvanced] = useState(false)
+  const [isCompleting, setIsCompleting] = useState(false)
 
   const styles = StyleSheet.create({
     container: {
@@ -63,30 +65,44 @@ export function OnboardingScreen() {
     },
   })
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (localUrl.trim() && localToken.trim()) {
-      // Create new server
-      const serverId = addServer({
-        name: 'My Server',
-        url: localUrl.trim(),
-        token: localToken.trim(),
-        clientId: localClientId.trim() || 'lumiere-mobile',
-      })
+      setIsCompleting(true)
 
-      // Set as current server (done automatically in addServer if first)
-      switchToServer(serverId)
+      try {
+        // Create new server
+        const serverId = addServer({
+          name: 'My Server',
+          url: localUrl.trim(),
+          token: localToken.trim(),
+          clientId: localClientId.trim() || 'lumiere-mobile',
+        })
 
-      // Set initial session for this server with default fallback
-      // Note: We merge with existing sessions rather than replacing to preserve
-      // any session keys that might already exist for other servers.
-      const sessionKey = localSessionKey.trim() || 'agent:main:main'
-      setServerSessions((prev) => ({
-        ...prev,
-        [serverId]: sessionKey,
-      }))
+        // Set as current server (done automatically in addServer if first)
+        switchToServer(serverId)
 
-      // Mark onboarding complete
-      setOnboardingCompleted(true)
+        // Set initial session for this server with default fallback
+        const sessionKey = localSessionKey.trim() || 'agent:main:main'
+
+        // PROPER FIX: Directly persist to AsyncStorage and await completion
+        // This ensures the session key is fully persisted before marking onboarding complete,
+        // preventing the race condition where ChatScreen mounts before AsyncStorage writes finish.
+        const existingSessions = await AsyncStorage.getItem('serverSessions')
+        const sessions = existingSessions ? JSON.parse(existingSessions) : {}
+        sessions[serverId] = sessionKey
+
+        // Wait for AsyncStorage write to complete
+        await AsyncStorage.setItem('serverSessions', JSON.stringify(sessions))
+
+        // Update the Jotai atom (will read from AsyncStorage, so already in sync)
+        setServerSessions(sessions)
+
+        // Now safe to mark onboarding complete - session key is guaranteed to be persisted
+        setOnboardingCompleted(true)
+      } catch (error) {
+        console.error('Error completing onboarding:', error)
+        setIsCompleting(false)
+      }
     }
   }
 
@@ -173,7 +189,12 @@ export function OnboardingScreen() {
             )}
           </View>
 
-          <Button title="Get Started" size="lg" onPress={handleComplete} disabled={!isValid} />
+          <Button
+            title={isCompleting ? 'Setting up...' : 'Get Started'}
+            size="lg"
+            onPress={handleComplete}
+            disabled={!isValid || isCompleting}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
