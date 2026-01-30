@@ -283,6 +283,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         renderItem={({ item }) => <ChatMessage message={item} />}
         contentContainerStyle={styles.messageList}
         style={{ flex: 1 }}
+        keyboardDismissMode="interactive"
         onContentSizeChange={() => {
           if (shouldAutoScrollRef.current) {
             flatListRef.current?.scrollToEnd({ animated: true })
