@@ -2,10 +2,8 @@ import { clientConfig, protocolConfig } from '../../config/gateway.config'
 import {
   AgentEvent,
   AgentParams,
-  ConnectParams,
   ConnectResponse,
   EventFrame,
-  GatewayError,
   HealthStatus,
   MoltConfig,
   RequestFrame,
@@ -76,7 +74,7 @@ export class MoltGatewayClient {
   }
 
   private async performHandshake(): Promise<ConnectResponse> {
-    const params: any = {
+    const params = {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,

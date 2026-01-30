@@ -5,7 +5,7 @@ import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 import { DEFAULT_SESSION_KEY } from '../constants'
 
 // Create AsyncStorage adapter for Jotai
-const storage = createJSONStorage<any>(() => AsyncStorage)
+const storage = createJSONStorage<unknown>(() => AsyncStorage)
 
 // Server configuration types
 export interface ServerConfig {

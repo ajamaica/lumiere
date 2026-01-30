@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { ActionRow, Button, ScreenHeader, Section, Text } from '../src/components/ui'
@@ -36,26 +36,27 @@ export default function SessionsScreen() {
     return () => {
       disconnect()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    const loadSessions = async () => {
-      if (!connected) return
+  const loadSessions = useCallback(async () => {
+    if (!connected) return
 
-      try {
-        const sessionData = await listSessions()
-        if (sessionData && Array.isArray((sessionData as any).sessions)) {
-          setSessions((sessionData as any).sessions)
-        }
-      } catch (err) {
-        console.error('Failed to fetch sessions:', err)
-      } finally {
-        setLoading(false)
+    try {
+      const sessionData = (await listSessions()) as { sessions?: Session[] }
+      if (sessionData?.sessions && Array.isArray(sessionData.sessions)) {
+        setSessions(sessionData.sessions)
       }
+    } catch (err) {
+      console.error('Failed to fetch sessions:', err)
+    } finally {
+      setLoading(false)
     }
+  }, [connected, listSessions])
 
+  useEffect(() => {
     loadSessions()
-  }, [connected])
+  }, [loadSessions])
 
   const handleNewSession = () => {
     const newSessionKey = `agent:main:${Date.now()}`
