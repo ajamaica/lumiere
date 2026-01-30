@@ -41,7 +41,7 @@
 ### Installation
 
 ```bash
-git clone https://github.com/your-org/lumiere.git
+git clone https://github.com/lumiere-bot/lumiere.git
 cd lumiere
 pnpm install
 ```
