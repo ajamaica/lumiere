@@ -1,37 +1,17 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
-import {
-  Alert,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-import {
-  Button,
-  Card,
-  ScreenHeader,
-  Section,
-  Text,
-  TextInput,
-} from '../src/components/ui'
+import { Button, Card, ScreenHeader, Section, Text, TextInput } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { useTheme } from '../src/theme'
 
 export default function ServersScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const {
-    serversList,
-    currentServerId,
-    addServer,
-    updateServer,
-    removeServer,
-    switchToServer,
-  } = useServers()
+  const { serversList, currentServerId, addServer, updateServer, removeServer, switchToServer } =
+    useServers()
 
   const [editingId, setEditingId] = useState<string | null>(null)
   const [showAddForm, setShowAddForm] = useState(false)
@@ -197,11 +177,7 @@ export default function ServersScreen() {
                     />
                   </View>
                   <View style={styles.buttonRow}>
-                    <Button
-                      title="Save"
-                      onPress={handleUpdateServer}
-                      style={{ flex: 1 }}
-                    />
+                    <Button title="Save" onPress={handleUpdateServer} style={{ flex: 1 }} />
                     <Button
                       title="Cancel"
                       variant="secondary"
@@ -236,11 +212,7 @@ export default function ServersScreen() {
                         onPress={() => handleEditServer(server.id)}
                         style={styles.iconButton}
                       >
-                        <Ionicons
-                          name="pencil-outline"
-                          size={20}
-                          color={theme.colors.primary}
-                        />
+                        <Ionicons name="pencil-outline" size={20} color={theme.colors.primary} />
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => handleRemoveServer(server.id)}
@@ -286,7 +258,12 @@ export default function ServersScreen() {
                 />
               </View>
               <View style={styles.formRow}>
-                <TextInput label="Token" value={formToken} onChangeText={setFormToken} secureTextEntry />
+                <TextInput
+                  label="Token"
+                  value={formToken}
+                  onChangeText={setFormToken}
+                  secureTextEntry
+                />
               </View>
               <View style={styles.formRow}>
                 <TextInput

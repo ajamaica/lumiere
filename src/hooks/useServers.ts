@@ -32,10 +32,7 @@ export function useServers(): UseServersResult {
   const [currentServerId, setCurrentServerId] = useAtom(currentServerIdAtom)
 
   // Derived state
-  const currentServer = useMemo(
-    () => servers[currentServerId] || null,
-    [servers, currentServerId],
-  )
+  const currentServer = useMemo(() => servers[currentServerId] || null, [servers, currentServerId])
 
   const serversList = useMemo(
     () => Object.values(servers).sort((a, b) => a.createdAt - b.createdAt),

@@ -54,18 +54,11 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
-  const {
-    connected,
-    connecting,
-    error,
-    connect,
-    disconnect,
-    sendAgentRequest,
-    getChatHistory,
-  } = useMoltGateway({
-    url: gatewayUrl,
-    token: gatewayToken,
-  })
+  const { connected, connecting, error, connect, disconnect, sendAgentRequest, getChatHistory } =
+    useMoltGateway({
+      url: gatewayUrl,
+      token: gatewayToken,
+    })
 
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
     sendAgentRequest,
@@ -199,7 +192,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       }).start()
     }
   }, [isAgentResponding, pulseAnim])
-
 
   const handleOpenSessionMenu = () => {
     router.push('/sessions')
