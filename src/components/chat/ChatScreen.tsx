@@ -29,6 +29,36 @@ interface ChatScreenProps {
   gatewayToken: string
 }
 
+/**
+ * ChatScreen Component
+ *
+ * SESSION KEY ARCHITECTURE & RACE CONDITION WORKAROUND:
+ *
+ * Session keys are stored per-server in the serverSessionsAtom, which uses AsyncStorage
+ * for persistence. The currentSessionKeyAtom is a derived atom that looks up the session
+ * key for the current server, returning an empty string if none exists.
+ *
+ * RACE CONDITION:
+ * During onboarding, when a user completes setup:
+ * 1. OnboardingScreen calls setServerSessions() to save the session key
+ * 2. setServerSessions() triggers an async AsyncStorage write operation
+ * 3. OnboardingScreen calls setOnboardingCompleted(true)
+ * 4. App immediately re-renders and mounts ChatScreen
+ * 5. ChatScreen may mount before AsyncStorage write completes
+ * 6. currentSessionKey reads as empty string from the atom
+ * 7. loadChatHistory() would fail with API validation error
+ *
+ * WORKAROUND:
+ * A useEffect in this component automatically initializes a default session key
+ * (agent:main:main) if currentSessionKey is empty when the component mounts.
+ * This ensures chat history can be loaded immediately after onboarding without
+ * requiring manual session selection.
+ *
+ * PROPER FIX (Future):
+ * - Make OnboardingScreen async and await AsyncStorage persistence before completing
+ * - OR use atomEffect to await storage writes before navigation
+ * - OR refactor to use a synchronous state management solution for session keys
+ */
 export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const { theme, themeMode, setThemeMode } = useTheme()
   const router = useRouter()
@@ -44,6 +74,23 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const pulseAnim = useRef(new Animated.Value(1)).current
 
   const styles = useMemo(() => createStyles(theme), [theme])
+
+  // WORKAROUND: Initialize default session key if not set
+  // This handles a race condition during onboarding where the ChatScreen mounts
+  // before AsyncStorage has finished persisting the session key set in OnboardingScreen.
+  // The OnboardingScreen sets the session key via setServerSessions(), which uses
+  // atomWithStorage and persists to AsyncStorage asynchronously. When onboarding
+  // completes and setOnboardingCompleted(true) is called, the app immediately
+  // re-renders and mounts ChatScreen, but the session key may not be available yet.
+  // This effect ensures a default session key is always available when the component
+  // loads, preventing API errors when attempting to load chat history.
+  useEffect(() => {
+    if (!currentSessionKey) {
+      const defaultSessionKey = 'agent:main:main'
+      console.log('Initializing default session key:', defaultSessionKey)
+      setCurrentSessionKey(defaultSessionKey)
+    }
+  }, [currentSessionKey, setCurrentSessionKey])
 
   const {
     connected,
@@ -76,6 +123,15 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
   // Load chat history on mount
   const loadChatHistory = useCallback(async () => {
+    // Skip loading if session key is not set (empty string)
+    // This prevents API validation errors: "must NOT have fewer than 1 characters"
+    // Note: This check is defensive; the useEffect above should initialize the key,
+    // but this protects against edge cases during initial load or server switching.
+    if (!currentSessionKey) {
+      console.log('Skipping chat history load: session key not set')
+      return
+    }
+
     try {
       const history = await getChatHistory(currentSessionKey, 100)
       console.log('Chat history:', history)
@@ -182,21 +238,25 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   }, [isAgentResponding, pulseAnim])
 
   const handleResetSession = async () => {
+    // Clear local state immediately (always safe to do)
+    setMessages([])
+    setCurrentAgentMessage('')
+    setIsAgentResponding(false)
+
+    // Skip server reset if session key is not set (defensive check)
+    // While the useEffect should ensure a session key exists, we check here
+    // to avoid API errors if called during an edge case scenario.
+    if (!currentSessionKey) {
+      console.log('Skipping server reset: session key not set')
+      return
+    }
+
     try {
       // Reset the current session on the server (clears history but keeps session key)
       await resetSession(currentSessionKey)
       console.log('Session reset successfully')
-
-      // Clear local state
-      setMessages([])
-      setCurrentAgentMessage('')
-      setIsAgentResponding(false)
     } catch (err) {
       console.error('Failed to reset session:', err)
-      // Still clear local state even if server reset fails
-      setMessages([])
-      setCurrentAgentMessage('')
-      setIsAgentResponding(false)
     }
   }
 
