@@ -29,14 +29,48 @@ export default function OverviewScreen() {
   const [instanceCount, setInstanceCount] = useState(0)
   const [sessionCount, setSessionCount] = useState(0)
 
-  const { connected, connecting, error, snapshot, connect, refreshHealth } = useMoltGateway({
-    url: gatewayUrl,
-    token: gatewayToken,
-  })
+  const { connected, connecting, error, snapshot, connect, refreshHealth, listSessions } =
+    useMoltGateway({
+      url: gatewayUrl,
+      token: gatewayToken,
+    })
 
   useEffect(() => {
     connect()
   }, [])
+
+  // Update resource counts from snapshot
+  useEffect(() => {
+    if (snapshot) {
+      if (snapshot.instances !== undefined) {
+        setInstanceCount(snapshot.instances)
+      }
+      if (snapshot.sessions !== undefined) {
+        setSessionCount(snapshot.sessions)
+      }
+    }
+  }, [snapshot])
+
+  // Fetch resource counts when connected
+  useEffect(() => {
+    const fetchResourceCounts = async () => {
+      if (!connected) return
+
+      try {
+        // Fetch session count from API if not in snapshot
+        if (!snapshot?.sessions) {
+          const sessionsData = await listSessions()
+          if (sessionsData && Array.isArray((sessionsData as any).sessions)) {
+            setSessionCount((sessionsData as any).sessions.length)
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch resource counts:', err)
+      }
+    }
+
+    fetchResourceCounts()
+  }, [connected, listSessions, snapshot])
 
   useEffect(() => {
     if (connected && !connectedAt) {
@@ -71,6 +105,12 @@ export default function OverviewScreen() {
     try {
       await refreshHealth()
       setLastRefresh(new Date())
+
+      // Also refresh resource counts
+      const sessionsData = await listSessions()
+      if (sessionsData && Array.isArray((sessionsData as any).sessions)) {
+        setSessionCount((sessionsData as any).sessions.length)
+      }
     } catch (err) {
       console.error('Failed to refresh:', err)
     }

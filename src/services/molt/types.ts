@@ -72,6 +72,8 @@ export interface GatewaySnapshot {
   lastChannelsRefresh?: number
   connectedAt?: number
   uptime?: number
+  instances?: number
+  sessions?: number
 }
 
 // Connect response
