@@ -76,6 +76,11 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
         setMessages(historyMessages)
         console.log(`Loaded ${historyMessages.length} messages from history`)
+
+        // Scroll to bottom after loading history
+        setTimeout(() => {
+          flatListRef.current?.scrollToEnd({ animated: false })
+        }, 100)
       }
     } catch (err) {
       console.error('Failed to load chat history:', err)
