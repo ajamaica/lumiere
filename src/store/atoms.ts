@@ -37,12 +37,16 @@ export const currentServerIdAtom = atomWithStorage<string>('currentServerId', ''
 
 export const serverSessionsAtom = atomWithStorage<ServerSessions>('serverSessions', {}, storage)
 
+// Default session key used when no session exists for current server
+const DEFAULT_SESSION_KEY = 'agent:main:main'
+
 // Derived atom for current session key (backward compatible interface)
+// Returns default session key if none exists for current server
 export const currentSessionKeyAtom = atom(
   (get) => {
     const currentServerId = get(currentServerIdAtom)
     const sessions = get(serverSessionsAtom)
-    return sessions[currentServerId] || ''
+    return sessions[currentServerId] || DEFAULT_SESSION_KEY
   },
   (get, set, newValue: string) => {
     const currentServerId = get(currentServerIdAtom)

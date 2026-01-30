@@ -34,18 +34,10 @@ interface ChatScreenProps {
  *
  * SESSION KEY ARCHITECTURE:
  *
- * Session keys are stored per-server in the serverSessionsAtom, which uses AsyncStorage
- * for persistence. The currentSessionKeyAtom is a derived atom that looks up the session
- * key for the current server, returning an empty string if none exists.
- *
- * RACE CONDITION FIX:
- * The OnboardingScreen now directly writes to AsyncStorage and awaits persistence
- * before marking onboarding complete. This ensures the session key is available
- * when ChatScreen mounts.
- *
- * DEFENSIVE FALLBACK:
- * A useEffect below still auto-initializes a default session key if empty, serving
- * as a defensive measure for edge cases (manual data deletion, server switching, etc).
+ * Session keys are stored per-server in the serverSessionsAtom.
+ * The currentSessionKeyAtom is a derived atom that looks up the session
+ * key for the current server, returning a default value ('agent:main:main')
+ * if none exists. This ensures a valid session key is always available.
  */
 export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const { theme, themeMode, setThemeMode } = useTheme()
@@ -62,21 +54,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const pulseAnim = useRef(new Animated.Value(1)).current
 
   const styles = useMemo(() => createStyles(theme), [theme])
-
-  // DEFENSIVE FALLBACK: Initialize default session key if not set
-  // OnboardingScreen now awaits AsyncStorage persistence before navigation,
-  // so this should rarely trigger during normal onboarding flow.
-  // However, this serves as a defensive measure for edge cases like:
-  // - Manual AsyncStorage data deletion
-  // - Server switching before session is initialized
-  // - Direct navigation to ChatScreen via deep links
-  useEffect(() => {
-    if (!currentSessionKey) {
-      const defaultSessionKey = 'agent:main:main'
-      console.log('Initializing default session key (fallback):', defaultSessionKey)
-      setCurrentSessionKey(defaultSessionKey)
-    }
-  }, [currentSessionKey, setCurrentSessionKey])
 
   const {
     connected,
@@ -109,15 +86,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
   // Load chat history on mount
   const loadChatHistory = useCallback(async () => {
-    // Skip loading if session key is not set (empty string)
-    // This prevents API validation errors: "must NOT have fewer than 1 characters"
-    // Note: This check is defensive; the useEffect above should initialize the key,
-    // but this protects against edge cases during initial load or server switching.
-    if (!currentSessionKey) {
-      console.log('Skipping chat history load: session key not set')
-      return
-    }
-
     try {
       const history = await getChatHistory(currentSessionKey, 100)
       console.log('Chat history:', history)
@@ -224,25 +192,21 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   }, [isAgentResponding, pulseAnim])
 
   const handleResetSession = async () => {
-    // Clear local state immediately (always safe to do)
-    setMessages([])
-    setCurrentAgentMessage('')
-    setIsAgentResponding(false)
-
-    // Skip server reset if session key is not set (defensive check)
-    // While the useEffect should ensure a session key exists, we check here
-    // to avoid API errors if called during an edge case scenario.
-    if (!currentSessionKey) {
-      console.log('Skipping server reset: session key not set')
-      return
-    }
-
     try {
       // Reset the current session on the server (clears history but keeps session key)
       await resetSession(currentSessionKey)
       console.log('Session reset successfully')
+
+      // Clear local state
+      setMessages([])
+      setCurrentAgentMessage('')
+      setIsAgentResponding(false)
     } catch (err) {
       console.error('Failed to reset session:', err)
+      // Still clear local state even if server reset fails
+      setMessages([])
+      setCurrentAgentMessage('')
+      setIsAgentResponding(false)
     }
   }
 
