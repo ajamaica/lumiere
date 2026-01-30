@@ -19,7 +19,7 @@ import {
 import { agentConfig } from '../../config/gateway.config'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
 import { useMoltGateway } from '../../services/molt'
-import { currentSessionKeyAtom } from '../../store'
+import { currentSessionKeyAtom, messageQueueAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
@@ -45,6 +45,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [, setMessageQueue] = useAtom(messageQueueAtom)
   const flatListRef = useRef<FlatList>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
@@ -124,14 +125,26 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     }
   }, [])
 
+  // Clear and reload history when session key changes or connection is established
   useEffect(() => {
-    if (connected) {
-      // Small delay to ensure WebSocket is fully ready
-      setTimeout(() => {
-        loadChatHistory()
-      }, 500)
-    }
-  }, [connected, loadChatHistory])
+    if (!connected) return
+
+    console.log('Session or connection changed, reloading history:', currentSessionKey)
+
+    // Clear all local message state
+    setMessages([])
+    setCurrentAgentMessage('')
+    setMessageQueue([]) // Clear pending messages in queue
+    hasScrolledOnLoadRef.current = false
+    shouldAutoScrollRef.current = true
+
+    // Small delay to ensure WebSocket is fully ready before loading history
+    const timer = setTimeout(() => {
+      loadChatHistory()
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [currentSessionKey, connected, loadChatHistory, setMessageQueue])
 
   // Scroll to bottom on initial load when messages are first populated
   useEffect(() => {
