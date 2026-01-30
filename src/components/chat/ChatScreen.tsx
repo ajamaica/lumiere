@@ -4,6 +4,7 @@ import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   ActivityIndicator,
+  Animated,
   FlatList,
   Keyboard,
   SafeAreaView,
@@ -36,6 +37,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
   const [showScrollButton, setShowScrollButton] = useState(false)
+  const pulseAnim = useRef(new Animated.Value(1)).current
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
@@ -124,6 +126,34 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       keyboardDidShowListener.remove()
     }
   }, [])
+
+  // Pulse animation for status dot when agent is responding
+  useEffect(() => {
+    if (isAgentResponding) {
+      const pulse = Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {
+            toValue: 0.3,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+          Animated.timing(pulseAnim, {
+            toValue: 1,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+        ]),
+      )
+      pulse.start()
+      return () => pulse.stop()
+    } else {
+      Animated.timing(pulseAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start()
+    }
+  }, [isAgentResponding, pulseAnim])
 
   const handleSend = async (text: string) => {
     const userMessage: Message = {
@@ -249,7 +279,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       return (
         <View style={styles.statusBarContainer}>
           <View style={styles.statusBubble}>
-            <View style={styles.connectedDot} />
+            <Animated.View style={[styles.connectedDot, { opacity: pulseAnim }]} />
             <Text style={styles.connectedText}>Health</Text>
             <Text style={styles.statusOk}>OK</Text>
           </View>
