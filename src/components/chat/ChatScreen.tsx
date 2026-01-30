@@ -280,13 +280,13 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {renderConnectionStatus()}
       <FlatList
         ref={flatListRef}
         data={allMessages}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <ChatMessage message={item} />}
         contentContainerStyle={styles.messageList}
+        style={{ flex: 1 }}
         onContentSizeChange={() => {
           if (shouldAutoScrollRef.current) {
             flatListRef.current?.scrollToEnd({ animated: true })
@@ -321,6 +321,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         onOpenSessionMenu={handleOpenSessionMenu}
         disabled={!connected || isAgentResponding}
       />
+      {renderConnectionStatus()}
     </SafeAreaView>
   )
 }
@@ -332,12 +333,17 @@ const createStyles = (theme: any) =>
       backgroundColor: theme.colors.background,
     },
     statusBarContainer: {
+      position: 'absolute',
+      top: 50,
+      left: 0,
+      right: 0,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingVertical: theme.spacing.sm,
       paddingHorizontal: theme.spacing.lg,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
+      zIndex: 1000,
     },
     statusBubble: {
       flexDirection: 'row',
