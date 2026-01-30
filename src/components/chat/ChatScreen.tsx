@@ -217,8 +217,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const renderConnectionStatus = () => {
     if (connecting) {
       return (
-        <View style={styles.statusBar}>
-          <View style={styles.statusContent}>
+        <View style={styles.statusBarContainer}>
+          <View style={styles.statusBubble}>
             <ActivityIndicator size="small" color={theme.colors.primary} />
             <Text style={styles.statusText}>Connecting...</Text>
           </View>
@@ -231,8 +231,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
     if (error) {
       return (
-        <View style={[styles.statusBar, styles.errorBar]}>
-          <View style={styles.statusContent}>
+        <View style={styles.statusBarContainer}>
+          <View style={[styles.statusBubble, styles.errorBubble]}>
             <Text style={styles.errorText}>Connection failed: {error}</Text>
             <TouchableOpacity onPress={connect} style={styles.retryButton}>
               <Text style={styles.retryText}>Retry</Text>
@@ -247,10 +247,11 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
     if (connected) {
       return (
-        <View style={[styles.statusBar, styles.connectedBar]}>
-          <View style={styles.statusContent}>
+        <View style={styles.statusBarContainer}>
+          <View style={styles.statusBubble}>
             <View style={styles.connectedDot} />
-            <Text style={styles.connectedText}>Connected</Text>
+            <Text style={styles.connectedText}>Health</Text>
+            <Text style={styles.statusOk}>OK</Text>
           </View>
           <TouchableOpacity onPress={handleOpenSettings} style={styles.settingsButton}>
             <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
@@ -330,27 +331,33 @@ const createStyles = (theme: any) =>
       flex: 1,
       backgroundColor: theme.colors.background,
     },
-    statusBar: {
+    statusBarContainer: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingVertical: theme.spacing.sm,
       paddingHorizontal: theme.spacing.lg,
-      backgroundColor: theme.colors.surface,
+      backgroundColor: theme.colors.background,
     },
-    statusContent: {
+    statusBubble: {
       flexDirection: 'row',
       alignItems: 'center',
-      flex: 1,
+      backgroundColor: theme.colors.surface,
+      paddingHorizontal: theme.spacing.md + 2,
+      paddingVertical: theme.spacing.sm + 2,
+      borderRadius: theme.borderRadius.xxl,
+      alignSelf: 'flex-start',
+      marginRight: theme.spacing.md,
     },
     settingsButton: {
-      padding: theme.spacing.xs,
-      marginLeft: theme.spacing.md,
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: theme.colors.surface,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
-    connectedBar: {
-      backgroundColor: 'transparent',
-    },
-    errorBar: {
+    errorBubble: {
       backgroundColor: theme.isDark ? '#3A1B1B' : '#FFEBEE',
     },
     statusText: {
@@ -360,13 +367,19 @@ const createStyles = (theme: any) =>
     },
     connectedText: {
       fontSize: theme.typography.fontSize.sm,
-      color: theme.colors.status.success,
+      color: theme.colors.text.primary,
       marginLeft: theme.spacing.sm,
     },
+    statusOk: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.primary,
+      marginLeft: theme.spacing.xs,
+      fontWeight: theme.typography.fontWeight.semibold,
+    },
     connectedDot: {
-      width: 8,
-      height: 8,
-      borderRadius: 4,
+      width: 10,
+      height: 10,
+      borderRadius: 5,
       backgroundColor: theme.colors.status.success,
     },
     errorText: {
@@ -379,6 +392,7 @@ const createStyles = (theme: any) =>
       paddingVertical: theme.spacing.xs + 2,
       backgroundColor: theme.colors.primary,
       borderRadius: theme.borderRadius.sm,
+      marginLeft: theme.spacing.sm,
     },
     retryText: {
       color: theme.colors.text.inverse,
