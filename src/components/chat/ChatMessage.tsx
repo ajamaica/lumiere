@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons'
 import * as Clipboard from 'expo-clipboard'
+import * as WebBrowser from 'expo-web-browser'
 import React, { useMemo, useState } from 'react'
-import { Linking, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
 import { useTheme } from '../../theme'
@@ -56,9 +57,16 @@ export function ChatMessage({ message }: ChatMessageProps) {
     [theme, isUser],
   )
 
-  const handleLinkPress = (url: string) => {
+  const handleLinkPress = async (url: string) => {
     console.log('Link pressed:', url)
-    Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err))
+    try {
+      await WebBrowser.openBrowserAsync(url, {
+        presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
+        controlsColor: theme.colors.primary,
+      })
+    } catch (err) {
+      console.error('Failed to open URL:', err)
+    }
   }
 
   const markdownRules = useMemo(
