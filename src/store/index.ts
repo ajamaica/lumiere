@@ -1,4 +1,4 @@
-export type { ServerConfig, ServersDict,ServerSessions } from './atoms'
+export type { ServerConfig, ServersDict, ServerSessions } from './atoms'
 export {
   currentServerIdAtom,
   currentSessionKeyAtom,

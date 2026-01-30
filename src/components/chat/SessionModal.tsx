@@ -125,12 +125,6 @@ export function SessionModal({
     return parts[parts.length - 1] || key
   }
 
-  const formatDate = (timestamp?: number) => {
-    if (!timestamp) return ''
-    const date = new Date(timestamp)
-    return date.toLocaleString()
-  }
-
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={onClose}>

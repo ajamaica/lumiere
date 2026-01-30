@@ -15,11 +15,7 @@ import {
 import { Button, Text, TextInput } from '../components/ui'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
-import {
-  currentSessionKeyAtom,
-  onboardingCompletedAtom,
-  serverSessionsAtom,
-} from '../store'
+import { currentSessionKeyAtom, onboardingCompletedAtom, serverSessionsAtom } from '../store'
 import { useTheme } from '../theme'
 
 export function OnboardingScreen() {

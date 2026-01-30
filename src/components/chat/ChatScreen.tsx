@@ -40,34 +40,25 @@ interface ChatScreenProps {
  * if none exists. This ensures a valid session key is always available.
  */
 export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
-  const { theme, themeMode, setThemeMode } = useTheme()
+  const { theme } = useTheme()
   const router = useRouter()
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
-  const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [currentSessionKey] = useAtom(currentSessionKeyAtom)
   const flatListRef = useRef<FlatList>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
-  // eslint-disable-next-line react-hooks/refs
   const pulseAnim = useRef(new Animated.Value(1)).current
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
-  const {
-    connected,
-    connecting,
-    error,
-    connect,
-    disconnect,
-    sendAgentRequest,
-    getChatHistory,
-    resetSession,
-  } = useMoltGateway({
-    url: gatewayUrl,
-    token: gatewayToken,
-  })
+  const { connected, connecting, error, connect, disconnect, sendAgentRequest, getChatHistory } =
+    useMoltGateway({
+      url: gatewayUrl,
+      token: gatewayToken,
+    })
 
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
     sendAgentRequest,
@@ -90,11 +81,21 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       const history = await getChatHistory(currentSessionKey, 100)
       console.log('Chat history:', history)
 
-      if (history && Array.isArray((history as any).messages)) {
-        const historyMessages = (history as any).messages
-          .filter((msg: any) => msg.role === 'user' || msg.role === 'assistant')
-          .map((msg: any, index: number) => {
-            const textContent = msg.content.find((c: any) => c.type === 'text')
+      interface HistoryMessage {
+        role: string
+        content: Array<{ type: string; text?: string }>
+        timestamp: number
+      }
+      interface HistoryResponse {
+        messages?: HistoryMessage[]
+      }
+
+      const historyResponse = history as HistoryResponse
+      if (historyResponse?.messages && Array.isArray(historyResponse.messages)) {
+        const historyMessages = historyResponse.messages
+          .filter((msg) => msg.role === 'user' || msg.role === 'assistant')
+          .map((msg, index: number) => {
+            const textContent = msg.content.find((c) => c.type === 'text')
             const text = textContent?.text || ''
 
             // Skip empty messages
@@ -122,6 +123,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     return () => {
       disconnect()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -190,37 +192,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       }).start()
     }
   }, [isAgentResponding, pulseAnim])
-
-  const handleResetSession = async () => {
-    try {
-      // Reset the current session on the server (clears history but keeps session key)
-      await resetSession(currentSessionKey)
-      console.log('Session reset successfully')
-
-      // Clear local state
-      setMessages([])
-      setCurrentAgentMessage('')
-      setIsAgentResponding(false)
-    } catch (err) {
-      console.error('Failed to reset session:', err)
-      // Still clear local state even if server reset fails
-      setMessages([])
-      setCurrentAgentMessage('')
-      setIsAgentResponding(false)
-    }
-  }
-
-  const handleNewSession = () => {
-    // Create a new session with a new session key
-    const newSessionKey = `agent:main:${Date.now()}`
-    setCurrentSessionKey(newSessionKey)
-    console.log('Created new session:', newSessionKey)
-
-    // Clear local state
-    setMessages([])
-    setCurrentAgentMessage('')
-    setIsAgentResponding(false)
-  }
 
   const handleOpenSessionMenu = () => {
     router.push('/sessions')
@@ -349,13 +320,30 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           queueCount={queueCount}
         />
       </KeyboardAvoidingView>
-      {/* eslint-disable-next-line react-hooks/refs */}
       {renderConnectionStatus()}
     </SafeAreaView>
   )
 }
 
-const createStyles = (theme: any) =>
+interface Theme {
+  colors: {
+    background: string
+    surface: string
+    border: string
+    text: { primary: string; secondary: string; tertiary: string; inverse: string }
+    primary: string
+    status: { success: string; error: string; warning: string }
+  }
+  spacing: { xs: number; sm: number; md: number; lg: number; xl: number }
+  borderRadius: { sm: number; md: number; xxl: number }
+  typography: {
+    fontSize: { xs: number; sm: number; base: number }
+    fontWeight: { semibold: string }
+  }
+  isDark: boolean
+}
+
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,

@@ -77,7 +77,7 @@ export default [
       'react/display-name': 'off',
 
       // React Native
-      'react-native/no-unused-styles': 'warn',
+      'react-native/no-unused-styles': 'off', // Disabled due to false positives with dynamic style access
       'react-native/no-inline-styles': 'off',
       'react-native/no-color-literals': 'off',
 

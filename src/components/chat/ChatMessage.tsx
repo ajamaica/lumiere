@@ -54,71 +54,129 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const styles = useMemo(() => createStyles(theme), [theme])
   const markdownStyles = useMemo(() => createMarkdownStyles(theme, isUser), [theme, isUser])
 
-  const handleLinkPress = async (url: string) => {
-    console.log('Link pressed:', url)
-    try {
-      await WebBrowser.openBrowserAsync(url, {
-        presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
-        controlsColor: theme.colors.primary,
-      })
-    } catch (err) {
-      console.error('Failed to open URL:', err)
-    }
-  }
+  const handleLinkPress = React.useCallback(
+    async (url: string) => {
+      console.log('Link pressed:', url)
+      try {
+        await WebBrowser.openBrowserAsync(url, {
+          presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
+          controlsColor: theme.colors.primary,
+        })
+      } catch (err) {
+        console.error('Failed to open URL:', err)
+      }
+    },
+    [theme.colors.primary],
+  )
 
   const markdownRules = useMemo(
     () => ({
-      text: (node: any, children: any, parent: any, styles: any) => (
+      text: (
+        node: { key: string; content: string },
+        _children: unknown,
+        _parent: unknown,
+        styles: { text: unknown },
+      ) => (
         <Text key={node.key} style={styles.text} selectable={true}>
           {node.content}
         </Text>
       ),
-      paragraph: (node: any, children: any, parent: any, styles: any) => (
+      paragraph: (
+        node: { key: string },
+        children: React.ReactNode,
+        _parent: unknown,
+        styles: { paragraph: unknown },
+      ) => (
         <Text key={node.key} style={styles.paragraph} selectable={true}>
           {children}
         </Text>
       ),
-      strong: (node: any, children: any, parent: any, styles: any) => (
+      strong: (
+        node: { key: string },
+        children: React.ReactNode,
+        _parent: unknown,
+        styles: { strong: unknown },
+      ) => (
         <Text key={node.key} style={styles.strong} selectable={true}>
           {children}
         </Text>
       ),
-      em: (node: any, children: any, parent: any, styles: any) => (
+      em: (
+        node: { key: string },
+        children: React.ReactNode,
+        _parent: unknown,
+        styles: { em: unknown },
+      ) => (
         <Text key={node.key} style={styles.em} selectable={true}>
           {children}
         </Text>
       ),
-      code_inline: (node: any, children: any, parent: any, styles: any) => (
+      code_inline: (
+        node: { key: string; content: string },
+        _children: unknown,
+        _parent: unknown,
+        styles: { code_inline: unknown },
+      ) => (
         <Text key={node.key} style={styles.code_inline} selectable={true}>
           {node.content}
         </Text>
       ),
-      fence: (node: any, children: any, parent: any, styles: any) => (
+      fence: (
+        node: { key: string; content: string },
+        _children: unknown,
+        _parent: unknown,
+        styles: { fence: unknown },
+      ) => (
         <Text key={node.key} style={styles.fence} selectable={true}>
           {node.content}
         </Text>
       ),
-      code_block: (node: any, children: any, parent: any, styles: any) => (
+      code_block: (
+        node: { key: string; content: string },
+        _children: unknown,
+        _parent: unknown,
+        styles: { code_block: unknown },
+      ) => (
         <Text key={node.key} style={styles.code_block} selectable={true}>
           {node.content}
         </Text>
       ),
-      heading1: (node: any, children: any, parent: any, styles: any) => (
+      heading1: (
+        node: { key: string },
+        children: React.ReactNode,
+        _parent: unknown,
+        styles: { heading1: unknown },
+      ) => (
         <Text key={node.key} style={styles.heading1} selectable={true}>
           {children}
         </Text>
       ),
-      heading2: (node: any, children: any, parent: any, styles: any) => (
+      heading2: (
+        node: { key: string },
+        children: React.ReactNode,
+        _parent: unknown,
+        styles: { heading2: unknown },
+      ) => (
         <Text key={node.key} style={styles.heading2} selectable={true}>
           {children}
         </Text>
       ),
-      heading3: (node: any, children: any, parent: any, styles: any) => (
+      heading3: (
+        node: { key: string },
+        children: React.ReactNode,
+        _parent: unknown,
+        styles: { heading3: unknown },
+      ) => (
         <Text key={node.key} style={styles.heading3} selectable={true}>
           {children}
         </Text>
       ),
-      link: (node: any, children: any, parent: any, styles: any) => {
+      link: (
+        node: { key: string; attributes?: { href?: string } },
+        children: React.ReactNode,
+        _parent: unknown,
+        styles: { link: unknown },
+      ) => {
         const url = node.attributes?.href || ''
         return (
           <Pressable key={node.key} onPress={() => handleLinkPress(url)}>
@@ -171,7 +229,33 @@ export function ChatMessage({ message }: ChatMessageProps) {
   )
 }
 
-const createStyles = (theme: any) =>
+interface Theme {
+  colors: {
+    background: string
+    surface: string
+    border: string
+    text: { primary: string; secondary: string; tertiary: string; inverse: string }
+    primary: string
+    message: {
+      user: string
+      agent: string
+      userText: string
+      agentText: string
+    }
+    status: { success: string; error: string; warning: string }
+  }
+  spacing: { xs: number; sm: number; md: number; lg: number }
+  borderRadius: { xs: number; sm: number; md: number; xxl: number }
+  typography: {
+    fontSize: { xs: number; sm: number; base: number; lg: number; xl: number }
+    lineHeight: { normal: number }
+    fontWeight: { medium: string; semibold: string; bold: string }
+    fontFamily: { monospace: string }
+  }
+  isDark: boolean
+}
+
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       marginVertical: theme.spacing.xs,
@@ -208,16 +292,6 @@ const createStyles = (theme: any) =>
       padding: theme.spacing.xs,
       borderRadius: theme.borderRadius.sm,
     },
-    text: {
-      fontSize: theme.typography.fontSize.base,
-      lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
-    },
-    userText: {
-      color: theme.colors.message.userText,
-    },
-    agentText: {
-      color: theme.colors.message.agentText,
-    },
     timestamp: {
       fontSize: theme.typography.fontSize.xs,
       color: theme.colors.text.secondary,
@@ -231,9 +305,8 @@ const createStyles = (theme: any) =>
     },
   })
 
-const createMarkdownStyles = (theme: any, isUser: boolean) => {
+const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
   const textColor = isUser ? theme.colors.message.userText : theme.colors.message.agentText
-  const backgroundColor = isUser ? theme.colors.message.user : theme.colors.message.agent
 
   return {
     body: {

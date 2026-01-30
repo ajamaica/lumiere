@@ -1,13 +1,7 @@
 import { useAtom } from 'jotai'
 import { useCallback, useMemo } from 'react'
 
-import {
-  currentServerIdAtom,
-  ServerConfig,
-  serversAtom,
-  ServersDict,
-  serverSessionsAtom,
-} from '../store'
+import { currentServerIdAtom, ServerConfig, serversAtom, ServersDict } from '../store'
 
 export interface MoltConfig {
   url: string
@@ -38,10 +32,7 @@ export function useServers(): UseServersResult {
   const [currentServerId, setCurrentServerId] = useAtom(currentServerIdAtom)
 
   // Derived state
-  const currentServer = useMemo(
-    () => servers[currentServerId] || null,
-    [servers, currentServerId],
-  )
+  const currentServer = useMemo(() => servers[currentServerId] || null, [servers, currentServerId])
 
   const serversList = useMemo(
     () => Object.values(servers).sort((a, b) => a.createdAt - b.createdAt),
