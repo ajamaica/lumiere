@@ -7,7 +7,6 @@ A mobile chat application built with React Native and Expo for interacting with 
 - **Real-time AI Chat**: Connect to AI agents via WebSocket for real-time conversations
 - **Message Queue System**: Continuous chat interaction with queued message handling
 - **Session Management**: Manage multiple chat sessions and view session history
-- **Interactive Keyboard**: Smooth keyboard dismissal that follows scroll gestures
 - **Secure Credentials**: Hide/show toggle for sensitive gateway information
 - **Auto-updates**: Automatic deployment to Expo on push to main branch
 - **Slash Commands**: Autocomplete support for chat commands
@@ -128,7 +127,6 @@ lumiere/
 - Real-time message streaming
 - Markdown rendering for formatted responses
 - Message queue for continuous conversations
-- Interactive keyboard dismissal on scroll
 - Auto-scroll to latest messages
 
 ### Gateway Management
