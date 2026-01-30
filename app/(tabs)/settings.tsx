@@ -142,30 +142,12 @@ export default function SettingsScreen() {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>AI Configuration</Text>
-          <View style={styles.settingItem}>
-            <Text style={styles.settingLabel}>Model</Text>
-            <Text style={styles.settingValue}>Claude Sonnet 4.5</Text>
-          </View>
-          <View style={styles.settingItem}>
-            <Text style={styles.settingLabel}>Gateway Status</Text>
-            <Text style={styles.settingValue}>Connected</Text>
-          </View>
-        </View>
-
-        <View style={styles.section}>
           <Text style={styles.sectionTitle}>Control</Text>
           <TouchableOpacity
             style={styles.settingItem}
             onPress={() => router.push('/overview')}
           >
             <Text style={styles.settingLabel}>Overview</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.settingItem}>
-            <Text style={styles.settingLabel}>Instances</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.settingItem}>
-            <Text style={styles.settingLabel}>Sessions</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.settingItem}>
             <Text style={styles.settingLabel}>Cron Jobs</Text>
