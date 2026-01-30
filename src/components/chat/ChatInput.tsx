@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useMemo,useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   KeyboardAvoidingView,
   Platform,
@@ -35,10 +35,7 @@ export function ChatInput({ onSend, onOpenSessionMenu, disabled = false }: ChatI
   const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
-    >
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View style={styles.container}>
         <TextInput
           style={styles.input}
