@@ -13,27 +13,26 @@ import {
 } from 'react-native'
 
 import { Button, Text, TextInput } from '../components/ui'
+import { DEFAULT_SESSION_KEY } from '../constants'
+import { useServers } from '../hooks/useServers'
 import {
-  clientIdAtom,
   currentSessionKeyAtom,
-  gatewayTokenAtom,
-  gatewayUrlAtom,
   onboardingCompletedAtom,
+  serverSessionsAtom,
 } from '../store'
 import { useTheme } from '../theme'
 
 export function OnboardingScreen() {
   const { theme } = useTheme()
-  const [gatewayUrl, setGatewayUrl] = useAtom(gatewayUrlAtom)
-  const [gatewayToken, setGatewayToken] = useAtom(gatewayTokenAtom)
-  const [clientId, setClientId] = useAtom(clientIdAtom)
+  const { addServer, switchToServer } = useServers()
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [, setServerSessions] = useAtom(serverSessionsAtom)
   const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
 
-  const [localUrl, setLocalUrl] = useState(gatewayUrl)
-  const [localToken, setLocalToken] = useState(gatewayToken)
-  const [localClientId, setLocalClientId] = useState(clientId || 'lumiere-mobile')
-  const [localSessionKey, setLocalSessionKey] = useState('agent:main:main')
+  const [localUrl, setLocalUrl] = useState('')
+  const [localToken, setLocalToken] = useState('')
+  const [localClientId, setLocalClientId] = useState('lumiere-mobile')
+  const [localSessionKey, setLocalSessionKey] = useState(DEFAULT_SESSION_KEY)
   const [showAdvanced, setShowAdvanced] = useState(false)
 
   const styles = StyleSheet.create({
@@ -72,10 +71,31 @@ export function OnboardingScreen() {
 
   const handleComplete = () => {
     if (localUrl.trim() && localToken.trim()) {
-      setGatewayUrl(localUrl.trim())
-      setGatewayToken(localToken.trim())
-      setClientId(localClientId.trim())
-      setCurrentSessionKey(localSessionKey.trim())
+      // Create new server
+      const serverId = addServer({
+        name: 'My Server',
+        url: localUrl.trim(),
+        token: localToken.trim(),
+        clientId: localClientId.trim(),
+      })
+
+      // Set as current server (done automatically in addServer if first)
+      switchToServer(serverId)
+
+      // Set session key from onboarding (persists to AsyncStorage)
+      const sessionKey = localSessionKey.trim()
+
+      // Store in both places:
+      // 1. currentSessionKeyAtom - current active session key
+      setCurrentSessionKey(sessionKey)
+
+      // 2. serverSessionsAtom - track session key per server
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
+
+      // Mark onboarding complete
       setOnboardingCompleted(true)
     }
   }
@@ -154,10 +174,10 @@ export function OnboardingScreen() {
                   label="Default Session Key"
                   value={localSessionKey}
                   onChangeText={setLocalSessionKey}
-                  placeholder="agent:main:main"
+                  placeholder={DEFAULT_SESSION_KEY}
                   autoCapitalize="none"
                   autoCorrect={false}
-                  hint="Session key for chat conversations (default: agent:main:main)"
+                  hint={`Session key for chat conversations (default: ${DEFAULT_SESSION_KEY})`}
                 />
               </>
             )}

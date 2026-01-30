@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 
 import { Badge, Button, Card, ScreenHeader, Section, StatCard, Text } from '../src/components/ui'
+import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { gatewayTokenAtom, gatewayUrlAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
 interface SchedulerStatus {
@@ -41,8 +41,9 @@ interface CronJob {
 export default function SchedulerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const [gatewayUrl] = useAtom(gatewayUrlAtom)
-  const [gatewayToken] = useAtom(gatewayTokenAtom)
+  const { getCurrentMoltConfig } = useServers()
+  const config = getCurrentMoltConfig()
+
   const [schedulerStatus, setSchedulerStatus] = useState<SchedulerStatus | null>(null)
   const [cronJobs, setCronJobs] = useState<CronJob[]>([])
   const [loading, setLoading] = useState(true)
@@ -57,8 +58,8 @@ export default function SchedulerScreen() {
     runCronJob,
     removeCronJob,
   } = useMoltGateway({
-    url: gatewayUrl,
-    token: gatewayToken,
+    url: config?.url || '',
+    token: config?.token || '',
   })
 
   useEffect(() => {
@@ -189,6 +190,30 @@ export default function SchedulerScreen() {
       marginTop: theme.spacing.sm,
     },
   })
+
+  if (!config) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ScreenHeader title="Scheduler" showBack />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: theme.spacing.lg,
+          }}
+        >
+          <Text variant="heading2" style={{ marginBottom: theme.spacing.md }}>
+            No Server Configured
+          </Text>
+          <Text color="secondary" center style={{ marginBottom: theme.spacing.xl }}>
+            Please add a server in Settings to get started.
+          </Text>
+          <Button title="Go to Settings" onPress={() => router.push('/settings')} />
+        </View>
+      </SafeAreaView>
+    )
+  }
 
   return (
     <SafeAreaView style={styles.container}>

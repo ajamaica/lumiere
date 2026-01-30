@@ -2,8 +2,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { atom } from 'jotai'
 import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 
+import { DEFAULT_SESSION_KEY } from '../constants'
+
 // Create AsyncStorage adapter for Jotai
 const storage = createJSONStorage<any>(() => AsyncStorage)
+
+// Server configuration types
+export interface ServerConfig {
+  id: string // UUID
+  name: string // User-friendly name
+  url: string
+  token: string
+  clientId?: string
+  createdAt: number
+}
+
+export interface ServersDict {
+  [uuid: string]: ServerConfig
+}
+
+export interface ServerSessions {
+  [serverUuid: string]: string // session key for each server
+}
 
 // Theme mode atom with AsyncStorage persistence
 export const themeModeAtom = atomWithStorage<'light' | 'dark' | 'system'>(
@@ -12,15 +32,20 @@ export const themeModeAtom = atomWithStorage<'light' | 'dark' | 'system'>(
   storage,
 )
 
-// Current session key atom with AsyncStorage persistence
-export const currentSessionKeyAtom = atomWithStorage<string>('currentSessionKey', '', storage)
+// Multi-server storage atoms
+export const serversAtom = atomWithStorage<ServersDict>('servers', {}, storage)
 
-// Gateway configuration atoms with AsyncStorage persistence
-export const gatewayUrlAtom = atomWithStorage<string>('gatewayUrl', '', storage)
+export const currentServerIdAtom = atomWithStorage<string>('currentServerId', '', storage)
 
-export const gatewayTokenAtom = atomWithStorage<string>('gatewayToken', '', storage)
+export const serverSessionsAtom = atomWithStorage<ServerSessions>('serverSessions', {}, storage)
 
-export const clientIdAtom = atomWithStorage<string>('clientId', 'lumiere-mobile', storage)
+// Current session key with persistent storage
+// Stores whatever session key is set during onboarding or session selection
+export const currentSessionKeyAtom = atomWithStorage<string>(
+  'currentSessionKey',
+  DEFAULT_SESSION_KEY,
+  storage,
+)
 
 // Onboarding completion status
 export const onboardingCompletedAtom = atomWithStorage<boolean>(
@@ -29,7 +54,7 @@ export const onboardingCompletedAtom = atomWithStorage<boolean>(
   storage,
 )
 
-// Gateway connection state
+// Gateway connection state (in-memory only)
 export const gatewayConnectedAtom = atom<boolean>(false)
 export const gatewayConnectingAtom = atom<boolean>(false)
 export const gatewayErrorAtom = atom<string | null>(null)

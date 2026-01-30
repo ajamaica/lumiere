@@ -29,6 +29,16 @@ interface ChatScreenProps {
   gatewayToken: string
 }
 
+/**
+ * ChatScreen Component
+ *
+ * SESSION KEY ARCHITECTURE:
+ *
+ * Session keys are stored per-server in the serverSessionsAtom.
+ * The currentSessionKeyAtom is a derived atom that looks up the session
+ * key for the current server, returning a default value ('agent:main:main')
+ * if none exists. This ensures a valid session key is always available.
+ */
 export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const { theme, themeMode, setThemeMode } = useTheme()
   const router = useRouter()

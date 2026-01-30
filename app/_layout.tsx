@@ -28,6 +28,14 @@ function AppContent() {
         }}
       />
       <Stack.Screen
+        name="servers"
+        options={{
+          presentation: 'modal',
+          animation: 'slide_from_bottom',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="sessions"
         options={{
           presentation: 'modal',

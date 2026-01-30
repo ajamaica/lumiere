@@ -1,12 +1,13 @@
+export type { ServerConfig, ServersDict,ServerSessions } from './atoms'
 export {
-  clientIdAtom,
+  currentServerIdAtom,
   currentSessionKeyAtom,
   gatewayConnectedAtom,
   gatewayConnectingAtom,
   gatewayErrorAtom,
-  gatewayTokenAtom,
-  gatewayUrlAtom,
   messageQueueAtom,
   onboardingCompletedAtom,
+  serversAtom,
+  serverSessionsAtom,
   themeModeAtom,
 } from './atoms'
