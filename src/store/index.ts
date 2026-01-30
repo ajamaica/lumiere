@@ -6,6 +6,7 @@ export {
   gatewayErrorAtom,
   gatewayTokenAtom,
   gatewayUrlAtom,
+  messageQueueAtom,
   onboardingCompletedAtom,
   themeModeAtom,
 } from './atoms'

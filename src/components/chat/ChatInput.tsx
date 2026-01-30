@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -15,9 +16,15 @@ interface ChatInputProps {
   onSend: (text: string) => void
   onOpenSessionMenu?: () => void
   disabled?: boolean
+  queueCount?: number
 }
 
-export function ChatInput({ onSend, onOpenSessionMenu, disabled = false }: ChatInputProps) {
+export function ChatInput({
+  onSend,
+  onOpenSessionMenu,
+  disabled = false,
+  queueCount = 0,
+}: ChatInputProps) {
   const { theme } = useTheme()
   const [text, setText] = useState('')
 
@@ -58,13 +65,20 @@ export function ChatInput({ onSend, onOpenSessionMenu, disabled = false }: ChatI
             <Ionicons name="ellipsis-vertical" size={24} color={menuButtonColor} />
           </TouchableOpacity>
         )}
-        <TouchableOpacity
-          style={[styles.sendButton, (!text.trim() || disabled) && styles.buttonDisabled]}
-          onPress={handleSend}
-          disabled={!text.trim() || disabled}
-        >
-          <Ionicons name="send" size={24} color={sendButtonColor} />
-        </TouchableOpacity>
+        <View style={styles.sendButtonContainer}>
+          {queueCount > 0 && (
+            <View style={styles.queueBadge}>
+              <Text style={styles.queueText}>{queueCount}</Text>
+            </View>
+          )}
+          <TouchableOpacity
+            style={[styles.sendButton, (!text.trim() || disabled) && styles.buttonDisabled]}
+            onPress={handleSend}
+            disabled={!text.trim() || disabled}
+          >
+            <Ionicons name="send" size={24} color={sendButtonColor} />
+          </TouchableOpacity>
+        </View>
       </View>
     </KeyboardAvoidingView>
   )
@@ -102,6 +116,11 @@ const createStyles = (theme: any) =>
       marginBottom: 2,
       marginRight: theme.spacing.xs,
     },
+    sendButtonContainer: {
+      position: 'relative',
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     sendButton: {
       width: 40,
       height: 40,
@@ -109,6 +128,22 @@ const createStyles = (theme: any) =>
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 2,
+    },
+    queueBadge: {
+      backgroundColor: theme.colors.primary,
+      borderRadius: theme.borderRadius.sm,
+      paddingHorizontal: theme.spacing.xs,
+      paddingVertical: 2,
+      marginRight: theme.spacing.xs,
+      marginBottom: 2,
+      minWidth: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    queueText: {
+      color: theme.colors.text.inverse,
+      fontSize: theme.typography.fontSize.xs,
+      fontWeight: theme.typography.fontWeight.semibold,
     },
     buttonDisabled: {
       opacity: 0.5,

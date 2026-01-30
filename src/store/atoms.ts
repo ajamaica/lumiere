@@ -33,3 +33,6 @@ export const onboardingCompletedAtom = atomWithStorage<boolean>(
 export const gatewayConnectedAtom = atom<boolean>(false)
 export const gatewayConnectingAtom = atom<boolean>(false)
 export const gatewayErrorAtom = atom<string | null>(null)
+
+// Message queue (in-memory only, not persisted)
+export const messageQueueAtom = atom<string[]>([])

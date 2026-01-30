@@ -16,7 +16,7 @@ import {
 
 import { agentConfig } from '../../config/gateway.config'
 import { AgentEvent, useMoltGateway } from '../../services/molt'
-import { currentSessionKeyAtom } from '../../store'
+import { currentSessionKeyAtom, messageQueueAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
@@ -33,6 +33,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
   const [isAgentResponding, setIsAgentResponding] = useState(false)
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [messageQueue, setMessageQueue] = useAtom(messageQueueAtom)
   const flatListRef = useRef<FlatList>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
@@ -155,7 +156,16 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     }
   }, [isAgentResponding, pulseAnim])
 
-  const handleSend = async (text: string) => {
+  // Process message queue when agent finishes responding
+  useEffect(() => {
+    if (!isAgentResponding && messageQueue.length > 0) {
+      const nextMessage = messageQueue[0]
+      setMessageQueue((prev) => prev.slice(1))
+      sendMessage(nextMessage)
+    }
+  }, [isAgentResponding, messageQueue])
+
+  const sendMessage = async (text: string) => {
     const userMessage: Message = {
       id: `msg-${Date.now()}`,
       text,
@@ -202,6 +212,16 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       console.error('Failed to send message:', err)
       setIsAgentResponding(false)
       setCurrentAgentMessage('')
+    }
+  }
+
+  const handleSend = async (text: string) => {
+    if (isAgentResponding) {
+      // Add to queue if agent is currently responding
+      setMessageQueue((prev) => [...prev, text])
+    } else {
+      // Send immediately if agent is not responding
+      await sendMessage(text)
     }
   }
 
@@ -349,7 +369,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       <ChatInput
         onSend={handleSend}
         onOpenSessionMenu={handleOpenSessionMenu}
-        disabled={!connected || isAgentResponding}
+        disabled={!connected}
+        queueCount={messageQueue.length}
       />
       {renderConnectionStatus()}
     </SafeAreaView>
