@@ -7,6 +7,8 @@ import {
   Animated,
   FlatList,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -37,6 +39,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
   const [showScrollButton, setShowScrollButton] = useState(false)
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
   const pulseAnim = useRef(new Animated.Value(1)).current
 
   const styles = useMemo(() => createStyles(theme), [theme])
@@ -130,16 +133,22 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     }
   }, [messages.length])
 
-  // Scroll to bottom when keyboard opens
+  // Track keyboard visibility and scroll to bottom when keyboard opens
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setIsKeyboardVisible(true)
       setTimeout(() => {
         flatListRef.current?.scrollToEnd({ animated: true })
       }, 100)
     })
 
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setIsKeyboardVisible(false)
+    })
+
     return () => {
       keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
     }
   }, [])
 
@@ -276,49 +285,55 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        ref={flatListRef}
-        data={allMessages}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <ChatMessage message={item} />}
-        contentContainerStyle={styles.messageList}
+      <KeyboardAvoidingView
         style={{ flex: 1 }}
-        keyboardDismissMode="interactive"
-        onContentSizeChange={() => {
-          if (shouldAutoScrollRef.current) {
-            flatListRef.current?.scrollToEnd({ animated: true })
-          }
-        }}
-        onScroll={(event) => {
-          const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
-          const threshold = layoutMeasurement.height * 0.3 // 30% of screen height
-          const isNearBottom = contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
-          shouldAutoScrollRef.current = isNearBottom
-          setShowScrollButton(!isNearBottom)
-        }}
-        scrollEventThrottle={16}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>Start a conversation with the AI agent</Text>
-          </View>
-        }
-      />
-      <TouchableOpacity
-        style={[styles.scrollToBottomButton, { opacity: showScrollButton ? 1 : 0 }]}
-        onPress={() => {
-          flatListRef.current?.scrollToEnd({ animated: true })
-          setShowScrollButton(false)
-        }}
-        pointerEvents={showScrollButton ? 'auto' : 'none'}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={0}
       >
-        <Ionicons name="chevron-down" size={24} color={theme.colors.text.inverse} />
-      </TouchableOpacity>
-      <ChatInput
-        onSend={handleSend}
-        onOpenSessionMenu={handleOpenSessionMenu}
-        disabled={!connected}
-        queueCount={queueCount}
-      />
+        <FlatList
+          ref={flatListRef}
+          data={allMessages}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <ChatMessage message={item} />}
+          contentContainerStyle={styles.messageList}
+          style={{ flex: 1 }}
+          keyboardDismissMode="interactive"
+          onContentSizeChange={() => {
+            if (shouldAutoScrollRef.current) {
+              flatListRef.current?.scrollToEnd({ animated: true })
+            }
+          }}
+          onScroll={(event) => {
+            const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
+            const threshold = layoutMeasurement.height * 0.3 // 30% of screen height
+            const isNearBottom = contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
+            shouldAutoScrollRef.current = isNearBottom
+            setShowScrollButton(!isNearBottom)
+          }}
+          scrollEventThrottle={16}
+          ListEmptyComponent={
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>Start a conversation with the AI agent</Text>
+            </View>
+          }
+        />
+        <TouchableOpacity
+          style={[styles.scrollToBottomButton, { opacity: showScrollButton && !isKeyboardVisible ? 1 : 0 }]}
+          onPress={() => {
+            flatListRef.current?.scrollToEnd({ animated: true })
+            setShowScrollButton(false)
+          }}
+          pointerEvents={showScrollButton && !isKeyboardVisible ? 'auto' : 'none'}
+        >
+          <Ionicons name="chevron-down" size={24} color={theme.colors.text.inverse} />
+        </TouchableOpacity>
+        <ChatInput
+          onSend={handleSend}
+          onOpenSessionMenu={handleOpenSessionMenu}
+          disabled={!connected}
+          queueCount={queueCount}
+        />
+      </KeyboardAvoidingView>
       {renderConnectionStatus()}
     </SafeAreaView>
   )
@@ -419,7 +434,7 @@ const createStyles = (theme: any) =>
     },
     scrollToBottomButton: {
       position: 'absolute',
-      bottom: 100,
+      bottom: 70,
       left: '50%',
       marginLeft: -24,
       width: 48,

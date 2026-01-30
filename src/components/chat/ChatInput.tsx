@@ -2,8 +2,6 @@ import { Ionicons } from '@expo/vector-icons'
 import React, { useMemo, useState } from 'react'
 import {
   FlatList,
-  KeyboardAvoidingView,
-  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -49,7 +47,7 @@ export function ChatInput({
   const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <>
       {hasInput && suggestions.length > 0 && (
         <FlatList
           data={suggestions}
@@ -106,7 +104,7 @@ export function ChatInput({
           </TouchableOpacity>
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </>
   )
 }
 
