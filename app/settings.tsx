@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { useSetAtom } from 'jotai'
 import React from 'react'
@@ -79,10 +80,15 @@ export default function SettingsScreen() {
       backgroundColor: theme.colors.background,
     },
     header: {
+      flexDirection: 'row',
+      alignItems: 'center',
       padding: theme.spacing.lg,
       paddingTop: theme.spacing.xl * 1.5,
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.border,
+    },
+    backButton: {
+      marginRight: theme.spacing.md,
     },
     title: {
       fontSize: theme.typography.fontSize.xxl,
@@ -137,6 +143,9 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={24} color={theme.colors.text.primary} />
+        </TouchableOpacity>
         <Text style={styles.title}>Settings</Text>
       </View>
       <ScrollView style={styles.content} contentContainerStyle={styles.scrollContent}>
