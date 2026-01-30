@@ -76,9 +76,10 @@ export function OnboardingScreen() {
       // Set as current server (done automatically in addServer if first)
       switchToServer(serverId)
 
-      // Set initial session for this server
+      // Set initial session for this server with default fallback
+      const sessionKey = localSessionKey.trim() || 'agent:main:main'
       setServerSessions({
-        [serverId]: localSessionKey.trim(),
+        [serverId]: sessionKey,
       })
 
       // Mark onboarding complete
