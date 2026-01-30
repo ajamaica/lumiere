@@ -290,7 +290,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         }}
         onScroll={(event) => {
           const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
-          const isNearBottom = contentOffset.y + layoutMeasurement.height >= contentSize.height - 50
+          const threshold = layoutMeasurement.height * 0.3 // 30% of screen height
+          const isNearBottom = contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
           shouldAutoScrollRef.current = isNearBottom
           setShowScrollButton(!isNearBottom)
         }}
@@ -301,17 +302,16 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           </View>
         }
       />
-      {showScrollButton && (
-        <TouchableOpacity
-          style={styles.scrollToBottomButton}
-          onPress={() => {
-            flatListRef.current?.scrollToEnd({ animated: true })
-            setShowScrollButton(false)
-          }}
-        >
-          <Ionicons name="chevron-down" size={24} color={theme.colors.text.inverse} />
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity
+        style={[styles.scrollToBottomButton, { opacity: showScrollButton ? 1 : 0 }]}
+        onPress={() => {
+          flatListRef.current?.scrollToEnd({ animated: true })
+          setShowScrollButton(false)
+        }}
+        pointerEvents={showScrollButton ? 'auto' : 'none'}
+      >
+        <Ionicons name="chevron-down" size={24} color={theme.colors.text.inverse} />
+      </TouchableOpacity>
       <ChatInput
         onSend={handleSend}
         onOpenSessionMenu={handleOpenSessionMenu}
