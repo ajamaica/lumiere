@@ -57,7 +57,7 @@ jobs:
 
       - name: Set iOS build number
         run: |
-          BUILD_NUMBER="${{ github.run_number }}"
+          BUILD_NUMBER="${{ github.run_id }}"
           npx json -I -f app.json -e "this.expo.ios.buildNumber='${BUILD_NUMBER:-1}'"
 
       - name: Build iOS app
