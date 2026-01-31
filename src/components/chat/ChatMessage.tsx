@@ -186,6 +186,42 @@ export function ChatMessage({ message }: ChatMessageProps) {
           </Pressable>
         )
       },
+      textgroup: (
+        node: { key: string },
+        children: React.ReactNode,
+        _parent: unknown,
+        styles: { textgroup: unknown },
+      ) => (
+        <Text key={node.key} style={styles.textgroup} selectable={true}>
+          {children}
+        </Text>
+      ),
+      list_item: (
+        node: { key: string },
+        children: React.ReactNode,
+        _parent: unknown,
+        styles: { list_item: unknown },
+      ) => (
+        <View key={node.key} style={styles.list_item}>
+          {React.Children.map(children, (child) =>
+            typeof child === 'string' ? (
+              <Text selectable={true}>{child}</Text>
+            ) : (
+              child
+            ),
+          )}
+        </View>
+      ),
+      blockquote: (
+        node: { key: string },
+        children: React.ReactNode,
+        _parent: unknown,
+        styles: { blockquote: unknown },
+      ) => (
+        <View key={node.key} style={styles.blockquote}>
+          {children}
+        </View>
+      ),
     }),
     [handleLinkPress],
   )
@@ -209,7 +245,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         >
           {processedText}
         </Markdown>
-        {message.streaming && <Text style={styles.streamingIndicator}>...</Text>}
+        {message.streaming && <Text style={styles.streamingIndicator} selectable={true}>...</Text>}
       </View>
       {!isUser && !message.streaming && (
         <View style={styles.actionButtons}>
@@ -222,7 +258,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           </TouchableOpacity>
         </View>
       )}
-      <Text style={styles.timestamp}>
+      <Text style={styles.timestamp} selectable={true}>
         {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
       </Text>
     </View>
