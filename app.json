@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ajamaica.lumiere"
+      "bundleIdentifier": "bot.lumiere.app"
     },
     "android": {
       "adaptiveIcon": {
