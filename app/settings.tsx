@@ -2,15 +2,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
 import { useSetAtom } from 'jotai'
 import React from 'react'
-import { Alert, SafeAreaView, ScrollView, StyleSheet } from 'react-native'
+import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 
-import { Button, ScreenHeader, Section, SettingRow } from '../src/components/ui'
+import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { onboardingCompletedAtom } from '../src/store'
+import { ColorThemeKey, colorThemes } from '../src/theme/colors'
 import { useTheme } from '../src/theme'
 
+const COLOR_THEME_KEYS: ColorThemeKey[] = ['default', 'pink', 'green', 'red', 'blue', 'purple', 'orange']
+
 export default function SettingsScreen() {
-  const { theme, themeMode, setThemeMode } = useTheme()
+  const { theme, themeMode, setThemeMode, colorTheme, setColorTheme } = useTheme()
   const router = useRouter()
   const { currentServer, serversList } = useServers()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
@@ -61,6 +64,11 @@ export default function SettingsScreen() {
     )
   }
 
+  const getSwatchColor = (key: ColorThemeKey): string => {
+    const palette = colorThemes[key]
+    return theme.isDark ? palette.dark.primary : palette.light.primary
+  }
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -68,6 +76,27 @@ export default function SettingsScreen() {
     },
     scrollContent: {
       padding: theme.spacing.lg,
+    },
+    colorThemeGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: theme.spacing.sm,
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.md,
+    },
+    colorThemeItem: {
+      alignItems: 'center',
+      gap: theme.spacing.xs,
+    },
+    colorSwatch: {
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      borderWidth: 3,
+      borderColor: 'transparent',
+    },
+    colorSwatchSelected: {
+      borderColor: theme.colors.text.primary,
     },
   })
 
@@ -77,6 +106,32 @@ export default function SettingsScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Section title="Appearance">
           <SettingRow label="Theme" value={getThemeLabel()} onPress={handleThemeToggle} />
+        </Section>
+
+        <Section title="Color Theme">
+          <View style={styles.colorThemeGrid}>
+            {COLOR_THEME_KEYS.map((key) => (
+              <Pressable
+                key={key}
+                style={styles.colorThemeItem}
+                onPress={() => setColorTheme(key)}
+              >
+                <View
+                  style={[
+                    styles.colorSwatch,
+                    { backgroundColor: getSwatchColor(key) },
+                    colorTheme === key && styles.colorSwatchSelected,
+                  ]}
+                />
+                <Text
+                  variant="caption"
+                  color={colorTheme === key ? 'primary' : 'secondary'}
+                >
+                  {colorThemes[key].name}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
         </Section>
 
         <Section title="Servers">

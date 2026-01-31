@@ -69,3 +69,146 @@ export const darkColors = {
 }
 
 export type Colors = typeof lightColors
+
+// Color theme definitions - each provides primary colors for light and dark modes
+export interface ColorThemePalette {
+  name: string
+  light: {
+    primary: string
+    primaryLight: string
+    primaryDark: string
+    messageUser: string
+    messageUserText: string
+  }
+  dark: {
+    primary: string
+    primaryLight: string
+    primaryDark: string
+    messageUser: string
+    messageUserText: string
+  }
+}
+
+export type ColorThemeKey = 'default' | 'pink' | 'green' | 'red' | 'blue' | 'purple' | 'orange'
+
+export const colorThemes: Record<ColorThemeKey, ColorThemePalette> = {
+  default: {
+    name: 'Default',
+    light: {
+      primary: '#FF6B47',
+      primaryLight: '#FF8A6B',
+      primaryDark: '#E85A3C',
+      messageUser: '#FF6B47',
+      messageUserText: '#FFFFFF',
+    },
+    dark: {
+      primary: '#FFD60A',
+      primaryLight: '#FFE34D',
+      primaryDark: '#FFCC00',
+      messageUser: '#FFD60A',
+      messageUserText: '#000000',
+    },
+  },
+  pink: {
+    name: 'Pink',
+    light: {
+      primary: '#E91E8C',
+      primaryLight: '#F06CB4',
+      primaryDark: '#C4177A',
+      messageUser: '#E91E8C',
+      messageUserText: '#FFFFFF',
+    },
+    dark: {
+      primary: '#FF6EB4',
+      primaryLight: '#FF9CCE',
+      primaryDark: '#E85A9E',
+      messageUser: '#FF6EB4',
+      messageUserText: '#000000',
+    },
+  },
+  green: {
+    name: 'Green',
+    light: {
+      primary: '#2E9E5A',
+      primaryLight: '#5BBE82',
+      primaryDark: '#24804A',
+      messageUser: '#2E9E5A',
+      messageUserText: '#FFFFFF',
+    },
+    dark: {
+      primary: '#4ADE80',
+      primaryLight: '#86EFAC',
+      primaryDark: '#3EBF6E',
+      messageUser: '#4ADE80',
+      messageUserText: '#000000',
+    },
+  },
+  red: {
+    name: 'Red',
+    light: {
+      primary: '#DC2626',
+      primaryLight: '#EF4444',
+      primaryDark: '#B91C1C',
+      messageUser: '#DC2626',
+      messageUserText: '#FFFFFF',
+    },
+    dark: {
+      primary: '#F87171',
+      primaryLight: '#FCA5A5',
+      primaryDark: '#EF4444',
+      messageUser: '#F87171',
+      messageUserText: '#000000',
+    },
+  },
+  blue: {
+    name: 'Blue',
+    light: {
+      primary: '#2563EB',
+      primaryLight: '#60A5FA',
+      primaryDark: '#1D4ED8',
+      messageUser: '#2563EB',
+      messageUserText: '#FFFFFF',
+    },
+    dark: {
+      primary: '#60A5FA',
+      primaryLight: '#93C5FD',
+      primaryDark: '#3B82F6',
+      messageUser: '#60A5FA',
+      messageUserText: '#000000',
+    },
+  },
+  purple: {
+    name: 'Purple',
+    light: {
+      primary: '#7C3AED',
+      primaryLight: '#A78BFA',
+      primaryDark: '#6D28D9',
+      messageUser: '#7C3AED',
+      messageUserText: '#FFFFFF',
+    },
+    dark: {
+      primary: '#A78BFA',
+      primaryLight: '#C4B5FD',
+      primaryDark: '#8B5CF6',
+      messageUser: '#A78BFA',
+      messageUserText: '#000000',
+    },
+  },
+  orange: {
+    name: 'Orange',
+    light: {
+      primary: '#EA580C',
+      primaryLight: '#FB923C',
+      primaryDark: '#C2410C',
+      messageUser: '#EA580C',
+      messageUserText: '#FFFFFF',
+    },
+    dark: {
+      primary: '#FB923C',
+      primaryLight: '#FDBA74',
+      primaryDark: '#F97316',
+      messageUser: '#FB923C',
+      messageUserText: '#000000',
+    },
+  },
+}
