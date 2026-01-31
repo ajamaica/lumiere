@@ -47,5 +47,5 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Publish update
-        run: eas update --branch production --message "${{ github.event.head_commit.message }}"
+      - name: Build iOS app
+        run: eas build --platform ios --profile production --non-interactive --message "${{ github.event.head_commit.message }}"
