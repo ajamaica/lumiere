@@ -99,7 +99,15 @@ export interface ColorThemePalette {
   dark: ColorThemeVariant
 }
 
-export type ColorThemeKey = 'default' | 'pink' | 'green' | 'red' | 'blue' | 'purple' | 'orange' | 'glass'
+export type ColorThemeKey =
+  | 'default'
+  | 'pink'
+  | 'green'
+  | 'red'
+  | 'blue'
+  | 'purple'
+  | 'orange'
+  | 'glass'
 
 export const colorThemes: Record<ColorThemeKey, ColorThemePalette> = {
   default: {

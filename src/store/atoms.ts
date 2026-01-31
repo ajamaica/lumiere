@@ -32,11 +32,7 @@ export const themeModeAtom = atomWithStorage<'light' | 'dark' | 'system'>(
 )
 
 // Color theme atom with AsyncStorage persistence
-export const colorThemeAtom = atomWithStorage<string>(
-  'colorTheme',
-  'default',
-  storage,
-)
+export const colorThemeAtom = atomWithStorage<string>('colorTheme', 'default', storage)
 
 // Multi-server storage atoms
 export const serversAtom = atomWithStorage<ServersDict>('servers', {}, storage)

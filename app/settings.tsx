@@ -120,11 +120,7 @@ export default function SettingsScreen() {
         <Section title="Color Theme">
           <View style={styles.colorThemeGrid}>
             {COLOR_THEME_KEYS.map((key) => (
-              <Pressable
-                key={key}
-                style={styles.colorThemeItem}
-                onPress={() => setColorTheme(key)}
-              >
+              <Pressable key={key} style={styles.colorThemeItem} onPress={() => setColorTheme(key)}>
                 <View
                   style={[
                     styles.colorSwatch,
@@ -132,10 +128,7 @@ export default function SettingsScreen() {
                     colorTheme === key && styles.colorSwatchSelected,
                   ]}
                 />
-                <Text
-                  variant="caption"
-                  color={colorTheme === key ? 'primary' : 'secondary'}
-                >
+                <Text variant="caption" color={colorTheme === key ? 'primary' : 'secondary'}>
                   {colorThemes[key].name}
                 </Text>
               </Pressable>

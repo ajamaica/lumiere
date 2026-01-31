@@ -48,7 +48,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   return (
     <ThemeContext.Provider
-      value={{ theme, themeMode, setThemeMode, toggleTheme, colorTheme: (colorTheme as ColorThemeKey) || 'default', setColorTheme }}
+      value={{
+        theme,
+        themeMode,
+        setThemeMode,
+        toggleTheme,
+        colorTheme: (colorTheme as ColorThemeKey) || 'default',
+        setColorTheme,
+      }}
     >
       {children}
     </ThemeContext.Provider>
