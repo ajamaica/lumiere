@@ -73,6 +73,19 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
 
         if (event.event === 'shutdown') {
           setConnected(false)
+          setError('Gateway shutdown')
+        }
+      })
+
+      // Set up connection state listener
+      newClient.onConnectionStateChange((connected, reconnecting) => {
+        console.log(`Connection state: connected=${connected}, reconnecting=${reconnecting}`)
+        setConnected(connected)
+        setConnecting(reconnecting)
+        if (reconnecting) {
+          setError('Reconnecting...')
+        } else if (connected) {
+          setError(null)
         }
       })
 
