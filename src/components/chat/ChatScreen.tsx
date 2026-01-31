@@ -1,16 +1,9 @@
 import { Ionicons } from '@expo/vector-icons'
+import { FlashList } from '@shopify/flash-list'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import {
-  ActivityIndicator,
-  FlatList,
-  Keyboard,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { ActivityIndicator, Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller'
 import Animated, {
   Easing,
@@ -52,7 +45,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
   const [currentSessionKey] = useAtom(currentSessionKeyAtom)
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
-  const flatListRef = useRef<FlatList>(null)
+  const flatListRef = useRef<FlashList<Message>>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
   const [showScrollButton, setShowScrollButton] = useState(false)
@@ -190,7 +183,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   useEffect(() => {
     if (messages.length > 0 && !hasScrolledOnLoadRef.current) {
       hasScrolledOnLoadRef.current = true
-      // Use a longer timeout to ensure FlatList has rendered
+      // Use a longer timeout to ensure FlashList has rendered
       setTimeout(() => {
         flatListRef.current?.scrollToEnd({ animated: false })
       }, 300)
@@ -308,13 +301,13 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <View style={{ flex: 1 }}>
         <Animated.View style={listContainerStyle}>
-          <FlatList
+          <FlashList
             ref={flatListRef}
             data={allMessages}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ChatMessage message={item} />}
+            estimatedItemSize={100}
             contentContainerStyle={styles.messageList}
-            style={{ flex: 1 }}
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {
               if (shouldAutoScrollRef.current) {
