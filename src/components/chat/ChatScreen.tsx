@@ -56,12 +56,21 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   // Track keyboard position in real-time for smooth interactive dismissal
   const { height: keyboardHeight } = useReanimatedKeyboardAnimation()
 
+  // Track the chat input container height so the list margin adjusts dynamically
+  const inputHeight = useSharedValue(40)
+  const handleInputLayout = useCallback(
+    (e: { nativeEvent: { layout: { height: number } } }) => {
+      inputHeight.value = e.nativeEvent.layout.height
+    },
+    [inputHeight],
+  )
+
   // Animated style for resizing the list when keyboard opens
   const listContainerStyle = useAnimatedStyle(() => {
     'worklet'
     return {
       flex: 1,
-      marginBottom: -keyboardHeight.value + 40,
+      marginBottom: -keyboardHeight.value + inputHeight.value,
     }
   })
 
@@ -343,7 +352,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         >
           <Ionicons name="arrow-down" size={22} color={theme.colors.text.inverse} />
         </TouchableOpacity>
-        <Animated.View style={inputContainerStyle}>
+        <Animated.View style={inputContainerStyle} onLayout={handleInputLayout}>
           <ChatInput
             onSend={handleSend}
             onOpenSessionMenu={handleOpenSessionMenu}
