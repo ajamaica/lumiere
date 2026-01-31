@@ -47,5 +47,10 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
+      - name: Set iOS build number
+        run: |
+          BUILD_NUMBER="${{ github.run_number }}"
+          npx json -I -f app.json -e "this.expo.ios.buildNumber='${BUILD_NUMBER:-1}'"
+
       - name: Build iOS app
         run: eas build --platform ios --profile production --non-interactive --auto-submit
