@@ -422,7 +422,7 @@ const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
       marginRight: theme.spacing.sm,
     },
     link: {
-      color: theme.colors.primary,
+      color: isUser && !theme.isDark ? '#FFFFFF' : theme.colors.primary,
       textDecorationLine: 'underline',
       fontWeight: theme.typography.fontWeight.medium,
     },
