@@ -13,6 +13,7 @@ import {
 
 type EventListener = (event: EventFrame) => void
 type ResponseHandler = (response: ResponseFrame) => void
+type ConnectionStateListener = (connected: boolean, reconnecting: boolean) => void
 
 export class MoltGatewayClient {
   private ws: WebSocket | null = null
@@ -21,9 +22,11 @@ export class MoltGatewayClient {
   private requestId = 0
   private responseHandlers = new Map<string, ResponseHandler>()
   private eventListeners: EventListener[] = []
+  private connectionStateListeners: ConnectionStateListener[] = []
   private reconnectAttempts = 0
   private maxReconnectAttempts = 5
   private reconnectDelay = 1000
+  private reconnecting = false
 
   constructor(config: MoltConfig) {
     this.config = {
@@ -42,7 +45,9 @@ export class MoltGatewayClient {
           this.performHandshake()
             .then((response) => {
               this.connected = true
+              this.reconnecting = false
               this.reconnectAttempts = 0
+              this.notifyConnectionState()
               resolve(response)
             })
             .catch(reject)
@@ -65,6 +70,7 @@ export class MoltGatewayClient {
         this.ws.onclose = () => {
           console.log('WebSocket closed')
           this.connected = false
+          this.notifyConnectionState()
           this.handleReconnect()
         }
       } catch (error) {
@@ -102,15 +108,32 @@ export class MoltGatewayClient {
   private handleReconnect() {
     if (this.reconnectAttempts < this.maxReconnectAttempts) {
       this.reconnectAttempts++
+      this.reconnecting = true
+      this.notifyConnectionState()
       const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1)
       console.log(`Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts})`)
       setTimeout(() => {
         this.connect().catch((error) => {
           console.error('Reconnection failed:', error)
+          this.reconnecting = false
+          this.notifyConnectionState()
         })
       }, delay)
     } else {
       console.error('Max reconnection attempts reached')
+      this.reconnecting = false
+      this.notifyConnectionState()
+    }
+  }
+
+  private notifyConnectionState() {
+    this.connectionStateListeners.forEach((listener) => listener(this.connected, this.reconnecting))
+  }
+
+  onConnectionStateChange(listener: ConnectionStateListener) {
+    this.connectionStateListeners.push(listener)
+    return () => {
+      this.connectionStateListeners = this.connectionStateListeners.filter((l) => l !== listener)
     }
   }
 
