@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router'
 import { useAtom } from 'jotai'
+import { KeyboardProvider } from 'react-native-keyboard-controller'
 
 import { OnboardingScreen } from '../src/screens/OnboardingScreen'
 import { onboardingCompletedAtom } from '../src/store'
@@ -73,8 +74,10 @@ function AppContent() {
 
 export default function RootLayout() {
   return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
+    <KeyboardProvider>
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
+    </KeyboardProvider>
   )
 }
