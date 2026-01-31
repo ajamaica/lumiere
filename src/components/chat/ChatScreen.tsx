@@ -341,7 +341,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           }}
           pointerEvents={showScrollButton && !isKeyboardVisible ? 'auto' : 'none'}
         >
-          <Ionicons name="chevron-down" size={24} color={theme.colors.text.inverse} />
+          <Ionicons name="arrow-down" size={22} color={theme.colors.text.inverse} />
         </TouchableOpacity>
         <Animated.View style={inputContainerStyle}>
           <ChatInput
@@ -472,7 +472,7 @@ const createStyles = (theme: Theme) =>
     },
     scrollToBottomButton: {
       position: 'absolute',
-      bottom: 70,
+      bottom: 150,
       left: '50%',
       marginLeft: -24,
       width: 48,
