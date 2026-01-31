@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai'
 import { useCallback, useMemo } from 'react'
 
+import { deleteServerToken, getServerToken, setServerToken } from '../services/secureTokenStorage'
 import { currentServerIdAtom, ServerConfig, serversAtom, ServersDict } from '../store'
 
 export interface MoltConfig {
@@ -17,14 +18,18 @@ export interface UseServersResult {
   serversList: ServerConfig[]
 
   // Mutations
-  addServer: (config: Omit<ServerConfig, 'id' | 'createdAt'>) => string
-  updateServer: (id: string, updates: Partial<Omit<ServerConfig, 'id' | 'createdAt'>>) => void
-  removeServer: (id: string) => void
+  addServer: (config: Omit<ServerConfig, 'id' | 'createdAt'>, token: string) => Promise<string>
+  updateServer: (
+    id: string,
+    updates: Partial<Omit<ServerConfig, 'id' | 'createdAt'>>,
+    token?: string,
+  ) => Promise<void>
+  removeServer: (id: string) => Promise<void>
   switchToServer: (id: string) => void
 
   // Utilities
-  getCurrentMoltConfig: () => MoltConfig | null
-  getMoltConfigForServer: (id: string) => MoltConfig | null
+  getCurrentMoltConfig: () => Promise<MoltConfig | null>
+  getMoltConfigForServer: (id: string) => Promise<MoltConfig | null>
 }
 
 export function useServers(): UseServersResult {
@@ -41,7 +46,7 @@ export function useServers(): UseServersResult {
 
   // Add server with auto-generated UUID and name
   const addServer = useCallback(
-    (config: Omit<ServerConfig, 'id' | 'createdAt'>) => {
+    async (config: Omit<ServerConfig, 'id' | 'createdAt'>, token: string) => {
       const id = generateUUID()
       const serverCount = Object.keys(servers).length
       const newServer: ServerConfig = {
@@ -50,6 +55,9 @@ export function useServers(): UseServersResult {
         name: config.name || `Server ${serverCount + 1}`,
         createdAt: Date.now(),
       }
+
+      // Store token securely in keychain
+      await setServerToken(id, token)
 
       setServers({ ...servers, [id]: newServer })
 
@@ -65,8 +73,17 @@ export function useServers(): UseServersResult {
 
   // Update server (merge partial updates)
   const updateServer = useCallback(
-    (id: string, updates: Partial<Omit<ServerConfig, 'id' | 'createdAt'>>) => {
+    async (
+      id: string,
+      updates: Partial<Omit<ServerConfig, 'id' | 'createdAt'>>,
+      token?: string,
+    ) => {
       if (!servers[id]) return
+
+      // Update token in keychain if provided
+      if (token !== undefined) {
+        await setServerToken(id, token)
+      }
 
       setServers({
         ...servers,
@@ -78,8 +95,11 @@ export function useServers(): UseServersResult {
 
   // Remove server with safeguards
   const removeServer = useCallback(
-    (id: string) => {
+    async (id: string) => {
       if (!servers[id]) return
+
+      // Delete token from keychain
+      await deleteServerToken(id)
 
       const newServers = { ...servers }
       delete newServers[id]
@@ -105,23 +125,27 @@ export function useServers(): UseServersResult {
   )
 
   // Get MoltConfig for current server
-  const getCurrentMoltConfig = useCallback((): MoltConfig | null => {
+  const getCurrentMoltConfig = useCallback(async (): Promise<MoltConfig | null> => {
     if (!currentServer) return null
+    const token = await getServerToken(currentServer.id)
+    if (!token) return null
     return {
       url: currentServer.url,
-      token: currentServer.token,
+      token,
       clientId: currentServer.clientId,
     }
   }, [currentServer])
 
   // Get MoltConfig for specific server
   const getMoltConfigForServer = useCallback(
-    (id: string): MoltConfig | null => {
+    async (id: string): Promise<MoltConfig | null> => {
       const server = servers[id]
       if (!server) return null
+      const token = await getServerToken(id)
+      if (!token) return null
       return {
         url: server.url,
-        token: server.token,
+        token,
         clientId: server.clientId,
       }
     },

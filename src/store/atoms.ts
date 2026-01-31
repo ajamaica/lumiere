@@ -12,7 +12,6 @@ export interface ServerConfig {
   id: string // UUID
   name: string // User-friendly name
   url: string
-  token: string
   clientId?: string
   createdAt: number
 }

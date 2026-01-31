@@ -1,4 +1,5 @@
 import { useRouter } from 'expo-router'
+import { useEffect, useState } from 'react'
 import { View } from 'react-native'
 
 import { ChatScreen } from '../src/components/chat'
@@ -10,7 +11,15 @@ export default function HomeScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { getCurrentMoltConfig } = useServers()
-  const config = getCurrentMoltConfig()
+  const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
+
+  useEffect(() => {
+    const loadConfig = async () => {
+      const moltConfig = await getCurrentMoltConfig()
+      setConfig(moltConfig)
+    }
+    loadConfig()
+  }, [getCurrentMoltConfig])
 
   if (!config) {
     return (

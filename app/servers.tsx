@@ -22,18 +22,20 @@ export default function ServersScreen() {
   const [formToken, setFormToken] = useState('')
   const [formClientId, setFormClientId] = useState('lumiere-mobile')
 
-  const handleAddServer = () => {
+  const handleAddServer = async () => {
     if (!formUrl.trim() || !formToken.trim()) {
       Alert.alert('Error', 'URL and Token are required')
       return
     }
 
-    addServer({
-      name: formName.trim() || 'New Server',
-      url: formUrl.trim(),
-      token: formToken.trim(),
-      clientId: formClientId.trim() || 'lumiere-mobile',
-    })
+    await addServer(
+      {
+        name: formName.trim() || 'New Server',
+        url: formUrl.trim(),
+        clientId: formClientId.trim() || 'lumiere-mobile',
+      },
+      formToken.trim(),
+    )
 
     // Reset form
     setFormName('')
@@ -50,19 +52,22 @@ export default function ServersScreen() {
     setEditingId(id)
     setFormName(server.name)
     setFormUrl(server.url)
-    setFormToken(server.token)
+    setFormToken('') // Don't show existing token for security
     setFormClientId(server.clientId || 'lumiere-mobile')
   }
 
-  const handleUpdateServer = () => {
+  const handleUpdateServer = async () => {
     if (!editingId) return
 
-    updateServer(editingId, {
-      name: formName.trim(),
-      url: formUrl.trim(),
-      token: formToken.trim(),
-      clientId: formClientId.trim(),
-    })
+    await updateServer(
+      editingId,
+      {
+        name: formName.trim(),
+        url: formUrl.trim(),
+        clientId: formClientId.trim(),
+      },
+      formToken.trim() || undefined, // Only update token if provided
+    )
 
     // Reset form
     setEditingId(null)

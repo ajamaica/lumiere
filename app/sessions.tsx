@@ -22,10 +22,18 @@ export default function SessionsScreen() {
   const { getCurrentMoltConfig } = useServers()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
-  const config = getCurrentMoltConfig()
+  const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
 
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadConfig = async () => {
+      const moltConfig = await getCurrentMoltConfig()
+      setConfig(moltConfig)
+    }
+    loadConfig()
+  }, [getCurrentMoltConfig])
 
   const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
     url: config?.url || '',
@@ -33,12 +41,14 @@ export default function SessionsScreen() {
   })
 
   useEffect(() => {
-    connect()
+    if (config) {
+      connect()
+    }
     return () => {
       disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [config])
 
   const loadSessions = useCallback(async () => {
     if (!connected) return

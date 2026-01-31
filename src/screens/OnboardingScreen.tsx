@@ -65,15 +65,17 @@ export function OnboardingScreen() {
     },
   })
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (localUrl.trim() && localToken.trim()) {
       // Create new server
-      const serverId = addServer({
-        name: 'My Server',
-        url: localUrl.trim(),
-        token: localToken.trim(),
-        clientId: localClientId.trim(),
-      })
+      const serverId = await addServer(
+        {
+          name: 'My Server',
+          url: localUrl.trim(),
+          clientId: localClientId.trim(),
+        },
+        localToken.trim(),
+      )
 
       // Set as current server (done automatically in addServer if first)
       switchToServer(serverId)
