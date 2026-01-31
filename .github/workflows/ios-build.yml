@@ -49,3 +49,6 @@ jobs:
 
       - name: Build iOS app
         run: eas build --platform ios --profile production --non-interactive
+
+      - name: Submit to App Store
+        run: eas submit --platform ios
