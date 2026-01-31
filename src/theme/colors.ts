@@ -71,25 +71,35 @@ export const darkColors = {
 export type Colors = typeof lightColors
 
 // Color theme definitions - each provides primary colors for light and dark modes
-export interface ColorThemePalette {
-  name: string
-  light: {
-    primary: string
-    primaryLight: string
-    primaryDark: string
-    messageUser: string
-    messageUserText: string
-  }
-  dark: {
-    primary: string
-    primaryLight: string
-    primaryDark: string
-    messageUser: string
-    messageUserText: string
-  }
+// Surface overrides are optional and used by themes like "glass" that change the full palette
+export interface ColorThemeVariant {
+  primary: string
+  primaryLight: string
+  primaryDark: string
+  messageUser: string
+  messageUserText: string
+  // Optional surface overrides for full-palette themes
+  background?: string
+  surface?: string
+  surfaceVariant?: string
+  messageAgent?: string
+  messageAgentText?: string
+  textPrimary?: string
+  textSecondary?: string
+  textTertiary?: string
+  textInverse?: string
+  border?: string
+  divider?: string
+  shadow?: string
 }
 
-export type ColorThemeKey = 'default' | 'pink' | 'green' | 'red' | 'blue' | 'purple' | 'orange'
+export interface ColorThemePalette {
+  name: string
+  light: ColorThemeVariant
+  dark: ColorThemeVariant
+}
+
+export type ColorThemeKey = 'default' | 'pink' | 'green' | 'red' | 'blue' | 'purple' | 'orange' | 'glass'
 
 export const colorThemes: Record<ColorThemeKey, ColorThemePalette> = {
   default: {
@@ -209,6 +219,47 @@ export const colorThemes: Record<ColorThemeKey, ColorThemePalette> = {
       primaryDark: '#F97316',
       messageUser: '#FB923C',
       messageUserText: '#000000',
+    },
+  },
+  glass: {
+    name: 'Glass',
+    light: {
+      primary: '#6A7BDB',
+      primaryLight: '#8E9BEA',
+      primaryDark: '#4F5FC0',
+      messageUser: 'rgba(106, 123, 219, 0.85)',
+      messageUserText: '#FFFFFF',
+      background: '#F0F2F8',
+      surface: 'rgba(255, 255, 255, 0.55)',
+      surfaceVariant: 'rgba(220, 225, 240, 0.60)',
+      messageAgent: 'rgba(255, 255, 255, 0.50)',
+      messageAgentText: '#2C2C3A',
+      textPrimary: '#1A1A2E',
+      textSecondary: '#6E6E8A',
+      textTertiary: '#A0A0B8',
+      textInverse: '#FFFFFF',
+      border: 'rgba(180, 190, 220, 0.40)',
+      divider: 'rgba(160, 170, 200, 0.30)',
+      shadow: 'rgba(100, 110, 160, 0.12)',
+    },
+    dark: {
+      primary: '#8E9BEA',
+      primaryLight: '#B0BAFB',
+      primaryDark: '#6A7BDB',
+      messageUser: 'rgba(142, 155, 234, 0.80)',
+      messageUserText: '#FFFFFF',
+      background: '#0A0A14',
+      surface: 'rgba(255, 255, 255, 0.08)',
+      surfaceVariant: 'rgba(255, 255, 255, 0.12)',
+      messageAgent: 'rgba(255, 255, 255, 0.06)',
+      messageAgentText: '#E0E0F0',
+      textPrimary: '#F0F0FF',
+      textSecondary: '#8888A8',
+      textTertiary: '#4A4A64',
+      textInverse: '#0A0A14',
+      border: 'rgba(255, 255, 255, 0.10)',
+      divider: 'rgba(255, 255, 255, 0.06)',
+      shadow: 'rgba(0, 0, 0, 0.40)',
     },
   },
 }

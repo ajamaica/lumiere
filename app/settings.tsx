@@ -10,7 +10,16 @@ import { onboardingCompletedAtom } from '../src/store'
 import { ColorThemeKey, colorThemes } from '../src/theme/colors'
 import { useTheme } from '../src/theme'
 
-const COLOR_THEME_KEYS: ColorThemeKey[] = ['default', 'pink', 'green', 'red', 'blue', 'purple', 'orange']
+const COLOR_THEME_KEYS: ColorThemeKey[] = [
+  'default',
+  'pink',
+  'green',
+  'red',
+  'blue',
+  'purple',
+  'orange',
+  'glass',
+]
 
 export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode, colorTheme, setColorTheme } = useTheme()
