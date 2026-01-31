@@ -7,7 +7,7 @@ import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } f
 import { ActionRow, Button, ScreenHeader, Section, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { currentSessionKeyAtom } from '../src/store'
+import { clearMessagesAtom, currentSessionKeyAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
 interface Session {
@@ -21,6 +21,7 @@ export default function SessionsScreen() {
   const router = useRouter()
   const { getCurrentMoltConfig } = useServers()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
   const config = getCurrentMoltConfig()
 
   const [sessions, setSessions] = useState<Session[]>([])
@@ -76,6 +77,8 @@ export default function SessionsScreen() {
           onPress: async () => {
             try {
               await resetSession(currentSessionKey)
+              // Trigger message clearing in ChatScreen
+              setClearMessagesTrigger((prev) => prev + 1)
               router.back()
             } catch (err) {
               console.error('Failed to reset session:', err)
