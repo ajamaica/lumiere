@@ -61,7 +61,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     'worklet'
     return {
       flex: 1,
-      marginBottom: -keyboardHeight.value + 20,
+      marginBottom: -keyboardHeight.value + 40,
     }
   })
 
