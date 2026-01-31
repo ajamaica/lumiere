@@ -69,7 +69,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     'worklet'
     return {
       flex: 1,
-      marginBottom: -keyboardHeight.value,
+      marginBottom: -keyboardHeight.value + 20,
     }
   })
 
@@ -82,10 +82,10 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       bottom: 0,
       left: 0,
       right: 0,
-      transform: [{ translateY: keyboardHeight.value === 0? keyboardHeight.value -20 : keyboardHeight.value }],
+      transform: [{ translateY: keyboardHeight.value === 0? keyboardHeight.value - 20 : keyboardHeight.value }],
     }
   })
-    
+
   // Pulse animation for status dot using Reanimated
   const pulseOpacity = useSharedValue(1)
   const pulseStyle = useAnimatedStyle(() => ({
