@@ -1,13 +1,14 @@
 name: EAS Update
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
 
 jobs:
   update:
-    name: Publish to Expo
+    name: Publish Update to Expo
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
