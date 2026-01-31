@@ -19,7 +19,7 @@ export default function OverviewScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { getCurrentMoltConfig } = useServers()
-  const config = getCurrentMoltConfig()
+  const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
 
   const [password, setPassword] = useState('')
   const [uptime, setUptime] = useState(0)
@@ -36,9 +36,19 @@ export default function OverviewScreen() {
     })
 
   useEffect(() => {
-    connect()
+    const loadConfig = async () => {
+      const moltConfig = await getCurrentMoltConfig()
+      setConfig(moltConfig)
+    }
+    loadConfig()
+  }, [getCurrentMoltConfig])
+
+  useEffect(() => {
+    if (config) {
+      connect()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [config])
 
   useEffect(() => {
     if (snapshot) {
