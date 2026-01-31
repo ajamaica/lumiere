@@ -61,7 +61,7 @@ jobs:
       - name: Build Android app
         id: eas-build
         run: |
-          BUILD_JSON=$(eas build --platform android --profile browserstack --non-interactive --json)
+          BUILD_JSON=$(eas build --platform android --profile production --non-interactive --json)
           echo "build_url=$(echo "$BUILD_JSON" | jq -r '.[0].artifacts.buildUrl')" >> $GITHUB_OUTPUT
 
       - name: Download Android build artifact
@@ -130,7 +130,7 @@ jobs:
       - name: Build iOS app
         id: eas-build
         run: |
-          BUILD_JSON=$(eas build --platform ios --profile browserstack --non-interactive --json)
+          BUILD_JSON=$(eas build --platform ios --profile production --non-interactive --json)
           echo "build_url=$(echo "$BUILD_JSON" | jq -r '.[0].artifacts.buildUrl')" >> $GITHUB_OUTPUT
 
       - name: Download iOS build artifact

@@ -7,19 +7,7 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {},
-    "browserstack": {
-      "distribution": "internal",
-      "ios": {
-        "simulator": false
-      },
-      "android": {
-        "buildType": "apk"
-      },
-      "env": {
-        "APP_VARIANT": "browserstack"
-      }
-    }
+    "production": {}
   },
   "submit": {
     "production": {
