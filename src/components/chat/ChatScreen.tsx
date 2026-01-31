@@ -4,17 +4,23 @@ import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   ActivityIndicator,
-  Animated,
   FlatList,
   Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
+import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller'
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { agentConfig } from '../../config/gateway.config'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
@@ -51,9 +57,43 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const hasScrolledOnLoadRef = useRef(false)
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
-  const pulseAnim = useRef(new Animated.Value(1)).current
 
   const styles = useMemo(() => createStyles(theme), [theme])
+
+  // Track keyboard position in real-time for smooth interactive dismissal
+  const { height: keyboardHeight } = useReanimatedKeyboardAnimation()
+
+  // Animated style for resizing the list when keyboard opens
+  const listContainerStyle = useAnimatedStyle(() => {
+    'worklet'
+    return {
+      flex: 1,
+      marginBottom: -keyboardHeight.value + 20,
+    }
+  })
+
+  // Animated style for moving the input with keyboard
+  // Position absolutely at bottom, moving up with keyboard height
+  const inputContainerStyle = useAnimatedStyle(() => {
+    'worklet'
+    return {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      transform: [
+        {
+          translateY: keyboardHeight.value === 0 ? keyboardHeight.value - 20 : keyboardHeight.value,
+        },
+      ],
+    }
+  })
+
+  // Pulse animation for status dot using Reanimated
+  const pulseOpacity = useSharedValue(1)
+  const pulseStyle = useAnimatedStyle(() => ({
+    opacity: pulseOpacity.value,
+  }))
 
   const { connected, connecting, error, connect, disconnect, sendAgentRequest, getChatHistory } =
     useMoltGateway({
@@ -179,30 +219,18 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   // Pulse animation for status dot when agent is responding
   useEffect(() => {
     if (isAgentResponding) {
-      const pulse = Animated.loop(
-        Animated.sequence([
-          Animated.timing(pulseAnim, {
-            toValue: 0.3,
-            duration: 800,
-            useNativeDriver: true,
-          }),
-          Animated.timing(pulseAnim, {
-            toValue: 1,
-            duration: 800,
-            useNativeDriver: true,
-          }),
-        ]),
+      pulseOpacity.value = withRepeat(
+        withSequence(
+          withTiming(0.3, { duration: 800, easing: Easing.inOut(Easing.ease) }),
+          withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        false,
       )
-      pulse.start()
-      return () => pulse.stop()
     } else {
-      Animated.timing(pulseAnim, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }).start()
+      pulseOpacity.value = withTiming(1, { duration: 200 })
     }
-  }, [isAgentResponding, pulseAnim])
+  }, [isAgentResponding, pulseOpacity])
 
   const handleOpenSessionMenu = () => {
     router.push('/sessions')
@@ -247,7 +275,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       return (
         <View style={styles.statusBarContainer}>
           <View style={styles.statusBubble}>
-            <Animated.View style={[styles.connectedDot, { opacity: pulseAnim }]} />
+            <Animated.View style={[styles.connectedDot, pulseStyle]} />
             <Text style={styles.connectedText}>Health</Text>
             <Text style={styles.statusOk}>OK</Text>
           </View>
@@ -277,40 +305,38 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   ]
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={0}
-      >
-        <FlatList
-          ref={flatListRef}
-          data={allMessages}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <ChatMessage message={item} />}
-          contentContainerStyle={styles.messageList}
-          style={{ flex: 1 }}
-          keyboardDismissMode="interactive"
-          onContentSizeChange={() => {
-            if (shouldAutoScrollRef.current) {
-              flatListRef.current?.scrollToEnd({ animated: true })
+    <SafeAreaView style={styles.container} edges={['left', 'right']}>
+      <View style={{ flex: 1 }}>
+        <Animated.View style={listContainerStyle}>
+          <FlatList
+            ref={flatListRef}
+            data={allMessages}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <ChatMessage message={item} />}
+            contentContainerStyle={styles.messageList}
+            style={{ flex: 1 }}
+            keyboardDismissMode="interactive"
+            onContentSizeChange={() => {
+              if (shouldAutoScrollRef.current) {
+                flatListRef.current?.scrollToEnd({ animated: true })
+              }
+            }}
+            onScroll={(event) => {
+              const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
+              const threshold = layoutMeasurement.height * 0.3 // 30% of screen height
+              const isNearBottom =
+                contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
+              shouldAutoScrollRef.current = isNearBottom
+              setShowScrollButton(!isNearBottom)
+            }}
+            scrollEventThrottle={16}
+            ListEmptyComponent={
+              <View style={styles.emptyContainer}>
+                <Text style={styles.emptyText}>Start a conversation with the AI agent</Text>
+              </View>
             }
-          }}
-          onScroll={(event) => {
-            const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
-            const threshold = layoutMeasurement.height * 0.3 // 30% of screen height
-            const isNearBottom =
-              contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
-            shouldAutoScrollRef.current = isNearBottom
-            setShowScrollButton(!isNearBottom)
-          }}
-          scrollEventThrottle={16}
-          ListEmptyComponent={
-            <View style={styles.emptyContainer}>
-              <Text style={styles.emptyText}>Start a conversation with the AI agent</Text>
-            </View>
-          }
-        />
+          />
+        </Animated.View>
         <TouchableOpacity
           style={[
             styles.scrollToBottomButton,
@@ -324,13 +350,15 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         >
           <Ionicons name="chevron-down" size={24} color={theme.colors.text.inverse} />
         </TouchableOpacity>
-        <ChatInput
-          onSend={handleSend}
-          onOpenSessionMenu={handleOpenSessionMenu}
-          disabled={!connected}
-          queueCount={queueCount}
-        />
-      </KeyboardAvoidingView>
+        <Animated.View style={inputContainerStyle}>
+          <ChatInput
+            onSend={handleSend}
+            onOpenSessionMenu={handleOpenSessionMenu}
+            disabled={!connected}
+            queueCount={queueCount}
+          />
+        </Animated.View>
+      </View>
       {renderConnectionStatus()}
     </SafeAreaView>
   )
@@ -435,7 +463,7 @@ const createStyles = (theme: Theme) =>
     },
     messageList: {
       paddingTop: 55,
-      paddingBottom: theme.spacing.sm,
+      paddingBottom: 60, // Room for input
       paddingHorizontal: theme.spacing.sm,
     },
     emptyContainer: {
