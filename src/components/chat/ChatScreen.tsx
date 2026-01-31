@@ -81,7 +81,11 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       bottom: 0,
       left: 0,
       right: 0,
-      transform: [{ translateY: keyboardHeight.value === 0? keyboardHeight.value - 20 : keyboardHeight.value }],
+      transform: [
+        {
+          translateY: keyboardHeight.value === 0 ? keyboardHeight.value - 20 : keyboardHeight.value,
+        },
+      ],
     }
   })
 
