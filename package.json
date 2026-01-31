@@ -15,6 +15,7 @@
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
     "@react-native-async-storage/async-storage": "^2.2.0",
+    "@shopify/flash-list": "^2.2.1",
     "expo": "~54.0.32",
     "expo-clipboard": "~8.0.8",
     "expo-constants": "^18.0.13",
