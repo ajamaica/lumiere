@@ -1,13 +1,14 @@
 name: EAS Update
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
 
 jobs:
   update:
-    name: Publish to Expo
+    name: Publish Update to Expo
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -46,5 +47,5 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Publish update
-        run: eas update --branch production --message "${{ github.event.head_commit.message }}"
+      - name: Build iOS app
+        run: eas build --platform ios --profile production --non-interactive --message "${{ github.event.head_commit.message }}"
