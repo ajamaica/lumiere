@@ -314,6 +314,9 @@ const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
       fontSize: theme.typography.fontSize.base,
       lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
     },
+    text: {
+      color: textColor,
+    },
     heading1: {
       color: textColor,
       fontSize: theme.typography.fontSize.xl,
