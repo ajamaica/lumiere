@@ -204,11 +204,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
       ) => (
         <View key={node.key} style={styles.list_item}>
           {React.Children.map(children, (child) =>
-            typeof child === 'string' ? (
-              <Text selectable={true}>{child}</Text>
-            ) : (
-              child
-            ),
+            typeof child === 'string' ? <Text selectable={true}>{child}</Text> : child,
           )}
         </View>
       ),
@@ -245,7 +241,11 @@ export function ChatMessage({ message }: ChatMessageProps) {
         >
           {processedText}
         </Markdown>
-        {message.streaming && <Text style={styles.streamingIndicator} selectable={true}>...</Text>}
+        {message.streaming && (
+          <Text style={styles.streamingIndicator} selectable={true}>
+            ...
+          </Text>
+        )}
       </View>
       {!isUser && !message.streaming && (
         <View style={styles.actionButtons}>
