@@ -61,4 +61,4 @@ jobs:
           npx json -I -f app.json -e "this.expo.ios.buildNumber='${BUILD_NUMBER:-1}'"
 
       - name: Build iOS app
-        run: eas build --platform ios --profile production --non-interactive
+        run: eas build --platform ios --profile production --non-interactive --auto-submit
