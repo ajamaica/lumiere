@@ -59,7 +59,6 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
 
   const styles = useMemo(() => createStyles(theme), [theme])
-  const insets = useSafeAreaInsets()
 
   // Track keyboard position in real-time for smooth interactive dismissal
   const { height: keyboardHeight } = useReanimatedKeyboardAnimation()
