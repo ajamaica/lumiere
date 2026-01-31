@@ -35,8 +35,6 @@ export function ChatInput({
     setText(command + ' ')
   }
 
-  const sendButtonColor =
-    !text.trim() || disabled ? theme.colors.text.tertiary : theme.colors.primary
   const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
 
   return (
@@ -60,41 +58,57 @@ export function ChatInput({
           )}
         />
       )}
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          value={text}
-          onChangeText={setText}
-          placeholder="Type a message..."
-          placeholderTextColor={theme.colors.text.secondary}
-          multiline
-          maxLength={2000}
-          editable={!disabled}
-          onSubmitEditing={handleSend}
-          blurOnSubmit={false}
-        />
-        {onOpenSessionMenu && (
-          <TouchableOpacity
-            style={[styles.menuButton, disabled && styles.buttonDisabled]}
-            onPress={onOpenSessionMenu}
-            disabled={disabled}
-          >
-            <Ionicons name="ellipsis-vertical" size={24} color={menuButtonColor} />
-          </TouchableOpacity>
-        )}
-        <View style={styles.sendButtonContainer}>
-          {queueCount > 0 && (
-            <View style={styles.queueBadge}>
-              <Text style={styles.queueText}>{queueCount}</Text>
+      <View style={styles.background}>
+        <View style={styles.container}>
+          <TextInput
+            style={styles.input}
+            value={text}
+            onChangeText={setText}
+            placeholder="Type a message..."
+            placeholderTextColor={theme.colors.text.secondary}
+            multiline
+            maxLength={2000}
+            editable={!disabled}
+            onSubmitEditing={handleSend}
+            blurOnSubmit={false}
+          />
+          <View style={styles.buttonRow}>
+            {onOpenSessionMenu && (
+              <TouchableOpacity
+                style={[styles.menuButton, disabled && styles.buttonDisabled]}
+                onPress={onOpenSessionMenu}
+                disabled={disabled}
+              >
+                <Ionicons name="ellipsis-vertical" size={24} color={menuButtonColor} />
+              </TouchableOpacity>
+            )}
+            <View style={styles.spacer} />
+            <View style={styles.sendButtonContainer}>
+              {queueCount > 0 && (
+                <View style={styles.queueBadge}>
+                  <Text style={styles.queueText}>{queueCount}</Text>
+                </View>
+              )}
+              <TouchableOpacity
+                style={[
+                  styles.sendButton,
+                  text.trim() && !disabled ? styles.sendButtonActive : styles.sendButtonInactive,
+                ]}
+                onPress={handleSend}
+                disabled={!text.trim() || disabled}
+              >
+                <Ionicons
+                  name="arrow-up"
+                  size={22}
+                  color={
+                    text.trim() && !disabled
+                      ? theme.colors.text.inverse
+                      : theme.colors.text.tertiary
+                  }
+                />
+              </TouchableOpacity>
             </View>
-          )}
-          <TouchableOpacity
-            style={[styles.sendButton, (!text.trim() || disabled) && styles.buttonDisabled]}
-            onPress={handleSend}
-            disabled={!text.trim() || disabled}
-          >
-            <Ionicons name="send" size={24} color={sendButtonColor} />
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
     </>
@@ -119,26 +133,38 @@ interface Theme {
 
 const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      paddingHorizontal: theme.spacing.md,
-      paddingVertical: theme.spacing.sm,
+    background: {
       backgroundColor: theme.colors.background,
-      borderTopWidth: 1,
-      borderTopColor: theme.colors.border,
+    },
+    container: {
+      flexDirection: 'column',
+      marginHorizontal: theme.spacing.sm,
+      marginVertical: theme.spacing.sm,
+      paddingHorizontal: theme.spacing.md,
+      paddingTop: theme.spacing.sm,
+      paddingBottom: theme.spacing.sm,
+      backgroundColor: theme.colors.surface,
+      borderRadius: 28,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
     },
     input: {
-      flex: 1,
       minHeight: 40,
       maxHeight: 120,
-      backgroundColor: theme.colors.surface,
-      borderRadius: theme.borderRadius.xxl,
+      backgroundColor: 'transparent',
+      borderRadius: 0,
       paddingHorizontal: theme.spacing.lg,
       paddingVertical: theme.spacing.sm + 2,
       fontSize: theme.typography.fontSize.base,
-      marginRight: theme.spacing.sm,
       color: theme.colors.text.primary,
+    },
+    buttonRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: theme.spacing.xs,
+    },
+    spacer: {
+      flex: 1,
     },
     menuButton: {
       width: 40,
@@ -146,8 +172,6 @@ const createStyles = (theme: Theme) =>
       borderRadius: theme.borderRadius.xxl,
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: 2,
-      marginRight: theme.spacing.xs,
     },
     sendButtonContainer: {
       position: 'relative',
@@ -155,12 +179,17 @@ const createStyles = (theme: Theme) =>
       alignItems: 'center',
     },
     sendButton: {
-      width: 40,
-      height: 40,
-      borderRadius: theme.borderRadius.xxl,
+      width: 36,
+      height: 36,
+      borderRadius: 18,
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: 2,
+    },
+    sendButtonActive: {
+      backgroundColor: theme.colors.primary,
+    },
+    sendButtonInactive: {
+      backgroundColor: theme.colors.surface,
     },
     queueBadge: {
       backgroundColor: theme.colors.primary,

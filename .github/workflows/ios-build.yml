@@ -48,7 +48,4 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build iOS app
-        run: eas build --platform ios --profile production --non-interactive
-
-      - name: Submit to App Store
-        run: eas submit --platform ios
+        run: eas build --platform ios --profile production --non-interactive --auto-submit
