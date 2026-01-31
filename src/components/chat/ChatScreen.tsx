@@ -462,7 +462,7 @@ const createStyles = (theme: Theme) =>
       fontWeight: theme.typography.fontWeight.semibold,
     },
     messageList: {
-      paddingTop: 55,
+      paddingTop: 110,
       paddingBottom: 60, // Room for input
       paddingHorizontal: theme.spacing.sm,
     },
