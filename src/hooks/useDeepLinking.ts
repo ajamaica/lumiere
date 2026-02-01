@@ -24,11 +24,11 @@ function parseDeepLink(url: string): { route: string; params: Record<string, str
     const path = parsed.path?.replace(/^\/+/, '').replace(/\/+$/, '') ?? ''
 
     if (!path || path === '') {
-      return { route: '/', params: parsed.queryParams as Record<string, string> ?? {} }
+      return { route: '/', params: (parsed.queryParams as Record<string, string>) ?? {} }
     }
 
     if (isValidRoute(path)) {
-      return { route: `/${path}`, params: parsed.queryParams as Record<string, string> ?? {} }
+      return { route: `/${path}`, params: (parsed.queryParams as Record<string, string>) ?? {} }
     }
 
     return null
@@ -49,6 +49,7 @@ export function useDeepLinking() {
     const subscription = Linking.addEventListener('url', (event) => {
       const result = parseDeepLink(event.url)
       if (result) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         router.push(result.route as any)
       }
     })
