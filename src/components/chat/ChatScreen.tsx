@@ -50,6 +50,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const hasScrolledOnLoadRef = useRef(false)
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
+  const [isLoadingHistory, setIsLoadingHistory] = useState(true)
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
@@ -120,6 +121,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
   // Load chat history on mount
   const loadChatHistory = useCallback(async () => {
+    setIsLoadingHistory(true)
     try {
       const history = await getChatHistory(currentSessionKey, 100)
       console.log('Chat history:', history)
@@ -158,6 +160,8 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       }
     } catch (err) {
       console.error('Failed to load chat history:', err)
+    } finally {
+      setIsLoadingHistory(false)
     }
   }, [getChatHistory, currentSessionKey])
 
@@ -188,16 +192,16 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     }
   }, [clearMessagesTrigger, connected, loadChatHistory])
 
-  // Scroll to bottom on initial load when messages are first populated
+  // Scroll to bottom after history finishes loading to show latest messages
   useEffect(() => {
-    if (messages.length > 0 && !hasScrolledOnLoadRef.current) {
+    if (!isLoadingHistory && messages.length > 0 && !hasScrolledOnLoadRef.current) {
       hasScrolledOnLoadRef.current = true
-      // Use a longer timeout to ensure FlashList has rendered
+      // Use a longer timeout to ensure FlashList has rendered all history items
       setTimeout(() => {
         flatListRef.current?.scrollToEnd({ animated: false })
-      }, 300)
+      }, 400)
     }
-  }, [messages.length])
+  }, [isLoadingHistory, messages.length])
 
   // Track keyboard visibility and scroll to bottom when keyboard opens
   useEffect(() => {
@@ -319,7 +323,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
             contentContainerStyle={styles.messageList}
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {
-              if (shouldAutoScrollRef.current) {
+              if (shouldAutoScrollRef.current && !isLoadingHistory) {
                 flatListRef.current?.scrollToEnd({ animated: true })
               }
             }}
@@ -333,9 +337,16 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
             }}
             scrollEventThrottle={16}
             ListEmptyComponent={
-              <View style={styles.emptyContainer}>
-                <Text style={styles.emptyText}>Start a conversation with the AI agent</Text>
-              </View>
+              isLoadingHistory ? (
+                <View style={styles.emptyContainer}>
+                  <ActivityIndicator size="large" color={theme.colors.primary} />
+                  <Text style={styles.loadingText}>Loading conversation...</Text>
+                </View>
+              ) : (
+                <View style={styles.emptyContainer}>
+                  <Text style={styles.emptyText}>Start a conversation with the AI agent</Text>
+                </View>
+              )
             }
           />
         </Animated.View>
@@ -478,6 +489,12 @@ const createStyles = (theme: Theme) =>
       fontSize: theme.typography.fontSize.base,
       color: theme.colors.text.secondary,
       textAlign: 'center',
+    },
+    loadingText: {
+      fontSize: theme.typography.fontSize.base,
+      color: theme.colors.text.secondary,
+      textAlign: 'center',
+      marginTop: theme.spacing.md,
     },
     scrollToBottomButton: {
       position: 'absolute',
