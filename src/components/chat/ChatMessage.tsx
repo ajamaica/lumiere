@@ -1,10 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
 import * as Clipboard from 'expo-clipboard'
 import * as WebBrowser from 'expo-web-browser'
-import React, { useMemo, useState } from 'react'
+import { useAtom } from 'jotai'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
+import { favoritesAtom } from '../../store'
 import { useTheme } from '../../theme'
 
 export interface Message {
@@ -50,6 +52,28 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const { theme } = useTheme()
   const isUser = message.sender === 'user'
   const [copied, setCopied] = useState(false)
+  const [favorites, setFavorites] = useAtom(favoritesAtom)
+
+  const isFavorited = useMemo(
+    () => favorites.some((f) => f.id === message.id),
+    [favorites, message.id],
+  )
+
+  const handleToggleFavorite = useCallback(() => {
+    if (isFavorited) {
+      setFavorites(favorites.filter((f) => f.id !== message.id))
+    } else {
+      setFavorites([
+        ...favorites,
+        {
+          id: message.id,
+          text: message.text,
+          sender: message.sender,
+          savedAt: Date.now(),
+        },
+      ])
+    }
+  }, [isFavorited, favorites, setFavorites, message])
 
   const styles = useMemo(() => createStyles(theme), [theme])
   const markdownStyles = useMemo(() => createMarkdownStyles(theme, isUser), [theme, isUser])
@@ -247,13 +271,22 @@ export function ChatMessage({ message }: ChatMessageProps) {
           </Text>
         )}
       </View>
-      {!isUser && !message.streaming && (
+      {!message.streaming && (
         <View style={styles.actionButtons}>
-          <TouchableOpacity style={styles.actionButton} onPress={handleCopy}>
+          {!isUser && (
+            <TouchableOpacity style={styles.actionButton} onPress={handleCopy}>
+              <Ionicons
+                name={copied ? 'checkmark' : 'copy-outline'}
+                size={18}
+                color={theme.colors.text.secondary}
+              />
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity style={styles.actionButton} onPress={handleToggleFavorite}>
             <Ionicons
-              name={copied ? 'checkmark' : 'copy-outline'}
+              name={isFavorited ? 'heart' : 'heart-outline'}
               size={18}
-              color={theme.colors.text.secondary}
+              color={isFavorited ? theme.colors.primary : theme.colors.text.secondary}
             />
           </TouchableOpacity>
         </View>
