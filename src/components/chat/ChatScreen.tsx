@@ -121,6 +121,10 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
   // Load chat history on mount
   const loadChatHistory = useCallback(async () => {
+    // Clear old messages immediately so stale content doesn't flash on screen
+    setMessages([])
+    setCurrentAgentMessage('')
+    hasScrolledOnLoadRef.current = false
     setIsLoadingHistory(true)
     try {
       const history = await getChatHistory(currentSessionKey, 100)
