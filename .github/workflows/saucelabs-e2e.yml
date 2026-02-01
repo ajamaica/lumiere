@@ -16,6 +16,11 @@ on:
         description: 'SauceLabs storage URL for the app (e.g. storage:filename=lumiere.ipa)'
         required: false
         type: string
+      branch:
+        description: 'Branch to run tests against'
+        required: false
+        type: string
+        default: 'main'
   workflow_call:
     inputs:
       platform:
@@ -24,6 +29,10 @@ on:
       app_url:
         required: false
         type: string
+      branch:
+        required: false
+        type: string
+        default: 'main'
 
 jobs:
   e2e-ios:
@@ -33,6 +42,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch || 'main' }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -84,6 +95,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch || 'main' }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
