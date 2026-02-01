@@ -1,12 +1,23 @@
 import { Ionicons } from '@expo/vector-icons'
+import * as ImagePicker from 'expo-image-picker'
 import React, { useMemo, useState } from 'react'
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  FlatList,
+  Image,
+  ImageStyle,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useTheme } from '../../theme'
+import { MessageAttachment } from './ChatMessage'
 
 interface ChatInputProps {
-  onSend: (text: string) => void
+  onSend: (text: string, attachments?: MessageAttachment[]) => void
   onOpenSessionMenu?: () => void
   disabled?: boolean
   queueCount?: number
@@ -20,15 +31,41 @@ export function ChatInput({
 }: ChatInputProps) {
   const { theme } = useTheme()
   const [text, setText] = useState('')
+  const [attachments, setAttachments] = useState<MessageAttachment[]>([])
   const { suggestions, hasInput } = useSlashCommands(text)
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
   const handleSend = () => {
-    if (text.trim() && !disabled) {
-      onSend(text.trim())
+    if ((text.trim() || attachments.length > 0) && !disabled) {
+      onSend(text.trim(), attachments.length > 0 ? attachments : undefined)
       setText('')
+      setAttachments([])
     }
+  }
+
+  const handlePickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsMultipleSelection: true,
+      quality: 0.8,
+      base64: true,
+    })
+
+    if (!result.canceled && result.assets.length > 0) {
+      const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
+        uri: asset.uri,
+        mimeType: asset.mimeType || 'image/jpeg',
+        base64: asset.base64 || undefined,
+        width: asset.width,
+        height: asset.height,
+      }))
+      setAttachments((prev) => [...prev, ...newAttachments])
+    }
+  }
+
+  const handleRemoveAttachment = (index: number) => {
+    setAttachments((prev) => prev.filter((_, i) => i !== index))
   }
 
   const handleSelectCommand = (command: string) => {
@@ -72,7 +109,29 @@ export function ChatInput({
             onSubmitEditing={handleSend}
             blurOnSubmit={false}
           />
+          {attachments.length > 0 && (
+            <View style={styles.previewRow}>
+              {attachments.map((attachment, index) => (
+                <View key={`preview-${index}`} style={styles.previewItem}>
+                  <Image source={{ uri: attachment.uri }} style={styles.previewImage as ImageStyle} />
+                  <TouchableOpacity
+                    style={styles.previewRemove}
+                    onPress={() => handleRemoveAttachment(index)}
+                  >
+                    <Ionicons name="close-circle" size={20} color={theme.colors.text.inverse} />
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          )}
           <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={[styles.menuButton, disabled && styles.buttonDisabled]}
+              onPress={handlePickImage}
+              disabled={disabled}
+            >
+              <Ionicons name="add" size={26} color={menuButtonColor} />
+            </TouchableOpacity>
             {onOpenSessionMenu && (
               <TouchableOpacity
                 style={[styles.menuButton, disabled && styles.buttonDisabled]}
@@ -92,16 +151,18 @@ export function ChatInput({
               <TouchableOpacity
                 style={[
                   styles.sendButton,
-                  text.trim() && !disabled ? styles.sendButtonActive : styles.sendButtonInactive,
+                  (text.trim() || attachments.length > 0) && !disabled
+                    ? styles.sendButtonActive
+                    : styles.sendButtonInactive,
                 ]}
                 onPress={handleSend}
-                disabled={!text.trim() || disabled}
+                disabled={(!text.trim() && attachments.length === 0) || disabled}
               >
                 <Ionicons
                   name="arrow-up"
                   size={22}
                   color={
-                    text.trim() && !disabled
+                    (text.trim() || attachments.length > 0) && !disabled
                       ? theme.colors.text.inverse
                       : theme.colors.text.tertiary
                   }
@@ -124,9 +185,9 @@ interface Theme {
     primary: string
   }
   spacing: { xs: number; sm: number; md: number; lg: number }
-  borderRadius: { xs: number; sm: number; xxl: number }
+  borderRadius: { sm: number; md: number; xxl: number }
   typography: {
-    fontSize: { xs: number; base: number }
+    fontSize: { xs: number; sm: number; base: number }
     fontWeight: { semibold: string }
   }
 }
@@ -209,6 +270,26 @@ const createStyles = (theme: Theme) =>
     },
     buttonDisabled: {
       opacity: 0.5,
+    },
+    previewRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: theme.spacing.xs,
+      paddingHorizontal: theme.spacing.xs,
+      marginBottom: theme.spacing.xs,
+    },
+    previewItem: {
+      position: 'relative',
+    },
+    previewImage: {
+      width: 60,
+      height: 60,
+      borderRadius: theme.borderRadius.sm,
+    },
+    previewRemove: {
+      position: 'absolute',
+      top: -6,
+      right: -6,
     },
     autocomplete: {
       maxHeight: 200,

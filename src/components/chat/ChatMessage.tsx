@@ -2,10 +2,18 @@ import { Ionicons } from '@expo/vector-icons'
 import * as Clipboard from 'expo-clipboard'
 import * as WebBrowser from 'expo-web-browser'
 import React, { useMemo, useState } from 'react'
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
 import { useTheme } from '../../theme'
+
+export interface MessageAttachment {
+  uri: string
+  mimeType?: string
+  base64?: string
+  width?: number
+  height?: number
+}
 
 export interface Message {
   id: string
@@ -13,6 +21,7 @@ export interface Message {
   sender: 'user' | 'agent'
   timestamp: Date
   streaming?: boolean
+  attachments?: MessageAttachment[]
 }
 
 interface ChatMessageProps {
@@ -233,14 +242,28 @@ export function ChatMessage({ message }: ChatMessageProps) {
   return (
     <View style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}>
       <View style={[styles.bubble, isUser ? styles.userBubble : styles.agentBubble]}>
-        <Markdown
-          style={markdownStyles}
-          onLinkPress={handleLinkPress}
-          mergeStyle={true}
-          rules={markdownRules}
-        >
-          {processedText}
-        </Markdown>
+        {message.attachments && message.attachments.length > 0 && (
+          <View style={styles.attachmentsContainer}>
+            {message.attachments.map((attachment, index) => (
+              <Image
+                key={`${message.id}-attachment-${index}`}
+                source={{ uri: attachment.uri }}
+                style={styles.attachmentImage}
+                resizeMode="cover"
+              />
+            ))}
+          </View>
+        )}
+        {message.text ? (
+          <Markdown
+            style={markdownStyles}
+            onLinkPress={handleLinkPress}
+            mergeStyle={true}
+            rules={markdownRules}
+          >
+            {processedText}
+          </Markdown>
+        ) : null}
         {message.streaming && (
           <Text style={styles.streamingIndicator} selectable={true}>
             ...
@@ -338,6 +361,15 @@ const createStyles = (theme: Theme) =>
       color: theme.colors.text.secondary,
       fontSize: theme.typography.fontSize.sm,
       marginTop: theme.spacing.xs,
+    },
+    attachmentsContainer: {
+      marginBottom: theme.spacing.sm,
+      gap: theme.spacing.xs,
+    },
+    attachmentImage: {
+      width: 200,
+      height: 200,
+      borderRadius: theme.borderRadius.md,
     },
   })
 
