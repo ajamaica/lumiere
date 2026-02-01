@@ -1,4 +1,4 @@
-name: SauceLabs E2E Tests
+name: (Sauce) SauceLabs E2E Tests
 
 on:
   workflow_dispatch:
@@ -13,11 +13,11 @@ on:
           - both
         default: 'ios'
       app_url:
-        description: 'SauceLabs storage URL for the app (e.g. storage:filename=lumiere.ipa)'
+        description: 'SauceLabs storage URL (skip build step if provided)'
         required: false
         type: string
       branch:
-        description: 'Branch to run tests against'
+        description: 'Branch to build and test against'
         required: false
         type: string
         default: 'main'
@@ -35,10 +35,159 @@ on:
         default: 'main'
 
 jobs:
-  e2e-ios:
-    name: iOS E2E Tests
+  build-ios:
+    name: (Sauce) Build iOS
     runs-on: ubuntu-latest
-    if: ${{ inputs.platform == 'ios' || inputs.platform == 'both' }}
+    if: ${{ (inputs.platform == 'ios' || inputs.platform == 'both') && !inputs.app_url }}
+    outputs:
+      app_url: ${{ steps.upload.outputs.app_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch || 'main' }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Set app name
+        run: |
+          npx json -I -f app.json -e "this.expo.name='(Sauce) lumiere'"
+
+      - name: Set iOS build number
+        run: |
+          BUILD_NUMBER="${{ github.run_id }}"
+          npx json -I -f app.json -e "this.expo.ios.buildNumber='${BUILD_NUMBER:-1}'"
+
+      - name: Build iOS app
+        run: eas build --platform ios --profile preview --non-interactive --json > eas-build.json
+
+      - name: Download build artifact
+        run: |
+          BUILD_URL=$(cat eas-build.json | python3 -c "import sys,json; print(json.load(sys.stdin)[0]['artifacts']['buildUrl'])")
+          curl -L -o lumiere.ipa "$BUILD_URL"
+
+      - name: Upload to SauceLabs
+        id: upload
+        env:
+          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        run: |
+          RESPONSE=$(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" \
+            -X POST "https://api.us-west-1.saucelabs.com/v1/storage/upload" \
+            -F "payload=@lumiere.ipa" \
+            -F "name=lumiere-${{ github.run_id }}.ipa")
+          FILE_ID=$(echo "$RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['item']['id'])")
+          echo "app_url=storage:$FILE_ID" >> $GITHUB_OUTPUT
+
+  build-android:
+    name: (Sauce) Build Android
+    runs-on: ubuntu-latest
+    if: ${{ (inputs.platform == 'android' || inputs.platform == 'both') && !inputs.app_url }}
+    outputs:
+      app_url: ${{ steps.upload.outputs.app_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch || 'main' }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Set app name
+        run: |
+          npx json -I -f app.json -e "this.expo.name='(Sauce) lumiere'"
+
+      - name: Build Android app
+        run: eas build --platform android --profile preview --non-interactive --json > eas-build.json
+
+      - name: Download build artifact
+        run: |
+          BUILD_URL=$(cat eas-build.json | python3 -c "import sys,json; print(json.load(sys.stdin)[0]['artifacts']['buildUrl'])")
+          curl -L -o lumiere.apk "$BUILD_URL"
+
+      - name: Upload to SauceLabs
+        id: upload
+        env:
+          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        run: |
+          RESPONSE=$(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" \
+            -X POST "https://api.us-west-1.saucelabs.com/v1/storage/upload" \
+            -F "payload=@lumiere.apk" \
+            -F "name=lumiere-${{ github.run_id }}.apk")
+          FILE_ID=$(echo "$RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['item']['id'])")
+          echo "app_url=storage:$FILE_ID" >> $GITHUB_OUTPUT
+
+  e2e-ios:
+    name: (Sauce) iOS E2E Tests
+    runs-on: ubuntu-latest
+    needs: build-ios
+    if: |
+      always() &&
+      (inputs.platform == 'ios' || inputs.platform == 'both') &&
+      (inputs.app_url || needs.build-ios.outputs.app_url)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -76,7 +225,7 @@ jobs:
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-          SAUCE_APP: ${{ inputs.app_url || 'storage:filename=lumiere.ipa' }}
+          SAUCE_APP: ${{ inputs.app_url || needs.build-ios.outputs.app_url }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: pnpm e2e:sauce:ios
 
@@ -89,9 +238,13 @@ jobs:
           retention-days: 30
 
   e2e-android:
-    name: Android E2E Tests
+    name: (Sauce) Android E2E Tests
     runs-on: ubuntu-latest
-    if: ${{ inputs.platform == 'android' || inputs.platform == 'both' }}
+    needs: build-android
+    if: |
+      always() &&
+      (inputs.platform == 'android' || inputs.platform == 'both') &&
+      (inputs.app_url || needs.build-android.outputs.app_url)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -129,7 +282,7 @@ jobs:
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-          SAUCE_APP: ${{ inputs.app_url || 'storage:filename=lumiere.apk' }}
+          SAUCE_APP: ${{ inputs.app_url || needs.build-android.outputs.app_url }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: pnpm e2e:sauce:android
 
