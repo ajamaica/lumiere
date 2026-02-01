@@ -21,7 +21,7 @@ import { useMoltGateway } from '../../services/molt'
 import { clearMessagesAtom, currentSessionKeyAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
-import { ChatMessage, Message } from './ChatMessage'
+import { ChatMessage, Message, MessageAttachment } from './ChatMessage'
 
 interface ChatScreenProps {
   gatewayUrl: string
@@ -103,7 +103,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       token: gatewayToken,
     })
 
-  const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
+  const { handleSend: handleSendText, isAgentResponding, queueCount } = useMessageQueue({
     sendAgentRequest,
     currentSessionKey,
     agentId: agentConfig.defaultAgentId,
@@ -117,6 +117,35 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       shouldAutoScrollRef.current = true
     },
   })
+
+  const handleSend = useCallback(
+    (text: string, attachments?: MessageAttachment[]) => {
+      if (attachments && attachments.length > 0) {
+        // When sending with attachments, add a user message with the images
+        // and prepend base64 image references to the text sent to the agent
+        const imageDescriptions = attachments
+          .map((a) => `[Image: ${a.mimeType || 'image/jpeg'}]`)
+          .join(' ')
+        const fullText = text ? `${imageDescriptions} ${text}` : imageDescriptions
+
+        const userMessage: Message = {
+          id: `msg-${Date.now()}`,
+          text,
+          sender: 'user',
+          timestamp: new Date(),
+          attachments,
+        }
+        setMessages((prev) => [...prev, userMessage])
+        shouldAutoScrollRef.current = true
+
+        // Send via the queue but with the enriched text
+        handleSendText(fullText)
+      } else {
+        handleSendText(text)
+      }
+    },
+    [handleSendText],
+  )
 
   // Load chat history on mount
   const loadChatHistory = useCallback(async () => {
