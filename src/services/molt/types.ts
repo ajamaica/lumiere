@@ -146,6 +146,7 @@ export interface AgentParams {
   agentId?: string
   sessionKey?: string
   model?: string
+  attachments?: Attachment[]
 }
 
 // Agent events
