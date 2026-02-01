@@ -10,6 +10,7 @@ export {
   gatewayConnectingAtom,
   gatewayErrorAtom,
   messageQueueAtom,
+  notificationsEnabledAtom,
   onboardingCompletedAtom,
   serversAtom,
   serverSessionsAtom,

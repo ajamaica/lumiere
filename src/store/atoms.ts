@@ -83,3 +83,10 @@ export const biometricLockEnabledAtom = atomWithStorage<boolean>(
   false,
   storage,
 )
+
+// Background notifications setting (off by default)
+export const notificationsEnabledAtom = atomWithStorage<boolean>(
+  'notificationsEnabled',
+  false,
+  storage,
+)
