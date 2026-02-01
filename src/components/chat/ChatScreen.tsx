@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { agentConfig } from '../../config/gateway.config'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
-import { Attachment, ContentBlock, useMoltGateway } from '../../services/molt'
+import { useMoltGateway } from '../../services/molt'
 import { clearMessagesAtom, currentSessionKeyAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
@@ -97,11 +97,19 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     opacity: pulseOpacity.value,
   }))
 
-  const { connected, connecting, error, connect, disconnect, sendAgentRequest, getChatHistory } =
-    useMoltGateway({
-      url: gatewayUrl,
-      token: gatewayToken,
-    })
+  const {
+    connected,
+    connecting,
+    error,
+    connect,
+    disconnect,
+    sendAgentRequest,
+    uploadMedia,
+    getChatHistory,
+  } = useMoltGateway({
+    url: gatewayUrl,
+    token: gatewayToken,
+  })
 
   const {
     handleSend: handleSendText,
@@ -123,42 +131,9 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   })
 
   const handleSend = useCallback(
-    (text: string, attachments?: MessageAttachment[]) => {
+    async (text: string, attachments?: MessageAttachment[]) => {
       if (attachments && attachments.length > 0) {
-        // Build Claude API content blocks: image blocks + text block
-        const contentBlocks: ContentBlock[] = []
-
-        // Add image content blocks with base64 data
-        for (const a of attachments) {
-          if (a.base64) {
-            contentBlocks.push({
-              type: 'image',
-              source: {
-                type: 'base64',
-                media_type: a.mimeType || 'image/jpeg',
-                data: a.base64,
-              },
-            })
-          }
-        }
-
-        // Add text content block
-        if (text) {
-          contentBlocks.push({ type: 'text', text })
-        } else {
-          contentBlocks.push({ type: 'text', text: 'What is in this image?' })
-        }
-
-        // Also build Molt-style attachments as fallback
-        const moltAttachments: Attachment[] = attachments
-          .filter((a) => a.base64)
-          .map((a) => ({
-            type: 'image' as const,
-            data: a.base64!,
-            mimeType: a.mimeType || 'image/jpeg',
-          }))
-
-        // Add user message with image previews to the local chat UI
+        // Add user message with image previews to the local chat UI immediately
         const userMessage: Message = {
           id: `msg-${Date.now()}`,
           text: text || '',
@@ -169,17 +144,31 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         setMessages((prev) => [...prev, userMessage])
         shouldAutoScrollRef.current = true
 
-        // Send with both content blocks and attachments for maximum gateway compatibility
-        handleSendText(text || 'Attached image(s)', {
-          content: contentBlocks,
-          attachments: moltAttachments.length > 0 ? moltAttachments : undefined,
-          skipUserMessage: true,
-        })
+        // Upload images to gateway via POST /api/media/upload, then send media paths
+        try {
+          const filesToUpload = attachments.map((a, i) => ({
+            uri: a.uri,
+            mimeType: a.mimeType || 'image/jpeg',
+            name: `image-${Date.now()}-${i}.${(a.mimeType || 'image/jpeg').split('/')[1] || 'jpg'}`,
+          }))
+
+          const uploadResult = await uploadMedia(filesToUpload)
+          const mediaPaths = uploadResult.files.map((f) => f.path)
+
+          handleSendText(text || 'Attached image(s)', {
+            media: mediaPaths,
+            skipUserMessage: true,
+          })
+        } catch (err) {
+          console.error('Failed to upload media:', err)
+          // Fallback: send text only if upload fails
+          handleSendText(text || 'Attached image(s)', { skipUserMessage: true })
+        }
       } else {
         handleSendText(text)
       }
     },
-    [handleSendText],
+    [handleSendText, uploadMedia],
   )
 
   // Load chat history on mount

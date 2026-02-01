@@ -49,14 +49,12 @@ export function ChatInput({
       mediaTypes: ['images'],
       allowsMultipleSelection: true,
       quality: 0.8,
-      base64: true,
     })
 
     if (!result.canceled && result.assets.length > 0) {
       const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
         uri: asset.uri,
         mimeType: asset.mimeType || 'image/jpeg',
-        base64: asset.base64 || undefined,
         width: asset.width,
         height: asset.height,
       }))

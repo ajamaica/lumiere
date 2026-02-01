@@ -139,32 +139,26 @@ export interface Attachment {
   mimeType?: string
 }
 
-// Content block types matching Claude Messages API
-export interface TextContentBlock {
-  type: 'text'
-  text: string
+// Media upload response from POST /api/media/upload
+export interface MediaUploadFile {
+  path: string
+  mime: string
+  name: string
+  size: number
 }
 
-export interface ImageContentBlock {
-  type: 'image'
-  source: {
-    type: 'base64'
-    media_type: string
-    data: string
-  }
+export interface MediaUploadResponse {
+  files: MediaUploadFile[]
 }
-
-export type ContentBlock = TextContentBlock | ImageContentBlock
 
 // Agent params
 export interface AgentParams {
   message: string
-  content?: ContentBlock[]
+  media?: string[]
   idempotencyKey: string
   agentId?: string
   sessionKey?: string
   model?: string
-  attachments?: Attachment[]
 }
 
 // Agent events

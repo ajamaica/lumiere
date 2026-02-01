@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 
-import { AgentEvent, Attachment, ContentBlock } from '../services/molt'
+import { AgentEvent } from '../services/molt'
 import { messageQueueAtom } from '../store'
 
 interface Message {
@@ -11,15 +11,20 @@ interface Message {
   timestamp: Date
 }
 
+interface QueuedItem {
+  text: string
+  media?: string[]
+  skipUserMessage?: boolean
+}
+
 interface UseMessageQueueProps {
   sendAgentRequest: (
     params: {
       message: string
-      content?: ContentBlock[]
+      media?: string[]
       idempotencyKey: string
       agentId: string
       sessionKey: string
-      attachments?: Attachment[]
     },
     onEvent: (event: AgentEvent) => void,
   ) => Promise<void>
@@ -41,16 +46,11 @@ export function useMessageQueue({
   onSendStart,
 }: UseMessageQueueProps) {
   const [messageQueue, setMessageQueue] = useAtom(messageQueueAtom)
-  const [attachmentQueue, setAttachmentQueue] = useState<
-    { attachments?: Attachment[]; content?: ContentBlock[] }[]
-  >([])
+  const [itemQueue, setItemQueue] = useState<QueuedItem[]>([])
   const [isAgentResponding, setIsAgentResponding] = useState(false)
 
   const sendMessage = useCallback(
-    async (
-      text: string,
-      opts?: { attachments?: Attachment[]; content?: ContentBlock[]; skipUserMessage?: boolean },
-    ) => {
+    async (text: string, opts?: { media?: string[]; skipUserMessage?: boolean }) => {
       if (!opts?.skipUserMessage) {
         const userMessage: Message = {
           id: `msg-${Date.now()}`,
@@ -71,11 +71,10 @@ export function useMessageQueue({
         await sendAgentRequest(
           {
             message: text,
-            content: opts?.content,
+            media: opts?.media,
             idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
             agentId,
             sessionKey: currentSessionKey,
-            attachments: opts?.attachments,
           },
           (event: AgentEvent) => {
             if (event.stream === 'assistant' && event.data.delta) {
@@ -112,19 +111,11 @@ export function useMessageQueue({
   )
 
   const handleSend = useCallback(
-    async (
-      text: string,
-      opts?: { attachments?: Attachment[]; content?: ContentBlock[]; skipUserMessage?: boolean },
-    ) => {
+    async (text: string, opts?: { media?: string[]; skipUserMessage?: boolean }) => {
       if (isAgentResponding) {
-        // Add to queue if agent is currently responding
         setMessageQueue((prev) => [...prev, text])
-        setAttachmentQueue((prev) => [
-          ...prev,
-          { attachments: opts?.attachments, content: opts?.content },
-        ])
+        setItemQueue((prev) => [...prev, { text, media: opts?.media }])
       } else {
-        // Send immediately if agent is not responding
         await sendMessage(text, opts)
       }
     },
@@ -134,14 +125,14 @@ export function useMessageQueue({
   // Process message queue when agent finishes responding
   useEffect(() => {
     if (!isAgentResponding && messageQueue.length > 0) {
+      const nextItem = itemQueue[0]
       const nextMessage = messageQueue[0]
-      const nextOpts = attachmentQueue[0]
       setMessageQueue((prev) => prev.slice(1))
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setAttachmentQueue((prev) => prev.slice(1))
-      sendMessage(nextMessage, nextOpts)
+      setItemQueue((prev) => prev.slice(1))
+      sendMessage(nextMessage, { media: nextItem?.media })
     }
-  }, [isAgentResponding, messageQueue, attachmentQueue, sendMessage, setMessageQueue])
+  }, [isAgentResponding, messageQueue, itemQueue, sendMessage, setMessageQueue])
 
   return {
     handleSend,

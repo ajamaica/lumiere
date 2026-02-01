@@ -8,6 +8,7 @@ import {
   EventFrame,
   GatewaySnapshot,
   HealthStatus,
+  MediaUploadResponse,
   MoltConfig,
   SendMessageParams,
 } from './types'
@@ -25,6 +26,9 @@ export interface UseMoltGatewayResult {
   refreshHealth: () => Promise<void>
   sendMessage: (params: SendMessageParams) => Promise<unknown>
   sendAgentRequest: (params: AgentParams, onEvent?: (event: AgentEvent) => void) => Promise<unknown>
+  uploadMedia: (
+    files: { uri: string; mimeType: string; name: string }[],
+  ) => Promise<MediaUploadResponse>
   getChatHistory: (sessionKey: string, limit?: number) => Promise<unknown>
   resetSession: (sessionKey: string) => Promise<unknown>
   listSessions: () => Promise<unknown>
@@ -150,6 +154,16 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     [client],
   )
 
+  const uploadMedia = useCallback(
+    async (files: { uri: string; mimeType: string; name: string }[]) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.uploadMedia(files)
+    },
+    [client],
+  )
+
   const getChatHistory = useCallback(
     async (sessionKey: string, limit?: number) => {
       if (!client) {
@@ -262,6 +276,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     refreshHealth,
     sendMessage,
     sendAgentRequest,
+    uploadMedia,
     getChatHistory,
     resetSession,
     listSessions,
