@@ -1,6 +1,7 @@
 export type { ServerConfig, ServersDict, ServerSessions } from './atoms'
 export {
   clearMessagesAtom,
+  colorThemeAtom,
   currentServerIdAtom,
   currentSessionKeyAtom,
   gatewayConnectedAtom,

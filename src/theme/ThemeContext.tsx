@@ -3,14 +3,17 @@ import { useAtom } from 'jotai'
 import React, { createContext, ReactNode, useContext, useEffect, useMemo } from 'react'
 import { useColorScheme } from 'react-native'
 
-import { themeModeAtom } from '../store'
-import { darkTheme, lightTheme, Theme, ThemeMode } from './themes'
+import { colorThemeAtom, themeModeAtom } from '../store'
+import { ColorThemeKey } from './colors'
+import { applyColorTheme, darkTheme, lightTheme, Theme, ThemeMode } from './themes'
 
 interface ThemeContextType {
   theme: Theme
   themeMode: ThemeMode
   setThemeMode: (mode: ThemeMode) => void
   toggleTheme: () => void
+  colorTheme: ColorThemeKey
+  setColorTheme: (theme: ColorThemeKey) => void
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
@@ -18,14 +21,20 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const systemColorScheme = useColorScheme()
   const [themeMode, setThemeMode] = useAtom(themeModeAtom)
+  const [colorTheme, setColorThemeRaw] = useAtom(colorThemeAtom)
 
-  // Determine active theme based on mode
+  const setColorTheme = (key: ColorThemeKey) => setColorThemeRaw(key)
+
+  // Determine active theme based on mode and color theme
   const theme = useMemo<Theme>(() => {
+    let baseTheme: Theme
     if (themeMode === 'system') {
-      return systemColorScheme === 'dark' ? darkTheme : lightTheme
+      baseTheme = systemColorScheme === 'dark' ? darkTheme : lightTheme
+    } else {
+      baseTheme = themeMode === 'dark' ? darkTheme : lightTheme
     }
-    return themeMode === 'dark' ? darkTheme : lightTheme
-  }, [themeMode, systemColorScheme])
+    return applyColorTheme(baseTheme, (colorTheme as ColorThemeKey) || 'default')
+  }, [themeMode, systemColorScheme, colorTheme])
 
   // Update system UI colors
   useEffect(() => {
@@ -38,7 +47,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <ThemeContext.Provider value={{ theme, themeMode, setThemeMode, toggleTheme }}>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        themeMode,
+        setThemeMode,
+        toggleTheme,
+        colorTheme: (colorTheme as ColorThemeKey) || 'default',
+        setColorTheme,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   )
