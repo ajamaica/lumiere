@@ -13,7 +13,7 @@ interface Message {
 
 interface QueuedItem {
   text: string
-  media?: string[]
+  media?: { path: string }[]
   skipUserMessage?: boolean
 }
 
@@ -21,7 +21,7 @@ interface UseMessageQueueProps {
   sendAgentRequest: (
     params: {
       message: string
-      media?: string[]
+      media?: { path: string }[]
       idempotencyKey: string
       agentId: string
       sessionKey: string
@@ -50,7 +50,7 @@ export function useMessageQueue({
   const [isAgentResponding, setIsAgentResponding] = useState(false)
 
   const sendMessage = useCallback(
-    async (text: string, opts?: { media?: string[]; skipUserMessage?: boolean }) => {
+    async (text: string, opts?: { media?: { path: string }[]; skipUserMessage?: boolean }) => {
       if (!opts?.skipUserMessage) {
         const userMessage: Message = {
           id: `msg-${Date.now()}`,
@@ -111,7 +111,7 @@ export function useMessageQueue({
   )
 
   const handleSend = useCallback(
-    async (text: string, opts?: { media?: string[]; skipUserMessage?: boolean }) => {
+    async (text: string, opts?: { media?: { path: string }[]; skipUserMessage?: boolean }) => {
       if (isAgentResponding) {
         setMessageQueue((prev) => [...prev, text])
         setItemQueue((prev) => [...prev, { text, media: opts?.media }])

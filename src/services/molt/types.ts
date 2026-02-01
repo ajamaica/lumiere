@@ -154,7 +154,7 @@ export interface MediaUploadResponse {
 // Agent params
 export interface AgentParams {
   message: string
-  media?: string[]
+  media?: { path: string }[]
   idempotencyKey: string
   agentId?: string
   sessionKey?: string

@@ -156,16 +156,15 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
           })
 
           const uploadResult = await uploadMedia(filesToUpload)
-          const mediaPaths = uploadResult.files.map((f) => f.path)
+          const media = uploadResult.files.map((f) => ({ path: f.path }))
 
-          handleSendText(text || '', {
-            media: mediaPaths,
+          handleSendText(text.trim() || '', {
+            media,
             skipUserMessage: true,
           })
         } catch (err) {
           console.error('Failed to upload media:', err)
-          // Fallback: send text only if upload fails
-          handleSendText(text || '', { skipUserMessage: true })
+          handleSendText(text.trim() || '', { skipUserMessage: true })
         }
       } else {
         handleSendText(text)
