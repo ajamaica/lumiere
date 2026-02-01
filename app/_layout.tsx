@@ -1,18 +1,44 @@
 import { Stack } from 'expo-router'
 import { useAtom } from 'jotai'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { AppState, AppStateStatus } from 'react-native'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
 
+import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { OnboardingScreen } from '../src/screens/OnboardingScreen'
-import { onboardingCompletedAtom } from '../src/store'
+import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider } from '../src/theme'
 
 function AppContent() {
   const [onboardingCompleted] = useAtom(onboardingCompletedAtom)
+  const [biometricLockEnabled] = useAtom(biometricLockEnabledAtom)
+  const [isLocked, setIsLocked] = useState(() => biometricLockEnabled)
+  const appState = useRef(AppState.currentState)
   useDeepLinking()
+
+  const handleUnlock = useCallback(() => {
+    setIsLocked(false)
+  }, [])
+
+  useEffect(() => {
+    const handleAppStateChange = (nextState: AppStateStatus) => {
+      if (biometricLockEnabled && appState.current === 'active' && nextState.match(/inactive|background/)) {
+        setIsLocked(true)
+      }
+      appState.current = nextState
+    }
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange)
+    return () => subscription.remove()
+  }, [biometricLockEnabled])
 
   if (!onboardingCompleted) {
     return <OnboardingScreen />
+  }
+
+  if (biometricLockEnabled && isLocked) {
+    return <BiometricLockScreen onUnlock={handleUnlock} />
   }
 
   return (

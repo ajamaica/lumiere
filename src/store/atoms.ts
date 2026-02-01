@@ -76,3 +76,10 @@ export interface FavoriteItem {
 }
 
 export const favoritesAtom = atomWithStorage<FavoriteItem[]>('favorites', [], storage)
+
+// Biometric lock setting (off by default)
+export const biometricLockEnabledAtom = atomWithStorage<boolean>(
+  'biometricLockEnabled',
+  false,
+  storage,
+)

@@ -1,10 +1,12 @@
+import * as LocalAuthentication from 'expo-local-authentication'
 import { useRouter } from 'expo-router'
-import { useSetAtom } from 'jotai'
+import { useAtom, useSetAtom } from 'jotai'
 import React from 'react'
 import { Alert, SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow } from '../../src/components/ui'
 import {
+  biometricLockEnabledAtom,
   clientIdAtom,
   currentSessionKeyAtom,
   gatewayTokenAtom,
@@ -21,6 +23,30 @@ export default function SettingsScreen() {
   const setGatewayToken = useSetAtom(gatewayTokenAtom)
   const setClientId = useSetAtom(clientIdAtom)
   const setCurrentSessionKey = useSetAtom(currentSessionKeyAtom)
+  const [biometricLockEnabled, setBiometricLockEnabled] = useAtom(biometricLockEnabledAtom)
+
+  const handleBiometricToggle = async (value: boolean) => {
+    if (value) {
+      const compatible = await LocalAuthentication.hasHardwareAsync()
+      if (!compatible) {
+        Alert.alert('Unavailable', 'Biometric authentication is not available on this device.')
+        return
+      }
+      const enrolled = await LocalAuthentication.isEnrolledAsync()
+      if (!enrolled) {
+        Alert.alert('Not Enrolled', 'No biometric credentials are enrolled on this device.')
+        return
+      }
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: 'Authenticate to enable Face ID lock',
+      })
+      if (result.success) {
+        setBiometricLockEnabled(true)
+      }
+    } else {
+      setBiometricLockEnabled(false)
+    }
+  }
 
   const getThemeLabel = () => {
     switch (themeMode) {
@@ -75,6 +101,14 @@ export default function SettingsScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Section title="Appearance">
           <SettingRow label="Theme" value={getThemeLabel()} />
+        </Section>
+
+        <Section title="Security">
+          <SettingRow
+            label="Require Face ID"
+            switchValue={biometricLockEnabled}
+            onSwitchChange={handleBiometricToggle}
+          />
         </Section>
 
         <Section title="Control">
