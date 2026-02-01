@@ -11,7 +11,13 @@ export interface SettingRowProps {
   onSwitchChange?: (value: boolean) => void
 }
 
-export function SettingRow({ label, value, onPress, switchValue, onSwitchChange }: SettingRowProps) {
+export function SettingRow({
+  label,
+  value,
+  onPress,
+  switchValue,
+  onSwitchChange,
+}: SettingRowProps) {
   const { theme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -38,9 +44,7 @@ export function SettingRow({ label, value, onPress, switchValue, onSwitchChange 
     <View style={styles.row}>
       <Text style={styles.label}>{label}</Text>
       {value && <Text style={styles.value}>{value}</Text>}
-      {switchValue !== undefined && (
-        <Switch value={switchValue} onValueChange={onSwitchChange} />
-      )}
+      {switchValue !== undefined && <Switch value={switchValue} onValueChange={onSwitchChange} />}
     </View>
   )
 
