@@ -11,6 +11,7 @@ import { useTheme } from '../../theme'
 
 export interface MessageAttachment {
   uri: string
+  base64?: string
   mimeType?: string
   fileName?: string
   width?: number

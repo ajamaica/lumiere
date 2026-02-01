@@ -5,7 +5,6 @@ import {
   ConnectResponse,
   EventFrame,
   HealthStatus,
-  MediaUploadResponse,
   MoltConfig,
   RequestFrame,
   ResponseFrame,
@@ -249,40 +248,6 @@ export class MoltGatewayClient {
     } else {
       return await this.request('agent', params)
     }
-  }
-
-  private getHttpBaseUrl(): string {
-    // Derive HTTP URL from WebSocket URL: ws:// → http://, wss:// → https://
-    return this.config.url.replace(/^ws(s?):\/\//, 'http$1://')
-  }
-
-  async uploadMedia(
-    files: { uri: string; mimeType: string; name: string }[],
-  ): Promise<MediaUploadResponse> {
-    const baseUrl = this.getHttpBaseUrl()
-    const formData = new FormData()
-
-    for (const file of files) {
-      formData.append('file', {
-        uri: file.uri,
-        type: file.mimeType,
-        name: file.name,
-      } as unknown as Blob)
-    }
-
-    const response = await fetch(`${baseUrl}/api/media/upload`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${this.config.token}`,
-      },
-      body: formData,
-    })
-
-    if (!response.ok) {
-      throw new Error(`Media upload failed: ${response.status} ${response.statusText}`)
-    }
-
-    return (await response.json()) as MediaUploadResponse
   }
 
   isConnected(): boolean {

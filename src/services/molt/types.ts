@@ -139,22 +139,10 @@ export interface Attachment {
   mimeType?: string
 }
 
-// Media upload response from POST /api/media/upload
-export interface MediaUploadFile {
-  path: string
-  mime: string
-  name: string
-  size: number
-}
-
-export interface MediaUploadResponse {
-  files: MediaUploadFile[]
-}
-
 // Agent params
 export interface AgentParams {
   message: string
-  media?: { path: string }[]
+  attachments?: { mimeType: string; content: string }[]
   idempotencyKey: string
   agentId?: string
   sessionKey?: string

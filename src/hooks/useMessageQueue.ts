@@ -13,7 +13,7 @@ interface Message {
 
 interface QueuedItem {
   text: string
-  media?: { path: string }[]
+  attachments?: { mimeType: string; content: string }[]
   skipUserMessage?: boolean
 }
 
@@ -21,7 +21,7 @@ interface UseMessageQueueProps {
   sendAgentRequest: (
     params: {
       message: string
-      media?: { path: string }[]
+      attachments?: { mimeType: string; content: string }[]
       idempotencyKey: string
       agentId: string
       sessionKey: string
@@ -50,7 +50,10 @@ export function useMessageQueue({
   const [isAgentResponding, setIsAgentResponding] = useState(false)
 
   const sendMessage = useCallback(
-    async (text: string, opts?: { media?: { path: string }[]; skipUserMessage?: boolean }) => {
+    async (
+      text: string,
+      opts?: { attachments?: { mimeType: string; content: string }[]; skipUserMessage?: boolean },
+    ) => {
       if (!opts?.skipUserMessage) {
         const userMessage: Message = {
           id: `msg-${Date.now()}`,
@@ -71,7 +74,7 @@ export function useMessageQueue({
         await sendAgentRequest(
           {
             message: text,
-            media: opts?.media,
+            attachments: opts?.attachments,
             idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
             agentId,
             sessionKey: currentSessionKey,
@@ -111,10 +114,13 @@ export function useMessageQueue({
   )
 
   const handleSend = useCallback(
-    async (text: string, opts?: { media?: { path: string }[]; skipUserMessage?: boolean }) => {
+    async (
+      text: string,
+      opts?: { attachments?: { mimeType: string; content: string }[]; skipUserMessage?: boolean },
+    ) => {
       if (isAgentResponding) {
         setMessageQueue((prev) => [...prev, text])
-        setItemQueue((prev) => [...prev, { text, media: opts?.media }])
+        setItemQueue((prev) => [...prev, { text, attachments: opts?.attachments }])
       } else {
         await sendMessage(text, opts)
       }
@@ -130,7 +136,7 @@ export function useMessageQueue({
       setMessageQueue((prev) => prev.slice(1))
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setItemQueue((prev) => prev.slice(1))
-      sendMessage(nextMessage, { media: nextItem?.media })
+      sendMessage(nextMessage, { attachments: nextItem?.attachments })
     }
   }, [isAgentResponding, messageQueue, itemQueue, sendMessage, setMessageQueue])
 

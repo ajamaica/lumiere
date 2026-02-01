@@ -97,19 +97,11 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     opacity: pulseOpacity.value,
   }))
 
-  const {
-    connected,
-    connecting,
-    error,
-    connect,
-    disconnect,
-    sendAgentRequest,
-    uploadMedia,
-    getChatHistory,
-  } = useMoltGateway({
-    url: gatewayUrl,
-    token: gatewayToken,
-  })
+  const { connected, connecting, error, connect, disconnect, sendAgentRequest, getChatHistory } =
+    useMoltGateway({
+      url: gatewayUrl,
+      token: gatewayToken,
+    })
 
   const {
     handleSend: handleSendText,
@@ -144,33 +136,23 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         setMessages((prev) => [...prev, userMessage])
         shouldAutoScrollRef.current = true
 
-        // Upload images to gateway via POST /api/media/upload, then send media paths
-        try {
-          const filesToUpload = attachments.map((a, i) => {
-            const ext = (a.mimeType || 'image/jpeg').split('/')[1] || 'jpg'
-            return {
-              uri: a.uri,
-              mimeType: a.mimeType || 'image/jpeg',
-              name: a.fileName || `image-${i}.${ext}`,
-            }
-          })
+        // Build inline base64 attachments for the gateway
+        const agentAttachments = attachments
+          .filter((a) => a.base64)
+          .map((a) => ({
+            mimeType: a.mimeType || 'image/jpeg',
+            content: a.base64!,
+          }))
 
-          const uploadResult = await uploadMedia(filesToUpload)
-          const media = uploadResult.files.map((f) => ({ path: f.path }))
-
-          handleSendText(text.trim() || '', {
-            media,
-            skipUserMessage: true,
-          })
-        } catch (err) {
-          console.error('Failed to upload media:', err)
-          handleSendText(text.trim() || '', { skipUserMessage: true })
-        }
+        handleSendText(text.trim() || '', {
+          attachments: agentAttachments.length > 0 ? agentAttachments : undefined,
+          skipUserMessage: true,
+        })
       } else {
         handleSendText(text)
       }
     },
-    [handleSendText, uploadMedia],
+    [handleSendText],
   )
 
   // Load chat history on mount
