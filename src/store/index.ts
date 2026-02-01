@@ -1,5 +1,6 @@
 export type { FavoriteItem, ServerConfig, ServersDict, ServerSessions } from './atoms'
 export {
+  biometricLockEnabledAtom,
   clearMessagesAtom,
   colorThemeAtom,
   currentServerIdAtom,
