@@ -7,8 +7,8 @@ import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, View } from 're
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { onboardingCompletedAtom } from '../src/store'
-import { ColorThemeKey, colorThemes } from '../src/theme/colors'
 import { useTheme } from '../src/theme'
+import { ColorThemeKey, colorThemes } from '../src/theme/colors'
 
 const COLOR_THEME_KEYS: ColorThemeKey[] = [
   'default',
