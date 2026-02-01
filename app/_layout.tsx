@@ -2,12 +2,14 @@ import { Stack } from 'expo-router'
 import { useAtom } from 'jotai'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
 
+import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { OnboardingScreen } from '../src/screens/OnboardingScreen'
 import { onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider } from '../src/theme'
 
 function AppContent() {
   const [onboardingCompleted] = useAtom(onboardingCompletedAtom)
+  useDeepLinking()
 
   if (!onboardingCompleted) {
     return <OnboardingScreen />
