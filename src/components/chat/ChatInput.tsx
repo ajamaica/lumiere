@@ -55,6 +55,7 @@ export function ChatInput({
       const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
         uri: asset.uri,
         mimeType: asset.mimeType || 'image/jpeg',
+        fileName: asset.fileName || undefined,
         width: asset.width,
         height: asset.height,
       }))

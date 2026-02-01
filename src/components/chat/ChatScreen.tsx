@@ -146,23 +146,26 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
 
         // Upload images to gateway via POST /api/media/upload, then send media paths
         try {
-          const filesToUpload = attachments.map((a, i) => ({
-            uri: a.uri,
-            mimeType: a.mimeType || 'image/jpeg',
-            name: `image-${Date.now()}-${i}.${(a.mimeType || 'image/jpeg').split('/')[1] || 'jpg'}`,
-          }))
+          const filesToUpload = attachments.map((a, i) => {
+            const ext = (a.mimeType || 'image/jpeg').split('/')[1] || 'jpg'
+            return {
+              uri: a.uri,
+              mimeType: a.mimeType || 'image/jpeg',
+              name: a.fileName || `image-${i}.${ext}`,
+            }
+          })
 
           const uploadResult = await uploadMedia(filesToUpload)
           const mediaPaths = uploadResult.files.map((f) => f.path)
 
-          handleSendText(text || 'Attached image(s)', {
+          handleSendText(text || '', {
             media: mediaPaths,
             skipUserMessage: true,
           })
         } catch (err) {
           console.error('Failed to upload media:', err)
           // Fallback: send text only if upload fails
-          handleSendText(text || 'Attached image(s)', { skipUserMessage: true })
+          handleSendText(text || '', { skipUserMessage: true })
         }
       } else {
         handleSendText(text)
