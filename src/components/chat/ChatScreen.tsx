@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { agentConfig } from '../../config/gateway.config'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
-import { useMoltGateway } from '../../services/molt'
+import { Attachment, useMoltGateway } from '../../services/molt'
 import { clearMessagesAtom, currentSessionKeyAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
@@ -121,16 +121,19 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const handleSend = useCallback(
     (text: string, attachments?: MessageAttachment[]) => {
       if (attachments && attachments.length > 0) {
-        // When sending with attachments, add a user message with the images
-        // and prepend base64 image references to the text sent to the agent
-        const imageDescriptions = attachments
-          .map((a) => `[Image: ${a.mimeType || 'image/jpeg'}]`)
-          .join(' ')
-        const fullText = text ? `${imageDescriptions} ${text}` : imageDescriptions
+        // Convert UI attachments to Molt protocol attachments with base64 data
+        const moltAttachments: Attachment[] = attachments
+          .filter((a) => a.base64)
+          .map((a) => ({
+            type: 'image' as const,
+            data: a.base64!,
+            mimeType: a.mimeType || 'image/jpeg',
+          }))
 
+        // Add user message with image previews to the local message list
         const userMessage: Message = {
           id: `msg-${Date.now()}`,
-          text,
+          text: text || '',
           sender: 'user',
           timestamp: new Date(),
           attachments,
@@ -138,8 +141,13 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         setMessages((prev) => [...prev, userMessage])
         shouldAutoScrollRef.current = true
 
-        // Send via the queue but with the enriched text
-        handleSendText(fullText)
+        // Send text + attachments through the queue to the agent
+        // skipUserMessage=true since we already added the user message above with image previews
+        handleSendText(
+          text || 'Attached image(s)',
+          moltAttachments.length > 0 ? moltAttachments : undefined,
+          true,
+        )
       } else {
         handleSendText(text)
       }
