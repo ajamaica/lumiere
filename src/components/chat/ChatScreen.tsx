@@ -103,7 +103,11 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
       token: gatewayToken,
     })
 
-  const { handleSend: handleSendText, isAgentResponding, queueCount } = useMessageQueue({
+  const {
+    handleSend: handleSendText,
+    isAgentResponding,
+    queueCount,
+  } = useMessageQueue({
     sendAgentRequest,
     currentSessionKey,
     agentId: agentConfig.defaultAgentId,

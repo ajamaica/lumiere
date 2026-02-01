@@ -113,7 +113,10 @@ export function ChatInput({
             <View style={styles.previewRow}>
               {attachments.map((attachment, index) => (
                 <View key={`preview-${index}`} style={styles.previewItem}>
-                  <Image source={{ uri: attachment.uri }} style={styles.previewImage as ImageStyle} />
+                  <Image
+                    source={{ uri: attachment.uri }}
+                    style={styles.previewImage as ImageStyle}
+                  />
                   <TouchableOpacity
                     style={styles.previewRemove}
                     onPress={() => handleRemoveAttachment(index)}
