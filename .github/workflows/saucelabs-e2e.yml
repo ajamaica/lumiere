@@ -61,11 +61,51 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Set app name to (sauce)
+        run: |
+          npx json -I -f app.json -e "this.expo.name='(sauce) lumiere'"
+
+      - name: Set iOS build number
+        run: |
+          BUILD_NUMBER="${{ github.run_id }}"
+          npx json -I -f app.json -e "this.expo.ios.buildNumber='${BUILD_NUMBER:-1}'"
+
+      - name: Build iOS app
+        if: ${{ !inputs.app_url }}
+        run: eas build --platform ios --profile production --non-interactive
+
+      - name: Download iOS build from EAS
+        if: ${{ !inputs.app_url }}
+        run: |
+          mkdir -p eas-build
+          eas build:list --platform ios --status finished --limit 1 --json | \
+            jq -r '.[0].artifacts.buildUrl' | \
+            xargs curl -L -o eas-build/lumiere.ipa
+
+      - name: Upload iOS build to SauceLabs
+        if: ${{ !inputs.app_url }}
+        id: sauce-upload-ios
+        run: |
+          RESPONSE=$(curl -u "${{ secrets.SAUCE_USERNAME }}:${{ secrets.SAUCE_ACCESS_KEY }}" \
+            --location \
+            --request POST 'https://api.us-west-1.saucelabs.com/v1/storage/upload' \
+            --form "payload=@eas-build/lumiere.ipa" \
+            --form "name=lumiere.ipa" \
+            --form "description=iOS build from run ${{ github.run_id }}")
+          SAUCE_FILE_ID=$(echo "$RESPONSE" | jq -r '.item.id')
+          echo "SAUCE_APP=storage:$SAUCE_FILE_ID" >> $GITHUB_OUTPUT
+
       - name: Run iOS E2E tests on SauceLabs
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-          SAUCE_APP: ${{ inputs.app_url || 'storage:filename=lumiere.ipa' }}
+          SAUCE_APP: ${{ inputs.app_url || steps.sauce-upload-ios.outputs.SAUCE_APP || 'storage:filename=lumiere.ipa' }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: pnpm e2e:sauce:ios
 
@@ -112,11 +152,51 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Set app name to (sauce)
+        run: |
+          npx json -I -f app.json -e "this.expo.name='(sauce) lumiere'"
+
+      - name: Set Android build number
+        run: |
+          BUILD_NUMBER="${{ github.run_id }}"
+          npx json -I -f app.json -e "this.expo.android.versionCode=${BUILD_NUMBER:-1}"
+
+      - name: Build Android app
+        if: ${{ !inputs.app_url }}
+        run: eas build --platform android --profile production --non-interactive
+
+      - name: Download Android build from EAS
+        if: ${{ !inputs.app_url }}
+        run: |
+          mkdir -p eas-build
+          eas build:list --platform android --status finished --limit 1 --json | \
+            jq -r '.[0].artifacts.buildUrl' | \
+            xargs curl -L -o eas-build/lumiere.apk
+
+      - name: Upload Android build to SauceLabs
+        if: ${{ !inputs.app_url }}
+        id: sauce-upload-android
+        run: |
+          RESPONSE=$(curl -u "${{ secrets.SAUCE_USERNAME }}:${{ secrets.SAUCE_ACCESS_KEY }}" \
+            --location \
+            --request POST 'https://api.us-west-1.saucelabs.com/v1/storage/upload' \
+            --form "payload=@eas-build/lumiere.apk" \
+            --form "name=lumiere.apk" \
+            --form "description=Android build from run ${{ github.run_id }}")
+          SAUCE_FILE_ID=$(echo "$RESPONSE" | jq -r '.item.id')
+          echo "SAUCE_APP=storage:$SAUCE_FILE_ID" >> $GITHUB_OUTPUT
+
       - name: Run Android E2E tests on SauceLabs
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-          SAUCE_APP: ${{ inputs.app_url || 'storage:filename=lumiere.apk' }}
+          SAUCE_APP: ${{ inputs.app_url || steps.sauce-upload-android.outputs.SAUCE_APP || 'storage:filename=lumiere.apk' }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: pnpm e2e:sauce:android
 
