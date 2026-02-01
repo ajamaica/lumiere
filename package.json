@@ -10,7 +10,10 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "e2e:sauce:ios": "wdio run e2e/configs/wdio.saucelabs.ios.conf.ts",
+    "e2e:sauce:android": "wdio run e2e/configs/wdio.saucelabs.android.conf.ts",
+    "sauce:upload": "./.saucelabs/upload-app.sh"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -38,6 +41,14 @@
     "react-native-worklets": "^0.7.2"
   },
   "devDependencies": {
+    "@wdio/cli": "^9.12.0",
+    "@wdio/local-runner": "^9.12.0",
+    "@wdio/mocha-framework": "^9.12.0",
+    "@wdio/spec-reporter": "^9.12.0",
+    "@wdio/junit-reporter": "^9.12.0",
+    "@wdio/sauce-service": "^9.12.0",
+    "@wdio/globals": "^9.12.0",
+    "@wdio/types": "^9.12.0",
     "@eslint/js": "^9.39.2",
     "@types/react": "~19.1.0",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
