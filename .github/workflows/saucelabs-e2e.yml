@@ -61,6 +61,24 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Set app name to (sauce)
+        run: |
+          npx json -I -f app.json -e "this.expo.name='(sauce) lumiere'"
+
+      - name: Set iOS build number
+        run: |
+          BUILD_NUMBER="${{ github.run_id }}"
+          npx json -I -f app.json -e "this.expo.ios.buildNumber='${BUILD_NUMBER:-1}'"
+
+      - name: Build iOS app
+        run: eas build --platform ios --profile production --non-interactive
+
       - name: Run iOS E2E tests on SauceLabs
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
@@ -111,6 +129,24 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Set app name to (sauce)
+        run: |
+          npx json -I -f app.json -e "this.expo.name='(sauce) lumiere'"
+
+      - name: Set Android build number
+        run: |
+          BUILD_NUMBER="${{ github.run_id }}"
+          npx json -I -f app.json -e "this.expo.android.versionCode=${BUILD_NUMBER:-1}"
+
+      - name: Build Android app
+        run: eas build --platform android --profile production --non-interactive
 
       - name: Run Android E2E tests on SauceLabs
         env:
