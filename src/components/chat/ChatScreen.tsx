@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { agentConfig } from '../../config/gateway.config'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
-import { Attachment, useMoltGateway } from '../../services/molt'
+import { Attachment, ContentBlock, useMoltGateway } from '../../services/molt'
 import { clearMessagesAtom, currentSessionKeyAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
@@ -121,7 +121,31 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
   const handleSend = useCallback(
     (text: string, attachments?: MessageAttachment[]) => {
       if (attachments && attachments.length > 0) {
-        // Convert UI attachments to Molt protocol attachments with base64 data
+        // Build Claude API content blocks: image blocks + text block
+        const contentBlocks: ContentBlock[] = []
+
+        // Add image content blocks with base64 data
+        for (const a of attachments) {
+          if (a.base64) {
+            contentBlocks.push({
+              type: 'image',
+              source: {
+                type: 'base64',
+                media_type: a.mimeType || 'image/jpeg',
+                data: a.base64,
+              },
+            })
+          }
+        }
+
+        // Add text content block
+        if (text) {
+          contentBlocks.push({ type: 'text', text })
+        } else {
+          contentBlocks.push({ type: 'text', text: 'What is in this image?' })
+        }
+
+        // Also build Molt-style attachments as fallback
         const moltAttachments: Attachment[] = attachments
           .filter((a) => a.base64)
           .map((a) => ({
@@ -130,7 +154,7 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
             mimeType: a.mimeType || 'image/jpeg',
           }))
 
-        // Add user message with image previews to the local message list
+        // Add user message with image previews to the local chat UI
         const userMessage: Message = {
           id: `msg-${Date.now()}`,
           text: text || '',
@@ -141,13 +165,12 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
         setMessages((prev) => [...prev, userMessage])
         shouldAutoScrollRef.current = true
 
-        // Send text + attachments through the queue to the agent
-        // skipUserMessage=true since we already added the user message above with image previews
-        handleSendText(
-          text || 'Attached image(s)',
-          moltAttachments.length > 0 ? moltAttachments : undefined,
-          true,
-        )
+        // Send with both content blocks and attachments for maximum gateway compatibility
+        handleSendText(text || 'Attached image(s)', {
+          content: contentBlocks,
+          attachments: moltAttachments.length > 0 ? moltAttachments : undefined,
+          skipUserMessage: true,
+        })
       } else {
         handleSendText(text)
       }
