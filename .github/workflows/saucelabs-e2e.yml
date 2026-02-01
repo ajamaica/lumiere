@@ -12,6 +12,11 @@ on:
           - android
           - both
         default: 'ios'
+      branch:
+        description: 'Branch to build from'
+        required: false
+        type: string
+        default: 'main'
       app_url:
         description: 'SauceLabs storage URL for the app (e.g. storage:filename=lumiere.ipa)'
         required: false
@@ -21,6 +26,10 @@ on:
       platform:
         required: true
         type: string
+      branch:
+        required: false
+        type: string
+        default: 'main'
       app_url:
         required: false
         type: string
@@ -33,6 +42,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -124,6 +135,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
