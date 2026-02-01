@@ -1,9 +1,10 @@
-export type { ServerConfig, ServersDict, ServerSessions } from './atoms'
+export type { FavoriteItem, ServerConfig, ServersDict, ServerSessions } from './atoms'
 export {
   clearMessagesAtom,
   colorThemeAtom,
   currentServerIdAtom,
   currentSessionKeyAtom,
+  favoritesAtom,
   gatewayConnectedAtom,
   gatewayConnectingAtom,
   gatewayErrorAtom,

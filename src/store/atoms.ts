@@ -66,3 +66,13 @@ export const messageQueueAtom = atom<string[]>([])
 
 // Trigger to clear messages and reload history (in-memory only)
 export const clearMessagesAtom = atom<number>(0)
+
+// Favorites
+export interface FavoriteItem {
+  id: string
+  text: string
+  sender: 'user' | 'agent'
+  savedAt: number
+}
+
+export const favoritesAtom = atomWithStorage<FavoriteItem[]>('favorites', [], storage)
