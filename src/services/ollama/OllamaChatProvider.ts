@@ -62,7 +62,7 @@ export class OllamaChatProvider implements ChatProvider {
       }
       this.connected = true
       this.notifyConnectionState(true, false)
-    } catch (error) {
+    } catch {
       this.connected = false
       this.notifyConnectionState(false, false)
       throw new Error(
