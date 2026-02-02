@@ -132,10 +132,6 @@ export default function ServersScreen() {
           ]}
           onPress={() => {
             setFormProviderType(option.value)
-            // Pre-fill URL hints per provider
-            if (option.value === 'ollama' && !formUrl) {
-              setFormUrl('http://localhost:11434')
-            }
           }}
         >
           <Text
