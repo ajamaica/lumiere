@@ -15,17 +15,16 @@ import Animated, {
 } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { agentConfig } from '../../config/gateway.config'
+import { useChatProvider } from '../../hooks/useChatProvider'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
-import { useMoltGateway } from '../../services/molt'
+import { ProviderConfig } from '../../services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
 
 interface ChatScreenProps {
-  gatewayUrl: string
-  gatewayToken: string
+  providerConfig: ProviderConfig
 }
 
 /**
@@ -38,7 +37,7 @@ interface ChatScreenProps {
  * key for the current server, returning a default value ('agent:main:main')
  * if none exists. This ensures a valid session key is always available.
  */
-export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
+export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const { theme } = useTheme()
   const router = useRouter()
   const [messages, setMessages] = useState<Message[]>([])
@@ -98,16 +97,12 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     opacity: pulseOpacity.value,
   }))
 
-  const { connected, connecting, error, connect, disconnect, sendAgentRequest, getChatHistory } =
-    useMoltGateway({
-      url: gatewayUrl,
-      token: gatewayToken,
-    })
+  const { connected, connecting, error, connect, disconnect, sendMessage, getChatHistory } =
+    useChatProvider(providerConfig)
 
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
-    sendAgentRequest,
+    sendMessage,
     currentSessionKey,
-    agentId: agentConfig.defaultAgentId,
     onMessageAdd: (message) => setMessages((prev) => [...prev, message]),
     onAgentMessageUpdate: (text) => setCurrentAgentMessage(text),
     onAgentMessageComplete: (message) => {
@@ -127,19 +122,9 @@ export function ChatScreen({ gatewayUrl, gatewayToken }: ChatScreenProps) {
     hasScrolledOnLoadRef.current = false
     setIsLoadingHistory(true)
     try {
-      const history = await getChatHistory(currentSessionKey, 100)
-      console.log('Chat history:', history)
+      const historyResponse = await getChatHistory(currentSessionKey, 100)
+      console.log('Chat history:', historyResponse)
 
-      interface HistoryMessage {
-        role: string
-        content: Array<{ type: string; text?: string }>
-        timestamp: number
-      }
-      interface HistoryResponse {
-        messages?: HistoryMessage[]
-      }
-
-      const historyResponse = history as HistoryResponse
       if (historyResponse?.messages && Array.isArray(historyResponse.messages)) {
         const historyMessages = historyResponse.messages
           .filter((msg) => msg.role === 'user' || msg.role === 'assistant')

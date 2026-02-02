@@ -2,7 +2,11 @@ import { useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 
 import { MessageAttachment } from '../components/chat/ChatMessage'
-import { AgentEvent, Attachment } from '../services/molt'
+import {
+  ChatProviderEvent,
+  ProviderAttachment,
+  SendMessageParams as ProviderSendParams,
+} from '../services/providers'
 import { messageQueueAtom } from '../store'
 
 interface Message {
@@ -19,18 +23,11 @@ interface QueuedMessage {
 }
 
 interface UseMessageQueueProps {
-  sendAgentRequest: (
-    params: {
-      message: string
-      idempotencyKey: string
-      agentId: string
-      sessionKey: string
-      attachments?: Attachment[]
-    },
-    onEvent: (event: AgentEvent) => void,
+  sendMessage: (
+    params: ProviderSendParams,
+    onEvent: (event: ChatProviderEvent) => void,
   ) => Promise<void>
   currentSessionKey: string
-  agentId: string
   onMessageAdd: (message: Message) => void
   onAgentMessageUpdate: (text: string) => void
   onAgentMessageComplete: (message: Message) => void
@@ -38,9 +35,8 @@ interface UseMessageQueueProps {
 }
 
 export function useMessageQueue({
-  sendAgentRequest,
+  sendMessage: providerSendMessage,
   currentSessionKey,
-  agentId,
   onMessageAdd,
   onAgentMessageUpdate,
   onAgentMessageComplete,
@@ -66,27 +62,25 @@ export function useMessageQueue({
 
       let accumulatedText = ''
 
-      // Convert MessageAttachments to API Attachments
-      const apiAttachments: Attachment[] | undefined = attachments?.map((a) => ({
+      // Convert MessageAttachments to provider attachments
+      const providerAttachments: ProviderAttachment[] | undefined = attachments?.map((a) => ({
         type: 'image' as const,
         data: a.base64,
         mimeType: a.mimeType,
       }))
 
       try {
-        await sendAgentRequest(
+        await providerSendMessage(
           {
             message: text,
-            idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
-            agentId,
             sessionKey: currentSessionKey,
-            attachments: apiAttachments,
+            attachments: providerAttachments,
           },
-          (event: AgentEvent) => {
-            if (event.stream === 'assistant' && event.data.delta) {
-              accumulatedText += event.data.delta
+          (event: ChatProviderEvent) => {
+            if (event.type === 'delta' && event.delta) {
+              accumulatedText += event.delta
               onAgentMessageUpdate(accumulatedText)
-            } else if (event.stream === 'lifecycle' && event.data.phase === 'end') {
+            } else if (event.type === 'lifecycle' && event.phase === 'end') {
               const agentMessage: Message = {
                 id: `msg-${Date.now()}`,
                 text: accumulatedText,
@@ -106,9 +100,8 @@ export function useMessageQueue({
       }
     },
     [
-      sendAgentRequest,
+      providerSendMessage,
       currentSessionKey,
-      agentId,
       onMessageAdd,
       onAgentMessageUpdate,
       onAgentMessageComplete,

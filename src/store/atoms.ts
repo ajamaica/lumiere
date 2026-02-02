@@ -3,6 +3,7 @@ import { atom } from 'jotai'
 import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 
 import { DEFAULT_SESSION_KEY } from '../constants'
+import type { ProviderType } from '../services/providers/types'
 
 // Create AsyncStorage adapter for Jotai
 const storage = createJSONStorage<unknown>(() => AsyncStorage)
@@ -13,6 +14,8 @@ export interface ServerConfig {
   name: string // User-friendly name
   url: string
   clientId?: string
+  providerType: ProviderType // 'molt' | 'ollama'
+  model?: string // Model name for Ollama (e.g., 'llama3.2', 'mistral')
   createdAt: number
 }
 

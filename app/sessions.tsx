@@ -19,7 +19,7 @@ interface Session {
 export default function SessionsScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { getCurrentMoltConfig } = useServers()
+  const { getProviderConfig } = useServers()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
@@ -29,11 +29,11 @@ export default function SessionsScreen() {
 
   useEffect(() => {
     const loadConfig = async () => {
-      const moltConfig = await getCurrentMoltConfig()
-      setConfig(moltConfig)
+      const providerConfig = await getProviderConfig()
+      setConfig(providerConfig)
     }
     loadConfig()
-  }, [getCurrentMoltConfig])
+  }, [getProviderConfig])
 
   const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
     url: config?.url || '',
