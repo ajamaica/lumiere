@@ -6,6 +6,7 @@ import {
   ChatProvider,
   ChatProviderEvent,
   HealthStatus,
+  ProviderCapabilities,
   ProviderConfig,
   SendMessageParams,
 } from './types'
@@ -16,6 +17,15 @@ import {
  * UI layer to work with any provider.
  */
 export class MoltChatProvider implements ChatProvider {
+  readonly capabilities: ProviderCapabilities = {
+    chat: true,
+    imageAttachments: true,
+    serverSessions: true,
+    persistentHistory: true,
+    scheduler: true,
+    gatewaySnapshot: true,
+  }
+
   private client: MoltGatewayClient
   private connected = false
 

@@ -97,8 +97,16 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     opacity: pulseOpacity.value,
   }))
 
-  const { connected, connecting, error, connect, disconnect, sendMessage, getChatHistory } =
-    useChatProvider(providerConfig)
+  const {
+    connected,
+    connecting,
+    error,
+    capabilities,
+    connect,
+    disconnect,
+    sendMessage,
+    getChatHistory,
+  } = useChatProvider(providerConfig)
 
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
     sendMessage,
@@ -358,6 +366,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             onOpenSessionMenu={handleOpenSessionMenu}
             disabled={!connected}
             queueCount={queueCount}
+            supportsImageAttachments={capabilities.imageAttachments}
           />
         </Animated.View>
       </View>

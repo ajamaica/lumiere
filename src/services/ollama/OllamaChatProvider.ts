@@ -4,6 +4,7 @@ import {
   ChatProvider,
   ChatProviderEvent,
   HealthStatus,
+  ProviderCapabilities,
   ProviderConfig,
   SendMessageParams,
 } from '../providers/types'
@@ -29,6 +30,15 @@ interface OllamaChatStreamChunk {
  * and maintains an in-memory conversation history per session.
  */
 export class OllamaChatProvider implements ChatProvider {
+  readonly capabilities: ProviderCapabilities = {
+    chat: true,
+    imageAttachments: false,
+    serverSessions: false,
+    persistentHistory: false,
+    scheduler: false,
+    gatewaySnapshot: false,
+  }
+
   private baseUrl: string
   private model: string
   private connected = false

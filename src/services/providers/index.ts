@@ -7,6 +7,7 @@ export type {
   ChatProviderEvent,
   HealthStatus,
   ProviderAttachment,
+  ProviderCapabilities,
   ProviderConfig,
   ProviderType,
   SendMessageParams,
