@@ -6,15 +6,27 @@ import {
   ChatProviderEvent,
   createChatProvider,
   HealthStatus,
+  ProviderCapabilities,
   ProviderConfig,
   SendMessageParams,
 } from '../services/providers'
+
+/** Default capabilities before a provider is connected */
+const DEFAULT_CAPABILITIES: ProviderCapabilities = {
+  chat: true,
+  imageAttachments: false,
+  serverSessions: false,
+  persistentHistory: false,
+  scheduler: false,
+  gatewaySnapshot: false,
+}
 
 export interface UseChatProviderResult {
   connected: boolean
   connecting: boolean
   error: string | null
   health: HealthStatus | null
+  capabilities: ProviderCapabilities
   connect: () => Promise<void>
   disconnect: () => void
   refreshHealth: () => Promise<void>
@@ -39,6 +51,7 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
   const [connecting, setConnecting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [health, setHealth] = useState<HealthStatus | null>(null)
+  const [capabilities, setCapabilities] = useState<ProviderCapabilities>(DEFAULT_CAPABILITIES)
   const providerRef = useRef<ChatProvider | null>(null)
 
   const connect = useCallback(async () => {
@@ -50,6 +63,7 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
     try {
       const provider = createChatProvider(config)
       providerRef.current = provider
+      setCapabilities(provider.capabilities)
 
       provider.onConnectionStateChange((isConnected, isReconnecting) => {
         setConnected(isConnected)
@@ -133,6 +147,7 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
     connecting,
     error,
     health,
+    capabilities,
     connect,
     disconnect,
     refreshHealth,

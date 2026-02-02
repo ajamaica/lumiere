@@ -46,12 +46,36 @@ export interface HealthStatus {
 }
 
 /**
+ * Declares which features a provider supports.
+ *
+ * The UI uses this to conditionally show/hide controls
+ * (e.g. hide the image-attach button when imageAttachments is false).
+ */
+export interface ProviderCapabilities {
+  /** Basic text chat (all providers must support this) */
+  chat: boolean
+  /** Sending image attachments alongside messages */
+  imageAttachments: boolean
+  /** Server-side session persistence (list / switch / reset) */
+  serverSessions: boolean
+  /** Persistent chat history that survives app restarts */
+  persistentHistory: boolean
+  /** Cron job / scheduler management */
+  scheduler: boolean
+  /** Gateway snapshot with presence & instance info */
+  gatewaySnapshot: boolean
+}
+
+/**
  * Abstract interface for any chat provider.
  *
  * Both Molt Gateway (WebSocket) and Ollama (HTTP streaming) implement this
  * interface, allowing the UI layer to be provider-agnostic.
  */
 export interface ChatProvider {
+  /** The set of features this provider supports */
+  capabilities: ProviderCapabilities
+
   /** Establish connection to the backend */
   connect(): Promise<void>
 

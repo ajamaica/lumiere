@@ -153,10 +153,12 @@ export default function SettingsScreen() {
           <SettingRow label="Favorites" onPress={() => router.push('/favorites')} />
         </Section>
 
-        <Section title="Control">
-          <SettingRow label="Overview" onPress={() => router.push('/overview')} />
-          <SettingRow label="Cron Jobs" onPress={() => router.push('/scheduler')} />
-        </Section>
+        {currentServer?.providerType !== 'ollama' && (
+          <Section title="Control">
+            <SettingRow label="Overview" onPress={() => router.push('/overview')} />
+            <SettingRow label="Cron Jobs" onPress={() => router.push('/scheduler')} />
+          </Section>
+        )}
 
         <Section title="Developer">
           <SettingRow label="Component Gallery" onPress={() => router.push('/gallery')} />

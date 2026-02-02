@@ -21,6 +21,7 @@ interface ChatInputProps {
   onOpenSessionMenu?: () => void
   disabled?: boolean
   queueCount?: number
+  supportsImageAttachments?: boolean
 }
 
 export function ChatInput({
@@ -28,6 +29,7 @@ export function ChatInput({
   onOpenSessionMenu,
   disabled = false,
   queueCount = 0,
+  supportsImageAttachments = true,
 }: ChatInputProps) {
   const { theme } = useTheme()
   const [text, setText] = useState('')
@@ -136,17 +138,19 @@ export function ChatInput({
                 <Ionicons name="ellipsis-vertical" size={24} color={menuButtonColor} />
               </TouchableOpacity>
             )}
-            <TouchableOpacity
-              style={[styles.menuButton, disabled && styles.buttonDisabled]}
-              onPress={handlePickImage}
-              disabled={disabled}
-            >
-              <Ionicons
-                name="add"
-                size={26}
-                color={disabled ? theme.colors.text.tertiary : theme.colors.text.secondary}
-              />
-            </TouchableOpacity>
+            {supportsImageAttachments && (
+              <TouchableOpacity
+                style={[styles.menuButton, disabled && styles.buttonDisabled]}
+                onPress={handlePickImage}
+                disabled={disabled}
+              >
+                <Ionicons
+                  name="add"
+                  size={26}
+                  color={disabled ? theme.colors.text.tertiary : theme.colors.text.secondary}
+                />
+              </TouchableOpacity>
+            )}
             <View style={styles.spacer} />
             <View style={styles.sendButtonContainer}>
               {queueCount > 0 && (
