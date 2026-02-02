@@ -173,9 +173,7 @@ export default function ServersScreen() {
           value={formUrl}
           onChangeText={setFormUrl}
           placeholder={
-            formProviderType === 'ollama'
-              ? 'http://localhost:11434'
-              : 'wss://gateway.example.com'
+            formProviderType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
           }
         />
       </View>
