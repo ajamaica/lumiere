@@ -2,6 +2,7 @@ export type { FavoriteItem, ServerConfig, ServersDict, ServerSessions } from './
 export {
   biometricLockEnabledAtom,
   clearMessagesAtom,
+  clientIdAtom,
   colorThemeAtom,
   currentServerIdAtom,
   currentSessionKeyAtom,
@@ -9,6 +10,8 @@ export {
   gatewayConnectedAtom,
   gatewayConnectingAtom,
   gatewayErrorAtom,
+  gatewayTokenAtom,
+  gatewayUrlAtom,
   messageQueueAtom,
   onboardingCompletedAtom,
   serversAtom,

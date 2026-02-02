@@ -77,6 +77,11 @@ export interface FavoriteItem {
 
 export const favoritesAtom = atomWithStorage<FavoriteItem[]>('favorites', [], storage)
 
+// Gateway settings (persisted for logout reset)
+export const gatewayUrlAtom = atomWithStorage<string>('gatewayUrl', '', storage)
+export const gatewayTokenAtom = atomWithStorage<string>('gatewayToken', '', storage)
+export const clientIdAtom = atomWithStorage<string>('clientId', 'lumiere-mobile', storage)
+
 // Biometric lock setting (off by default)
 export const biometricLockEnabledAtom = atomWithStorage<boolean>(
   'biometricLockEnabled',
