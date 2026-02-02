@@ -1,12 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as LocalAuthentication from 'expo-local-authentication'
 import { useRouter } from 'expo-router'
-import { useSetAtom } from 'jotai'
+import { useAtom, useSetAtom } from 'jotai'
 import React from 'react'
 import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
-import { onboardingCompletedAtom } from '../src/store'
+import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 import { ColorThemeKey, colorThemes } from '../src/theme/colors'
 
@@ -26,6 +27,30 @@ export default function SettingsScreen() {
   const router = useRouter()
   const { currentServer, serversList } = useServers()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
+  const [biometricLockEnabled, setBiometricLockEnabled] = useAtom(biometricLockEnabledAtom)
+
+  const handleBiometricToggle = async (value: boolean) => {
+    if (value) {
+      const compatible = await LocalAuthentication.hasHardwareAsync()
+      if (!compatible) {
+        Alert.alert('Unavailable', 'Biometric authentication is not available on this device.')
+        return
+      }
+      const enrolled = await LocalAuthentication.isEnrolledAsync()
+      if (!enrolled) {
+        Alert.alert('Not Enrolled', 'No biometric credentials are enrolled on this device.')
+        return
+      }
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: 'Authenticate to enable Face ID lock',
+      })
+      if (result.success) {
+        setBiometricLockEnabled(true)
+      }
+    } else {
+      setBiometricLockEnabled(false)
+    }
+  }
 
   const getThemeLabel = () => {
     switch (themeMode) {
@@ -115,6 +140,14 @@ export default function SettingsScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Section title="Appearance">
           <SettingRow label="Theme" value={getThemeLabel()} onPress={handleThemeToggle} />
+        </Section>
+
+        <Section title="Security">
+          <SettingRow
+            label="Require Face ID"
+            switchValue={biometricLockEnabled}
+            onSwitchChange={handleBiometricToggle}
+          />
         </Section>
 
         <Section title="Color Theme">
