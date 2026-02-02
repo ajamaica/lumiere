@@ -54,20 +54,39 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
   const [capabilities, setCapabilities] = useState<ProviderCapabilities>(DEFAULT_CAPABILITIES)
   const providerRef = useRef<ChatProvider | null>(null)
 
+  // Use refs for the connection guard and config to avoid stale closures.
+  // The connect callback is captured once by ChatScreen's useEffect([]),
+  // so we need refs to always read the latest values.
+  const connectingRef = useRef(false)
+  const connectedRef = useRef(false)
+  const configRef = useRef(config)
+  configRef.current = config
+
+  // Keep refs in sync with state
+  useEffect(() => {
+    connectingRef.current = connecting
+  }, [connecting])
+  useEffect(() => {
+    connectedRef.current = connected
+  }, [connected])
+
   const connect = useCallback(async () => {
-    if (connecting || connected) return
+    if (connectingRef.current || connectedRef.current) return
 
     setConnecting(true)
+    connectingRef.current = true
     setError(null)
 
     try {
-      const provider = createChatProvider(config)
+      const provider = createChatProvider(configRef.current)
       providerRef.current = provider
       setCapabilities(provider.capabilities)
 
       provider.onConnectionStateChange((isConnected, isReconnecting) => {
         setConnected(isConnected)
+        connectedRef.current = isConnected
         setConnecting(isReconnecting)
+        connectingRef.current = isReconnecting
         if (isReconnecting) {
           setError('Reconnecting...')
         } else if (isConnected) {
@@ -77,6 +96,7 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
 
       await provider.connect()
       setConnected(true)
+      connectedRef.current = true
 
       try {
         const healthStatus = await provider.getHealth()
@@ -90,8 +110,9 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
       console.error('Failed to connect:', err)
     } finally {
       setConnecting(false)
+      connectingRef.current = false
     }
-  }, [config, connecting, connected])
+  }, [])
 
   const disconnect = useCallback(() => {
     if (providerRef.current) {
@@ -99,6 +120,9 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
       providerRef.current = null
     }
     setConnected(false)
+    connectedRef.current = false
+    setConnecting(false)
+    connectingRef.current = false
     setHealth(null)
   }, [])
 
