@@ -12,11 +12,12 @@ import {
 } from 'react-native'
 
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
+import { useFeatureFlags } from '../src/hooks/useFeatureFlags'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
 
-const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
+const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
   { value: 'molt', label: 'Molt Gateway' },
   { value: 'ollama', label: 'Ollama' },
 ]
@@ -25,6 +26,11 @@ export default function AddServerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { addServer, switchToServer } = useServers()
+  const { flags } = useFeatureFlags()
+
+  const providerOptions = ALL_PROVIDER_OPTIONS.filter(
+    (o) => o.value !== 'ollama' || flags.ollamaProvider,
+  )
 
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')
@@ -116,32 +122,34 @@ export default function AddServerScreen() {
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
         >
-          <View style={styles.formRow}>
-            <Text variant="caption" color="secondary" style={{ marginBottom: 4 }}>
-              Provider Type
-            </Text>
-            <View style={styles.providerPicker}>
-              {PROVIDER_OPTIONS.map((option) => (
-                <TouchableOpacity
-                  key={option.value}
-                  style={[
-                    styles.providerOption,
-                    providerType === option.value && styles.providerOptionActive,
-                  ]}
-                  onPress={() => setProviderType(option.value)}
-                >
-                  <Text
+          {providerOptions.length > 1 && (
+            <View style={styles.formRow}>
+              <Text variant="caption" color="secondary" style={{ marginBottom: 4 }}>
+                Provider Type
+              </Text>
+              <View style={styles.providerPicker}>
+                {providerOptions.map((option) => (
+                  <TouchableOpacity
+                    key={option.value}
                     style={[
-                      styles.providerOptionText,
-                      providerType === option.value && styles.providerOptionTextActive,
+                      styles.providerOption,
+                      providerType === option.value && styles.providerOptionActive,
                     ]}
+                    onPress={() => setProviderType(option.value)}
                   >
-                    {option.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+                    <Text
+                      style={[
+                        styles.providerOptionText,
+                        providerType === option.value && styles.providerOptionTextActive,
+                      ]}
+                    >
+                      {option.label}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
-          </View>
+          )}
 
           <View style={styles.formRow}>
             <TextInput

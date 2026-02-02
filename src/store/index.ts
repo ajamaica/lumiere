@@ -1,4 +1,4 @@
-export type { FavoriteItem, ServerConfig, ServersDict, ServerSessions } from './atoms'
+export type { FavoriteItem, FeatureFlags, ServerConfig, ServersDict, ServerSessions } from './atoms'
 export {
   biometricLockEnabledAtom,
   clearMessagesAtom,
@@ -6,6 +6,7 @@ export {
   currentServerIdAtom,
   currentSessionKeyAtom,
   favoritesAtom,
+  featureFlagsAtom,
   gatewayConnectedAtom,
   gatewayConnectingAtom,
   gatewayErrorAtom,
