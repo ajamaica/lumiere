@@ -165,9 +165,38 @@ export type AgentEvent = {
   ts: number
 }
 
+// Node pairing types
+export type PairingState = 'unpaired' | 'requesting' | 'waiting' | 'paired' | 'error'
+
+export interface NodePairRequest {
+  nodeId: string
+  name?: string
+  caps?: string[]
+}
+
+export interface NodePairResponse {
+  requestId: string
+  nodeId: string
+  expiresAt: number
+}
+
+export interface NodePairApproval {
+  nodeId: string
+  token: string
+}
+
+export interface NodeInfo {
+  nodeId: string
+  name?: string
+  paired: boolean
+  caps?: string[]
+}
+
 // Event types
 export type GatewayEvent =
   | { event: 'agent'; payload: AgentEvent; seq?: number }
   | { event: 'presence'; payload: unknown }
   | { event: 'tick'; payload: { timestamp: number } }
   | { event: 'shutdown'; payload: { restartIn?: number } }
+  | { event: 'node.pair.approved'; payload: NodePairApproval }
+  | { event: 'node.pair.rejected'; payload: { nodeId: string } }

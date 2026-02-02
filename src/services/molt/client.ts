@@ -1,4 +1,4 @@
-import { clientConfig, protocolConfig } from '../../config/gateway.config'
+import { clientConfig, nodeConfig, protocolConfig } from '../../config/gateway.config'
 import {
   AgentEvent,
   AgentParams,
@@ -6,6 +6,9 @@ import {
   EventFrame,
   HealthStatus,
   MoltConfig,
+  NodePairApproval,
+  NodePairResponse,
+  PairingState,
   RequestFrame,
   ResponseFrame,
   SendMessageParams,
@@ -14,6 +17,7 @@ import {
 type EventListener = (event: EventFrame) => void
 type ResponseHandler = (response: ResponseFrame) => void
 type ConnectionStateListener = (connected: boolean, reconnecting: boolean) => void
+type PairingStateListener = (state: PairingState, info?: NodePairResponse) => void
 
 export class MoltGatewayClient {
   private ws: WebSocket | null = null
@@ -23,16 +27,23 @@ export class MoltGatewayClient {
   private responseHandlers = new Map<string, ResponseHandler>()
   private eventListeners: EventListener[] = []
   private connectionStateListeners: ConnectionStateListener[] = []
+  private pairingStateListeners: PairingStateListener[] = []
   private reconnectAttempts = 0
   private maxReconnectAttempts = 5
   private reconnectDelay = 1000
   private reconnecting = false
+  private _pairingState: PairingState = 'unpaired'
+  private pairingInfo: NodePairResponse | null = null
 
   constructor(config: MoltConfig) {
     this.config = {
       clientId: 'lumiere-mobile',
       ...config,
     }
+  }
+
+  get pairingState(): PairingState {
+    return this._pairingState
   }
 
   connect(): Promise<ConnectResponse> {
@@ -80,13 +91,21 @@ export class MoltGatewayClient {
   }
 
   private async performHandshake(): Promise<ConnectResponse> {
-    const params = {
+    const params: Record<string, unknown> = {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,
-      auth: {
-        token: this.config.token,
+      role: 'node',
+      device: {
+        id: this.config.clientId || clientConfig.id,
+        name: nodeConfig.defaultName,
       },
+      caps: nodeConfig.caps,
+    }
+
+    // Include auth token if we have one (paired nodes reconnecting)
+    if (this.config.token) {
+      params.auth = { token: this.config.token }
     }
 
     const response = await this.request('connect', params)
@@ -101,8 +120,28 @@ export class MoltGatewayClient {
         this.responseHandlers.delete(frame.id)
       }
     } else if (frame.type === 'event') {
-      this.eventListeners.forEach((listener) => listener(frame))
+      // Handle pairing events internally
+      if (frame.event === 'node.pair.approved') {
+        const approval = frame.payload as NodePairApproval
+        this.setPairingState('paired')
+        this.pairingStateListeners.forEach((l) => l('paired', this.pairingInfo ?? undefined))
+        // The approval contains the token — callers should listen for this
+        this.eventListeners.forEach((listener) => listener(frame))
+        console.log('Node pairing approved, token received for node:', approval.nodeId)
+      } else if (frame.event === 'node.pair.rejected') {
+        this.setPairingState('unpaired')
+        this.pairingInfo = null
+        this.eventListeners.forEach((listener) => listener(frame))
+        console.log('Node pairing rejected')
+      } else {
+        this.eventListeners.forEach((listener) => listener(frame))
+      }
     }
+  }
+
+  private setPairingState(state: PairingState) {
+    this._pairingState = state
+    this.pairingStateListeners.forEach((l) => l(state, this.pairingInfo ?? undefined))
   }
 
   private handleReconnect() {
@@ -134,6 +173,13 @@ export class MoltGatewayClient {
     this.connectionStateListeners.push(listener)
     return () => {
       this.connectionStateListeners = this.connectionStateListeners.filter((l) => l !== listener)
+    }
+  }
+
+  onPairingStateChange(listener: PairingStateListener) {
+    this.pairingStateListeners.push(listener)
+    return () => {
+      this.pairingStateListeners = this.pairingStateListeners.filter((l) => l !== listener)
     }
   }
 
@@ -170,6 +216,46 @@ export class MoltGatewayClient {
       this.eventListeners = this.eventListeners.filter((l) => l !== listener)
     }
   }
+
+  // --- Node pairing methods ---
+
+  async requestPairing(name?: string): Promise<NodePairResponse> {
+    this.setPairingState('requesting')
+
+    try {
+      const response = (await this.request('node.pair.request', {
+        nodeId: this.config.clientId || clientConfig.id,
+        name: name || nodeConfig.defaultName,
+        caps: nodeConfig.caps,
+      })) as NodePairResponse
+
+      this.pairingInfo = response
+      this.setPairingState('waiting')
+
+      return response
+    } catch (error) {
+      this.setPairingState('error')
+      throw error
+    }
+  }
+
+  async verifyPairing(nodeId: string, token: string): Promise<boolean> {
+    try {
+      const response = (await this.request('node.pair.verify', {
+        nodeId,
+        token,
+      })) as { valid: boolean }
+      return response.valid
+    } catch {
+      return false
+    }
+  }
+
+  getPairingInfo(): NodePairResponse | null {
+    return this.pairingInfo
+  }
+
+  // --- Standard gateway methods ---
 
   async getHealth(): Promise<HealthStatus> {
     return (await this.request('health')) as HealthStatus
