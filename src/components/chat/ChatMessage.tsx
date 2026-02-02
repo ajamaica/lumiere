@@ -3,11 +3,17 @@ import * as Clipboard from 'expo-clipboard'
 import * as WebBrowser from 'expo-web-browser'
 import { useAtom } from 'jotai'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
 import { favoritesAtom } from '../../store'
 import { useTheme } from '../../theme'
+
+export interface MessageAttachment {
+  uri: string
+  base64?: string
+  mimeType?: string
+}
 
 export interface Message {
   id: string
@@ -15,6 +21,7 @@ export interface Message {
   sender: 'user' | 'agent'
   timestamp: Date
   streaming?: boolean
+  attachments?: MessageAttachment[]
 }
 
 interface ChatMessageProps {
@@ -257,6 +264,18 @@ export function ChatMessage({ message }: ChatMessageProps) {
   return (
     <View style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}>
       <View style={[styles.bubble, isUser ? styles.userBubble : styles.agentBubble]}>
+        {message.attachments && message.attachments.length > 0 && (
+          <View style={styles.attachmentContainer}>
+            {message.attachments.map((attachment, index) => (
+              <Image
+                key={index}
+                source={{ uri: attachment.uri }}
+                style={styles.attachmentImage}
+                resizeMode="cover"
+              />
+            ))}
+          </View>
+        )}
         <Markdown
           style={markdownStyles}
           onLinkPress={handleLinkPress}
@@ -371,6 +390,17 @@ const createStyles = (theme: Theme) =>
       color: theme.colors.text.secondary,
       fontSize: theme.typography.fontSize.sm,
       marginTop: theme.spacing.xs,
+    },
+    attachmentContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: theme.spacing.xs,
+      marginBottom: theme.spacing.sm,
+    },
+    attachmentImage: {
+      width: 200,
+      height: 200,
+      borderRadius: theme.borderRadius.md,
     },
   })
 

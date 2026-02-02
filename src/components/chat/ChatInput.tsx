@@ -1,12 +1,23 @@
 import { Ionicons } from '@expo/vector-icons'
+import * as ImagePicker from 'expo-image-picker'
 import React, { useMemo, useState } from 'react'
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  FlatList,
+  Image,
+  ImageStyle,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useTheme } from '../../theme'
+import { MessageAttachment } from './ChatMessage'
 
 interface ChatInputProps {
-  onSend: (text: string) => void
+  onSend: (text: string, attachments?: MessageAttachment[]) => void
   onOpenSessionMenu?: () => void
   disabled?: boolean
   queueCount?: number
@@ -20,14 +31,16 @@ export function ChatInput({
 }: ChatInputProps) {
   const { theme } = useTheme()
   const [text, setText] = useState('')
+  const [attachments, setAttachments] = useState<MessageAttachment[]>([])
   const { suggestions, hasInput } = useSlashCommands(text)
 
   const styles = useMemo(() => createStyles(theme), [theme])
 
   const handleSend = () => {
-    if (text.trim() && !disabled) {
-      onSend(text.trim())
+    if ((text.trim() || attachments.length > 0) && !disabled) {
+      onSend(text.trim(), attachments.length > 0 ? attachments : undefined)
       setText('')
+      setAttachments([])
     }
   }
 
@@ -35,7 +48,30 @@ export function ChatInput({
     setText(command + ' ')
   }
 
+  const handlePickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsMultipleSelection: true,
+      quality: 0.8,
+      base64: true,
+    })
+
+    if (!result.canceled && result.assets.length > 0) {
+      const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
+        uri: asset.uri,
+        base64: asset.base64 ?? undefined,
+        mimeType: asset.mimeType ?? 'image/jpeg',
+      }))
+      setAttachments((prev) => [...prev, ...newAttachments])
+    }
+  }
+
+  const handleRemoveAttachment = (index: number) => {
+    setAttachments((prev) => prev.filter((_, i) => i !== index))
+  }
+
   const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
+  const hasContent = text.trim() || attachments.length > 0
 
   return (
     <>
@@ -60,6 +96,24 @@ export function ChatInput({
       )}
       <View style={styles.background}>
         <View style={styles.container}>
+          {attachments.length > 0 && (
+            <View style={styles.attachmentPreviewRow}>
+              {attachments.map((attachment, index) => (
+                <View key={index} style={styles.attachmentPreviewItem}>
+                  <Image
+                    source={{ uri: attachment.uri }}
+                    style={styles.attachmentPreviewImage as ImageStyle}
+                  />
+                  <TouchableOpacity
+                    style={styles.removeAttachmentButton}
+                    onPress={() => handleRemoveAttachment(index)}
+                  >
+                    <Ionicons name="close-circle" size={20} color={theme.colors.text.inverse} />
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          )}
           <TextInput
             style={styles.input}
             value={text}
@@ -82,6 +136,17 @@ export function ChatInput({
                 <Ionicons name="ellipsis-vertical" size={24} color={menuButtonColor} />
               </TouchableOpacity>
             )}
+            <TouchableOpacity
+              style={[styles.menuButton, disabled && styles.buttonDisabled]}
+              onPress={handlePickImage}
+              disabled={disabled}
+            >
+              <Ionicons
+                name="add"
+                size={26}
+                color={disabled ? theme.colors.text.tertiary : theme.colors.text.secondary}
+              />
+            </TouchableOpacity>
             <View style={styles.spacer} />
             <View style={styles.sendButtonContainer}>
               {queueCount > 0 && (
@@ -92,18 +157,16 @@ export function ChatInput({
               <TouchableOpacity
                 style={[
                   styles.sendButton,
-                  text.trim() && !disabled ? styles.sendButtonActive : styles.sendButtonInactive,
+                  hasContent && !disabled ? styles.sendButtonActive : styles.sendButtonInactive,
                 ]}
                 onPress={handleSend}
-                disabled={!text.trim() || disabled}
+                disabled={!hasContent || disabled}
               >
                 <Ionicons
                   name="arrow-up"
                   size={22}
                   color={
-                    text.trim() && !disabled
-                      ? theme.colors.text.inverse
-                      : theme.colors.text.tertiary
+                    hasContent && !disabled ? theme.colors.text.inverse : theme.colors.text.tertiary
                   }
                 />
               </TouchableOpacity>
@@ -124,9 +187,9 @@ interface Theme {
     primary: string
   }
   spacing: { xs: number; sm: number; md: number; lg: number }
-  borderRadius: { xs: number; sm: number; xxl: number }
+  borderRadius: { sm: number; md: number; xxl: number }
   typography: {
-    fontSize: { xs: number; base: number }
+    fontSize: { xs: number; sm: number; base: number }
     fontWeight: { semibold: string }
   }
 }
@@ -231,5 +294,31 @@ const createStyles = (theme: Theme) =>
     commandDescription: {
       fontSize: theme.typography.fontSize.sm,
       color: theme.colors.text.secondary,
+    },
+    attachmentPreviewRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: theme.spacing.sm,
+      paddingHorizontal: theme.spacing.sm,
+      paddingTop: theme.spacing.sm,
+    },
+    attachmentPreviewItem: {
+      position: 'relative',
+    },
+    attachmentPreviewImage: {
+      width: 64,
+      height: 64,
+      borderRadius: theme.borderRadius.md,
+    },
+    removeAttachmentButton: {
+      position: 'absolute',
+      top: -6,
+      right: -6,
+      backgroundColor: 'rgba(0,0,0,0.6)',
+      borderRadius: 10,
+      width: 20,
+      height: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   })
