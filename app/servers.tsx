@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import React, { useState } from 'react'
+import React from 'react'
 import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-import { Button, Card, ScreenHeader, Section, Text, TextInput } from '../src/components/ui'
+import { Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
@@ -16,58 +16,7 @@ const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
 export default function ServersScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { serversList, currentServerId, updateServer, removeServer, switchToServer } = useServers()
-
-  const [editingId, setEditingId] = useState<string | null>(null)
-
-  // Edit form state
-  const [formName, setFormName] = useState('')
-  const [formUrl, setFormUrl] = useState('')
-  const [formToken, setFormToken] = useState('')
-  const [formClientId, setFormClientId] = useState('lumiere-mobile')
-  const [formProviderType, setFormProviderType] = useState<ProviderType>('molt')
-  const [formModel, setFormModel] = useState('')
-
-  const resetForm = () => {
-    setFormName('')
-    setFormUrl('')
-    setFormToken('')
-    setFormClientId('lumiere-mobile')
-    setFormProviderType('molt')
-    setFormModel('')
-  }
-
-  const handleEditServer = (id: string) => {
-    const server = serversList.find((s) => s.id === id)
-    if (!server) return
-
-    setEditingId(id)
-    setFormName(server.name)
-    setFormUrl(server.url)
-    setFormToken('')
-    setFormClientId(server.clientId || 'lumiere-mobile')
-    setFormProviderType(server.providerType || 'molt')
-    setFormModel(server.model || '')
-  }
-
-  const handleUpdateServer = async () => {
-    if (!editingId) return
-
-    await updateServer(
-      editingId,
-      {
-        name: formName.trim(),
-        url: formUrl.trim(),
-        clientId: formClientId.trim(),
-        providerType: formProviderType,
-        model: formModel.trim() || undefined,
-      },
-      formToken.trim() || undefined,
-    )
-
-    setEditingId(null)
-    resetForm()
-  }
+  const { serversList, currentServerId, removeServer, switchToServer } = useServers()
 
   const handleRemoveServer = (id: string) => {
     const server = serversList.find((s) => s.id === id)
@@ -91,85 +40,6 @@ export default function ServersScreen() {
 
   const providerLabel = (type: ProviderType) =>
     PROVIDER_OPTIONS.find((o) => o.value === type)?.label ?? type
-
-  const renderEditForm = () => (
-    <>
-      <View style={styles.formRow}>
-        <Text variant="caption" color="secondary" style={{ marginBottom: 4 }}>
-          Provider Type
-        </Text>
-        <View style={styles.providerPicker}>
-          {PROVIDER_OPTIONS.map((option) => (
-            <TouchableOpacity
-              key={option.value}
-              style={[
-                styles.providerOption,
-                formProviderType === option.value && styles.providerOptionActive,
-              ]}
-              onPress={() => setFormProviderType(option.value)}
-            >
-              <Text
-                style={[
-                  styles.providerOptionText,
-                  formProviderType === option.value && styles.providerOptionTextActive,
-                ]}
-              >
-                {option.label}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-      <View style={styles.formRow}>
-        <TextInput
-          label="Name"
-          value={formName}
-          onChangeText={setFormName}
-          placeholder={formProviderType === 'ollama' ? 'My Ollama' : 'My Server'}
-        />
-      </View>
-      <View style={styles.formRow}>
-        <TextInput
-          label="URL"
-          value={formUrl}
-          onChangeText={setFormUrl}
-          placeholder={
-            formProviderType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
-          }
-        />
-      </View>
-      {formProviderType === 'molt' && (
-        <>
-          <View style={styles.formRow}>
-            <TextInput
-              label="Token"
-              value={formToken}
-              onChangeText={setFormToken}
-              secureTextEntry
-            />
-          </View>
-          <View style={styles.formRow}>
-            <TextInput
-              label="Client ID"
-              value={formClientId}
-              onChangeText={setFormClientId}
-              placeholder="lumiere-mobile"
-            />
-          </View>
-        </>
-      )}
-      {formProviderType === 'ollama' && (
-        <View style={styles.formRow}>
-          <TextInput
-            label="Model"
-            value={formModel}
-            onChangeText={setFormModel}
-            placeholder="llama3.2"
-          />
-        </View>
-      )}
-    </>
-  )
 
   const styles = StyleSheet.create({
     container: {
@@ -200,39 +70,6 @@ export default function ServersScreen() {
     iconButton: {
       padding: theme.spacing.xs,
     },
-    formRow: {
-      marginBottom: theme.spacing.md,
-    },
-    buttonRow: {
-      flexDirection: 'row',
-      gap: theme.spacing.sm,
-      marginTop: theme.spacing.md,
-    },
-    providerPicker: {
-      flexDirection: 'row',
-      gap: theme.spacing.sm,
-    },
-    providerOption: {
-      flex: 1,
-      paddingVertical: theme.spacing.sm + 2,
-      paddingHorizontal: theme.spacing.md,
-      borderRadius: theme.borderRadius.sm,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      alignItems: 'center',
-    },
-    providerOptionActive: {
-      borderColor: theme.colors.primary,
-      backgroundColor: theme.isDark ? 'rgba(99,102,241,0.15)' : 'rgba(99,102,241,0.08)',
-    },
-    providerOptionText: {
-      fontSize: 14,
-      color: theme.colors.text.secondary,
-    },
-    providerOptionTextActive: {
-      color: theme.colors.primary,
-      fontWeight: '600',
-    },
     providerBadge: {
       fontSize: 11,
       color: theme.colors.text.tertiary,
@@ -248,27 +85,6 @@ export default function ServersScreen() {
         <Section title="Servers">
           {serversList.map((server) => {
             const isActive = server.id === currentServerId
-            const isEditing = editingId === server.id
-
-            if (isEditing) {
-              return (
-                <Card key={server.id} style={styles.serverCard}>
-                  {renderEditForm()}
-                  <View style={styles.buttonRow}>
-                    <Button title="Save" onPress={handleUpdateServer} style={{ flex: 1 }} />
-                    <Button
-                      title="Cancel"
-                      variant="secondary"
-                      onPress={() => {
-                        setEditingId(null)
-                        resetForm()
-                      }}
-                      style={{ flex: 1 }}
-                    />
-                  </View>
-                </Card>
-              )
-            }
 
             return (
               <TouchableOpacity key={server.id} onPress={() => handleSwitchServer(server.id)}>
@@ -289,7 +105,9 @@ export default function ServersScreen() {
                     </View>
                     <View style={styles.serverActions}>
                       <TouchableOpacity
-                        onPress={() => handleEditServer(server.id)}
+                        onPress={() =>
+                          router.push({ pathname: '/edit-server', params: { id: server.id } })
+                        }
                         style={styles.iconButton}
                       >
                         <Ionicons name="pencil-outline" size={20} color={theme.colors.primary} />
