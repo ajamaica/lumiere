@@ -16,13 +16,11 @@ const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
 export default function ServersScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { serversList, currentServerId, addServer, updateServer, removeServer, switchToServer } =
-    useServers()
+  const { serversList, currentServerId, updateServer, removeServer, switchToServer } = useServers()
 
   const [editingId, setEditingId] = useState<string | null>(null)
-  const [showAddForm, setShowAddForm] = useState(false)
 
-  // Form state
+  // Edit form state
   const [formName, setFormName] = useState('')
   const [formUrl, setFormUrl] = useState('')
   const [formToken, setFormToken] = useState('')
@@ -39,33 +37,6 @@ export default function ServersScreen() {
     setFormModel('')
   }
 
-  const handleAddServer = async () => {
-    if (!formUrl.trim()) {
-      Alert.alert('Error', 'URL is required')
-      return
-    }
-
-    // Molt requires a token, Ollama does not
-    if (formProviderType === 'molt' && !formToken.trim()) {
-      Alert.alert('Error', 'Token is required for Molt Gateway')
-      return
-    }
-
-    await addServer(
-      {
-        name: formName.trim() || 'New Server',
-        url: formUrl.trim(),
-        clientId: formClientId.trim() || 'lumiere-mobile',
-        providerType: formProviderType,
-        model: formModel.trim() || undefined,
-      },
-      formToken.trim() || 'ollama-no-token',
-    )
-
-    resetForm()
-    setShowAddForm(false)
-  }
-
   const handleEditServer = (id: string) => {
     const server = serversList.find((s) => s.id === id)
     if (!server) return
@@ -73,7 +44,7 @@ export default function ServersScreen() {
     setEditingId(id)
     setFormName(server.name)
     setFormUrl(server.url)
-    setFormToken('') // Don't show existing token for security
+    setFormToken('')
     setFormClientId(server.clientId || 'lumiere-mobile')
     setFormProviderType(server.providerType || 'molt')
     setFormModel(server.model || '')
@@ -91,7 +62,7 @@ export default function ServersScreen() {
         providerType: formProviderType,
         model: formModel.trim() || undefined,
       },
-      formToken.trim() || undefined, // Only update token if provided
+      formToken.trim() || undefined,
     )
 
     setEditingId(null)
@@ -121,39 +92,33 @@ export default function ServersScreen() {
   const providerLabel = (type: ProviderType) =>
     PROVIDER_OPTIONS.find((o) => o.value === type)?.label ?? type
 
-  const renderProviderPicker = () => (
-    <View style={styles.providerPicker}>
-      {PROVIDER_OPTIONS.map((option) => (
-        <TouchableOpacity
-          key={option.value}
-          style={[
-            styles.providerOption,
-            formProviderType === option.value && styles.providerOptionActive,
-          ]}
-          onPress={() => {
-            setFormProviderType(option.value)
-          }}
-        >
-          <Text
-            style={[
-              styles.providerOptionText,
-              formProviderType === option.value && styles.providerOptionTextActive,
-            ]}
-          >
-            {option.label}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  )
-
-  const renderFormFields = () => (
+  const renderEditForm = () => (
     <>
       <View style={styles.formRow}>
         <Text variant="caption" color="secondary" style={{ marginBottom: 4 }}>
           Provider Type
         </Text>
-        {renderProviderPicker()}
+        <View style={styles.providerPicker}>
+          {PROVIDER_OPTIONS.map((option) => (
+            <TouchableOpacity
+              key={option.value}
+              style={[
+                styles.providerOption,
+                formProviderType === option.value && styles.providerOptionActive,
+              ]}
+              onPress={() => setFormProviderType(option.value)}
+            >
+              <Text
+                style={[
+                  styles.providerOptionText,
+                  formProviderType === option.value && styles.providerOptionTextActive,
+                ]}
+              >
+                {option.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
       <View style={styles.formRow}>
         <TextInput
@@ -288,7 +253,7 @@ export default function ServersScreen() {
             if (isEditing) {
               return (
                 <Card key={server.id} style={styles.serverCard}>
-                  {renderFormFields()}
+                  {renderEditForm()}
                   <View style={styles.buttonRow}>
                     <Button title="Save" onPress={handleUpdateServer} style={{ flex: 1 }} />
                     <Button
@@ -353,31 +318,11 @@ export default function ServersScreen() {
           )}
         </Section>
 
-        <Section title="Add Server">
-          {showAddForm ? (
-            <Card>
-              {renderFormFields()}
-              <View style={styles.buttonRow}>
-                <Button title="Add Server" onPress={handleAddServer} style={{ flex: 1 }} />
-                <Button
-                  title="Cancel"
-                  variant="secondary"
-                  onPress={() => {
-                    setShowAddForm(false)
-                    resetForm()
-                  }}
-                  style={{ flex: 1 }}
-                />
-              </View>
-            </Card>
-          ) : (
-            <Button
-              title="Add New Server"
-              variant="secondary"
-              onPress={() => setShowAddForm(true)}
-            />
-          )}
-        </Section>
+        <Button
+          title="Add New Server"
+          variant="secondary"
+          onPress={() => router.push('/add-server')}
+        />
       </ScrollView>
     </SafeAreaView>
   )
