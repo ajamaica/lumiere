@@ -27,9 +27,7 @@ export interface UseChatProviderResult {
   error: string | null
   health: HealthStatus | null
   capabilities: ProviderCapabilities
-  connect: () => Promise<void>
-  disconnect: () => void
-  refreshHealth: () => Promise<void>
+  retry: () => void
   sendMessage: (
     params: SendMessageParams,
     onEvent: (event: ChatProviderEvent) => void,
@@ -39,12 +37,17 @@ export interface UseChatProviderResult {
   listSessions: () => Promise<unknown>
 }
 
+/** Derive a stable string key from the config so we can detect changes */
+function configKey(config: ProviderConfig): string {
+  return `${config.type}|${config.url}|${config.token}|${config.clientId ?? ''}|${config.model ?? ''}`
+}
+
 /**
  * Provider-agnostic hook for chat functionality.
  *
- * Works with any ChatProvider (Molt, Ollama, etc.) based on the config.type.
- * Replaces useMoltGateway for the core chat flow while keeping the same
- * interface shape that ChatScreen and useMessageQueue expect.
+ * Automatically connects when mounted and disconnects on unmount.
+ * When config changes, the old provider is disconnected and a new one
+ * is created and connected.
  */
 export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
   const [connected, setConnected] = useState(false)
@@ -53,83 +56,96 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
   const [health, setHealth] = useState<HealthStatus | null>(null)
   const [capabilities, setCapabilities] = useState<ProviderCapabilities>(DEFAULT_CAPABILITIES)
   const providerRef = useRef<ChatProvider | null>(null)
+  const [retryCount, setRetryCount] = useState(0)
 
-  // Use refs for the connection guard and config to avoid stale closures.
-  // The connect callback is captured once by ChatScreen's useEffect([]),
-  // so we need refs to always read the latest values.
-  const connectingRef = useRef(false)
-  const connectedRef = useRef(false)
-  const configRef = useRef(config)
-  configRef.current = config
+  // Derive a stable key for the config to use as an effect dependency
+  const key = configKey(config)
 
-  // Keep refs in sync with state
+  // Auto-connect when config changes (or on initial mount)
   useEffect(() => {
-    connectingRef.current = connecting
-  }, [connecting])
-  useEffect(() => {
-    connectedRef.current = connected
-  }, [connected])
+    let cancelled = false
+    let unsubConnectionState: (() => void) | null = null
 
-  const connect = useCallback(async () => {
-    if (connectingRef.current || connectedRef.current) return
+    const doConnect = async () => {
+      // Clean up any existing provider
+      if (providerRef.current) {
+        providerRef.current.disconnect()
+        providerRef.current = null
+      }
 
-    setConnecting(true)
-    connectingRef.current = true
-    setError(null)
-
-    try {
-      const provider = createChatProvider(configRef.current)
-      providerRef.current = provider
-      setCapabilities(provider.capabilities)
-
-      provider.onConnectionStateChange((isConnected, isReconnecting) => {
-        setConnected(isConnected)
-        connectedRef.current = isConnected
-        setConnecting(isReconnecting)
-        connectingRef.current = isReconnecting
-        if (isReconnecting) {
-          setError('Reconnecting...')
-        } else if (isConnected) {
-          setError(null)
-        }
-      })
-
-      await provider.connect()
-      setConnected(true)
-      connectedRef.current = true
+      setConnected(false)
+      setConnecting(true)
+      setError(null)
+      setHealth(null)
 
       try {
-        const healthStatus = await provider.getHealth()
-        setHealth(healthStatus)
+        const provider = createChatProvider(config)
+        if (cancelled) {
+          provider.disconnect()
+          return
+        }
+
+        providerRef.current = provider
+        setCapabilities(provider.capabilities)
+
+        unsubConnectionState = provider.onConnectionStateChange((isConnected, isReconnecting) => {
+          if (cancelled) return
+          setConnected(isConnected)
+          setConnecting(isReconnecting)
+          if (isReconnecting) {
+            setError('Reconnecting...')
+          } else if (isConnected) {
+            setError(null)
+          }
+        })
+
+        await provider.connect()
+
+        if (cancelled) {
+          provider.disconnect()
+          return
+        }
+
+        setConnected(true)
+        setConnecting(false)
+
+        // Fetch initial health
+        try {
+          const healthStatus = await provider.getHealth()
+          if (!cancelled) {
+            setHealth(healthStatus)
+          }
+        } catch (err) {
+          console.error('Failed to fetch health:', err)
+        }
       } catch (err) {
-        console.error('Failed to fetch health:', err)
+        if (cancelled) return
+        const errorMessage = err instanceof Error ? err.message : 'Connection failed'
+        setError(errorMessage)
+        setConnecting(false)
+        console.error('Failed to connect:', err)
       }
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Connection failed'
-      setError(errorMessage)
-      console.error('Failed to connect:', err)
-    } finally {
+    }
+
+    doConnect()
+
+    return () => {
+      cancelled = true
+      if (unsubConnectionState) {
+        unsubConnectionState()
+      }
+      if (providerRef.current) {
+        providerRef.current.disconnect()
+        providerRef.current = null
+      }
+      setConnected(false)
       setConnecting(false)
-      connectingRef.current = false
     }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, retryCount])
 
-  const disconnect = useCallback(() => {
-    if (providerRef.current) {
-      providerRef.current.disconnect()
-      providerRef.current = null
-    }
-    setConnected(false)
-    connectedRef.current = false
-    setConnecting(false)
-    connectingRef.current = false
-    setHealth(null)
-  }, [])
-
-  const refreshHealth = useCallback(async () => {
-    if (!providerRef.current) throw new Error('Provider not connected')
-    const healthStatus = await providerRef.current.getHealth()
-    setHealth(healthStatus)
+  const retry = useCallback(() => {
+    setRetryCount((c) => c + 1)
   }, [])
 
   const sendMessage = useCallback(
@@ -158,23 +174,13 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
     return await providerRef.current.listSessions()
   }, [])
 
-  useEffect(() => {
-    return () => {
-      if (providerRef.current) {
-        providerRef.current.disconnect()
-      }
-    }
-  }, [])
-
   return {
     connected,
     connecting,
     error,
     health,
     capabilities,
-    connect,
-    disconnect,
-    refreshHealth,
+    retry,
     sendMessage,
     getChatHistory,
     resetSession,

@@ -97,16 +97,8 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     opacity: pulseOpacity.value,
   }))
 
-  const {
-    connected,
-    connecting,
-    error,
-    capabilities,
-    connect,
-    disconnect,
-    sendMessage,
-    getChatHistory,
-  } = useChatProvider(providerConfig)
+  const { connected, connecting, error, capabilities, retry, sendMessage, getChatHistory } =
+    useChatProvider(providerConfig)
 
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
     sendMessage,
@@ -161,14 +153,6 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       setIsLoadingHistory(false)
     }
   }, [getChatHistory, currentSessionKey])
-
-  useEffect(() => {
-    connect()
-    return () => {
-      disconnect()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useEffect(() => {
     if (connected) {
@@ -263,7 +247,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
         <View style={styles.statusBarContainer}>
           <View style={[styles.statusBubble, styles.errorBubble]}>
             <Text style={styles.errorText}>Connection failed: {error}</Text>
-            <TouchableOpacity onPress={connect} style={styles.retryButton}>
+            <TouchableOpacity onPress={retry} style={styles.retryButton}>
               <Text style={styles.retryText}>Retry</Text>
             </TouchableOpacity>
           </View>
