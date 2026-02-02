@@ -89,10 +89,7 @@ export interface ChatProvider {
   onConnectionStateChange(listener: (connected: boolean, reconnecting: boolean) => void): () => void
 
   /** Send a chat message and receive streaming events */
-  sendMessage(
-    params: SendMessageParams,
-    onEvent: (event: ChatProviderEvent) => void,
-  ): Promise<void>
+  sendMessage(params: SendMessageParams, onEvent: (event: ChatProviderEvent) => void): Promise<void>
 
   /** Retrieve chat history for a session */
   getChatHistory(sessionKey: string, limit?: number): Promise<ChatHistoryResponse>
