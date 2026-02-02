@@ -40,7 +40,7 @@ interface CronJob {
 export default function SchedulerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { getCurrentMoltConfig } = useServers()
+  const { getProviderConfig } = useServers()
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
 
   const [schedulerStatus, setSchedulerStatus] = useState<SchedulerStatus | null>(null)
@@ -48,11 +48,11 @@ export default function SchedulerScreen() {
 
   useEffect(() => {
     const loadConfig = async () => {
-      const moltConfig = await getCurrentMoltConfig()
-      setConfig(moltConfig)
+      const providerConfig = await getProviderConfig()
+      setConfig(providerConfig)
     }
     loadConfig()
-  }, [getCurrentMoltConfig])
+  }, [getProviderConfig])
 
   const {
     connected,

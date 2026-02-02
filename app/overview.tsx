@@ -18,7 +18,7 @@ import { useTheme } from '../src/theme'
 export default function OverviewScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { getCurrentMoltConfig } = useServers()
+  const { getProviderConfig } = useServers()
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
 
   const [password, setPassword] = useState('')
@@ -37,11 +37,11 @@ export default function OverviewScreen() {
 
   useEffect(() => {
     const loadConfig = async () => {
-      const moltConfig = await getCurrentMoltConfig()
-      setConfig(moltConfig)
+      const providerConfig = await getProviderConfig()
+      setConfig(providerConfig)
     }
     loadConfig()
-  }, [getCurrentMoltConfig])
+  }, [getProviderConfig])
 
   useEffect(() => {
     if (config) {

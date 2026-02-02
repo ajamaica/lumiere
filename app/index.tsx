@@ -5,21 +5,22 @@ import { View } from 'react-native'
 import { ChatScreen } from '../src/components/chat'
 import { Button, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
+import { ProviderConfig } from '../src/services/providers'
 import { useTheme } from '../src/theme'
 
 export default function HomeScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { getCurrentMoltConfig } = useServers()
-  const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
+  const { getProviderConfig } = useServers()
+  const [config, setConfig] = useState<ProviderConfig | null>(null)
 
   useEffect(() => {
     const loadConfig = async () => {
-      const moltConfig = await getCurrentMoltConfig()
-      setConfig(moltConfig)
+      const providerConfig = await getProviderConfig()
+      setConfig(providerConfig)
     }
     loadConfig()
-  }, [getCurrentMoltConfig])
+  }, [getProviderConfig])
 
   if (!config) {
     return (
@@ -43,5 +44,5 @@ export default function HomeScreen() {
     )
   }
 
-  return <ChatScreen gatewayUrl={config.url} gatewayToken={config.token} />
+  return <ChatScreen providerConfig={config} />
 }

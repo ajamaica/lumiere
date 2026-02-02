@@ -1,14 +1,9 @@
 import { useAtom } from 'jotai'
 import { useCallback, useMemo } from 'react'
 
+import { ProviderConfig } from '../services/providers'
 import { deleteServerToken, getServerToken, setServerToken } from '../services/secureTokenStorage'
 import { currentServerIdAtom, ServerConfig, serversAtom, ServersDict } from '../store'
-
-export interface MoltConfig {
-  url: string
-  token: string
-  clientId?: string
-}
 
 export interface UseServersResult {
   // State
@@ -28,8 +23,8 @@ export interface UseServersResult {
   switchToServer: (id: string) => void
 
   // Utilities
-  getCurrentMoltConfig: () => Promise<MoltConfig | null>
-  getMoltConfigForServer: (id: string) => Promise<MoltConfig | null>
+  getProviderConfig: () => Promise<ProviderConfig | null>
+  getProviderConfigForServer: (id: string) => Promise<ProviderConfig | null>
 }
 
 export function useServers(): UseServersResult {
@@ -124,29 +119,34 @@ export function useServers(): UseServersResult {
     [servers, setCurrentServerId],
   )
 
-  // Get MoltConfig for current server
-  const getCurrentMoltConfig = useCallback(async (): Promise<MoltConfig | null> => {
+  // Get ProviderConfig for current server
+  const getProviderConfig = useCallback(async (): Promise<ProviderConfig | null> => {
     if (!currentServer) return null
     const token = await getServerToken(currentServer.id)
-    if (!token) return null
+    // Ollama doesn't require a token, Molt does
+    if (!token && currentServer.providerType !== 'ollama') return null
     return {
+      type: currentServer.providerType || 'molt',
       url: currentServer.url,
-      token,
+      token: token || '',
       clientId: currentServer.clientId,
+      model: currentServer.model,
     }
   }, [currentServer])
 
-  // Get MoltConfig for specific server
-  const getMoltConfigForServer = useCallback(
-    async (id: string): Promise<MoltConfig | null> => {
+  // Get ProviderConfig for specific server
+  const getProviderConfigForServer = useCallback(
+    async (id: string): Promise<ProviderConfig | null> => {
       const server = servers[id]
       if (!server) return null
       const token = await getServerToken(id)
-      if (!token) return null
+      if (!token && server.providerType !== 'ollama') return null
       return {
+        type: server.providerType || 'molt',
         url: server.url,
-        token,
+        token: token || '',
         clientId: server.clientId,
+        model: server.model,
       }
     },
     [servers],
@@ -161,8 +161,8 @@ export function useServers(): UseServersResult {
     updateServer,
     removeServer,
     switchToServer,
-    getCurrentMoltConfig,
-    getMoltConfigForServer,
+    getProviderConfig,
+    getProviderConfigForServer,
   }
 }
 

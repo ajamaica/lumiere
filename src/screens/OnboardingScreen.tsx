@@ -73,6 +73,7 @@ export function OnboardingScreen() {
           name: 'My Server',
           url: localUrl.trim(),
           clientId: localClientId.trim(),
+          providerType: 'molt',
         },
         localToken.trim(),
       )
