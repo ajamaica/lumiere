@@ -17,8 +17,7 @@
       "bundleIdentifier": "bot.lumiere.app",
       "buildNumber": "1",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false,
-        "UIBackgroundModes": ["fetch", "remote-notification"]
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -43,16 +42,7 @@
     },
     "platforms": ["ios", "android"],
     "scheme": "lumiere",
-    "plugins": [
-      "expo-router",
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/icon.png",
-          "color": "#ffffff"
-        }
-      ]
-    ],
+    "plugins": ["expo-router"],
     "extra": {
       "eas": {
         "projectId": "24d55021-5419-4ad2-b491-7aad43cbbdec"

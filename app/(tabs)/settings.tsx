@@ -5,7 +5,6 @@ import React from 'react'
 import { Alert, SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow } from '../../src/components/ui'
-import { useNotifications } from '../../src/hooks/useNotifications'
 import {
   biometricLockEnabledAtom,
   clientIdAtom,
@@ -25,21 +24,6 @@ export default function SettingsScreen() {
   const setClientId = useSetAtom(clientIdAtom)
   const setCurrentSessionKey = useSetAtom(currentSessionKeyAtom)
   const [biometricLockEnabled, setBiometricLockEnabled] = useAtom(biometricLockEnabledAtom)
-  const { notificationsEnabled, enableNotifications, disableNotifications } = useNotifications()
-
-  const handleNotificationToggle = async (value: boolean) => {
-    if (value) {
-      const granted = await enableNotifications()
-      if (!granted) {
-        Alert.alert(
-          'Permission Required',
-          'Notification permission is required for background alerts. Please enable it in your device settings.',
-        )
-      }
-    } else {
-      await disableNotifications()
-    }
-  }
 
   const handleBiometricToggle = async (value: boolean) => {
     if (value) {
@@ -124,14 +108,6 @@ export default function SettingsScreen() {
             label="Require Face ID"
             switchValue={biometricLockEnabled}
             onSwitchChange={handleBiometricToggle}
-          />
-        </Section>
-
-        <Section title="Notifications">
-          <SettingRow
-            label="Background Alerts"
-            switchValue={notificationsEnabled}
-            onSwitchChange={handleNotificationToggle}
           />
         </Section>
 
