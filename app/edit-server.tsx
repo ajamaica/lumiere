@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Alert,
   KeyboardAvoidingView,
@@ -35,24 +35,12 @@ export default function EditServerScreen() {
 
   const server = id ? servers[id] : null
 
-  const [name, setName] = useState('')
-  const [url, setUrl] = useState('')
+  const [name, setName] = useState(server?.name ?? '')
+  const [url, setUrl] = useState(server?.url ?? '')
   const [token, setToken] = useState('')
-  const [clientId, setClientId] = useState('lumiere-mobile')
-  const [providerType, setProviderType] = useState<ProviderType>('molt')
-  const [model, setModel] = useState('')
-
-  // Populate form from existing server data
-  useEffect(() => {
-    if (server) {
-      setName(server.name)
-      setUrl(server.url)
-      setToken('')
-      setClientId(server.clientId || 'lumiere-mobile')
-      setProviderType(server.providerType || 'molt')
-      setModel(server.model || '')
-    }
-  }, [server])
+  const [clientId, setClientId] = useState(server?.clientId || 'lumiere-mobile')
+  const [providerType, setProviderType] = useState<ProviderType>(server?.providerType || 'molt')
+  const [model, setModel] = useState(server?.model ?? '')
 
   const handleSave = async () => {
     if (!id) return
