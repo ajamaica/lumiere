@@ -65,7 +65,10 @@ async function checkGatewayHealth(
 }
 
 // Check for recently completed cron jobs by querying the gateway HTTP API
-async function checkCronJobs(serverUrl: string, token: string): Promise<CronJob[]> {
+async function checkCronJobs(
+  serverUrl: string,
+  token: string,
+): Promise<CronJob[]> {
   try {
     const httpUrl = serverUrl.replace(/^ws(s)?:\/\//, 'http$1://').replace(/\/ws\/?$/, '')
     const response = await fetch(`${httpUrl}/api/cron/list`, {
@@ -144,7 +147,10 @@ async function backgroundGatewayCheck(): Promise<BackgroundFetch.BackgroundFetch
       hasNewData = true
     }
 
-    await AsyncStorage.setItem(STORAGE_KEYS.lastHealthStatus, String(healthResult.healthy))
+    await AsyncStorage.setItem(
+      STORAGE_KEYS.lastHealthStatus,
+      String(healthResult.healthy),
+    )
 
     // 2. Check for completed cron jobs
     if (healthResult.healthy) {
@@ -172,7 +178,10 @@ async function backgroundGatewayCheck(): Promise<BackgroundFetch.BackgroundFetch
         }
       }
 
-      await AsyncStorage.setItem(STORAGE_KEYS.lastCronRunTimestamps, JSON.stringify(newTimestamps))
+      await AsyncStorage.setItem(
+        STORAGE_KEYS.lastCronRunTimestamps,
+        JSON.stringify(newTimestamps),
+      )
     }
 
     return hasNewData
