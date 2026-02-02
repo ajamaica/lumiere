@@ -1,7 +1,8 @@
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 
-import { AgentEvent } from '../services/molt'
+import { MessageAttachment } from '../components/chat/ChatMessage'
+import { AgentEvent, Attachment } from '../services/molt'
 import { messageQueueAtom } from '../store'
 
 interface Message {
@@ -9,6 +10,12 @@ interface Message {
   text: string
   sender: 'user' | 'agent'
   timestamp: Date
+  attachments?: MessageAttachment[]
+}
+
+interface QueuedMessage {
+  text: string
+  attachments?: MessageAttachment[]
 }
 
 interface UseMessageQueueProps {
@@ -18,6 +25,7 @@ interface UseMessageQueueProps {
       idempotencyKey: string
       agentId: string
       sessionKey: string
+      attachments?: Attachment[]
     },
     onEvent: (event: AgentEvent) => void,
   ) => Promise<void>
@@ -42,12 +50,13 @@ export function useMessageQueue({
   const [isAgentResponding, setIsAgentResponding] = useState(false)
 
   const sendMessage = useCallback(
-    async (text: string) => {
+    async (text: string, attachments?: MessageAttachment[]) => {
       const userMessage: Message = {
         id: `msg-${Date.now()}`,
         text,
         sender: 'user',
         timestamp: new Date(),
+        attachments,
       }
 
       onMessageAdd(userMessage)
@@ -57,6 +66,13 @@ export function useMessageQueue({
 
       let accumulatedText = ''
 
+      // Convert MessageAttachments to API Attachments
+      const apiAttachments: Attachment[] | undefined = attachments?.map((a) => ({
+        type: 'image' as const,
+        data: a.base64,
+        mimeType: a.mimeType,
+      }))
+
       try {
         await sendAgentRequest(
           {
@@ -64,6 +80,7 @@ export function useMessageQueue({
             idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
             agentId,
             sessionKey: currentSessionKey,
+            attachments: apiAttachments,
           },
           (event: AgentEvent) => {
             if (event.stream === 'assistant' && event.data.delta) {
@@ -100,13 +117,13 @@ export function useMessageQueue({
   )
 
   const handleSend = useCallback(
-    async (text: string) => {
+    async (text: string, attachments?: MessageAttachment[]) => {
       if (isAgentResponding) {
         // Add to queue if agent is currently responding
-        setMessageQueue((prev) => [...prev, text])
+        setMessageQueue((prev) => [...prev, JSON.stringify({ text, attachments } as QueuedMessage)])
       } else {
         // Send immediately if agent is not responding
-        await sendMessage(text)
+        await sendMessage(text, attachments)
       }
     },
     [isAgentResponding, sendMessage, setMessageQueue],
@@ -115,10 +132,16 @@ export function useMessageQueue({
   // Process message queue when agent finishes responding
   useEffect(() => {
     if (!isAgentResponding && messageQueue.length > 0) {
-      const nextMessage = messageQueue[0]
+      const nextRaw = messageQueue[0]
       setMessageQueue((prev) => prev.slice(1))
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      sendMessage(nextMessage)
+      try {
+        const queued: QueuedMessage = JSON.parse(nextRaw)
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        sendMessage(queued.text, queued.attachments)
+      } catch {
+        // Fallback for plain text queue items (backwards compat)
+        sendMessage(nextRaw)
+      }
     }
   }, [isAgentResponding, messageQueue, sendMessage, setMessageQueue])
 
