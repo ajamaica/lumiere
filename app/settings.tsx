@@ -6,6 +6,7 @@ import React from 'react'
 import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
+import { useFeatureFlags } from '../src/hooks/useFeatureFlags'
 import { useServers } from '../src/hooks/useServers'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { useTheme } from '../src/theme'
@@ -26,6 +27,7 @@ export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode, colorTheme, setColorTheme } = useTheme()
   const router = useRouter()
   const { currentServer, serversList } = useServers()
+  const { flags, setFlag } = useFeatureFlags()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
   const [biometricLockEnabled, setBiometricLockEnabled] = useAtom(biometricLockEnabledAtom)
 
@@ -192,6 +194,14 @@ export default function SettingsScreen() {
             <SettingRow label="Cron Jobs" onPress={() => router.push('/scheduler')} />
           </Section>
         )}
+
+        <Section title="Feature Flags">
+          <SettingRow
+            label="Ollama Provider"
+            switchValue={flags.ollamaProvider}
+            onSwitchChange={(value) => setFlag('ollamaProvider', value)}
+          />
+        </Section>
 
         <Section title="Developer">
           <SettingRow label="Component Gallery" onPress={() => router.push('/gallery')} />

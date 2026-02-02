@@ -86,3 +86,14 @@ export const biometricLockEnabledAtom = atomWithStorage<boolean>(
   false,
   storage,
 )
+
+// Feature flags (persisted)
+export interface FeatureFlags {
+  ollamaProvider: boolean
+}
+
+export const featureFlagsAtom = atomWithStorage<FeatureFlags>(
+  'featureFlags',
+  { ollamaProvider: false },
+  storage,
+)
