@@ -7,6 +7,7 @@ import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, View } from 're
 
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useFeatureFlags } from '../src/hooks/useFeatureFlags'
+import { useNotifications } from '../src/hooks/useNotifications'
 import { useServers } from '../src/hooks/useServers'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { useTheme } from '../src/theme'
@@ -30,6 +31,21 @@ export default function SettingsScreen() {
   const { flags, setFlag } = useFeatureFlags()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
   const [biometricLockEnabled, setBiometricLockEnabled] = useAtom(biometricLockEnabledAtom)
+  const { notificationsEnabled, enableNotifications, disableNotifications } = useNotifications()
+
+  const handleNotificationToggle = async (value: boolean) => {
+    if (value) {
+      const granted = await enableNotifications()
+      if (!granted) {
+        Alert.alert(
+          'Permission Required',
+          'Notification permission is required for background alerts. Please enable it in your device settings.',
+        )
+      }
+    } else {
+      await disableNotifications()
+    }
+  }
 
   const handleBiometricToggle = async (value: boolean) => {
     if (value) {
@@ -149,6 +165,14 @@ export default function SettingsScreen() {
             label="Require Face ID"
             switchValue={biometricLockEnabled}
             onSwitchChange={handleBiometricToggle}
+          />
+        </Section>
+
+        <Section title="Notifications">
+          <SettingRow
+            label="Background Alerts"
+            switchValue={notificationsEnabled}
+            onSwitchChange={handleNotificationToggle}
           />
         </Section>
 

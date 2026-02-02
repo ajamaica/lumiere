@@ -97,3 +97,10 @@ export const featureFlagsAtom = atomWithStorage<FeatureFlags>(
   { ollamaProvider: false },
   storage,
 )
+
+// Background notifications setting (off by default)
+export const notificationsEnabledAtom = atomWithStorage<boolean>(
+  'notificationsEnabled',
+  false,
+  storage,
+)
