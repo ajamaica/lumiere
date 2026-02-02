@@ -42,29 +42,29 @@ Lumiere uses [Expo Router](https://docs.expo.dev/router/introduction/) for file-
 
 ### Tab Screens
 
-| Screen | File | Description |
-|--------|------|-------------|
-| **Chat** | `app/(tabs)/index.tsx` | Main chat interface. Connects to Molt Gateway via WebSocket for real-time streamed AI responses. Supports markdown rendering, message queuing, slash command autocomplete, image attachments, and message favoriting. |
-| **Settings** | `app/(tabs)/settings.tsx` | App configuration. Sections for Appearance (theme selection), Security (Face ID toggle), Control (links to Overview and Cron Jobs), About (version info), and Account (logout with credential clearing). |
+| Screen       | File                      | Description                                                                                                                                                                                                           |
+| ------------ | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Chat**     | `app/(tabs)/index.tsx`    | Main chat interface. Connects to Molt Gateway via WebSocket for real-time streamed AI responses. Supports markdown rendering, message queuing, slash command autocomplete, image attachments, and message favoriting. |
+| **Settings** | `app/(tabs)/settings.tsx` | App configuration. Sections for Appearance (theme selection), Security (Face ID toggle), Control (links to Overview and Cron Jobs), About (version info), and Account (logout with credential clearing).              |
 
 ### Modal Screens
 
-| Screen | File | Description |
-|--------|------|-------------|
-| **Overview** | `app/overview.tsx` | Gateway monitoring dashboard. Displays connection status, uptime, tick interval, and last refresh time. Shows resource counts for instances (presence beacons), sessions, and cron status. Includes gateway access credentials with show/hide toggle, and connect/refresh controls. |
-| **Servers** | `app/servers.tsx` | Multi-server management. Add, edit, switch between, and remove Molt Gateway server configurations. Each server stores a name, WebSocket URL, token, and client ID. The active server is highlighted with a primary-color border. |
-| **Sessions** | `app/sessions.tsx` | Chat session management. Create new sessions, reset the current session (clears message history on the gateway), and switch between available sessions fetched from the gateway. Active session is visually indicated. |
-| **Scheduler** | `app/scheduler.tsx` | Cron job management. Displays scheduler status (enabled/disabled, job count, next wake time). Lists all gateway cron jobs with their schedule, agent, system prompt, and tags. Supports enabling/disabling, running on-demand, and removing jobs. |
-| **Favorites** | `app/favorites.tsx` | Saved messages viewer. Displays favorited chat messages with sender badges, timestamps, and message previews. Favorites are persisted via Jotai with AsyncStorage. |
-| **Gallery** | `app/gallery.tsx` | Component gallery for development. Showcases all reusable UI components (Button, Card, Badge, TextInput, etc.) in a single scrollable view. |
+| Screen        | File                | Description                                                                                                                                                                                                                                                                         |
+| ------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Overview**  | `app/overview.tsx`  | Gateway monitoring dashboard. Displays connection status, uptime, tick interval, and last refresh time. Shows resource counts for instances (presence beacons), sessions, and cron status. Includes gateway access credentials with show/hide toggle, and connect/refresh controls. |
+| **Servers**   | `app/servers.tsx`   | Multi-server management. Add, edit, switch between, and remove Molt Gateway server configurations. Each server stores a name, WebSocket URL, token, and client ID. The active server is highlighted with a primary-color border.                                                    |
+| **Sessions**  | `app/sessions.tsx`  | Chat session management. Create new sessions, reset the current session (clears message history on the gateway), and switch between available sessions fetched from the gateway. Active session is visually indicated.                                                              |
+| **Scheduler** | `app/scheduler.tsx` | Cron job management. Displays scheduler status (enabled/disabled, job count, next wake time). Lists all gateway cron jobs with their schedule, agent, system prompt, and tags. Supports enabling/disabling, running on-demand, and removing jobs.                                   |
+| **Favorites** | `app/favorites.tsx` | Saved messages viewer. Displays favorited chat messages with sender badges, timestamps, and message previews. Favorites are persisted via Jotai with AsyncStorage.                                                                                                                  |
+| **Gallery**   | `app/gallery.tsx`   | Component gallery for development. Showcases all reusable UI components (Button, Card, Badge, TextInput, etc.) in a single scrollable view.                                                                                                                                         |
 
 ### Special Screens
 
-| Screen | File | Description |
-|--------|------|-------------|
-| **Onboarding** | `src/screens/OnboardingScreen.tsx` | First-time setup wizard. Collects Gateway URL and token with optional advanced fields (Client ID, Default Session Key). Shown before main app when onboarding is not completed. |
-| **Biometric Lock** | `src/components/BiometricLockScreen.tsx` | Face ID authentication screen. Displayed on app launch and when returning from background if biometric lock is enabled in Settings. |
-| **Home (Root)** | `app/index.tsx` | Entry point that loads server config and renders the Chat screen, or shows a "No Server Configured" prompt if no server is set up. |
+| Screen             | File                                     | Description                                                                                                                                                                     |
+| ------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Onboarding**     | `src/screens/OnboardingScreen.tsx`       | First-time setup wizard. Collects Gateway URL and token with optional advanced fields (Client ID, Default Session Key). Shown before main app when onboarding is not completed. |
+| **Biometric Lock** | `src/components/BiometricLockScreen.tsx` | Face ID authentication screen. Displayed on app launch and when returning from background if biometric lock is enabled in Settings.                                             |
+| **Home (Root)**    | `app/index.tsx`                          | Entry point that loads server config and renders the Chat screen, or shows a "No Server Configured" prompt if no server is set up.                                              |
 
 ### Navigation Flow
 
@@ -139,6 +139,7 @@ pnpm start
 ### Deep Linking
 
 Open screens directly using `lumiere://` URLs:
+
 - `lumiere://chat` — Chat screen
 - `lumiere://settings` — Settings screen
 - `lumiere://servers` — Server management
