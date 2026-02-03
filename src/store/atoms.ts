@@ -95,6 +95,24 @@ export interface SessionAliases {
 
 export const sessionAliasesAtom = atomWithStorage<SessionAliases>('sessionAliases', {}, storage)
 
+// Triggers (persisted)
+export interface TriggerConfig {
+  id: string // Random 8-char slug used in the deep link URL
+  message: string // Message to auto-send when the trigger fires
+  sessionKey: string // Session key to send the message in
+  serverId: string // Server to send it on
+  createdAt: number
+}
+
+export interface TriggersDict {
+  [slug: string]: TriggerConfig
+}
+
+export const triggersAtom = atomWithStorage<TriggersDict>('triggers', {}, storage)
+
+// In-memory atom for pending trigger messages (set by deep link, consumed by ChatScreen)
+export const pendingTriggerMessageAtom = atom<string | null>(null)
+
 // Feature flags (persisted)
 export interface FeatureFlags {
   ollamaProvider: boolean
