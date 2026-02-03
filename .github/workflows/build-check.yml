@@ -45,3 +45,6 @@ jobs:
 
       - name: TypeScript type check
         run: npx tsc --noEmit
+
+      - name: Expo export
+        run: npx expo export
