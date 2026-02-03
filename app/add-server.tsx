@@ -20,6 +20,7 @@ import { useTheme } from '../src/theme'
 const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
   { value: 'molt', label: 'Molt Gateway' },
   { value: 'ollama', label: 'Ollama' },
+  { value: 'echo', label: 'Echo Server' },
 ]
 
 export default function AddServerScreen() {
@@ -29,7 +30,8 @@ export default function AddServerScreen() {
   const { flags } = useFeatureFlags()
 
   const providerOptions = ALL_PROVIDER_OPTIONS.filter(
-    (o) => o.value !== 'ollama' || flags.ollamaProvider,
+    (o) =>
+      (o.value !== 'ollama' || flags.ollamaProvider) && (o.value !== 'echo' || flags.echoProvider),
   )
 
   const [name, setName] = useState('')
@@ -50,6 +52,10 @@ export default function AddServerScreen() {
       return
     }
 
+    // Echo provider doesn't need a token or URL validation beyond non-empty
+    const effectiveToken =
+      providerType === 'echo' ? 'echo-no-token' : token.trim() || 'ollama-no-token'
+
     const serverId = await addServer(
       {
         name: name.trim() || 'New Server',
@@ -58,7 +64,7 @@ export default function AddServerScreen() {
         providerType,
         model: model.trim() || undefined,
       },
-      token.trim() || 'ollama-no-token',
+      effectiveToken,
     )
 
     switchToServer(serverId)
@@ -156,7 +162,13 @@ export default function AddServerScreen() {
               label="Name"
               value={name}
               onChangeText={setName}
-              placeholder={providerType === 'ollama' ? 'My Ollama' : 'My Server'}
+              placeholder={
+                providerType === 'ollama'
+                  ? 'My Ollama'
+                  : providerType === 'echo'
+                    ? 'My Echo Server'
+                    : 'My Server'
+              }
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -168,7 +180,11 @@ export default function AddServerScreen() {
               value={url}
               onChangeText={setUrl}
               placeholder={
-                providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                providerType === 'ollama'
+                  ? 'http://localhost:11434'
+                  : providerType === 'echo'
+                    ? 'echo://local'
+                    : 'wss://gateway.example.com'
               }
               autoCapitalize="none"
               autoCorrect={false}

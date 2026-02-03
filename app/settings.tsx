@@ -190,7 +190,7 @@ export default function SettingsScreen() {
           <SettingRow label="Triggers" onPress={() => router.push('/triggers')} />
         </Section>
 
-        {currentServer?.providerType !== 'ollama' && (
+        {currentServer?.providerType !== 'ollama' && currentServer?.providerType !== 'echo' && (
           <Section title="Control">
             <SettingRow label="Overview" onPress={() => router.push('/overview')} />
             <SettingRow label="Cron Jobs" onPress={() => router.push('/scheduler')} />
@@ -202,6 +202,11 @@ export default function SettingsScreen() {
             label="Ollama Provider"
             switchValue={flags.ollamaProvider}
             onSwitchChange={(value) => setFlag('ollamaProvider', value)}
+          />
+          <SettingRow
+            label="Echo Server"
+            switchValue={flags.echoProvider}
+            onSwitchChange={(value) => setFlag('echoProvider', value)}
           />
         </Section>
 

@@ -116,10 +116,11 @@ export const pendingTriggerMessageAtom = atom<string | null>(null)
 // Feature flags (persisted)
 export interface FeatureFlags {
   ollamaProvider: boolean
+  echoProvider: boolean
 }
 
 export const featureFlagsAtom = atomWithStorage<FeatureFlags>(
   'featureFlags',
-  { ollamaProvider: false },
+  { ollamaProvider: false, echoProvider: false },
   storage,
 )
