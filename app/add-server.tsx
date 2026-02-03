@@ -41,7 +41,7 @@ export default function AddServerScreen() {
   const [model, setModel] = useState('')
 
   const handleAdd = async () => {
-    if (!url.trim()) {
+    if (providerType !== 'echo' && !url.trim()) {
       Alert.alert('Error', 'URL is required')
       return
     }
@@ -51,14 +51,13 @@ export default function AddServerScreen() {
       return
     }
 
-    // Echo provider doesn't need a token or URL validation beyond non-empty
     const effectiveToken =
       providerType === 'echo' ? 'echo-no-token' : token.trim() || 'ollama-no-token'
 
     await addServer(
       {
         name: name.trim() || 'New Server',
-        url: url.trim(),
+        url: providerType === 'echo' ? 'echo://local' : url.trim(),
         clientId: clientId.trim() || 'lumiere-mobile',
         providerType,
         model: model.trim() || undefined,
@@ -172,23 +171,21 @@ export default function AddServerScreen() {
             />
           </View>
 
-          <View style={styles.formRow}>
-            <TextInput
-              label="URL"
-              value={url}
-              onChangeText={setUrl}
-              placeholder={
-                providerType === 'ollama'
-                  ? 'http://localhost:11434'
-                  : providerType === 'echo'
-                    ? 'echo://local'
-                    : 'wss://gateway.example.com'
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="url"
-            />
-          </View>
+          {providerType !== 'echo' && (
+            <View style={styles.formRow}>
+              <TextInput
+                label="URL"
+                value={url}
+                onChangeText={setUrl}
+                placeholder={
+                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                }
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="url"
+              />
+            </View>
+          )}
 
           {providerType === 'molt' && (
             <>
