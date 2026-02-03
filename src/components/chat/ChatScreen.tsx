@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import { FlashList } from '@shopify/flash-list'
+import { FlashList, FlashListRef } from '@shopify/flash-list'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -44,7 +44,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
   const [currentSessionKey] = useAtom(currentSessionKeyAtom)
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
-  const flatListRef = useRef<FlashList<Message>>(null)
+  const flatListRef = useRef<FlashListRef<Message>>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
   const [showScrollButton, setShowScrollButton] = useState(false)
@@ -176,10 +176,12 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   // Scroll to bottom after history finishes loading to show latest messages
   useEffect(() => {
     if (!isLoadingHistory && messages.length > 0 && !hasScrolledOnLoadRef.current) {
-      hasScrolledOnLoadRef.current = true
       // Use a longer timeout to ensure FlashList has rendered all history items
       setTimeout(() => {
         flatListRef.current?.scrollToEnd({ animated: false })
+        // Mark as scrolled *after* the initial jump so onContentSizeChange
+        // doesn't trigger an animated scroll during history load
+        hasScrolledOnLoadRef.current = true
       }, 400)
     }
   }, [isLoadingHistory, messages.length])
@@ -300,11 +302,14 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             data={allMessages}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ChatMessage message={item} />}
-            estimatedItemSize={100}
             contentContainerStyle={styles.messageList}
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {
-              if (shouldAutoScrollRef.current && !isLoadingHistory) {
+              if (
+                shouldAutoScrollRef.current &&
+                !isLoadingHistory &&
+                hasScrolledOnLoadRef.current
+              ) {
                 flatListRef.current?.scrollToEnd({ animated: true })
               }
             }}
@@ -334,13 +339,16 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
         <TouchableOpacity
           style={[
             styles.scrollToBottomButton,
-            { opacity: showScrollButton && !isKeyboardVisible ? 1 : 0 },
+            {
+              opacity: showScrollButton && !isKeyboardVisible ? 1 : 0,
+              pointerEvents:
+                showScrollButton && !isKeyboardVisible ? ('auto' as const) : ('none' as const),
+            },
           ]}
           onPress={() => {
             flatListRef.current?.scrollToEnd({ animated: true })
             setShowScrollButton(false)
           }}
-          pointerEvents={showScrollButton && !isKeyboardVisible ? 'auto' : 'none'}
         >
           <Ionicons name="arrow-down" size={22} color={theme.colors.text.inverse} />
         </TouchableOpacity>
@@ -372,7 +380,7 @@ interface Theme {
   borderRadius: { sm: number; md: number; xxl: number }
   typography: {
     fontSize: { xs: number; sm: number; base: number }
-    fontWeight: { semibold: string }
+    fontWeight: { semibold: '600' }
   }
   isDark: boolean
 }
