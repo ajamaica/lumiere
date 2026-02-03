@@ -59,6 +59,7 @@
     "eslint-plugin-react-native": "^5.0.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "jest-expo": "^54.0.17",
+    "react-test-renderer": "19.1.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2"
   },
