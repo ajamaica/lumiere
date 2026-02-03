@@ -194,7 +194,7 @@ interface Theme {
   borderRadius: { sm: number; md: number; xxl: number }
   typography: {
     fontSize: { xs: number; sm: number; base: number }
-    fontWeight: { semibold: string }
+    fontWeight: { semibold: '600' }
   }
 }
 

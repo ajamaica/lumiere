@@ -93,7 +93,7 @@ export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
     },
     retryText: {
       fontSize: theme.typography.fontSize.base,
-      fontWeight: theme.typography.fontWeight.semiBold as '600',
+      fontWeight: theme.typography.fontWeight.semibold,
       color: '#ffffff',
     },
   })
