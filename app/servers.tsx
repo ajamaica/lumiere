@@ -3,7 +3,8 @@ import { useRouter } from 'expo-router'
 import React from 'react'
 import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-import { Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
+import { Button, Card, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
+import { useFeatureFlags } from '../src/hooks/useFeatureFlags'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
@@ -18,6 +19,7 @@ export default function ServersScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { serversList, currentServerId, removeServer, switchToServer } = useServers()
+  const { flags, setFlag } = useFeatureFlags()
 
   const handleRemoveServer = (id: string) => {
     const server = serversList.find((s) => s.id === id)
@@ -135,6 +137,14 @@ export default function ServersScreen() {
               No servers configured
             </Text>
           )}
+        </Section>
+
+        <Section title="Feature Flags">
+          <SettingRow
+            label="Echo Server"
+            switchValue={flags.echoProvider}
+            onSwitchChange={(value) => setFlag('echoProvider', value)}
+          />
         </Section>
 
         <Button
