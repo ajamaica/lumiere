@@ -1,3 +1,5 @@
+import { Ollama } from 'ollama/browser'
+
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -15,19 +17,11 @@ interface OllamaMessage {
   images?: string[]
 }
 
-interface OllamaChatStreamChunk {
-  model: string
-  created_at: string
-  message: { role: string; content: string }
-  done: boolean
-}
-
 /**
- * Chat provider for Ollama's local HTTP API.
+ * Chat provider for Ollama using the official ollama-js client.
  *
- * Ollama exposes a REST API at http://localhost:11434 by default.
- * This provider uses the /api/chat endpoint with streaming support
- * and maintains an in-memory conversation history per session.
+ * Uses the `ollama` npm package for robust HTTP communication,
+ * streaming, and error handling against a local or remote Ollama server.
  */
 export class OllamaChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
@@ -39,40 +33,40 @@ export class OllamaChatProvider implements ChatProvider {
     gatewaySnapshot: false,
   }
 
-  private baseUrl: string
+  private client: Ollama
   private model: string
   private connected = false
   private connectionListeners: Array<(connected: boolean, reconnecting: boolean) => void> = []
+  private abortController: AbortController | null = null
 
   // In-memory conversation history keyed by session
   private sessions: Map<string, OllamaMessage[]> = new Map()
 
   constructor(config: ProviderConfig) {
-    // Normalize URL: strip trailing slash, ensure no /api suffix yet
-    this.baseUrl = config.url.replace(/\/+$/, '')
+    const host = config.url.replace(/\/+$/, '')
+    this.client = new Ollama({ host })
     this.model = config.model || 'llama3.2'
   }
 
   async connect(): Promise<void> {
-    // Verify Ollama is reachable by hitting the tags endpoint
     try {
-      const response = await fetch(`${this.baseUrl}/api/tags`)
-      if (!response.ok) {
-        throw new Error(`Ollama returned status ${response.status}`)
-      }
+      await this.client.list()
       this.connected = true
       this.notifyConnectionState(true, false)
     } catch {
       this.connected = false
       this.notifyConnectionState(false, false)
       throw new Error(
-        `Cannot connect to Ollama at ${this.baseUrl}. ` +
-          `Make sure Ollama is running (ollama serve).`,
+        `Cannot connect to Ollama. Make sure Ollama is running (ollama serve).`,
       )
     }
   }
 
   disconnect(): void {
+    if (this.abortController) {
+      this.abortController.abort()
+      this.abortController = null
+    }
     this.connected = false
     this.notifyConnectionState(false, false)
   }
@@ -107,13 +101,11 @@ export class OllamaChatProvider implements ChatProvider {
   ): Promise<void> {
     const messages = this.getSessionMessages(params.sessionKey)
 
-    // Build the user message
     const userMsg: OllamaMessage = {
       role: 'user',
       content: params.message,
     }
 
-    // Ollama supports images as base64 strings in the `images` field
     if (params.attachments?.length) {
       userMsg.images = params.attachments
         .filter((a) => a.type === 'image' && a.data)
@@ -122,78 +114,40 @@ export class OllamaChatProvider implements ChatProvider {
 
     messages.push(userMsg)
 
-    // Signal lifecycle start
     onEvent({ type: 'lifecycle', phase: 'start' })
 
+    this.abortController = new AbortController()
+
     try {
-      const response = await fetch(`${this.baseUrl}/api/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: this.model,
-          messages,
-          stream: true,
-        }),
+      const stream = await this.client.chat({
+        model: this.model,
+        messages,
+        stream: true,
       })
 
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(`Ollama error (${response.status}): ${errorText}`)
-      }
-
-      // Read the streaming NDJSON response
-      const reader = response.body?.getReader()
-      if (!reader) {
-        throw new Error('No response body reader available')
-      }
-
-      const decoder = new TextDecoder()
       let fullResponse = ''
-      let buffer = ''
 
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
+      for await (const chunk of stream) {
+        if (this.abortController?.signal.aborted) {
+          break
+        }
 
-        buffer += decoder.decode(value, { stream: true })
-
-        // Process complete JSON lines
-        const lines = buffer.split('\n')
-        buffer = lines.pop() || '' // Keep incomplete line in buffer
-
-        for (const line of lines) {
-          const trimmed = line.trim()
-          if (!trimmed) continue
-
-          try {
-            const chunk: OllamaChatStreamChunk = JSON.parse(trimmed)
-
-            if (chunk.message?.content) {
-              fullResponse += chunk.message.content
-              onEvent({ type: 'delta', delta: chunk.message.content })
-            }
-
-            if (chunk.done) {
-              // Store assistant response in session history
-              messages.push({ role: 'assistant', content: fullResponse })
-              onEvent({ type: 'lifecycle', phase: 'end' })
-              return
-            }
-          } catch {
-            // Skip malformed JSON lines
-            console.warn('Ollama: skipping malformed chunk:', trimmed)
-          }
+        if (chunk.message?.content) {
+          fullResponse += chunk.message.content
+          onEvent({ type: 'delta', delta: chunk.message.content })
         }
       }
 
-      // If we exit the loop without a done=true chunk, still finalize
       if (fullResponse) {
         messages.push({ role: 'assistant', content: fullResponse })
       }
+
       onEvent({ type: 'lifecycle', phase: 'end' })
     } catch (error) {
       onEvent({ type: 'lifecycle', phase: 'end' })
       throw error
+    } finally {
+      this.abortController = null
     }
   }
 
@@ -206,7 +160,7 @@ export class OllamaChatProvider implements ChatProvider {
       .map((m, i) => ({
         role: m.role as 'user' | 'assistant',
         content: [{ type: 'text', text: m.content }],
-        timestamp: Date.now() - (sliced.length - i) * 1000, // Approximate timestamps
+        timestamp: Date.now() - (sliced.length - i) * 1000,
       }))
 
     return { messages: historyMessages }
@@ -227,11 +181,8 @@ export class OllamaChatProvider implements ChatProvider {
 
   async getHealth(): Promise<HealthStatus> {
     try {
-      const response = await fetch(`${this.baseUrl}/api/tags`)
-      if (response.ok) {
-        return { status: 'healthy' }
-      }
-      return { status: 'degraded' }
+      await this.client.list()
+      return { status: 'healthy' }
     } catch {
       return { status: 'unhealthy' }
     }
