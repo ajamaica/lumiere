@@ -176,10 +176,12 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   // Scroll to bottom after history finishes loading to show latest messages
   useEffect(() => {
     if (!isLoadingHistory && messages.length > 0 && !hasScrolledOnLoadRef.current) {
-      hasScrolledOnLoadRef.current = true
       // Use a longer timeout to ensure FlashList has rendered all history items
       setTimeout(() => {
         flatListRef.current?.scrollToEnd({ animated: false })
+        // Mark as scrolled *after* the initial jump so onContentSizeChange
+        // doesn't trigger an animated scroll during history load
+        hasScrolledOnLoadRef.current = true
       }, 400)
     }
   }, [isLoadingHistory, messages.length])
@@ -304,7 +306,11 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             contentContainerStyle={styles.messageList}
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {
-              if (shouldAutoScrollRef.current && !isLoadingHistory) {
+              if (
+                shouldAutoScrollRef.current &&
+                !isLoadingHistory &&
+                hasScrolledOnLoadRef.current
+              ) {
                 flatListRef.current?.scrollToEnd({ animated: true })
               }
             }}
