@@ -306,7 +306,11 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             contentContainerStyle={styles.messageList}
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {
-              if (shouldAutoScrollRef.current && !isLoadingHistory && hasScrolledOnLoadRef.current) {
+              if (
+                shouldAutoScrollRef.current &&
+                !isLoadingHistory &&
+                hasScrolledOnLoadRef.current
+              ) {
                 flatListRef.current?.scrollToEnd({ animated: true })
               }
             }}
