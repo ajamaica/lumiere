@@ -38,19 +38,14 @@
 
 ## Screens
 
-Lumiere uses [Expo Router](https://docs.expo.dev/router/introduction/) for file-based navigation. Screens are organized into tab-based views and modal screens presented from the root stack.
+Lumiere uses [Expo Router](https://docs.expo.dev/router/introduction/) for file-based navigation. Screens are organized as stack routes with modal presentations.
 
-### Tab Screens
-
-| Screen       | File                      | Description                                                                                                                                                                                                           |
-| ------------ | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Chat**     | `app/(tabs)/index.tsx`    | Main chat interface. Connects to Molt Gateway via WebSocket for real-time streamed AI responses. Supports markdown rendering, message queuing, slash command autocomplete, image attachments, and message favoriting. |
-| **Settings** | `app/(tabs)/settings.tsx` | App configuration. Sections for Appearance (theme selection), Security (Face ID toggle), Control (links to Overview and Cron Jobs), About (version info), and Account (logout with credential clearing).              |
-
-### Modal Screens
+### Screens
 
 | Screen        | File                | Description                                                                                                                                                                                                                                                                         |
 | ------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Chat**      | `app/index.tsx`     | Main chat interface. Connects to Molt Gateway via WebSocket for real-time streamed AI responses. Supports markdown rendering, message queuing, slash command autocomplete, image attachments, and message favoriting.                                                               |
+| **Settings**  | `app/settings.tsx`  | App configuration. Sections for Appearance (theme selection), Security (Face ID toggle), Control (links to Overview and Cron Jobs), About (version info), and Account (logout with credential clearing).                                                                            |
 | **Overview**  | `app/overview.tsx`  | Gateway monitoring dashboard. Displays connection status, uptime, tick interval, and last refresh time. Shows resource counts for instances (presence beacons), sessions, and cron status. Includes gateway access credentials with show/hide toggle, and connect/refresh controls. |
 | **Servers**   | `app/servers.tsx`   | Multi-server management. Add, edit, switch between, and remove Molt Gateway server configurations. Each server stores a name, WebSocket URL, token, and client ID. The active server is highlighted with a primary-color border.                                                    |
 | **Sessions**  | `app/sessions.tsx`  | Chat session management. Create new sessions, reset the current session (clears message history on the gateway), and switch between available sessions fetched from the gateway. Active session is visually indicated.                                                              |
@@ -73,16 +68,14 @@ RootLayout (ThemeProvider + KeyboardProvider)
 ├── OnboardingScreen (if first launch)
 ├── BiometricLockScreen (if Face ID enabled)
 └── Stack Navigator
-    ├── (tabs)
-    │   ├── Chat (index)
-    │   └── Settings
-    └── Modals (slide from bottom)
-        ├── Overview
-        ├── Servers
-        ├── Sessions
-        ├── Scheduler
-        ├── Favorites
-        └── Gallery
+    ├── Chat (index)
+    ├── Settings
+    ├── Overview
+    ├── Servers
+    ├── Sessions
+    ├── Scheduler
+    ├── Favorites
+    └── Gallery
 ```
 
 ## Screenshots
@@ -152,9 +145,8 @@ Open screens directly using `lumiere://` URLs:
 
 ```
 app/                    Expo Router file-based routes
-├── (tabs)/             Tab navigator (Chat + Settings)
 ├── _layout.tsx         Root layout with providers and auth gates
-└── *.tsx               Modal screen routes
+└── *.tsx               Screen routes
 
 src/
 ├── components/
