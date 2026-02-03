@@ -9,6 +9,14 @@ function createProvider() {
   })
 }
 
+beforeEach(() => {
+  jest.useFakeTimers()
+})
+
+afterEach(() => {
+  jest.useRealTimers()
+})
+
 describe('EchoChatProvider', () => {
   describe('capabilities', () => {
     it('supports chat only', () => {
@@ -65,13 +73,20 @@ describe('EchoChatProvider', () => {
   })
 
   describe('sendMessage', () => {
-    it('echoes the message back', async () => {
+    it('echoes the message back after a 2s delay', async () => {
       const provider = createProvider()
       const events: ChatProviderEvent[] = []
 
-      await provider.sendMessage({ message: 'Hello world', sessionKey: 'test-session' }, (event) =>
-        events.push(event),
+      const promise = provider.sendMessage(
+        { message: 'Hello world', sessionKey: 'test-session' },
+        (event) => events.push(event),
       )
+
+      // start event fires immediately
+      expect(events).toEqual([{ type: 'lifecycle', phase: 'start' }])
+
+      jest.advanceTimersByTime(2000)
+      await promise
 
       expect(events).toEqual([
         { type: 'lifecycle', phase: 'start' },
@@ -83,8 +98,12 @@ describe('EchoChatProvider', () => {
     it('maintains separate sessions', async () => {
       const provider = createProvider()
 
-      await provider.sendMessage({ message: 'msg1', sessionKey: 'session-a' }, () => {})
-      await provider.sendMessage({ message: 'msg2', sessionKey: 'session-b' }, () => {})
+      const p1 = provider.sendMessage({ message: 'msg1', sessionKey: 'session-a' }, () => {})
+      jest.advanceTimersByTime(2000)
+      await p1
+      const p2 = provider.sendMessage({ message: 'msg2', sessionKey: 'session-b' }, () => {})
+      jest.advanceTimersByTime(2000)
+      await p2
 
       const historyA = await provider.getChatHistory('session-a')
       const historyB = await provider.getChatHistory('session-b')
@@ -107,7 +126,9 @@ describe('EchoChatProvider', () => {
       const provider = createProvider()
       // Send 3 messages (each creates user + assistant = 6 entries)
       for (let i = 0; i < 3; i++) {
-        await provider.sendMessage({ message: `msg${i}`, sessionKey: 'session' }, () => {})
+        const p = provider.sendMessage({ message: `msg${i}`, sessionKey: 'session' }, () => {})
+        jest.advanceTimersByTime(2000)
+        await p
       }
 
       const history = await provider.getChatHistory('session', 2)
@@ -116,7 +137,9 @@ describe('EchoChatProvider', () => {
 
     it('returns messages with proper structure', async () => {
       const provider = createProvider()
-      await provider.sendMessage({ message: 'test', sessionKey: 'session' }, () => {})
+      const p = provider.sendMessage({ message: 'test', sessionKey: 'session' }, () => {})
+      jest.advanceTimersByTime(2000)
+      await p
 
       const history = await provider.getChatHistory('session')
       expect(history.messages[0]).toMatchObject({
@@ -130,7 +153,9 @@ describe('EchoChatProvider', () => {
   describe('resetSession', () => {
     it('clears session history', async () => {
       const provider = createProvider()
-      await provider.sendMessage({ message: 'test', sessionKey: 'session' }, () => {})
+      const p = provider.sendMessage({ message: 'test', sessionKey: 'session' }, () => {})
+      jest.advanceTimersByTime(2000)
+      await p
 
       await provider.resetSession('session')
       const history = await provider.getChatHistory('session')
@@ -141,8 +166,12 @@ describe('EchoChatProvider', () => {
   describe('listSessions', () => {
     it('lists all active sessions', async () => {
       const provider = createProvider()
-      await provider.sendMessage({ message: 'a', sessionKey: 'session-1' }, () => {})
-      await provider.sendMessage({ message: 'b', sessionKey: 'session-2' }, () => {})
+      const p1 = provider.sendMessage({ message: 'a', sessionKey: 'session-1' }, () => {})
+      jest.advanceTimersByTime(2000)
+      await p1
+      const p2 = provider.sendMessage({ message: 'b', sessionKey: 'session-2' }, () => {})
+      jest.advanceTimersByTime(2000)
+      await p2
 
       const result = (await provider.listSessions()) as {
         sessions: { key: string; messageCount: number }[]

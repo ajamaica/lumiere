@@ -46,7 +46,7 @@ export default function EditServerScreen() {
   const handleSave = async () => {
     if (!id) return
 
-    if (!url.trim()) {
+    if (providerType !== 'echo' && !url.trim()) {
       Alert.alert('Error', 'URL is required')
       return
     }
@@ -55,7 +55,7 @@ export default function EditServerScreen() {
       id,
       {
         name: name.trim(),
-        url: url.trim(),
+        url: providerType === 'echo' ? 'echo://local' : url.trim(),
         clientId: clientId.trim(),
         providerType,
         model: model.trim() || undefined,
@@ -180,23 +180,23 @@ export default function EditServerScreen() {
             />
           </View>
 
-          <View style={styles.formRow}>
-            <TextInput
-              label="URL"
-              value={url}
-              onChangeText={setUrl}
-              placeholder={
-                providerType === 'ollama'
-                  ? 'http://localhost:11434'
-                  : providerType === 'echo'
-                    ? 'echo://local'
+          {providerType !== 'echo' && (
+            <View style={styles.formRow}>
+              <TextInput
+                label="URL"
+                value={url}
+                onChangeText={setUrl}
+                placeholder={
+                  providerType === 'ollama'
+                    ? 'http://localhost:11434'
                     : 'wss://gateway.example.com'
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="url"
-            />
-          </View>
+                }
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="url"
+              />
+            </View>
+          )}
 
           {providerType === 'molt' && (
             <>

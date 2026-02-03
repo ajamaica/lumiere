@@ -81,6 +81,9 @@ export class EchoChatProvider implements ChatProvider {
 
     onEvent({ type: 'lifecycle', phase: 'start' })
 
+    // Simulate network delay before echoing back
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+
     // Echo back the same message
     const echoResponse = params.message
 
