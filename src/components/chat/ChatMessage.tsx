@@ -17,6 +17,7 @@ import Markdown from 'react-native-markdown-display'
 
 import { favoritesAtom } from '../../store'
 import { useTheme } from '../../theme'
+import { CodeBlock } from './CodeBlock'
 
 export interface MessageAttachment {
   uri: string
@@ -162,24 +163,25 @@ export function ChatMessage({ message }: ChatMessageProps) {
         </Text>
       ),
       fence: (
-        node: { key: string; content: string },
+        node: { key: string; content: string; sourceInfo?: string },
         _children: unknown,
         _parent: unknown,
-        styles: { fence: TextStyle },
+        _styles: { fence: TextStyle },
       ) => (
-        <Text key={node.key} style={styles.fence} selectable={true}>
-          {node.content}
-        </Text>
+        <CodeBlock
+          key={node.key}
+          code={node.content}
+          language={node.sourceInfo || undefined}
+          isUser={isUser}
+        />
       ),
       code_block: (
         node: { key: string; content: string },
         _children: unknown,
         _parent: unknown,
-        styles: { code_block: TextStyle },
+        _styles: { code_block: TextStyle },
       ) => (
-        <Text key={node.key} style={styles.code_block} selectable={true}>
-          {node.content}
-        </Text>
+        <CodeBlock key={node.key} code={node.content} isUser={isUser} />
       ),
       heading1: (
         node: { key: string },
@@ -259,7 +261,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         </View>
       ),
     }),
-    [handleLinkPress],
+    [handleLinkPress, isUser],
   )
 
   const handleCopy = async () => {
