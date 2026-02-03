@@ -6,7 +6,8 @@ import { DEFAULT_SESSION_KEY } from '../constants'
 import type { ProviderType } from '../services/providers/types'
 
 // Create AsyncStorage adapter for Jotai
-const storage = createJSONStorage<unknown>(() => AsyncStorage)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const storage = createJSONStorage<any>(() => AsyncStorage)
 
 // Server configuration types
 export interface ServerConfig {

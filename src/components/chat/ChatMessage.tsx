@@ -3,7 +3,16 @@ import * as Clipboard from 'expo-clipboard'
 import * as WebBrowser from 'expo-web-browser'
 import { useAtom } from 'jotai'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
 import { favoritesAtom } from '../../store'
@@ -106,7 +115,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string; content: string },
         _children: unknown,
         _parent: unknown,
-        styles: { text: unknown },
+        styles: { text: TextStyle },
       ) => (
         <Text key={node.key} style={styles.text} selectable={true}>
           {node.content}
@@ -116,7 +125,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string },
         children: React.ReactNode,
         _parent: unknown,
-        styles: { paragraph: unknown },
+        styles: { paragraph: TextStyle },
       ) => (
         <Text key={node.key} style={styles.paragraph} selectable={true}>
           {children}
@@ -126,7 +135,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string },
         children: React.ReactNode,
         _parent: unknown,
-        styles: { strong: unknown },
+        styles: { strong: TextStyle },
       ) => (
         <Text key={node.key} style={styles.strong} selectable={true}>
           {children}
@@ -136,7 +145,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string },
         children: React.ReactNode,
         _parent: unknown,
-        styles: { em: unknown },
+        styles: { em: TextStyle },
       ) => (
         <Text key={node.key} style={styles.em} selectable={true}>
           {children}
@@ -146,7 +155,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string; content: string },
         _children: unknown,
         _parent: unknown,
-        styles: { code_inline: unknown },
+        styles: { code_inline: TextStyle },
       ) => (
         <Text key={node.key} style={styles.code_inline} selectable={true}>
           {node.content}
@@ -156,7 +165,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string; content: string },
         _children: unknown,
         _parent: unknown,
-        styles: { fence: unknown },
+        styles: { fence: TextStyle },
       ) => (
         <Text key={node.key} style={styles.fence} selectable={true}>
           {node.content}
@@ -166,7 +175,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string; content: string },
         _children: unknown,
         _parent: unknown,
-        styles: { code_block: unknown },
+        styles: { code_block: TextStyle },
       ) => (
         <Text key={node.key} style={styles.code_block} selectable={true}>
           {node.content}
@@ -176,7 +185,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string },
         children: React.ReactNode,
         _parent: unknown,
-        styles: { heading1: unknown },
+        styles: { heading1: TextStyle },
       ) => (
         <Text key={node.key} style={styles.heading1} selectable={true}>
           {children}
@@ -186,7 +195,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string },
         children: React.ReactNode,
         _parent: unknown,
-        styles: { heading2: unknown },
+        styles: { heading2: TextStyle },
       ) => (
         <Text key={node.key} style={styles.heading2} selectable={true}>
           {children}
@@ -196,7 +205,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string },
         children: React.ReactNode,
         _parent: unknown,
-        styles: { heading3: unknown },
+        styles: { heading3: TextStyle },
       ) => (
         <Text key={node.key} style={styles.heading3} selectable={true}>
           {children}
@@ -206,7 +215,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string; attributes?: { href?: string } },
         children: React.ReactNode,
         _parent: unknown,
-        styles: { link: unknown },
+        styles: { link: TextStyle },
       ) => {
         const url = node.attributes?.href || ''
         return (
@@ -221,7 +230,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string },
         children: React.ReactNode,
         _parent: unknown,
-        styles: { textgroup: unknown },
+        styles: { textgroup: TextStyle },
       ) => (
         <Text key={node.key} style={styles.textgroup} selectable={true}>
           {children}
@@ -231,7 +240,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string },
         children: React.ReactNode,
         _parent: unknown,
-        styles: { list_item: unknown },
+        styles: { list_item: ViewStyle },
       ) => (
         <View key={node.key} style={styles.list_item}>
           {React.Children.map(children, (child) =>
@@ -243,7 +252,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         node: { key: string },
         children: React.ReactNode,
         _parent: unknown,
-        styles: { blockquote: unknown },
+        styles: { blockquote: ViewStyle },
       ) => (
         <View key={node.key} style={styles.blockquote}>
           {children}
@@ -278,7 +287,10 @@ export function ChatMessage({ message }: ChatMessageProps) {
         )}
         <Markdown
           style={markdownStyles}
-          onLinkPress={handleLinkPress}
+          onLinkPress={(url: string) => {
+            handleLinkPress(url)
+            return false
+          }}
           mergeStyle={true}
           rules={markdownRules}
         >
@@ -337,7 +349,7 @@ interface Theme {
   typography: {
     fontSize: { xs: number; sm: number; base: number; lg: number; xl: number }
     lineHeight: { normal: number }
-    fontWeight: { medium: string; semibold: string; bold: string }
+    fontWeight: { medium: '500'; semibold: '600'; bold: '700' }
     fontFamily: { monospace: string }
   }
   isDark: boolean
@@ -449,7 +461,7 @@ const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
       color: textColor,
     },
     em: {
-      fontStyle: 'italic',
+      fontStyle: 'italic' as const,
       color: textColor,
     },
     code_inline: {
@@ -525,7 +537,7 @@ const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
     },
     link: {
       color: isUser && !theme.isDark ? '#FFFFFF' : theme.colors.primary,
-      textDecorationLine: 'underline',
+      textDecorationLine: 'underline' as const,
       fontWeight: theme.typography.fontWeight.medium,
     },
     hr: {
@@ -550,7 +562,7 @@ const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
     tr: {
       borderBottomWidth: 1,
       borderColor: textColor,
-      flexDirection: 'row',
+      flexDirection: 'row' as const,
     },
     th: {
       flex: 1,
