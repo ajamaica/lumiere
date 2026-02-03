@@ -261,7 +261,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       return (
         <View style={styles.statusBarContainer}>
           <View style={[styles.statusBubble, styles.errorBubble]}>
-            <Text style={styles.errorText} numberOfLines={1}>Connection failed: {error}</Text>
+            <Text style={styles.errorText} numberOfLines={1}>
+              Connection failed: {error}
+            </Text>
             <TouchableOpacity onPress={retry} style={styles.retryButton}>
               <Text style={styles.retryText}>Retry</Text>
             </TouchableOpacity>
