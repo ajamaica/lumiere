@@ -18,7 +18,6 @@ export default [
       'android/**',
       'ios/**',
       '*.config.js',
-      'e2e/**',
     ],
   },
   js.configs.recommended,
