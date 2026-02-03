@@ -204,11 +204,7 @@ export default function SessionsScreen() {
                     hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                     style={{ padding: 4, marginRight: 8 }}
                   >
-                    <Ionicons
-                      name="pencil-outline"
-                      size={18}
-                      color={theme.colors.text.secondary}
-                    />
+                    <Ionicons name="pencil-outline" size={18} color={theme.colors.text.secondary} />
                   </TouchableOpacity>
                   <Ionicons
                     name={isActive ? 'checkmark-circle' : 'chevron-forward'}
