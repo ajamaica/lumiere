@@ -261,7 +261,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       return (
         <View style={styles.statusBarContainer}>
           <View style={[styles.statusBubble, styles.errorBubble]}>
-            <Text style={styles.errorText}>Connection failed: {error}</Text>
+            <Text style={styles.errorText} numberOfLines={1}>Connection failed: {error}</Text>
             <TouchableOpacity onPress={retry} style={styles.retryButton}>
               <Text style={styles.retryText}>Retry</Text>
             </TouchableOpacity>
@@ -426,6 +426,7 @@ const createStyles = (theme: Theme) =>
       borderRadius: theme.borderRadius.xxl,
       alignSelf: 'flex-start',
       marginRight: theme.spacing.md,
+      flexShrink: 1,
     },
     settingsButton: {
       width: 40,
@@ -434,6 +435,7 @@ const createStyles = (theme: Theme) =>
       backgroundColor: theme.colors.surface,
       alignItems: 'center',
       justifyContent: 'center',
+      flexShrink: 0,
     },
     errorBubble: {
       backgroundColor: theme.isDark ? '#3A1B1B' : '#FFEBEE',
