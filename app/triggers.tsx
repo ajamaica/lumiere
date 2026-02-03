@@ -2,14 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import * as Clipboard from 'expo-clipboard'
 import { useAtom } from 'jotai'
 import React, { useCallback, useMemo, useState } from 'react'
-import {
-  Alert,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { ActionRow, Button, ScreenHeader, Section, Text, TextInput } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
@@ -35,9 +28,7 @@ export default function TriggersScreen() {
   const [newMessage, setNewMessage] = useState('')
 
   const triggersList = useMemo(
-    () =>
-      Object.values(triggers)
-        .sort((a, b) => b.createdAt - a.createdAt),
+    () => Object.values(triggers).sort((a, b) => b.createdAt - a.createdAt),
     [triggers],
   )
 
@@ -65,17 +56,13 @@ export default function TriggersScreen() {
     setIsCreating(false)
 
     const deepLink = `lumiere://trigger/autotrigger/${slug}`
-    Alert.alert(
-      'Trigger Created',
-      `Your deep link:\n\n${deepLink}`,
-      [
-        {
-          text: 'Copy Link',
-          onPress: () => Clipboard.setStringAsync(deepLink),
-        },
-        { text: 'OK' },
-      ],
-    )
+    Alert.alert('Trigger Created', `Your deep link:\n\n${deepLink}`, [
+      {
+        text: 'Copy Link',
+        onPress: () => Clipboard.setStringAsync(deepLink),
+      },
+      { text: 'OK' },
+    ])
   }, [newMessage, currentServerId, currentServer, currentSessionKey, triggers, setTriggers])
 
   const handleDelete = useCallback(
@@ -191,7 +178,8 @@ export default function TriggersScreen() {
                 multiline
               />
               <Text variant="caption" color="secondary" style={{ marginBottom: theme.spacing.sm }}>
-                Server: {currentServer?.name || 'None'} | Session: {formatSessionKey(currentSessionKey)}
+                Server: {currentServer?.name || 'None'} | Session:{' '}
+                {formatSessionKey(currentSessionKey)}
               </Text>
               <View style={styles.formButtons}>
                 <Button title="Create Trigger" onPress={handleCreate} />

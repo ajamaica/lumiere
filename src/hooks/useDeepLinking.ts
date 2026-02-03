@@ -44,7 +44,11 @@ function parseDeepLink(url: string): DeepLinkResult | TriggerResult | null {
     const path = parsed.path?.replace(/^\/+/, '').replace(/\/+$/, '') ?? ''
 
     if (!path || path === '') {
-      return { type: 'navigate', route: '/', params: (parsed.queryParams as Record<string, string>) ?? {} }
+      return {
+        type: 'navigate',
+        route: '/',
+        params: (parsed.queryParams as Record<string, string>) ?? {},
+      }
     }
 
     // Match trigger deep links: lumiere://trigger/autotrigger/{slug}
@@ -54,7 +58,11 @@ function parseDeepLink(url: string): DeepLinkResult | TriggerResult | null {
     }
 
     if (isValidRoute(path)) {
-      return { type: 'navigate', route: `/${path}`, params: (parsed.queryParams as Record<string, string>) ?? {} }
+      return {
+        type: 'navigate',
+        route: `/${path}`,
+        params: (parsed.queryParams as Record<string, string>) ?? {},
+      }
     }
 
     return null
