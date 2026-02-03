@@ -11,6 +11,7 @@ import { useTheme } from '../src/theme'
 const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
   { value: 'molt', label: 'Molt Gateway' },
   { value: 'ollama', label: 'Ollama' },
+  { value: 'echo', label: 'Echo Server' },
 ]
 
 export default function ServersScreen() {

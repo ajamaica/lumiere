@@ -56,10 +56,11 @@ export function useServers(): UseServersResult {
 
       setServers({ ...servers, [id]: newServer })
 
-      // If this is the first server, make it current
-      if (Object.keys(servers).length === 0) {
-        setCurrentServerId(id)
-      }
+      // Always make the newly added server the current one.
+      // We cannot rely on switchToServer() called after addServer()
+      // because it closes over the stale servers state that does not
+      // yet include the new server.
+      setCurrentServerId(id)
 
       return id
     },

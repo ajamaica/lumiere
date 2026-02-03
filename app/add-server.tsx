@@ -26,7 +26,7 @@ const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
 export default function AddServerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { addServer, switchToServer } = useServers()
+  const { addServer } = useServers()
   const { flags } = useFeatureFlags()
 
   const providerOptions = ALL_PROVIDER_OPTIONS.filter(
@@ -56,7 +56,7 @@ export default function AddServerScreen() {
     const effectiveToken =
       providerType === 'echo' ? 'echo-no-token' : token.trim() || 'ollama-no-token'
 
-    const serverId = await addServer(
+    await addServer(
       {
         name: name.trim() || 'New Server',
         url: url.trim(),
@@ -67,7 +67,6 @@ export default function AddServerScreen() {
       effectiveToken,
     )
 
-    switchToServer(serverId)
     router.back()
   }
 
