@@ -178,9 +178,7 @@ export default function AddServerScreen() {
                 value={url}
                 onChangeText={setUrl}
                 placeholder={
-                  providerType === 'ollama'
-                    ? 'http://localhost:11434'
-                    : 'wss://gateway.example.com'
+                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
