@@ -20,7 +20,7 @@ import { useTheme } from '../theme'
 
 export function OnboardingScreen() {
   const { theme } = useTheme()
-  const { addServer, switchToServer } = useServers()
+  const { addServer } = useServers()
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setServerSessions] = useAtom(serverSessionsAtom)
   const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
@@ -77,9 +77,6 @@ export function OnboardingScreen() {
         },
         localToken.trim(),
       )
-
-      // Set as current server (done automatically in addServer if first)
-      switchToServer(serverId)
 
       // Set session key from onboarding (persists to AsyncStorage)
       const sessionKey = localSessionKey.trim()
