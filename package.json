@@ -11,8 +11,6 @@
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "e2e:sauce:ios": "wdio run e2e/configs/wdio.saucelabs.ios.conf.ts",
-    "e2e:sauce:android": "wdio run e2e/configs/wdio.saucelabs.android.conf.ts",
     "sauce:upload": "./.saucelabs/upload-app.sh"
   },
   "dependencies": {
@@ -47,14 +45,6 @@
     "@types/react": "~19.1.0",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "@typescript-eslint/parser": "^8.54.0",
-    "@wdio/cli": "^9.23.2",
-    "@wdio/globals": "^9.23.0",
-    "@wdio/junit-reporter": "^9.23.2",
-    "@wdio/local-runner": "^9.23.2",
-    "@wdio/mocha-framework": "^9.23.2",
-    "@wdio/sauce-service": "^9.23.2",
-    "@wdio/spec-reporter": "^9.23.2",
-    "@wdio/types": "^9.23.2",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
