@@ -1,4 +1,11 @@
-export type { FavoriteItem, FeatureFlags, ServerConfig, ServersDict, ServerSessions } from './atoms'
+export type {
+  FavoriteItem,
+  FeatureFlags,
+  ServerConfig,
+  ServersDict,
+  ServerSessions,
+  SessionAliases,
+} from './atoms'
 export {
   biometricLockEnabledAtom,
   clearMessagesAtom,
@@ -14,5 +21,6 @@ export {
   onboardingCompletedAtom,
   serversAtom,
   serverSessionsAtom,
+  sessionAliasesAtom,
   themeModeAtom,
 } from './atoms'

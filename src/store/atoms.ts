@@ -87,6 +87,13 @@ export const biometricLockEnabledAtom = atomWithStorage<boolean>(
   storage,
 )
 
+// Session aliases (local display names for session keys)
+export interface SessionAliases {
+  [sessionKey: string]: string // display name for each session
+}
+
+export const sessionAliasesAtom = atomWithStorage<SessionAliases>('sessionAliases', {}, storage)
+
 // Feature flags (persisted)
 export interface FeatureFlags {
   ollamaProvider: boolean
