@@ -144,6 +144,14 @@ function AppContent() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="triggers"
+        options={{
+          presentation: 'modal',
+          animation: 'slide_from_bottom',
+          headerShown: false,
+        }}
+      />
     </Stack>
   )
 }
