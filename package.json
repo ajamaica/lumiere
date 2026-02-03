@@ -23,6 +23,7 @@
     "expo": "~54.0.33",
     "expo-clipboard": "~8.0.8",
     "expo-constants": "^18.0.13",
+    "expo-glass-effect": "^0.1.8",
     "expo-image-picker": "^17.0.10",
     "expo-linking": "^8.0.11",
     "expo-local-authentication": "^17.0.8",
@@ -59,8 +60,8 @@
     "eslint-plugin-react-native": "^5.0.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "jest-expo": "^54.0.17",
-    "react-test-renderer": "19.1.0",
     "prettier": "^3.8.1",
+    "react-test-renderer": "19.1.0",
     "typescript": "~5.9.2"
   },
   "private": true

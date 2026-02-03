@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
+import { GlassView } from 'expo-glass-effect'
 import * as ImagePicker from 'expo-image-picker'
 import React, { useMemo, useState } from 'react'
 import {
@@ -97,7 +98,7 @@ export function ChatInput({
         />
       )}
       <View style={styles.background}>
-        <View style={styles.container}>
+        <GlassView style={styles.container}>
           {attachments.length > 0 && (
             <View style={styles.attachmentPreviewRow}>
               {attachments.map((attachment, index) => (
@@ -176,7 +177,7 @@ export function ChatInput({
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </GlassView>
       </View>
     </>
   )
@@ -201,7 +202,7 @@ interface Theme {
 const createStyles = (theme: Theme) =>
   StyleSheet.create({
     background: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     container: {
       flexDirection: 'column',
@@ -210,10 +211,9 @@ const createStyles = (theme: Theme) =>
       paddingHorizontal: theme.spacing.md,
       paddingTop: theme.spacing.sm,
       paddingBottom: theme.spacing.sm,
-      backgroundColor: theme.colors.surface,
+      backgroundColor: 'transparent',
       borderRadius: 28,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
+      overflow: 'hidden',
     },
     input: {
       minHeight: 40,
