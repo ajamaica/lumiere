@@ -121,6 +121,6 @@ export interface FeatureFlags {
 
 export const featureFlagsAtom = atomWithStorage<FeatureFlags>(
   'featureFlags',
-  { ollamaProvider: false, echoProvider: false },
+  { ollamaProvider: false, echoProvider: true },
   storage,
 )
