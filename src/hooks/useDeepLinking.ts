@@ -1,6 +1,6 @@
-import { getDefaultStore } from 'jotai'
 import * as Linking from 'expo-linking'
 import { useRouter } from 'expo-router'
+import { getDefaultStore } from 'jotai'
 import { useEffect } from 'react'
 
 import {
