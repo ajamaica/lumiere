@@ -92,6 +92,7 @@ export default function SettingsScreen() {
               'currentServerId',
               'serverSessions',
               'onboardingCompleted',
+              'triggers',
             ])
             setOnboardingCompleted(false)
           },
@@ -186,6 +187,7 @@ export default function SettingsScreen() {
 
         <Section title="Content">
           <SettingRow label="Favorites" onPress={() => router.push('/favorites')} />
+          <SettingRow label="Triggers" onPress={() => router.push('/triggers')} />
         </Section>
 
         {currentServer?.providerType !== 'ollama' && currentServer?.providerType !== 'echo' && (

@@ -18,7 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useChatProvider } from '../../hooks/useChatProvider'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
 import { ProviderConfig } from '../../services/providers'
-import { clearMessagesAtom, currentSessionKeyAtom } from '../../store'
+import { clearMessagesAtom, currentSessionKeyAtom, pendingTriggerMessageAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
@@ -44,6 +44,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
   const [currentSessionKey] = useAtom(currentSessionKeyAtom)
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
+  const [pendingTriggerMessage, setPendingTriggerMessage] = useAtom(pendingTriggerMessageAtom)
   const flatListRef = useRef<FlashListRef<Message>>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
@@ -172,6 +173,18 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       loadChatHistory()
     }
   }, [clearMessagesTrigger, connected, loadChatHistory])
+
+  // Auto-send pending trigger message once connected and history has loaded
+  useEffect(() => {
+    if (connected && !isLoadingHistory && pendingTriggerMessage) {
+      // Small delay so the UI settles before firing the message
+      const timer = setTimeout(() => {
+        handleSend(pendingTriggerMessage)
+        setPendingTriggerMessage(null)
+      }, 600)
+      return () => clearTimeout(timer)
+    }
+  }, [connected, isLoadingHistory, pendingTriggerMessage, handleSend, setPendingTriggerMessage])
 
   // Scroll to bottom after history finishes loading to show latest messages
   useEffect(() => {
@@ -303,7 +316,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ChatMessage message={item} />}
             contentContainerStyle={styles.messageList}
-            keyboardDismissMode="interactive"
+            keyboardDismissMode="on-drag"
             onContentSizeChange={() => {
               if (
                 shouldAutoScrollRef.current &&
