@@ -180,9 +180,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         _children: unknown,
         _parent: unknown,
         _styles: { code_block: TextStyle },
-      ) => (
-        <CodeBlock key={node.key} code={node.content} isUser={isUser} />
-      ),
+      ) => <CodeBlock key={node.key} code={node.content} isUser={isUser} />,
       heading1: (
         node: { key: string },
         children: React.ReactNode,
