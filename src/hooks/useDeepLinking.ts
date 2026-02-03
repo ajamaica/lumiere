@@ -75,9 +75,13 @@ function parseDeepLink(url: string): DeepLinkResult | TriggerResult | null {
  * Executes a trigger by switching to the trigger's server/session and
  * setting a pending message that ChatScreen will pick up and auto-send.
  */
-function executeTrigger(slug: string) {
+async function executeTrigger(slug: string) {
   const store = getDefaultStore()
-  const triggers = store.get(triggersAtom)
+  const rawTriggers = store.get(triggersAtom)
+
+  // atomWithStorage may return a Promise before hydration completes
+  const triggers = rawTriggers instanceof Promise ? await rawTriggers : rawTriggers
+
   const trigger = triggers[slug]
 
   if (!trigger) {
