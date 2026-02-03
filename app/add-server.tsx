@@ -30,8 +30,7 @@ export default function AddServerScreen() {
   const { flags } = useFeatureFlags()
 
   const providerOptions = ALL_PROVIDER_OPTIONS.filter(
-    (o) =>
-      (o.value !== 'ollama' || flags.ollamaProvider) && (o.value !== 'echo' || flags.echoProvider),
+    (o) => o.value !== 'ollama' || flags.ollamaProvider,
   )
 
   const [name, setName] = useState('')
