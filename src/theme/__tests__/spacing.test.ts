@@ -2,7 +2,15 @@ import { borderRadius, spacing } from '../spacing'
 
 describe('spacing', () => {
   it('has values in ascending order', () => {
-    const values = [spacing.xs, spacing.sm, spacing.md, spacing.lg, spacing.xl, spacing.xxl, spacing.xxxl]
+    const values = [
+      spacing.xs,
+      spacing.sm,
+      spacing.md,
+      spacing.lg,
+      spacing.xl,
+      spacing.xxl,
+      spacing.xxxl,
+    ]
     for (let i = 1; i < values.length; i++) {
       expect(values[i]).toBeGreaterThan(values[i - 1])
     }
