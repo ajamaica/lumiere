@@ -56,9 +56,7 @@ export class OllamaChatProvider implements ChatProvider {
     } catch {
       this.connected = false
       this.notifyConnectionState(false, false)
-      throw new Error(
-        `Cannot connect to Ollama. Make sure Ollama is running (ollama serve).`,
-      )
+      throw new Error(`Cannot connect to Ollama. Make sure Ollama is running (ollama serve).`)
     }
   }
 
