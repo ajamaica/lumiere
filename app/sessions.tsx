@@ -7,7 +7,7 @@ import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } f
 import { ActionRow, Button, ScreenHeader, Section, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { clearMessagesAtom, currentSessionKeyAtom } from '../src/store'
+import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
 interface Session {
@@ -22,6 +22,7 @@ export default function SessionsScreen() {
   const { getProviderConfig } = useServers()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
+  const [sessionAliases] = useAtom(sessionAliasesAtom)
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
 
   const [sessions, setSessions] = useState<Session[]>([])
@@ -105,8 +106,13 @@ export default function SessionsScreen() {
   }
 
   const formatSessionKey = (key: string) => {
+    if (sessionAliases[key]) return sessionAliases[key]
     const parts = key.split(':')
     return parts[parts.length - 1] || key
+  }
+
+  const handleEditSession = (sessionKey: string) => {
+    router.push({ pathname: '/edit-session', params: { key: sessionKey } })
   }
 
   const styles = StyleSheet.create({
@@ -193,6 +199,17 @@ export default function SessionsScreen() {
                       <Text variant="caption">{session.messageCount} messages</Text>
                     )}
                   </View>
+                  <TouchableOpacity
+                    onPress={() => handleEditSession(session.key)}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                    style={{ padding: 4, marginRight: 8 }}
+                  >
+                    <Ionicons
+                      name="pencil-outline"
+                      size={18}
+                      color={theme.colors.text.secondary}
+                    />
+                  </TouchableOpacity>
                   <Ionicons
                     name={isActive ? 'checkmark-circle' : 'chevron-forward'}
                     size={20}
