@@ -316,7 +316,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ChatMessage message={item} />}
             contentContainerStyle={styles.messageList}
-            keyboardDismissMode="interactive"
+            keyboardDismissMode="on-drag"
             onContentSizeChange={() => {
               if (
                 shouldAutoScrollRef.current &&
