@@ -341,7 +341,8 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             styles.scrollToBottomButton,
             {
               opacity: showScrollButton && !isKeyboardVisible ? 1 : 0,
-              pointerEvents: showScrollButton && !isKeyboardVisible ? 'auto' as const : 'none' as const,
+              pointerEvents:
+                showScrollButton && !isKeyboardVisible ? ('auto' as const) : ('none' as const),
             },
           ]}
           onPress={() => {
