@@ -20,6 +20,7 @@ import { useTheme } from '../src/theme'
 const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
   { value: 'molt', label: 'Molt Gateway' },
   { value: 'ollama', label: 'Ollama' },
+  { value: 'echo', label: 'Echo Server' },
 ]
 
 export default function EditServerScreen() {
@@ -30,7 +31,8 @@ export default function EditServerScreen() {
   const { flags } = useFeatureFlags()
 
   const providerOptions = ALL_PROVIDER_OPTIONS.filter(
-    (o) => o.value !== 'ollama' || flags.ollamaProvider,
+    (o) =>
+      (o.value !== 'ollama' || flags.ollamaProvider) && (o.value !== 'echo' || flags.echoProvider),
   )
 
   const server = id ? servers[id] : null
@@ -167,7 +169,13 @@ export default function EditServerScreen() {
               label="Name"
               value={name}
               onChangeText={setName}
-              placeholder={providerType === 'ollama' ? 'My Ollama' : 'My Server'}
+              placeholder={
+                providerType === 'ollama'
+                  ? 'My Ollama'
+                  : providerType === 'echo'
+                    ? 'My Echo Server'
+                    : 'My Server'
+              }
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -179,7 +187,11 @@ export default function EditServerScreen() {
               value={url}
               onChangeText={setUrl}
               placeholder={
-                providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                providerType === 'ollama'
+                  ? 'http://localhost:11434'
+                  : providerType === 'echo'
+                    ? 'echo://local'
+                    : 'wss://gateway.example.com'
               }
               autoCapitalize="none"
               autoCorrect={false}

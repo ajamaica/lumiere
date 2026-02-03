@@ -98,10 +98,11 @@ export const sessionAliasesAtom = atomWithStorage<SessionAliases>('sessionAliase
 // Feature flags (persisted)
 export interface FeatureFlags {
   ollamaProvider: boolean
+  echoProvider: boolean
 }
 
 export const featureFlagsAtom = atomWithStorage<FeatureFlags>(
   'featureFlags',
-  { ollamaProvider: false },
+  { ollamaProvider: false, echoProvider: false },
   storage,
 )

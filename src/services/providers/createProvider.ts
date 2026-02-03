@@ -1,3 +1,4 @@
+import { EchoChatProvider } from '../echo/EchoChatProvider'
 import { OllamaChatProvider } from '../ollama/OllamaChatProvider'
 import { MoltChatProvider } from './MoltChatProvider'
 import { ChatProvider, ProviderConfig } from './types'
@@ -12,6 +13,8 @@ export function createChatProvider(config: ProviderConfig): ChatProvider {
       return new MoltChatProvider(config)
     case 'ollama':
       return new OllamaChatProvider(config)
+    case 'echo':
+      return new EchoChatProvider(config)
     default:
       throw new Error(`Unknown provider type: ${(config as ProviderConfig).type}`)
   }
