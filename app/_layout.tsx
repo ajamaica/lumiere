@@ -1,16 +1,17 @@
 import { Stack } from 'expo-router'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { AppState, AppStateStatus } from 'react-native'
+import { AppState, AppStateStatus, View } from 'react-native'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
 
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { OnboardingScreen } from '../src/screens/OnboardingScreen'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
-import { ThemeProvider } from '../src/theme'
+import { ThemeProvider, useTheme } from '../src/theme'
 
 function AppContent() {
+  const { theme } = useTheme()
   const [onboardingCompleted] = useAtom(onboardingCompletedAtom)
   const [biometricLockEnabled] = useAtom(biometricLockEnabledAtom)
   const [isLocked, setIsLocked] = useState(() => biometricLockEnabled)
@@ -37,18 +38,29 @@ function AppContent() {
     return () => subscription.remove()
   }, [biometricLockEnabled])
 
+  const backgroundStyle = { flex: 1, backgroundColor: theme.colors.background }
+
   if (!onboardingCompleted) {
-    return <OnboardingScreen />
+    return (
+      <View style={backgroundStyle}>
+        <OnboardingScreen />
+      </View>
+    )
   }
 
   if (biometricLockEnabled && isLocked) {
-    return <BiometricLockScreen onUnlock={handleUnlock} />
+    return (
+      <View style={backgroundStyle}>
+        <BiometricLockScreen onUnlock={handleUnlock} />
+      </View>
+    )
   }
 
   return (
     <Stack
       screenOptions={{
         headerShown: false,
+        contentStyle: { backgroundColor: theme.colors.background },
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
