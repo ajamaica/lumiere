@@ -31,8 +31,7 @@ export default function EditServerScreen() {
   const { flags } = useFeatureFlags()
 
   const providerOptions = ALL_PROVIDER_OPTIONS.filter(
-    (o) =>
-      (o.value !== 'ollama' || flags.ollamaProvider) && (o.value !== 'echo' || flags.echoProvider),
+    (o) => o.value !== 'ollama' || flags.ollamaProvider,
   )
 
   const server = id ? servers[id] : null

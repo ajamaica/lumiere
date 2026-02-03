@@ -203,11 +203,6 @@ export default function SettingsScreen() {
             switchValue={flags.ollamaProvider}
             onSwitchChange={(value) => setFlag('ollamaProvider', value)}
           />
-          <SettingRow
-            label="Echo Server"
-            switchValue={flags.echoProvider}
-            onSwitchChange={(value) => setFlag('echoProvider', value)}
-          />
         </Section>
 
         <Section title="Developer">
