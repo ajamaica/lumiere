@@ -17,7 +17,7 @@ function AppContent() {
   const [biometricLockEnabled] = useAtom(biometricLockEnabledAtom)
   const [isLocked, setIsLocked] = useState(() => biometricLockEnabled)
   const appState = useRef(AppState.currentState)
-  useDeepLinking()
+  useDeepLinking(biometricLockEnabled && isLocked)
   useNotifications()
 
   const handleUnlock = useCallback(() => {

@@ -39,7 +39,7 @@ export interface UseChatProviderResult {
 
 /** Derive a stable string key from the config so we can detect changes */
 function configKey(config: ProviderConfig): string {
-  return `${config.type}|${config.url}|${config.token}|${config.clientId ?? ''}|${config.model ?? ''}`
+  return `${config.type}|${config.url}|${config.token}|${config.clientId ?? ''}|${config.model ?? ''}|${config.serverId ?? ''}`
 }
 
 /**
