@@ -1,12 +1,29 @@
-import { EventEmitter, requireNativeModule } from 'expo-modules-core'
+import { requireNativeModule } from 'expo-modules-core'
+import type { EventSubscription } from 'expo-modules-core'
 
-interface SpeechTranscriptionEvents {
-  onTranscription: { text: string; isFinal: boolean }
-  onError: { message: string }
+interface TranscriptionEvent {
+  text: string
+  isFinal: boolean
 }
 
-const nativeModule = requireNativeModule('SpeechTranscription')
-const emitter = new EventEmitter(nativeModule)
+interface ErrorEvent {
+  message: string
+}
+
+interface SpeechTranscriptionNativeModule {
+  isAvailable(): Promise<boolean>
+  requestPermissions(): Promise<boolean>
+  startTranscription(): Promise<void>
+  stopTranscription(): Promise<string>
+  cancelTranscription(): Promise<void>
+  addListener(
+    eventName: 'onTranscription',
+    listener: (event: TranscriptionEvent) => void,
+  ): EventSubscription
+  addListener(eventName: 'onError', listener: (event: ErrorEvent) => void): EventSubscription
+}
+
+const nativeModule = requireNativeModule<SpeechTranscriptionNativeModule>('SpeechTranscription')
 
 export default {
   async isAvailable(): Promise<boolean> {
@@ -29,13 +46,11 @@ export default {
     return nativeModule.cancelTranscription()
   },
 
-  addTranscriptionListener(
-    callback: (event: SpeechTranscriptionEvents['onTranscription']) => void,
-  ) {
-    return emitter.addListener('onTranscription', callback)
+  addTranscriptionListener(callback: (event: TranscriptionEvent) => void): EventSubscription {
+    return nativeModule.addListener('onTranscription', callback)
   },
 
-  addErrorListener(callback: (event: SpeechTranscriptionEvents['onError']) => void) {
-    return emitter.addListener('onError', callback)
+  addErrorListener(callback: (event: ErrorEvent) => void): EventSubscription {
+    return nativeModule.addListener('onError', callback)
   },
 }

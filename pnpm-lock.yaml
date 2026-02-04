@@ -44,6 +44,9 @@ importers:
       expo-local-authentication:
         specifier: ^17.0.8
         version: 17.0.8(expo@54.0.33)
+      expo-modules-core:
+        specifier: ^3.0.29
+        version: 3.0.29(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       expo-notifications:
         specifier: ^0.32.16
         version: 0.32.16(expo@54.0.33)(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)

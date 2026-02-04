@@ -29,6 +29,7 @@
     "expo-image-picker": "^17.0.10",
     "expo-linking": "^8.0.11",
     "expo-local-authentication": "^17.0.8",
+    "expo-modules-core": "^3.0.29",
     "expo-notifications": "^0.32.16",
     "expo-router": "~6.0.23",
     "expo-secure-store": "^15.0.8",
