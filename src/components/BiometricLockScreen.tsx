@@ -96,9 +96,7 @@ export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        {error ? 'Failed to authenticate' : 'Locked'}
-      </Text>
+      <Text style={styles.title}>{error ? 'Failed to authenticate' : 'Locked'}</Text>
       <Text style={styles.subtitle}>
         {error
           ? 'There was an issue with your authentication attempt.\nPlease try again.'
