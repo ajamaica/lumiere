@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Constants from 'expo-constants'
 import * as LocalAuthentication from 'expo-local-authentication'
 import { useRouter } from 'expo-router'
 import { useAtom, useSetAtom } from 'jotai'
 import React from 'react'
-import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
@@ -112,6 +113,16 @@ export default function SettingsScreen() {
     logoutSection: {
       marginTop: theme.spacing.xl,
     },
+    footer: {
+      marginTop: theme.spacing.xl,
+      alignItems: 'center',
+      gap: theme.spacing.xs,
+    },
+    footerText: {
+      color: theme.colors.textSecondary,
+      fontSize: 12,
+      textAlign: 'center',
+    },
   })
 
   return (
@@ -204,20 +215,19 @@ export default function SettingsScreen() {
           </Section>
         )}
 
-        {/* Info group */}
-        <Section>
-          <SettingRow icon="help-circle-outline" label="Help" onPress={() => {}} />
-          <SettingRow
-            icon="information-circle-outline"
-            label="About"
-            value="1.0.0"
-            showDivider={false}
-          />
-        </Section>
-
         {/* Logout */}
         <View style={styles.logoutSection}>
           <Button title="Logout" variant="danger" size="lg" onPress={handleLogout} />
+        </View>
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            {Constants.expoConfig?.name ?? 'Lumiere'}{' '}
+            {Constants.expoConfig?.version ?? '1.0.0'} (
+            {(Constants.expoConfig?.ios?.buildNumber ?? '1').slice(0, 5)})
+          </Text>
+          <Text style={styles.footerText}>With ♥ from Arturo, Mateo and Alonso</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
