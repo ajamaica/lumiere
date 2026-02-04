@@ -1,11 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import * as ImagePicker from 'expo-image-picker'
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import {
   FlatList,
   Image,
   ImageStyle,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -14,6 +15,7 @@ import {
 } from 'react-native'
 
 import { useSlashCommands } from '../../hooks/useSlashCommands'
+import { useVoiceTranscription } from '../../hooks/useVoiceTranscription'
 import { useTheme } from '../../theme'
 import { MessageAttachment } from './ChatMessage'
 
@@ -36,6 +38,7 @@ export function ChatInput({
   const [text, setText] = useState('')
   const [attachments, setAttachments] = useState<MessageAttachment[]>([])
   const { suggestions, hasInput } = useSlashCommands(text)
+  const voice = useVoiceTranscription()
 
   const glassAvailable = isLiquidGlassAvailable()
   const styles = useMemo(() => createStyles(theme, glassAvailable), [theme, glassAvailable])
@@ -74,15 +77,34 @@ export function ChatInput({
     setAttachments((prev) => prev.filter((_, i) => i !== index))
   }
 
+  const handleMicPress = useCallback(async () => {
+    if (voice.status === 'idle') {
+      await voice.start()
+    }
+  }, [voice])
+
+  const handleStopRecording = useCallback(async () => {
+    const finalText = await voice.stop()
+    if (finalText.trim()) {
+      setText((prev) => (prev ? prev + ' ' + finalText.trim() : finalText.trim()))
+    }
+  }, [voice])
+
+  const handleCancelRecording = useCallback(async () => {
+    await voice.cancel()
+  }, [voice])
+
   const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
   const hasContent = text.trim() || attachments.length > 0
   const isTyping = text.length > 0
+  const isRecording = voice.status === 'recording'
+  const showMic = !hasContent && voice.isAvailable && Platform.OS === 'ios'
 
   const Container = glassAvailable ? GlassView : View
   const containerProps = glassAvailable
     ? {
         style: styles.container,
-        glassEffectStyle: isTyping ? ('clear' as const) : ('regular' as const),
+        glassEffectStyle: isTyping || isRecording ? ('clear' as const) : ('regular' as const),
       }
     : { style: [styles.container, styles.containerFallback] }
 
@@ -109,84 +131,127 @@ export function ChatInput({
       )}
       <View style={styles.background}>
         <Container {...containerProps}>
-          {attachments.length > 0 && (
-            <View style={styles.attachmentPreviewRow}>
-              {attachments.map((attachment, index) => (
-                <View key={index} style={styles.attachmentPreviewItem}>
-                  <Image
-                    source={{ uri: attachment.uri }}
-                    style={styles.attachmentPreviewImage as ImageStyle}
-                  />
-                  <TouchableOpacity
-                    style={styles.removeAttachmentButton}
-                    onPress={() => handleRemoveAttachment(index)}
-                  >
-                    <Ionicons name="close-circle" size={20} color={theme.colors.text.inverse} />
-                  </TouchableOpacity>
-                </View>
-              ))}
+          {isRecording && (
+            <View style={styles.recordingOverlay}>
+              <View style={styles.recordingIndicator}>
+                <View style={styles.recordingDot} />
+                <Text style={styles.recordingLabel}>Listening...</Text>
+              </View>
+              <Text style={styles.transcribedText} numberOfLines={3}>
+                {voice.transcribedText || 'Start speaking...'}
+              </Text>
+              <View style={styles.recordingActions}>
+                <TouchableOpacity style={styles.cancelButton} onPress={handleCancelRecording}>
+                  <Ionicons name="close" size={20} color={theme.colors.text.secondary} />
+                  <Text style={styles.cancelButtonText}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.stopButton} onPress={handleStopRecording}>
+                  <Ionicons name="checkmark" size={20} color={theme.colors.text.inverse} />
+                  <Text style={styles.stopButtonText}>Done</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
-          <TextInput
-            style={styles.input}
-            value={text}
-            onChangeText={setText}
-            placeholder="Type a message..."
-            placeholderTextColor={theme.colors.text.secondary}
-            multiline
-            maxLength={2000}
-            editable={!disabled}
-            onSubmitEditing={handleSend}
-            blurOnSubmit={false}
-          />
-          <View style={styles.buttonRow}>
-            {onOpenSessionMenu && (
-              <TouchableOpacity
-                style={[styles.menuButton, disabled && styles.buttonDisabled]}
-                onPress={onOpenSessionMenu}
-                disabled={disabled}
-              >
-                <Ionicons name="ellipsis-vertical" size={24} color={menuButtonColor} />
-              </TouchableOpacity>
-            )}
-            {supportsImageAttachments && (
-              <TouchableOpacity
-                style={[styles.menuButton, disabled && styles.buttonDisabled]}
-                onPress={handlePickImage}
-                disabled={disabled}
-              >
-                <Ionicons
-                  name="add"
-                  size={26}
-                  color={disabled ? theme.colors.text.tertiary : theme.colors.text.secondary}
-                />
-              </TouchableOpacity>
-            )}
-            <View style={styles.spacer} />
-            <View style={styles.sendButtonContainer}>
-              {queueCount > 0 && (
-                <View style={styles.queueBadge}>
-                  <Text style={styles.queueText}>{queueCount}</Text>
+          {!isRecording && (
+            <>
+              {attachments.length > 0 && (
+                <View style={styles.attachmentPreviewRow}>
+                  {attachments.map((attachment, index) => (
+                    <View key={index} style={styles.attachmentPreviewItem}>
+                      <Image
+                        source={{ uri: attachment.uri }}
+                        style={styles.attachmentPreviewImage as ImageStyle}
+                      />
+                      <TouchableOpacity
+                        style={styles.removeAttachmentButton}
+                        onPress={() => handleRemoveAttachment(index)}
+                      >
+                        <Ionicons name="close-circle" size={20} color={theme.colors.text.inverse} />
+                      </TouchableOpacity>
+                    </View>
+                  ))}
                 </View>
               )}
-              <TouchableOpacity
-                style={[
-                  styles.sendButton,
-                  hasContent && !disabled ? styles.sendButtonActive : styles.sendButtonInactive,
-                ]}
-                onPress={handleSend}
-                disabled={!hasContent || disabled}
-              >
-                <Ionicons
-                  name="arrow-up"
-                  size={22}
-                  color={
-                    hasContent && !disabled ? theme.colors.text.inverse : theme.colors.text.tertiary
-                  }
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
+              <TextInput
+                style={styles.input}
+                value={text}
+                onChangeText={setText}
+                placeholder="Type a message..."
+                placeholderTextColor={theme.colors.text.secondary}
+                multiline
+                maxLength={2000}
+                editable={!disabled}
+                onSubmitEditing={handleSend}
+                blurOnSubmit={false}
+              />
+              <View style={styles.buttonRow}>
+                {onOpenSessionMenu && (
+                  <TouchableOpacity
+                    style={[styles.menuButton, disabled && styles.buttonDisabled]}
+                    onPress={onOpenSessionMenu}
+                    disabled={disabled}
+                  >
+                    <Ionicons name="ellipsis-vertical" size={24} color={menuButtonColor} />
+                  </TouchableOpacity>
+                )}
+                {supportsImageAttachments && (
+                  <TouchableOpacity
+                    style={[styles.menuButton, disabled && styles.buttonDisabled]}
+                    onPress={handlePickImage}
+                    disabled={disabled}
+                  >
+                    <Ionicons
+                      name="add"
+                      size={26}
+                      color={disabled ? theme.colors.text.tertiary : theme.colors.text.secondary}
+                    />
+                  </TouchableOpacity>
+                )}
+                <View style={styles.spacer} />
+                <View style={styles.sendButtonContainer}>
+                  {queueCount > 0 && (
+                    <View style={styles.queueBadge}>
+                      <Text style={styles.queueText}>{queueCount}</Text>
+                    </View>
+                  )}
+                  {showMic ? (
+                    <TouchableOpacity
+                      style={[styles.sendButton, styles.sendButtonInactive]}
+                      onPress={handleMicPress}
+                      disabled={disabled}
+                    >
+                      <Ionicons
+                        name="mic"
+                        size={22}
+                        color={disabled ? theme.colors.text.tertiary : theme.colors.text.secondary}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      style={[
+                        styles.sendButton,
+                        hasContent && !disabled
+                          ? styles.sendButtonActive
+                          : styles.sendButtonInactive,
+                      ]}
+                      onPress={handleSend}
+                      disabled={!hasContent || disabled}
+                    >
+                      <Ionicons
+                        name="arrow-up"
+                        size={22}
+                        color={
+                          hasContent && !disabled
+                            ? theme.colors.text.inverse
+                            : theme.colors.text.tertiary
+                        }
+                      />
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+            </>
+          )}
         </Container>
       </View>
     </>
@@ -339,5 +404,64 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
       height: 20,
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    recordingOverlay: {
+      paddingVertical: theme.spacing.md,
+      paddingHorizontal: theme.spacing.sm,
+      gap: theme.spacing.sm,
+    },
+    recordingIndicator: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.xs,
+    },
+    recordingDot: {
+      width: 8,
+      height: 8,
+      borderRadius: 4,
+      backgroundColor: '#FF3B30',
+    },
+    recordingLabel: {
+      fontSize: theme.typography.fontSize.sm,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.text.primary,
+    },
+    transcribedText: {
+      fontSize: theme.typography.fontSize.base,
+      color: theme.colors.text.primary,
+      minHeight: 40,
+      paddingHorizontal: theme.spacing.xs,
+    },
+    recordingActions: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      gap: theme.spacing.sm,
+    },
+    cancelButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.xs,
+      paddingVertical: theme.spacing.xs,
+      paddingHorizontal: theme.spacing.md,
+      borderRadius: theme.borderRadius.xxl,
+    },
+    cancelButtonText: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.secondary,
+    },
+    stopButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.xs,
+      paddingVertical: theme.spacing.xs,
+      paddingHorizontal: theme.spacing.md,
+      borderRadius: theme.borderRadius.xxl,
+      backgroundColor: theme.colors.primary,
+    },
+    stopButtonText: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.inverse,
+      fontWeight: theme.typography.fontWeight.semibold,
     },
   })

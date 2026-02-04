@@ -1,4 +1,5 @@
 import { Stack } from 'expo-router'
+import * as SplashScreen from 'expo-splash-screen'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AppState, AppStateStatus, View } from 'react-native'
@@ -7,9 +8,12 @@ import { KeyboardProvider } from 'react-native-keyboard-controller'
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useNotifications } from '../src/hooks/useNotifications'
+import { useQuickActions } from '../src/hooks/useQuickActions'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
+
+SplashScreen.preventAutoHideAsync()
 
 function AppContent() {
   const { theme } = useTheme()
@@ -20,6 +24,11 @@ function AppContent() {
   const isLocked = biometricLockEnabled && !isUnlocked
   useDeepLinking(isLocked)
   useNotifications()
+  useQuickActions()
+
+  useEffect(() => {
+    SplashScreen.hideAsync()
+  }, [])
 
   const handleUnlock = useCallback(() => {
     setIsUnlocked(true)

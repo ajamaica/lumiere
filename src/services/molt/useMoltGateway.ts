@@ -121,13 +121,8 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     if (!client) {
       throw new Error('Client not connected')
     }
-    try {
-      const healthStatus = await client.getHealth()
-      setHealth(healthStatus)
-    } catch (err) {
-      console.error('Failed to refresh health:', err)
-      throw err
-    }
+    const healthStatus = await client.getHealth()
+    setHealth(healthStatus)
   }, [client])
 
   const sendMessage = useCallback(

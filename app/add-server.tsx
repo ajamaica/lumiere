@@ -19,6 +19,9 @@ import { useTheme } from '../src/theme'
 const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
   { value: 'molt', label: 'OpenClaw' },
   { value: 'ollama', label: 'Ollama' },
+  ...(Platform.OS === 'ios'
+    ? [{ value: 'apple' as ProviderType, label: 'Apple Intelligence' }]
+    : []),
   { value: 'echo', label: 'Echo Server' },
 ]
 
@@ -35,24 +38,37 @@ export default function AddServerScreen() {
   const [providerType, setProviderType] = useState<ProviderType>('molt')
   const [model, setModel] = useState('')
 
+  const needsUrl = providerType !== 'echo' && providerType !== 'apple'
+  const needsToken = providerType === 'molt'
+
   const handleAdd = async () => {
-    if (providerType !== 'echo' && !url.trim()) {
+    if (needsUrl && !url.trim()) {
       Alert.alert('Error', 'URL is required')
       return
     }
 
-    if (providerType === 'molt' && !token.trim()) {
+    if (needsToken && !token.trim()) {
       Alert.alert('Error', 'Token is required for OpenClaw')
       return
     }
 
-    const effectiveToken =
-      providerType === 'echo' ? 'echo-no-token' : token.trim() || 'ollama-no-token'
+    let effectiveUrl = url.trim()
+    let effectiveToken = token.trim()
+
+    if (providerType === 'echo') {
+      effectiveUrl = 'echo://local'
+      effectiveToken = 'echo-no-token'
+    } else if (providerType === 'apple') {
+      effectiveUrl = 'apple://on-device'
+      effectiveToken = 'apple-no-token'
+    } else if (!effectiveToken) {
+      effectiveToken = 'ollama-no-token'
+    }
 
     await addServer(
       {
-        name: name.trim() || 'New Server',
-        url: providerType === 'echo' ? 'echo://local' : url.trim(),
+        name: name.trim() || (providerType === 'apple' ? 'Apple Intelligence' : 'New Server'),
+        url: effectiveUrl,
         clientId: clientId.trim() || 'lumiere-mobile',
         providerType,
         model: model.trim() || undefined,
@@ -159,14 +175,25 @@ export default function AddServerScreen() {
                   ? 'My Ollama'
                   : providerType === 'echo'
                     ? 'My Echo Server'
-                    : 'My Server'
+                    : providerType === 'apple'
+                      ? 'Apple Intelligence'
+                      : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
             />
           </View>
 
-          {providerType !== 'echo' && (
+          {providerType === 'apple' && (
+            <View style={styles.formRow}>
+              <Text variant="caption" color="secondary">
+                Uses Apple Foundation Models to run AI entirely on-device via CoreML. Requires iOS
+                26+ with Apple Intelligence support.
+              </Text>
+            </View>
+          )}
+
+          {needsUrl && (
             <View style={styles.formRow}>
               <TextInput
                 label="URL"
