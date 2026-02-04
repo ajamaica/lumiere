@@ -119,7 +119,7 @@ export default function SettingsScreen() {
       gap: theme.spacing.xs,
     },
     footerText: {
-      color: theme.colors.textSecondary,
+      color: theme.colors.text.secondary,
       fontSize: 12,
       textAlign: 'center',
     },
