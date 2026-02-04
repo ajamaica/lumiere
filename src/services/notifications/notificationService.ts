@@ -66,14 +66,14 @@ async function checkServerForNewMessages(
 
     const messages = data.messages ?? []
     // Find newest assistant message
-    const assistantMessages = messages.filter((m) => m.role === 'assistant' && m.timestamp > lastCheck)
+    const assistantMessages = messages.filter(
+      (m) => m.role === 'assistant' && m.timestamp > lastCheck,
+    )
 
     if (assistantMessages.length > 0) {
       const latest = assistantMessages[assistantMessages.length - 1]
       const text =
-        latest.content
-          ?.find((c) => c.type === 'text')
-          ?.text?.slice(0, 100) ?? 'New message'
+        latest.content?.find((c) => c.type === 'text')?.text?.slice(0, 100) ?? 'New message'
 
       // Update the last check to now
       await setLastCheck(serverSessionKey, Date.now())
