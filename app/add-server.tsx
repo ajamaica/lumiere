@@ -12,7 +12,6 @@ import {
 } from 'react-native'
 
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
-import { useFeatureFlags } from '../src/hooks/useFeatureFlags'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
@@ -27,11 +26,7 @@ export default function AddServerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { addServer } = useServers()
-  const { flags } = useFeatureFlags()
-
-  const providerOptions = ALL_PROVIDER_OPTIONS.filter(
-    (o) => o.value !== 'ollama' || flags.ollamaProvider,
-  )
+  const providerOptions = ALL_PROVIDER_OPTIONS
 
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')

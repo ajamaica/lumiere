@@ -1,6 +1,5 @@
 export type {
   FavoriteItem,
-  FeatureFlags,
   ServerConfig,
   ServersDict,
   ServerSessions,
@@ -17,7 +16,6 @@ export {
   currentServerIdAtom,
   currentSessionKeyAtom,
   favoritesAtom,
-  featureFlagsAtom,
   gatewayConnectedAtom,
   gatewayConnectingAtom,
   gatewayErrorAtom,

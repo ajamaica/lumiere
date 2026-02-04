@@ -12,7 +12,6 @@ import {
 } from 'react-native'
 
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
-import { useFeatureFlags } from '../src/hooks/useFeatureFlags'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
@@ -28,11 +27,7 @@ export default function EditServerScreen() {
   const router = useRouter()
   const { id } = useLocalSearchParams<{ id: string }>()
   const { servers, updateServer } = useServers()
-  const { flags } = useFeatureFlags()
-
-  const providerOptions = ALL_PROVIDER_OPTIONS.filter(
-    (o) => o.value !== 'ollama' || flags.ollamaProvider,
-  )
+  const providerOptions = ALL_PROVIDER_OPTIONS
 
   const server = id ? servers[id] : null
 
