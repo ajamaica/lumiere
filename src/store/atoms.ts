@@ -126,4 +126,3 @@ export const backgroundFetchIntervalAtom = atomWithStorage<number>(
   15,
   storage,
 )
-
