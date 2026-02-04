@@ -18,6 +18,9 @@ export interface ChatIntent {
   label: string
 }
 
+/** Allowed intent actions. Unrecognised actions are silently ignored. */
+const ALLOWED_ACTIONS = new Set(['openApp', 'playMedia', 'navigate'])
+
 /** Regex that matches lumiere://intent/{action} with optional query string */
 const INTENT_REGEX = /lumiere:\/\/intent\/(\w+)(\?[^\s)>\]]*)?/g
 
@@ -42,6 +45,8 @@ export function extractIntents(text: string): ChatIntent[] {
     const raw = match[0]
     const action = match[1]
     const queryString = match[2] ?? ''
+
+    if (!ALLOWED_ACTIONS.has(action)) continue
 
     const params: Record<string, string> = {}
     if (queryString.length > 1) {
