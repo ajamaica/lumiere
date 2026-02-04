@@ -9,7 +9,6 @@ import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
-import { useWidgetSync } from '../src/hooks/useWidgetSync'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
@@ -26,7 +25,6 @@ function AppContent() {
   useDeepLinking(isLocked)
   useNotifications()
   useQuickActions()
-  useWidgetSync()
 
   useEffect(() => {
     SplashScreen.hideAsync()

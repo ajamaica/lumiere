@@ -66,8 +66,7 @@
           "color": "#ffffff"
         }
       ],
-      "expo-quick-actions",
-      "./plugins/withIOSWidget"
+      "expo-quick-actions"
     ],
     "extra": {
       "eas": {
