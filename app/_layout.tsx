@@ -7,6 +7,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller'
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useNotifications } from '../src/hooks/useNotifications'
+import { useQuickActions } from '../src/hooks/useQuickActions'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
@@ -19,6 +20,7 @@ function AppContent() {
   const appState = useRef(AppState.currentState)
   useDeepLinking(biometricLockEnabled && isLocked)
   useNotifications()
+  useQuickActions()
 
   const handleUnlock = useCallback(() => {
     setIsLocked(false)
