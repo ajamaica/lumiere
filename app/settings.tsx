@@ -8,7 +8,11 @@ import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, View } from 're
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useFeatureFlags } from '../src/hooks/useFeatureFlags'
 import { useServers } from '../src/hooks/useServers'
-import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
+import {
+  backgroundNotificationsEnabledAtom,
+  biometricLockEnabledAtom,
+  onboardingCompletedAtom,
+} from '../src/store'
 import { useTheme } from '../src/theme'
 import { ColorThemeKey, colorThemes } from '../src/theme/colors'
 
@@ -30,6 +34,9 @@ export default function SettingsScreen() {
   const { flags, setFlag } = useFeatureFlags()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
   const [biometricLockEnabled, setBiometricLockEnabled] = useAtom(biometricLockEnabledAtom)
+  const [backgroundNotificationsEnabled, setBackgroundNotificationsEnabled] = useAtom(
+    backgroundNotificationsEnabledAtom,
+  )
 
   const handleBiometricToggle = async (value: boolean) => {
     if (value) {
@@ -150,6 +157,14 @@ export default function SettingsScreen() {
             label="Require Face ID"
             switchValue={biometricLockEnabled}
             onSwitchChange={handleBiometricToggle}
+          />
+        </Section>
+
+        <Section title="Notifications">
+          <SettingRow
+            label="Background Notifications"
+            switchValue={backgroundNotificationsEnabled}
+            onSwitchChange={setBackgroundNotificationsEnabled}
           />
         </Section>
 

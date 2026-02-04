@@ -40,7 +40,7 @@ interface CronJob {
 export default function SchedulerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { getProviderConfig } = useServers()
+  const { getProviderConfig, currentServerId } = useServers()
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
 
   const [schedulerStatus, setSchedulerStatus] = useState<SchedulerStatus | null>(null)
@@ -52,7 +52,7 @@ export default function SchedulerScreen() {
       setConfig(providerConfig)
     }
     loadConfig()
-  }, [getProviderConfig])
+  }, [getProviderConfig, currentServerId])
 
   const {
     connected,

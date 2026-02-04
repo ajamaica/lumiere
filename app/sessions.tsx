@@ -19,7 +19,7 @@ interface Session {
 export default function SessionsScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { getProviderConfig } = useServers()
+  const { getProviderConfig, currentServerId } = useServers()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [sessionAliases] = useAtom(sessionAliasesAtom)
@@ -34,7 +34,7 @@ export default function SessionsScreen() {
       setConfig(providerConfig)
     }
     loadConfig()
-  }, [getProviderConfig])
+  }, [getProviderConfig, currentServerId])
 
   const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
     url: config?.url || '',

@@ -18,7 +18,7 @@ import { useTheme } from '../src/theme'
 export default function OverviewScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { getProviderConfig } = useServers()
+  const { getProviderConfig, currentServerId } = useServers()
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
 
   const [password, setPassword] = useState('')
@@ -41,7 +41,7 @@ export default function OverviewScreen() {
       setConfig(providerConfig)
     }
     loadConfig()
-  }, [getProviderConfig])
+  }, [getProviderConfig, currentServerId])
 
   useEffect(() => {
     if (config) {

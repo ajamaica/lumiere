@@ -9,6 +9,8 @@ export type {
   TriggersDict,
 } from './atoms'
 export {
+  backgroundFetchIntervalAtom,
+  backgroundNotificationsEnabledAtom,
   biometricLockEnabledAtom,
   clearMessagesAtom,
   colorThemeAtom,
