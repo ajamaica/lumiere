@@ -159,9 +159,11 @@ export default function SettingsScreen() {
           </Section>
         )}
 
-        <Section title="Developer">
-          <SettingRow label="Component Gallery" onPress={() => router.push('/gallery')} />
-        </Section>
+        {__DEV__ && (
+          <Section title="Developer">
+            <SettingRow label="Component Gallery" onPress={() => router.push('/gallery')} />
+          </Section>
+        )}
 
         <Section title="About">
           <SettingRow label="Version" value="1.0.0" />
