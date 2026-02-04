@@ -10,12 +10,9 @@ jest.mock('expo-router', () => ({
     replace: jest.fn(),
     back: jest.fn(),
   }),
-  Stack: Object.assign(
-    ({ children }: { children: React.ReactNode }) => <>{children}</>,
-    {
-      Screen: () => null,
-    },
-  ),
+  Stack: Object.assign(({ children }: { children: React.ReactNode }) => <>{children}</>, {
+    Screen: () => null,
+  }),
 }))
 
 // Mock expo-system-ui
@@ -110,9 +107,7 @@ describe('App Startup', () => {
 
     await waitFor(() => {
       expect(screen.getByText('No Server Configured')).toBeTruthy()
-      expect(
-        screen.getByText('Please add a server in Settings to get started.'),
-      ).toBeTruthy()
+      expect(screen.getByText('Please add a server in Settings to get started.')).toBeTruthy()
       expect(screen.getByText('Go to Settings')).toBeTruthy()
     })
   })
