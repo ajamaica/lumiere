@@ -9,7 +9,7 @@ import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
 
 const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
-  { value: 'molt', label: 'Molt Gateway' },
+  { value: 'molt', label: 'OpenClaw' },
   { value: 'ollama', label: 'Ollama' },
   { value: 'echo', label: 'Echo Server' },
 ]
