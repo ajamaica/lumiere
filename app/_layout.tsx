@@ -7,7 +7,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller'
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useNotifications } from '../src/hooks/useNotifications'
-import { OnboardingScreen } from '../src/screens/OnboardingScreen'
+import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
 
@@ -45,7 +45,7 @@ function AppContent() {
   if (!onboardingCompleted) {
     return (
       <View style={backgroundStyle}>
-        <OnboardingScreen />
+        <OnboardingFlow />
       </View>
     )
   }
