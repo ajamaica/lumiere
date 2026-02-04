@@ -113,6 +113,20 @@ export const triggersAtom = atomWithStorage<TriggersDict>('triggers', {}, storag
 // In-memory atom for pending trigger messages (set by deep link, consumed by ChatScreen)
 export const pendingTriggerMessageAtom = atom<string | null>(null)
 
+// Background notifications setting (off by default)
+export const backgroundNotificationsEnabledAtom = atomWithStorage<boolean>(
+  'backgroundNotificationsEnabled',
+  false,
+  storage,
+)
+
+// Interval in minutes for background fetch checks (default 15 min)
+export const backgroundFetchIntervalAtom = atomWithStorage<number>(
+  'backgroundFetchInterval',
+  15,
+  storage,
+)
+
 // Feature flags (persisted)
 export interface FeatureFlags {
   ollamaProvider: boolean
