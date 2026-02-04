@@ -30,6 +30,28 @@ export function buildCacheKey(serverId: string | undefined, sessionKey: string):
 }
 
 /**
+ * Read cached chat history directly from AsyncStorage without a provider.
+ *
+ * This allows the UI to show cached messages immediately (before the provider
+ * connects), eliminating the loading spinner when a cache exists.
+ */
+export async function readCachedHistory(
+  serverId: string | undefined,
+  sessionKey: string,
+  limit?: number,
+): Promise<ChatHistoryMessage[]> {
+  try {
+    const key = buildCacheKey(serverId, sessionKey)
+    const raw = await AsyncStorage.getItem(key)
+    if (!raw) return []
+    const messages = JSON.parse(raw) as ChatHistoryMessage[]
+    return limit ? messages.slice(-limit) : messages
+  } catch {
+    return []
+  }
+}
+
+/**
  * Decorator that adds transparent AsyncStorage message caching to any
  * `ChatProvider`.
  *
