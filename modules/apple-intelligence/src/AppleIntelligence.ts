@@ -35,7 +35,7 @@ let nativeModule: AppleIntelligenceNativeModule | null = null
 function getModule(): AppleIntelligenceNativeModule {
   if (!nativeModule) {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { requireNativeModule } = require('expo-modules-core')
+    const { requireNativeModule } = require('expo')
     nativeModule = requireNativeModule('AppleIntelligence') as AppleIntelligenceNativeModule
   }
   return nativeModule
@@ -43,7 +43,7 @@ function getModule(): AppleIntelligenceNativeModule {
 
 function createEventEmitter(mod: AppleIntelligenceNativeModule) {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { EventEmitter } = require('expo-modules-core')
+  const { EventEmitter } = require('expo')
   return new EventEmitter(mod)
 }
 
