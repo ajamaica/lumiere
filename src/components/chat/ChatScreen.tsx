@@ -121,6 +121,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     setMessages([])
     setCurrentAgentMessage('')
     hasScrolledOnLoadRef.current = false
+    setHistoryReady(false)
     setIsLoadingHistory(true)
     try {
       const historyResponse = await getChatHistory(currentSessionKey, 100)
@@ -186,7 +187,11 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     }
   }, [connected, isLoadingHistory, pendingTriggerMessage, handleSend, setPendingTriggerMessage])
 
-  // Scroll to bottom after history finishes loading to show latest messages
+  // Scroll to bottom after history finishes loading to show latest messages.
+  // The list stays hidden (opacity 0) until this scroll completes so the user
+  // never sees the conversation flash from the top before jumping to the bottom.
+  const [historyReady, setHistoryReady] = useState(false)
+
   useEffect(() => {
     if (!isLoadingHistory && messages.length > 0 && !hasScrolledOnLoadRef.current) {
       // Use a longer timeout to ensure FlashList has rendered all history items
@@ -195,7 +200,16 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
         // Mark as scrolled *after* the initial jump so onContentSizeChange
         // doesn't trigger an animated scroll during history load
         hasScrolledOnLoadRef.current = true
+        // Reveal the list now that we're scrolled to the bottom
+        setHistoryReady(true)
       }, 400)
+    }
+  }, [isLoadingHistory, messages.length])
+
+  // When there are no history messages, reveal immediately
+  useEffect(() => {
+    if (!isLoadingHistory && messages.length === 0) {
+      setHistoryReady(true)
     }
   }, [isLoadingHistory, messages.length])
 
@@ -311,7 +325,13 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <View style={{ flex: 1 }}>
-        <Animated.View style={listContainerStyle}>
+        {!historyReady && (
+          <View style={styles.emptyContainer}>
+            <ActivityIndicator size="large" color={theme.colors.primary} />
+            <Text style={styles.loadingText}>Loading conversation...</Text>
+          </View>
+        )}
+        <Animated.View style={[listContainerStyle, { opacity: historyReady ? 1 : 0 }]}>
           <FlashList
             ref={flatListRef}
             data={allMessages}
