@@ -10,12 +10,12 @@ import {
   View,
 } from 'react-native'
 
+import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
 import { Button, Text, TextInput } from '../components/ui'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
 import { ProviderType } from '../services/providers'
 import { currentSessionKeyAtom, onboardingCompletedAtom, serverSessionsAtom } from '../store'
-import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
 import { useTheme } from '../theme'
 
 const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
