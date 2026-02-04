@@ -8,7 +8,6 @@ import {
 } from '../components/illustrations'
 import { StepIndicator } from '../components/ui/StepIndicator'
 import { useTheme } from '../theme'
-
 import { OnboardingIntroScreen } from './OnboardingIntroScreen'
 import { SetupScreen } from './SetupScreen'
 
