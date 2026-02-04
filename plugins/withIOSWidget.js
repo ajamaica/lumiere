@@ -242,8 +242,7 @@ function withIOSWidget(config) {
           `${WIDGET_TARGET_NAME}.appex in Embed App Extensions`
 
         // Add the build file to the copy files phase
-        const phase =
-          xcodeProject.hash.project.objects.PBXCopyFilesBuildPhase[embedPhase.uuid]
+        const phase = xcodeProject.hash.project.objects.PBXCopyFilesBuildPhase[embedPhase.uuid]
         if (phase) {
           phase.files.push({
             value: buildFileUuid,
