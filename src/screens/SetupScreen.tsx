@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native'
 
+import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
 import { Button, Text, TextInput } from '../components/ui'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
@@ -137,6 +138,26 @@ export function SetupScreen() {
         name: 'Echo Agent',
         url: '',
         providerType: 'echo',
+      },
+      '',
+    )
+
+    const sessionKey = DEFAULT_SESSION_KEY
+    setCurrentSessionKey(sessionKey)
+    setServerSessions((prev) => ({
+      ...prev,
+      [serverId]: sessionKey,
+    }))
+
+    setOnboardingCompleted(true)
+  }
+
+  const handleCreateLocalAI = async () => {
+    const serverId = await addServer(
+      {
+        name: 'Local AI',
+        url: '',
+        providerType: 'apple',
       },
       '',
     )
@@ -280,6 +301,14 @@ export function SetupScreen() {
         </View>
 
         <Button title="Get Started" size="lg" onPress={handleComplete} disabled={!isValid} />
+
+        {isAppleAIAvailable() && (
+          <TouchableOpacity style={styles.echoLink} onPress={handleCreateLocalAI}>
+            <Text variant="bodySmall" color="secondary">
+              Create a Local AI server
+            </Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity style={styles.echoLink} onPress={handleCreateEchoAgent}>
           <Text variant="bodySmall" color="secondary">
