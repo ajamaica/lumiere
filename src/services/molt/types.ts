@@ -125,12 +125,9 @@ export interface ChatHistoryParams {
   limit?: number
 }
 
-// Chat message from history
-export interface ChatHistoryMessage {
-  role: 'user' | 'assistant'
-  content: Array<{ type: string; text?: string }>
-  timestamp: number
-}
+// Chat message from history — re-exported from the shared provider types
+// to keep backwards compatibility for any molt-specific imports.
+export type { ChatHistoryMessage } from '../providers/types'
 
 export interface Attachment {
   type: 'image' | 'audio' | 'document'

@@ -1,3 +1,5 @@
+import { DEFAULT_SESSION_KEY } from '../constants'
+
 export const clientConfig = {
   id: 'cli',
   mode: 'cli',
@@ -12,6 +14,6 @@ export const protocolConfig = {
 
 export const agentConfig = {
   defaultAgentId: 'main',
-  defaultSessionKey: 'agent:main:main',
+  defaultSessionKey: DEFAULT_SESSION_KEY,
   defaultModel: 'claude-sonnet-4-5',
 } as const
