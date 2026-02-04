@@ -1,5 +1,8 @@
-import type { EventSubscription } from 'expo'
 import { requireOptionalNativeModule } from 'expo'
+
+interface EventSubscription {
+  remove(): void
+}
 
 interface TranscriptionEvent {
   text: string
