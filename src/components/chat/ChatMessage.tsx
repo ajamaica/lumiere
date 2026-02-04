@@ -17,10 +17,10 @@ import {
 import Markdown from 'react-native-markdown-display'
 
 import {
+  clearMessagesAtom,
   currentSessionKeyAtom,
   favoritesAtom,
   sessionAliasesAtom,
-  clearMessagesAtom,
 } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
