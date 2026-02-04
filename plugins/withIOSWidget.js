@@ -70,12 +70,27 @@ function withIOSWidget(config) {
     // Add native module files to the main app target
     const mainTarget = xcodeProject.getFirstTarget()
     if (mainTarget) {
-      for (const file of nativeModuleFiles) {
-        xcodeProject.addSourceFile(
-          `${appName}/${file}`,
-          { target: mainTarget.firstTarget.uuid },
-          mainTarget.firstTarget.uuid,
-        )
+      // Find the main app source group by matching the app name
+      const groups = xcodeProject.hash.project.objects.PBXGroup
+      let mainAppGroupKey = null
+      for (const key in groups) {
+        if (typeof key === 'string' && !key.endsWith('_comment')) {
+          const group = groups[key]
+          if (group && (group.name === appName || group.path === appName)) {
+            mainAppGroupKey = key
+            break
+          }
+        }
+      }
+
+      if (mainAppGroupKey) {
+        for (const file of nativeModuleFiles) {
+          xcodeProject.addSourceFile(
+            `${appName}/${file}`,
+            { target: mainTarget.firstTarget.uuid },
+            mainAppGroupKey,
+          )
+        }
       }
     }
 
