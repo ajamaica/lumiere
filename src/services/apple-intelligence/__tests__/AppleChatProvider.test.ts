@@ -123,9 +123,8 @@ describe('AppleChatProvider', () => {
       )
 
       const events: ChatProviderEvent[] = []
-      await provider.sendMessage(
-        { message: 'Hi', sessionKey: 'test-session' },
-        (event) => events.push(event),
+      await provider.sendMessage({ message: 'Hi', sessionKey: 'test-session' }, (event) =>
+        events.push(event),
       )
 
       expect(events).toEqual([
@@ -163,9 +162,8 @@ describe('AppleChatProvider', () => {
 
       const events: ChatProviderEvent[] = []
       await expect(
-        provider.sendMessage(
-          { message: 'Hi', sessionKey: 'test-session' },
-          (event) => events.push(event),
+        provider.sendMessage({ message: 'Hi', sessionKey: 'test-session' }, (event) =>
+          events.push(event),
         ),
       ).rejects.toThrow('Model generation failed')
 
