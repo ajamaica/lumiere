@@ -126,14 +126,3 @@ export const backgroundFetchIntervalAtom = atomWithStorage<number>(
   15,
   storage,
 )
-
-// Feature flags (persisted)
-export interface FeatureFlags {
-  ollamaProvider: boolean
-}
-
-export const featureFlagsAtom = atomWithStorage<FeatureFlags>(
-  'featureFlags',
-  { ollamaProvider: false },
-  storage,
-)

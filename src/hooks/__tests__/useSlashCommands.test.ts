@@ -31,7 +31,6 @@ describe('SLASH_COMMANDS', () => {
 
   it('has no duplicate commands', () => {
     const commands = SLASH_COMMANDS.map((c) => c.command)
-    const unique = new Set(commands)
     // /whoami and /id both exist with same description, which is intentional
     // but check there are no other exact duplicates
     const duplicates = commands.filter((cmd, i) => commands.indexOf(cmd) !== i)
