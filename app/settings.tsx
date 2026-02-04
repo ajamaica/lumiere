@@ -223,8 +223,7 @@ export default function SettingsScreen() {
         {/* Footer */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-            {Constants.expoConfig?.name ?? 'Lumiere'}{' '}
-            {Constants.expoConfig?.version ?? '1.0.0'} (
+            {Constants.expoConfig?.name ?? 'Lumiere'} {Constants.expoConfig?.version ?? '1.0.0'} (
             {(Constants.expoConfig?.ios?.buildNumber ?? '1').slice(0, 5)})
           </Text>
           <Text style={styles.footerText}>With ♥ from Arturo, Mateo and Alonso</Text>
