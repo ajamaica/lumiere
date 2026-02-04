@@ -8,6 +8,9 @@ jest.mock('../MoltChatProvider', () => ({
 jest.mock('../../ollama/OllamaChatProvider', () => ({
   OllamaChatProvider: jest.fn().mockImplementation(() => ({ type: 'ollama-mock' })),
 }))
+jest.mock('../../apple-intelligence/AppleChatProvider', () => ({
+  AppleChatProvider: jest.fn().mockImplementation(() => ({ type: 'apple-mock' })),
+}))
 
 describe('createChatProvider', () => {
   it('wraps every provider with CachedChatProvider', () => {
@@ -44,6 +47,15 @@ describe('createChatProvider', () => {
       url: 'http://localhost:11434',
       token: '',
       model: 'llama3',
+    })
+    expect(provider).toBeInstanceOf(CachedChatProvider)
+  })
+
+  it('creates a CachedChatProvider wrapping apple for apple type', () => {
+    const provider = createChatProvider({
+      type: 'apple',
+      url: 'apple://on-device',
+      token: '',
     })
     expect(provider).toBeInstanceOf(CachedChatProvider)
   })
