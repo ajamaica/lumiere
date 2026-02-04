@@ -216,13 +216,40 @@ function withIOSWidget(config) {
     // Add the widget extension to the main target's embed phase
     const embedTarget = xcodeProject.getFirstTarget()
     if (embedTarget) {
-      xcodeProject.addBuildPhase(
-        [`${WIDGET_TARGET_NAME}.appex`],
+      // Create the embed phase with an empty files array to avoid orphaned references.
+      // Passing the .appex filename directly would create an invalid PBXFileReference
+      // since the .appex is a build product, not a source file.
+      const embedPhase = xcodeProject.addBuildPhase(
+        [],
         'PBXCopyFilesBuildPhase',
         'Embed App Extensions',
         embedTarget.firstTarget.uuid,
         'app_extension',
       )
+
+      // Wire up the widget target's product reference into the embed phase
+      const productRefUuid = target.pbxNativeTarget.productReference
+      if (embedPhase && productRefUuid) {
+        const buildFileUuid = xcodeProject.generateUuid()
+
+        // Create a PBXBuildFile entry for the .appex product
+        xcodeProject.hash.project.objects.PBXBuildFile[buildFileUuid] = {
+          isa: 'PBXBuildFile',
+          fileRef: productRefUuid,
+          settings: { ATTRIBUTES: ['RemoveHeadersOnCopy'] },
+        }
+        xcodeProject.hash.project.objects.PBXBuildFile[`${buildFileUuid}_comment`] =
+          `${WIDGET_TARGET_NAME}.appex in Embed App Extensions`
+
+        // Add the build file to the copy files phase
+        const phase = xcodeProject.hash.project.objects.PBXCopyFilesBuildPhase[embedPhase.uuid]
+        if (phase) {
+          phase.files.push({
+            value: buildFileUuid,
+            comment: `${WIDGET_TARGET_NAME}.appex in Embed App Extensions`,
+          })
+        }
+      }
     }
 
     return config
