@@ -125,7 +125,6 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     setIsLoadingHistory(true)
     try {
       const historyResponse = await getChatHistory(currentSessionKey, 100)
-      console.log('Chat history:', historyResponse)
 
       if (historyResponse?.messages && Array.isArray(historyResponse.messages)) {
         const historyMessages = historyResponse.messages
@@ -147,10 +146,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
           .filter((msg: Message | null) => msg !== null)
 
         setMessages(historyMessages)
-        console.log(`Loaded ${historyMessages.length} messages from history`)
       }
-    } catch (err) {
-      console.error('Failed to load chat history:', err)
+    } catch {
+      // Failed to load chat history — will show empty state
     } finally {
       setIsLoadingHistory(false)
     }

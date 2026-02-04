@@ -93,8 +93,7 @@ export function useMessageQueue({
             }
           },
         )
-      } catch (err) {
-        console.error('Failed to send message:', err)
+      } catch {
         setIsAgentResponding(false)
         onAgentMessageUpdate('')
       }

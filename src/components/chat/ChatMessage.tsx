@@ -96,14 +96,13 @@ export function ChatMessage({ message }: ChatMessageProps) {
 
   const handleLinkPress = React.useCallback(
     async (url: string) => {
-      console.log('Link pressed:', url)
       try {
         await WebBrowser.openBrowserAsync(url, {
           presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
           controlsColor: theme.colors.primary,
         })
-      } catch (err) {
-        console.error('Failed to open URL:', err)
+      } catch {
+        // Failed to open URL in browser — ignore
       }
     },
     [theme.colors.primary],

@@ -148,8 +148,7 @@ export async function backgroundCheckTask(): Promise<BackgroundFetch.BackgroundF
     return notifiedCount > 0
       ? BackgroundFetch.BackgroundFetchResult.NewData
       : BackgroundFetch.BackgroundFetchResult.NoData
-  } catch (error) {
-    console.error('[BackgroundCheck] Error:', error)
+  } catch {
     return BackgroundFetch.BackgroundFetchResult.Failed
   }
 }
@@ -174,7 +173,6 @@ export async function registerBackgroundFetch(intervalMinutes: number = 15): Pro
     status === BackgroundFetch.BackgroundFetchStatus.Restricted ||
     status === BackgroundFetch.BackgroundFetchStatus.Denied
   ) {
-    console.warn('[BackgroundFetch] Background fetch is restricted or denied by the OS')
     return
   }
 

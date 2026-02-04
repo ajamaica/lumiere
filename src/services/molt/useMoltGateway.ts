@@ -60,7 +60,6 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       clientRef.current = newClient
 
       const response = await newClient.connect()
-      console.log('Connected to Molt Gateway:', response)
 
       setClient(newClient)
       setConnected(true)
@@ -69,8 +68,6 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
 
       // Set up event listeners
       newClient.addEventListener((event: EventFrame) => {
-        console.log('Gateway event:', event)
-
         if (event.event === 'shutdown') {
           setConnected(false)
           setError('Gateway shutdown')
@@ -79,7 +76,6 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
 
       // Set up connection state listener
       newClient.onConnectionStateChange((connected, reconnecting) => {
-        console.log(`Connection state: connected=${connected}, reconnecting=${reconnecting}`)
         setConnected(connected)
         setConnecting(reconnecting)
         if (reconnecting) {
@@ -93,13 +89,12 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       try {
         const healthStatus = await newClient.getHealth()
         setHealth(healthStatus)
-      } catch (err) {
-        console.error('Failed to fetch health:', err)
+      } catch {
+        // Health check failed — non-critical
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Connection failed'
       setError(errorMessage)
-      console.error('Failed to connect:', err)
     } finally {
       setConnecting(false)
     }
@@ -125,7 +120,6 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       const healthStatus = await client.getHealth()
       setHealth(healthStatus)
     } catch (err) {
-      console.error('Failed to refresh health:', err)
       throw err
     }
   }, [client])

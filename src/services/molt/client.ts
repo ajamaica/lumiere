@@ -41,7 +41,6 @@ export class MoltGatewayClient {
         this.ws = new WebSocket(this.config.url)
 
         this.ws.onopen = () => {
-          console.log('WebSocket connected')
           this.performHandshake()
             .then((response) => {
               this.connected = true
@@ -57,18 +56,16 @@ export class MoltGatewayClient {
           try {
             const frame = JSON.parse(event.data)
             this.handleFrame(frame)
-          } catch (error) {
-            console.error('Failed to parse message:', error)
+          } catch {
+            // Failed to parse WebSocket message — ignore malformed frames
           }
         }
 
-        this.ws.onerror = (error) => {
-          console.error('WebSocket error:', error)
+        this.ws.onerror = () => {
           reject(new Error('WebSocket connection failed'))
         }
 
         this.ws.onclose = () => {
-          console.log('WebSocket closed')
           this.connected = false
           this.notifyConnectionState()
           this.handleReconnect()
@@ -111,16 +108,13 @@ export class MoltGatewayClient {
       this.reconnecting = true
       this.notifyConnectionState()
       const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1)
-      console.log(`Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts})`)
       setTimeout(() => {
-        this.connect().catch((error) => {
-          console.error('Reconnection failed:', error)
+        this.connect().catch(() => {
           this.reconnecting = false
           this.notifyConnectionState()
         })
       }, delay)
     } else {
-      console.error('Max reconnection attempts reached')
       this.reconnecting = false
       this.notifyConnectionState()
     }

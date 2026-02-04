@@ -115,15 +115,14 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
           if (!cancelled) {
             setHealth(healthStatus)
           }
-        } catch (err) {
-          console.error('Failed to fetch health:', err)
+        } catch {
+          // Health check failed — non-critical, ignore
         }
       } catch (err) {
         if (cancelled) return
         const errorMessage = err instanceof Error ? err.message : 'Connection failed'
         setError(errorMessage)
         setConnecting(false)
-        console.error('Failed to connect:', err)
       }
     }
 
