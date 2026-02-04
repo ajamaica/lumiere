@@ -124,8 +124,13 @@ export function useServers(): UseServersResult {
   const getProviderConfig = useCallback(async (): Promise<ProviderConfig | null> => {
     if (!currentServer) return null
     const token = await getServerToken(currentServer.id)
-    // Ollama and Echo don't require a token, Molt does
-    if (!token && currentServer.providerType !== 'ollama' && currentServer.providerType !== 'echo')
+    // Ollama, Echo, and Apple don't require a token, Molt does
+    if (
+      !token &&
+      currentServer.providerType !== 'ollama' &&
+      currentServer.providerType !== 'echo' &&
+      currentServer.providerType !== 'apple'
+    )
       return null
     return {
       type: currentServer.providerType || 'molt',
@@ -143,7 +148,13 @@ export function useServers(): UseServersResult {
       const server = servers[id]
       if (!server) return null
       const token = await getServerToken(id)
-      if (!token && server.providerType !== 'ollama' && server.providerType !== 'echo') return null
+      if (
+        !token &&
+        server.providerType !== 'ollama' &&
+        server.providerType !== 'echo' &&
+        server.providerType !== 'apple'
+      )
+        return null
       return {
         type: server.providerType || 'molt',
         url: server.url,
