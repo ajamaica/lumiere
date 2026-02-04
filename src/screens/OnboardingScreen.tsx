@@ -126,7 +126,7 @@ export function OnboardingScreen() {
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="url"
-              hint="The URL of your Molt Gateway server"
+              hint="The URL of your OpenClaw server"
             />
 
             <TextInput

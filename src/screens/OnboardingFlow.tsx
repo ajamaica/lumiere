@@ -27,7 +27,7 @@ const INTRO_STEPS = [
   {
     title: 'Highly configurable for custom needs',
     description:
-      'Connect to Molt Gateway, Ollama, or Echo providers. Customize themes, set up deep link triggers, and tailor the experience to fit your workflow.',
+      'Connect to OpenClaw, Ollama, or Echo providers. Customize themes, set up deep link triggers, and tailor the experience to fit your workflow.',
     illustration: ConfigIllustration,
   },
 ]
