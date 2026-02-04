@@ -216,14 +216,14 @@ function withIOSWidget(config) {
     }
 
     // Add the widget extension to the main target's embed phase
-    const mainTarget = xcodeProject.getFirstTarget()
-    if (mainTarget) {
+    const embedTarget = xcodeProject.getFirstTarget()
+    if (embedTarget) {
       // Add copy files build phase for embedding the extension
       xcodeProject.addBuildPhase(
         [`${WIDGET_TARGET_NAME}.appex`],
         'PBXCopyFilesBuildPhase',
         'Embed App Extensions',
-        mainTarget.firstTarget.uuid,
+        embedTarget.firstTarget.uuid,
         'app_extension',
       )
     }
