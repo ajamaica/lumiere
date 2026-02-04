@@ -175,8 +175,8 @@ export default function SettingsScreen() {
           />
         </Section>
 
-        {/* Control group - hidden for Ollama/Echo */}
-        {currentServer?.providerType !== 'ollama' && currentServer?.providerType !== 'echo' && (
+        {/* Control group - only available for OpenClaw (Molt) servers */}
+        {currentServer?.providerType === 'molt' && (
           <Section showDivider>
             <SettingRow
               icon="grid-outline"
