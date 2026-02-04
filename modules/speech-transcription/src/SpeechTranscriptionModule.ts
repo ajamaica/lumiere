@@ -1,5 +1,5 @@
 import type { EventSubscription } from 'expo-modules-core'
-import { requireNativeModule } from 'expo-modules-core'
+import { requireOptionalNativeModule } from 'expo-modules-core'
 
 interface TranscriptionEvent {
   text: string
@@ -23,34 +23,44 @@ interface SpeechTranscriptionNativeModule {
   addListener(eventName: 'onError', listener: (event: ErrorEvent) => void): EventSubscription
 }
 
-const nativeModule = requireNativeModule<SpeechTranscriptionNativeModule>('SpeechTranscription')
+const nativeModule =
+  requireOptionalNativeModule<SpeechTranscriptionNativeModule>('SpeechTranscription')
+
+const noopSubscription: EventSubscription = { remove: () => {} }
 
 export default {
   async isAvailable(): Promise<boolean> {
+    if (!nativeModule) return false
     return nativeModule.isAvailable()
   },
 
   async requestPermissions(): Promise<boolean> {
+    if (!nativeModule) return false
     return nativeModule.requestPermissions()
   },
 
   async startTranscription(): Promise<void> {
+    if (!nativeModule) return
     return nativeModule.startTranscription()
   },
 
   async stopTranscription(): Promise<string> {
+    if (!nativeModule) return ''
     return nativeModule.stopTranscription()
   },
 
   async cancelTranscription(): Promise<void> {
+    if (!nativeModule) return
     return nativeModule.cancelTranscription()
   },
 
   addTranscriptionListener(callback: (event: TranscriptionEvent) => void): EventSubscription {
+    if (!nativeModule) return noopSubscription
     return nativeModule.addListener('onTranscription', callback)
   },
 
   addErrorListener(callback: (event: ErrorEvent) => void): EventSubscription {
+    if (!nativeModule) return noopSubscription
     return nativeModule.addListener('onError', callback)
   },
 }
