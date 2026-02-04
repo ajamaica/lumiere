@@ -3,7 +3,7 @@ import * as LocalAuthentication from 'expo-local-authentication'
 import { useRouter } from 'expo-router'
 import { useAtom, useSetAtom } from 'jotai'
 import React from 'react'
-import { Alert, SafeAreaView, ScrollView, StyleSheet } from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
@@ -103,77 +103,122 @@ export default function SettingsScreen() {
       backgroundColor: theme.colors.background,
     },
     scrollContent: {
-      padding: theme.spacing.lg,
+      paddingHorizontal: theme.spacing.lg,
+      paddingBottom: theme.spacing.xxxl,
+    },
+    spacer: {
+      height: theme.spacing.lg,
+    },
+    logoutSection: {
+      marginTop: theme.spacing.xl,
     },
   })
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader title="Settings" showBack />
+      <ScreenHeader title="Settings" showClose />
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Section title="Appearance">
-          <SettingRow label="Theme" value={getThemeLabel()} onPress={handleThemeToggle} />
+        {/* Server info at top - like Reeder+ section */}
+        <Section>
           <SettingRow
+            icon="server-outline"
+            label={currentServer?.name || 'No Server'}
+            subtitle={`${serversList.length} server${serversList.length !== 1 ? 's' : ''} configured`}
+            onPress={() => router.push('/servers')}
+            showDivider={false}
+          />
+        </Section>
+
+        <View style={styles.spacer} />
+
+        {/* Main settings group */}
+        <Section showDivider>
+          <SettingRow
+            icon="settings-outline"
+            label="General"
+            onPress={handleThemeToggle}
+            value={getThemeLabel()}
+          />
+          <SettingRow
+            icon="color-palette-outline"
             label="Colors"
             value={colorThemes[colorTheme].name}
             onPress={() => router.push('/colors')}
           />
-        </Section>
-
-        <Section title="Security">
           <SettingRow
-            label="Require Face ID"
+            icon="scan-outline"
+            label="Face ID"
             switchValue={biometricLockEnabled}
             onSwitchChange={handleBiometricToggle}
           />
-        </Section>
-
-        <Section title="Notifications">
           <SettingRow
-            label="Background Notifications"
+            icon="notifications-outline"
+            label="Notifications"
             switchValue={backgroundNotificationsEnabled}
             onSwitchChange={setBackgroundNotificationsEnabled}
+            showDivider={false}
           />
         </Section>
 
-        <Section title="Servers">
+        {/* Content group */}
+        <Section showDivider>
           <SettingRow
-            label="Current Server"
-            value={currentServer?.name || 'None'}
-            onPress={() => router.push('/servers')}
+            icon="heart-outline"
+            label="Favorites"
+            onPress={() => router.push('/favorites')}
           />
           <SettingRow
-            label="Total Servers"
-            value={serversList.length.toString()}
-            onPress={() => router.push('/servers')}
+            icon="flash-outline"
+            label="Triggers"
+            onPress={() => router.push('/triggers')}
+            showDivider={false}
           />
         </Section>
 
-        <Section title="Content">
-          <SettingRow label="Favorites" onPress={() => router.push('/favorites')} />
-          <SettingRow label="Triggers" onPress={() => router.push('/triggers')} />
-        </Section>
-
+        {/* Control group - hidden for Ollama/Echo */}
         {currentServer?.providerType !== 'ollama' && currentServer?.providerType !== 'echo' && (
-          <Section title="Control">
-            <SettingRow label="Overview" onPress={() => router.push('/overview')} />
-            <SettingRow label="Cron Jobs" onPress={() => router.push('/scheduler')} />
+          <Section showDivider>
+            <SettingRow
+              icon="grid-outline"
+              label="Overview"
+              onPress={() => router.push('/overview')}
+            />
+            <SettingRow
+              icon="time-outline"
+              label="Cron Jobs"
+              onPress={() => router.push('/scheduler')}
+              showDivider={false}
+            />
           </Section>
         )}
 
+        {/* Developer */}
         {__DEV__ && (
-          <Section title="Developer">
-            <SettingRow label="Component Gallery" onPress={() => router.push('/gallery')} />
+          <Section showDivider>
+            <SettingRow
+              icon="construct-outline"
+              label="Component Gallery"
+              onPress={() => router.push('/gallery')}
+              showDivider={false}
+            />
           </Section>
         )}
 
-        <Section title="About">
-          <SettingRow label="Version" value="1.0.0" />
+        {/* Info group */}
+        <Section>
+          <SettingRow icon="help-circle-outline" label="Help" onPress={() => {}} />
+          <SettingRow
+            icon="information-circle-outline"
+            label="About"
+            value="1.0.0"
+            showDivider={false}
+          />
         </Section>
 
-        <Section title="Account">
+        {/* Logout */}
+        <View style={styles.logoutSection}>
           <Button title="Logout" variant="danger" size="lg" onPress={handleLogout} />
-        </Section>
+        </View>
       </ScrollView>
     </SafeAreaView>
   )

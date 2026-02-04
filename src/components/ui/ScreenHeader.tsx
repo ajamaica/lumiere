@@ -9,6 +9,8 @@ export interface ScreenHeaderProps extends ViewProps {
   title: string
   subtitle?: string
   showBack?: boolean
+  /** Show a close (X) button instead of a back arrow */
+  showClose?: boolean
   onBack?: () => void
   right?: React.ReactNode
 }
@@ -17,6 +19,7 @@ export function ScreenHeader({
   title,
   subtitle,
   showBack = false,
+  showClose = false,
   onBack,
   right,
   style,
@@ -33,10 +36,19 @@ export function ScreenHeader({
       alignItems: 'center',
       padding: theme.spacing.lg,
       paddingTop: theme.spacing.xl * 1.5,
-      borderBottomWidth: 1,
+      borderBottomWidth: showClose ? 0 : 1,
       borderBottomColor: theme.colors.border,
     },
     backButton: {
+      marginRight: theme.spacing.md,
+    },
+    closeButton: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: theme.colors.surfaceVariant,
+      alignItems: 'center',
+      justifyContent: 'center',
       marginRight: theme.spacing.md,
     },
     content: {
@@ -56,7 +68,12 @@ export function ScreenHeader({
 
   return (
     <View style={[styles.header, style]} {...props}>
-      {showBack && (
+      {showClose && (
+        <TouchableOpacity onPress={handleBack} style={styles.closeButton}>
+          <Ionicons name="close" size={20} color={theme.colors.text.secondary} />
+        </TouchableOpacity>
+      )}
+      {showBack && !showClose && (
         <TouchableOpacity onPress={handleBack} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color={theme.colors.text.primary} />
         </TouchableOpacity>
