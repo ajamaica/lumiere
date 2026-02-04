@@ -11,7 +11,7 @@ import { useTheme } from '../src/theme'
 export default function HomeScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { getProviderConfig } = useServers()
+  const { getProviderConfig, currentServerId } = useServers()
   const [config, setConfig] = useState<ProviderConfig | null>(null)
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function HomeScreen() {
       setConfig(providerConfig)
     }
     loadConfig()
-  }, [getProviderConfig])
+  }, [getProviderConfig, currentServerId])
 
   if (!config) {
     return (
@@ -44,5 +44,5 @@ export default function HomeScreen() {
     )
   }
 
-  return <ChatScreen providerConfig={config} />
+  return <ChatScreen key={currentServerId} providerConfig={config} />
 }
