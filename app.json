@@ -50,8 +50,7 @@
           "icon": "./assets/icon.png",
           "color": "#ffffff"
         }
-      ],
-      "./modules/apple-intelligence"
+      ]
     ],
     "extra": {
       "eas": {
