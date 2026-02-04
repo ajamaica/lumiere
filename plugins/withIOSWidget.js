@@ -162,10 +162,8 @@ function withIOSWidget(config) {
       widgetBundleId,
     )
 
-    // Add build phases
-    xcodeProject.addBuildPhase([], 'PBXSourcesBuildPhase', 'Sources', target.uuid)
-
     // Add each Swift file to the sources build phase
+    // (addTarget already created the PBXSourcesBuildPhase, so we just add files to it)
     for (const file of swiftFiles) {
       xcodeProject.addSourceFile(
         `${WIDGET_TARGET_NAME}/${file}`,
@@ -174,9 +172,8 @@ function withIOSWidget(config) {
       )
     }
 
-    // Frameworks build phase
-    xcodeProject.addBuildPhase([], 'PBXFrameworksBuildPhase', 'Frameworks', target.uuid)
-
+    // Add frameworks to the widget target
+    // (addTarget already created the PBXFrameworksBuildPhase, so we just add frameworks to it)
     xcodeProject.addFramework('WidgetKit.framework', {
       target: target.uuid,
       link: true,
