@@ -1,9 +1,8 @@
-import { renderHook, act } from '@testing-library/react-native'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 
-import { useMessageQueue } from '../useMessageQueue'
 import { ChatProviderEvent } from '../../services/providers'
+import { useMessageQueue } from '../useMessageQueue'
 
 // ---------- mocks ----------
 
@@ -27,7 +26,10 @@ jest.mock('react', () => {
 type OnEvent = (event: ChatProviderEvent) => void
 
 function createMocks() {
-  const sendMessage = jest.fn<Promise<void>, [{ message: string; sessionKey: string; attachments?: unknown[] }, OnEvent]>()
+  const sendMessage = jest.fn<
+    Promise<void>,
+    [{ message: string; sessionKey: string; attachments?: unknown[] }, OnEvent]
+  >()
   const onMessageAdd = jest.fn()
   const onAgentMessageUpdate = jest.fn()
   const onAgentMessageComplete = jest.fn()
@@ -71,8 +73,6 @@ function setupHook(mocks = createMocks()) {
 
   // Wire up mocks
   ;(useAtom as jest.Mock).mockReturnValue([messageQueue, setMessageQueue])
-
-  const useStateCalls: number[] = []
   ;(useState as jest.Mock).mockImplementation((initial: unknown) => {
     // The hook calls useState once for isAgentResponding (boolean, initial false)
     if (initial === false) {
@@ -85,9 +85,9 @@ function setupHook(mocks = createMocks()) {
   ;(useEffect as jest.Mock).mockImplementation((fn: () => void) => {
     effects.push(fn)
   })
-
   ;(useCallback as jest.Mock).mockImplementation((fn: (...args: unknown[]) => unknown) => fn)
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks -- test helper that drives hooks imperatively
   const result = useMessageQueue(mocks)
 
   // Re-sync atom mock to current queue value after initial render
@@ -102,6 +102,7 @@ function setupHook(mocks = createMocks()) {
       effects.length = 0
       effects.push(fn)
     })
+    // eslint-disable-next-line react-hooks/rules-of-hooks -- test helper
     const freshResult = useMessageQueue(mocks)
     effects.forEach((fn) => fn())
     return freshResult
@@ -260,17 +261,10 @@ describe('useMessageQueue', () => {
         () => new Promise(() => {}), // never resolves
       )
 
-      const { result, setMessageQueue } = setupHook(mocks)
+      const { result } = setupHook(mocks)
 
       // First send – goes immediately (sets isAgentResponding = true)
-      const sendPromise = result.handleSend('first')
-
-      // Now we need the hook to see isAgentResponding = true
-      // Since useCallback returns the raw fn and isAgentResponding is captured
-      // via closure, we simulate the state being true after first send starts
-      // by re-setting up with isAgentResponding = true
-      // In the real hook the React re-render would handle this.
-      // For our test, we verify the queue mechanism via the setMessageQueue mock.
+      void result.handleSend('first')
 
       // The first message should go through sendMessage directly
       expect(mocks.sendMessage).toHaveBeenCalledTimes(1)
