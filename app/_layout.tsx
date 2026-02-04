@@ -20,6 +20,13 @@ function AppContent() {
   useDeepLinking(biometricLockEnabled && isLocked)
   useNotifications()
 
+  // Sync isLocked when biometricLockEnabled loads from storage
+  useEffect(() => {
+    if (biometricLockEnabled) {
+      setIsLocked(true)
+    }
+  }, [biometricLockEnabled])
+
   const handleUnlock = useCallback(() => {
     setIsLocked(false)
   }, [])
