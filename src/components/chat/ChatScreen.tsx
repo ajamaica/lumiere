@@ -258,7 +258,11 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   }, [isAgentResponding, pulseOpacity])
 
   const handleOpenSessionMenu = () => {
-    router.push('/sessions')
+    if (providerConfig.type === 'ollama') {
+      router.push('/ollama-models')
+    } else {
+      router.push('/sessions')
+    }
   }
 
   const handleOpenSettings = () => {
