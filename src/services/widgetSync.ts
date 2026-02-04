@@ -1,4 +1,4 @@
-import { Platform } from 'react-native'
+import { NativeModules, Platform } from 'react-native'
 
 import type { TriggersDict } from '../store'
 
@@ -30,10 +30,6 @@ export async function syncTriggersToWidget(triggers: TriggersDict): Promise<void
   }))
 
   try {
-    // Use the native module bridge to write to App Group UserDefaults.
-    // We use NativeModules.SharedUserDefaults which is registered by our
-    // config plugin, or fall back to the RNCAsyncStorage shared group approach.
-    const { NativeModules } = require('react-native')
     const SharedDefaults = NativeModules.SharedUserDefaults
 
     if (SharedDefaults?.setItem) {
