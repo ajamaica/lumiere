@@ -283,7 +283,7 @@ export function SetupScreen() {
 
         <TouchableOpacity style={styles.echoLink} onPress={handleCreateEchoAgent}>
           <Text variant="bodySmall" color="secondary">
-            Create demo Echo Agent
+            Create a Local AI or Echo server
           </Text>
         </TouchableOpacity>
       </ScrollView>
