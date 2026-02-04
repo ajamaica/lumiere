@@ -24,6 +24,7 @@
     "expo-background-fetch": "^14.0.9",
     "expo-clipboard": "~8.0.8",
     "expo-constants": "^18.0.13",
+    "expo-glass-effect": "^0.1.8",
     "expo-image-picker": "^17.0.10",
     "expo-linking": "^8.0.11",
     "expo-local-authentication": "^17.0.8",
