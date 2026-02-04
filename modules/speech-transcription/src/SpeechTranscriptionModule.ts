@@ -1,5 +1,5 @@
-import type { EventSubscription } from 'expo-modules-core'
-import { requireOptionalNativeModule } from 'expo-modules-core'
+import type { EventSubscription } from 'expo'
+import { requireOptionalNativeModule } from 'expo'
 
 interface TranscriptionEvent {
   text: string
