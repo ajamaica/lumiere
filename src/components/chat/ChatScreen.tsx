@@ -80,7 +80,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const inputContainerStyle = useAnimatedStyle(() => {
     'worklet'
     return {
-      backgroundColor: "transparent",
+      backgroundColor: 'transparent',
       position: 'absolute',
       bottom: 0,
       left: 0,
