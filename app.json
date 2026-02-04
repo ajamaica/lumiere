@@ -52,8 +52,7 @@
           "icon": "./assets/icon.png",
           "color": "#ffffff"
         }
-      ],
-      "./modules/speech-transcription"
+      ]
     ],
     "extra": {
       "eas": {
