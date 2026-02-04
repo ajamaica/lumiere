@@ -1,1 +1,1 @@
-export { isAvailable, generateResponse, generateStreamingResponse } from './src/AppleIntelligence'
+export { generateResponse, generateStreamingResponse, isAvailable } from './src/AppleIntelligence'

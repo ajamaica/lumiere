@@ -54,6 +54,7 @@ export class AppleChatProvider implements ChatProvider {
     }
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       this.nativeModule = require('../../../modules/apple-intelligence')
     } catch {
       this.connected = false
