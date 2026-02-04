@@ -7,12 +7,7 @@
  * 3. Copies Swift source files into the extension
  * 4. Links WidgetKit and SwiftUI frameworks
  */
-const {
-  withXcodeProject,
-  withEntitlementsPlist,
-  withInfoPlist,
-  IOSConfig,
-} = require('@expo/config-plugins')
+const { withXcodeProject, withEntitlementsPlist, withInfoPlist } = require('@expo/config-plugins')
 const fs = require('fs')
 const path = require('path')
 
@@ -134,7 +129,6 @@ function withIOSWidget(config) {
     fs.writeFileSync(infoPlistPath, infoPlistContent)
 
     // Add widget extension target to the Xcode project
-    const targetUuid = xcodeProject.generateUuid()
     const widgetGroup = xcodeProject.addPbxGroup(
       [...swiftFiles, 'Info.plist', `${WIDGET_TARGET_NAME}.entitlements`],
       WIDGET_TARGET_NAME,
@@ -154,13 +148,7 @@ function withIOSWidget(config) {
     )
 
     // Add build phases
-    // Source files build phase
-    const sourcesBuildPhase = xcodeProject.addBuildPhase(
-      [],
-      'PBXSourcesBuildPhase',
-      'Sources',
-      target.uuid,
-    )
+    xcodeProject.addBuildPhase([], 'PBXSourcesBuildPhase', 'Sources', target.uuid)
 
     // Add each Swift file to the sources build phase
     for (const file of swiftFiles) {
@@ -172,12 +160,7 @@ function withIOSWidget(config) {
     }
 
     // Frameworks build phase
-    const frameworksBuildPhase = xcodeProject.addBuildPhase(
-      [],
-      'PBXFrameworksBuildPhase',
-      'Frameworks',
-      target.uuid,
-    )
+    xcodeProject.addBuildPhase([], 'PBXFrameworksBuildPhase', 'Frameworks', target.uuid)
 
     xcodeProject.addFramework('WidgetKit.framework', {
       target: target.uuid,
@@ -218,7 +201,6 @@ function withIOSWidget(config) {
     // Add the widget extension to the main target's embed phase
     const embedTarget = xcodeProject.getFirstTarget()
     if (embedTarget) {
-      // Add copy files build phase for embedding the extension
       xcodeProject.addBuildPhase(
         [`${WIDGET_TARGET_NAME}.appex`],
         'PBXCopyFilesBuildPhase',

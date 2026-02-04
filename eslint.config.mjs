@@ -17,6 +17,7 @@ export default [
       'build/**',
       'android/**',
       'ios/**',
+      'plugins/**',
       '*.config.js',
     ],
   },
