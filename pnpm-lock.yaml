@@ -120,6 +120,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.54.0
         version: 8.54.0(eslint@9.39.2)(typescript@5.9.3)
+      babel-preset-expo:
+        specifier: ^54.0.10
+        version: 54.0.10(@babel/core@7.28.6)(@babel/runtime@7.28.6)(expo@54.0.33)(react-refresh@0.14.2)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2
@@ -138,6 +141,9 @@ importers:
       eslint-plugin-simple-import-sort:
         specifier: ^12.1.1
         version: 12.1.1(eslint@9.39.2)
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@25.1.0)
       jest-expo:
         specifier: ^54.0.17
         version: 54.0.17(@babel/core@7.28.6)(expo@54.0.33)(jest@29.7.0(@types/node@25.1.0))(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
