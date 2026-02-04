@@ -80,13 +80,14 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const inputContainerStyle = useAnimatedStyle(() => {
     'worklet'
     return {
+      backgroundColor: 'transparent',
       position: 'absolute',
       bottom: 0,
       left: 0,
       right: 0,
       transform: [
         {
-          translateY: keyboardHeight.value === 0 ? keyboardHeight.value - 20 : keyboardHeight.value,
+          translateY: keyboardHeight.value - 20,
         },
       ],
     }
@@ -173,17 +174,25 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     }
   }, [clearMessagesTrigger, connected, loadChatHistory])
 
+  // Keep a ref to handleSend so the trigger timer isn't reset every time
+  // handleSend's identity changes (which happens on every render because the
+  // inline callbacks passed to useMessageQueue create new references).
+  const handleSendRef = useRef(handleSend)
+  useEffect(() => {
+    handleSendRef.current = handleSend
+  }, [handleSend])
+
   // Auto-send pending trigger message once connected and history has loaded
   useEffect(() => {
     if (connected && !isLoadingHistory && pendingTriggerMessage) {
       // Small delay so the UI settles before firing the message
       const timer = setTimeout(() => {
-        handleSend(pendingTriggerMessage)
+        handleSendRef.current(pendingTriggerMessage)
         setPendingTriggerMessage(null)
       }, 600)
       return () => clearTimeout(timer)
     }
-  }, [connected, isLoadingHistory, pendingTriggerMessage, handleSend, setPendingTriggerMessage])
+  }, [connected, isLoadingHistory, pendingTriggerMessage, setPendingTriggerMessage])
 
   // Scroll to bottom after history finishes loading to show latest messages.
   // The list stays hidden (opacity 0) until this scroll completes so the user

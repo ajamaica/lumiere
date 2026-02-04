@@ -139,6 +139,14 @@ function AppContent() {
         }}
       />
       <Stack.Screen
+        name="colors"
+        options={{
+          presentation: 'modal',
+          animation: 'slide_from_bottom',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="favorites"
         options={{
           presentation: 'modal',
