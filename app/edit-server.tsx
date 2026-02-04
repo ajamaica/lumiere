@@ -30,11 +30,14 @@ export default function EditServerScreen() {
   const { servers, updateServer } = useServers()
   const { flags } = useFeatureFlags()
 
-  const providerOptions = ALL_PROVIDER_OPTIONS.filter(
-    (o) => o.value !== 'ollama' || flags.ollamaProvider,
-  )
-
   const server = id ? servers[id] : null
+
+  // Always include the current server's provider type in the options,
+  // even if the feature flag would normally hide it
+  const providerOptions = ALL_PROVIDER_OPTIONS.filter(
+    (o) =>
+      o.value !== 'ollama' || flags.ollamaProvider || o.value === server?.providerType,
+  )
 
   const [name, setName] = useState(server?.name ?? '')
   const [url, setUrl] = useState(server?.url ?? '')
@@ -42,6 +45,7 @@ export default function EditServerScreen() {
   const [clientId, setClientId] = useState(server?.clientId || 'lumiere-mobile')
   const [providerType, setProviderType] = useState<ProviderType>(server?.providerType || 'molt')
   const [model, setModel] = useState(server?.model ?? '')
+  const isTypeChanged = providerType !== server?.providerType
 
   const handleSave = async () => {
     if (!id) return
@@ -50,6 +54,20 @@ export default function EditServerScreen() {
       Alert.alert('Error', 'URL is required')
       return
     }
+
+    if (providerType === 'molt' && isTypeChanged && !token.trim()) {
+      Alert.alert('Error', 'Token is required when switching to Molt Gateway')
+      return
+    }
+
+    // When switching away from molt, store a placeholder token for non-token providers
+    const effectiveToken = token.trim()
+      ? token.trim()
+      : isTypeChanged && providerType !== 'molt'
+        ? providerType === 'echo'
+          ? 'echo-no-token'
+          : 'ollama-no-token'
+        : undefined
 
     await updateServer(
       id,
@@ -60,7 +78,7 @@ export default function EditServerScreen() {
         providerType,
         model: model.trim() || undefined,
       },
-      token.trim() || undefined,
+      effectiveToken,
     )
 
     router.back()
@@ -200,7 +218,7 @@ export default function EditServerScreen() {
             <>
               <View style={styles.formRow}>
                 <TextInput
-                  label="Token (leave blank to keep current)"
+                  label={isTypeChanged ? 'Token' : 'Token (leave blank to keep current)'}
                   value={token}
                   onChangeText={setToken}
                   secureTextEntry
