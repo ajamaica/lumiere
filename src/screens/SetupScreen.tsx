@@ -15,6 +15,7 @@ import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
 import { ProviderType } from '../services/providers'
 import { currentSessionKeyAtom, onboardingCompletedAtom, serverSessionsAtom } from '../store'
+import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
 import { useTheme } from '../theme'
 
 const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
@@ -301,11 +302,13 @@ export function SetupScreen() {
 
         <Button title="Get Started" size="lg" onPress={handleComplete} disabled={!isValid} />
 
-        <TouchableOpacity style={styles.echoLink} onPress={handleCreateLocalAI}>
-          <Text variant="bodySmall" color="secondary">
-            Create a Local AI server
-          </Text>
-        </TouchableOpacity>
+        {isAppleAIAvailable() && (
+          <TouchableOpacity style={styles.echoLink} onPress={handleCreateLocalAI}>
+            <Text variant="bodySmall" color="secondary">
+              Create a Local AI server
+            </Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity style={styles.echoLink} onPress={handleCreateEchoAgent}>
           <Text variant="bodySmall" color="secondary">
