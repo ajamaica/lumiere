@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import { GlassView } from 'expo-glass-effect'
+import { GlassView, isGlassEffectAPIAvailable } from 'expo-glass-effect'
 import * as ImagePicker from 'expo-image-picker'
 import React, { useMemo, useState } from 'react'
 import {
@@ -37,7 +37,8 @@ export function ChatInput({
   const [attachments, setAttachments] = useState<MessageAttachment[]>([])
   const { suggestions, hasInput } = useSlashCommands(text)
 
-  const styles = useMemo(() => createStyles(theme), [theme])
+  const glassAvailable = isGlassEffectAPIAvailable()
+  const styles = useMemo(() => createStyles(theme, glassAvailable), [theme, glassAvailable])
 
   const handleSend = () => {
     if ((text.trim() || attachments.length > 0) && !disabled) {
@@ -75,6 +76,12 @@ export function ChatInput({
 
   const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
   const hasContent = text.trim() || attachments.length > 0
+  const isTyping = text.length > 0
+
+  const Container = glassAvailable ? GlassView : View
+  const containerProps = glassAvailable
+    ? { style: styles.container, glassEffectStyle: isTyping ? ('clear' as const) : ('regular' as const) }
+    : { style: [styles.container, styles.containerFallback] }
 
   return (
     <>
@@ -98,7 +105,7 @@ export function ChatInput({
         />
       )}
       <View style={styles.background}>
-        <GlassView style={styles.container}>
+        <Container {...containerProps}>
           {attachments.length > 0 && (
             <View style={styles.attachmentPreviewRow}>
               {attachments.map((attachment, index) => (
@@ -177,7 +184,7 @@ export function ChatInput({
               </TouchableOpacity>
             </View>
           </View>
-        </GlassView>
+        </Container>
       </View>
     </>
   )
@@ -199,7 +206,7 @@ interface Theme {
   }
 }
 
-const createStyles = (theme: Theme) =>
+const createStyles = (theme: Theme, _glassAvailable: boolean) =>
   StyleSheet.create({
     background: {
       backgroundColor: 'transparent',
@@ -214,6 +221,11 @@ const createStyles = (theme: Theme) =>
       backgroundColor: 'transparent',
       borderRadius: 28,
       overflow: 'hidden',
+    },
+    containerFallback: {
+      backgroundColor: theme.colors.surface,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
     },
     input: {
       minHeight: 40,
