@@ -36,16 +36,13 @@ jest.mock('../../src/services/secureTokenStorage', () => ({
 }))
 
 // Mock chat components to avoid pulling in deep native dependencies
-jest.mock('../../src/components/chat', () => ({
-  ChatScreen: ({ providerConfig }: { providerConfig: unknown }) => {
-    const { View, Text } = require('react-native')
-    return (
-      <View>
-        <Text>ChatScreen</Text>
-      </View>
-    )
-  },
-}))
+jest.mock('../../src/components/chat', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { createElement } = require('react')
+  return {
+    ChatScreen: () => createElement('Text', null, 'ChatScreen'),
+  }
+})
 
 // Mock deep linking and notifications hooks
 jest.mock('../../src/hooks/useDeepLinking', () => ({
