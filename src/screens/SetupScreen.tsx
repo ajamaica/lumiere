@@ -109,11 +109,7 @@ export function SetupScreen() {
         <Text variant="heading1" style={{ marginBottom: theme.spacing.sm }}>
           Setup your server
         </Text>
-        <Text
-          variant="body"
-          color="secondary"
-          style={{ marginBottom: theme.spacing.xxl }}
-        >
+        <Text variant="body" color="secondary" style={{ marginBottom: theme.spacing.xxl }}>
           Connect to your Molt Gateway to start chatting with your agents.
         </Text>
 

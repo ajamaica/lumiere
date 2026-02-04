@@ -34,8 +34,7 @@ export function StepIndicator({ currentStep, totalSteps }: StepIndicatorProps) {
           style={[
             styles.dot,
             {
-              backgroundColor:
-                index <= currentStep ? theme.colors.primary : theme.colors.border,
+              backgroundColor: index <= currentStep ? theme.colors.primary : theme.colors.border,
             },
           ]}
         />
