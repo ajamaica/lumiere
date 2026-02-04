@@ -15,20 +15,14 @@ function AppContent() {
   const { theme } = useTheme()
   const [onboardingCompleted] = useAtom(onboardingCompletedAtom)
   const [biometricLockEnabled] = useAtom(biometricLockEnabledAtom)
-  const [isLocked, setIsLocked] = useState(() => biometricLockEnabled)
+  const [isUnlocked, setIsUnlocked] = useState(false)
   const appState = useRef(AppState.currentState)
-  useDeepLinking(biometricLockEnabled && isLocked)
+  const isLocked = biometricLockEnabled && !isUnlocked
+  useDeepLinking(isLocked)
   useNotifications()
 
-  // Sync isLocked when biometricLockEnabled loads from storage
-  useEffect(() => {
-    if (biometricLockEnabled) {
-      setIsLocked(true)
-    }
-  }, [biometricLockEnabled])
-
   const handleUnlock = useCallback(() => {
-    setIsLocked(false)
+    setIsUnlocked(true)
   }, [])
 
   useEffect(() => {
@@ -38,7 +32,7 @@ function AppContent() {
         appState.current === 'active' &&
         nextState.match(/inactive|background/)
       ) {
-        setIsLocked(true)
+        setIsUnlocked(false)
       }
       appState.current = nextState
     }
@@ -57,7 +51,7 @@ function AppContent() {
     )
   }
 
-  if (biometricLockEnabled && isLocked) {
+  if (isLocked) {
     return (
       <View style={backgroundStyle}>
         <BiometricLockScreen onUnlock={handleUnlock} />
