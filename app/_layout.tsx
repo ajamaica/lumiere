@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useAtom } from 'jotai'
@@ -21,6 +22,7 @@ function AppContent() {
   const [onboardingCompleted] = useAtom(onboardingCompletedAtom)
   const [biometricLockEnabled] = useAtom(biometricLockEnabledAtom)
   const [isUnlocked, setIsUnlocked] = useState(false)
+  const [isHydrated, setIsHydrated] = useState(false)
   const appState = useRef(AppState.currentState)
   const isLocked = biometricLockEnabled && !isUnlocked
   useDeepLinking(isLocked)
@@ -29,7 +31,13 @@ function AppContent() {
   useWidgetSync()
 
   useEffect(() => {
-    SplashScreen.hideAsync()
+    // Wait for AsyncStorage to hydrate the biometric setting before rendering.
+    // Without this, the atom briefly returns false (default), causing the Stack
+    // navigator to mount and then unmount when the real value loads — crashing the app.
+    AsyncStorage.getItem('biometricLockEnabled').then(() => {
+      setIsHydrated(true)
+      SplashScreen.hideAsync()
+    })
   }, [])
 
   const handleUnlock = useCallback(() => {
@@ -53,6 +61,10 @@ function AppContent() {
   }, [biometricLockEnabled])
 
   const backgroundStyle = { flex: 1, backgroundColor: theme.colors.background }
+
+  if (!isHydrated) {
+    return null
+  }
 
   if (!onboardingCompleted) {
     return (
