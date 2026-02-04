@@ -7,7 +7,7 @@
  * 3. Copies Swift source files into the extension
  * 4. Links WidgetKit and SwiftUI frameworks
  */
-const { withXcodeProject, withEntitlementsPlist, withInfoPlist } = require('@expo/config-plugins')
+const { withXcodeProject, withEntitlementsPlist, withInfoPlist } = require('expo/config-plugins')
 const fs = require('fs')
 const path = require('path')
 
