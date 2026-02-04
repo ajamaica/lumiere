@@ -151,6 +151,26 @@ export function SetupScreen() {
     setOnboardingCompleted(true)
   }
 
+  const handleCreateLocalAI = async () => {
+    const serverId = await addServer(
+      {
+        name: 'Local AI',
+        url: '',
+        providerType: 'apple',
+      },
+      '',
+    )
+
+    const sessionKey = DEFAULT_SESSION_KEY
+    setCurrentSessionKey(sessionKey)
+    setServerSessions((prev) => ({
+      ...prev,
+      [serverId]: sessionKey,
+    }))
+
+    setOnboardingCompleted(true)
+  }
+
   const isValid =
     providerType === 'molt'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
@@ -281,9 +301,15 @@ export function SetupScreen() {
 
         <Button title="Get Started" size="lg" onPress={handleComplete} disabled={!isValid} />
 
+        <TouchableOpacity style={styles.echoLink} onPress={handleCreateLocalAI}>
+          <Text variant="bodySmall" color="secondary">
+            Create a Local AI server
+          </Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.echoLink} onPress={handleCreateEchoAgent}>
           <Text variant="bodySmall" color="secondary">
-            Create a Local AI or Echo server
+            Create demo Echo Agent
           </Text>
         </TouchableOpacity>
       </ScrollView>
