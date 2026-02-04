@@ -6,20 +6,22 @@ import { useTheme } from '../../theme'
 export interface SectionProps extends ViewProps {
   title?: string
   right?: React.ReactNode
+  /** Show a divider line at the bottom of the section */
+  showDivider?: boolean
 }
 
-export function Section({ title, right, style, children, ...props }: SectionProps) {
+export function Section({ title, right, showDivider = false, style, children, ...props }: SectionProps) {
   const { theme } = useTheme()
 
   const styles = StyleSheet.create({
     section: {
-      marginBottom: theme.spacing.xl,
+      marginBottom: theme.spacing.md,
     },
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: theme.spacing.md,
+      marginBottom: theme.spacing.xs,
     },
     title: {
       fontSize: theme.typography.fontSize.sm,
@@ -27,6 +29,11 @@ export function Section({ title, right, style, children, ...props }: SectionProp
       color: theme.colors.text.secondary,
       textTransform: 'uppercase',
       letterSpacing: 0.5,
+    },
+    divider: {
+      height: StyleSheet.hairlineWidth,
+      backgroundColor: theme.colors.divider,
+      marginTop: theme.spacing.md,
     },
   })
 
@@ -39,6 +46,7 @@ export function Section({ title, right, style, children, ...props }: SectionProp
         </View>
       )}
       {children}
+      {showDivider && <View style={styles.divider} />}
     </View>
   )
 }
