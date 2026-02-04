@@ -17,7 +17,7 @@ import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
 
 const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
-  { value: 'molt', label: 'Molt Gateway' },
+  { value: 'molt', label: 'OpenClaw' },
   { value: 'ollama', label: 'Ollama' },
   { value: 'echo', label: 'Echo Server' },
 ]
@@ -42,7 +42,7 @@ export default function AddServerScreen() {
     }
 
     if (providerType === 'molt' && !token.trim()) {
-      Alert.alert('Error', 'Token is required for Molt Gateway')
+      Alert.alert('Error', 'Token is required for OpenClaw')
       return
     }
 
