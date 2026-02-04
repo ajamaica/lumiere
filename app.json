@@ -17,7 +17,9 @@
       "bundleIdentifier": "bot.lumiere.app",
       "buildNumber": "1",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSMicrophoneUsageDescription": "Lumiere needs access to your microphone to transcribe voice messages.",
+        "NSSpeechRecognitionUsageDescription": "Lumiere uses speech recognition to convert your voice to text."
       }
     },
     "android": {
@@ -50,7 +52,8 @@
           "icon": "./assets/icon.png",
           "color": "#ffffff"
         }
-      ]
+      ],
+      "./modules/speech-transcription"
     ],
     "extra": {
       "eas": {
