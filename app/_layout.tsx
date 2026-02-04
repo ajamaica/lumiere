@@ -8,6 +8,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller'
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useNotifications } from '../src/hooks/useNotifications'
+import { useQuickActions } from '../src/hooks/useQuickActions'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
@@ -18,17 +19,19 @@ function AppContent() {
   const { theme } = useTheme()
   const [onboardingCompleted] = useAtom(onboardingCompletedAtom)
   const [biometricLockEnabled] = useAtom(biometricLockEnabledAtom)
-  const [isLocked, setIsLocked] = useState(() => biometricLockEnabled)
+  const [isUnlocked, setIsUnlocked] = useState(false)
   const appState = useRef(AppState.currentState)
-  useDeepLinking(biometricLockEnabled && isLocked)
+  const isLocked = biometricLockEnabled && !isUnlocked
+  useDeepLinking(isLocked)
   useNotifications()
+  useQuickActions()
 
   useEffect(() => {
     SplashScreen.hideAsync()
   }, [])
 
   const handleUnlock = useCallback(() => {
-    setIsLocked(false)
+    setIsUnlocked(true)
   }, [])
 
   useEffect(() => {
@@ -38,7 +41,7 @@ function AppContent() {
         appState.current === 'active' &&
         nextState.match(/inactive|background/)
       ) {
-        setIsLocked(true)
+        setIsUnlocked(false)
       }
       appState.current = nextState
     }
@@ -57,7 +60,7 @@ function AppContent() {
     )
   }
 
-  if (biometricLockEnabled && isLocked) {
+  if (isLocked) {
     return (
       <View style={backgroundStyle}>
         <BiometricLockScreen onUnlock={handleUnlock} />

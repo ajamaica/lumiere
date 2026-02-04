@@ -65,7 +65,8 @@
           "icon": "./assets/icon.png",
           "color": "#ffffff"
         }
-      ]
+      ],
+      "expo-quick-actions"
     ],
     "extra": {
       "eas": {
