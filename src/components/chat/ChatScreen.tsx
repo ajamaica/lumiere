@@ -120,22 +120,27 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   })
 
   // Convert raw history messages into UI Message objects
-  const historyToMessages = useCallback((msgs: { role: string; content: Array<{ type: string; text?: string }>; timestamp: number }[]): Message[] => {
-    return msgs
-      .filter((msg) => msg.role === 'user' || msg.role === 'assistant')
-      .map((msg, index) => {
-        const textContent = msg.content.find((c) => c.type === 'text')
-        const text = textContent?.text || ''
-        if (!text) return null
-        return {
-          id: `history-${msg.timestamp}-${index}`,
-          text,
-          sender: msg.role === 'user' ? 'user' : 'agent',
-          timestamp: new Date(msg.timestamp),
-        } as Message
-      })
-      .filter((msg): msg is Message => msg !== null)
-  }, [])
+  const historyToMessages = useCallback(
+    (
+      msgs: { role: string; content: Array<{ type: string; text?: string }>; timestamp: number }[],
+    ): Message[] => {
+      return msgs
+        .filter((msg) => msg.role === 'user' || msg.role === 'assistant')
+        .map((msg, index) => {
+          const textContent = msg.content.find((c) => c.type === 'text')
+          const text = textContent?.text || ''
+          if (!text) return null
+          return {
+            id: `history-${msg.timestamp}-${index}`,
+            text,
+            sender: msg.role === 'user' ? 'user' : 'agent',
+            timestamp: new Date(msg.timestamp),
+          } as Message
+        })
+        .filter((msg): msg is Message => msg !== null)
+    },
+    [],
+  )
 
   // Pre-populate from local cache before the provider connects.
   // This lets us show cached messages instantly and skip the loading spinner.
@@ -150,7 +155,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
         setIsLoadingHistory(false)
       }
     })
-    return () => { cancelled = true }
+    return () => {
+      cancelled = true
+    }
   }, [providerConfig.serverId, currentSessionKey, historyToMessages])
 
   // Load chat history on mount
