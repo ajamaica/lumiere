@@ -117,26 +117,16 @@ export class OllamaChatProvider implements ChatProvider {
     this.abortController = new AbortController()
 
     try {
-      const stream = await this.client.chat({
+      const response = await this.client.chat({
         model: this.model,
         messages,
-        stream: true,
+        stream: false,
       })
 
-      let fullResponse = ''
-
-      for await (const chunk of stream) {
-        if (this.abortController?.signal.aborted) {
-          break
-        }
-
-        if (chunk.message?.content) {
-          fullResponse += chunk.message.content
-          onEvent({ type: 'delta', delta: chunk.message.content })
-        }
-      }
+      const fullResponse = response.message?.content || ''
 
       if (fullResponse) {
+        onEvent({ type: 'delta', delta: fullResponse })
         messages.push({ role: 'assistant', content: fullResponse })
       }
 
