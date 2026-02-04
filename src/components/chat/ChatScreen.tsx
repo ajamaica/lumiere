@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useChatProvider } from '../../hooks/useChatProvider'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
-import { ProviderConfig } from '../../services/providers'
+import { ProviderConfig, readCachedHistory } from '../../services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, pendingTriggerMessageAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatInput } from './ChatInput'
@@ -99,6 +99,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     opacity: pulseOpacity.value,
   }))
 
+  // Track whether we pre-populated from local cache so we can skip the loader
+  const hasCacheRef = useRef(false)
+
   const { connected, connecting, error, capabilities, retry, sendMessage, getChatHistory } =
     useChatProvider(providerConfig)
 
@@ -116,37 +119,60 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     },
   })
 
+  // Convert raw history messages into UI Message objects
+  const historyToMessages = useCallback((msgs: { role: string; content: Array<{ type: string; text?: string }>; timestamp: number }[]): Message[] => {
+    return msgs
+      .filter((msg) => msg.role === 'user' || msg.role === 'assistant')
+      .map((msg, index) => {
+        const textContent = msg.content.find((c) => c.type === 'text')
+        const text = textContent?.text || ''
+        if (!text) return null
+        return {
+          id: `history-${msg.timestamp}-${index}`,
+          text,
+          sender: msg.role === 'user' ? 'user' : 'agent',
+          timestamp: new Date(msg.timestamp),
+        } as Message
+      })
+      .filter((msg): msg is Message => msg !== null)
+  }, [])
+
+  // Pre-populate from local cache before the provider connects.
+  // This lets us show cached messages instantly and skip the loading spinner.
+  useEffect(() => {
+    let cancelled = false
+    readCachedHistory(providerConfig.serverId, currentSessionKey, 100).then((cached) => {
+      if (cancelled || cached.length === 0) return
+      const cachedMessages = historyToMessages(cached)
+      if (cachedMessages.length > 0) {
+        hasCacheRef.current = true
+        setMessages(cachedMessages)
+        setIsLoadingHistory(false)
+      }
+    })
+    return () => { cancelled = true }
+  }, [providerConfig.serverId, currentSessionKey, historyToMessages])
+
   // Load chat history on mount
   const loadChatHistory = useCallback(async () => {
-    // Clear old messages immediately so stale content doesn't flash on screen
-    setMessages([])
-    setCurrentAgentMessage('')
-    hasScrolledOnLoadRef.current = false
-    setHistoryReady(false)
-    setIsLoadingHistory(true)
+    const hadCache = hasCacheRef.current
+
+    // When we already have cached messages on screen, skip the loader and
+    // refresh silently in the background. Otherwise show the loading state.
+    if (!hadCache) {
+      setMessages([])
+      setCurrentAgentMessage('')
+      hasScrolledOnLoadRef.current = false
+      setHistoryReady(false)
+      setIsLoadingHistory(true)
+    }
+
     try {
       const historyResponse = await getChatHistory(currentSessionKey, 100)
       console.log('Chat history:', historyResponse)
 
       if (historyResponse?.messages && Array.isArray(historyResponse.messages)) {
-        const historyMessages = historyResponse.messages
-          .filter((msg) => msg.role === 'user' || msg.role === 'assistant')
-          .map((msg, index: number) => {
-            const textContent = msg.content.find((c) => c.type === 'text')
-            const text = textContent?.text || ''
-
-            // Skip empty messages
-            if (!text) return null
-
-            return {
-              id: `history-${msg.timestamp}-${index}`,
-              text,
-              sender: msg.role === 'user' ? 'user' : 'agent',
-              timestamp: new Date(msg.timestamp),
-            } as Message
-          })
-          .filter((msg: Message | null) => msg !== null)
-
+        const historyMessages = historyToMessages(historyResponse.messages)
         setMessages(historyMessages)
         console.log(`Loaded ${historyMessages.length} messages from history`)
       }
@@ -155,7 +181,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     } finally {
       setIsLoadingHistory(false)
     }
-  }, [getChatHistory, currentSessionKey])
+  }, [getChatHistory, currentSessionKey, historyToMessages])
 
   useEffect(() => {
     if (connected) {
@@ -169,6 +195,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   // Clear messages when reset session is triggered
   useEffect(() => {
     if (clearMessagesTrigger > 0 && connected) {
+      hasCacheRef.current = false
       setMessages([])
       setCurrentAgentMessage('')
       hasScrolledOnLoadRef.current = false
