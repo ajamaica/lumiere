@@ -7,7 +7,12 @@
  * 3. Copies Swift source files into the extension
  * 4. Links WidgetKit and SwiftUI frameworks
  */
-const { withXcodeProject, withEntitlementsPlist, withInfoPlist } = require('expo/config-plugins')
+const {
+  withXcodeProject,
+  withEntitlementsPlist,
+  withInfoPlist,
+  withDangerousMod,
+} = require('expo/config-plugins')
 const fs = require('fs')
 const path = require('path')
 
@@ -251,6 +256,86 @@ function withIOSWidget(config) {
 
     return config
   })
+
+  // Step 4: Modify the Podfile to set the widget extension deployment target
+  config = withDangerousMod(config, [
+    'ios',
+    (config) => {
+      const podfilePath = path.join(config.modRequest.projectRoot, 'ios', 'Podfile')
+      if (!fs.existsSync(podfilePath)) {
+        return config
+      }
+
+      let podfileContent = fs.readFileSync(podfilePath, 'utf8')
+
+      const snippet = [
+        `    # -- ${WIDGET_TARGET_NAME} deployment target --`,
+        `    installer.pods_project.targets.each do |target|`,
+        `      if target.name == '${WIDGET_TARGET_NAME}'`,
+        `        target.build_configurations.each do |config|`,
+        `          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '17.0'`,
+        `        end`,
+        `      end`,
+        `    end`,
+      ].join('\n')
+
+      // Unique marker to detect if the snippet has already been injected
+      const marker = `# -- ${WIDGET_TARGET_NAME} deployment target --`
+
+      if (podfileContent.includes(marker)) {
+        // Already injected; skip to avoid duplicates
+        return config
+      }
+
+      // Try to find an existing post_install block with any variable name / spacing
+      const postInstallRegex = /^([ \t]*post_install\s+do\s*\|[^|]*\|)/m
+      const match = podfileContent.match(postInstallRegex)
+
+      if (match) {
+        // Find the matching "end" for this post_install block and insert before it.
+        const headerIndex = podfileContent.indexOf(match[0])
+        const afterHeader = podfileContent.substring(headerIndex)
+
+        // Walk through lines to find the block-level "end"
+        let depth = 0
+        let insertOffset = -1
+        const lines = afterHeader.split('\n')
+        let offset = headerIndex
+
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i]
+          // Count block openers (do |...|, do\n, etc.) and enders
+          if (/\bdo\b/.test(line)) {
+            depth++
+          }
+          if (/^\s*end\s*$/.test(line)) {
+            depth--
+            if (depth === 0) {
+              // Insert the snippet right before this closing "end"
+              insertOffset = offset
+              break
+            }
+          }
+          offset += line.length + 1 // +1 for the newline
+        }
+
+        if (insertOffset !== -1) {
+          podfileContent =
+            podfileContent.substring(0, insertOffset) +
+            snippet +
+            '\n' +
+            podfileContent.substring(insertOffset)
+        }
+      } else {
+        // No existing post_install block; append a new one
+        podfileContent += '\n\npost_install do |installer|\n' + snippet + '\nend\n'
+      }
+
+      fs.writeFileSync(podfilePath, podfileContent)
+
+      return config
+    },
+  ])
 
   return config
 }
