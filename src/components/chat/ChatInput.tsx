@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import { GlassView, isGlassEffectAPIAvailable } from 'expo-glass-effect'
+import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import * as ImagePicker from 'expo-image-picker'
 import React, { useMemo, useState } from 'react'
 import {
@@ -37,7 +37,7 @@ export function ChatInput({
   const [attachments, setAttachments] = useState<MessageAttachment[]>([])
   const { suggestions, hasInput } = useSlashCommands(text)
 
-  const glassAvailable = isGlassEffectAPIAvailable()
+  const glassAvailable = isLiquidGlassAvailable()
   const styles = useMemo(() => createStyles(theme, glassAvailable), [theme, glassAvailable])
 
   const handleSend = () => {
