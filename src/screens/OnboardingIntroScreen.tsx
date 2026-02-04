@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { Button, StepIndicator, Text } from '../components/ui'
 import { useTheme } from '../theme'
@@ -9,6 +9,7 @@ interface OnboardingIntroScreenProps {
   totalSteps: number
   title: string
   description: string
+  Illustration: React.ComponentType
   onNext: () => void
   onSkip: () => void
 }
@@ -18,6 +19,7 @@ export function OnboardingIntroScreen({
   totalSteps,
   title,
   description,
+  Illustration,
   onNext,
   onSkip,
 }: OnboardingIntroScreenProps) {
@@ -32,13 +34,9 @@ export function OnboardingIntroScreen({
       justifyContent: 'center',
       paddingHorizontal: theme.spacing.xl,
     },
-    logoContainer: {
+    illustrationContainer: {
       alignItems: 'center',
       marginBottom: theme.spacing.xxxl,
-    },
-    logo: {
-      width: 280,
-      height: 120,
     },
     title: {
       marginBottom: theme.spacing.lg,
@@ -58,13 +56,8 @@ export function OnboardingIntroScreen({
       <StepIndicator currentStep={step} totalSteps={totalSteps} />
 
       <View style={styles.content}>
-        <View style={styles.logoContainer}>
-          <Image
-            // eslint-disable-next-line @typescript-eslint/no-require-imports
-            source={require('../../assets/logo.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+        <View style={styles.illustrationContainer}>
+          <Illustration />
         </View>
 
         <Text variant="heading1" style={styles.title}>

@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 
+import {
+  AgentIllustration,
+  ConfigIllustration,
+  FeaturesIllustration,
+} from '../components/illustrations'
 import { StepIndicator } from '../components/ui/StepIndicator'
 import { useTheme } from '../theme'
 
@@ -12,16 +17,19 @@ const INTRO_STEPS = [
     title: 'Managing your Agents is easier than ever',
     description:
       'Lumiere gives you a beautiful mobile interface to interact with your AI agents on the go. Monitor conversations, send messages, and stay connected from anywhere.',
+    illustration: AgentIllustration,
   },
   {
     title: 'Full control with powerful features',
     description:
       'Manage multiple servers, switch between sessions, schedule tasks with cron jobs, and get real-time notifications. Everything you need to stay in command.',
+    illustration: FeaturesIllustration,
   },
   {
     title: 'Highly configurable for custom needs',
     description:
       'Connect to Molt Gateway, Ollama, or Echo providers. Customize themes, set up deep link triggers, and tailor the experience to fit your workflow.',
+    illustration: ConfigIllustration,
   },
 ]
 
@@ -54,6 +62,7 @@ export function OnboardingFlow() {
           totalSteps={totalSteps}
           title={INTRO_STEPS[currentStep].title}
           description={INTRO_STEPS[currentStep].description}
+          Illustration={INTRO_STEPS[currentStep].illustration}
           onNext={handleNext}
           onSkip={handleSkip}
         />
