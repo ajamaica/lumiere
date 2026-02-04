@@ -87,7 +87,9 @@ export default function SettingsScreen() {
               'serverSessions',
               'onboardingCompleted',
               'triggers',
+              'biometricLockEnabled',
             ])
+            setBiometricLockEnabled(false)
             setOnboardingCompleted(false)
           },
         },

@@ -79,33 +79,32 @@ export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
       textAlign: 'center',
       marginBottom: theme.spacing.xl,
     },
-    error: {
-      fontSize: theme.typography.fontSize.sm,
-      color: theme.colors.text.secondary,
-      textAlign: 'center',
-      marginTop: theme.spacing.md,
-    },
     retryButton: {
       paddingVertical: theme.spacing.md,
       paddingHorizontal: theme.spacing.xl,
-      borderRadius: 8,
-      backgroundColor: theme.colors.primary,
+      borderRadius: 12,
+      backgroundColor: theme.colors.surface,
+      alignSelf: 'stretch',
+      alignItems: 'center',
     },
     retryText: {
       fontSize: theme.typography.fontSize.base,
       fontWeight: theme.typography.fontWeight.semibold,
-      color: '#ffffff',
+      color: theme.colors.text.primary,
     },
   })
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Locked</Text>
-      <Text style={styles.subtitle}>Authenticate to unlock Lumiere</Text>
+      <Text style={styles.title}>{error ? 'Failed to authenticate' : 'Locked'}</Text>
+      <Text style={styles.subtitle}>
+        {error
+          ? 'There was an issue with your authentication attempt.\nPlease try again.'
+          : 'Authenticate to unlock Lumiere'}
+      </Text>
       <TouchableOpacity style={styles.retryButton} onPress={authenticate} activeOpacity={0.7}>
-        <Text style={styles.retryText}>Unlock</Text>
+        <Text style={styles.retryText}>{error ? 'Try Again' : 'Unlock'}</Text>
       </TouchableOpacity>
-      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   )
 }
