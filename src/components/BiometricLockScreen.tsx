@@ -12,39 +12,29 @@ export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
   const { theme } = useTheme()
   const [error, setError] = useState<string | null>(null)
   const appState = useRef(AppState.currentState)
+  const authenticatingRef = useRef(false)
 
   const authenticate = useCallback(async () => {
+    if (authenticatingRef.current) return
+    authenticatingRef.current = true
     setError(null)
-    const result = await LocalAuthentication.authenticateAsync({
-      promptMessage: 'Unlock Lumiere',
-      disableDeviceFallback: false,
-    })
-    if (result.success) {
-      onUnlock()
-    } else if (result.error !== 'user_cancel' && result.error !== 'system_cancel') {
-      setError('Authentication failed. Tap to try again.')
-    }
-  }, [onUnlock])
-
-  useEffect(() => {
-    let mounted = true
-    const doInitialAuth = async () => {
-      if (!mounted) return
+    try {
       const result = await LocalAuthentication.authenticateAsync({
         promptMessage: 'Unlock Lumiere',
         disableDeviceFallback: false,
       })
-      if (!mounted) return
       if (result.success) {
         onUnlock()
       } else if (result.error !== 'user_cancel' && result.error !== 'system_cancel') {
         setError('Authentication failed. Tap to try again.')
       }
+    } finally {
+      authenticatingRef.current = false
     }
-    doInitialAuth()
-    return () => {
-      mounted = false
-    }
+  }, [onUnlock])
+
+  useEffect(() => {
+    authenticate()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

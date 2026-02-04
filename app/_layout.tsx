@@ -1,9 +1,8 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { AppState, AppStateStatus, View } from 'react-native'
+import { AppState, AppStateStatus, StyleSheet, View } from 'react-native'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
 
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
@@ -22,7 +21,6 @@ function AppContent() {
   const [onboardingCompleted] = useAtom(onboardingCompletedAtom)
   const [biometricLockEnabled] = useAtom(biometricLockEnabledAtom)
   const [isUnlocked, setIsUnlocked] = useState(false)
-  const [isHydrated, setIsHydrated] = useState(false)
   const appState = useRef(AppState.currentState)
   const isLocked = biometricLockEnabled && !isUnlocked
   useDeepLinking(isLocked)
@@ -31,13 +29,7 @@ function AppContent() {
   useWidgetSync()
 
   useEffect(() => {
-    // Wait for AsyncStorage to hydrate the biometric setting before rendering.
-    // Without this, the atom briefly returns false (default), causing the Stack
-    // navigator to mount and then unmount when the real value loads — crashing the app.
-    AsyncStorage.getItem('biometricLockEnabled').then(() => {
-      setIsHydrated(true)
-      SplashScreen.hideAsync()
-    })
+    SplashScreen.hideAsync()
   }, [])
 
   const handleUnlock = useCallback(() => {
@@ -62,10 +54,6 @@ function AppContent() {
 
   const backgroundStyle = { flex: 1, backgroundColor: theme.colors.background }
 
-  if (!isHydrated) {
-    return null
-  }
-
   if (!onboardingCompleted) {
     return (
       <View style={backgroundStyle}>
@@ -74,127 +62,126 @@ function AppContent() {
     )
   }
 
-  if (isLocked) {
-    return (
-      <View style={backgroundStyle}>
-        <BiometricLockScreen onUnlock={handleUnlock} />
-      </View>
-    )
-  }
-
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        contentStyle: { backgroundColor: theme.colors.background },
-      }}
-    >
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="settings"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
+    <View style={backgroundStyle}>
+      <Stack
+        screenOptions={{
           headerShown: false,
+          contentStyle: { backgroundColor: theme.colors.background },
         }}
-      />
-      <Stack.Screen
-        name="servers"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="add-server"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="edit-server"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="sessions"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="edit-session"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="overview"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="scheduler"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="gallery"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="colors"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="favorites"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="triggers"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="ollama-models"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-    </Stack>
+      >
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="settings"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="servers"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="add-server"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="edit-server"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="sessions"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="edit-session"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="overview"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="scheduler"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="gallery"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="colors"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="favorites"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="triggers"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ollama-models"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false,
+          }}
+        />
+      </Stack>
+      {isLocked && (
+        <View style={[StyleSheet.absoluteFill, backgroundStyle]}>
+          <BiometricLockScreen onUnlock={handleUnlock} />
+        </View>
+      )}
+    </View>
   )
 }
 
