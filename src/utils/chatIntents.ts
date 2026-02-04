@@ -19,7 +19,27 @@ export interface ChatIntent {
 }
 
 /** Allowed intent actions. Unrecognised actions are silently ignored. */
-const ALLOWED_ACTIONS = new Set(['openApp', 'playMedia', 'navigate'])
+const ALLOWED_ACTIONS = new Set([
+  'openApp',
+  'playMedia',
+  'navigate',
+  'copyToClipboard',
+  'openSession',
+])
+
+/** Map action names to Ionicons icon names */
+const ACTION_ICONS: Record<string, string> = {
+  openApp: 'open-outline',
+  playMedia: 'play-circle-outline',
+  navigate: 'compass-outline',
+  copyToClipboard: 'clipboard-outline',
+  openSession: 'chatbubble-ellipses-outline',
+}
+
+/** Returns the Ionicons name for a given action, with a fallback. */
+export function intentIcon(action: string): string {
+  return ACTION_ICONS[action] ?? 'open-outline'
+}
 
 /** Regex that matches lumiere://intent/{action} with optional query string */
 const INTENT_REGEX = /lumiere:\/\/intent\/(\w+)(\?[^\s)>\]]*)?/g
