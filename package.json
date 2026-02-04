@@ -31,6 +31,7 @@
     "expo-local-authentication": "^17.0.8",
     "expo-modules-core": "^3.0.29",
     "expo-notifications": "^0.32.16",
+    "expo-quick-actions": "^6.0.1",
     "expo-router": "~6.0.23",
     "expo-secure-store": "^15.0.8",
     "expo-splash-screen": "^31.0.13",
