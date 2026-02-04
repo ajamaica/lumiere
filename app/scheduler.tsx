@@ -40,7 +40,7 @@ interface CronJob {
 export default function SchedulerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
-  const { getProviderConfig, currentServerId } = useServers()
+  const { getProviderConfig, currentServerId, currentServer } = useServers()
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
 
   const [schedulerStatus, setSchedulerStatus] = useState<SchedulerStatus | null>(null)
@@ -198,6 +198,30 @@ export default function SchedulerScreen() {
       marginTop: theme.spacing.sm,
     },
   })
+
+  if (currentServer?.providerType !== 'molt') {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ScreenHeader title="Scheduler" showBack />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: theme.spacing.lg,
+          }}
+        >
+          <Text variant="heading2" style={{ marginBottom: theme.spacing.md }}>
+            OpenClaw Only
+          </Text>
+          <Text color="secondary" center style={{ marginBottom: theme.spacing.xl }}>
+            Cron Jobs are only available for OpenClaw servers.
+          </Text>
+          <Button title="Go to Settings" onPress={() => router.push('/settings')} />
+        </View>
+      </SafeAreaView>
+    )
+  }
 
   if (!config) {
     return (
