@@ -10,7 +10,14 @@ export interface SectionProps extends ViewProps {
   showDivider?: boolean
 }
 
-export function Section({ title, right, showDivider = false, style, children, ...props }: SectionProps) {
+export function Section({
+  title,
+  right,
+  showDivider = false,
+  style,
+  children,
+  ...props
+}: SectionProps) {
   const { theme } = useTheme()
 
   const styles = StyleSheet.create({

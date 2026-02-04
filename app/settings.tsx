@@ -206,11 +206,7 @@ export default function SettingsScreen() {
 
         {/* Info group */}
         <Section>
-          <SettingRow
-            icon="help-circle-outline"
-            label="Help"
-            onPress={() => {}}
-          />
+          <SettingRow icon="help-circle-outline" label="Help" onPress={() => {}} />
           <SettingRow
             icon="information-circle-outline"
             label="About"

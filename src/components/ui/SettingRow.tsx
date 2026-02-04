@@ -78,11 +78,7 @@ export function SettingRow({
     <View style={styles.row}>
       {icon && (
         <View style={styles.iconContainer}>
-          <Ionicons
-            name={icon}
-            size={22}
-            color={iconColor || theme.colors.text.secondary}
-          />
+          <Ionicons name={icon} size={22} color={iconColor || theme.colors.text.secondary} />
         </View>
       )}
       <View style={styles.content}>
