@@ -80,7 +80,10 @@ export function ChatInput({
 
   const Container = glassAvailable ? GlassView : View
   const containerProps = glassAvailable
-    ? { style: styles.container, glassEffectStyle: isTyping ? ('clear' as const) : ('regular' as const) }
+    ? {
+        style: styles.container,
+        glassEffectStyle: isTyping ? ('clear' as const) : ('regular' as const),
+      }
     : { style: [styles.container, styles.containerFallback] }
 
   return (
