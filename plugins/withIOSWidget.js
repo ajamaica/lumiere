@@ -7,7 +7,12 @@
  * 3. Copies Swift source files into the extension
  * 4. Links WidgetKit and SwiftUI frameworks
  */
-const { withXcodeProject, withEntitlementsPlist, withInfoPlist } = require('expo/config-plugins')
+const {
+  withXcodeProject,
+  withEntitlementsPlist,
+  withInfoPlist,
+  withDangerousMod,
+} = require('expo/config-plugins')
 const fs = require('fs')
 const path = require('path')
 
@@ -251,6 +256,40 @@ function withIOSWidget(config) {
 
     return config
   })
+
+  // Step 4: Disable code signing for CocoaPods resource bundle targets (Xcode 14+)
+  config = withDangerousMod(config, [
+    'ios',
+    (config) => {
+      const podfilePath = path.join(config.modRequest.platformProjectRoot, 'Podfile')
+      if (fs.existsSync(podfilePath)) {
+        let podfileContent = fs.readFileSync(podfilePath, 'utf8')
+
+        const snippet = `
+    # Disable code signing for resource bundles (Xcode 14+)
+    installer.pods_project.targets.each do |target|
+      if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
+        target.build_configurations.each do |config|
+          config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+        end
+      end
+    end`
+
+        // Append inside existing post_install if present, otherwise add a new one
+        if (podfileContent.includes('post_install do |installer|')) {
+          podfileContent = podfileContent.replace(
+            'post_install do |installer|',
+            `post_install do |installer|${snippet}`,
+          )
+        } else {
+          podfileContent += `\npost_install do |installer|${snippet}\nend\n`
+        }
+
+        fs.writeFileSync(podfilePath, podfileContent)
+      }
+      return config
+    },
+  ])
 
   return config
 }
