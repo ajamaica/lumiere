@@ -1,4 +1,4 @@
-import { EchoChatProvider } from '../../echo/EchoChatProvider'
+import { CachedChatProvider } from '../CachedChatProvider'
 import { createChatProvider } from '../createProvider'
 
 // Mock heavy providers to avoid importing their dependencies
@@ -10,32 +10,42 @@ jest.mock('../../ollama/OllamaChatProvider', () => ({
 }))
 
 describe('createChatProvider', () => {
-  it('creates an EchoChatProvider for echo type', () => {
+  it('wraps every provider with CachedChatProvider', () => {
     const provider = createChatProvider({
       type: 'echo',
       url: '',
       token: '',
     })
-    expect(provider).toBeInstanceOf(EchoChatProvider)
+    expect(provider).toBeInstanceOf(CachedChatProvider)
   })
 
-  it('creates a MoltChatProvider for molt type', () => {
+  it('creates a CachedChatProvider wrapping echo for echo type', () => {
+    const provider = createChatProvider({
+      type: 'echo',
+      url: '',
+      token: '',
+    })
+    expect(provider).toBeInstanceOf(CachedChatProvider)
+    expect(provider.capabilities.chat).toBe(true)
+  })
+
+  it('creates a CachedChatProvider wrapping molt for molt type', () => {
     const provider = createChatProvider({
       type: 'molt',
       url: 'wss://example.com',
       token: 'test-token',
     })
-    expect(provider).toHaveProperty('type', 'molt-mock')
+    expect(provider).toBeInstanceOf(CachedChatProvider)
   })
 
-  it('creates an OllamaChatProvider for ollama type', () => {
+  it('creates a CachedChatProvider wrapping ollama for ollama type', () => {
     const provider = createChatProvider({
       type: 'ollama',
       url: 'http://localhost:11434',
       token: '',
       model: 'llama3',
     })
-    expect(provider).toHaveProperty('type', 'ollama-mock')
+    expect(provider).toBeInstanceOf(CachedChatProvider)
   })
 
   it('throws for unknown provider type', () => {

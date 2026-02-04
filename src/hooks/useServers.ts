@@ -133,6 +133,7 @@ export function useServers(): UseServersResult {
       token: token || '',
       clientId: currentServer.clientId,
       model: currentServer.model,
+      serverId: currentServer.id,
     }
   }, [currentServer])
 
@@ -149,6 +150,7 @@ export function useServers(): UseServersResult {
         token: token || '',
         clientId: server.clientId,
         model: server.model,
+        serverId: id,
       }
     },
     [servers],

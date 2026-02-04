@@ -9,6 +9,7 @@ export interface ProviderConfig {
   token: string // Molt requires token; Ollama may not
   clientId?: string
   model?: string // Ollama model name (e.g., 'llama3', 'mistral')
+  serverId?: string // Server UUID for cache isolation
 }
 
 export interface ChatProviderEvent {
