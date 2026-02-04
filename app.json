@@ -10,14 +10,16 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F2EFE9"
     },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "bot.lumiere.app",
       "buildNumber": "1",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSMicrophoneUsageDescription": "Lumiere needs access to your microphone to transcribe voice messages.",
+        "NSSpeechRecognitionUsageDescription": "Lumiere uses speech recognition to convert your voice to text."
       }
     },
     "android": {
@@ -44,6 +46,19 @@
     "scheme": "lumiere",
     "plugins": [
       "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#F2EFE9",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#000000"
+          }
+        }
+      ],
       [
         "expo-notifications",
         {

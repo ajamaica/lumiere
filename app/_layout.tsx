@@ -1,4 +1,5 @@
 import { Stack } from 'expo-router'
+import * as SplashScreen from 'expo-splash-screen'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AppState, AppStateStatus, View } from 'react-native'
@@ -12,6 +13,8 @@ import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
 
+SplashScreen.preventAutoHideAsync()
+
 function AppContent() {
   const { theme } = useTheme()
   const [onboardingCompleted] = useAtom(onboardingCompletedAtom)
@@ -21,6 +24,10 @@ function AppContent() {
   useDeepLinking(biometricLockEnabled && isLocked)
   useNotifications()
   useQuickActions()
+
+  useEffect(() => {
+    SplashScreen.hideAsync()
+  }, [])
 
   const handleUnlock = useCallback(() => {
     setIsLocked(false)
