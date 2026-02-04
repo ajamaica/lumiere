@@ -80,13 +80,14 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const inputContainerStyle = useAnimatedStyle(() => {
     'worklet'
     return {
+      backgroundColor: 'transparent',
       position: 'absolute',
       bottom: 0,
       left: 0,
       right: 0,
       transform: [
         {
-          translateY: keyboardHeight.value === 0 ? keyboardHeight.value - 20 : keyboardHeight.value,
+          translateY: keyboardHeight.value - 20,
         },
       ],
     }
