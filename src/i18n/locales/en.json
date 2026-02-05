@@ -1,0 +1,153 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "done": "Done",
+    "error": "Error",
+    "success": "Success",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip",
+    "confirm": "Confirm",
+    "active": "Active"
+  },
+  "settings": {
+    "title": "Settings",
+    "servers": "Servers",
+    "noServersConfigured": "No servers configured",
+    "general": "General",
+    "colors": "Colors",
+    "faceId": "Face ID",
+    "notifications": "Notifications",
+    "favorites": "Favorites",
+    "triggers": "Triggers",
+    "overview": "Overview",
+    "cronJobs": "Cron Jobs",
+    "componentGallery": "Component Gallery",
+    "logout": "Logout",
+    "logoutConfirmTitle": "Logout",
+    "logoutConfirmMessage": "Are you sure you want to logout? All servers and settings will be cleared.",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "biometric": {
+      "unavailable": "Unavailable",
+      "unavailableMessage": "Biometric authentication is not available on this device.",
+      "notEnrolled": "Not Enrolled",
+      "notEnrolledMessage": "No biometric credentials are enrolled on this device.",
+      "enablePrompt": "Authenticate to enable Face ID lock"
+    },
+    "language": "Language"
+  },
+  "home": {
+    "connectionError": "Connection Error",
+    "goToSettings": "Go to Settings",
+    "noServerConfigured": "No Server Configured",
+    "noServerMessage": "Please add a server in Settings to get started."
+  },
+  "chat": {
+    "placeholder": "Type a message...",
+    "listening": "Listening...",
+    "startSpeaking": "Start speaking...",
+    "send": "Send"
+  },
+  "addServer": {
+    "title": "Add Server",
+    "providerType": "Provider Type",
+    "name": "Name",
+    "url": "URL",
+    "token": "Token",
+    "apiKey": "API Key",
+    "clientId": "Client ID",
+    "model": "Model",
+    "addButton": "Add Server",
+    "placeholders": {
+      "myServer": "My Server",
+      "myOllama": "My Ollama",
+      "myEchoServer": "My Echo Server",
+      "myClaude": "My Claude"
+    },
+    "providers": {
+      "openClaw": "OpenClaw",
+      "ollama": "Ollama",
+      "claude": "Claude",
+      "appleIntelligence": "Apple Intelligence",
+      "echoServer": "Echo Server"
+    },
+    "appleDescription": "Uses Apple Foundation Models to run AI entirely on-device via CoreML. Requires iOS 26+ with Apple Intelligence support.",
+    "errors": {
+      "urlRequired": "URL is required",
+      "tokenRequired": "Token is required",
+      "apiKeyRequired": "API Key is required"
+    }
+  },
+  "editServer": {
+    "title": "Edit Server",
+    "saveChanges": "Save Changes",
+    "deleteServer": "Delete Server",
+    "deleteConfirmTitle": "Delete Server",
+    "deleteConfirmMessage": "Are you sure you want to delete this server? This action cannot be undone."
+  },
+  "biometricLock": {
+    "locked": "Locked",
+    "unlock": "Unlock",
+    "unlockPrompt": "Unlock Lumiere",
+    "authenticateToUnlock": "Authenticate to unlock Lumiere",
+    "failed": "Failed to authenticate",
+    "failedMessage": "There was an issue with your authentication attempt.\nPlease try again.",
+    "authFailed": "Authentication failed. Tap to try again.",
+    "tryAgain": "Try Again"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Managing your Agents is easier than ever",
+      "description": "Lumiere gives you a beautiful mobile interface to interact with your AI agents on the go. Monitor conversations, send messages, and stay connected from anywhere."
+    },
+    "step2": {
+      "title": "Full control with powerful features",
+      "description": "Manage multiple servers, switch between sessions, schedule tasks with cron jobs, and get real-time notifications. Everything you need to stay in command."
+    },
+    "step3": {
+      "title": "Highly configurable for custom needs",
+      "description": "Connect to OpenClaw, Ollama, or Echo providers. Customize themes, set up deep link triggers, and tailor the experience to fit your workflow."
+    },
+    "getStarted": "Get Started"
+  },
+  "sessions": {
+    "title": "Sessions",
+    "newSession": "New Session",
+    "editSession": "Edit Session",
+    "deleteSession": "Delete Session",
+    "sessionName": "Session Name",
+    "defaultSession": "Default Session"
+  },
+  "favorites": {
+    "title": "Favorites",
+    "noFavorites": "No favorites yet",
+    "addFavorite": "Add to Favorites",
+    "removeFavorite": "Remove from Favorites"
+  },
+  "triggers": {
+    "title": "Triggers",
+    "newTrigger": "New Trigger",
+    "editTrigger": "Edit Trigger",
+    "deleteTrigger": "Delete Trigger",
+    "noTriggers": "No triggers configured"
+  },
+  "scheduler": {
+    "title": "Scheduler",
+    "cronJobs": "Cron Jobs"
+  },
+  "gallery": {
+    "title": "Gallery"
+  },
+  "overview": {
+    "title": "Overview"
+  }
+}

@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import * as ImagePicker from 'expo-image-picker'
 import React, { useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FlatList,
   Image,
@@ -35,6 +36,7 @@ export function ChatInput({
   supportsImageAttachments = true,
 }: ChatInputProps) {
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const [text, setText] = useState('')
   const [attachments, setAttachments] = useState<MessageAttachment[]>([])
   const { suggestions, hasInput } = useSlashCommands(text)
@@ -134,19 +136,19 @@ export function ChatInput({
             <View style={styles.recordingOverlay}>
               <View style={styles.recordingIndicator}>
                 <View style={styles.recordingDot} />
-                <Text style={styles.recordingLabel}>Listening...</Text>
+                <Text style={styles.recordingLabel}>{t('chat.listening')}</Text>
               </View>
               <Text style={styles.transcribedText} numberOfLines={3}>
-                {voice.transcribedText || 'Start speaking...'}
+                {voice.transcribedText || t('chat.startSpeaking')}
               </Text>
               <View style={styles.recordingActions}>
                 <TouchableOpacity style={styles.cancelButton} onPress={handleCancelRecording}>
                   <Ionicons name="close" size={20} color={theme.colors.text.secondary} />
-                  <Text style={styles.cancelButtonText}>Cancel</Text>
+                  <Text style={styles.cancelButtonText}>{t('common.cancel')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.stopButton} onPress={handleStopRecording}>
                   <Ionicons name="checkmark" size={20} color={theme.colors.text.inverse} />
-                  <Text style={styles.stopButtonText}>Done</Text>
+                  <Text style={styles.stopButtonText}>{t('common.done')}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -175,7 +177,7 @@ export function ChatInput({
                 style={styles.input}
                 value={text}
                 onChangeText={setText}
-                placeholder="Type a message..."
+                placeholder={t('chat.placeholder')}
                 placeholderTextColor={theme.colors.text.secondary}
                 multiline
                 maxLength={2000}

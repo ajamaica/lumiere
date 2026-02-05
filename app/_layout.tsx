@@ -1,3 +1,5 @@
+import '../src/i18n'
+
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useAtom } from 'jotai'
@@ -8,6 +10,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller'
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { ErrorBoundary } from '../src/components/ui'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
+import { useLanguage } from '../src/hooks/useLanguage'
 import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
@@ -28,6 +31,7 @@ function AppContent() {
   useDeepLinking(isLocked)
   useNotifications()
   useQuickActions()
+  useLanguage() // Initialize language sync
 
   // Use formSheet presentation on iPad for better UX
   const modalOptions = useMemo(
