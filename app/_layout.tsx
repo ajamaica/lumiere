@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useAtom } from 'jotai'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AppState, AppStateStatus, View } from 'react-native'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
 
@@ -12,6 +12,7 @@ import { useQuickActions } from '../src/hooks/useQuickActions'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
+import { useIsTablet } from '../src/utils/device'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -22,9 +23,22 @@ function AppContent() {
   const [isUnlocked, setIsUnlocked] = useState(false)
   const appState = useRef(AppState.currentState)
   const isLocked = biometricLockEnabled && !isUnlocked
+  const isTablet = useIsTablet()
   useDeepLinking(isLocked)
   useNotifications()
   useQuickActions()
+
+  // Use formSheet presentation on iPad for better UX
+  const modalOptions = useMemo(
+    () =>
+      ({
+        presentation: isTablet ? 'formSheet' : 'modal',
+        animation: 'slide_from_bottom',
+        headerShown: false,
+        sheetCornerRadius: isTablet ? 20 : undefined,
+      }) as const,
+    [isTablet],
+  )
 
   useEffect(() => {
     SplashScreen.hideAsync()
@@ -76,110 +90,19 @@ function AppContent() {
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="settings"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="servers"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="add-server"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="edit-server"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="sessions"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="edit-session"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="overview"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="scheduler"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="gallery"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="colors"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="favorites"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="triggers"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="ollama-models"
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false,
-        }}
-      />
+      <Stack.Screen name="settings" options={modalOptions} />
+      <Stack.Screen name="servers" options={modalOptions} />
+      <Stack.Screen name="add-server" options={modalOptions} />
+      <Stack.Screen name="edit-server" options={modalOptions} />
+      <Stack.Screen name="sessions" options={modalOptions} />
+      <Stack.Screen name="edit-session" options={modalOptions} />
+      <Stack.Screen name="overview" options={modalOptions} />
+      <Stack.Screen name="scheduler" options={modalOptions} />
+      <Stack.Screen name="gallery" options={modalOptions} />
+      <Stack.Screen name="colors" options={modalOptions} />
+      <Stack.Screen name="favorites" options={modalOptions} />
+      <Stack.Screen name="triggers" options={modalOptions} />
+      <Stack.Screen name="ollama-models" options={modalOptions} />
     </Stack>
   )
 }
