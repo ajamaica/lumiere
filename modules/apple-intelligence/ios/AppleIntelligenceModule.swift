@@ -31,7 +31,7 @@ public class AppleIntelligenceModule: Module {
   private func checkAvailability() -> Bool {
     #if canImport(FoundationModels)
     if #available(iOS 26.0, *) {
-      return LanguageModelSession.isAvailable
+      return SystemLanguageModel.default.isAvailable
     }
     #endif
     return false
@@ -45,7 +45,7 @@ public class AppleIntelligenceModule: Module {
       throw AppleIntelligenceError.unavailable
     }
 
-    guard LanguageModelSession.isAvailable else {
+    guard SystemLanguageModel.default.isAvailable else {
       throw AppleIntelligenceError.unavailable
     }
 
@@ -77,7 +77,7 @@ public class AppleIntelligenceModule: Module {
       throw AppleIntelligenceError.unavailable
     }
 
-    guard LanguageModelSession.isAvailable else {
+    guard SystemLanguageModel.default.isAvailable else {
       throw AppleIntelligenceError.unavailable
     }
 

@@ -23,8 +23,14 @@ public class SpeechTranscriptionModule: Module {
       SFSpeechRecognizer.requestAuthorization { authStatus in
         switch authStatus {
         case .authorized:
-          AVAudioApplication.requestRecordPermission { granted in
-            promise.resolve(granted)
+          if #available(iOS 17.0, *) {
+            AVAudioApplication.requestRecordPermission { granted in
+              promise.resolve(granted)
+            }
+          } else {
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+              promise.resolve(granted)
+            }
           }
         default:
           promise.resolve(false)
