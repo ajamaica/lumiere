@@ -304,10 +304,7 @@ export function useContentContainerStyle() {
   }
 
   // For tablets and unfolded foldables
-  if (
-    (deviceType === 'tablet' || deviceType === 'foldable') &&
-    width > MAX_CONTENT_WIDTH
-  ) {
+  if ((deviceType === 'tablet' || deviceType === 'foldable') && width > MAX_CONTENT_WIDTH) {
     return {
       maxWidth: MAX_CONTENT_WIDTH,
       alignSelf: 'center' as const,
@@ -340,9 +337,7 @@ export function getHingePosition(): number | null {
  * Hook to get hinge position (reactive)
  */
 export function useHingePosition(): number | null {
-  const [hingePosition, setHingePosition] = useState<number | null>(
-    getHingePosition(),
-  )
+  const [hingePosition, setHingePosition] = useState<number | null>(getHingePosition())
 
   useEffect(() => {
     const subscription = Dimensions.addEventListener('change', () => {

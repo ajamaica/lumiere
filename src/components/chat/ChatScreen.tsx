@@ -35,7 +35,6 @@ import {
   useDeviceType,
   useFoldResponsiveValue,
   useFoldState,
-  useIsFoldable,
 } from '../../utils/device'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
@@ -75,7 +74,6 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
 
   // Foldable device support
   const deviceType = useDeviceType()
-  const isFoldable = useIsFoldable()
   const foldState = useFoldState()
   const contentContainerStyle = useContentContainerStyle()
 
