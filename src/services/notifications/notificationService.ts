@@ -26,7 +26,7 @@ async function setLastCheck(serverSessionKey: string, timestamp: number): Promis
 }
 
 /**
- * Perform an HTTP health + chat history check against a Molt server.
+ * Perform an HTTP health + chat history check against a server.
  * Returns the latest assistant message if it arrived after our last check.
  */
 async function checkServerForNewMessages(
@@ -99,7 +99,7 @@ function httpUrl(url: string): string {
 /**
  * The background task that runs periodically. It reads server configs from
  * AsyncStorage (since Jotai atoms are not available outside React), checks
- * each Molt server for new assistant messages, and fires a local notification.
+ * Claude and Clawd servers for new assistant messages, and fires a local notification.
  */
 export async function backgroundCheckTask(): Promise<BackgroundFetch.BackgroundFetchResult> {
   try {
@@ -121,8 +121,9 @@ export async function backgroundCheckTask(): Promise<BackgroundFetch.BackgroundF
     for (const serverId of Object.keys(servers)) {
       const server = servers[serverId]
 
-      // Only check Molt servers (they have a gateway we can poll)
-      if (server.providerType !== 'molt') continue
+      // Only check Claude and Clawd servers (they have a gateway that supports background polling)
+      const serverName = server.name?.toLowerCase() ?? ''
+      if (serverName !== 'claude' && serverName !== 'clawd') continue
 
       const token = await getServerToken(serverId)
       if (!token) continue
