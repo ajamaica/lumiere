@@ -1,3 +1,4 @@
+import { API_CONFIG, DEFAULT_MODELS } from '../../constants'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -73,7 +74,7 @@ export class ClaudieChatProvider implements ChatProvider {
   constructor(config: ProviderConfig) {
     this.baseUrl = config.url.replace(/\/+$/, '')
     this.apiKey = config.token
-    this.model = config.model || 'claude-sonnet-4-5-20250514'
+    this.model = config.model || DEFAULT_MODELS.CLAUDE
   }
 
   async connect(): Promise<void> {
@@ -84,7 +85,7 @@ export class ClaudieChatProvider implements ChatProvider {
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': this.apiKey,
-          'anthropic-version': '2023-06-01',
+          'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
         },
         body: JSON.stringify({
           model: this.model,
@@ -189,11 +190,11 @@ export class ClaudieChatProvider implements ChatProvider {
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': this.apiKey,
-          'anthropic-version': '2023-06-01',
+          'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
         },
         body: JSON.stringify({
           model: this.model,
-          max_tokens: 8192,
+          max_tokens: API_CONFIG.CLAUDE_MAX_TOKENS,
           messages: messages.map(this.formatMessageForApi),
           stream: true,
         }),
@@ -308,7 +309,7 @@ export class ClaudieChatProvider implements ChatProvider {
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': this.apiKey,
-          'anthropic-version': '2023-06-01',
+          'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
         },
         body: JSON.stringify({
           model: this.model,
