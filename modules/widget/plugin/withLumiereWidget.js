@@ -1,4 +1,5 @@
-const { withXcodeProject, withInfoPlist, IOSConfig } = require('@expo/config-plugins')
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { withXcodeProject } = require('@expo/config-plugins')
 const fs = require('fs')
 const path = require('path')
 
@@ -8,7 +9,7 @@ const WIDGET_BUNDLE_ID_SUFFIX = '.widget'
 /**
  * Creates the widget extension Swift code
  */
-function getWidgetSwiftCode(bundleIdentifier) {
+function getWidgetSwiftCode() {
   const appUrlScheme = 'lumiere'
 
   return `import WidgetKit
@@ -116,7 +117,6 @@ const withWidgetExtension = (config) => {
     const targetName = WIDGET_EXTENSION_NAME
     const bundleIdentifier = `${config.ios.bundleIdentifier}${WIDGET_BUNDLE_ID_SUFFIX}`
 
-    const projectRoot = config.modRequest.projectRoot
     const platformProjectRoot = config.modRequest.platformProjectRoot
     const widgetDir = path.join(platformProjectRoot, targetName)
 
@@ -127,7 +127,7 @@ const withWidgetExtension = (config) => {
 
     // Write widget Swift file
     const widgetSwiftPath = path.join(widgetDir, 'LumiereWidget.swift')
-    fs.writeFileSync(widgetSwiftPath, getWidgetSwiftCode(bundleIdentifier))
+    fs.writeFileSync(widgetSwiftPath, getWidgetSwiftCode())
 
     // Write widget Info.plist
     const infoPlistPath = path.join(widgetDir, 'Info.plist')

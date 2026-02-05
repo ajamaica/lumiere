@@ -1,1 +1,1 @@
-export { reloadWidgets, isWidgetAvailable } from './src/Widget'
+export { isWidgetAvailable, reloadWidgets } from './src/Widget'
