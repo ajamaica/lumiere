@@ -62,13 +62,13 @@
 
 ## AI Providers
 
-| Provider               | Type      | Chat | Images | Sessions | History | Scheduler |
-| ---------------------- | --------- | :--: | :----: | :------: | :-----: | :-------: |
-| **OpenClaw**           | `molt`    |  ✅  |   ✅   |    ✅    |   ✅    |    ✅     |
-| **Claude**             | `claudie` |  ✅  |   ✅   |    —     |    —    |     —     |
-| **Ollama**             | `ollama`  |  ✅  |   —    |    —     |    —    |     —     |
-| **Apple Intelligence** | `apple`   |  ✅  |   —    |    —     |    —    |     —     |
-| **Echo Server**        | `echo`    |  ✅  |   —    |    —     |    —    |     —     |
+| Provider               | Type     | Chat | Images | Sessions | History | Scheduler |
+| ---------------------- | -------- | :--: | :----: | :------: | :-----: | :-------: |
+| **OpenClaw**           | `molt`   |  ✅  |   ✅   |    ✅    |   ✅    |    ✅     |
+| **Claude**             | `claude` |  ✅  |   ✅   |    —     |    —    |     —     |
+| **Ollama**             | `ollama` |  ✅  |   —    |    —     |    —    |     —     |
+| **Apple Intelligence** | `apple`  |  ✅  |   —    |    —     |    —    |     —     |
+| **Echo Server**        | `echo`   |  ✅  |   —    |    —     |    —    |     —     |
 
 ### OpenClaw (Molt Gateway)
 
@@ -203,7 +203,7 @@ src/
 ├── screens/            Onboarding and lock screens
 ├── services/
 │   ├── molt/           OpenClaw WebSocket client
-│   ├── claudie/        Claude/Anthropic API client
+│   ├── claude/         Claude/Anthropic API client
 │   ├── ollama/         Ollama HTTP client
 │   ├── apple-intelligence/  Apple Foundation Models wrapper
 │   └── echo/           Echo test provider

@@ -10,12 +10,12 @@ import {
   SendMessageParams,
 } from '../providers/types'
 
-interface ClaudieMessage {
+interface ClaudeMessage {
   role: 'user' | 'assistant'
-  content: string | ClaudieContentBlock[]
+  content: string | ClaudeContentBlock[]
 }
 
-interface ClaudieContentBlock {
+interface ClaudeContentBlock {
   type: 'text' | 'image'
   text?: string
   source?: {
@@ -25,7 +25,7 @@ interface ClaudieContentBlock {
   }
 }
 
-interface ClaudieStreamEvent {
+interface ClaudeStreamEvent {
   type: string
   delta?: {
     type: string
@@ -37,7 +37,7 @@ interface ClaudieStreamEvent {
   }
   message?: {
     id: string
-    content: ClaudieContentBlock[]
+    content: ClaudeContentBlock[]
   }
   error?: {
     type: string
@@ -46,12 +46,12 @@ interface ClaudieStreamEvent {
 }
 
 /**
- * Chat provider for Claudie API (Anthropic Claude API compatible).
+ * Chat provider for Claude API (Anthropic Claude API compatible).
  *
  * Uses the Anthropic Messages API format with streaming support
  * for real-time response delivery.
  */
-export class ClaudieChatProvider implements ChatProvider {
+export class ClaudeChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: true,
@@ -69,7 +69,7 @@ export class ClaudieChatProvider implements ChatProvider {
   private abortController: AbortController | null = null
 
   // In-memory conversation history keyed by session
-  private sessions: Map<string, ClaudieMessage[]> = new Map()
+  private sessions: Map<string, ClaudeMessage[]> = new Map()
 
   constructor(config: ProviderConfig) {
     this.baseUrl = config.url.replace(/\/+$/, '')
@@ -103,7 +103,7 @@ export class ClaudieChatProvider implements ChatProvider {
     } catch {
       this.connected = false
       this.notifyConnectionState(false, false)
-      throw new Error(`Cannot connect to Claudie API. Check your API key and endpoint.`)
+      throw new Error(`Cannot connect to Claude API. Check your API key and endpoint.`)
     }
   }
 
@@ -133,7 +133,7 @@ export class ClaudieChatProvider implements ChatProvider {
     this.connectionListeners.forEach((l) => l(connected, reconnecting))
   }
 
-  private getSessionMessages(sessionKey: string): ClaudieMessage[] {
+  private getSessionMessages(sessionKey: string): ClaudeMessage[] {
     if (!this.sessions.has(sessionKey)) {
       this.sessions.set(sessionKey, [])
     }
@@ -147,7 +147,7 @@ export class ClaudieChatProvider implements ChatProvider {
     const messages = this.getSessionMessages(params.sessionKey)
 
     // Build the user message content
-    const contentBlocks: ClaudieContentBlock[] = []
+    const contentBlocks: ClaudeContentBlock[] = []
 
     // Add text content
     if (params.message) {
@@ -170,7 +170,7 @@ export class ClaudieChatProvider implements ChatProvider {
       }
     }
 
-    const userMsg: ClaudieMessage = {
+    const userMsg: ClaudeMessage = {
       role: 'user',
       content:
         contentBlocks.length === 1 && contentBlocks[0].type === 'text'
@@ -231,7 +231,7 @@ export class ClaudieChatProvider implements ChatProvider {
             if (data === '[DONE]') continue
 
             try {
-              const event: ClaudieStreamEvent = JSON.parse(data)
+              const event: ClaudeStreamEvent = JSON.parse(data)
 
               if (event.type === 'content_block_delta' && event.delta?.text) {
                 fullResponse += event.delta.text
@@ -261,7 +261,7 @@ export class ClaudieChatProvider implements ChatProvider {
     }
   }
 
-  private formatMessageForApi(msg: ClaudieMessage): { role: string; content: unknown } {
+  private formatMessageForApi(msg: ClaudeMessage): { role: string; content: unknown } {
     return {
       role: msg.role,
       content: msg.content,
@@ -281,7 +281,7 @@ export class ClaudieChatProvider implements ChatProvider {
     return { messages: historyMessages }
   }
 
-  private extractTextContent(content: string | ClaudieContentBlock[]): string {
+  private extractTextContent(content: string | ClaudeContentBlock[]): string {
     if (typeof content === 'string') {
       return content
     }
