@@ -6,6 +6,7 @@ import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
+import { ProviderConfig } from '../src/services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
@@ -22,10 +23,13 @@ export default function SessionsScreen() {
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [sessionAliases] = useAtom(sessionAliasesAtom)
-  const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
+  const [config, setConfig] = useState<ProviderConfig | null>(null)
 
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
+
+  // Only molt provider supports server-side sessions
+  const supportsServerSessions = config?.type === 'molt'
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -41,17 +45,22 @@ export default function SessionsScreen() {
   })
 
   useEffect(() => {
-    if (config) {
+    // Only connect to gateway if provider supports server sessions
+    if (config && supportsServerSessions) {
       connect()
+    } else if (config) {
+      // For providers without server sessions, mark loading as done immediately
+      setLoading(false)
     }
     return () => {
       disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config])
+  }, [config, supportsServerSessions])
 
   const loadSessions = useCallback(async () => {
-    if (!connected) return
+    // Only load sessions for providers that support server-side sessions
+    if (!connected || !supportsServerSessions) return
 
     try {
       const sessionData = (await listSessions()) as { sessions?: Session[] }
@@ -63,7 +72,7 @@ export default function SessionsScreen() {
     } finally {
       setLoading(false)
     }
-  }, [connected, listSessions])
+  }, [connected, listSessions, supportsServerSessions])
 
   useEffect(() => {
     loadSessions()
@@ -86,7 +95,10 @@ export default function SessionsScreen() {
           style: 'destructive',
           onPress: async () => {
             try {
-              await resetSession(currentSessionKey)
+              // Only call server reset for providers that support server sessions
+              if (supportsServerSessions) {
+                await resetSession(currentSessionKey)
+              }
               setClearMessagesTrigger((prev) => prev + 1)
               router.back()
             } catch (err) {
@@ -184,34 +196,40 @@ export default function SessionsScreen() {
           />
         </Section>
 
-        {/* Available sessions group */}
-        <Section showDivider>
-          {loading ? (
-            <SettingRow icon="hourglass-outline" label="Loading sessions..." showDivider={false} />
-          ) : sessions.length > 0 ? (
-            sessions.map((session, index) => {
-              const isActive = session.key === currentSessionKey
-              return (
-                <SettingRow
-                  key={session.key}
-                  icon={isActive ? 'checkmark-circle' : 'radio-button-off-outline'}
-                  iconColor={isActive ? theme.colors.primary : undefined}
-                  label={formatSessionKey(session.key)}
-                  subtitle={
-                    session.messageCount !== undefined
-                      ? `${session.messageCount} messages`
-                      : undefined
-                  }
-                  value={isActive ? 'Active' : undefined}
-                  onPress={() => handleSelectSession(session.key)}
-                  showDivider={index < sessions.length - 1}
-                />
-              )
-            })
-          ) : (
-            <SettingRow icon="albums-outline" label="No sessions available" showDivider={false} />
-          )}
-        </Section>
+        {/* Available sessions group - only shown for providers with server sessions */}
+        {supportsServerSessions && (
+          <Section showDivider>
+            {loading ? (
+              <SettingRow
+                icon="hourglass-outline"
+                label="Loading sessions..."
+                showDivider={false}
+              />
+            ) : sessions.length > 0 ? (
+              sessions.map((session, index) => {
+                const isActive = session.key === currentSessionKey
+                return (
+                  <SettingRow
+                    key={session.key}
+                    icon={isActive ? 'checkmark-circle' : 'radio-button-off-outline'}
+                    iconColor={isActive ? theme.colors.primary : undefined}
+                    label={formatSessionKey(session.key)}
+                    subtitle={
+                      session.messageCount !== undefined
+                        ? `${session.messageCount} messages`
+                        : undefined
+                    }
+                    value={isActive ? 'Active' : undefined}
+                    onPress={() => handleSelectSession(session.key)}
+                    showDivider={index < sessions.length - 1}
+                  />
+                )
+              })
+            ) : (
+              <SettingRow icon="albums-outline" label="No sessions available" showDivider={false} />
+            )}
+          </Section>
+        )}
       </ScrollView>
     </SafeAreaView>
   )
