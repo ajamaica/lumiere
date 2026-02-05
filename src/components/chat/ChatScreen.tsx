@@ -28,14 +28,16 @@ interface ChatScreenProps {
 }
 
 /**
- * ChatScreen Component
+ * Renders the chat UI for a given provider, including message history, live agent streaming, input, and connection status.
  *
- * SESSION KEY ARCHITECTURE:
+ * The component manages message state, history loading (with optional cached preloading), auto-scrolling behavior,
+ * keyboard-aware input positioning, and interaction with the chat provider (send, retry, fetch history).
  *
- * Session keys are stored per-server in the serverSessionsAtom.
- * The currentSessionKeyAtom is a derived atom that looks up the session
- * key for the current server, returning a default value ('agent:main:main')
- * if none exists. This ensures a valid session key is always available.
+ * Session key handling: session keys are resolved per server via a derived atom that supplies a default key when
+ * none is stored, ensuring a valid session key is always available to provider calls.
+ *
+ * @param providerConfig - Configuration for the chat provider, used to initialize the chat connection and capabilities.
+ * @returns The chat screen UI as a React element.
  */
 export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const { theme } = useTheme()
