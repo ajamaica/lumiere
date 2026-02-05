@@ -46,8 +46,6 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
   implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
 
-  // Google AI Edge SDK (Gemini Nano) - Optional dependency
-  // Uncomment when you want to integrate the actual SDK:
-  // implementation 'com.google.ai.edge:generativeai:0.1.0'
-  // Or check Google's documentation for the latest version
+  // Google AI Edge SDK (Gemini Nano)
+  implementation 'com.google.ai.edge:generativeai:0.2.2'
 }

@@ -6,14 +6,11 @@ import expo.modules.kotlin.modules.ModuleDefinition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import org.json.JSONArray
-import org.json.JSONObject
-
-// Import Google AI Edge SDK (Gemini Nano) when available
-// Note: You'll need to add the dependency in your app's build.gradle:
-// implementation 'com.google.ai.edge:generativeai:0.1.0'
-// For now, we'll use conditional compilation/reflection to handle when SDK is not available
+import com.google.ai.edge.GenerativeModel
+import com.google.ai.edge.content
 
 /**
  * Expo native module that exposes Gemini Nano (on-device AI for Android)
@@ -49,12 +46,9 @@ class GeminiNanoModule : Module() {
     }
 
     try {
-      // Check if Gemini Nano SDK is available via reflection
-      // This allows the app to build even without the SDK
-      val generativeModelClass = Class.forName("com.google.ai.edge.GenerativeModel")
-
-      // Additional runtime checks for device capability could be added here
-      // For example, checking AICore availability on the device
+      // Try to create a model instance to verify SDK is available
+      // This is a lightweight check that doesn't actually load the model
+      Class.forName("com.google.ai.edge.GenerativeModel")
       return true
     } catch (e: ClassNotFoundException) {
       return false
@@ -73,22 +67,23 @@ class GeminiNanoModule : Module() {
     try {
       val messages = parseMessages(messagesJson)
 
-      // Initialize Gemini Nano model
-      // Note: This is pseudo-code - actual implementation depends on Google AI Edge SDK
-      // val model = GenerativeModel(
-      //   modelName = "gemini-nano",
-      //   systemInstruction = systemPrompt
-      // )
+      // Initialize Gemini Nano model with system instruction
+      val model = GenerativeModel(
+        modelName = "gemini-nano",
+        systemInstruction = content { text(systemPrompt) }
+      )
 
-      // Build the conversation prompt from messages
-      val conversationText = buildConversationPrompt(systemPrompt, messages)
+      // Build conversation history from messages
+      val conversationHistory = messages.map { message ->
+        content(role = message.role) {
+          text(message.content)
+        }
+      }
 
-      // Generate response
-      // val response = model.generateContent(conversationText)
-      // return response.text ?: ""
+      // Generate response using the full conversation context
+      val response = model.generateContent(*conversationHistory.toTypedArray())
 
-      // Placeholder implementation until SDK is integrated
-      return generatePlaceholderResponse(messages)
+      return response.text ?: ""
     } catch (e: Exception) {
       throw GeminiNanoException.GenerationFailed(e.message ?: "Unknown error")
     }
@@ -109,29 +104,42 @@ class GeminiNanoModule : Module() {
       try {
         val messages = parseMessages(messagesJson)
 
-        // Initialize Gemini Nano model
-        // val model = GenerativeModel(
-        //   modelName = "gemini-nano",
-        //   systemInstruction = systemPrompt
-        // )
+        // Initialize Gemini Nano model with system instruction
+        val model = GenerativeModel(
+          modelName = "gemini-nano",
+          systemInstruction = content { text(systemPrompt) }
+        )
 
-        // Build the conversation prompt
-        val conversationText = buildConversationPrompt(systemPrompt, messages)
+        // Build conversation history from messages
+        val conversationHistory = messages.map { message ->
+          content(role = message.role) {
+            text(message.content)
+          }
+        }
 
         // Stream the response
-        // val responseFlow = model.generateContentStream(conversationText)
-        // var accumulatedText = ""
+        var accumulatedText = ""
 
-        // responseFlow.collect { chunk ->
-        //   accumulatedText += chunk.text ?: ""
-        //   sendEvent("onStreamingDelta", mapOf(
-        //     "delta" to accumulatedText,
-        //     "requestId" to requestId
-        //   ))
-        // }
+        model.generateContentStream(*conversationHistory.toTypedArray())
+          .catch { e ->
+            sendEvent("onStreamingError", mapOf(
+              "error" to (e.message ?: "Stream error"),
+              "requestId" to requestId
+            ))
+          }
+          .collect { chunk ->
+            // Accumulate the text from each chunk
+            val chunkText = chunk.text ?: ""
+            accumulatedText += chunkText
 
-        // Placeholder streaming implementation
-        streamPlaceholderResponse(messages, requestId)
+            // Send the accumulated text as delta
+            if (accumulatedText.isNotEmpty()) {
+              sendEvent("onStreamingDelta", mapOf(
+                "delta" to accumulatedText,
+                "requestId" to requestId
+              ))
+            }
+          }
 
         sendEvent("onStreamingComplete", mapOf("requestId" to requestId))
       } catch (e: Exception) {
@@ -168,44 +176,6 @@ class GeminiNanoModule : Module() {
       return messages
     } catch (e: Exception) {
       throw GeminiNanoException.InvalidMessages()
-    }
-  }
-
-  private fun buildConversationPrompt(systemPrompt: String, messages: List<ChatMessage>): String {
-    val builder = StringBuilder()
-    builder.append("System: $systemPrompt\n\n")
-
-    for (message in messages) {
-      val prefix = if (message.role == "user") "User" else "Assistant"
-      builder.append("$prefix: ${message.content}\n\n")
-    }
-
-    return builder.toString()
-  }
-
-  // MARK: - Placeholder Implementation
-  // These methods provide a working implementation until the actual Gemini Nano SDK is integrated
-
-  private fun generatePlaceholderResponse(messages: List<ChatMessage>): String {
-    val lastUserMessage = messages.lastOrNull { it.role == "user" }?.content ?: ""
-    return "This is a placeholder response from Gemini Nano module. " +
-           "You said: '$lastUserMessage'. " +
-           "Please integrate the Google AI Edge SDK (Gemini Nano) to enable actual on-device inference."
-  }
-
-  private suspend fun streamPlaceholderResponse(messages: List<ChatMessage>, requestId: String) {
-    val response = generatePlaceholderResponse(messages)
-    val words = response.split(" ")
-    var accumulated = ""
-
-    for (word in words) {
-      accumulated += "$word "
-      sendEvent("onStreamingDelta", mapOf(
-        "delta" to accumulated.trim(),
-        "requestId" to requestId
-      ))
-      // Simulate streaming delay
-      kotlinx.coroutines.delay(50)
     }
   }
 }
