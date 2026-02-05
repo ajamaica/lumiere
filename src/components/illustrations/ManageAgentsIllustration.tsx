@@ -8,6 +8,7 @@ const COLORS = {
   pink: '#FF6B9D',
   blue: '#4DAFFF',
   green: '#7CFF6B',
+  orange: '#FF9F43',
   black: '#000000',
   white: '#FFFFFF',
 }
@@ -19,181 +20,166 @@ export function ManageAgentsIllustration() {
   return (
     <View style={{ width: 280, height: 260, alignItems: 'center', justifyContent: 'center' }}>
       <Svg width={280} height={260} viewBox="0 0 280 260">
-        {/* Pointing hand */}
-        <G transform="translate(80, 10)">
+        {/* Central hub/orchestrator */}
+        <G transform="translate(100, 85)">
           {/* Shadow */}
-          <Path
-            d="M0 50 L30 20 L70 35 L110 10 L130 30 L100 60 L40 70 Z"
-            fill={COLORS.black}
-            transform={`translate(${SHADOW_OFFSET}, ${SHADOW_OFFSET})`}
-          />
-          {/* Hand shape */}
-          <Path
-            d="M0 50 L30 20 L70 35 L110 10 L130 30 L100 60 L40 70 Z"
+          <Rect x={SHADOW_OFFSET} y={SHADOW_OFFSET} width="80" height="80" fill={COLORS.black} />
+          {/* Main box */}
+          <Rect
+            x="0"
+            y="0"
+            width="80"
+            height="80"
             fill={COLORS.yellow}
             stroke={COLORS.black}
             strokeWidth={STROKE}
           />
-          {/* Finger */}
-          <Rect
-            x="105"
-            y="5"
-            width="50"
-            height="20"
-            fill={COLORS.black}
-            transform={`translate(${SHADOW_OFFSET}, ${SHADOW_OFFSET})`}
-          />
-          <Rect
-            x="105"
-            y="5"
-            width="50"
-            height="20"
-            fill={COLORS.yellow}
-            stroke={COLORS.black}
-            strokeWidth={STROKE}
-          />
+          {/* Inner pattern - grid lines */}
+          <Path d="M0 27 L80 27" stroke={COLORS.black} strokeWidth={2} />
+          <Path d="M0 54 L80 54" stroke={COLORS.black} strokeWidth={2} />
+          <Path d="M27 0 L27 80" stroke={COLORS.black} strokeWidth={2} />
+          <Path d="M54 0 L54 80" stroke={COLORS.black} strokeWidth={2} />
+          {/* Status dots */}
+          <Circle cx="13" cy="13" r="6" fill={COLORS.green} stroke={COLORS.black} strokeWidth={2} />
+          <Circle cx="40" cy="13" r="6" fill={COLORS.green} stroke={COLORS.black} strokeWidth={2} />
+          <Circle cx="67" cy="13" r="6" fill={COLORS.pink} stroke={COLORS.black} strokeWidth={2} />
         </G>
 
-        {/* Agent 1 - Circle */}
-        <G transform="translate(20, 100)">
-          {/* Shadow */}
-          <Circle cx={55 + SHADOW_OFFSET} cy={55 + SHADOW_OFFSET} r="55" fill={COLORS.black} />
-          {/* Body */}
-          <Circle
-            cx="55"
-            cy="55"
-            r="55"
+        {/* Agent box 1 - top left */}
+        <G transform="translate(15, 20)">
+          <Rect x={SHADOW_OFFSET} y={SHADOW_OFFSET} width="55" height="45" fill={COLORS.black} />
+          <Rect
+            x="0"
+            y="0"
+            width="55"
+            height="45"
             fill={COLORS.pink}
             stroke={COLORS.black}
             strokeWidth={STROKE}
           />
-          {/* Eye */}
-          <Circle
-            cx="40"
-            cy="45"
-            r="15"
-            fill={COLORS.white}
-            stroke={COLORS.black}
-            strokeWidth={STROKE}
-          />
-          <Circle
-            cx="70"
-            cy="45"
-            r="15"
-            fill={COLORS.white}
-            stroke={COLORS.black}
-            strokeWidth={STROKE}
-          />
-          <Circle cx="40" cy="45" r="7" fill={COLORS.black} />
-          <Circle cx="70" cy="45" r="7" fill={COLORS.black} />
-          {/* Mouth */}
-          <Rect x="35" y="70" width="40" height="10" fill={COLORS.black} />
-          {/* Antenna */}
-          <Rect x="50" y="-20" width="10" height="25" fill={COLORS.black} />
-          <Circle
-            cx="55"
-            cy="-25"
-            r="12"
-            fill={COLORS.yellow}
-            stroke={COLORS.black}
-            strokeWidth={STROKE}
-          />
+          {/* Screen/display */}
+          <Rect x="8" y="8" width="39" height="20" fill={COLORS.black} />
+          <Rect x="12" y="12" width="20" height="4" fill={COLORS.green} />
+          <Rect x="12" y="20" width="30" height="4" fill={COLORS.white} />
+          {/* Indicator light */}
+          <Circle cx="47" cy="37" r="5" fill={COLORS.green} stroke={COLORS.black} strokeWidth={2} />
         </G>
 
-        {/* Agent 2 - Square */}
-        <G transform="translate(105, 140)">
-          {/* Shadow */}
-          <Rect x={SHADOW_OFFSET} y={SHADOW_OFFSET} width="70" height="70" fill={COLORS.black} />
-          {/* Body */}
+        {/* Agent box 2 - top right */}
+        <G transform="translate(205, 25)">
+          <Rect x={SHADOW_OFFSET} y={SHADOW_OFFSET} width="55" height="50" fill={COLORS.black} />
           <Rect
             x="0"
             y="0"
-            width="70"
-            height="70"
+            width="55"
+            height="50"
             fill={COLORS.blue}
             stroke={COLORS.black}
             strokeWidth={STROKE}
           />
-          {/* Single eye */}
-          <Circle
-            cx="35"
-            cy="30"
-            r="18"
-            fill={COLORS.white}
-            stroke={COLORS.black}
-            strokeWidth={STROKE}
-          />
-          <Circle cx="35" cy="30" r="8" fill={COLORS.black} />
-          {/* Mouth */}
-          <Rect x="15" y="55" width="40" height="8" fill={COLORS.black} />
-          {/* Antenna */}
-          <Rect x="30" y="-18" width="10" height="20" fill={COLORS.black} />
+          {/* Bars/levels */}
+          <Rect x="8" y="10" width="8" height="30" fill={COLORS.black} />
+          <Rect x="8" y="20" width="8" height="20" fill={COLORS.yellow} />
+          <Rect x="20" y="10" width="8" height="30" fill={COLORS.black} />
+          <Rect x="20" y="15" width="8" height="25" fill={COLORS.yellow} />
+          <Rect x="32" y="10" width="8" height="30" fill={COLORS.black} />
+          <Rect x="32" y="25" width="8" height="15" fill={COLORS.yellow} />
+          {/* Light */}
+          <Circle cx="47" cy="42" r="5" fill={COLORS.green} stroke={COLORS.black} strokeWidth={2} />
+        </G>
+
+        {/* Agent box 3 - bottom left */}
+        <G transform="translate(10, 185)">
+          <Rect x={SHADOW_OFFSET} y={SHADOW_OFFSET} width="60" height="50" fill={COLORS.black} />
           <Rect
-            x="22"
-            y="-30"
-            width="26"
-            height="15"
+            x="0"
+            y="0"
+            width="60"
+            height="50"
             fill={COLORS.green}
             stroke={COLORS.black}
             strokeWidth={STROKE}
           />
+          {/* Progress bar */}
+          <Rect x="8" y="12" width="44" height="12" fill={COLORS.black} />
+          <Rect x="10" y="14" width="30" height="8" fill={COLORS.yellow} />
+          {/* Dots */}
+          <Circle cx="15" cy="38" r="5" fill={COLORS.black} />
+          <Circle cx="30" cy="38" r="5" fill={COLORS.black} />
+          <Circle cx="45" cy="38" r="5" fill={COLORS.white} stroke={COLORS.black} strokeWidth={2} />
         </G>
 
-        {/* Agent 3 - Triangle */}
-        <G transform="translate(195, 95)">
-          {/* Shadow */}
-          <Path
-            d="M40 0 L80 70 L0 70 Z"
-            fill={COLORS.black}
-            transform={`translate(${SHADOW_OFFSET}, ${SHADOW_OFFSET})`}
-          />
-          {/* Body */}
-          <Path
-            d="M40 0 L80 70 L0 70 Z"
-            fill={COLORS.green}
+        {/* Agent box 4 - bottom right */}
+        <G transform="translate(200, 180)">
+          <Rect x={SHADOW_OFFSET} y={SHADOW_OFFSET} width="60" height="55" fill={COLORS.black} />
+          <Rect
+            x="0"
+            y="0"
+            width="60"
+            height="55"
+            fill={COLORS.orange}
             stroke={COLORS.black}
             strokeWidth={STROKE}
           />
-          {/* Eye */}
-          <Circle
-            cx="40"
-            cy="40"
-            r="15"
-            fill={COLORS.white}
-            stroke={COLORS.black}
-            strokeWidth={STROKE}
-          />
-          <Circle cx="40" cy="40" r="7" fill={COLORS.black} />
-          {/* Mouth */}
-          <Rect x="25" y="55" width="30" height="6" fill={COLORS.black} />
-          {/* Antenna */}
-          <Rect x="36" y="-15" width="8" height="18" fill={COLORS.black} />
-          <Circle
-            cx="40"
-            cy="-22"
-            r="10"
-            fill={COLORS.pink}
-            stroke={COLORS.black}
-            strokeWidth={STROKE}
-          />
+          {/* Terminal lines */}
+          <Rect x="8" y="10" width="44" height="35" fill={COLORS.black} />
+          <Rect x="12" y="15" width="25" height="4" fill={COLORS.green} />
+          <Rect x="12" y="23" width="35" height="4" fill={COLORS.white} />
+          <Rect x="12" y="31" width="18" height="4" fill={COLORS.green} />
+          {/* Cursor */}
+          <Rect x="32" y="31" width="6" height="4" fill={COLORS.white} />
         </G>
 
-        {/* Connection lines */}
-        <Path d="M200 40 L100 95" stroke={COLORS.black} strokeWidth={4} strokeDasharray="10,8" />
-        <Path d="M200 40 L140 135" stroke={COLORS.black} strokeWidth={4} strokeDasharray="10,8" />
-        <Path d="M200 40 L230 90" stroke={COLORS.black} strokeWidth={4} strokeDasharray="10,8" />
+        {/* Connection lines from hub to agents */}
+        {/* To top left */}
+        <Path d="M100 110 L70 65" stroke={COLORS.black} strokeWidth={4} />
+        <Circle cx="70" cy="65" r="6" fill={COLORS.yellow} stroke={COLORS.black} strokeWidth={2} />
+
+        {/* To top right */}
+        <Path d="M180 110 L205 65" stroke={COLORS.black} strokeWidth={4} />
+        <Circle cx="205" cy="65" r="6" fill={COLORS.blue} stroke={COLORS.black} strokeWidth={2} />
+
+        {/* To bottom left */}
+        <Path d="M110 165 L70 185" stroke={COLORS.black} strokeWidth={4} />
+        <Circle cx="70" cy="185" r="6" fill={COLORS.green} stroke={COLORS.black} strokeWidth={2} />
+
+        {/* To bottom right */}
+        <Path d="M170 165 L200 185" stroke={COLORS.black} strokeWidth={4} />
+        <Circle
+          cx="200"
+          cy="185"
+          r="6"
+          fill={COLORS.orange}
+          stroke={COLORS.black}
+          strokeWidth={2}
+        />
+
+        {/* Data flow arrows on lines */}
+        <Path d="M85 88 L80 83 L80 93 Z" fill={COLORS.black} />
+        <Path d="M192 88 L197 83 L197 93 Z" fill={COLORS.black} />
+        <Path d="M90 175 L85 170 L85 180 Z" fill={COLORS.black} />
+        <Path d="M185 175 L190 170 L190 180 Z" fill={COLORS.black} />
 
         {/* Decorative elements */}
         <Rect
           x="5"
-          y="230"
-          width="20"
-          height="20"
-          fill={COLORS.yellow}
+          y="130"
+          width="12"
+          height="12"
+          fill={COLORS.pink}
           stroke={COLORS.black}
           strokeWidth={2}
         />
-        <Circle cx="270" cy="240" r="10" fill={COLORS.pink} stroke={COLORS.black} strokeWidth={2} />
+        <Circle cx="270" cy="130" r="8" fill={COLORS.blue} stroke={COLORS.black} strokeWidth={2} />
+        <Rect
+          x="130"
+          y="5"
+          width="20"
+          height="10"
+          fill={COLORS.green}
+          stroke={COLORS.black}
+          strokeWidth={2}
+        />
       </Svg>
     </View>
   )
