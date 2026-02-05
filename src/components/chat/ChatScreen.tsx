@@ -30,6 +30,13 @@ import { useMessageQueue } from '../../hooks/useMessageQueue'
 import { ProviderConfig, readCachedHistory } from '../../services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, pendingTriggerMessageAtom } from '../../store'
 import { useTheme } from '../../theme'
+import {
+  useContentContainerStyle,
+  useDeviceType,
+  useFoldResponsiveValue,
+  useFoldState,
+  useIsFoldable,
+} from '../../utils/device'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
 
@@ -66,7 +73,23 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const searchInputRef = useRef<TextInput>(null)
 
-  const styles = useMemo(() => createStyles(theme, glassAvailable), [theme, glassAvailable])
+  // Foldable device support
+  const deviceType = useDeviceType()
+  const isFoldable = useIsFoldable()
+  const foldState = useFoldState()
+  const contentContainerStyle = useContentContainerStyle()
+
+  // Responsive values for foldable devices
+  const messageListPadding = useFoldResponsiveValue(
+    theme.spacing.sm, // folded (narrow screen)
+    theme.spacing.md, // unfolded (wider screen)
+    theme.spacing.sm, // half-folded
+  )
+
+  const styles = useMemo(
+    () => createStyles(theme, glassAvailable, deviceType, foldState, messageListPadding),
+    [theme, glassAvailable, deviceType, foldState, messageListPadding],
+  )
 
   // Track keyboard position in real-time for smooth interactive dismissal
   const { height: keyboardHeight } = useReanimatedKeyboardAnimation()
@@ -501,7 +524,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             data={filteredMessages}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ChatMessage message={item} />}
-            contentContainerStyle={styles.messageList}
+            contentContainerStyle={[styles.messageList, contentContainerStyle]}
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {
               if (
@@ -588,15 +611,24 @@ interface Theme {
   isDark: boolean
 }
 
-const createStyles = (theme: Theme, _glassAvailable: boolean) =>
-  StyleSheet.create({
+const createStyles = (
+  theme: Theme,
+  _glassAvailable: boolean,
+  deviceType: 'phone' | 'tablet' | 'foldable',
+  foldState: 'folded' | 'unfolded' | 'half-folded',
+  messageListPadding: number,
+) => {
+  // Adjust status bar position for foldable devices in half-folded state
+  const statusBarTop = deviceType === 'foldable' && foldState === 'half-folded' ? 40 : 50
+
+  return StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
     statusBarContainer: {
       position: 'absolute',
-      top: 50,
+      top: statusBarTop,
       left: 0,
       right: 0,
       flexDirection: 'row',
@@ -718,9 +750,9 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
       fontWeight: theme.typography.fontWeight.semibold,
     },
     messageList: {
-      paddingTop: 110,
+      paddingTop: deviceType === 'foldable' && foldState === 'half-folded' ? 100 : 110,
       paddingBottom: 60, // Room for input
-      paddingHorizontal: theme.spacing.sm,
+      paddingHorizontal: messageListPadding,
     },
     emptyContainer: {
       flex: 1,
@@ -761,3 +793,4 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
       zIndex: 1000,
     },
   })
+}

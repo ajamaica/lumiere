@@ -21,11 +21,58 @@ export function isIPad(): boolean {
 }
 
 /**
- * Get device type based on screen size
+ * Check if the current device is a foldable device based on aspect ratio and dimensions
+ * Foldable devices typically have unusual aspect ratios when unfolded
  */
-export type DeviceType = 'phone' | 'tablet'
+export function isFoldable(): boolean {
+  if (Platform.OS !== 'android') return false
+
+  const { width, height } = Dimensions.get('window')
+  const aspectRatio = Math.max(width, height) / Math.min(width, height)
+
+  // Foldables in unfolded state typically have aspect ratios between 1.1 and 1.4
+  // (closer to square than typical phones which are 2:1 or wider)
+  // Also check if the device meets minimum tablet width when unfolded
+  const minDimension = Math.min(width, height)
+  const isUnfoldedSize = minDimension >= TABLET_MIN_WIDTH
+  const isFoldableAspectRatio = aspectRatio >= 1.1 && aspectRatio <= 1.4
+
+  return isUnfoldedSize && isFoldableAspectRatio
+}
+
+/**
+ * Get fold state based on current dimensions
+ * This helps determine if a foldable device is currently folded or unfolded
+ */
+export type FoldState = 'folded' | 'unfolded' | 'half-folded'
+
+export function getFoldState(): FoldState {
+  if (!isFoldable()) return 'unfolded'
+
+  const { width, height } = Dimensions.get('window')
+  const minDimension = Math.min(width, height)
+  const aspectRatio = Math.max(width, height) / Math.min(width, height)
+
+  // When folded, device acts like a phone (narrow)
+  if (minDimension < TABLET_MIN_WIDTH) {
+    return 'folded'
+  }
+
+  // Half-folded state (flex mode) typically has unusual aspect ratios
+  if (aspectRatio > 1.6 && aspectRatio < 2.5) {
+    return 'half-folded'
+  }
+
+  return 'unfolded'
+}
+
+/**
+ * Get device type based on screen size and foldable state
+ */
+export type DeviceType = 'phone' | 'tablet' | 'foldable'
 
 export function getDeviceType(): DeviceType {
+  if (isFoldable()) return 'foldable'
   return isTablet() ? 'tablet' : 'phone'
 }
 
@@ -47,7 +94,22 @@ export function useDeviceType(): DeviceType {
     const subscription = Dimensions.addEventListener(
       'change',
       ({ window }: { window: ScaledSize }) => {
-        const minDimension = Math.min(window.width, window.height)
+        // Recalculate device type on dimension change
+        const { width, height } = window
+        const minDimension = Math.min(width, height)
+        const aspectRatio = Math.max(width, height) / minDimension
+
+        // Check for foldable first
+        if (Platform.OS === 'android') {
+          const isUnfoldedSize = minDimension >= TABLET_MIN_WIDTH
+          const isFoldableAspectRatio = aspectRatio >= 1.1 && aspectRatio <= 1.4
+          if (isUnfoldedSize && isFoldableAspectRatio) {
+            setDeviceType('foldable')
+            return
+          }
+        }
+
+        // Fall back to tablet or phone
         setDeviceType(minDimension >= TABLET_MIN_WIDTH ? 'tablet' : 'phone')
       },
     )
@@ -64,6 +126,45 @@ export function useDeviceType(): DeviceType {
 export function useIsTablet(): boolean {
   const deviceType = useDeviceType()
   return deviceType === 'tablet'
+}
+
+/**
+ * Hook to check if device is foldable (reactive)
+ */
+export function useIsFoldable(): boolean {
+  const deviceType = useDeviceType()
+  return deviceType === 'foldable'
+}
+
+/**
+ * Hook to get current fold state (reactive)
+ */
+export function useFoldState(): FoldState {
+  const [foldState, setFoldState] = useState<FoldState>(getFoldState())
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener(
+      'change',
+      ({ window }: { window: ScaledSize }) => {
+        const { width, height } = window
+        const minDimension = Math.min(width, height)
+        const aspectRatio = Math.max(width, height) / minDimension
+
+        // Determine fold state based on dimensions
+        if (minDimension < TABLET_MIN_WIDTH) {
+          setFoldState('folded')
+        } else if (aspectRatio > 1.6 && aspectRatio < 2.5) {
+          setFoldState('half-folded')
+        } else {
+          setFoldState('unfolded')
+        }
+      },
+    )
+
+    return () => subscription.remove()
+  }, [])
+
+  return foldState
 }
 
 /**
@@ -97,12 +198,64 @@ export function useResponsiveValue<T>(phoneValue: T, tabletValue: T): T {
 }
 
 /**
+ * Hook to get responsive values with foldable support
+ * Allows different values for phone, foldable, and tablet devices
+ */
+export function useResponsiveValueWithFoldable<T>(
+  phoneValue: T,
+  foldableValue: T,
+  tabletValue: T,
+): T {
+  const deviceType = useDeviceType()
+
+  switch (deviceType) {
+    case 'foldable':
+      return foldableValue
+    case 'tablet':
+      return tabletValue
+    default:
+      return phoneValue
+  }
+}
+
+/**
+ * Hook to get responsive values based on fold state
+ * Useful for adapting UI when device is folded vs unfolded
+ */
+export function useFoldResponsiveValue<T>(
+  foldedValue: T,
+  unfoldedValue: T,
+  halfFoldedValue?: T,
+): T {
+  const foldState = useFoldState()
+
+  if (foldState === 'half-folded' && halfFoldedValue !== undefined) {
+    return halfFoldedValue
+  }
+
+  return foldState === 'folded' ? foldedValue : unfoldedValue
+}
+
+/**
  * Responsive breakpoints for layout
  */
 export const breakpoints = {
   phone: 0,
-  tablet: 768,
+  foldableMin: 600, // Minimum width for foldable in folded state
+  tablet: 768, // Tablet and foldable unfolded state
   tabletLarge: 1024,
+} as const
+
+/**
+ * Common foldable device dimensions (for reference)
+ */
+export const foldableDimensions = {
+  // Samsung Galaxy Z Fold series (unfolded)
+  galaxyZFoldUnfolded: { width: 884, height: 2208 },
+  // Samsung Galaxy Z Flip series (unfolded)
+  galaxyZFlipUnfolded: { width: 1080, height: 2640 },
+  // Generic foldable aspect ratios
+  foldableAspectRatio: { min: 1.1, max: 1.4 },
 } as const
 
 /**
@@ -128,19 +281,76 @@ export function useScreenDimensions() {
 }
 
 /**
- * Hook that returns container style for centered, max-width content on tablets
+ * Hook that returns container style for centered, max-width content on tablets and foldables
  */
 export function useContentContainerStyle() {
-  const isTabletDevice = useIsTablet()
+  const deviceType = useDeviceType()
+  const foldState = useFoldState()
   const { width } = useScreenDimensions()
 
-  if (!isTabletDevice || width <= MAX_CONTENT_WIDTH) {
+  // For phones and folded foldables, no max width
+  if (deviceType === 'phone' || foldState === 'folded') {
     return {}
   }
 
-  return {
-    maxWidth: MAX_CONTENT_WIDTH,
-    alignSelf: 'center' as const,
-    width: '100%' as const,
+  // For foldables in half-folded state, use slightly smaller max width
+  if (deviceType === 'foldable' && foldState === 'half-folded') {
+    const halfFoldedMaxWidth = MAX_CONTENT_WIDTH * 0.8
+    return {
+      maxWidth: halfFoldedMaxWidth,
+      alignSelf: 'center' as const,
+      width: '100%' as const,
+    }
   }
+
+  // For tablets and unfolded foldables
+  if (
+    (deviceType === 'tablet' || deviceType === 'foldable') &&
+    width > MAX_CONTENT_WIDTH
+  ) {
+    return {
+      maxWidth: MAX_CONTENT_WIDTH,
+      alignSelf: 'center' as const,
+      width: '100%' as const,
+    }
+  }
+
+  return {}
+}
+
+/**
+ * Estimate hinge position for foldable devices
+ * Returns the approximate vertical position of the hinge as a percentage (0-100)
+ * This is an approximation since React Native doesn't provide direct hinge detection
+ */
+export function getHingePosition(): number | null {
+  if (!isFoldable()) return null
+
+  const foldState = getFoldState()
+
+  // In half-folded (flex mode), hinge is typically in the middle
+  if (foldState === 'half-folded') {
+    return 50 // 50% from top
+  }
+
+  return null
+}
+
+/**
+ * Hook to get hinge position (reactive)
+ */
+export function useHingePosition(): number | null {
+  const [hingePosition, setHingePosition] = useState<number | null>(
+    getHingePosition(),
+  )
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', () => {
+      setHingePosition(getHingePosition())
+    })
+
+    return () => subscription.remove()
+  }, [])
+
+  return hingePosition
 }
