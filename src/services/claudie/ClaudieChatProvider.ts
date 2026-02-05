@@ -171,9 +171,10 @@ export class ClaudieChatProvider implements ChatProvider {
 
     const userMsg: ClaudieMessage = {
       role: 'user',
-      content: contentBlocks.length === 1 && contentBlocks[0].type === 'text'
-        ? contentBlocks[0].text!
-        : contentBlocks,
+      content:
+        contentBlocks.length === 1 && contentBlocks[0].type === 'text'
+          ? contentBlocks[0].text!
+          : contentBlocks,
     }
 
     messages.push(userMsg)
