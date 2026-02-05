@@ -67,7 +67,8 @@
           "color": "#ffffff"
         }
       ],
-      "expo-quick-actions"
+      "expo-quick-actions",
+      "./modules/widget/plugin/withLumiereWidget"
     ],
     "extra": {
       "eas": {
