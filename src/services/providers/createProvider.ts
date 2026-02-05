@@ -1,6 +1,7 @@
 import { AppleChatProvider } from '../apple-intelligence/AppleChatProvider'
 import { ClaudeChatProvider } from '../claude/ClaudeChatProvider'
 import { EchoChatProvider } from '../echo/EchoChatProvider'
+import { GeminiNanoChatProvider } from '../gemini-nano/GeminiNanoChatProvider'
 import { OllamaChatProvider } from '../ollama/OllamaChatProvider'
 import { OpenAIChatProvider } from '../openai/OpenAIChatProvider'
 import { CachedChatProvider } from './CachedChatProvider'
@@ -36,6 +37,9 @@ export function createChatProvider(config: ProviderConfig): ChatProvider {
       break
     case 'openai':
       inner = new OpenAIChatProvider(config)
+      break
+    case 'gemini-nano':
+      inner = new GeminiNanoChatProvider(config)
       break
     default:
       throw new Error(`Unknown provider type: ${(config as ProviderConfig).type}`)
