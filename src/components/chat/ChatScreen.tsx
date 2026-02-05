@@ -653,7 +653,7 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
     searchBarWrapper: {
       position: 'absolute',
       left: theme.spacing.lg,
-      right: 0,
+      right: theme.spacing.lg,
       transformOrigin: 'right center',
     },
     searchBar: {
