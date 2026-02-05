@@ -12,8 +12,15 @@ const storage = createJSONStorage<any>(() => AsyncStorage)
 // Export the storage adapter for use outside React components
 export { storage as jotaiStorage }
 
-// Export default store for accessing atoms outside React
-export const store = getDefaultStore()
+// Lazily initialized store for accessing atoms outside React
+// This avoids calling getDefaultStore() at module load time, which can cause issues in tests
+let _store: ReturnType<typeof getDefaultStore> | null = null
+export function getStore() {
+  if (!_store) {
+    _store = getDefaultStore()
+  }
+  return _store
+}
 
 // Server configuration types
 export interface ServerConfig {

@@ -188,7 +188,7 @@ describe('CachedChatProvider', () => {
 
       // Pre-populate cache
       const key = buildCacheKey('srv', 'session-1')
-      await jotaiStorage.setItem(key, cachedMessages, undefined)
+      await jotaiStorage.setItem(key, cachedMessages)
 
       const inner = createMockProvider({
         getChatHistory: jest.fn().mockRejectedValue(new Error('Network error')),
@@ -220,7 +220,7 @@ describe('CachedChatProvider', () => {
       ]
 
       const key = buildCacheKey('srv', 'session-1')
-      await jotaiStorage.setItem(key, cachedMessages, undefined)
+      await jotaiStorage.setItem(key, cachedMessages)
 
       const inner = createMockProvider({
         getChatHistory: jest.fn().mockRejectedValue(new Error('offline')),
@@ -238,7 +238,7 @@ describe('CachedChatProvider', () => {
   describe('resetSession', () => {
     it('clears both inner provider session and local cache', async () => {
       const key = buildCacheKey('srv', 'session-1')
-      await jotaiStorage.setItem(key, [msg('user', 'hi')], undefined)
+      await jotaiStorage.setItem(key, [msg('user', 'hi')])
 
       const inner = createMockProvider()
       const cached = new CachedChatProvider(inner, 'srv')
@@ -252,7 +252,7 @@ describe('CachedChatProvider', () => {
 
     it('clears cache even when inner provider throws', async () => {
       const key = buildCacheKey('srv', 'session-1')
-      await jotaiStorage.setItem(key, [msg('user', 'hi')], undefined)
+      await jotaiStorage.setItem(key, [msg('user', 'hi')])
 
       const inner = createMockProvider({
         resetSession: jest.fn().mockRejectedValue(new Error('fail')),
@@ -348,7 +348,7 @@ describe('CachedChatProvider', () => {
       // Simulate: cache has messages from a previous session
       const cachedMessages = [msg('user', 'cached-q'), msg('assistant', 'cached-a')]
       const key = buildCacheKey('srv', 'session-1')
-      await jotaiStorage.setItem(key, cachedMessages, undefined)
+      await jotaiStorage.setItem(key, cachedMessages)
 
       // Inner provider has persistentHistory: false (like Apple Intelligence)
       // and returns empty (simulating app restart where in-memory is lost)
@@ -373,7 +373,7 @@ describe('CachedChatProvider', () => {
       ]
 
       const key = buildCacheKey('srv', 'session-1')
-      await jotaiStorage.setItem(key, cachedMessages, undefined)
+      await jotaiStorage.setItem(key, cachedMessages)
 
       const inner = createMockProvider({
         getChatHistory: jest.fn().mockResolvedValue({ messages: [] } as ChatHistoryResponse),
@@ -402,7 +402,7 @@ describe('CachedChatProvider', () => {
       // Simulate: cache has stale messages
       const cachedMessages = [msg('user', 'stale-q'), msg('assistant', 'stale-a')]
       const key = buildCacheKey('srv', 'session-1')
-      await jotaiStorage.setItem(key, cachedMessages, undefined)
+      await jotaiStorage.setItem(key, cachedMessages)
 
       // Inner provider has persistentHistory: true (like Molt)
       // Server says session is empty - we should trust it

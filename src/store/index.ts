@@ -20,6 +20,7 @@ export {
   gatewayConnectedAtom,
   gatewayConnectingAtom,
   gatewayErrorAtom,
+  getStore,
   jotaiStorage,
   languageAtom,
   messageQueueAtom,
@@ -29,7 +30,6 @@ export {
   serversAtom,
   serverSessionsAtom,
   sessionAliasesAtom,
-  store,
   themeModeAtom,
   triggersAtom,
 } from './atoms'

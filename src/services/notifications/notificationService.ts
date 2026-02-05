@@ -5,25 +5,25 @@ import * as TaskManager from 'expo-task-manager'
 import {
   backgroundNotificationsEnabledAtom,
   currentSessionKeyAtom,
+  getStore,
   notificationLastCheckAtom,
   type NotificationLastCheckMap,
   serversAtom,
   serverSessionsAtom,
-  store,
 } from '../../store'
 import { getServerToken } from '../secureTokenStorage'
 
 export const BACKGROUND_FETCH_TASK = 'background-server-check'
 
 async function getLastCheckMap(): Promise<NotificationLastCheckMap> {
-  const raw = store.get(notificationLastCheckAtom)
+  const raw = getStore().get(notificationLastCheckAtom)
   // Handle hydration: atomWithStorage may return a Promise during initial load
   return raw instanceof Promise ? await raw : raw
 }
 
 async function setLastCheck(serverSessionKey: string, timestamp: number): Promise<void> {
   const map = await getLastCheckMap()
-  store.set(notificationLastCheckAtom, { ...map, [serverSessionKey]: timestamp })
+  getStore().set(notificationLastCheckAtom, { ...map, [serverSessionKey]: timestamp })
 }
 
 /**
@@ -111,6 +111,7 @@ async function resolveAtom<T>(value: T | Promise<T>): Promise<T> {
  */
 export async function backgroundCheckTask(): Promise<BackgroundFetch.BackgroundFetchResult> {
   try {
+    const store = getStore()
     const notificationsEnabled = await resolveAtom(store.get(backgroundNotificationsEnabledAtom))
 
     if (!notificationsEnabled) {
