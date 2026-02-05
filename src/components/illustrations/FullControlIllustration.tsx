@@ -9,247 +9,147 @@ const LICHTENSTEIN = {
   blue: '#0057B8',
   black: '#1A1A1A',
   white: '#FFFFFF',
-  skin: '#FFDBB4',
-  gray: '#C0C0C0',
 }
 
 export function FullControlIllustration() {
-  const strokeWidth = 3
+  const strokeWidth = 4
 
   return (
-    <View style={{ width: 240, height: 200, alignItems: 'center', justifyContent: 'center' }}>
-      <Svg width={220} height={180} viewBox="0 0 220 180">
+    <View style={{ width: 280, height: 260, alignItems: 'center', justifyContent: 'center' }}>
+      <Svg width={280} height={260} viewBox="0 0 280 260">
         <Defs>
-          {/* Ben-Day dot patterns */}
-          <Pattern id="dotsGray" patternUnits="userSpaceOnUse" width="6" height="6">
-            <Rect width="6" height="6" fill={LICHTENSTEIN.gray} />
-            <Circle cx="3" cy="3" r="1.2" fill="#888888" />
-          </Pattern>
-          <Pattern id="dotsYellowCtrl" patternUnits="userSpaceOnUse" width="8" height="8">
-            <Rect width="8" height="8" fill={LICHTENSTEIN.white} />
-            <Circle cx="4" cy="4" r="2" fill={LICHTENSTEIN.yellow} />
-          </Pattern>
-          <Pattern id="dotsSkinCtrl" patternUnits="userSpaceOnUse" width="6" height="6">
-            <Rect width="6" height="6" fill={LICHTENSTEIN.skin} />
-            <Circle cx="3" cy="3" r="1.2" fill="#E8A880" />
+          <Pattern id="dotsYellowCtrl" patternUnits="userSpaceOnUse" width="10" height="10">
+            <Rect width="10" height="10" fill={LICHTENSTEIN.yellow} />
+            <Circle cx="5" cy="5" r="2.5" fill="#E8C000" />
           </Pattern>
         </Defs>
 
-        {/* Control Panel Background */}
-        <Rect
-          x="15"
-          y="50"
-          width="190"
-          height="120"
-          rx="10"
-          fill="url(#dotsGray)"
-          stroke={LICHTENSTEIN.black}
-          strokeWidth={strokeWidth}
-        />
-
-        {/* Panel inner border */}
-        <Rect
-          x="25"
-          y="60"
-          width="170"
-          height="100"
-          rx="5"
-          fill={LICHTENSTEIN.white}
-          stroke={LICHTENSTEIN.black}
-          strokeWidth={2}
-        />
-
-        {/* Big Red Button - top left */}
-        <G transform="translate(45, 75)">
+        {/* Large abstract lever/switch */}
+        <G transform="translate(30, 40)">
+          {/* Base */}
+          <Rect
+            x="0"
+            y="140"
+            width="100"
+            height="40"
+            fill={LICHTENSTEIN.black}
+            stroke={LICHTENSTEIN.black}
+            strokeWidth={strokeWidth}
+          />
+          {/* Lever arm */}
+          <Rect
+            x="35"
+            y="20"
+            width="30"
+            height="130"
+            fill="url(#dotsYellowCtrl)"
+            stroke={LICHTENSTEIN.black}
+            strokeWidth={strokeWidth}
+          />
+          {/* Lever ball */}
           <Circle
-            cx="20"
+            cx="50"
             cy="20"
-            r="22"
+            r="30"
+            fill={LICHTENSTEIN.red}
+            stroke={LICHTENSTEIN.black}
+            strokeWidth={strokeWidth}
+          />
+          {/* Highlight */}
+          <Circle cx="40" cy="10" r="10" fill={LICHTENSTEIN.white} opacity={0.7} />
+        </G>
+
+        {/* Big bold button */}
+        <G transform="translate(160, 30)">
+          <Circle
+            cx="50"
+            cy="50"
+            r="50"
             fill={LICHTENSTEIN.red}
             stroke={LICHTENSTEIN.black}
             strokeWidth={strokeWidth}
           />
           <Circle
-            cx="20"
-            cy="20"
-            r="15"
+            cx="50"
+            cy="50"
+            r="35"
             fill={LICHTENSTEIN.red}
             stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
+            strokeWidth={3}
           />
           {/* Highlight */}
-          <Circle cx="14" cy="14" r="5" fill={LICHTENSTEIN.white} opacity={0.6} />
+          <Circle cx="35" cy="35" r="12" fill={LICHTENSTEIN.white} opacity={0.6} />
         </G>
 
-        {/* Toggle Switches - top right */}
-        <G transform="translate(120, 70)">
+        {/* Abstract toggle switches */}
+        <G transform="translate(150, 150)">
           {/* Switch 1 - ON */}
           <Rect
             x="0"
             y="0"
-            width="20"
-            height="40"
-            rx="4"
+            width="35"
+            height="70"
             fill={LICHTENSTEIN.black}
             stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
+            strokeWidth={strokeWidth}
           />
           <Rect
-            x="2"
-            y="2"
-            width="16"
-            height="18"
-            rx="3"
+            x="5"
+            y="5"
+            width="25"
+            height="30"
             fill={LICHTENSTEIN.yellow}
             stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
+            strokeWidth={3}
           />
+
           {/* Switch 2 - OFF */}
           <Rect
-            x="30"
+            x="50"
             y="0"
-            width="20"
-            height="40"
-            rx="4"
+            width="35"
+            height="70"
             fill={LICHTENSTEIN.black}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
-          />
-          <Rect
-            x="32"
-            y="20"
-            width="16"
-            height="18"
-            rx="3"
-            fill={LICHTENSTEIN.gray}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
-          />
-          {/* Switch 3 - ON */}
-          <Rect
-            x="60"
-            y="0"
-            width="20"
-            height="40"
-            rx="4"
-            fill={LICHTENSTEIN.black}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
-          />
-          <Rect
-            x="62"
-            y="2"
-            width="16"
-            height="18"
-            rx="3"
-            fill={LICHTENSTEIN.yellow}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
-          />
-        </G>
-
-        {/* Lever base */}
-        <G transform="translate(45, 120)">
-          <Rect
-            x="0"
-            y="25"
-            width="60"
-            height="15"
-            rx="3"
-            fill={LICHTENSTEIN.black}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
-          />
-          {/* Lever slot */}
-          <Path d="M5 30 L55 30" stroke={LICHTENSTEIN.gray} strokeWidth={4} />
-          {/* Lever stick */}
-          <Rect
-            x="40"
-            y="-5"
-            width="10"
-            height="35"
-            rx="2"
-            fill={LICHTENSTEIN.gray}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
-          />
-          {/* Lever ball */}
-          <Circle
-            cx="45"
-            cy="-10"
-            r="12"
-            fill={LICHTENSTEIN.red}
             stroke={LICHTENSTEIN.black}
             strokeWidth={strokeWidth}
           />
-          <Circle cx="41" cy="-14" r="4" fill={LICHTENSTEIN.white} opacity={0.6} />
-        </G>
-
-        {/* Hand gripping lever */}
-        <G transform="translate(85, 90)">
-          {/* Wrist/arm */}
-          <Path
-            d="M60 25 L45 15 L35 20 L30 35 L40 40 L55 35 Z"
-            fill="url(#dotsSkinCtrl)"
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
-          />
-          {/* Hand gripping */}
-          <Path
-            d="M30 35 Q15 30 10 15 Q8 5 15 0 Q25 -5 30 5 L35 20"
-            fill="url(#dotsSkinCtrl)"
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
-          />
-          {/* Fingers */}
-          <Path d="M15 0 Q5 5 8 15" fill="none" stroke={LICHTENSTEIN.black} strokeWidth={2} />
-          <Path d="M20 2 Q12 8 14 18" fill="none" stroke={LICHTENSTEIN.black} strokeWidth={2} />
-          {/* Sleeve cuff */}
           <Rect
-            x="45"
-            y="10"
+            x="55"
+            y="35"
             width="25"
-            height="12"
+            height="30"
             fill={LICHTENSTEIN.blue}
             stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
+            strokeWidth={3}
           />
         </G>
 
-        {/* Status lights */}
-        <G transform="translate(125, 125)">
-          <Circle cx="0" cy="0" r="8" fill="#00C853" stroke={LICHTENSTEIN.black} strokeWidth={2} />
-          <Circle cx="25" cy="0" r="8" fill="#00C853" stroke={LICHTENSTEIN.black} strokeWidth={2} />
-          <Circle
-            cx="50"
-            cy="0"
-            r="8"
-            fill={LICHTENSTEIN.red}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
-          />
-        </G>
-
-        {/* Panel label area */}
-        <Rect
-          x="75"
-          y="8"
-          width="70"
-          height="25"
-          rx="5"
-          fill={LICHTENSTEIN.blue}
+        {/* Status indicators - large dots */}
+        <Circle
+          cx="260"
+          cy="180"
+          r="15"
+          fill="#00C853"
           stroke={LICHTENSTEIN.black}
-          strokeWidth={strokeWidth}
+          strokeWidth={3}
         />
-        {/* Label lines */}
-        <Path d="M85 17 L135 17" stroke={LICHTENSTEIN.white} strokeWidth={3} />
-        <Path d="M90 25 L130 25" stroke={LICHTENSTEIN.white} strokeWidth={2} />
+        <Circle
+          cx="260"
+          cy="220"
+          r="15"
+          fill={LICHTENSTEIN.yellow}
+          stroke={LICHTENSTEIN.black}
+          strokeWidth={3}
+        />
 
-        {/* Action lines - comic speed effect */}
-        <Path d="M20 45 L5 35" stroke={LICHTENSTEIN.black} strokeWidth={2} />
-        <Path d="M25 42 L15 28" stroke={LICHTENSTEIN.black} strokeWidth={2} />
-        <Path d="M200 45 L215 35" stroke={LICHTENSTEIN.black} strokeWidth={2} />
-        <Path d="M195 42 L205 28" stroke={LICHTENSTEIN.black} strokeWidth={2} />
+        {/* Abstract power waves */}
+        <Path d="M100 60 Q120 40 140 60" fill="none" stroke={LICHTENSTEIN.black} strokeWidth={3} />
+        <Path d="M105 45 Q125 20 145 45" fill="none" stroke={LICHTENSTEIN.black} strokeWidth={3} />
+        <Path d="M110 30 Q130 5 150 30" fill="none" stroke={LICHTENSTEIN.black} strokeWidth={3} />
+
+        {/* Action lines */}
+        <Path d="M20 30 L5 15" stroke={LICHTENSTEIN.black} strokeWidth={3} />
+        <Path d="M15 45 L0 35" stroke={LICHTENSTEIN.black} strokeWidth={3} />
       </Svg>
     </View>
   )
