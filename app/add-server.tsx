@@ -30,7 +30,7 @@ export default function AddServerScreen() {
   const [model, setModel] = useState('')
 
   const needsUrl = providerType !== 'echo' && providerType !== 'apple'
-  const needsToken = providerType === 'molt' || providerType === 'claudie'
+  const needsToken = providerType === 'molt' || providerType === 'claudie' || providerType === 'openai'
 
   const handleAdd = async () => {
     if (needsUrl && !url.trim()) {
@@ -39,7 +39,12 @@ export default function AddServerScreen() {
     }
 
     if (needsToken && !token.trim()) {
-      Alert.alert('Error', providerType === 'claudie' ? 'API Key is required' : 'Token is required')
+      Alert.alert(
+        'Error',
+        providerType === 'claudie' || providerType === 'openai'
+          ? 'API Key is required'
+          : 'Token is required',
+      )
       return
     }
 
@@ -64,7 +69,9 @@ export default function AddServerScreen() {
             ? 'Apple Intelligence'
             : providerType === 'claudie'
               ? 'Claude'
-              : 'New Server'),
+              : providerType === 'openai'
+                ? 'OpenAI'
+                : 'New Server'),
         url: effectiveUrl,
         clientId: clientId.trim() || 'lumiere-mobile',
         providerType,
@@ -133,7 +140,9 @@ export default function AddServerScreen() {
                       ? 'Apple Intelligence'
                       : providerType === 'claudie'
                         ? 'My Claude'
-                        : 'My Server'
+                        : providerType === 'openai'
+                          ? 'My OpenAI'
+                          : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -160,7 +169,9 @@ export default function AddServerScreen() {
                     ? 'http://localhost:11434'
                     : providerType === 'claudie'
                       ? 'https://api.anthropic.com'
-                      : 'wss://gateway.example.com'
+                      : providerType === 'openai'
+                        ? 'https://api.openai.com'
+                        : 'wss://gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -225,6 +236,31 @@ export default function AddServerScreen() {
                   value={model}
                   onChangeText={setModel}
                   placeholder="claude-sonnet-4-5-20250514"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+            </>
+          )}
+
+          {providerType === 'openai' && (
+            <>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="API Key"
+                  value={token}
+                  onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="Model"
+                  value={model}
+                  onChangeText={setModel}
+                  placeholder="gpt-4o"
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
