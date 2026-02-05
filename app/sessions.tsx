@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -6,7 +7,7 @@ import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { ProviderConfig } from '../src/services/providers'
+import { buildCacheKey, ProviderConfig } from '../src/services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
@@ -99,6 +100,10 @@ export default function SessionsScreen() {
               if (supportsServerSessions) {
                 await resetSession(currentSessionKey)
               }
+              // Clear the local message cache
+              const cacheKey = buildCacheKey(currentServerId, currentSessionKey)
+              await AsyncStorage.removeItem(cacheKey)
+
               setClearMessagesTrigger((prev) => prev + 1)
               router.back()
             } catch (err) {
