@@ -1,6 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-
 import { CACHE_CONFIG } from '../../constants'
+import { jotaiStorage } from '../../store'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -37,9 +36,8 @@ export async function readCachedHistory(
 ): Promise<ChatHistoryMessage[]> {
   try {
     const key = buildCacheKey(serverId, sessionKey)
-    const raw = await AsyncStorage.getItem(key)
-    if (!raw) return []
-    const messages = JSON.parse(raw) as ChatHistoryMessage[]
+    const messages = await jotaiStorage.getItem(key, [] as ChatHistoryMessage[])
+    if (!messages || messages.length === 0) return []
     return limit ? messages.slice(-limit) : messages
   } catch (error) {
     if (__DEV__) {
@@ -175,7 +173,7 @@ export class CachedChatProvider implements ChatProvider {
     try {
       await this.inner.resetSession(sessionKey)
     } finally {
-      await AsyncStorage.removeItem(cacheKey)
+      await jotaiStorage.removeItem(cacheKey, undefined)
     }
   }
 
@@ -191,9 +189,8 @@ export class CachedChatProvider implements ChatProvider {
 
   private async readCache(key: string): Promise<ChatHistoryMessage[]> {
     try {
-      const raw = await AsyncStorage.getItem(key)
-      if (!raw) return []
-      return JSON.parse(raw) as ChatHistoryMessage[]
+      const messages = await jotaiStorage.getItem(key, [] as ChatHistoryMessage[])
+      return messages ?? []
     } catch (error) {
       if (__DEV__) {
         console.warn(`[CachedChatProvider] Failed to read cache for key "${key}":`, error)
@@ -205,7 +202,8 @@ export class CachedChatProvider implements ChatProvider {
   private async writeCache(key: string, messages: ChatHistoryMessage[]): Promise<void> {
     try {
       const trimmed = messages.slice(-CACHE_CONFIG.MAX_CACHED_MESSAGES)
-      await AsyncStorage.setItem(key, JSON.stringify(trimmed))
+      const existing = await jotaiStorage.getItem(key, [] as ChatHistoryMessage[])
+      await jotaiStorage.setItem(key, trimmed, existing)
     } catch (error) {
       // Log in development to help debug storage issues
       if (__DEV__) {

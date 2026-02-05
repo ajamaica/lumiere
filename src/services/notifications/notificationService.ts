@@ -1,28 +1,29 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as BackgroundFetch from 'expo-background-fetch'
 import * as Notifications from 'expo-notifications'
 import * as TaskManager from 'expo-task-manager'
 
+import {
+  backgroundNotificationsEnabledAtom,
+  currentSessionKeyAtom,
+  notificationLastCheckAtom,
+  type NotificationLastCheckMap,
+  serversAtom,
+  serverSessionsAtom,
+  store,
+} from '../../store'
 import { getServerToken } from '../secureTokenStorage'
 
 export const BACKGROUND_FETCH_TASK = 'background-server-check'
 
-/** Key used to store the last-known message timestamp per server+session */
-const LAST_CHECK_KEY = 'notifications_last_check'
-
-interface LastCheckMap {
-  [serverSessionKey: string]: number
-}
-
-async function getLastCheckMap(): Promise<LastCheckMap> {
-  const raw = await AsyncStorage.getItem(LAST_CHECK_KEY)
-  return raw ? JSON.parse(raw) : {}
+async function getLastCheckMap(): Promise<NotificationLastCheckMap> {
+  const raw = store.get(notificationLastCheckAtom)
+  // Handle hydration: atomWithStorage may return a Promise during initial load
+  return raw instanceof Promise ? await raw : raw
 }
 
 async function setLastCheck(serverSessionKey: string, timestamp: number): Promise<void> {
   const map = await getLastCheckMap()
-  map[serverSessionKey] = timestamp
-  await AsyncStorage.setItem(LAST_CHECK_KEY, JSON.stringify(map))
+  store.set(notificationLastCheckAtom, { ...map, [serverSessionKey]: timestamp })
 }
 
 /**
@@ -97,24 +98,28 @@ function httpUrl(url: string): string {
 }
 
 /**
+ * Helper to resolve atom values that may be Promises during hydration.
+ */
+async function resolveAtom<T>(value: T | Promise<T>): Promise<T> {
+  return value instanceof Promise ? await value : value
+}
+
+/**
  * The background task that runs periodically. It reads server configs from
- * AsyncStorage (since Jotai atoms are not available outside React), checks
- * Claude and Clawd servers for new assistant messages, and fires a local notification.
+ * Jotai store, checks Claude and Clawd servers for new assistant messages,
+ * and fires a local notification.
  */
 export async function backgroundCheckTask(): Promise<BackgroundFetch.BackgroundFetchResult> {
   try {
-    const serversRaw = await AsyncStorage.getItem('servers')
-    const sessionsRaw = await AsyncStorage.getItem('serverSessions')
-    const currentSessionRaw = await AsyncStorage.getItem('currentSessionKey')
-    const notificationsEnabled = await AsyncStorage.getItem('backgroundNotificationsEnabled')
+    const notificationsEnabled = await resolveAtom(store.get(backgroundNotificationsEnabledAtom))
 
-    if (notificationsEnabled !== 'true') {
+    if (!notificationsEnabled) {
       return BackgroundFetch.BackgroundFetchResult.NoData
     }
 
-    const servers = serversRaw ? JSON.parse(serversRaw) : {}
-    const sessions = sessionsRaw ? JSON.parse(sessionsRaw) : {}
-    const defaultSession = currentSessionRaw ? JSON.parse(currentSessionRaw) : 'agent:main:main'
+    const servers = await resolveAtom(store.get(serversAtom))
+    const sessions = await resolveAtom(store.get(serverSessionsAtom))
+    const defaultSession = await resolveAtom(store.get(currentSessionKeyAtom))
 
     let notifiedCount = 0
 
