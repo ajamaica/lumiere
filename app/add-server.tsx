@@ -18,6 +18,7 @@ import { useTheme } from '../src/theme'
 const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
   { value: 'molt', label: 'OpenClaw' },
   { value: 'ollama', label: 'Ollama' },
+  { value: 'claudie', label: 'Claude' },
   ...(Platform.OS === 'ios'
     ? [{ value: 'apple' as ProviderType, label: 'Apple Intelligence' }]
     : []),
@@ -38,7 +39,7 @@ export default function AddServerScreen() {
   const [model, setModel] = useState('')
 
   const needsUrl = providerType !== 'echo' && providerType !== 'apple'
-  const needsToken = providerType === 'molt'
+  const needsToken = providerType === 'molt' || providerType === 'claudie'
 
   const handleAdd = async () => {
     if (needsUrl && !url.trim()) {
@@ -47,7 +48,7 @@ export default function AddServerScreen() {
     }
 
     if (needsToken && !token.trim()) {
-      Alert.alert('Error', 'Token is required for OpenClaw')
+      Alert.alert('Error', providerType === 'claudie' ? 'API Key is required' : 'Token is required')
       return
     }
 
@@ -66,7 +67,13 @@ export default function AddServerScreen() {
 
     await addServer(
       {
-        name: name.trim() || (providerType === 'apple' ? 'Apple Intelligence' : 'New Server'),
+        name:
+          name.trim() ||
+          (providerType === 'apple'
+            ? 'Apple Intelligence'
+            : providerType === 'claudie'
+              ? 'Claude'
+              : 'New Server'),
         url: effectiveUrl,
         clientId: clientId.trim() || 'lumiere-mobile',
         providerType,
@@ -133,7 +140,9 @@ export default function AddServerScreen() {
                     ? 'My Echo Server'
                     : providerType === 'apple'
                       ? 'Apple Intelligence'
-                      : 'My Server'
+                      : providerType === 'claudie'
+                        ? 'My Claude'
+                        : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -156,7 +165,11 @@ export default function AddServerScreen() {
                 value={url}
                 onChangeText={setUrl}
                 placeholder={
-                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                  providerType === 'ollama'
+                    ? 'http://localhost:11434'
+                    : providerType === 'claudie'
+                      ? 'https://api.anthropic.com'
+                      : 'wss://gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -201,6 +214,31 @@ export default function AddServerScreen() {
                 autoCorrect={false}
               />
             </View>
+          )}
+
+          {providerType === 'claudie' && (
+            <>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="API Key"
+                  value={token}
+                  onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="Model"
+                  value={model}
+                  onChangeText={setModel}
+                  placeholder="claude-sonnet-4-5-20250514"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+            </>
           )}
 
           <View style={styles.buttonRow}>
