@@ -7,22 +7,23 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   ActivityIndicator,
   Keyboard,
-  LayoutAnimation,
-  Platform,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  UIManager,
   View,
 } from 'react-native'
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller'
 import Animated, {
   Easing,
+  FadeIn,
+  FadeOut,
+  interpolate,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withSequence,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -49,11 +50,6 @@ interface ChatScreenProps {
  * key for the current server, returning a default value ('agent:main:main')
  * if none exists. This ensures a valid session key is always available.
  */
-// Enable LayoutAnimation on Android
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true)
-}
-
 export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const { theme } = useTheme()
   const router = useRouter()
@@ -118,6 +114,23 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const pulseOpacity = useSharedValue(1)
   const pulseStyle = useAnimatedStyle(() => ({
     opacity: pulseOpacity.value,
+  }))
+
+  // Search bar expand/collapse animation
+  const searchProgress = useSharedValue(0)
+
+  const searchBarAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: searchProgress.value,
+    transform: [{ scaleX: interpolate(searchProgress.value, [0, 1], [0.7, 1]) }],
+  }))
+
+  const statusBubbleAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: 1 - searchProgress.value,
+    transform: [{ scale: interpolate(searchProgress.value, [0, 1], [1, 0.85]) }],
+  }))
+
+  const statusActionsAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: 1 - searchProgress.value,
   }))
 
   // Track whether we pre-populated from local cache so we can skip the loader
@@ -325,20 +338,21 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   }
 
   const handleToggleSearch = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     if (isSearchOpen) {
-      setIsSearchOpen(false)
+      searchProgress.value = withSpring(0, { damping: 20, stiffness: 300 })
       setSearchQuery('')
+      setIsSearchOpen(false)
     } else {
       setIsSearchOpen(true)
-      setTimeout(() => searchInputRef.current?.focus(), 100)
+      searchProgress.value = withSpring(1, { damping: 18, stiffness: 200 })
+      setTimeout(() => searchInputRef.current?.focus(), 150)
     }
   }
 
   const handleCloseSearch = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    setIsSearchOpen(false)
+    searchProgress.value = withSpring(0, { damping: 20, stiffness: 300 })
     setSearchQuery('')
+    setTimeout(() => setIsSearchOpen(false), 200)
   }
 
   const renderConnectionStatus = () => {
@@ -392,62 +406,71 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     }
 
     if (connected) {
-      if (isSearchOpen) {
-        const SearchBarContainer = glassAvailable ? GlassView : View
-        const searchBarProps = glassAvailable
-          ? { style: styles.searchBar, glassEffectStyle: 'regular' as const }
-          : { style: [styles.searchBar, styles.searchBarFallback] }
-
-        return (
-          <View style={styles.statusBarContainer}>
-            <SearchBarContainer {...searchBarProps}>
-              <Ionicons name="search" size={18} color={theme.colors.text.secondary} />
-              <TextInput
-                ref={searchInputRef}
-                style={styles.searchInput}
-                placeholder="Search messages..."
-                placeholderTextColor={theme.colors.text.tertiary}
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                autoCorrect={false}
-                returnKeyType="search"
-              />
-              {searchQuery.length > 0 && (
-                <Text style={styles.searchCount}>
-                  {
-                    allMessages.filter((m) =>
-                      m.text.toLowerCase().includes(searchQuery.toLowerCase()),
-                    ).length
-                  }
-                </Text>
-              )}
-              <TouchableOpacity onPress={handleCloseSearch} hitSlop={8}>
-                <Ionicons name="close-circle" size={20} color={theme.colors.text.secondary} />
-              </TouchableOpacity>
-            </SearchBarContainer>
-          </View>
-        )
-      }
+      const SearchBarContainer = glassAvailable ? GlassView : View
+      const searchBarProps = glassAvailable
+        ? { style: styles.searchBar, glassEffectStyle: 'regular' as const }
+        : { style: [styles.searchBar, styles.searchBarFallback] }
 
       return (
         <View style={styles.statusBarContainer}>
-          <StatusBubbleContainer {...statusBubbleProps}>
-            <Animated.View style={[styles.connectedDot, pulseStyle]} />
-            <Text style={styles.connectedText}>Health</Text>
-            <Text style={styles.statusOk}>OK</Text>
-          </StatusBubbleContainer>
-          <View style={styles.statusActions}>
-            <TouchableOpacity onPress={handleToggleSearch} activeOpacity={0.7}>
-              <SettingsButtonContainer {...settingsButtonProps}>
-                <Ionicons name="search" size={22} color={theme.colors.text.secondary} />
-              </SettingsButtonContainer>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
-              <SettingsButtonContainer {...settingsButtonProps}>
-                <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
-              </SettingsButtonContainer>
-            </TouchableOpacity>
-          </View>
+          {/* Status bubble layer - fades out when search opens */}
+          <Animated.View
+            style={[styles.statusRow, statusBubbleAnimatedStyle]}
+            pointerEvents={isSearchOpen ? 'none' : 'auto'}
+          >
+            <StatusBubbleContainer {...statusBubbleProps}>
+              <Animated.View style={[styles.connectedDot, pulseStyle]} />
+              <Text style={styles.connectedText}>Health</Text>
+              <Text style={styles.statusOk}>OK</Text>
+            </StatusBubbleContainer>
+            <Animated.View style={[styles.statusActions, statusActionsAnimatedStyle]}>
+              <TouchableOpacity onPress={handleToggleSearch} activeOpacity={0.7}>
+                <SettingsButtonContainer {...settingsButtonProps}>
+                  <Ionicons name="search" size={22} color={theme.colors.text.secondary} />
+                </SettingsButtonContainer>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
+                <SettingsButtonContainer {...settingsButtonProps}>
+                  <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+                </SettingsButtonContainer>
+              </TouchableOpacity>
+            </Animated.View>
+          </Animated.View>
+
+          {/* Search bar layer - expands in when search opens */}
+          {isSearchOpen && (
+            <Animated.View
+              style={[styles.searchBarWrapper, searchBarAnimatedStyle]}
+              entering={FadeIn.duration(150)}
+              exiting={FadeOut.duration(100)}
+            >
+              <SearchBarContainer {...searchBarProps}>
+                <Ionicons name="search" size={18} color={theme.colors.text.secondary} />
+                <TextInput
+                  ref={searchInputRef}
+                  style={styles.searchInput}
+                  placeholder="Search messages..."
+                  placeholderTextColor={theme.colors.text.tertiary}
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  autoCorrect={false}
+                  returnKeyType="search"
+                />
+                {searchQuery.length > 0 && (
+                  <Text style={styles.searchCount}>
+                    {
+                      allMessages.filter((m) =>
+                        m.text.toLowerCase().includes(searchQuery.toLowerCase()),
+                      ).length
+                    }
+                  </Text>
+                )}
+                <TouchableOpacity onPress={handleCloseSearch} hitSlop={8}>
+                  <Ionicons name="close-circle" size={20} color={theme.colors.text.secondary} />
+                </TouchableOpacity>
+              </SearchBarContainer>
+            </Animated.View>
+          )}
         </View>
       )
     }
@@ -621,10 +644,22 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
     settingsButtonFallback: {
       backgroundColor: theme.colors.surface,
     },
+    statusRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flex: 1,
+    },
     statusActions: {
       flexDirection: 'row',
       alignItems: 'center',
       gap: theme.spacing.sm,
+    },
+    searchBarWrapper: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      transformOrigin: 'right center',
     },
     searchBar: {
       flex: 1,
