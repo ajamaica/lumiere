@@ -18,6 +18,7 @@ export default [
       'android/**',
       'ios/**',
       'plugins/**',
+      'electron/**',
       '*.config.js',
     ],
   },

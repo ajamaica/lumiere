@@ -1,7 +1,5 @@
 const { app, BrowserWindow, shell, Menu } = require('electron')
 const path = require('path')
-const { spawn } = require('child_process')
-
 const isDev = process.env.ELECTRON_DEV === 'true'
 const DEV_SERVER_URL = 'http://localhost:8081'
 
