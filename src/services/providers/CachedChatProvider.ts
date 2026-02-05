@@ -147,6 +147,18 @@ export class CachedChatProvider implements ChatProvider {
       // offline next time.
       if (response.messages.length > 0) {
         await this.writeCache(cacheKey, response.messages)
+        return response
+      }
+
+      // For providers without persistent history (e.g. Apple Intelligence),
+      // the inner provider only has in-memory storage which is lost on app restart.
+      // When it returns empty, fall back to the cache which may have messages.
+      if (!this.inner.capabilities.persistentHistory) {
+        const cached = await this.readCache(cacheKey)
+        if (cached.length > 0) {
+          const messages = limit ? cached.slice(-limit) : cached
+          return { messages }
+        }
       }
 
       return response
