@@ -9,7 +9,7 @@ export const DEFAULT_SESSION_KEY = 'agent:main:main'
  * Default model identifiers for various AI providers.
  */
 export const DEFAULT_MODELS = {
-  /** Default Claude model for Claudie API provider */
+  /** Default Claude model for Claude API provider */
   CLAUDE: 'claude-sonnet-4-5-20250514',
   /** Default Ollama model for local inference */
   OLLAMA: 'llama3.2',
