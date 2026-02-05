@@ -24,6 +24,7 @@
 ## Features
 
 ### Core
+
 - **Multi-provider support** — Connect to OpenClaw, Claude, Ollama, Apple Intelligence, or Echo Server
 - **Multi-server management** — Configure and switch between multiple AI servers
 - **Real-time streaming** — Streamed AI responses with markdown rendering
@@ -32,71 +33,81 @@
 - **Slash commands** — 38 built-in commands with autocomplete
 
 ### Voice & Input
+
 - **Voice transcription** — Dictate messages using native iOS speech recognition
 - **Recording overlay** — Visual feedback with real-time transcription preview
 
 ### Personalization
+
 - **Color themes** — 8 color palettes (Default, Pink, Green, Red, Blue, Purple, Orange, Glass)
 - **Light & dark modes** — System-aware theming with manual override
 - **Session aliases** — Custom display names for chat sessions
 
 ### Automation
+
 - **Triggers** — Create deep links that auto-send messages to specific sessions
 - **Quick actions** — Home screen shortcuts (iOS 3D Touch / Android) linked to triggers
 - **Cron scheduler** — Schedule recurring agent tasks (OpenClaw only)
 - **Background notifications** — Get notified of new messages when app is backgrounded
 
 ### Security
+
 - **Face ID / Touch ID** — Biometric authentication on app launch and resume
 - **Secure storage** — API keys and tokens stored securely
 
 ### Platform
+
 - **iPad support** — Responsive layouts with form sheet modals on tablet
 - **Deep linking** — Open screens and execute triggers via `lumiere://` URLs
 
 ## AI Providers
 
-| Provider | Type | Chat | Images | Sessions | History | Scheduler |
-|----------|------|:----:|:------:|:--------:|:-------:|:---------:|
-| **OpenClaw** | `molt` | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Claude** | `claudie` | ✅ | ✅ | — | — | — |
-| **Ollama** | `ollama` | ✅ | — | — | — | — |
-| **Apple Intelligence** | `apple` | ✅ | — | — | — | — |
-| **Echo Server** | `echo` | ✅ | — | — | — | — |
+| Provider               | Type      | Chat | Images | Sessions | History | Scheduler |
+| ---------------------- | --------- | :--: | :----: | :------: | :-----: | :-------: |
+| **OpenClaw**           | `molt`    |  ✅  |   ✅   |    ✅    |   ✅    |    ✅     |
+| **Claude**             | `claudie` |  ✅  |   ✅   |    —     |    —    |     —     |
+| **Ollama**             | `ollama`  |  ✅  |   —    |    —     |    —    |     —     |
+| **Apple Intelligence** | `apple`   |  ✅  |   —    |    —     |    —    |     —     |
+| **Echo Server**        | `echo`    |  ✅  |   —    |    —     |    —    |     —     |
 
 ### OpenClaw (Molt Gateway)
+
 Full-featured provider with WebSocket streaming, server-side sessions, chat history persistence, and cron job scheduling. Requires a running Molt Gateway instance.
 
 ### Claude (Anthropic API)
+
 Direct integration with Anthropic's Messages API. Supports streaming responses and image attachments. Requires an Anthropic API key.
 
 ### Ollama
+
 Connect to a local Ollama instance for offline AI. Includes a model selection screen to switch between installed models.
 
 ### Apple Intelligence
+
 On-device AI using Apple Foundation Models. Requires iOS 18+ with Apple Intelligence support. No external server needed.
 
 ### Echo Server
+
 Testing provider that echoes messages back. Useful for development and debugging.
 
 ## Screens
 
-| Screen | File | Description |
-|--------|------|-------------|
-| **Chat** | `app/index.tsx` | Main chat interface with streaming responses, markdown rendering, voice input, slash commands, and message favoriting |
-| **Settings** | `app/settings.tsx` | App configuration including appearance, security, notifications, and account management |
-| **Servers** | `app/servers.tsx` | View, switch, and manage configured AI servers |
-| **Add Server** | `app/add-server.tsx` | Configure a new server with provider-specific fields |
-| **Edit Server** | `app/edit-server.tsx` | Modify or delete existing server configuration |
-| **Sessions** | `app/sessions.tsx` | Create, switch, and reset chat sessions (OpenClaw) |
-| **Edit Session** | `app/edit-session.tsx` | Rename sessions with custom aliases |
-| **Overview** | `app/overview.tsx` | Gateway monitoring dashboard with health status (OpenClaw) |
-| **Scheduler** | `app/scheduler.tsx` | Cron job management (OpenClaw) |
-| **Favorites** | `app/favorites.tsx` | Saved messages viewer |
-| **Triggers** | `app/triggers.tsx` | Create and manage auto-send deep links |
-| **Colors** | `app/colors.tsx` | Color theme selection |
-| **Ollama Models** | `app/ollama-models.tsx` | Model selection for Ollama provider |
-| **Gallery** | `app/gallery.tsx` | Component showcase for development |
+| Screen            | File                    | Description                                                                                                           |
+| ----------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Chat**          | `app/index.tsx`         | Main chat interface with streaming responses, markdown rendering, voice input, slash commands, and message favoriting |
+| **Settings**      | `app/settings.tsx`      | App configuration including appearance, security, notifications, and account management                               |
+| **Servers**       | `app/servers.tsx`       | View, switch, and manage configured AI servers                                                                        |
+| **Add Server**    | `app/add-server.tsx`    | Configure a new server with provider-specific fields                                                                  |
+| **Edit Server**   | `app/edit-server.tsx`   | Modify or delete existing server configuration                                                                        |
+| **Sessions**      | `app/sessions.tsx`      | Create, switch, and reset chat sessions (OpenClaw)                                                                    |
+| **Edit Session**  | `app/edit-session.tsx`  | Rename sessions with custom aliases                                                                                   |
+| **Overview**      | `app/overview.tsx`      | Gateway monitoring dashboard with health status (OpenClaw)                                                            |
+| **Scheduler**     | `app/scheduler.tsx`     | Cron job management (OpenClaw)                                                                                        |
+| **Favorites**     | `app/favorites.tsx`     | Saved messages viewer                                                                                                 |
+| **Triggers**      | `app/triggers.tsx`      | Create and manage auto-send deep links                                                                                |
+| **Colors**        | `app/colors.tsx`        | Color theme selection                                                                                                 |
+| **Ollama Models** | `app/ollama-models.tsx` | Model selection for Ollama provider                                                                                   |
+| **Gallery**       | `app/gallery.tsx`       | Component showcase for development                                                                                    |
 
 ### Navigation Flow
 
@@ -165,18 +176,18 @@ pnpm start
 
 Open screens directly using `lumiere://` URLs:
 
-| URL | Action |
-|-----|--------|
-| `lumiere://chat` | Chat screen |
-| `lumiere://settings` | Settings |
-| `lumiere://servers` | Server management |
-| `lumiere://sessions` | Session management |
-| `lumiere://overview` | Gateway overview |
-| `lumiere://scheduler` | Cron scheduler |
-| `lumiere://favorites` | Favorites |
-| `lumiere://triggers` | Triggers |
-| `lumiere://colors` | Color themes |
-| `lumiere://trigger/autotrigger/{slug}` | Execute a trigger |
+| URL                                    | Action             |
+| -------------------------------------- | ------------------ |
+| `lumiere://chat`                       | Chat screen        |
+| `lumiere://settings`                   | Settings           |
+| `lumiere://servers`                    | Server management  |
+| `lumiere://sessions`                   | Session management |
+| `lumiere://overview`                   | Gateway overview   |
+| `lumiere://scheduler`                  | Cron scheduler     |
+| `lumiere://favorites`                  | Favorites          |
+| `lumiere://triggers`                   | Triggers           |
+| `lumiere://colors`                     | Color themes       |
+| `lumiere://trigger/autotrigger/{slug}` | Execute a trigger  |
 
 ## Architecture
 
@@ -210,12 +221,14 @@ src/
 ## Platform-Specific Features
 
 ### iOS Only
+
 - Voice transcription via native Speech Recognition
 - Apple Intelligence provider (iOS 18+)
 - 3D Touch quick actions
 - Glass effect input styling
 
 ### iPad
+
 - Form sheet modals instead of full-screen
 - Responsive layouts
 - Landscape orientation support
