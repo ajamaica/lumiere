@@ -6,6 +6,7 @@ import AppleIcon from '../../assets/provider-apple.svg'
 import ClaudeIcon from '../../assets/provider-claude.svg'
 import EchoIcon from '../../assets/provider-echo.svg'
 import OllamaIcon from '../../assets/provider-ollama.svg'
+import OpenAIIcon from '../../assets/provider-openai.svg'
 import OpenClawIcon from '../../assets/provider-openclaw.svg'
 import { ProviderType } from '../services/providers'
 
@@ -20,6 +21,7 @@ export function getProviderIcon(type: ProviderType, color: string): React.ReactN
     molt: OpenClawIcon,
     ollama: OllamaIcon,
     claudie: ClaudeIcon,
+    openai: OpenAIIcon,
     apple: AppleIcon,
     echo: EchoIcon,
   }
@@ -34,6 +36,7 @@ export function getAllProviderOptions(color: string) {
     { value: 'molt', label: 'OpenClaw', icon: getProviderIcon('molt', color) },
     { value: 'ollama', label: 'Ollama', icon: getProviderIcon('ollama', color) },
     { value: 'claudie', label: 'Claude', icon: getProviderIcon('claudie', color) },
+    { value: 'openai', label: 'OpenAI', icon: getProviderIcon('openai', color) },
     ...(Platform.OS === 'ios'
       ? [
           {
@@ -60,6 +63,11 @@ export function getBasicProviderOptions(color: string) {
       value: 'claudie' as ProviderType,
       label: 'Claude',
       icon: getProviderIcon('claudie', color),
+    },
+    {
+      value: 'openai' as ProviderType,
+      label: 'OpenAI',
+      icon: getProviderIcon('openai', color),
     },
     ...(Platform.OS === 'ios'
       ? [

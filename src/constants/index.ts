@@ -13,6 +13,8 @@ export const DEFAULT_MODELS = {
   CLAUDE: 'claude-sonnet-4-5-20250514',
   /** Default Ollama model for local inference */
   OLLAMA: 'llama3.2',
+  /** Default OpenAI model */
+  OPENAI: 'gpt-4o',
 } as const
 
 /**
@@ -23,6 +25,8 @@ export const API_CONFIG = {
   ANTHROPIC_VERSION: '2023-06-01',
   /** Default max tokens for Claude API responses */
   CLAUDE_MAX_TOKENS: 8192,
+  /** Default max tokens for OpenAI API responses */
+  OPENAI_MAX_TOKENS: 4096,
 } as const
 
 /**
