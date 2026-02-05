@@ -19,6 +19,7 @@ import {
 import { Button, ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
+import { backgroundCheckTask } from '../src/services/notifications/notificationService'
 import {
   backgroundNotificationsEnabledAtom,
   biometricLockEnabledAtom,
@@ -86,6 +87,17 @@ export default function SettingsScreen() {
     const currentIndex = supportedLanguages.indexOf(currentLanguage)
     const nextIndex = (currentIndex + 1) % supportedLanguages.length
     setLanguage(supportedLanguages[nextIndex])
+  }
+
+  const handleTestNotifications = async () => {
+    try {
+      const result = await backgroundCheckTask()
+      const resultText =
+        result === 1 ? 'NewData (notification sent)' : result === 2 ? 'NoData' : 'Failed'
+      Alert.alert('Background Check Result', `Result: ${resultText}`)
+    } catch (error) {
+      Alert.alert('Error', String(error))
+    }
   }
 
   const handleLogout = () => {
@@ -273,6 +285,11 @@ export default function SettingsScreen() {
               icon="construct-outline"
               label={t('settings.componentGallery')}
               onPress={() => router.push('/gallery')}
+            />
+            <SettingRow
+              icon="notifications-circle-outline"
+              label="Test Background Notifications"
+              onPress={handleTestNotifications}
               showDivider={false}
             />
           </Section>
