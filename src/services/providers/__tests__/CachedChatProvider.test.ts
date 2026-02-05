@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { jotaiStorage } from '../../../store'
 import { buildCacheKey, CachedChatProvider } from '../CachedChatProvider'
 import {
   ChatHistoryMessage,
@@ -135,8 +136,7 @@ describe('CachedChatProvider', () => {
 
       // Cache contains both user + assistant messages
       const key = buildCacheKey('srv-1', 'agent:main:main')
-      const raw = await AsyncStorage.getItem(key)
-      const cached_messages = JSON.parse(raw!) as ChatHistoryMessage[]
+      const cached_messages = await jotaiStorage.getItem(key, [] as ChatHistoryMessage[])
 
       expect(cached_messages).toHaveLength(2)
       expect(cached_messages[0].role).toBe('user')
@@ -159,8 +159,7 @@ describe('CachedChatProvider', () => {
       await cached.sendMessage({ message: 'Hi', sessionKey: 'session-a' }, () => {})
 
       const key = buildCacheKey('srv-1', 'session-a')
-      const raw = await AsyncStorage.getItem(key)
-      const cached_messages = JSON.parse(raw!) as ChatHistoryMessage[]
+      const cached_messages = await jotaiStorage.getItem(key, [] as ChatHistoryMessage[])
       expect(cached_messages).toHaveLength(1)
       expect(cached_messages[0].role).toBe('user')
     })
@@ -180,8 +179,8 @@ describe('CachedChatProvider', () => {
 
       // Verify it was written to cache
       const key = buildCacheKey('srv', 'session-1')
-      const raw = await AsyncStorage.getItem(key)
-      expect(JSON.parse(raw!)).toEqual(serverMessages)
+      const cachedData = await jotaiStorage.getItem(key, [] as ChatHistoryMessage[])
+      expect(cachedData).toEqual(serverMessages)
     })
 
     it('falls back to cache when inner provider fails', async () => {
@@ -189,7 +188,7 @@ describe('CachedChatProvider', () => {
 
       // Pre-populate cache
       const key = buildCacheKey('srv', 'session-1')
-      await AsyncStorage.setItem(key, JSON.stringify(cachedMessages))
+      await jotaiStorage.setItem(key, cachedMessages)
 
       const inner = createMockProvider({
         getChatHistory: jest.fn().mockRejectedValue(new Error('Network error')),
@@ -221,7 +220,7 @@ describe('CachedChatProvider', () => {
       ]
 
       const key = buildCacheKey('srv', 'session-1')
-      await AsyncStorage.setItem(key, JSON.stringify(cachedMessages))
+      await jotaiStorage.setItem(key, cachedMessages)
 
       const inner = createMockProvider({
         getChatHistory: jest.fn().mockRejectedValue(new Error('offline')),
@@ -239,7 +238,7 @@ describe('CachedChatProvider', () => {
   describe('resetSession', () => {
     it('clears both inner provider session and local cache', async () => {
       const key = buildCacheKey('srv', 'session-1')
-      await AsyncStorage.setItem(key, JSON.stringify([msg('user', 'hi')]))
+      await jotaiStorage.setItem(key, [msg('user', 'hi')])
 
       const inner = createMockProvider()
       const cached = new CachedChatProvider(inner, 'srv')
@@ -247,12 +246,13 @@ describe('CachedChatProvider', () => {
       await cached.resetSession('session-1')
 
       expect(inner.resetSession).toHaveBeenCalledWith('session-1')
-      expect(await AsyncStorage.getItem(key)).toBeNull()
+      const remaining = await jotaiStorage.getItem(key, [] as ChatHistoryMessage[])
+      expect(remaining).toEqual([])
     })
 
     it('clears cache even when inner provider throws', async () => {
       const key = buildCacheKey('srv', 'session-1')
-      await AsyncStorage.setItem(key, JSON.stringify([msg('user', 'hi')]))
+      await jotaiStorage.setItem(key, [msg('user', 'hi')])
 
       const inner = createMockProvider({
         resetSession: jest.fn().mockRejectedValue(new Error('fail')),
@@ -261,7 +261,8 @@ describe('CachedChatProvider', () => {
       const cached = new CachedChatProvider(inner, 'srv')
 
       await expect(cached.resetSession('session-1')).rejects.toThrow('fail')
-      expect(await AsyncStorage.getItem(key)).toBeNull()
+      const remaining = await jotaiStorage.getItem(key, [] as ChatHistoryMessage[])
+      expect(remaining).toEqual([])
     })
   })
 
@@ -284,11 +285,14 @@ describe('CachedChatProvider', () => {
       await cachedA.sendMessage({ message: 'from-a', sessionKey: 's1' }, () => {})
       await cachedB.sendMessage({ message: 'from-b', sessionKey: 's1' }, () => {})
 
-      const rawA = await AsyncStorage.getItem(buildCacheKey('server-a', 's1'))
-      const rawB = await AsyncStorage.getItem(buildCacheKey('server-b', 's1'))
-
-      const msgsA = JSON.parse(rawA!) as ChatHistoryMessage[]
-      const msgsB = JSON.parse(rawB!) as ChatHistoryMessage[]
+      const msgsA = await jotaiStorage.getItem(
+        buildCacheKey('server-a', 's1'),
+        [] as ChatHistoryMessage[],
+      )
+      const msgsB = await jotaiStorage.getItem(
+        buildCacheKey('server-b', 's1'),
+        [] as ChatHistoryMessage[],
+      )
 
       expect(msgsA[0].content[0].text).toBe('from-a')
       expect(msgsB[0].content[0].text).toBe('from-b')
@@ -310,11 +314,14 @@ describe('CachedChatProvider', () => {
       await cached.sendMessage({ message: 'msg-s1', sessionKey: 'session-1' }, () => {})
       await cached.sendMessage({ message: 'msg-s2', sessionKey: 'session-2' }, () => {})
 
-      const raw1 = await AsyncStorage.getItem(buildCacheKey('srv', 'session-1'))
-      const raw2 = await AsyncStorage.getItem(buildCacheKey('srv', 'session-2'))
-
-      const msgs1 = JSON.parse(raw1!) as ChatHistoryMessage[]
-      const msgs2 = JSON.parse(raw2!) as ChatHistoryMessage[]
+      const msgs1 = await jotaiStorage.getItem(
+        buildCacheKey('srv', 'session-1'),
+        [] as ChatHistoryMessage[],
+      )
+      const msgs2 = await jotaiStorage.getItem(
+        buildCacheKey('srv', 'session-2'),
+        [] as ChatHistoryMessage[],
+      )
 
       expect(msgs1[0].content[0].text).toBe('msg-s1')
       expect(msgs2[0].content[0].text).toBe('msg-s2')
@@ -331,7 +338,8 @@ describe('CachedChatProvider', () => {
       await cached.getChatHistory('session-1')
 
       const key = buildCacheKey('srv', 'session-1')
-      expect(await AsyncStorage.getItem(key)).toBeNull()
+      const cachedData = await jotaiStorage.getItem(key, [] as ChatHistoryMessage[])
+      expect(cachedData).toEqual([])
     })
   })
 
@@ -340,7 +348,7 @@ describe('CachedChatProvider', () => {
       // Simulate: cache has messages from a previous session
       const cachedMessages = [msg('user', 'cached-q'), msg('assistant', 'cached-a')]
       const key = buildCacheKey('srv', 'session-1')
-      await AsyncStorage.setItem(key, JSON.stringify(cachedMessages))
+      await jotaiStorage.setItem(key, cachedMessages)
 
       // Inner provider has persistentHistory: false (like Apple Intelligence)
       // and returns empty (simulating app restart where in-memory is lost)
@@ -365,7 +373,7 @@ describe('CachedChatProvider', () => {
       ]
 
       const key = buildCacheKey('srv', 'session-1')
-      await AsyncStorage.setItem(key, JSON.stringify(cachedMessages))
+      await jotaiStorage.setItem(key, cachedMessages)
 
       const inner = createMockProvider({
         getChatHistory: jest.fn().mockResolvedValue({ messages: [] } as ChatHistoryResponse),
@@ -394,7 +402,7 @@ describe('CachedChatProvider', () => {
       // Simulate: cache has stale messages
       const cachedMessages = [msg('user', 'stale-q'), msg('assistant', 'stale-a')]
       const key = buildCacheKey('srv', 'session-1')
-      await AsyncStorage.setItem(key, JSON.stringify(cachedMessages))
+      await jotaiStorage.setItem(key, cachedMessages)
 
       // Inner provider has persistentHistory: true (like Molt)
       // Server says session is empty - we should trust it
