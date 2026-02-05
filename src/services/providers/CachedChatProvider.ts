@@ -173,7 +173,7 @@ export class CachedChatProvider implements ChatProvider {
     try {
       await this.inner.resetSession(sessionKey)
     } finally {
-      await jotaiStorage.removeItem(cacheKey, undefined)
+      await jotaiStorage.removeItem(cacheKey)
     }
   }
 
@@ -202,8 +202,7 @@ export class CachedChatProvider implements ChatProvider {
   private async writeCache(key: string, messages: ChatHistoryMessage[]): Promise<void> {
     try {
       const trimmed = messages.slice(-CACHE_CONFIG.MAX_CACHED_MESSAGES)
-      const existing = await jotaiStorage.getItem(key, [] as ChatHistoryMessage[])
-      await jotaiStorage.setItem(key, trimmed, existing)
+      await jotaiStorage.setItem(key, trimmed)
     } catch (error) {
       // Log in development to help debug storage issues
       if (__DEV__) {
