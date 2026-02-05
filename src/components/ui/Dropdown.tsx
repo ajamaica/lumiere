@@ -16,6 +16,7 @@ export interface DropdownProps<T extends string = string> {
   value: T
   onValueChange: (value: T) => void
   hint?: string
+  disabled?: boolean
 }
 
 export function Dropdown<T extends string = string>({
@@ -24,6 +25,7 @@ export function Dropdown<T extends string = string>({
   value,
   onValueChange,
   hint,
+  disabled,
 }: DropdownProps<T>) {
   const { theme } = useTheme()
   const [open, setOpen] = useState(false)
@@ -50,6 +52,9 @@ export function Dropdown<T extends string = string>({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
+    },
+    triggerDisabled: {
+      opacity: 0.5,
     },
     triggerText: {
       fontSize: theme.typography.fontSize.base,
@@ -100,7 +105,12 @@ export function Dropdown<T extends string = string>({
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
-      <TouchableOpacity style={styles.trigger} onPress={() => setOpen(true)} activeOpacity={0.7}>
+      <TouchableOpacity
+        style={[styles.trigger, disabled && styles.triggerDisabled]}
+        onPress={() => setOpen(true)}
+        activeOpacity={0.7}
+        disabled={disabled}
+      >
         <Text style={styles.triggerText}>{selectedOption?.label ?? ''}</Text>
         <Ionicons name="chevron-down" size={18} color={theme.colors.text.secondary} />
       </TouchableOpacity>

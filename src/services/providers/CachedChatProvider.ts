@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { CACHE_CONFIG } from '../../constants'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -9,12 +10,6 @@ import {
   ProviderCapabilities,
   SendMessageParams,
 } from './types'
-
-/** Maximum number of messages cached per session to prevent unbounded storage growth. */
-const MAX_CACHED_MESSAGES = 200
-
-/** AsyncStorage key prefix for cached chat messages. */
-const CACHE_KEY_PREFIX = 'chat_cache:'
 
 /**
  * Build the AsyncStorage key for a given server + session pair.
@@ -26,7 +21,7 @@ const CACHE_KEY_PREFIX = 'chat_cache:'
  */
 export function buildCacheKey(serverId: string | undefined, sessionKey: string): string {
   const server = serverId || '_local'
-  return `${CACHE_KEY_PREFIX}${server}:${sessionKey}`
+  return `${CACHE_CONFIG.CACHE_KEY_PREFIX}${server}:${sessionKey}`
 }
 
 /**
@@ -46,7 +41,10 @@ export async function readCachedHistory(
     if (!raw) return []
     const messages = JSON.parse(raw) as ChatHistoryMessage[]
     return limit ? messages.slice(-limit) : messages
-  } catch {
+  } catch (error) {
+    if (__DEV__) {
+      console.warn(`[readCachedHistory] Failed to read cache for session "${sessionKey}":`, error)
+    }
     return []
   }
 }
@@ -196,17 +194,24 @@ export class CachedChatProvider implements ChatProvider {
       const raw = await AsyncStorage.getItem(key)
       if (!raw) return []
       return JSON.parse(raw) as ChatHistoryMessage[]
-    } catch {
+    } catch (error) {
+      if (__DEV__) {
+        console.warn(`[CachedChatProvider] Failed to read cache for key "${key}":`, error)
+      }
       return []
     }
   }
 
   private async writeCache(key: string, messages: ChatHistoryMessage[]): Promise<void> {
     try {
-      const trimmed = messages.slice(-MAX_CACHED_MESSAGES)
+      const trimmed = messages.slice(-CACHE_CONFIG.MAX_CACHED_MESSAGES)
       await AsyncStorage.setItem(key, JSON.stringify(trimmed))
-    } catch {
-      // Silently ignore write failures (storage full, etc.)
+    } catch (error) {
+      // Log in development to help debug storage issues
+      if (__DEV__) {
+        console.warn(`[CachedChatProvider] Failed to write cache for key "${key}":`, error)
+      }
+      // Silently ignore in production (storage full, etc.)
     }
   }
 
