@@ -96,7 +96,6 @@ export function ChatInput({
 
   const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
   const hasContent = text.trim() || attachments.length > 0
-  const isTyping = text.length > 0
   const isRecording = voice.status === 'recording'
   const showMic = !hasContent && voice.isAvailable && Platform.OS === 'ios'
 
@@ -104,7 +103,7 @@ export function ChatInput({
   const containerProps = glassAvailable
     ? {
         style: styles.container,
-        glassEffectStyle: isTyping || isRecording ? ('clear' as const) : ('regular' as const),
+        glassEffectStyle: 'clear' as const,
       }
     : { style: [styles.container, styles.containerFallback] }
 
