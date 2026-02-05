@@ -20,6 +20,8 @@ export interface SettingRowProps {
   subtitle?: string
   /** Whether to show bottom divider (default: true) */
   showDivider?: boolean
+  /** Custom label text color override */
+  labelColor?: string
 }
 
 export function SettingRow({
@@ -33,6 +35,7 @@ export function SettingRow({
   customIcon,
   subtitle,
   showDivider = true,
+  labelColor,
 }: SettingRowProps) {
   const { theme } = useTheme()
 
@@ -62,7 +65,7 @@ export function SettingRow({
     },
     label: {
       fontSize: theme.typography.fontSize.base,
-      color: theme.colors.text.primary,
+      color: labelColor || theme.colors.text.primary,
       fontWeight: theme.typography.fontWeight.regular,
     },
     subtitle: {
