@@ -1,87 +1,106 @@
 import React from 'react'
 import { View } from 'react-native'
-import Svg, { Circle, Defs, G, Path, Pattern, Rect } from 'react-native-svg'
+import Svg, { Circle, G, Path, Rect } from 'react-native-svg'
 
-// Lichtenstein-style colors
-const LICHTENSTEIN = {
-  red: '#E41E31',
-  yellow: '#FFD60A',
-  blue: '#0057B8',
-  black: '#1A1A1A',
+// Neo-Brutalism colors
+const COLORS = {
+  yellow: '#FFE600',
+  pink: '#FF6B9D',
+  blue: '#4DAFFF',
+  green: '#7CFF6B',
+  orange: '#FF9F43',
+  black: '#000000',
   white: '#FFFFFF',
 }
 
-export function SetupIllustration() {
-  const strokeWidth = 4
+const SHADOW_OFFSET = 6
+const STROKE = 3
 
+export function SetupIllustration() {
   return (
     <View style={{ width: 280, height: 260, alignItems: 'center', justifyContent: 'center' }}>
       <Svg width={280} height={260} viewBox="0 0 280 260">
-        <Defs>
-          <Pattern id="dotsBlueSetup" patternUnits="userSpaceOnUse" width="10" height="10">
-            <Rect width="10" height="10" fill={LICHTENSTEIN.white} />
-            <Circle cx="5" cy="5" r="3" fill={LICHTENSTEIN.blue} />
-          </Pattern>
-        </Defs>
-
-        {/* Large abstract plug */}
-        <G transform="translate(20, 80)">
+        {/* Plug */}
+        <G transform="translate(20, 70)">
+          {/* Plug body shadow */}
+          <Rect
+            x={SHADOW_OFFSET}
+            y={20 + SHADOW_OFFSET}
+            width="70"
+            height="50"
+            fill={COLORS.black}
+          />
           {/* Plug body */}
           <Rect
             x="0"
             y="20"
-            width="80"
-            height="60"
-            rx="8"
-            fill={LICHTENSTEIN.yellow}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
+            width="70"
+            height="50"
+            fill={COLORS.yellow}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
           />
           {/* Prongs */}
           <Rect
-            x="85"
-            y="30"
-            width="40"
-            height="15"
-            fill={LICHTENSTEIN.white}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
+            x={75 + SHADOW_OFFSET}
+            y={30 + SHADOW_OFFSET}
+            width="35"
+            height="12"
+            fill={COLORS.black}
           />
           <Rect
-            x="85"
-            y="55"
-            width="40"
-            height="15"
-            fill={LICHTENSTEIN.white}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
+            x="75"
+            y="30"
+            width="35"
+            height="12"
+            fill={COLORS.white}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
+          />
+          <Rect
+            x={75 + SHADOW_OFFSET}
+            y={48 + SHADOW_OFFSET}
+            width="35"
+            height="12"
+            fill={COLORS.black}
+          />
+          <Rect
+            x="75"
+            y="48"
+            width="35"
+            height="12"
+            fill={COLORS.white}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
           />
           {/* Cable */}
           <Path
-            d="M0 50 Q-30 50 -40 80 Q-50 120 -20 150"
+            d="M0 45 Q-25 45 -30 80 Q-35 130 -10 160"
             fill="none"
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={12}
+            stroke={COLORS.black}
+            strokeWidth={14}
           />
           <Path
-            d="M0 50 Q-30 50 -40 80 Q-50 120 -20 150"
+            d="M0 45 Q-25 45 -30 80 Q-35 130 -10 160"
             fill="none"
-            stroke={LICHTENSTEIN.yellow}
-            strokeWidth={8}
+            stroke={COLORS.yellow}
+            strokeWidth={10}
           />
         </G>
 
-        {/* Large abstract socket/server */}
-        <G transform="translate(155, 50)">
+        {/* Server/Socket */}
+        <G transform="translate(150, 40)">
+          {/* Server shadow */}
+          <Rect x={SHADOW_OFFSET} y={SHADOW_OFFSET} width="100" height="140" fill={COLORS.black} />
+          {/* Server body */}
           <Rect
             x="0"
             y="0"
             width="100"
             height="140"
-            rx="10"
-            fill="url(#dotsBlueSetup)"
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
+            fill={COLORS.blue}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
           />
           {/* Socket holes */}
           <Rect
@@ -89,87 +108,97 @@ export function SetupIllustration() {
             y="45"
             width="20"
             height="50"
-            fill={LICHTENSTEIN.black}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
+            fill={COLORS.black}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
           />
-          <Circle cx="-5" cy="60" r="8" fill={LICHTENSTEIN.white} />
-          <Circle cx="-5" cy="80" r="8" fill={LICHTENSTEIN.white} />
+          <Circle cx="-5" cy="58" r="6" fill={COLORS.white} />
+          <Circle cx="-5" cy="78" r="6" fill={COLORS.white} />
           {/* Status light */}
+          <Circle cx={50 + 4} cy={25 + 4} r="15" fill={COLORS.black} />
           <Circle
             cx="50"
-            cy="30"
+            cy="25"
             r="15"
-            fill="#00C853"
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={3}
+            fill={COLORS.green}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
           />
           {/* Screen lines */}
-          <Rect x="20" y="60" width="60" height="8" fill={LICHTENSTEIN.black} />
-          <Rect x="20" y="80" width="45" height="8" fill={LICHTENSTEIN.black} />
-          <Rect x="20" y="100" width="55" height="8" fill={LICHTENSTEIN.black} />
+          <Rect x="15" y="55" width="70" height="10" fill={COLORS.black} />
+          <Rect x="15" y="75" width="50" height="10" fill={COLORS.black} />
+          <Rect x="15" y="95" width="60" height="10" fill={COLORS.black} />
+          {/* Blinking cursor */}
+          <Rect x="80" y="95" width="5" height="10" fill={COLORS.white} />
         </G>
 
-        {/* Connection spark - large burst */}
+        {/* Connection spark */}
         <G transform="translate(115, 85)">
+          {/* Spark shadow */}
           <Path
-            d="M0 25 L15 0 L25 20 L50 10 L35 30 L55 40 L30 45 L40 70 L20 50 L0 65 L10 45 L-15 40 L10 30 Z"
-            fill={LICHTENSTEIN.yellow}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={3}
+            d="M0 0 L15 20 L5 20 L20 45 L8 25 L18 25 L0 0"
+            fill={COLORS.black}
+            transform={`translate(${SHADOW_OFFSET}, ${SHADOW_OFFSET})`}
           />
-          <Circle
-            cx="20"
-            cy="35"
-            r="12"
-            fill={LICHTENSTEIN.white}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={2}
+          {/* Spark */}
+          <Path
+            d="M0 0 L15 20 L5 20 L20 45 L8 25 L18 25 L0 0"
+            fill={COLORS.orange}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
           />
         </G>
 
-        {/* Motion lines */}
-        <Path d="M90 120 L75 120" stroke={LICHTENSTEIN.black} strokeWidth={3} />
-        <Path d="M90 135 L65 135" stroke={LICHTENSTEIN.black} strokeWidth={3} />
-        <Path d="M90 150 L75 150" stroke={LICHTENSTEIN.black} strokeWidth={3} />
-
-        {/* Success checkmark */}
-        <G transform="translate(200, 200)">
+        {/* Checkmark badge */}
+        <G transform="translate(200, 195)">
+          {/* Shadow */}
+          <Circle cx={30 + SHADOW_OFFSET} cy={30 + SHADOW_OFFSET} r="30" fill={COLORS.black} />
+          {/* Circle */}
           <Circle
             cx="30"
             cy="30"
             r="30"
-            fill="#00C853"
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
+            fill={COLORS.green}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
           />
+          {/* Checkmark */}
           <Path
             d="M15 30 L25 40 L45 18"
             fill="none"
-            stroke={LICHTENSTEIN.white}
+            stroke={COLORS.black}
             strokeWidth={6}
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </G>
 
+        {/* Motion lines */}
+        <Path d="M100 105 L85 105" stroke={COLORS.black} strokeWidth={4} />
+        <Path d="M100 120 L80 120" stroke={COLORS.black} strokeWidth={4} />
+        <Path d="M100 135 L85 135" stroke={COLORS.black} strokeWidth={4} />
+
         {/* Decorative elements */}
-        <Circle
-          cx="30"
-          cy="30"
-          r="12"
-          fill={LICHTENSTEIN.red}
-          stroke={LICHTENSTEIN.black}
-          strokeWidth={3}
-        />
-        <Circle
-          cx="60"
-          cy="15"
-          r="8"
-          fill={LICHTENSTEIN.blue}
-          stroke={LICHTENSTEIN.black}
+        <Rect
+          x="5"
+          y="10"
+          width="25"
+          height="25"
+          fill={COLORS.pink}
+          stroke={COLORS.black}
           strokeWidth={2}
         />
+        <Circle cx="60" cy="20" r="10" fill={COLORS.green} stroke={COLORS.black} strokeWidth={2} />
+        <Rect
+          x="5"
+          y="235"
+          width="15"
+          height="15"
+          fill={COLORS.yellow}
+          stroke={COLORS.black}
+          strokeWidth={2}
+        />
+        <Circle cx="270" cy="15" r="8" fill={COLORS.blue} stroke={COLORS.black} strokeWidth={2} />
       </Svg>
     </View>
   )

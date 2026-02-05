@@ -1,155 +1,198 @@
 import React from 'react'
 import { View } from 'react-native'
-import Svg, { Circle, Defs, G, Path, Pattern, Rect } from 'react-native-svg'
+import Svg, { Circle, G, Path, Rect } from 'react-native-svg'
 
-// Lichtenstein-style colors
-const LICHTENSTEIN = {
-  red: '#E41E31',
-  yellow: '#FFD60A',
-  blue: '#0057B8',
-  black: '#1A1A1A',
+// Neo-Brutalism colors
+const COLORS = {
+  yellow: '#FFE600',
+  pink: '#FF6B9D',
+  blue: '#4DAFFF',
+  green: '#7CFF6B',
+  orange: '#FF9F43',
+  black: '#000000',
   white: '#FFFFFF',
 }
 
-export function FullControlIllustration() {
-  const strokeWidth = 4
+const SHADOW_OFFSET = 6
+const STROKE = 3
 
+export function FullControlIllustration() {
   return (
     <View style={{ width: 280, height: 260, alignItems: 'center', justifyContent: 'center' }}>
       <Svg width={280} height={260} viewBox="0 0 280 260">
-        <Defs>
-          <Pattern id="dotsYellowCtrl" patternUnits="userSpaceOnUse" width="10" height="10">
-            <Rect width="10" height="10" fill={LICHTENSTEIN.yellow} />
-            <Circle cx="5" cy="5" r="2.5" fill="#E8C000" />
-          </Pattern>
-        </Defs>
-
-        {/* Large abstract lever/switch */}
-        <G transform="translate(30, 40)">
-          {/* Base */}
-          <Rect
-            x="0"
-            y="140"
-            width="100"
-            height="40"
-            fill={LICHTENSTEIN.black}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
-          />
-          {/* Lever arm */}
-          <Rect
-            x="35"
-            y="20"
-            width="30"
-            height="130"
-            fill="url(#dotsYellowCtrl)"
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
-          />
-          {/* Lever ball */}
-          <Circle
-            cx="50"
-            cy="20"
-            r="30"
-            fill={LICHTENSTEIN.red}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
-          />
-          {/* Highlight */}
-          <Circle cx="40" cy="10" r="10" fill={LICHTENSTEIN.white} opacity={0.7} />
-        </G>
-
-        {/* Big bold button */}
-        <G transform="translate(160, 30)">
+        {/* Big power button */}
+        <G transform="translate(90, 20)">
+          {/* Shadow */}
+          <Circle cx={50 + SHADOW_OFFSET} cy={50 + SHADOW_OFFSET} r="50" fill={COLORS.black} />
+          {/* Button */}
           <Circle
             cx="50"
             cy="50"
             r="50"
-            fill={LICHTENSTEIN.red}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
+            fill={COLORS.pink}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
           />
-          <Circle
-            cx="50"
-            cy="50"
-            r="35"
-            fill={LICHTENSTEIN.red}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={3}
+          {/* Power icon */}
+          <Path d="M50 25 L50 50" stroke={COLORS.black} strokeWidth={6} strokeLinecap="round" />
+          <Path
+            d="M30 35 A25 25 0 1 0 70 35"
+            fill="none"
+            stroke={COLORS.black}
+            strokeWidth={6}
+            strokeLinecap="round"
           />
-          {/* Highlight */}
-          <Circle cx="35" cy="35" r="12" fill={LICHTENSTEIN.white} opacity={0.6} />
         </G>
 
-        {/* Abstract toggle switches */}
-        <G transform="translate(150, 150)">
+        {/* Lever */}
+        <G transform="translate(20, 80)">
+          {/* Base shadow */}
+          <Rect
+            x={SHADOW_OFFSET}
+            y={130 + SHADOW_OFFSET}
+            width="60"
+            height="30"
+            fill={COLORS.black}
+          />
+          {/* Base */}
+          <Rect
+            x="0"
+            y="130"
+            width="60"
+            height="30"
+            fill={COLORS.black}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
+          />
+          {/* Lever arm shadow */}
+          <Rect
+            x={20 + SHADOW_OFFSET}
+            y={20 + SHADOW_OFFSET}
+            width="20"
+            height="115"
+            fill={COLORS.black}
+          />
+          {/* Lever arm */}
+          <Rect
+            x="20"
+            y="20"
+            width="20"
+            height="115"
+            fill={COLORS.yellow}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
+          />
+          {/* Lever ball shadow */}
+          <Circle cx={30 + SHADOW_OFFSET} cy={20 + SHADOW_OFFSET} r="25" fill={COLORS.black} />
+          {/* Lever ball */}
+          <Circle
+            cx="30"
+            cy="20"
+            r="25"
+            fill={COLORS.orange}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
+          />
+        </G>
+
+        {/* Toggle switches */}
+        <G transform="translate(200, 130)">
           {/* Switch 1 - ON */}
+          <Rect x={SHADOW_OFFSET} y={SHADOW_OFFSET} width="30" height="60" fill={COLORS.black} />
           <Rect
             x="0"
             y="0"
-            width="35"
-            height="70"
-            fill={LICHTENSTEIN.black}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
+            width="30"
+            height="60"
+            fill={COLORS.white}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
           />
           <Rect
             x="5"
             y="5"
-            width="25"
-            height="30"
-            fill={LICHTENSTEIN.yellow}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={3}
+            width="20"
+            height="25"
+            fill={COLORS.green}
+            stroke={COLORS.black}
+            strokeWidth={2}
           />
 
           {/* Switch 2 - OFF */}
           <Rect
-            x="50"
-            y="0"
-            width="35"
-            height="70"
-            fill={LICHTENSTEIN.black}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={strokeWidth}
+            x={45 + SHADOW_OFFSET}
+            y={SHADOW_OFFSET}
+            width="30"
+            height="60"
+            fill={COLORS.black}
           />
           <Rect
-            x="55"
-            y="35"
-            width="25"
-            height="30"
-            fill={LICHTENSTEIN.blue}
-            stroke={LICHTENSTEIN.black}
-            strokeWidth={3}
+            x="45"
+            y="0"
+            width="30"
+            height="60"
+            fill={COLORS.white}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
+          />
+          <Rect
+            x="50"
+            y="30"
+            width="20"
+            height="25"
+            fill={COLORS.pink}
+            stroke={COLORS.black}
+            strokeWidth={2}
           />
         </G>
 
-        {/* Status indicators - large dots */}
-        <Circle
-          cx="260"
-          cy="180"
-          r="15"
-          fill="#00C853"
-          stroke={LICHTENSTEIN.black}
-          strokeWidth={3}
-        />
-        <Circle
-          cx="260"
-          cy="220"
-          r="15"
-          fill={LICHTENSTEIN.yellow}
-          stroke={LICHTENSTEIN.black}
-          strokeWidth={3}
-        />
+        {/* Status lights */}
+        <G transform="translate(200, 210)">
+          <Circle cx={SHADOW_OFFSET} cy={SHADOW_OFFSET} r="15" fill={COLORS.black} />
+          <Circle
+            cx="0"
+            cy="0"
+            r="15"
+            fill={COLORS.green}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
+          />
+          <Circle cx={45 + SHADOW_OFFSET} cy={SHADOW_OFFSET} r="15" fill={COLORS.black} />
+          <Circle
+            cx="45"
+            cy="0"
+            r="15"
+            fill={COLORS.yellow}
+            stroke={COLORS.black}
+            strokeWidth={STROKE}
+          />
+        </G>
 
-        {/* Abstract power waves */}
-        <Path d="M100 60 Q120 40 140 60" fill="none" stroke={LICHTENSTEIN.black} strokeWidth={3} />
-        <Path d="M105 45 Q125 20 145 45" fill="none" stroke={LICHTENSTEIN.black} strokeWidth={3} />
-        <Path d="M110 30 Q130 5 150 30" fill="none" stroke={LICHTENSTEIN.black} strokeWidth={3} />
+        {/* Speed lines */}
+        <Path d="M100 100 L130 85" stroke={COLORS.black} strokeWidth={3} />
+        <Path d="M105 115 L140 105" stroke={COLORS.black} strokeWidth={3} />
+        <Path d="M100 130 L130 125" stroke={COLORS.black} strokeWidth={3} />
 
-        {/* Action lines */}
-        <Path d="M20 30 L5 15" stroke={LICHTENSTEIN.black} strokeWidth={3} />
-        <Path d="M15 45 L0 35" stroke={LICHTENSTEIN.black} strokeWidth={3} />
+        {/* Decorative blocks */}
+        <Rect
+          x="160"
+          y="10"
+          width="15"
+          height="15"
+          fill={COLORS.blue}
+          stroke={COLORS.black}
+          strokeWidth={2}
+        />
+        <Rect
+          x="5"
+          y="5"
+          width="25"
+          height="25"
+          fill={COLORS.green}
+          stroke={COLORS.black}
+          strokeWidth={2}
+        />
+        <Circle cx="270" cy="30" r="8" fill={COLORS.yellow} stroke={COLORS.black} strokeWidth={2} />
       </Svg>
     </View>
   )
