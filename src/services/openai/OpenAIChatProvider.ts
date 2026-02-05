@@ -266,8 +266,9 @@ export class OpenAIChatProvider implements ChatProvider {
     const sliced = limit ? messages.slice(-limit) : messages
 
     const historyMessages: ChatHistoryMessage[] = sliced
-      .filter((m): m is OpenAIMessage & { role: 'user' | 'assistant' } =>
-        m.role === 'user' || m.role === 'assistant',
+      .filter(
+        (m): m is OpenAIMessage & { role: 'user' | 'assistant' } =>
+          m.role === 'user' || m.role === 'assistant',
       )
       .map((m, i) => ({
         role: m.role,
