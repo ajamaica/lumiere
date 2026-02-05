@@ -60,8 +60,13 @@ export function SetupScreen() {
     },
   })
 
-  const needsUrl = providerType === 'molt' || providerType === 'ollama' || providerType === 'claudie' || providerType === 'openai'
-  const needsToken = providerType === 'molt' || providerType === 'claudie' || providerType === 'openai'
+  const needsUrl =
+    providerType === 'molt' ||
+    providerType === 'ollama' ||
+    providerType === 'claudie' ||
+    providerType === 'openai'
+  const needsToken =
+    providerType === 'molt' || providerType === 'claudie' || providerType === 'openai'
 
   const handleComplete = async () => {
     if (providerType === 'molt' && localUrl.trim() && localToken.trim()) {
@@ -259,7 +264,9 @@ export function SetupScreen() {
             />
           )}
 
-          {(providerType === 'ollama' || providerType === 'claudie' || providerType === 'openai') && (
+          {(providerType === 'ollama' ||
+            providerType === 'claudie' ||
+            providerType === 'openai') && (
             <TextInput
               label="Model"
               value={localModel}

@@ -30,7 +30,8 @@ export default function AddServerScreen() {
   const [model, setModel] = useState('')
 
   const needsUrl = providerType !== 'echo' && providerType !== 'apple'
-  const needsToken = providerType === 'molt' || providerType === 'claudie' || providerType === 'openai'
+  const needsToken =
+    providerType === 'molt' || providerType === 'claudie' || providerType === 'openai'
 
   const handleAdd = async () => {
     if (needsUrl && !url.trim()) {
