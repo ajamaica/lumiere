@@ -136,7 +136,7 @@ export default function EditServerScreen() {
                   ? 'My Ollama'
                   : providerType === 'echo'
                     ? 'My Echo Server'
-                    : providerType === 'claudie'
+                    : providerType === 'claude'
                       ? 'My Claude'
                       : providerType === 'openai'
                         ? 'My OpenAI'
@@ -156,7 +156,7 @@ export default function EditServerScreen() {
                 placeholder={
                   providerType === 'ollama'
                     ? 'http://localhost:11434'
-                    : providerType === 'claudie'
+                    : providerType === 'claude'
                       ? 'https://api.anthropic.com'
                       : providerType === 'openai'
                         ? 'https://api.openai.com'
@@ -207,7 +207,7 @@ export default function EditServerScreen() {
             </View>
           )}
 
-          {(providerType === 'claudie' || providerType === 'openai') && (
+          {(providerType === 'claude' || providerType === 'openai') && (
             <>
               <View style={styles.formRow}>
                 <TextInput

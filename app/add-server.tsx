@@ -31,7 +31,7 @@ export default function AddServerScreen() {
 
   const needsUrl = providerType !== 'echo' && providerType !== 'apple'
   const needsToken =
-    providerType === 'molt' || providerType === 'claudie' || providerType === 'openai'
+    providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
 
   const handleAdd = async () => {
     if (needsUrl && !url.trim()) {
@@ -42,7 +42,7 @@ export default function AddServerScreen() {
     if (needsToken && !token.trim()) {
       Alert.alert(
         'Error',
-        providerType === 'claudie' || providerType === 'openai'
+        providerType === 'claude' || providerType === 'openai'
           ? 'API Key is required'
           : 'Token is required',
       )
@@ -68,7 +68,7 @@ export default function AddServerScreen() {
           name.trim() ||
           (providerType === 'apple'
             ? 'Apple Intelligence'
-            : providerType === 'claudie'
+            : providerType === 'claude'
               ? 'Claude'
               : providerType === 'openai'
                 ? 'OpenAI'
@@ -139,7 +139,7 @@ export default function AddServerScreen() {
                     ? 'My Echo Server'
                     : providerType === 'apple'
                       ? 'Apple Intelligence'
-                      : providerType === 'claudie'
+                      : providerType === 'claude'
                         ? 'My Claude'
                         : providerType === 'openai'
                           ? 'My OpenAI'
@@ -168,7 +168,7 @@ export default function AddServerScreen() {
                 placeholder={
                   providerType === 'ollama'
                     ? 'http://localhost:11434'
-                    : providerType === 'claudie'
+                    : providerType === 'claude'
                       ? 'https://api.anthropic.com'
                       : providerType === 'openai'
                         ? 'https://api.openai.com'
@@ -219,7 +219,7 @@ export default function AddServerScreen() {
             </View>
           )}
 
-          {providerType === 'claudie' && (
+          {providerType === 'claude' && (
             <>
               <View style={styles.formRow}>
                 <TextInput
