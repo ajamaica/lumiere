@@ -16,11 +16,19 @@
       "supportsTablet": true,
       "bundleIdentifier": "bot.lumiere.app",
       "buildNumber": "1",
+      "requiresFullScreen": false,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSMicrophoneUsageDescription": "Lumiere needs access to your microphone to transcribe voice messages.",
         "NSSpeechRecognitionUsageDescription": "Lumiere uses speech recognition to convert your voice to text.",
-        "NSCalendarsUsageDescription": "Lumiere needs access to your calendar to create and store events."
+        "NSCalendarsUsageDescription": "Lumiere needs access to your calendar to create and store events.",
+        "UIRequiresFullScreen": false,
+        "UISupportedInterfaceOrientations~ipad": [
+          "UIInterfaceOrientationPortrait",
+          "UIInterfaceOrientationPortraitUpsideDown",
+          "UIInterfaceOrientationLandscapeLeft",
+          "UIInterfaceOrientationLandscapeRight"
+        ]
       }
     },
     "android": {
