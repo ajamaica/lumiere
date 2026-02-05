@@ -10,11 +10,11 @@ on:
 
 jobs:
   lint-and-format:
-    name: Lint and Format Check
+    name: Lint & Format
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
