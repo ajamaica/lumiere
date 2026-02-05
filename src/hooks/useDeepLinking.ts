@@ -1,12 +1,13 @@
 import * as Linking from 'expo-linking'
 import { useRouter } from 'expo-router'
-import { getDefaultStore } from 'jotai'
+import { getDefaultStore, useAtomValue } from 'jotai'
 import { useCallback, useEffect, useRef } from 'react'
 
 import {
   currentServerIdAtom,
   currentSessionKeyAtom,
   pendingTriggerMessageAtom,
+  type TriggerConfig,
   triggersAtom,
 } from '../store'
 
@@ -36,6 +37,16 @@ interface DeepLinkResult {
 interface TriggerResult {
   type: 'trigger'
   slug: string
+}
+
+/**
+ * Resolves the triggers atom value, handling the Promise that
+ * atomWithStorage may return before hydration completes.
+ */
+async function resolveTriggers(
+  raw: Record<string, TriggerConfig> | Promise<Record<string, TriggerConfig>>,
+): Promise<Record<string, TriggerConfig>> {
+  return raw instanceof Promise ? await raw : raw
 }
 
 function parseDeepLink(url: string): DeepLinkResult | TriggerResult | null {
@@ -77,38 +88,32 @@ function parseDeepLink(url: string): DeepLinkResult | TriggerResult | null {
  */
 async function executeTrigger(slug: string) {
   const store = getDefaultStore()
-  const rawTriggers = store.get(triggersAtom)
-
-  // atomWithStorage may return a Promise before hydration completes
-  const triggers = rawTriggers instanceof Promise ? await rawTriggers : rawTriggers
-
+  const triggers = await resolveTriggers(store.get(triggersAtom))
   const trigger = triggers[slug]
+  if (!trigger) return
 
-  if (!trigger) {
-    // Slug doesn't exist — silently ignore
-    return
-  }
-
-  // Switch to the trigger's server and session
   store.set(currentServerIdAtom, trigger.serverId)
   store.set(currentSessionKeyAtom, trigger.sessionKey)
-
-  // Set the pending message so ChatScreen auto-sends it once connected
   store.set(pendingTriggerMessageAtom, trigger.message)
 }
 
 /**
  * Handles deep links that arrive while the app is already running.
- * Expo Router automatically handles deep links on cold start via the scheme config,
- * but this hook handles URLs received while the app is in the foreground/background.
+ * Uses the same robust hydration-aware pattern as useQuickActions to ensure
+ * triggers are available before processing URLs.
  *
  * @param isLocked – when true (biometric lock active), deep links are queued
  *                   and processed once the app is unlocked.
  */
 export function useDeepLinking(isLocked: boolean) {
   const router = useRouter()
+  // Subscribe to triggers atom to ensure hydration completes before handling URLs
+  // This matches the pattern used by useQuickActions for reliable trigger execution
+  const triggers = useAtomValue(triggersAtom)
   const pendingUrlRef = useRef<string | null>(null)
   const isLockedRef = useRef(isLocked)
+  const initialUrlHandledRef = useRef(false)
+
   useEffect(() => {
     isLockedRef.current = isLocked
   }, [isLocked])
@@ -119,11 +124,8 @@ export function useDeepLinking(isLocked: boolean) {
       if (!result) return
 
       if (result.type === 'trigger') {
-        // Wait for atoms to be set before touching navigation
         await executeTrigger(result.slug)
-        // Dismiss any open modals to reveal the existing chat screen.
-        // All non-index routes are modals, so this brings us back to the
-        // home/chat screen without remounting it.
+        // Dismiss any open modals to reveal the existing chat screen
         if (router.canDismiss()) {
           router.dismissAll()
         }
@@ -136,29 +138,41 @@ export function useDeepLinking(isLocked: boolean) {
     [router],
   )
 
-  // Process any queued deep link once the app is unlocked
+  // Process any queued deep link once triggers are hydrated and app is unlocked
   useEffect(() => {
-    if (!isLocked && pendingUrlRef.current) {
-      const url = pendingUrlRef.current
-      pendingUrlRef.current = null
-      handleUrl(url)
-    }
-  }, [isLocked, handleUrl])
+    // Wait for triggers to be hydrated (not a Promise) and app unlocked
+    if (triggers instanceof Promise) return
+    if (isLocked) return
+    if (!pendingUrlRef.current) return
 
+    const url = pendingUrlRef.current
+    pendingUrlRef.current = null
+    handleUrl(url)
+  }, [triggers, isLocked, handleUrl])
+
+  // Handle cold start: check initial URL once triggers are hydrated
   useEffect(() => {
-    // Handle the URL that launched / resumed the app (cold start + background resume)
+    // Skip if already handled or triggers not hydrated yet
+    if (initialUrlHandledRef.current) return
+    if (triggers instanceof Promise) return
+
     const handleInitialURL = async () => {
       const initialUrl = await Linking.getInitialURL()
-      if (initialUrl) {
-        if (isLockedRef.current) {
-          pendingUrlRef.current = initialUrl
-        } else {
-          handleUrl(initialUrl)
-        }
+      if (!initialUrl) return
+
+      initialUrlHandledRef.current = true
+
+      if (isLockedRef.current) {
+        pendingUrlRef.current = initialUrl
+      } else {
+        handleUrl(initialUrl)
       }
     }
     handleInitialURL()
+  }, [triggers, handleUrl])
 
+  // Listen for URLs received while app is in foreground/background
+  useEffect(() => {
     const subscription = Linking.addEventListener('url', (event) => {
       if (isLockedRef.current) {
         pendingUrlRef.current = event.url
@@ -170,5 +184,5 @@ export function useDeepLinking(isLocked: boolean) {
     return () => {
       subscription.remove()
     }
-  }, [router, handleUrl])
+  }, [handleUrl])
 }
