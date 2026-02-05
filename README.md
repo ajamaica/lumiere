@@ -81,10 +81,15 @@ RootLayout (ThemeProvider + KeyboardProvider)
 ## Screenshots
 
 <p align="center">
-  <img src="assets/screenshots/onboarding.png" alt="Onboarding" width="200" />
-  <img src="assets/screenshots/chat.png" alt="Chat Interface" width="200" />
-  <img src="assets/screenshots/overview.png" alt="Gateway Overview" width="200" />
-  <img src="assets/screenshots/chat-conversation.png" alt="Chat Conversation" width="200" />
+  <img src="screenshots/chat-conversation.png" alt="Chat Light Mode" width="200" />
+  <img src="screenshots/chat-dark-mode.png" alt="Chat Dark Mode" width="200" />
+  <img src="screenshots/settings.png" alt="Settings" width="200" />
+</p>
+
+<p align="center">
+  <img src="screenshots/add-server.png" alt="Add Server" width="200" />
+  <img src="screenshots/colors-theme.png" alt="Color Themes" width="200" />
+  <img src="screenshots/favorites.png" alt="Favorites" width="200" />
 </p>
 
 ## Getting Started
