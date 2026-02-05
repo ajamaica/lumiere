@@ -109,6 +109,66 @@ function getWidgetInfoPlist() {
 }
 
 /**
+ * Find an existing native target by name
+ */
+function findTargetByName(xcodeProject, targetName) {
+  const nativeTargets = xcodeProject.pbxNativeTargetSection()
+  for (const key in nativeTargets) {
+    if (typeof nativeTargets[key] === 'object' && nativeTargets[key].name === targetName) {
+      return { uuid: key, target: nativeTargets[key] }
+    }
+  }
+  return null
+}
+
+/**
+ * Find an existing PBXGroup by name
+ */
+function findGroupByName(xcodeProject, groupName) {
+  const groups = xcodeProject.pbxGroupByName(groupName)
+  return groups || null
+}
+
+/**
+ * Find an existing build phase by name for a target
+ */
+function findBuildPhaseByName(xcodeProject, targetUuid, phaseName) {
+  const target = xcodeProject.pbxNativeTargetSection()[targetUuid]
+  if (!target || !target.buildPhases) return null
+
+  const copyFilesPhases = xcodeProject.pbxCopyfilesBuildPhaseSection()
+  for (const phaseRef of target.buildPhases) {
+    const phase = copyFilesPhases[phaseRef.value]
+    if (phase && phase.name === `"${phaseName}"`) {
+      return { uuid: phaseRef.value, phase }
+    }
+  }
+  return null
+}
+
+/**
+ * Find embed extensions build phase in main target
+ */
+function findEmbedExtensionsPhase(xcodeProject, mainTargetUuid) {
+  const nativeTargets = xcodeProject.pbxNativeTargetSection()
+  const mainTarget = nativeTargets[mainTargetUuid]
+  if (!mainTarget || !mainTarget.buildPhases) return null
+
+  const copyFilesPhases = xcodeProject.pbxCopyfilesBuildPhaseSection()
+  for (const phaseRef of mainTarget.buildPhases) {
+    const phase = copyFilesPhases[phaseRef.value]
+    if (
+      phase &&
+      (phase.name === '"Embed Foundation Extensions"' ||
+        phase.name === 'Embed Foundation Extensions')
+    ) {
+      return { uuid: phaseRef.value, phase }
+    }
+  }
+  return null
+}
+
+/**
  * Add widget extension target to Xcode project
  */
 const withWidgetExtension = (config) => {
@@ -125,44 +185,68 @@ const withWidgetExtension = (config) => {
       fs.mkdirSync(widgetDir, { recursive: true })
     }
 
-    // Write widget Swift file
+    // Write widget Swift file (only if it doesn't exist or content changed)
     const widgetSwiftPath = path.join(widgetDir, 'LumiereWidget.swift')
-    fs.writeFileSync(widgetSwiftPath, getWidgetSwiftCode())
+    const swiftCode = getWidgetSwiftCode()
+    if (!fs.existsSync(widgetSwiftPath) || fs.readFileSync(widgetSwiftPath, 'utf8') !== swiftCode) {
+      fs.writeFileSync(widgetSwiftPath, swiftCode)
+    }
 
-    // Write widget Info.plist
+    // Write widget Info.plist (only if it doesn't exist or content changed)
     const infoPlistPath = path.join(widgetDir, 'Info.plist')
     const plist = require('@expo/plist')
-    fs.writeFileSync(infoPlistPath, plist.build(getWidgetInfoPlist()))
+    const plistContent = plist.build(getWidgetInfoPlist())
+    if (!fs.existsSync(infoPlistPath) || fs.readFileSync(infoPlistPath, 'utf8') !== plistContent) {
+      fs.writeFileSync(infoPlistPath, plistContent)
+    }
 
     // Get the main app target
     const mainTarget = xcodeProject.getFirstTarget()
     const mainTargetUuid = mainTarget.uuid
 
-    // Add the widget extension target
-    const widgetTarget = xcodeProject.addTarget(
-      targetName,
-      'app_extension',
-      targetName,
-      bundleIdentifier,
-    )
+    // Check if widget target already exists
+    let widgetTarget = findTargetByName(xcodeProject, targetName)
+    let widgetTargetUuid
+    let productReference
 
-    // Create a PBXGroup for the widget files
-    const widgetGroup = xcodeProject.addPbxGroup(
-      ['LumiereWidget.swift', 'Info.plist'],
-      targetName,
-      targetName,
-    )
+    if (widgetTarget) {
+      // Reuse existing target
+      widgetTargetUuid = widgetTarget.uuid
+      productReference = widgetTarget.target.productReference
+    } else {
+      // Add the widget extension target
+      const newTarget = xcodeProject.addTarget(
+        targetName,
+        'app_extension',
+        targetName,
+        bundleIdentifier,
+      )
+      widgetTargetUuid = newTarget.uuid
+      productReference = newTarget.productReference
+    }
 
-    // Add the group to the main project group
-    const mainGroupKey = xcodeProject.getFirstProject().firstProject.mainGroup
-    xcodeProject.addToPbxGroup(widgetGroup.uuid, mainGroupKey)
+    // Check if widget group already exists
+    let widgetGroup = findGroupByName(xcodeProject, targetName)
 
-    // Add source files to the widget target
-    xcodeProject.addSourceFile(
-      `${targetName}/LumiereWidget.swift`,
-      { target: widgetTarget.uuid },
-      widgetGroup.uuid,
-    )
+    if (!widgetGroup) {
+      // Create a PBXGroup for the widget files
+      widgetGroup = xcodeProject.addPbxGroup(
+        ['LumiereWidget.swift', 'Info.plist'],
+        targetName,
+        targetName,
+      )
+
+      // Add the group to the main project group
+      const mainGroupKey = xcodeProject.getFirstProject().firstProject.mainGroup
+      xcodeProject.addToPbxGroup(widgetGroup.uuid, mainGroupKey)
+
+      // Add source files to the widget target
+      xcodeProject.addSourceFile(
+        `${targetName}/LumiereWidget.swift`,
+        { target: widgetTargetUuid },
+        widgetGroup.uuid,
+      )
+    }
 
     // Add build settings for the widget target
     const configurations = xcodeProject.pbxXCBuildConfigurationSection()
@@ -192,7 +276,7 @@ const withWidgetExtension = (config) => {
             CODE_SIGN_STYLE: 'Automatic',
             CURRENT_PROJECT_VERSION: '1',
             GCC_C_LANGUAGE_STANDARD: 'gnu17',
-            GENERATE_INFOPLIST_FILE: 'YES',
+            GENERATE_INFOPLIST_FILE: 'NO',
             INFOPLIST_FILE: `${targetName}/Info.plist`,
             INFOPLIST_KEY_CFBundleDisplayName: 'Lumiere Widget',
             INFOPLIST_KEY_NSHumanReadableCopyright: '""',
@@ -211,25 +295,63 @@ const withWidgetExtension = (config) => {
       }
     }
 
-    // Add the widget extension to the main app's embed frameworks build phase
-    const embedExtensionsBuildPhase = xcodeProject.addBuildPhase(
-      [],
-      'PBXCopyFilesBuildPhase',
-      'Embed Foundation Extensions',
-      mainTargetUuid,
-      'app_extension',
-    )
+    // Check if embed extensions build phase already exists
+    let embedPhase = findEmbedExtensionsPhase(xcodeProject, mainTargetUuid)
 
-    if (embedExtensionsBuildPhase) {
-      embedExtensionsBuildPhase.buildPhase.dstSubfolderSpec = 13 // PlugIns folder
-      embedExtensionsBuildPhase.buildPhase.dstPath = ''
+    if (!embedPhase) {
+      // Add the widget extension to the main app's embed frameworks build phase
+      const newPhase = xcodeProject.addBuildPhase(
+        [],
+        'PBXCopyFilesBuildPhase',
+        'Embed Foundation Extensions',
+        mainTargetUuid,
+        'app_extension',
+      )
 
-      // Add the widget product to embed phase
-      xcodeProject.addToPbxBuildFileSection({
-        uuid: xcodeProject.generateUuid(),
-        fileRef: widgetTarget.productReference,
-        settings: { ATTRIBUTES: ['RemoveHeadersOnCopy'] },
-      })
+      if (newPhase) {
+        newPhase.buildPhase.dstSubfolderSpec = 13 // PlugIns folder
+        newPhase.buildPhase.dstPath = ''
+        embedPhase = { uuid: newPhase.uuid, phase: newPhase.buildPhase }
+      }
+    }
+
+    // Ensure the widget product is in the embed phase
+    if (embedPhase && productReference) {
+      // Check if widget is already in the embed phase
+      const existingFiles = embedPhase.phase.files || []
+      const buildFileSection = xcodeProject.pbxBuildFileSection()
+
+      let widgetAlreadyEmbedded = false
+      for (const fileEntry of existingFiles) {
+        const buildFile = buildFileSection[fileEntry.value]
+        if (buildFile && buildFile.fileRef === productReference) {
+          widgetAlreadyEmbedded = true
+          break
+        }
+      }
+
+      if (!widgetAlreadyEmbedded) {
+        // Create a PBXBuildFile for the widget product
+        const buildFileUuid = xcodeProject.generateUuid()
+        const buildFileCommentKey = `${buildFileUuid}_comment`
+
+        // Add to PBXBuildFile section
+        buildFileSection[buildFileUuid] = {
+          isa: 'PBXBuildFile',
+          fileRef: productReference,
+          settings: { ATTRIBUTES: ['RemoveHeadersOnCopy'] },
+        }
+        buildFileSection[buildFileCommentKey] = `${targetName}.appex in Embed Foundation Extensions`
+
+        // Add to the embed phase's files array
+        if (!embedPhase.phase.files) {
+          embedPhase.phase.files = []
+        }
+        embedPhase.phase.files.push({
+          value: buildFileUuid,
+          comment: `${targetName}.appex in Embed Foundation Extensions`,
+        })
+      }
     }
 
     return config

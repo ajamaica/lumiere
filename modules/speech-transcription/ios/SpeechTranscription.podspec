@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.homepage       = 'https://github.com/ajamaica/lumiere'
   s.license        = { type: 'MIT' }
   s.platforms      = { :ios => '15.1' }
-  s.source         = { git: '' }
+  s.source         = { :path => '.' }
   s.static_framework = true
 
   s.dependency 'ExpoModulesCore'
