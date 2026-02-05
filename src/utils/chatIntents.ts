@@ -27,6 +27,8 @@ const ALLOWED_ACTIONS = new Set([
   'openSession',
   'storeContact',
   'storeCalendarEvent',
+  'makeCall',
+  'openMaps',
 ])
 
 /** Map action names to Ionicons icon names */
@@ -38,6 +40,8 @@ const ACTION_ICONS: Record<string, string> = {
   openSession: 'chatbubble-ellipses-outline',
   storeContact: 'person-add-outline',
   storeCalendarEvent: 'calendar-outline',
+  makeCall: 'call-outline',
+  openMaps: 'map-outline',
 }
 
 /** Returns the Ionicons name for a given action, with a fallback. */
