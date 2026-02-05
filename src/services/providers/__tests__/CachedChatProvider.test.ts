@@ -334,4 +334,80 @@ describe('CachedChatProvider', () => {
       expect(await AsyncStorage.getItem(key)).toBeNull()
     })
   })
+
+  describe('non-persistent history providers', () => {
+    it('falls back to cache when provider returns empty (simulates app restart)', async () => {
+      // Simulate: cache has messages from a previous session
+      const cachedMessages = [msg('user', 'cached-q'), msg('assistant', 'cached-a')]
+      const key = buildCacheKey('srv', 'session-1')
+      await AsyncStorage.setItem(key, JSON.stringify(cachedMessages))
+
+      // Inner provider has persistentHistory: false (like Apple Intelligence)
+      // and returns empty (simulating app restart where in-memory is lost)
+      const inner = createMockProvider({
+        getChatHistory: jest.fn().mockResolvedValue({ messages: [] } as ChatHistoryResponse),
+      })
+      // Default mock provider has persistentHistory: false
+
+      const cached = new CachedChatProvider(inner, 'srv')
+      const result = await cached.getChatHistory('session-1')
+
+      // Should fall back to cache instead of returning empty
+      expect(result.messages).toEqual(cachedMessages)
+    })
+
+    it('respects limit when falling back to cache for non-persistent providers', async () => {
+      const cachedMessages = [
+        msg('user', 'q1'),
+        msg('assistant', 'a1'),
+        msg('user', 'q2'),
+        msg('assistant', 'a2'),
+      ]
+
+      const key = buildCacheKey('srv', 'session-1')
+      await AsyncStorage.setItem(key, JSON.stringify(cachedMessages))
+
+      const inner = createMockProvider({
+        getChatHistory: jest.fn().mockResolvedValue({ messages: [] } as ChatHistoryResponse),
+      })
+
+      const cached = new CachedChatProvider(inner, 'srv')
+      const result = await cached.getChatHistory('session-1', 2)
+
+      expect(result.messages).toHaveLength(2)
+      expect(result.messages[0].content[0].text).toBe('q2')
+      expect(result.messages[1].content[0].text).toBe('a2')
+    })
+
+    it('returns empty when both cache and provider are empty for non-persistent providers', async () => {
+      const inner = createMockProvider({
+        getChatHistory: jest.fn().mockResolvedValue({ messages: [] } as ChatHistoryResponse),
+      })
+
+      const cached = new CachedChatProvider(inner, 'srv')
+      const result = await cached.getChatHistory('session-empty')
+
+      expect(result.messages).toEqual([])
+    })
+
+    it('does NOT fall back to cache for persistent-history providers returning empty', async () => {
+      // Simulate: cache has stale messages
+      const cachedMessages = [msg('user', 'stale-q'), msg('assistant', 'stale-a')]
+      const key = buildCacheKey('srv', 'session-1')
+      await AsyncStorage.setItem(key, JSON.stringify(cachedMessages))
+
+      // Inner provider has persistentHistory: true (like Molt)
+      // Server says session is empty - we should trust it
+      const inner = createMockProvider({
+        getChatHistory: jest.fn().mockResolvedValue({ messages: [] } as ChatHistoryResponse),
+      })
+      inner.capabilities.persistentHistory = true
+
+      const cached = new CachedChatProvider(inner, 'srv')
+      const result = await cached.getChatHistory('session-1')
+
+      // Should return empty, trusting the server's authoritative response
+      expect(result.messages).toEqual([])
+    })
+  })
 })
