@@ -10,11 +10,11 @@ on:
 
 jobs:
   typecheck:
-    name: TypeScript Build Verification
+    name: Typecheck & Export
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
