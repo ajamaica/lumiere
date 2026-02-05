@@ -1,10 +1,19 @@
+import { Ionicons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Constants from 'expo-constants'
 import * as LocalAuthentication from 'expo-local-authentication'
 import { useRouter } from 'expo-router'
 import { useAtom, useSetAtom } from 'jotai'
 import React from 'react'
-import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
@@ -19,7 +28,7 @@ import { colorThemes } from '../src/theme/colors'
 export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode, colorTheme } = useTheme()
   const router = useRouter()
-  const { currentServer, serversList } = useServers()
+  const { currentServer, currentServerId, serversList, switchToServer } = useServers()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
   const [biometricLockEnabled, setBiometricLockEnabled] = useAtom(biometricLockEnabledAtom)
   const [backgroundNotificationsEnabled, setBackgroundNotificationsEnabled] = useAtom(
@@ -129,15 +138,53 @@ export default function SettingsScreen() {
     <SafeAreaView style={styles.container}>
       <ScreenHeader title="Settings" showClose />
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Server info at top - like Reeder+ section */}
-        <Section>
-          <SettingRow
-            icon="server-outline"
-            label={currentServer?.name || 'No Server'}
-            subtitle={`${serversList.length} server${serversList.length !== 1 ? 's' : ''} configured`}
-            onPress={() => router.push('/servers')}
-            showDivider={false}
-          />
+        {/* Server list */}
+        <Section
+          title="Servers"
+          right={
+            <TouchableOpacity onPress={() => router.push('/add-server')}>
+              <Ionicons name="add-circle-outline" size={20} color={theme.colors.primary} />
+            </TouchableOpacity>
+          }
+        >
+          {serversList.map((server, index) => {
+            const isActive = server.id === currentServerId
+            return (
+              <View
+                key={server.id}
+                style={isActive ? {
+                  backgroundColor: theme.colors.primary + '14',
+                  borderRadius: theme.borderRadius.md,
+                  marginHorizontal: -theme.spacing.sm,
+                  paddingHorizontal: theme.spacing.sm,
+                } : undefined}
+              >
+                <SettingRow
+                  icon="server-outline"
+                  iconColor={isActive ? theme.colors.primary : undefined}
+                  label={server.name}
+                  subtitle={server.url}
+                  value={isActive ? 'Active' : undefined}
+                  onPress={() => {
+                    if (isActive) {
+                      router.push(`/edit-server?id=${server.id}`)
+                    } else {
+                      switchToServer(server.id)
+                    }
+                  }}
+                  showDivider={index < serversList.length - 1}
+                />
+              </View>
+            )
+          })}
+          {serversList.length === 0 && (
+            <SettingRow
+              icon="server-outline"
+              label="No servers configured"
+              onPress={() => router.push('/add-server')}
+              showDivider={false}
+            />
+          )}
         </Section>
 
         <View style={styles.spacer} />
