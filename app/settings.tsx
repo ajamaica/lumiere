@@ -43,10 +43,7 @@ export default function SettingsScreen() {
     if (value) {
       const compatible = await LocalAuthentication.hasHardwareAsync()
       if (!compatible) {
-        Alert.alert(
-          t('settings.biometric.unavailable'),
-          t('settings.biometric.unavailableMessage'),
-        )
+        Alert.alert(t('settings.biometric.unavailable'), t('settings.biometric.unavailableMessage'))
         return
       }
       const enrolled = await LocalAuthentication.isEnrolledAsync()
