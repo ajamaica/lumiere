@@ -25,7 +25,7 @@ export default function EditServerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { servers, updateServer } = useServers()
+  const { servers, updateServer, removeServer } = useServers()
   const providerOptions = ALL_PROVIDER_OPTIONS
 
   const server = id ? servers[id] : null
@@ -58,6 +58,22 @@ export default function EditServerScreen() {
     )
 
     router.back()
+  }
+
+  const handleDelete = () => {
+    if (!id || !server) return
+
+    Alert.alert('Delete Server', `Are you sure you want to delete "${server.name}"?`, [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: async () => {
+          await removeServer(id)
+          router.back()
+        },
+      },
+    ])
   }
 
   if (!server) {
@@ -110,6 +126,7 @@ export default function EditServerScreen() {
                 options={providerOptions}
                 value={providerType}
                 onValueChange={setProviderType}
+                disabled
               />
             </View>
           )}
@@ -194,6 +211,13 @@ export default function EditServerScreen() {
               style={{ flex: 1 }}
             />
           </View>
+
+          <Button
+            title="Delete Server"
+            variant="danger"
+            onPress={handleDelete}
+            style={{ marginTop: theme.spacing.xl }}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
