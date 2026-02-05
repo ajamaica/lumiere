@@ -1,10 +1,9 @@
-import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 
-import { ActionRow, Button, ScreenHeader, Section, Text } from '../src/components/ui'
+import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
@@ -88,7 +87,6 @@ export default function SessionsScreen() {
           onPress: async () => {
             try {
               await resetSession(currentSessionKey)
-              // Trigger message clearing in ChatScreen
               setClearMessagesTrigger((prev) => prev + 1)
               router.back()
             } catch (err) {
@@ -121,27 +119,18 @@ export default function SessionsScreen() {
       backgroundColor: theme.colors.background,
     },
     scrollContent: {
-      padding: theme.spacing.lg,
+      paddingHorizontal: theme.spacing.lg,
+      paddingBottom: theme.spacing.xxxl,
     },
-    sessionItem: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: theme.spacing.md,
-      backgroundColor: theme.colors.surface,
-      borderRadius: theme.borderRadius.md,
-      marginBottom: theme.spacing.sm,
-    },
-    activeSession: {
-      backgroundColor: theme.colors.primary + '20',
-      borderWidth: 1,
-      borderColor: theme.colors.primary,
+    spacer: {
+      height: theme.spacing.lg,
     },
   })
 
   if (!config) {
     return (
       <SafeAreaView style={styles.container}>
-        <ScreenHeader title="Sessions" showBack />
+        <ScreenHeader title="Sessions" showClose />
         <View
           style={{
             flex: 1,
@@ -164,60 +153,63 @@ export default function SessionsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader title="Sessions" showBack />
-
+      <ScreenHeader title="Sessions" showClose />
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Section title="Actions">
-          <ActionRow icon="add-circle-outline" label="New Session" onPress={handleNewSession} />
-          <ActionRow
-            icon="refresh-outline"
-            label="Reset Current Session"
-            onPress={handleResetSession}
+        {/* Current session info at top */}
+        <Section>
+          <SettingRow
+            icon="chatbubble-outline"
+            label={formatSessionKey(currentSessionKey)}
+            subtitle="Current session"
+            onPress={() => handleEditSession(currentSessionKey)}
+            showDivider={false}
           />
         </Section>
 
-        <Section title="Available Sessions">
+        <View style={styles.spacer} />
+
+        {/* Actions group */}
+        <Section showDivider>
+          <SettingRow icon="add-circle-outline" label="New Session" onPress={handleNewSession} />
+          <SettingRow
+            icon="pencil-outline"
+            label="Edit Session"
+            onPress={() => handleEditSession(currentSessionKey)}
+          />
+          <SettingRow
+            icon="refresh-outline"
+            label="Reset Current Session"
+            onPress={handleResetSession}
+            showDivider={false}
+          />
+        </Section>
+
+        {/* Available sessions group */}
+        <Section showDivider>
           {loading ? (
-            <Text color="secondary" center>
-              Loading sessions...
-            </Text>
+            <SettingRow icon="hourglass-outline" label="Loading sessions..." showDivider={false} />
           ) : sessions.length > 0 ? (
-            sessions.map((session) => {
+            sessions.map((session, index) => {
               const isActive = session.key === currentSessionKey
               return (
-                <TouchableOpacity
+                <SettingRow
                   key={session.key}
-                  style={[styles.sessionItem, isActive && styles.activeSession]}
+                  icon={isActive ? 'checkmark-circle' : 'radio-button-off-outline'}
+                  iconColor={isActive ? theme.colors.primary : undefined}
+                  label={formatSessionKey(session.key)}
+                  subtitle={
+                    session.messageCount !== undefined
+                      ? `${session.messageCount} messages`
+                      : undefined
+                  }
+                  value={isActive ? 'Active' : undefined}
                   onPress={() => handleSelectSession(session.key)}
-                >
-                  <View style={{ flex: 1 }}>
-                    <Text variant="body">
-                      {formatSessionKey(session.key)}
-                      {isActive && ' (Active)'}
-                    </Text>
-                    {session.messageCount !== undefined && (
-                      <Text variant="caption">{session.messageCount} messages</Text>
-                    )}
-                  </View>
-                  <TouchableOpacity
-                    onPress={() => handleEditSession(session.key)}
-                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                    style={{ padding: 4, marginRight: 8 }}
-                  >
-                    <Ionicons name="pencil-outline" size={18} color={theme.colors.text.secondary} />
-                  </TouchableOpacity>
-                  <Ionicons
-                    name={isActive ? 'checkmark-circle' : 'chevron-forward'}
-                    size={20}
-                    color={isActive ? theme.colors.primary : theme.colors.text.tertiary}
-                  />
-                </TouchableOpacity>
+                  showDivider={index < sessions.length - 1}
+                />
               )
             })
           ) : (
-            <Text color="secondary" center>
-              No sessions available
-            </Text>
+            <SettingRow icon="albums-outline" label="No sessions available" showDivider={false} />
           )}
         </Section>
       </ScrollView>
