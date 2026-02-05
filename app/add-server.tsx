@@ -11,25 +11,16 @@ import {
 } from 'react-native'
 
 import { Button, Dropdown, ScreenHeader, Text, TextInput } from '../src/components/ui'
+import { getAllProviderOptions } from '../src/config/providerOptions'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
-
-const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
-  { value: 'molt', label: 'OpenClaw' },
-  { value: 'ollama', label: 'Ollama' },
-  { value: 'claudie', label: 'Claude' },
-  ...(Platform.OS === 'ios'
-    ? [{ value: 'apple' as ProviderType, label: 'Apple Intelligence' }]
-    : []),
-  { value: 'echo', label: 'Echo Server' },
-]
 
 export default function AddServerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { addServer } = useServers()
-  const providerOptions = ALL_PROVIDER_OPTIONS
+  const providerOptions = getAllProviderOptions(theme.colors.text.primary)
 
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')
@@ -39,7 +30,8 @@ export default function AddServerScreen() {
   const [model, setModel] = useState('')
 
   const needsUrl = providerType !== 'echo' && providerType !== 'apple'
-  const needsToken = providerType === 'molt' || providerType === 'claudie'
+  const needsToken =
+    providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
 
   const handleAdd = async () => {
     if (needsUrl && !url.trim()) {
@@ -48,7 +40,12 @@ export default function AddServerScreen() {
     }
 
     if (needsToken && !token.trim()) {
-      Alert.alert('Error', providerType === 'claudie' ? 'API Key is required' : 'Token is required')
+      Alert.alert(
+        'Error',
+        providerType === 'claude' || providerType === 'openai'
+          ? 'API Key is required'
+          : 'Token is required',
+      )
       return
     }
 
@@ -71,9 +68,11 @@ export default function AddServerScreen() {
           name.trim() ||
           (providerType === 'apple'
             ? 'Apple Intelligence'
-            : providerType === 'claudie'
+            : providerType === 'claude'
               ? 'Claude'
-              : 'New Server'),
+              : providerType === 'openai'
+                ? 'OpenAI'
+                : 'New Server'),
         url: effectiveUrl,
         clientId: clientId.trim() || 'lumiere-mobile',
         providerType,
@@ -140,9 +139,11 @@ export default function AddServerScreen() {
                     ? 'My Echo Server'
                     : providerType === 'apple'
                       ? 'Apple Intelligence'
-                      : providerType === 'claudie'
+                      : providerType === 'claude'
                         ? 'My Claude'
-                        : 'My Server'
+                        : providerType === 'openai'
+                          ? 'My OpenAI'
+                          : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -167,9 +168,11 @@ export default function AddServerScreen() {
                 placeholder={
                   providerType === 'ollama'
                     ? 'http://localhost:11434'
-                    : providerType === 'claudie'
+                    : providerType === 'claude'
                       ? 'https://api.anthropic.com'
-                      : 'wss://gateway.example.com'
+                      : providerType === 'openai'
+                        ? 'https://api.openai.com'
+                        : 'wss://gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -216,7 +219,7 @@ export default function AddServerScreen() {
             </View>
           )}
 
-          {providerType === 'claudie' && (
+          {providerType === 'claude' && (
             <>
               <View style={styles.formRow}>
                 <TextInput
@@ -234,6 +237,31 @@ export default function AddServerScreen() {
                   value={model}
                   onChangeText={setModel}
                   placeholder="claude-sonnet-4-5-20250514"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+            </>
+          )}
+
+          {providerType === 'openai' && (
+            <>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="API Key"
+                  value={token}
+                  onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="Model"
+                  value={model}
+                  onChangeText={setModel}
+                  placeholder="gpt-4o"
                   autoCapitalize="none"
                   autoCorrect={false}
                 />

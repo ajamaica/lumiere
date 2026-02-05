@@ -10,48 +10,47 @@ import {
   SendMessageParams,
 } from '../providers/types'
 
-interface ClaudieMessage {
-  role: 'user' | 'assistant'
-  content: string | ClaudieContentBlock[]
+interface OpenAIMessage {
+  role: 'user' | 'assistant' | 'system'
+  content: string | OpenAIContentPart[]
 }
 
-interface ClaudieContentBlock {
-  type: 'text' | 'image'
-  text?: string
-  source?: {
-    type: 'base64'
-    media_type: string
-    data: string
+type OpenAIContentPart = OpenAITextPart | OpenAIImagePart
+
+interface OpenAITextPart {
+  type: 'text'
+  text: string
+}
+
+interface OpenAIImagePart {
+  type: 'image_url'
+  image_url: {
+    url: string
   }
 }
 
-interface ClaudieStreamEvent {
-  type: string
-  delta?: {
-    type: string
-    text?: string
-  }
-  content_block?: {
-    type: string
-    text?: string
-  }
-  message?: {
-    id: string
-    content: ClaudieContentBlock[]
-  }
+interface OpenAIStreamChunk {
+  id: string
+  choices: Array<{
+    delta: {
+      content?: string
+      role?: string
+    }
+    finish_reason: string | null
+  }>
   error?: {
-    type: string
     message: string
   }
 }
 
 /**
- * Chat provider for Claudie API (Anthropic Claude API compatible).
+ * Chat provider for the OpenAI Chat Completions API.
  *
- * Uses the Anthropic Messages API format with streaming support
- * for real-time response delivery.
+ * Uses the /v1/chat/completions endpoint with streaming support
+ * for real-time response delivery. Compatible with OpenAI and
+ * any OpenAI-compatible API (e.g. Azure OpenAI, local proxies).
  */
-export class ClaudieChatProvider implements ChatProvider {
+export class OpenAIChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: true,
@@ -69,41 +68,36 @@ export class ClaudieChatProvider implements ChatProvider {
   private abortController: AbortController | null = null
 
   // In-memory conversation history keyed by session
-  private sessions: Map<string, ClaudieMessage[]> = new Map()
+  private sessions: Map<string, OpenAIMessage[]> = new Map()
 
   constructor(config: ProviderConfig) {
     this.baseUrl = config.url.replace(/\/+$/, '')
     this.apiKey = config.token
-    this.model = config.model || DEFAULT_MODELS.CLAUDE
+    this.model = config.model || DEFAULT_MODELS.OPENAI
   }
 
   async connect(): Promise<void> {
     try {
-      // Verify connection by making a simple request
-      const response = await fetch(`${this.baseUrl}/v1/messages`, {
-        method: 'POST',
+      const response = await fetch(`${this.baseUrl}/v1/models`, {
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': this.apiKey,
-          'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
+          Authorization: `Bearer ${this.apiKey}`,
         },
-        body: JSON.stringify({
-          model: this.model,
-          max_tokens: 1,
-          messages: [{ role: 'user', content: 'hi' }],
-        }),
       })
 
-      if (!response.ok && response.status !== 400) {
+      if (!response.ok && response.status !== 401) {
         throw new Error(`API returned status ${response.status}`)
       }
 
+      // 401 means the endpoint exists but key is wrong; we still consider
+      // this a successful "connection test" for URL reachability, but
+      // actual auth errors will surface on first message send.
       this.connected = true
       this.notifyConnectionState(true, false)
     } catch {
       this.connected = false
       this.notifyConnectionState(false, false)
-      throw new Error(`Cannot connect to Claudie API. Check your API key and endpoint.`)
+      throw new Error('Cannot connect to OpenAI API. Check your API key and endpoint.')
     }
   }
 
@@ -133,7 +127,7 @@ export class ClaudieChatProvider implements ChatProvider {
     this.connectionListeners.forEach((l) => l(connected, reconnecting))
   }
 
-  private getSessionMessages(sessionKey: string): ClaudieMessage[] {
+  private getSessionMessages(sessionKey: string): OpenAIMessage[] {
     if (!this.sessions.has(sessionKey)) {
       this.sessions.set(sessionKey, [])
     }
@@ -147,35 +141,33 @@ export class ClaudieChatProvider implements ChatProvider {
     const messages = this.getSessionMessages(params.sessionKey)
 
     // Build the user message content
-    const contentBlocks: ClaudieContentBlock[] = []
+    const contentParts: OpenAIContentPart[] = []
 
-    // Add text content
     if (params.message) {
-      contentBlocks.push({ type: 'text', text: params.message })
+      contentParts.push({ type: 'text', text: params.message })
     }
 
     // Add image attachments if present
     if (params.attachments?.length) {
       for (const attachment of params.attachments) {
         if (attachment.type === 'image' && attachment.data) {
-          contentBlocks.push({
-            type: 'image',
-            source: {
-              type: 'base64',
-              media_type: attachment.mimeType || 'image/png',
-              data: attachment.data,
+          const mimeType = attachment.mimeType || 'image/png'
+          contentParts.push({
+            type: 'image_url',
+            image_url: {
+              url: `data:${mimeType};base64,${attachment.data}`,
             },
           })
         }
       }
     }
 
-    const userMsg: ClaudieMessage = {
+    const userMsg: OpenAIMessage = {
       role: 'user',
       content:
-        contentBlocks.length === 1 && contentBlocks[0].type === 'text'
-          ? contentBlocks[0].text!
-          : contentBlocks,
+        contentParts.length === 1 && contentParts[0].type === 'text'
+          ? contentParts[0].text
+          : contentParts,
     }
 
     messages.push(userMsg)
@@ -185,16 +177,15 @@ export class ClaudieChatProvider implements ChatProvider {
     this.abortController = new AbortController()
 
     try {
-      const response = await fetch(`${this.baseUrl}/v1/messages`, {
+      const response = await fetch(`${this.baseUrl}/v1/chat/completions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': this.apiKey,
-          'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
+          Authorization: `Bearer ${this.apiKey}`,
         },
         body: JSON.stringify({
           model: this.model,
-          max_tokens: API_CONFIG.CLAUDE_MAX_TOKENS,
+          max_tokens: API_CONFIG.OPENAI_MAX_TOKENS,
           messages: messages.map(this.formatMessageForApi),
           stream: true,
         }),
@@ -231,16 +222,18 @@ export class ClaudieChatProvider implements ChatProvider {
             if (data === '[DONE]') continue
 
             try {
-              const event: ClaudieStreamEvent = JSON.parse(data)
+              const chunk: OpenAIStreamChunk = JSON.parse(data)
 
-              if (event.type === 'content_block_delta' && event.delta?.text) {
-                fullResponse += event.delta.text
-                onEvent({ type: 'delta', delta: event.delta.text })
-              } else if (event.type === 'error') {
-                throw new Error(event.error?.message || 'Stream error')
+              if (chunk.error) {
+                throw new Error(chunk.error.message || 'Stream error')
+              }
+
+              const delta = chunk.choices?.[0]?.delta?.content
+              if (delta) {
+                fullResponse += delta
+                onEvent({ type: 'delta', delta })
               }
             } catch (e) {
-              // Skip malformed JSON lines
               if (e instanceof SyntaxError) continue
               throw e
             }
@@ -261,7 +254,7 @@ export class ClaudieChatProvider implements ChatProvider {
     }
   }
 
-  private formatMessageForApi(msg: ClaudieMessage): { role: string; content: unknown } {
+  private formatMessageForApi(msg: OpenAIMessage): { role: string; content: unknown } {
     return {
       role: msg.role,
       content: msg.content,
@@ -272,21 +265,26 @@ export class ClaudieChatProvider implements ChatProvider {
     const messages = this.getSessionMessages(sessionKey)
     const sliced = limit ? messages.slice(-limit) : messages
 
-    const historyMessages: ChatHistoryMessage[] = sliced.map((m, i) => ({
-      role: m.role,
-      content: [{ type: 'text', text: this.extractTextContent(m.content) }],
-      timestamp: Date.now() - (sliced.length - i) * 1000,
-    }))
+    const historyMessages: ChatHistoryMessage[] = sliced
+      .filter(
+        (m): m is OpenAIMessage & { role: 'user' | 'assistant' } =>
+          m.role === 'user' || m.role === 'assistant',
+      )
+      .map((m, i) => ({
+        role: m.role,
+        content: [{ type: 'text', text: this.extractTextContent(m.content) }],
+        timestamp: Date.now() - (sliced.length - i) * 1000,
+      }))
 
     return { messages: historyMessages }
   }
 
-  private extractTextContent(content: string | ClaudieContentBlock[]): string {
+  private extractTextContent(content: string | OpenAIContentPart[]): string {
     if (typeof content === 'string') {
       return content
     }
-    const textBlocks = content.filter((b) => b.type === 'text' && b.text)
-    return textBlocks.map((b) => b.text).join('\n')
+    const textParts = content.filter((p): p is OpenAITextPart => p.type === 'text' && !!p.text)
+    return textParts.map((p) => p.text).join('\n')
   }
 
   async resetSession(sessionKey: string): Promise<void> {
@@ -304,21 +302,14 @@ export class ClaudieChatProvider implements ChatProvider {
 
   async getHealth(): Promise<HealthStatus> {
     try {
-      const response = await fetch(`${this.baseUrl}/v1/messages`, {
-        method: 'POST',
+      const response = await fetch(`${this.baseUrl}/v1/models`, {
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': this.apiKey,
-          'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
+          Authorization: `Bearer ${this.apiKey}`,
         },
-        body: JSON.stringify({
-          model: this.model,
-          max_tokens: 1,
-          messages: [{ role: 'user', content: 'ping' }],
-        }),
       })
 
-      if (response.ok || response.status === 400) {
+      if (response.ok) {
         return { status: 'healthy' }
       }
       return { status: 'degraded' }

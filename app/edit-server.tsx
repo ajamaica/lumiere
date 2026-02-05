@@ -11,22 +11,17 @@ import {
 } from 'react-native'
 
 import { Button, Dropdown, ScreenHeader, Text, TextInput } from '../src/components/ui'
+import { getBasicProviderOptions } from '../src/config/providerOptions'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
-
-const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
-  { value: 'molt', label: 'OpenClaw' },
-  { value: 'ollama', label: 'Ollama' },
-  { value: 'echo', label: 'Echo Server' },
-]
 
 export default function EditServerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { id } = useLocalSearchParams<{ id: string }>()
   const { servers, updateServer, removeServer } = useServers()
-  const providerOptions = ALL_PROVIDER_OPTIONS
+  const providerOptions = getBasicProviderOptions(theme.colors.text.primary)
 
   const server = id ? servers[id] : null
 
@@ -141,7 +136,11 @@ export default function EditServerScreen() {
                   ? 'My Ollama'
                   : providerType === 'echo'
                     ? 'My Echo Server'
-                    : 'My Server'
+                    : providerType === 'claude'
+                      ? 'My Claude'
+                      : providerType === 'openai'
+                        ? 'My OpenAI'
+                        : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -155,7 +154,13 @@ export default function EditServerScreen() {
                 value={url}
                 onChangeText={setUrl}
                 placeholder={
-                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                  providerType === 'ollama'
+                    ? 'http://localhost:11434'
+                    : providerType === 'claude'
+                      ? 'https://api.anthropic.com'
+                      : providerType === 'openai'
+                        ? 'https://api.openai.com'
+                        : 'wss://gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -200,6 +205,31 @@ export default function EditServerScreen() {
                 autoCorrect={false}
               />
             </View>
+          )}
+
+          {(providerType === 'claude' || providerType === 'openai') && (
+            <>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="API Key (leave blank to keep current)"
+                  value={token}
+                  onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="Model"
+                  value={model}
+                  onChangeText={setModel}
+                  placeholder={providerType === 'openai' ? 'gpt-4o' : 'claude-sonnet-4-5-20250514'}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+            </>
           )}
 
           <View style={styles.buttonRow}>

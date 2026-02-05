@@ -14,10 +14,14 @@ export interface SettingRowProps {
   icon?: keyof typeof Ionicons.glyphMap
   /** Custom icon color override */
   iconColor?: string
+  /** Custom icon node (takes precedence over icon) */
+  customIcon?: React.ReactNode
   /** Subtitle text shown below the label */
   subtitle?: string
   /** Whether to show bottom divider (default: true) */
   showDivider?: boolean
+  /** Custom label text color override */
+  labelColor?: string
 }
 
 export function SettingRow({
@@ -28,8 +32,10 @@ export function SettingRow({
   onSwitchChange,
   icon,
   iconColor,
+  customIcon,
   subtitle,
   showDivider = true,
+  labelColor,
 }: SettingRowProps) {
   const { theme } = useTheme()
 
@@ -59,7 +65,7 @@ export function SettingRow({
     },
     label: {
       fontSize: theme.typography.fontSize.base,
-      color: theme.colors.text.primary,
+      color: labelColor || theme.colors.text.primary,
       fontWeight: theme.typography.fontWeight.regular,
     },
     subtitle: {
@@ -76,9 +82,11 @@ export function SettingRow({
 
   const content = (
     <View style={styles.row}>
-      {icon && (
+      {(customIcon || icon) && (
         <View style={styles.iconContainer}>
-          <Ionicons name={icon} size={22} color={iconColor || theme.colors.text.secondary} />
+          {customIcon || (
+            <Ionicons name={icon!} size={22} color={iconColor || theme.colors.text.secondary} />
+          )}
         </View>
       )}
       <View style={styles.content}>

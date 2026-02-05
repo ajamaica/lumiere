@@ -1,1 +1,0 @@
-export { ClaudieChatProvider } from './ClaudieChatProvider'

@@ -16,7 +16,8 @@ import {
   View,
 } from 'react-native'
 
-import { Button, ScreenHeader, Section, SettingRow } from '../src/components/ui'
+import { ScreenHeader, Section, SettingRow } from '../src/components/ui'
+import { getProviderIcon } from '../src/config/providerOptions'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
 import { backgroundCheckTask } from '../src/services/notifications/notificationService'
@@ -142,9 +143,6 @@ export default function SettingsScreen() {
     spacer: {
       height: theme.spacing.lg,
     },
-    logoutSection: {
-      marginTop: theme.spacing.xl,
-    },
     footer: {
       marginTop: theme.spacing.xl,
       alignItems: 'center',
@@ -187,8 +185,10 @@ export default function SettingsScreen() {
                 }
               >
                 <SettingRow
-                  icon="server-outline"
-                  iconColor={isActive ? theme.colors.primary : undefined}
+                  customIcon={getProviderIcon(
+                    server.providerType || 'molt',
+                    isActive ? theme.colors.primary : theme.colors.text.secondary,
+                  )}
                   label={server.name}
                   subtitle={server.url}
                   value={isActive ? 'Active' : undefined}
@@ -301,9 +301,16 @@ export default function SettingsScreen() {
         )}
 
         {/* Logout */}
-        <View style={styles.logoutSection}>
-          <Button title={t('settings.logout')} variant="danger" size="lg" onPress={handleLogout} />
-        </View>
+        <Section showDivider>
+          <SettingRow
+            icon="log-out-outline"
+            label={t('settings.logout')}
+            labelColor="#EF4444"
+            iconColor="#EF4444"
+            onPress={handleLogout}
+            showDivider={false}
+          />
+        </Section>
 
         {/* Footer */}
         <View style={styles.footer}>

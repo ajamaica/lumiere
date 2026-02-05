@@ -12,20 +12,12 @@ import {
 
 import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
 import { Button, Dropdown, Text, TextInput } from '../components/ui'
+import { getAllProviderOptions } from '../config/providerOptions'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
 import { ProviderType } from '../services/providers'
 import { currentSessionKeyAtom, onboardingCompletedAtom, serverSessionsAtom } from '../store'
 import { useTheme } from '../theme'
-
-const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
-  { value: 'molt', label: 'OpenClaw' },
-  { value: 'ollama', label: 'Ollama' },
-  ...(Platform.OS === 'ios' && isAppleAIAvailable()
-    ? [{ value: 'apple' as ProviderType, label: 'Apple Intelligence' }]
-    : []),
-  { value: 'echo', label: 'Echo Server' },
-]
 
 export function SetupScreen() {
   const { theme } = useTheme()
@@ -33,6 +25,11 @@ export function SetupScreen() {
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setServerSessions] = useAtom(serverSessionsAtom)
   const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
+
+  const allOptions = getAllProviderOptions(theme.colors.text.primary)
+  const providerOptionsList = isAppleAIAvailable()
+    ? allOptions
+    : allOptions.filter((o) => o.value !== 'apple')
 
   const [providerType, setProviderType] = useState<ProviderType>('molt')
   const [localUrl, setLocalUrl] = useState('')
@@ -63,8 +60,13 @@ export function SetupScreen() {
     },
   })
 
-  const needsUrl = providerType === 'molt' || providerType === 'ollama'
-  const needsToken = providerType === 'molt'
+  const needsUrl =
+    providerType === 'molt' ||
+    providerType === 'ollama' ||
+    providerType === 'claude' ||
+    providerType === 'openai'
+  const needsToken =
+    providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
 
   const handleComplete = async () => {
     if (providerType === 'molt' && localUrl.trim() && localToken.trim()) {
@@ -95,6 +97,44 @@ export function SetupScreen() {
           model: localModel.trim() || undefined,
         },
         'ollama-no-token',
+      )
+
+      const sessionKey = DEFAULT_SESSION_KEY
+      setCurrentSessionKey(sessionKey)
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
+
+      setOnboardingCompleted(true)
+    } else if (providerType === 'claude' && localUrl.trim() && localToken.trim()) {
+      const serverId = await addServer(
+        {
+          name: 'My Claude',
+          url: localUrl.trim(),
+          providerType: 'claude',
+          model: localModel.trim() || undefined,
+        },
+        localToken.trim(),
+      )
+
+      const sessionKey = DEFAULT_SESSION_KEY
+      setCurrentSessionKey(sessionKey)
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
+
+      setOnboardingCompleted(true)
+    } else if (providerType === 'openai' && localUrl.trim() && localToken.trim()) {
+      const serverId = await addServer(
+        {
+          name: 'My OpenAI',
+          url: localUrl.trim(),
+          providerType: 'openai',
+          model: localModel.trim() || undefined,
+        },
+        localToken.trim(),
       )
 
       const sessionKey = DEFAULT_SESSION_KEY
@@ -145,7 +185,7 @@ export function SetupScreen() {
   }
 
   const isValid =
-    providerType === 'molt'
+    providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
       : providerType === 'ollama'
         ? localUrl.trim().length > 0
@@ -167,7 +207,7 @@ export function SetupScreen() {
         <View style={styles.form}>
           <Dropdown
             label="Provider Type"
-            options={PROVIDER_OPTIONS}
+            options={providerOptionsList}
             value={providerType}
             onValueChange={setProviderType}
           />
@@ -180,7 +220,11 @@ export function SetupScreen() {
               placeholder={
                 providerType === 'ollama'
                   ? 'http://localhost:11434'
-                  : 'https://your-gateway.example.com'
+                  : providerType === 'claude'
+                    ? 'https://api.anthropic.com'
+                    : providerType === 'openai'
+                      ? 'https://api.openai.com'
+                      : 'https://your-gateway.example.com'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -188,33 +232,61 @@ export function SetupScreen() {
               hint={
                 providerType === 'ollama'
                   ? 'The URL of your Ollama server'
-                  : 'The URL of your OpenClaw server'
+                  : providerType === 'claude'
+                    ? 'The base URL of the Anthropic API'
+                    : providerType === 'openai'
+                      ? 'The base URL of the OpenAI API'
+                      : 'The URL of your OpenClaw server'
               }
             />
           )}
 
           {needsToken && (
             <TextInput
-              label="Token"
+              label={providerType === 'claude' || providerType === 'openai' ? 'API Key' : 'Token'}
               value={localToken}
               onChangeText={setLocalToken}
-              placeholder="Your authentication token"
+              placeholder={
+                providerType === 'claude' || providerType === 'openai'
+                  ? 'Your API key'
+                  : 'Your authentication token'
+              }
               autoCapitalize="none"
               autoCorrect={false}
               secureTextEntry
-              hint="Your authentication token for the gateway"
+              hint={
+                providerType === 'claude'
+                  ? 'Your Anthropic API key'
+                  : providerType === 'openai'
+                    ? 'Your OpenAI API key'
+                    : 'Your authentication token for the gateway'
+              }
             />
           )}
 
-          {providerType === 'ollama' && (
+          {(providerType === 'ollama' ||
+            providerType === 'claude' ||
+            providerType === 'openai') && (
             <TextInput
               label="Model"
               value={localModel}
               onChangeText={setLocalModel}
-              placeholder="llama3.2"
+              placeholder={
+                providerType === 'ollama'
+                  ? 'llama3.2'
+                  : providerType === 'claude'
+                    ? 'claude-sonnet-4-5-20250514'
+                    : 'gpt-4o'
+              }
               autoCapitalize="none"
               autoCorrect={false}
-              hint="Ollama model to use (default: llama3.2)"
+              hint={
+                providerType === 'ollama'
+                  ? 'Ollama model to use (default: llama3.2)'
+                  : providerType === 'claude'
+                    ? 'Claude model to use (default: claude-sonnet-4-5)'
+                    : 'OpenAI model to use (default: gpt-4o)'
+              }
             />
           )}
 
