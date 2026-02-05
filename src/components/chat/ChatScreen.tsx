@@ -414,9 +414,11 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
               />
               {searchQuery.length > 0 && (
                 <Text style={styles.searchCount}>
-                  {allMessages.filter((m) =>
-                    m.text.toLowerCase().includes(searchQuery.toLowerCase()),
-                  ).length}
+                  {
+                    allMessages.filter((m) =>
+                      m.text.toLowerCase().includes(searchQuery.toLowerCase()),
+                    ).length
+                  }
                 </Text>
               )}
               <TouchableOpacity onPress={handleCloseSearch} hitSlop={8}>
@@ -516,7 +518,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
               ) : (
                 <View style={styles.emptyContainer}>
                   <Text style={styles.emptyText}>
-                    {searchQuery ? 'No matching messages' : 'Start a conversation with the AI agent'}
+                    {searchQuery
+                      ? 'No matching messages'
+                      : 'Start a conversation with the AI agent'}
                   </Text>
                 </View>
               )
