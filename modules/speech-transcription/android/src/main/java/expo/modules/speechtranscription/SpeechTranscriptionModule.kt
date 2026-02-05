@@ -14,6 +14,8 @@ import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import java.util.Locale
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 
 class SpeechTranscriptionModule : Module() {
   private var speechRecognizer: SpeechRecognizer? = null
@@ -58,9 +60,8 @@ class SpeechTranscriptionModule : Module() {
     }
 
     AsyncFunction("stopTranscription") {
-      val result = lastTranscription
-      stopRecognition()
-      result
+      stopRecognitionSync()
+      lastTranscription
     }
 
     AsyncFunction("cancelTranscription") {
@@ -149,6 +150,19 @@ class SpeechTranscriptionModule : Module() {
 
       recognizer.startListening(intent)
     }
+  }
+
+  private fun stopRecognitionSync() {
+    val latch = CountDownLatch(1)
+    mainHandler.post {
+      speechRecognizer?.apply {
+        stopListening()
+        destroy()
+      }
+      speechRecognizer = null
+      latch.countDown()
+    }
+    latch.await(2, TimeUnit.SECONDS)
   }
 
   private fun stopRecognition() {
