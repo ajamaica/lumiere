@@ -9,6 +9,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller'
 
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { ErrorBoundary } from '../src/components/ui'
+import { useAppleShortcuts } from '../src/hooks/useAppleShortcuts'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useNotifications } from '../src/hooks/useNotifications'
@@ -31,6 +32,7 @@ function AppContent() {
   useDeepLinking(isLocked)
   useNotifications()
   useQuickActions()
+  useAppleShortcuts()
   useLanguage() // Initialize language sync
 
   // Use formSheet presentation on iPad for better UX
