@@ -4,7 +4,18 @@ import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ActivityIndicator, Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Keyboard,
+  LayoutAnimation,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  UIManager,
+  View,
+} from 'react-native'
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller'
 import Animated, {
   Easing,
@@ -38,6 +49,11 @@ interface ChatScreenProps {
  * key for the current server, returning a default value ('agent:main:main')
  * if none exists. This ensures a valid session key is always available.
  */
+// Enable LayoutAnimation on Android
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true)
+}
+
 export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const { theme } = useTheme()
   const router = useRouter()
@@ -53,6 +69,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
   const [isLoadingHistory, setIsLoadingHistory] = useState(true)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const searchInputRef = useRef<TextInput>(null)
 
   const styles = useMemo(() => createStyles(theme, glassAvailable), [theme, glassAvailable])
 
@@ -305,6 +324,23 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     router.push('/settings')
   }
 
+  const handleToggleSearch = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    if (isSearchOpen) {
+      setIsSearchOpen(false)
+      setSearchQuery('')
+    } else {
+      setIsSearchOpen(true)
+      setTimeout(() => searchInputRef.current?.focus(), 100)
+    }
+  }
+
+  const handleCloseSearch = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    setIsSearchOpen(false)
+    setSearchQuery('')
+  }
+
   const renderConnectionStatus = () => {
     const StatusBubbleContainer = glassAvailable ? GlassView : View
     const statusBubbleProps = glassAvailable
@@ -356,6 +392,41 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     }
 
     if (connected) {
+      if (isSearchOpen) {
+        const SearchBarContainer = glassAvailable ? GlassView : View
+        const searchBarProps = glassAvailable
+          ? { style: styles.searchBar, glassEffectStyle: 'regular' as const }
+          : { style: [styles.searchBar, styles.searchBarFallback] }
+
+        return (
+          <View style={styles.statusBarContainer}>
+            <SearchBarContainer {...searchBarProps}>
+              <Ionicons name="search" size={18} color={theme.colors.text.secondary} />
+              <TextInput
+                ref={searchInputRef}
+                style={styles.searchInput}
+                placeholder="Search messages..."
+                placeholderTextColor={theme.colors.text.tertiary}
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                autoCorrect={false}
+                returnKeyType="search"
+              />
+              {searchQuery.length > 0 && (
+                <Text style={styles.searchCount}>
+                  {allMessages.filter((m) =>
+                    m.text.toLowerCase().includes(searchQuery.toLowerCase()),
+                  ).length}
+                </Text>
+              )}
+              <TouchableOpacity onPress={handleCloseSearch} hitSlop={8}>
+                <Ionicons name="close-circle" size={20} color={theme.colors.text.secondary} />
+              </TouchableOpacity>
+            </SearchBarContainer>
+          </View>
+        )
+      }
+
       return (
         <View style={styles.statusBarContainer}>
           <StatusBubbleContainer {...statusBubbleProps}>
@@ -363,11 +434,18 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             <Text style={styles.connectedText}>Health</Text>
             <Text style={styles.statusOk}>OK</Text>
           </StatusBubbleContainer>
-          <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
-            <SettingsButtonContainer {...settingsButtonProps}>
-              <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
-            </SettingsButtonContainer>
-          </TouchableOpacity>
+          <View style={styles.statusActions}>
+            <TouchableOpacity onPress={handleToggleSearch} activeOpacity={0.7}>
+              <SettingsButtonContainer {...settingsButtonProps}>
+                <Ionicons name="search" size={22} color={theme.colors.text.secondary} />
+              </SettingsButtonContainer>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
+              <SettingsButtonContainer {...settingsButtonProps}>
+                <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+              </SettingsButtonContainer>
+            </TouchableOpacity>
+          </View>
         </View>
       )
     }
@@ -390,6 +468,10 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       : []),
   ]
 
+  const filteredMessages = searchQuery
+    ? allMessages.filter((m) => m.text.toLowerCase().includes(searchQuery.toLowerCase()))
+    : allMessages
+
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <View style={{ flex: 1 }}>
@@ -402,7 +484,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
         <Animated.View style={[listContainerStyle, { opacity: historyReady ? 1 : 0 }]}>
           <FlashList
             ref={flatListRef}
-            data={allMessages}
+            data={filteredMessages}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ChatMessage message={item} />}
             contentContainerStyle={styles.messageList}
@@ -433,7 +515,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
                 </View>
               ) : (
                 <View style={styles.emptyContainer}>
-                  <Text style={styles.emptyText}>Start a conversation with the AI agent</Text>
+                  <Text style={styles.emptyText}>
+                    {searchQuery ? 'No matching messages' : 'Start a conversation with the AI agent'}
+                  </Text>
                 </View>
               )
             }
@@ -532,6 +616,36 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
     },
     settingsButtonFallback: {
       backgroundColor: theme.colors.surface,
+    },
+    statusActions: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.sm,
+    },
+    searchBar: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
+      borderRadius: theme.borderRadius.xxl,
+      overflow: 'hidden',
+    },
+    searchBarFallback: {
+      backgroundColor: theme.colors.surface,
+    },
+    searchInput: {
+      flex: 1,
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.primary,
+      marginLeft: theme.spacing.sm,
+      marginRight: theme.spacing.sm,
+      paddingVertical: 4,
+    },
+    searchCount: {
+      fontSize: theme.typography.fontSize.xs,
+      color: theme.colors.text.secondary,
+      marginRight: theme.spacing.sm,
     },
     errorBubble: {
       backgroundColor: theme.isDark ? '#3A1B1B' : '#FFEBEE',
