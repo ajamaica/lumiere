@@ -152,12 +152,16 @@ export default function SettingsScreen() {
             return (
               <View
                 key={server.id}
-                style={isActive ? {
-                  backgroundColor: theme.colors.primary + '14',
-                  borderRadius: theme.borderRadius.md,
-                  marginHorizontal: -theme.spacing.sm,
-                  paddingHorizontal: theme.spacing.sm,
-                } : undefined}
+                style={
+                  isActive
+                    ? {
+                        backgroundColor: theme.colors.primary + '14',
+                        borderRadius: theme.borderRadius.md,
+                        marginHorizontal: -theme.spacing.sm,
+                        paddingHorizontal: theme.spacing.sm,
+                      }
+                    : undefined
+                }
               >
                 <SettingRow
                   icon="server-outline"
