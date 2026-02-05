@@ -1,5 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
+import * as Calendar from 'expo-calendar'
 import * as Clipboard from 'expo-clipboard'
+import * as Contacts from 'expo-contacts'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import { useAtom, useSetAtom } from 'jotai'
@@ -305,6 +307,64 @@ export function ChatMessage({ message }: ChatMessageProps) {
             }
             setCurrentSessionKey(key)
             setClearMessages((n) => n + 1)
+            break
+          }
+          case 'storeContact': {
+            const { status } = await Contacts.requestPermissionsAsync()
+            if (status !== 'granted') {
+              console.warn('Contacts permission not granted')
+              break
+            }
+            const contact: Contacts.Contact = {
+              contactType: Contacts.ContactTypes.Person,
+              name: intent.params.name ?? '',
+              firstName: intent.params.firstName ?? '',
+              lastName: intent.params.lastName ?? '',
+              emails: intent.params.email
+                ? [{ email: intent.params.email, label: 'email' }]
+                : undefined,
+              phoneNumbers: intent.params.phone
+                ? [{ number: intent.params.phone, label: 'mobile' }]
+                : undefined,
+              company: intent.params.company ?? '',
+              jobTitle: intent.params.jobTitle ?? '',
+            }
+            await Contacts.addContactAsync(contact)
+            setIntentCopied(true)
+            setTimeout(() => setIntentCopied(false), 2000)
+            break
+          }
+          case 'storeCalendarEvent': {
+            const { status } = await Calendar.requestCalendarPermissionsAsync()
+            if (status !== 'granted') {
+              console.warn('Calendar permission not granted')
+              break
+            }
+            const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT)
+            const defaultCalendar =
+              calendars.find((cal) => cal.isPrimary) ??
+              calendars.find((cal) => cal.allowsModifications) ??
+              calendars[0]
+            if (!defaultCalendar) {
+              console.warn('No calendar available')
+              break
+            }
+            const startDate = intent.params.startDate
+              ? new Date(intent.params.startDate)
+              : new Date()
+            const endDate = intent.params.endDate
+              ? new Date(intent.params.endDate)
+              : new Date(startDate.getTime() + 60 * 60 * 1000) // Default 1 hour duration
+            await Calendar.createEventAsync(defaultCalendar.id, {
+              title: intent.params.title ?? 'New Event',
+              startDate,
+              endDate,
+              location: intent.params.location,
+              notes: intent.params.notes,
+              allDay: intent.params.allDay === 'true',
+            })
+            setIntentCopied(true)
+            setTimeout(() => setIntentCopied(false), 2000)
             break
           }
           default:
