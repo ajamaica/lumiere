@@ -2,13 +2,12 @@ import React from 'react'
 import { Platform } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
-import { ProviderType } from '../services/providers'
-
 import AppleIcon from '../../assets/provider-apple.svg'
 import ClaudeIcon from '../../assets/provider-claude.svg'
 import EchoIcon from '../../assets/provider-echo.svg'
 import OllamaIcon from '../../assets/provider-ollama.svg'
 import OpenClawIcon from '../../assets/provider-openclaw.svg'
+import { ProviderType } from '../services/providers'
 
 const ICON_SIZE = 20
 
