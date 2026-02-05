@@ -40,5 +40,5 @@ coverage/
 *.tsbuildinfo
 
 # generated native folders
-/ios
+# /ios - Commented out to keep Mac Catalyst configuration
 /android

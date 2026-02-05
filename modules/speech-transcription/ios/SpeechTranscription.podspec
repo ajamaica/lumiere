@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.author         = ''
   s.homepage       = 'https://github.com/ajamaica/lumiere'
   s.license        = { type: 'MIT' }
-  s.platforms      = { :ios => '15.1' }
+  s.platforms      = { :ios => '15.1', :osx => '12.0' }
   s.source         = { git: '' }
   s.static_framework = true
 

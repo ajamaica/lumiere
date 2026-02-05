@@ -52,7 +52,7 @@
       ],
       "package": "bot.lumiere.app"
     },
-    "platforms": ["ios", "android"],
+    "platforms": ["ios", "android", "macos"],
     "scheme": "lumiere",
     "plugins": [
       "expo-router",
@@ -76,7 +76,18 @@
           "color": "#ffffff"
         }
       ],
-      "expo-quick-actions"
+      "expo-quick-actions",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.1",
+            "catalyst": {
+              "enabled": true
+            }
+          }
+        }
+      ]
     ],
     "extra": {
       "eas": {
