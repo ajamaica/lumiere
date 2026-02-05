@@ -62,13 +62,13 @@
 
 ## AI Providers
 
-| Provider               | Type      | Chat | Images | Sessions | History | Scheduler |
-| ---------------------- | --------- | :--: | :----: | :------: | :-----: | :-------: |
-| **OpenClaw**           | `molt`    |  ✅  |   ✅   |    ✅    |   ✅    |    ✅     |
+| Provider               | Type     | Chat | Images | Sessions | History | Scheduler |
+| ---------------------- | -------- | :--: | :----: | :------: | :-----: | :-------: |
+| **OpenClaw**           | `molt`   |  ✅  |   ✅   |    ✅    |   ✅    |    ✅     |
 | **Claude**             | `claude` |  ✅  |   ✅   |    —     |    —    |     —     |
-| **Ollama**             | `ollama`  |  ✅  |   —    |    —     |    —    |     —     |
-| **Apple Intelligence** | `apple`   |  ✅  |   —    |    —     |    —    |     —     |
-| **Echo Server**        | `echo`    |  ✅  |   —    |    —     |    —    |     —     |
+| **Ollama**             | `ollama` |  ✅  |   —    |    —     |    —    |     —     |
+| **Apple Intelligence** | `apple`  |  ✅  |   —    |    —     |    —    |     —     |
+| **Echo Server**        | `echo`   |  ✅  |   —    |    —     |    —    |     —     |
 
 ### OpenClaw (Molt Gateway)
 
