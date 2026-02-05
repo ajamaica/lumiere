@@ -1,7 +1,7 @@
 // Abstract Chat Provider types
 // Shared interface that all chat providers (Molt, Ollama, etc.) must implement
 
-export type ProviderType = 'molt' | 'ollama' | 'echo' | 'apple'
+export type ProviderType = 'molt' | 'ollama' | 'echo' | 'apple' | 'claudie'
 
 export interface ProviderConfig {
   type: ProviderType

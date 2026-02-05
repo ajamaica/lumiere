@@ -1,4 +1,5 @@
 import { AppleChatProvider } from '../apple-intelligence/AppleChatProvider'
+import { ClaudieChatProvider } from '../claudie/ClaudieChatProvider'
 import { EchoChatProvider } from '../echo/EchoChatProvider'
 import { OllamaChatProvider } from '../ollama/OllamaChatProvider'
 import { CachedChatProvider } from './CachedChatProvider'
@@ -28,6 +29,9 @@ export function createChatProvider(config: ProviderConfig): ChatProvider {
       break
     case 'apple':
       inner = new AppleChatProvider(config)
+      break
+    case 'claudie':
+      inner = new ClaudieChatProvider(config)
       break
     default:
       throw new Error(`Unknown provider type: ${(config as ProviderConfig).type}`)
