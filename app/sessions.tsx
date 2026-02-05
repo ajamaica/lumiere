@@ -1,13 +1,13 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
+import { useChatProvider } from '../src/hooks/useChatProvider'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { buildCacheKey, ProviderConfig } from '../src/services/providers'
+import { ProviderConfig } from '../src/services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
@@ -40,10 +40,16 @@ export default function SessionsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
-    url: config?.url || '',
-    token: config?.token || '',
-  })
+  const { connected, connect, disconnect, listSessions, resetSession: moltResetSession } =
+    useMoltGateway({
+      url: config?.url || '',
+      token: config?.token || '',
+    })
+
+  // Use the chat provider for cache-aware session reset
+  const { resetSession: providerResetSession } = useChatProvider(
+    config ?? { type: 'echo', url: '' },
+  )
 
   useEffect(() => {
     // Only connect to gateway if provider supports server sessions
@@ -98,11 +104,10 @@ export default function SessionsScreen() {
             try {
               // Only call server reset for providers that support server sessions
               if (supportsServerSessions) {
-                await resetSession(currentSessionKey)
+                await moltResetSession(currentSessionKey)
               }
-              // Clear the local message cache
-              const cacheKey = buildCacheKey(currentServerId, currentSessionKey)
-              await AsyncStorage.removeItem(cacheKey)
+              // Clear the local message cache via provider (handles AsyncStorage)
+              await providerResetSession(currentSessionKey)
 
               setClearMessagesTrigger((prev) => prev + 1)
               router.back()
