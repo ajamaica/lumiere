@@ -126,3 +126,6 @@ export const backgroundFetchIntervalAtom = atomWithStorage<number>(
   15,
   storage,
 )
+
+// Language preference (empty string means use device default)
+export const languageAtom = atomWithStorage<string>('language', '', storage)

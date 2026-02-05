@@ -5,6 +5,7 @@ import * as LocalAuthentication from 'expo-local-authentication'
 import { useRouter } from 'expo-router'
 import { useAtom, useSetAtom } from 'jotai'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Alert,
   SafeAreaView,
@@ -16,6 +17,7 @@ import {
 } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow } from '../src/components/ui'
+import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
 import {
   backgroundNotificationsEnabledAtom,
@@ -28,6 +30,8 @@ import { colorThemes } from '../src/theme/colors'
 export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode, colorTheme } = useTheme()
   const router = useRouter()
+  const { t } = useTranslation()
+  const { currentLanguage, currentLanguageName, setLanguage, supportedLanguages } = useLanguage()
   const { currentServer, currentServerId, serversList, switchToServer } = useServers()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
   const [biometricLockEnabled, setBiometricLockEnabled] = useAtom(biometricLockEnabledAtom)
@@ -39,16 +43,19 @@ export default function SettingsScreen() {
     if (value) {
       const compatible = await LocalAuthentication.hasHardwareAsync()
       if (!compatible) {
-        Alert.alert('Unavailable', 'Biometric authentication is not available on this device.')
+        Alert.alert(
+          t('settings.biometric.unavailable'),
+          t('settings.biometric.unavailableMessage'),
+        )
         return
       }
       const enrolled = await LocalAuthentication.isEnrolledAsync()
       if (!enrolled) {
-        Alert.alert('Not Enrolled', 'No biometric credentials are enrolled on this device.')
+        Alert.alert(t('settings.biometric.notEnrolled'), t('settings.biometric.notEnrolledMessage'))
         return
       }
       const result = await LocalAuthentication.authenticateAsync({
-        promptMessage: 'Authenticate to enable Face ID lock',
+        promptMessage: t('settings.biometric.enablePrompt'),
       })
       if (result.success) {
         setBiometricLockEnabled(true)
@@ -61,13 +68,13 @@ export default function SettingsScreen() {
   const getThemeLabel = () => {
     switch (themeMode) {
       case 'light':
-        return 'Light'
+        return t('settings.theme.light')
       case 'dark':
-        return 'Dark'
+        return t('settings.theme.dark')
       case 'system':
-        return 'System'
+        return t('settings.theme.system')
       default:
-        return 'System'
+        return t('settings.theme.system')
     }
   }
 
@@ -78,33 +85,35 @@ export default function SettingsScreen() {
     setThemeMode(modes[nextIndex])
   }
 
+  const handleLanguageToggle = () => {
+    const currentIndex = supportedLanguages.indexOf(currentLanguage)
+    const nextIndex = (currentIndex + 1) % supportedLanguages.length
+    setLanguage(supportedLanguages[nextIndex])
+  }
+
   const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout? All servers and settings will be cleared.',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
+    Alert.alert(t('settings.logoutConfirmTitle'), t('settings.logoutConfirmMessage'), [
+      {
+        text: t('common.cancel'),
+        style: 'cancel',
+      },
+      {
+        text: t('settings.logout'),
+        style: 'destructive',
+        onPress: async () => {
+          await AsyncStorage.multiRemove([
+            'servers',
+            'currentServerId',
+            'serverSessions',
+            'onboardingCompleted',
+            'triggers',
+            'biometricLockEnabled',
+          ])
+          setBiometricLockEnabled(false)
+          setOnboardingCompleted(false)
         },
-        {
-          text: 'Logout',
-          style: 'destructive',
-          onPress: async () => {
-            await AsyncStorage.multiRemove([
-              'servers',
-              'currentServerId',
-              'serverSessions',
-              'onboardingCompleted',
-              'triggers',
-              'biometricLockEnabled',
-            ])
-            setBiometricLockEnabled(false)
-            setOnboardingCompleted(false)
-          },
-        },
-      ],
-    )
+      },
+    ])
   }
 
   const styles = StyleSheet.create({
@@ -136,11 +145,11 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader title="Settings" showClose />
+      <ScreenHeader title={t('settings.title')} showClose />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Server list */}
         <Section
-          title="Servers"
+          title={t('settings.servers')}
           right={
             <TouchableOpacity onPress={() => router.push('/add-server')}>
               <Ionicons name="add-circle-outline" size={20} color={theme.colors.primary} />
@@ -184,7 +193,7 @@ export default function SettingsScreen() {
           {serversList.length === 0 && (
             <SettingRow
               icon="server-outline"
-              label="No servers configured"
+              label={t('settings.noServersConfigured')}
               onPress={() => router.push('/add-server')}
               showDivider={false}
             />
@@ -197,27 +206,33 @@ export default function SettingsScreen() {
         <Section showDivider>
           <SettingRow
             icon="settings-outline"
-            label="General"
+            label={t('settings.general')}
             onPress={handleThemeToggle}
             value={getThemeLabel()}
           />
           <SettingRow
             icon="color-palette-outline"
-            label="Colors"
+            label={t('settings.colors')}
             value={colorThemes[colorTheme].name}
             onPress={() => router.push('/colors')}
           />
           <SettingRow
             icon="scan-outline"
-            label="Face ID"
+            label={t('settings.faceId')}
             switchValue={biometricLockEnabled}
             onSwitchChange={handleBiometricToggle}
           />
           <SettingRow
             icon="notifications-outline"
-            label="Notifications"
+            label={t('settings.notifications')}
             switchValue={backgroundNotificationsEnabled}
             onSwitchChange={setBackgroundNotificationsEnabled}
+          />
+          <SettingRow
+            icon="language-outline"
+            label={t('settings.language')}
+            value={currentLanguageName}
+            onPress={handleLanguageToggle}
             showDivider={false}
           />
         </Section>
@@ -226,12 +241,12 @@ export default function SettingsScreen() {
         <Section showDivider>
           <SettingRow
             icon="heart-outline"
-            label="Favorites"
+            label={t('settings.favorites')}
             onPress={() => router.push('/favorites')}
           />
           <SettingRow
             icon="flash-outline"
-            label="Triggers"
+            label={t('settings.triggers')}
             onPress={() => router.push('/triggers')}
             showDivider={false}
           />
@@ -242,12 +257,12 @@ export default function SettingsScreen() {
           <Section showDivider>
             <SettingRow
               icon="grid-outline"
-              label="Overview"
+              label={t('settings.overview')}
               onPress={() => router.push('/overview')}
             />
             <SettingRow
               icon="time-outline"
-              label="Cron Jobs"
+              label={t('settings.cronJobs')}
               onPress={() => router.push('/scheduler')}
               showDivider={false}
             />
@@ -259,7 +274,7 @@ export default function SettingsScreen() {
           <Section showDivider>
             <SettingRow
               icon="construct-outline"
-              label="Component Gallery"
+              label={t('settings.componentGallery')}
               onPress={() => router.push('/gallery')}
               showDivider={false}
             />
@@ -268,7 +283,7 @@ export default function SettingsScreen() {
 
         {/* Logout */}
         <View style={styles.logoutSection}>
-          <Button title="Logout" variant="danger" size="lg" onPress={handleLogout} />
+          <Button title={t('settings.logout')} variant="danger" size="lg" onPress={handleLogout} />
         </View>
 
         {/* Footer */}

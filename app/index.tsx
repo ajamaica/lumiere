@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
 import { ChatScreen } from '../src/components/chat'
@@ -11,6 +12,7 @@ import { useTheme } from '../src/theme'
 export default function HomeScreen() {
   const { theme } = useTheme()
   const router = useRouter()
+  const { t } = useTranslation()
   const { getProviderConfig, currentServerId } = useServers()
   const [config, setConfig] = useState<ProviderConfig | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -61,12 +63,12 @@ export default function HomeScreen() {
         }}
       >
         <Text variant="heading2" style={{ marginBottom: theme.spacing.md }}>
-          Connection Error
+          {t('home.connectionError')}
         </Text>
         <Text color="secondary" center style={{ marginBottom: theme.spacing.xl }}>
           {error}
         </Text>
-        <Button title="Go to Settings" onPress={() => router.push('/settings')} />
+        <Button title={t('home.goToSettings')} onPress={() => router.push('/settings')} />
       </View>
     )
   }
@@ -84,12 +86,12 @@ export default function HomeScreen() {
         }}
       >
         <Text variant="heading2" style={{ marginBottom: theme.spacing.md }}>
-          No Server Configured
+          {t('home.noServerConfigured')}
         </Text>
         <Text color="secondary" center style={{ marginBottom: theme.spacing.xl }}>
-          Please add a server in Settings to get started.
+          {t('home.noServerMessage')}
         </Text>
-        <Button title="Go to Settings" onPress={() => router.push('/settings')} />
+        <Button title={t('home.goToSettings')} onPress={() => router.push('/settings')} />
       </View>
     )
   }

@@ -1,0 +1,153 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "done": "Listo",
+    "error": "Error",
+    "success": "Éxito",
+    "loading": "Cargando...",
+    "retry": "Reintentar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "skip": "Omitir",
+    "confirm": "Confirmar",
+    "active": "Activo"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "servers": "Servidores",
+    "noServersConfigured": "No hay servidores configurados",
+    "general": "General",
+    "colors": "Colores",
+    "faceId": "Face ID",
+    "notifications": "Notificaciones",
+    "favorites": "Favoritos",
+    "triggers": "Disparadores",
+    "overview": "Resumen",
+    "cronJobs": "Tareas Programadas",
+    "componentGallery": "Galería de Componentes",
+    "logout": "Cerrar Sesión",
+    "logoutConfirmTitle": "Cerrar Sesión",
+    "logoutConfirmMessage": "¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los servidores y ajustes.",
+    "theme": {
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    },
+    "biometric": {
+      "unavailable": "No Disponible",
+      "unavailableMessage": "La autenticación biométrica no está disponible en este dispositivo.",
+      "notEnrolled": "No Configurado",
+      "notEnrolledMessage": "No hay credenciales biométricas configuradas en este dispositivo.",
+      "enablePrompt": "Autentícate para habilitar el bloqueo con Face ID"
+    },
+    "language": "Idioma"
+  },
+  "home": {
+    "connectionError": "Error de Conexión",
+    "goToSettings": "Ir a Ajustes",
+    "noServerConfigured": "Sin Servidor Configurado",
+    "noServerMessage": "Por favor, añade un servidor en Ajustes para comenzar."
+  },
+  "chat": {
+    "placeholder": "Escribe un mensaje...",
+    "listening": "Escuchando...",
+    "startSpeaking": "Comienza a hablar...",
+    "send": "Enviar"
+  },
+  "addServer": {
+    "title": "Añadir Servidor",
+    "providerType": "Tipo de Proveedor",
+    "name": "Nombre",
+    "url": "URL",
+    "token": "Token",
+    "apiKey": "Clave API",
+    "clientId": "ID de Cliente",
+    "model": "Modelo",
+    "addButton": "Añadir Servidor",
+    "placeholders": {
+      "myServer": "Mi Servidor",
+      "myOllama": "Mi Ollama",
+      "myEchoServer": "Mi Servidor Echo",
+      "myClaude": "Mi Claude"
+    },
+    "providers": {
+      "openClaw": "OpenClaw",
+      "ollama": "Ollama",
+      "claude": "Claude",
+      "appleIntelligence": "Apple Intelligence",
+      "echoServer": "Servidor Echo"
+    },
+    "appleDescription": "Utiliza Apple Foundation Models para ejecutar IA completamente en el dispositivo mediante CoreML. Requiere iOS 26+ con soporte de Apple Intelligence.",
+    "errors": {
+      "urlRequired": "La URL es requerida",
+      "tokenRequired": "El token es requerido",
+      "apiKeyRequired": "La clave API es requerida"
+    }
+  },
+  "editServer": {
+    "title": "Editar Servidor",
+    "saveChanges": "Guardar Cambios",
+    "deleteServer": "Eliminar Servidor",
+    "deleteConfirmTitle": "Eliminar Servidor",
+    "deleteConfirmMessage": "¿Estás seguro de que deseas eliminar este servidor? Esta acción no se puede deshacer."
+  },
+  "biometricLock": {
+    "locked": "Bloqueado",
+    "unlock": "Desbloquear",
+    "unlockPrompt": "Desbloquear Lumiere",
+    "authenticateToUnlock": "Autentícate para desbloquear Lumiere",
+    "failed": "Error de autenticación",
+    "failedMessage": "Hubo un problema con tu intento de autenticación.\nPor favor, inténtalo de nuevo.",
+    "authFailed": "Autenticación fallida. Toca para reintentar.",
+    "tryAgain": "Reintentar"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Gestionar tus Agentes es más fácil que nunca",
+      "description": "Lumiere te ofrece una hermosa interfaz móvil para interactuar con tus agentes de IA en cualquier lugar. Monitorea conversaciones, envía mensajes y mantente conectado desde donde estés."
+    },
+    "step2": {
+      "title": "Control total con funciones potentes",
+      "description": "Gestiona múltiples servidores, cambia entre sesiones, programa tareas con cron jobs y recibe notificaciones en tiempo real. Todo lo que necesitas para estar al mando."
+    },
+    "step3": {
+      "title": "Altamente configurable para necesidades personalizadas",
+      "description": "Conéctate a proveedores OpenClaw, Ollama o Echo. Personaliza temas, configura disparadores de enlaces profundos y adapta la experiencia a tu flujo de trabajo."
+    },
+    "getStarted": "Comenzar"
+  },
+  "sessions": {
+    "title": "Sesiones",
+    "newSession": "Nueva Sesión",
+    "editSession": "Editar Sesión",
+    "deleteSession": "Eliminar Sesión",
+    "sessionName": "Nombre de Sesión",
+    "defaultSession": "Sesión Predeterminada"
+  },
+  "favorites": {
+    "title": "Favoritos",
+    "noFavorites": "Aún no hay favoritos",
+    "addFavorite": "Añadir a Favoritos",
+    "removeFavorite": "Eliminar de Favoritos"
+  },
+  "triggers": {
+    "title": "Disparadores",
+    "newTrigger": "Nuevo Disparador",
+    "editTrigger": "Editar Disparador",
+    "deleteTrigger": "Eliminar Disparador",
+    "noTriggers": "No hay disparadores configurados"
+  },
+  "scheduler": {
+    "title": "Programador",
+    "cronJobs": "Tareas Programadas"
+  },
+  "gallery": {
+    "title": "Galería"
+  },
+  "overview": {
+    "title": "Resumen"
+  }
+}

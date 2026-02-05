@@ -3,6 +3,17 @@ import React from 'react'
 
 import HomeScreen from '../index'
 
+// Mock react-i18next
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: {
+      language: 'en',
+      changeLanguage: jest.fn(),
+    },
+  }),
+}))
+
 // Mock expo-router
 jest.mock('expo-router', () => ({
   useRouter: () => ({
@@ -96,7 +107,7 @@ describe('App Startup', () => {
     render(<HomeScreen />)
 
     await waitFor(() => {
-      expect(screen.getByText('No Server Configured')).toBeTruthy()
+      expect(screen.getByText('home.noServerConfigured')).toBeTruthy()
     })
   })
 
@@ -106,9 +117,9 @@ describe('App Startup', () => {
     render(<HomeScreen />)
 
     await waitFor(() => {
-      expect(screen.getByText('No Server Configured')).toBeTruthy()
-      expect(screen.getByText('Please add a server in Settings to get started.')).toBeTruthy()
-      expect(screen.getByText('Go to Settings')).toBeTruthy()
+      expect(screen.getByText('home.noServerConfigured')).toBeTruthy()
+      expect(screen.getByText('home.noServerMessage')).toBeTruthy()
+      expect(screen.getByText('home.goToSettings')).toBeTruthy()
     })
   })
 
@@ -123,7 +134,7 @@ describe('App Startup', () => {
 
     await waitFor(() => {
       expect(screen.getByText('ChatScreen')).toBeTruthy()
-      expect(screen.queryByText('No Server Configured')).toBeNull()
+      expect(screen.queryByText('home.noServerConfigured')).toBeNull()
     })
   })
 })

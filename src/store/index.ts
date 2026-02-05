@@ -19,6 +19,7 @@ export {
   gatewayConnectedAtom,
   gatewayConnectingAtom,
   gatewayErrorAtom,
+  languageAtom,
   messageQueueAtom,
   onboardingCompletedAtom,
   pendingTriggerMessageAtom,

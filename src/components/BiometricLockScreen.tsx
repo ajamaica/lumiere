@@ -1,5 +1,6 @@
 import * as LocalAuthentication from 'expo-local-authentication'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { AppState, AppStateStatus, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../theme'
@@ -10,35 +11,36 @@ interface BiometricLockScreenProps {
 
 export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const [error, setError] = useState<string | null>(null)
   const appState = useRef(AppState.currentState)
 
   const authenticate = useCallback(async () => {
     setError(null)
     const result = await LocalAuthentication.authenticateAsync({
-      promptMessage: 'Unlock Lumiere',
+      promptMessage: t('biometricLock.unlockPrompt'),
       disableDeviceFallback: false,
     })
     if (result.success) {
       onUnlock()
     } else if (result.error !== 'user_cancel' && result.error !== 'system_cancel') {
-      setError('Authentication failed. Tap to try again.')
+      setError(t('biometricLock.authFailed'))
     }
-  }, [onUnlock])
+  }, [onUnlock, t])
 
   useEffect(() => {
     let mounted = true
     const doInitialAuth = async () => {
       if (!mounted) return
       const result = await LocalAuthentication.authenticateAsync({
-        promptMessage: 'Unlock Lumiere',
+        promptMessage: t('biometricLock.unlockPrompt'),
         disableDeviceFallback: false,
       })
       if (!mounted) return
       if (result.success) {
         onUnlock()
       } else if (result.error !== 'user_cancel' && result.error !== 'system_cancel') {
-        setError('Authentication failed. Tap to try again.')
+        setError(t('biometricLock.authFailed'))
       }
     }
     doInitialAuth()
@@ -96,14 +98,16 @@ export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{error ? 'Failed to authenticate' : 'Locked'}</Text>
+      <Text style={styles.title}>
+        {error ? t('biometricLock.failed') : t('biometricLock.locked')}
+      </Text>
       <Text style={styles.subtitle}>
-        {error
-          ? 'There was an issue with your authentication attempt.\nPlease try again.'
-          : 'Authenticate to unlock Lumiere'}
+        {error ? t('biometricLock.failedMessage') : t('biometricLock.authenticateToUnlock')}
       </Text>
       <TouchableOpacity style={styles.retryButton} onPress={authenticate} activeOpacity={0.7}>
-        <Text style={styles.retryText}>{error ? 'Try Again' : 'Unlock'}</Text>
+        <Text style={styles.retryText}>
+          {error ? t('biometricLock.tryAgain') : t('biometricLock.unlock')}
+        </Text>
       </TouchableOpacity>
     </View>
   )
