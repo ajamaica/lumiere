@@ -27,6 +27,8 @@ export class MoltGatewayClient {
   private maxReconnectAttempts = 5
   private reconnectDelay = 1000
   private reconnecting = false
+  private reconnectExhausted = false
+  private reconnectTimer: ReturnType<typeof setTimeout> | null = null
 
   constructor(config: MoltConfig) {
     this.config = {
@@ -112,7 +114,8 @@ export class MoltGatewayClient {
       this.notifyConnectionState()
       const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1)
       console.log(`Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts})`)
-      setTimeout(() => {
+      this.reconnectTimer = setTimeout(() => {
+        this.reconnectTimer = null
         this.connect().catch((error) => {
           console.error('Reconnection failed:', error)
           this.reconnecting = false
@@ -122,8 +125,36 @@ export class MoltGatewayClient {
     } else {
       console.error('Max reconnection attempts reached')
       this.reconnecting = false
+      this.reconnectExhausted = true
       this.notifyConnectionState()
     }
+  }
+
+  /**
+   * Manually retry connection after automatic reconnection has been exhausted.
+   * This resets the attempt counter and initiates a new connection.
+   */
+  retryConnection(): Promise<ConnectResponse> {
+    // Cancel any pending reconnect timer
+    if (this.reconnectTimer) {
+      clearTimeout(this.reconnectTimer)
+      this.reconnectTimer = null
+    }
+
+    // Reset state for fresh connection attempt
+    this.reconnectAttempts = 0
+    this.reconnectExhausted = false
+    this.reconnecting = false
+
+    return this.connect()
+  }
+
+  /**
+   * Check if automatic reconnection attempts have been exhausted.
+   * When true, use retryConnection() to manually initiate a new connection.
+   */
+  isReconnectExhausted(): boolean {
+    return this.reconnectExhausted
   }
 
   private notifyConnectionState() {
@@ -255,10 +286,19 @@ export class MoltGatewayClient {
   }
 
   disconnect() {
+    // Cancel any pending reconnect timer
+    if (this.reconnectTimer) {
+      clearTimeout(this.reconnectTimer)
+      this.reconnectTimer = null
+    }
+
     if (this.ws) {
       this.ws.close()
       this.ws = null
       this.connected = false
+      this.reconnecting = false
+      this.reconnectExhausted = false
+      this.reconnectAttempts = 0
     }
   }
 }

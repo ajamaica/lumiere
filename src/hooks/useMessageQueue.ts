@@ -8,6 +8,7 @@ import {
   SendMessageParams as ProviderSendParams,
 } from '../services/providers'
 import { messageQueueAtom } from '../store'
+import { generateId } from '../utils/generateId'
 
 interface Message {
   id: string
@@ -48,7 +49,7 @@ export function useMessageQueue({
   const sendMessage = useCallback(
     async (text: string, attachments?: MessageAttachment[]) => {
       const userMessage: Message = {
-        id: `msg-${Date.now()}`,
+        id: generateId('msg'),
         text,
         sender: 'user',
         timestamp: new Date(),
@@ -82,7 +83,7 @@ export function useMessageQueue({
               onAgentMessageUpdate(accumulatedText)
             } else if (event.type === 'lifecycle' && event.phase === 'end') {
               const agentMessage: Message = {
-                id: `msg-${Date.now()}`,
+                id: generateId('msg'),
                 text: accumulatedText,
                 sender: 'agent',
                 timestamp: new Date(),
