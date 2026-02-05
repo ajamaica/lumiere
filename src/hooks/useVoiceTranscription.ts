@@ -21,7 +21,7 @@ export function useVoiceTranscription(): UseVoiceTranscriptionResult {
   >(null)
 
   useEffect(() => {
-    if (Platform.OS !== 'ios') return
+    if (Platform.OS !== 'ios' && Platform.OS !== 'android') return
 
     let mounted = true
 
@@ -45,7 +45,7 @@ export function useVoiceTranscription(): UseVoiceTranscriptionResult {
 
   useEffect(() => {
     const mod = moduleRef.current
-    if (!mod || Platform.OS !== 'ios') return
+    if (!mod || (Platform.OS !== 'ios' && Platform.OS !== 'android')) return
 
     const transcriptionSub = mod.addTranscriptionListener((event) => {
       setTranscribedText(event.text)

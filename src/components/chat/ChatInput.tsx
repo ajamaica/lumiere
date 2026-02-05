@@ -7,7 +7,6 @@ import {
   FlatList,
   Image,
   ImageStyle,
-  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -99,7 +98,7 @@ export function ChatInput({
   const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
   const hasContent = text.trim() || attachments.length > 0
   const isRecording = voice.status === 'recording'
-  const showMic = !hasContent && voice.isAvailable && Platform.OS === 'ios'
+  const showMic = !hasContent && voice.isAvailable
 
   const Container = glassAvailable ? GlassView : View
   const containerProps = glassAvailable
