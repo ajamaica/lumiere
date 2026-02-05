@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
-import { Button, Text, TextInput } from '../components/ui'
+import { Button, Dropdown, Text, TextInput } from '../components/ui'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
 import { ProviderType } from '../services/providers'
@@ -21,6 +21,10 @@ import { useTheme } from '../theme'
 const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
   { value: 'molt', label: 'OpenClaw' },
   { value: 'ollama', label: 'Ollama' },
+  ...(Platform.OS === 'ios' && isAppleAIAvailable()
+    ? [{ value: 'apple' as ProviderType, label: 'Apple Intelligence' }]
+    : []),
+  { value: 'echo', label: 'Echo Server' },
 ]
 
 export function SetupScreen() {
@@ -50,32 +54,6 @@ export function SetupScreen() {
     form: {
       marginBottom: theme.spacing.xxl,
     },
-    providerPicker: {
-      flexDirection: 'row',
-      gap: theme.spacing.sm,
-      marginBottom: theme.spacing.lg,
-    },
-    providerOption: {
-      flex: 1,
-      paddingVertical: theme.spacing.sm + 2,
-      paddingHorizontal: theme.spacing.md,
-      borderRadius: theme.borderRadius.sm,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      alignItems: 'center',
-    },
-    providerOptionActive: {
-      borderColor: theme.colors.primary,
-      backgroundColor: theme.isDark ? 'rgba(99,102,241,0.15)' : 'rgba(99,102,241,0.08)',
-    },
-    providerOptionText: {
-      fontSize: 14,
-      color: theme.colors.text.secondary,
-    },
-    providerOptionTextActive: {
-      color: theme.colors.primary,
-      fontWeight: '600',
-    },
     advancedToggle: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -83,12 +61,10 @@ export function SetupScreen() {
       paddingVertical: theme.spacing.md,
       marginBottom: theme.spacing.md,
     },
-    echoLink: {
-      alignItems: 'center',
-      paddingVertical: theme.spacing.xl,
-      marginTop: theme.spacing.lg,
-    },
   })
+
+  const needsUrl = providerType === 'molt' || providerType === 'ollama'
+  const needsToken = providerType === 'molt'
 
   const handleComplete = async () => {
     if (providerType === 'molt' && localUrl.trim() && localToken.trim()) {
@@ -129,53 +105,51 @@ export function SetupScreen() {
       }))
 
       setOnboardingCompleted(true)
+    } else if (providerType === 'echo') {
+      const serverId = await addServer(
+        {
+          name: 'Echo Agent',
+          url: '',
+          providerType: 'echo',
+        },
+        '',
+      )
+
+      const sessionKey = DEFAULT_SESSION_KEY
+      setCurrentSessionKey(sessionKey)
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
+
+      setOnboardingCompleted(true)
+    } else if (providerType === 'apple') {
+      const serverId = await addServer(
+        {
+          name: 'Local AI',
+          url: '',
+          providerType: 'apple',
+        },
+        '',
+      )
+
+      const sessionKey = DEFAULT_SESSION_KEY
+      setCurrentSessionKey(sessionKey)
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
+
+      setOnboardingCompleted(true)
     }
-  }
-
-  const handleCreateEchoAgent = async () => {
-    const serverId = await addServer(
-      {
-        name: 'Echo Agent',
-        url: '',
-        providerType: 'echo',
-      },
-      '',
-    )
-
-    const sessionKey = DEFAULT_SESSION_KEY
-    setCurrentSessionKey(sessionKey)
-    setServerSessions((prev) => ({
-      ...prev,
-      [serverId]: sessionKey,
-    }))
-
-    setOnboardingCompleted(true)
-  }
-
-  const handleCreateLocalAI = async () => {
-    const serverId = await addServer(
-      {
-        name: 'Local AI',
-        url: '',
-        providerType: 'apple',
-      },
-      '',
-    )
-
-    const sessionKey = DEFAULT_SESSION_KEY
-    setCurrentSessionKey(sessionKey)
-    setServerSessions((prev) => ({
-      ...prev,
-      [serverId]: sessionKey,
-    }))
-
-    setOnboardingCompleted(true)
   }
 
   const isValid =
     providerType === 'molt'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
-      : localUrl.trim().length > 0
+      : providerType === 'ollama'
+        ? localUrl.trim().length > 0
+        : true
 
   return (
     <KeyboardAvoidingView
@@ -191,48 +165,35 @@ export function SetupScreen() {
         </Text>
 
         <View style={styles.form}>
-          <View style={styles.providerPicker}>
-            {PROVIDER_OPTIONS.map((option) => (
-              <TouchableOpacity
-                key={option.value}
-                style={[
-                  styles.providerOption,
-                  providerType === option.value && styles.providerOptionActive,
-                ]}
-                onPress={() => setProviderType(option.value)}
-              >
-                <Text
-                  style={[
-                    styles.providerOptionText,
-                    providerType === option.value && styles.providerOptionTextActive,
-                  ]}
-                >
-                  {option.label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          <TextInput
-            label="URL"
-            value={localUrl}
-            onChangeText={setLocalUrl}
-            placeholder={
-              providerType === 'ollama'
-                ? 'http://localhost:11434'
-                : 'https://your-gateway.example.com'
-            }
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="url"
-            hint={
-              providerType === 'ollama'
-                ? 'The URL of your Ollama server'
-                : 'The URL of your OpenClaw server'
-            }
+          <Dropdown
+            label="Provider Type"
+            options={PROVIDER_OPTIONS}
+            value={providerType}
+            onValueChange={setProviderType}
           />
 
-          {providerType === 'molt' && (
+          {needsUrl && (
+            <TextInput
+              label="URL"
+              value={localUrl}
+              onChangeText={setLocalUrl}
+              placeholder={
+                providerType === 'ollama'
+                  ? 'http://localhost:11434'
+                  : 'https://your-gateway.example.com'
+              }
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="url"
+              hint={
+                providerType === 'ollama'
+                  ? 'The URL of your Ollama server'
+                  : 'The URL of your OpenClaw server'
+              }
+            />
+          )}
+
+          {needsToken && (
             <TextInput
               label="Token"
               value={localToken}
@@ -301,20 +262,6 @@ export function SetupScreen() {
         </View>
 
         <Button title="Get Started" size="lg" onPress={handleComplete} disabled={!isValid} />
-
-        {isAppleAIAvailable() && (
-          <TouchableOpacity style={styles.echoLink} onPress={handleCreateLocalAI}>
-            <Text variant="bodySmall" color="secondary">
-              Create a Local AI server
-            </Text>
-          </TouchableOpacity>
-        )}
-
-        <TouchableOpacity style={styles.echoLink} onPress={handleCreateEchoAgent}>
-          <Text variant="bodySmall" color="secondary">
-            Create demo Echo Agent
-          </Text>
-        </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
   )

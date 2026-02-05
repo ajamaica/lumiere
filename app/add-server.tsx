@@ -7,11 +7,10 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from 'react-native'
 
-import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
+import { Button, Dropdown, ScreenHeader, Text, TextInput } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
@@ -93,31 +92,6 @@ export default function AddServerScreen() {
     formRow: {
       marginBottom: theme.spacing.md,
     },
-    providerPicker: {
-      flexDirection: 'row',
-      gap: theme.spacing.sm,
-    },
-    providerOption: {
-      flex: 1,
-      paddingVertical: theme.spacing.sm + 2,
-      paddingHorizontal: theme.spacing.md,
-      borderRadius: theme.borderRadius.sm,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      alignItems: 'center',
-    },
-    providerOptionActive: {
-      borderColor: theme.colors.primary,
-      backgroundColor: theme.isDark ? 'rgba(99,102,241,0.15)' : 'rgba(99,102,241,0.08)',
-    },
-    providerOptionText: {
-      fontSize: 14,
-      color: theme.colors.text.secondary,
-    },
-    providerOptionTextActive: {
-      color: theme.colors.primary,
-      fontWeight: '600',
-    },
     buttonRow: {
       flexDirection: 'row',
       gap: theme.spacing.sm,
@@ -138,30 +112,12 @@ export default function AddServerScreen() {
         >
           {providerOptions.length > 1 && (
             <View style={styles.formRow}>
-              <Text variant="caption" color="secondary" style={{ marginBottom: 4 }}>
-                Provider Type
-              </Text>
-              <View style={styles.providerPicker}>
-                {providerOptions.map((option) => (
-                  <TouchableOpacity
-                    key={option.value}
-                    style={[
-                      styles.providerOption,
-                      providerType === option.value && styles.providerOptionActive,
-                    ]}
-                    onPress={() => setProviderType(option.value)}
-                  >
-                    <Text
-                      style={[
-                        styles.providerOptionText,
-                        providerType === option.value && styles.providerOptionTextActive,
-                      ]}
-                    >
-                      {option.label}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+              <Dropdown
+                label="Provider Type"
+                options={providerOptions}
+                value={providerType}
+                onValueChange={setProviderType}
+              />
             </View>
           )}
 
