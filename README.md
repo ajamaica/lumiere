@@ -5,11 +5,12 @@
 <h1 align="center">Lumiere</h1>
 
 <p align="center">
-  A React Native mobile client for interacting with AI agents through the <a href="#">Molt Gateway</a>.
+  A React Native mobile client for interacting with AI agents. Supports multiple providers including OpenClaw, Claude, Ollama, and Apple Intelligence.
 </p>
 
 <p align="center">
   <a href="#features">Features</a> •
+  <a href="#ai-providers">AI Providers</a> •
   <a href="#screens">Screens</a> •
   <a href="#screenshots">Screenshots</a> •
   <a href="#getting-started">Getting Started</a> •
@@ -22,44 +23,80 @@
 
 ## Features
 
-- **Multi-server support** — Connect and manage multiple Molt Gateway servers simultaneously
-- **Real-time streaming chat** — WebSocket connection to Molt Gateway with streamed AI responses
-- **Image attachments** — Attach images to chat messages via the + button in the input bar
-- **Message queue** — Queue messages while the agent is responding for continuous conversation flow
-- **Slash commands** — 30+ built-in commands with autocomplete across core, model, execution, and admin categories
-- **Session management** — Create, switch, and reset independent chat sessions
-- **Cron scheduler** — Schedule and manage recurring agent tasks
-- **Gateway monitoring** — Live health checks, uptime, and connection status
-- **Favorites** — Save and manage favorite messages with persistent storage
-- **Face ID lock** — Biometric authentication on app launch and resume
-- **Deep linking** — Open app screens directly via `lumiere://` URLs
-- **Light & dark themes** — System-aware theming with manual override and dark mode support
-- **Onboarding flow** — Guided first-time setup for gateway credentials
+### Core
+- **Multi-provider support** — Connect to OpenClaw, Claude, Ollama, Apple Intelligence, or Echo Server
+- **Multi-server management** — Configure and switch between multiple AI servers
+- **Real-time streaming** — Streamed AI responses with markdown rendering
+- **Image attachments** — Attach images to chat messages (provider-dependent)
+- **Message queue** — Queue messages while the agent is responding
+- **Slash commands** — 38 built-in commands with autocomplete
+
+### Voice & Input
+- **Voice transcription** — Dictate messages using native iOS speech recognition
+- **Recording overlay** — Visual feedback with real-time transcription preview
+
+### Personalization
+- **Color themes** — 8 color palettes (Default, Pink, Green, Red, Blue, Purple, Orange, Glass)
+- **Light & dark modes** — System-aware theming with manual override
+- **Session aliases** — Custom display names for chat sessions
+
+### Automation
+- **Triggers** — Create deep links that auto-send messages to specific sessions
+- **Quick actions** — Home screen shortcuts (iOS 3D Touch / Android) linked to triggers
+- **Cron scheduler** — Schedule recurring agent tasks (OpenClaw only)
+- **Background notifications** — Get notified of new messages when app is backgrounded
+
+### Security
+- **Face ID / Touch ID** — Biometric authentication on app launch and resume
+- **Secure storage** — API keys and tokens stored securely
+
+### Platform
+- **iPad support** — Responsive layouts with form sheet modals on tablet
+- **Deep linking** — Open screens and execute triggers via `lumiere://` URLs
+
+## AI Providers
+
+| Provider | Type | Chat | Images | Sessions | History | Scheduler |
+|----------|------|:----:|:------:|:--------:|:-------:|:---------:|
+| **OpenClaw** | `molt` | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Claude** | `claudie` | ✅ | ✅ | — | — | — |
+| **Ollama** | `ollama` | ✅ | — | — | — | — |
+| **Apple Intelligence** | `apple` | ✅ | — | — | — | — |
+| **Echo Server** | `echo` | ✅ | — | — | — | — |
+
+### OpenClaw (Molt Gateway)
+Full-featured provider with WebSocket streaming, server-side sessions, chat history persistence, and cron job scheduling. Requires a running Molt Gateway instance.
+
+### Claude (Anthropic API)
+Direct integration with Anthropic's Messages API. Supports streaming responses and image attachments. Requires an Anthropic API key.
+
+### Ollama
+Connect to a local Ollama instance for offline AI. Includes a model selection screen to switch between installed models.
+
+### Apple Intelligence
+On-device AI using Apple Foundation Models. Requires iOS 18+ with Apple Intelligence support. No external server needed.
+
+### Echo Server
+Testing provider that echoes messages back. Useful for development and debugging.
 
 ## Screens
 
-Lumiere uses [Expo Router](https://docs.expo.dev/router/introduction/) for file-based navigation. Screens are organized as stack routes with modal presentations.
-
-### Screens
-
-| Screen        | File                | Description                                                                                                                                                                                                                                                                         |
-| ------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Chat**      | `app/index.tsx`     | Main chat interface. Connects to Molt Gateway via WebSocket for real-time streamed AI responses. Supports markdown rendering, message queuing, slash command autocomplete, image attachments, and message favoriting.                                                               |
-| **Settings**  | `app/settings.tsx`  | App configuration. Sections for Appearance (theme selection), Security (Face ID toggle), Control (links to Overview and Cron Jobs), About (version info), and Account (logout with credential clearing).                                                                            |
-| **Overview**  | `app/overview.tsx`  | Gateway monitoring dashboard. Displays connection status, uptime, tick interval, and last refresh time. Shows resource counts for instances (presence beacons), sessions, and cron status. Includes gateway access credentials with show/hide toggle, and connect/refresh controls. |
-| **Servers**   | `app/servers.tsx`   | Multi-server management. Add, edit, switch between, and remove Molt Gateway server configurations. Each server stores a name, WebSocket URL, token, and client ID. The active server is highlighted with a primary-color border.                                                    |
-| **Sessions**  | `app/sessions.tsx`  | Chat session management. Create new sessions, reset the current session (clears message history on the gateway), and switch between available sessions fetched from the gateway. Active session is visually indicated.                                                              |
-| **Scheduler** | `app/scheduler.tsx` | Cron job management. Displays scheduler status (enabled/disabled, job count, next wake time). Lists all gateway cron jobs with their schedule, agent, system prompt, and tags. Supports enabling/disabling, running on-demand, and removing jobs.                                   |
-| **Favorites** | `app/favorites.tsx` | Saved messages viewer. Displays favorited chat messages with sender badges, timestamps, and message previews. Favorites are persisted via Jotai with AsyncStorage.                                                                                                                  |
-| **Gallery**   | `app/gallery.tsx`   | Component gallery for development. Showcases all reusable UI components (Button, Card, Badge, TextInput, etc.) in a single scrollable view.                                                                                                                                         |
-
-### Special Screens
-
-| Screen             | File                                     | Description                                                                                                                                                                     |
-| ------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Onboarding**     | `src/screens/OnboardingScreen.tsx`       | First-time setup wizard. Collects Gateway URL and token with optional advanced fields (Client ID, Default Session Key). Shown before main app when onboarding is not completed. |
-| **Biometric Lock** | `src/components/BiometricLockScreen.tsx` | Face ID authentication screen. Displayed on app launch and when returning from background if biometric lock is enabled in Settings.                                             |
-| **Home (Root)**    | `app/index.tsx`                          | Entry point that loads server config and renders the Chat screen, or shows a "No Server Configured" prompt if no server is set up.                                              |
+| Screen | File | Description |
+|--------|------|-------------|
+| **Chat** | `app/index.tsx` | Main chat interface with streaming responses, markdown rendering, voice input, slash commands, and message favoriting |
+| **Settings** | `app/settings.tsx` | App configuration including appearance, security, notifications, and account management |
+| **Servers** | `app/servers.tsx` | View, switch, and manage configured AI servers |
+| **Add Server** | `app/add-server.tsx` | Configure a new server with provider-specific fields |
+| **Edit Server** | `app/edit-server.tsx` | Modify or delete existing server configuration |
+| **Sessions** | `app/sessions.tsx` | Create, switch, and reset chat sessions (OpenClaw) |
+| **Edit Session** | `app/edit-session.tsx` | Rename sessions with custom aliases |
+| **Overview** | `app/overview.tsx` | Gateway monitoring dashboard with health status (OpenClaw) |
+| **Scheduler** | `app/scheduler.tsx` | Cron job management (OpenClaw) |
+| **Favorites** | `app/favorites.tsx` | Saved messages viewer |
+| **Triggers** | `app/triggers.tsx` | Create and manage auto-send deep links |
+| **Colors** | `app/colors.tsx` | Color theme selection |
+| **Ollama Models** | `app/ollama-models.tsx` | Model selection for Ollama provider |
+| **Gallery** | `app/gallery.tsx` | Component showcase for development |
 
 ### Navigation Flow
 
@@ -70,11 +107,14 @@ RootLayout (ThemeProvider + KeyboardProvider)
 └── Stack Navigator
     ├── Chat (index)
     ├── Settings
-    ├── Overview
-    ├── Servers
-    ├── Sessions
-    ├── Scheduler
+    ├── Servers / Add Server / Edit Server
+    ├── Sessions / Edit Session
+    ├── Overview (OpenClaw)
+    ├── Scheduler (OpenClaw)
     ├── Favorites
+    ├── Triggers
+    ├── Colors
+    ├── Ollama Models (Ollama)
     └── Gallery
 ```
 
@@ -108,43 +148,35 @@ pnpm install
 pnpm start
 ```
 
-### Chat Interface
+### Adding a Server
 
-- Real-time message streaming via WebSocket
-- Markdown rendering for formatted responses
-- Image attachment support via + button
-- Message queue for continuous conversations
-- Slash command autocomplete (30+ commands)
-- Message favoriting with long-press
-- Interactive keyboard dismissal on scroll
-- Auto-scroll to latest messages
-
-### Gateway Management
-
-- Multi-server support for connecting to multiple Molt Gateway instances
-- WebSocket connection status monitoring
-- Health checks and uptime tracking
-- Session and instance count monitoring
-- Secure credential storage with show/hide toggle
-
-### Session Management
-
-- View and manage chat sessions
-- Create new sessions and reset existing ones
-- Quick session switching with visual active indicator
-- Chat messages clear immediately on session switch
+1. Open the app and tap the settings gear icon
+2. Tap the + button next to "Servers"
+3. Select a provider type (OpenClaw, Claude, Ollama, Apple Intelligence, or Echo)
+4. Fill in the required fields:
+   - **OpenClaw**: Name, WebSocket URL, Token, Client ID
+   - **Claude**: Name, API Key
+   - **Ollama**: Name, Server URL (default: `http://localhost:11434`)
+   - **Apple Intelligence**: Name only (on-device)
+   - **Echo**: Name only (for testing)
+5. Tap "Add Server"
 
 ### Deep Linking
 
 Open screens directly using `lumiere://` URLs:
 
-- `lumiere://chat` — Chat screen
-- `lumiere://settings` — Settings screen
-- `lumiere://servers` — Server management
-- `lumiere://sessions` — Session management
-- `lumiere://overview` — Gateway overview
-- `lumiere://scheduler` — Cron scheduler
-- `lumiere://favorites` — Favorites
+| URL | Action |
+|-----|--------|
+| `lumiere://chat` | Chat screen |
+| `lumiere://settings` | Settings |
+| `lumiere://servers` | Server management |
+| `lumiere://sessions` | Session management |
+| `lumiere://overview` | Gateway overview |
+| `lumiere://scheduler` | Cron scheduler |
+| `lumiere://favorites` | Favorites |
+| `lumiere://triggers` | Triggers |
+| `lumiere://colors` | Color themes |
+| `lumiere://trigger/autotrigger/{slug}` | Execute a trigger |
 
 ## Architecture
 
@@ -155,19 +187,38 @@ app/                    Expo Router file-based routes
 
 src/
 ├── components/
-│   ├── chat/           Chat UI (ChatScreen, ChatInput, ChatMessage, SessionModal)
-│   ├── ui/             Reusable components (Button, Card, Badge, TextInput, etc.)
-│   └── gallery/        Component showcase for development
-├── screens/            Legacy screens (OnboardingScreen)
-├── services/molt/      Molt Gateway WebSocket client
-├── hooks/              Custom hooks (useServers, useMessageQueue, useSlashCommands, useDeepLinking)
+│   ├── chat/           Chat UI (ChatScreen, ChatInput, ChatMessage)
+│   └── ui/             Reusable components (Button, Card, Badge, etc.)
+├── screens/            Onboarding and lock screens
+├── services/
+│   ├── molt/           OpenClaw WebSocket client
+│   ├── claudie/        Claude/Anthropic API client
+│   ├── ollama/         Ollama HTTP client
+│   ├── apple-intelligence/  Apple Foundation Models wrapper
+│   └── echo/           Echo test provider
+├── modules/
+│   ├── speech-transcription/  Native iOS speech recognition
+│   └── apple-intelligence/    Native Apple Foundation Models
+├── hooks/              Custom hooks (useServers, useVoiceTranscription, etc.)
 ├── store/              Jotai atoms with AsyncStorage persistence
-├── theme/              Theme system (colors, typography, spacing, dark mode)
-├── config/             Configuration management
-└── constants/          App constants
+├── theme/              Theme system (colors, typography, spacing)
+└── utils/              Utilities (device detection, etc.)
 ```
 
-**Key dependencies:** React Native 0.81, Expo 54, Expo Router 6, Jotai (state), React Native Reanimated (animations), WebSocket (real-time streaming).
+**Key dependencies:** React Native 0.81, Expo 54, Expo Router 6, Jotai (state), React Native Reanimated (animations).
+
+## Platform-Specific Features
+
+### iOS Only
+- Voice transcription via native Speech Recognition
+- Apple Intelligence provider (iOS 18+)
+- 3D Touch quick actions
+- Glass effect input styling
+
+### iPad
+- Form sheet modals instead of full-screen
+- Responsive layouts
+- Landscape orientation support
 
 ## Contributing
 
