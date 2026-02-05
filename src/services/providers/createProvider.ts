@@ -1,5 +1,5 @@
 import { AppleChatProvider } from '../apple-intelligence/AppleChatProvider'
-import { ClaudieChatProvider } from '../claudie/ClaudieChatProvider'
+import { ClaudeChatProvider } from '../claude/ClaudeChatProvider'
 import { EchoChatProvider } from '../echo/EchoChatProvider'
 import { OllamaChatProvider } from '../ollama/OllamaChatProvider'
 import { OpenAIChatProvider } from '../openai/OpenAIChatProvider'
@@ -31,8 +31,8 @@ export function createChatProvider(config: ProviderConfig): ChatProvider {
     case 'apple':
       inner = new AppleChatProvider(config)
       break
-    case 'claudie':
-      inner = new ClaudieChatProvider(config)
+    case 'claude':
+      inner = new ClaudeChatProvider(config)
       break
     case 'openai':
       inner = new OpenAIChatProvider(config)

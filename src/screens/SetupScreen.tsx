@@ -63,10 +63,10 @@ export function SetupScreen() {
   const needsUrl =
     providerType === 'molt' ||
     providerType === 'ollama' ||
-    providerType === 'claudie' ||
+    providerType === 'claude' ||
     providerType === 'openai'
   const needsToken =
-    providerType === 'molt' || providerType === 'claudie' || providerType === 'openai'
+    providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
 
   const handleComplete = async () => {
     if (providerType === 'molt' && localUrl.trim() && localToken.trim()) {
@@ -107,12 +107,12 @@ export function SetupScreen() {
       }))
 
       setOnboardingCompleted(true)
-    } else if (providerType === 'claudie' && localUrl.trim() && localToken.trim()) {
+    } else if (providerType === 'claude' && localUrl.trim() && localToken.trim()) {
       const serverId = await addServer(
         {
           name: 'My Claude',
           url: localUrl.trim(),
-          providerType: 'claudie',
+          providerType: 'claude',
           model: localModel.trim() || undefined,
         },
         localToken.trim(),
@@ -185,7 +185,7 @@ export function SetupScreen() {
   }
 
   const isValid =
-    providerType === 'molt' || providerType === 'claudie' || providerType === 'openai'
+    providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
       : providerType === 'ollama'
         ? localUrl.trim().length > 0
@@ -220,7 +220,7 @@ export function SetupScreen() {
               placeholder={
                 providerType === 'ollama'
                   ? 'http://localhost:11434'
-                  : providerType === 'claudie'
+                  : providerType === 'claude'
                     ? 'https://api.anthropic.com'
                     : providerType === 'openai'
                       ? 'https://api.openai.com'
@@ -232,7 +232,7 @@ export function SetupScreen() {
               hint={
                 providerType === 'ollama'
                   ? 'The URL of your Ollama server'
-                  : providerType === 'claudie'
+                  : providerType === 'claude'
                     ? 'The base URL of the Anthropic API'
                     : providerType === 'openai'
                       ? 'The base URL of the OpenAI API'
@@ -243,11 +243,11 @@ export function SetupScreen() {
 
           {needsToken && (
             <TextInput
-              label={providerType === 'claudie' || providerType === 'openai' ? 'API Key' : 'Token'}
+              label={providerType === 'claude' || providerType === 'openai' ? 'API Key' : 'Token'}
               value={localToken}
               onChangeText={setLocalToken}
               placeholder={
-                providerType === 'claudie' || providerType === 'openai'
+                providerType === 'claude' || providerType === 'openai'
                   ? 'Your API key'
                   : 'Your authentication token'
               }
@@ -255,7 +255,7 @@ export function SetupScreen() {
               autoCorrect={false}
               secureTextEntry
               hint={
-                providerType === 'claudie'
+                providerType === 'claude'
                   ? 'Your Anthropic API key'
                   : providerType === 'openai'
                     ? 'Your OpenAI API key'
@@ -265,7 +265,7 @@ export function SetupScreen() {
           )}
 
           {(providerType === 'ollama' ||
-            providerType === 'claudie' ||
+            providerType === 'claude' ||
             providerType === 'openai') && (
             <TextInput
               label="Model"
@@ -274,7 +274,7 @@ export function SetupScreen() {
               placeholder={
                 providerType === 'ollama'
                   ? 'llama3.2'
-                  : providerType === 'claudie'
+                  : providerType === 'claude'
                     ? 'claude-sonnet-4-5-20250514'
                     : 'gpt-4o'
               }
@@ -283,7 +283,7 @@ export function SetupScreen() {
               hint={
                 providerType === 'ollama'
                   ? 'Ollama model to use (default: llama3.2)'
-                  : providerType === 'claudie'
+                  : providerType === 'claude'
                     ? 'Claude model to use (default: claude-sonnet-4-5)'
                     : 'OpenAI model to use (default: gpt-4o)'
               }
