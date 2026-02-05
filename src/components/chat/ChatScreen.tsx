@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { FlashList, FlashListRef } from '@shopify/flash-list'
+import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -40,6 +41,7 @@ interface ChatScreenProps {
 export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const { theme } = useTheme()
   const router = useRouter()
+  const glassAvailable = isLiquidGlassAvailable()
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
   const [currentSessionKey] = useAtom(currentSessionKeyAtom)
@@ -52,7 +54,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
   const [isLoadingHistory, setIsLoadingHistory] = useState(true)
 
-  const styles = useMemo(() => createStyles(theme), [theme])
+  const styles = useMemo(() => createStyles(theme, glassAvailable), [theme, glassAvailable])
 
   // Track keyboard position in real-time for smooth interactive dismissal
   const { height: keyboardHeight } = useReanimatedKeyboardAnimation()
@@ -304,33 +306,50 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   }
 
   const renderConnectionStatus = () => {
+    const StatusBubbleContainer = glassAvailable ? GlassView : View
+    const statusBubbleProps = glassAvailable
+      ? { style: styles.statusBubble, glassEffectStyle: 'regular' as const }
+      : { style: [styles.statusBubble, styles.statusBubbleFallback] }
+
+    const SettingsButtonContainer = glassAvailable ? GlassView : View
+    const settingsButtonProps = glassAvailable
+      ? { style: styles.settingsButton, glassEffectStyle: 'regular' as const }
+      : { style: [styles.settingsButton, styles.settingsButtonFallback] }
+
     if (connecting) {
       return (
         <View style={styles.statusBarContainer}>
-          <View style={styles.statusBubble}>
+          <StatusBubbleContainer {...statusBubbleProps}>
             <ActivityIndicator size="small" color={theme.colors.primary} />
             <Text style={styles.statusText}>Connecting...</Text>
-          </View>
-          <TouchableOpacity onPress={handleOpenSettings} style={styles.settingsButton}>
-            <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+          </StatusBubbleContainer>
+          <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
+            <SettingsButtonContainer {...settingsButtonProps}>
+              <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+            </SettingsButtonContainer>
           </TouchableOpacity>
         </View>
       )
     }
 
     if (error) {
+      const errorBubbleProps = glassAvailable
+        ? { style: styles.statusBubble, glassEffectStyle: 'regular' as const }
+        : { style: [styles.statusBubble, styles.statusBubbleFallback, styles.errorBubble] }
       return (
         <View style={styles.statusBarContainer}>
-          <View style={[styles.statusBubble, styles.errorBubble]}>
+          <StatusBubbleContainer {...errorBubbleProps}>
             <Text style={styles.errorText} numberOfLines={1}>
               Connection failed: {error}
             </Text>
             <TouchableOpacity onPress={retry} style={styles.retryButton}>
               <Text style={styles.retryText}>Retry</Text>
             </TouchableOpacity>
-          </View>
-          <TouchableOpacity onPress={handleOpenSettings} style={styles.settingsButton}>
-            <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+          </StatusBubbleContainer>
+          <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
+            <SettingsButtonContainer {...settingsButtonProps}>
+              <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+            </SettingsButtonContainer>
           </TouchableOpacity>
         </View>
       )
@@ -339,13 +358,15 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     if (connected) {
       return (
         <View style={styles.statusBarContainer}>
-          <View style={styles.statusBubble}>
+          <StatusBubbleContainer {...statusBubbleProps}>
             <Animated.View style={[styles.connectedDot, pulseStyle]} />
             <Text style={styles.connectedText}>Health</Text>
             <Text style={styles.statusOk}>OK</Text>
-          </View>
-          <TouchableOpacity onPress={handleOpenSettings} style={styles.settingsButton}>
-            <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+          </StatusBubbleContainer>
+          <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
+            <SettingsButtonContainer {...settingsButtonProps}>
+              <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+            </SettingsButtonContainer>
           </TouchableOpacity>
         </View>
       )
@@ -467,7 +488,7 @@ interface Theme {
   isDark: boolean
 }
 
-const createStyles = (theme: Theme) =>
+const createStyles = (theme: Theme, _glassAvailable: boolean) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -489,22 +510,28 @@ const createStyles = (theme: Theme) =>
     statusBubble: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: theme.colors.surface,
       paddingHorizontal: theme.spacing.md + 2,
       paddingVertical: theme.spacing.sm + 2,
       borderRadius: theme.borderRadius.xxl,
       alignSelf: 'flex-start',
       marginRight: theme.spacing.md,
       flexShrink: 1,
+      overflow: 'hidden',
+    },
+    statusBubbleFallback: {
+      backgroundColor: theme.colors.surface,
     },
     settingsButton: {
       width: 40,
       height: 40,
       borderRadius: 20,
-      backgroundColor: theme.colors.surface,
       alignItems: 'center',
       justifyContent: 'center',
       flexShrink: 0,
+      overflow: 'hidden',
+    },
+    settingsButtonFallback: {
+      backgroundColor: theme.colors.surface,
     },
     errorBubble: {
       backgroundColor: theme.isDark ? '#3A1B1B' : '#FFEBEE',

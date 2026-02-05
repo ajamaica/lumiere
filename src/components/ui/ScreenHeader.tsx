@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
+import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ViewProps } from 'react-native'
 
@@ -27,6 +28,7 @@ export function ScreenHeader({
 }: ScreenHeaderProps) {
   const { theme } = useTheme()
   const router = useRouter()
+  const glassAvailable = isLiquidGlassAvailable()
 
   const handleBack = onBack || (() => router.back())
 
@@ -46,10 +48,13 @@ export function ScreenHeader({
       width: 36,
       height: 36,
       borderRadius: 18,
-      backgroundColor: theme.colors.surfaceVariant,
       alignItems: 'center',
       justifyContent: 'center',
       marginRight: theme.spacing.md,
+      overflow: 'hidden',
+    },
+    closeButtonFallback: {
+      backgroundColor: theme.colors.surfaceVariant,
     },
     content: {
       flex: 1,
@@ -66,11 +71,18 @@ export function ScreenHeader({
     },
   })
 
+  const CloseButtonContainer = glassAvailable ? GlassView : View
+  const closeButtonContainerProps = glassAvailable
+    ? { style: styles.closeButton, glassEffectStyle: 'regular' as const }
+    : { style: [styles.closeButton, styles.closeButtonFallback] }
+
   return (
     <View style={[styles.header, style]} {...props}>
       {showClose && (
-        <TouchableOpacity onPress={handleBack} style={styles.closeButton}>
-          <Ionicons name="close" size={20} color={theme.colors.text.secondary} />
+        <TouchableOpacity onPress={handleBack} activeOpacity={0.7}>
+          <CloseButtonContainer {...closeButtonContainerProps}>
+            <Ionicons name="close" size={20} color={theme.colors.text.secondary} />
+          </CloseButtonContainer>
         </TouchableOpacity>
       )}
       {showBack && !showClose && (
