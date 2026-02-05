@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons'
 import * as Clipboard from 'expo-clipboard'
+import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
-import { useAtom } from 'jotai'
+import { useAtom, useSetAtom } from 'jotai'
 import React, { useCallback, useMemo, useState } from 'react'
 import {
   Image,
@@ -15,8 +16,14 @@ import {
 } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
-import { favoritesAtom } from '../../store'
+import {
+  clearMessagesAtom,
+  currentSessionKeyAtom,
+  favoritesAtom,
+  sessionAliasesAtom,
+} from '../../store'
 import { useTheme } from '../../theme'
+import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 
 export interface MessageAttachment {
   uri: string
@@ -68,7 +75,11 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const { theme } = useTheme()
   const isUser = message.sender === 'user'
   const [copied, setCopied] = useState(false)
+  const [intentCopied, setIntentCopied] = useState(false)
   const [favorites, setFavorites] = useAtom(favoritesAtom)
+  const setCurrentSessionKey = useSetAtom(currentSessionKeyAtom)
+  const setSessionAliases = useSetAtom(sessionAliasesAtom)
+  const setClearMessages = useSetAtom(clearMessagesAtom)
 
   const isFavorited = useMemo(
     () => favorites.some((f) => f.id === message.id),
@@ -268,7 +279,49 @@ export function ChatMessage({ message }: ChatMessageProps) {
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const processedText = useMemo(() => linkifyText(message.text), [message.text])
+  // Extract intents from the message (agent messages only)
+  const intents = useMemo(
+    () => (!isUser ? extractIntents(message.text) : []),
+    [isUser, message.text],
+  )
+
+  const handleIntentPress = useCallback(
+    async (intent: ChatIntent) => {
+      try {
+        switch (intent.action) {
+          case 'copyToClipboard': {
+            const text = intent.params.text ?? ''
+            await Clipboard.setStringAsync(text)
+            setIntentCopied(true)
+            setTimeout(() => setIntentCopied(false), 2000)
+            break
+          }
+          case 'openSession': {
+            const key = intent.params.key
+            if (!key) break
+            const label = intent.params.label
+            if (label) {
+              setSessionAliases((prev) => ({ ...prev, [key]: label }))
+            }
+            setCurrentSessionKey(key)
+            setClearMessages((n) => n + 1)
+            break
+          }
+          default:
+            await Linking.openURL(intent.raw)
+        }
+      } catch (err) {
+        console.error('Failed to execute intent:', err)
+      }
+    },
+    [setCurrentSessionKey, setSessionAliases, setClearMessages],
+  )
+
+  // Strip intent URLs from displayed text, then linkify
+  const processedText = useMemo(() => {
+    const text = intents.length > 0 ? stripIntents(message.text) : message.text
+    return linkifyText(text)
+  }, [message.text, intents])
 
   return (
     <View style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}>
@@ -302,6 +355,30 @@ export function ChatMessage({ message }: ChatMessageProps) {
           </Text>
         )}
       </View>
+      {!message.streaming && intents.length > 0 && (
+        <View style={styles.intentActions}>
+          {intents.map((intent, index) => {
+            const isCopyIntent = intent.action === 'copyToClipboard'
+            const showCheck = isCopyIntent && intentCopied
+            return (
+              <TouchableOpacity
+                key={index}
+                style={styles.intentButton}
+                onPress={() => handleIntentPress(intent)}
+                activeOpacity={0.7}
+              >
+                <Ionicons
+                  name={(showCheck ? 'checkmark' : intentIcon(intent.action)) as any}
+                  size={16}
+                  color={theme.colors.primary}
+                  style={styles.intentButtonIcon}
+                />
+                <Text style={styles.intentButtonText}>{showCheck ? 'Copied!' : intent.label}</Text>
+              </TouchableOpacity>
+            )
+          })}
+        </View>
+      )}
       {!message.streaming && (
         <View style={styles.actionButtons}>
           {!isUser && (
@@ -381,6 +458,30 @@ const createStyles = (theme: Theme) =>
       width: '100%',
       backgroundColor: theme.colors.message.agent,
       borderBottomLeftRadius: theme.borderRadius.sm,
+    },
+    intentActions: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: theme.spacing.sm,
+      gap: theme.spacing.xs,
+    },
+    intentButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
+      borderRadius: theme.borderRadius.xxl,
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)',
+    },
+    intentButtonIcon: {
+      marginRight: theme.spacing.xs,
+    },
+    intentButtonText: {
+      color: theme.colors.primary,
+      fontSize: theme.typography.fontSize.sm,
+      fontWeight: theme.typography.fontWeight.semibold,
     },
     actionButtons: {
       flexDirection: 'row',
