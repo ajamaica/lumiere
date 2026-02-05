@@ -1,5 +1,6 @@
 export type {
   FavoriteItem,
+  NotificationLastCheckMap,
   ServerConfig,
   ServersDict,
   ServerSessions,
@@ -19,13 +20,16 @@ export {
   gatewayConnectedAtom,
   gatewayConnectingAtom,
   gatewayErrorAtom,
+  jotaiStorage,
   languageAtom,
   messageQueueAtom,
+  notificationLastCheckAtom,
   onboardingCompletedAtom,
   pendingTriggerMessageAtom,
   serversAtom,
   serverSessionsAtom,
   sessionAliasesAtom,
+  store,
   themeModeAtom,
   triggersAtom,
 } from './atoms'

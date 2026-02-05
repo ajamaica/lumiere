@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import Constants from 'expo-constants'
 import * as LocalAuthentication from 'expo-local-authentication'
 import { useRouter } from 'expo-router'
 import { useAtom, useSetAtom } from 'jotai'
+import { RESET } from 'jotai/utils'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -23,7 +23,11 @@ import { backgroundCheckTask } from '../src/services/notifications/notificationS
 import {
   backgroundNotificationsEnabledAtom,
   biometricLockEnabledAtom,
+  currentServerIdAtom,
   onboardingCompletedAtom,
+  serversAtom,
+  serverSessionsAtom,
+  triggersAtom,
 } from '../src/store'
 import { useTheme } from '../src/theme'
 import { colorThemes } from '../src/theme/colors'
@@ -35,6 +39,10 @@ export default function SettingsScreen() {
   const { currentLanguage, currentLanguageName, setLanguage, supportedLanguages } = useLanguage()
   const { currentServer, currentServerId, serversList, switchToServer } = useServers()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
+  const setServers = useSetAtom(serversAtom)
+  const setCurrentServerId = useSetAtom(currentServerIdAtom)
+  const setServerSessions = useSetAtom(serverSessionsAtom)
+  const setTriggers = useSetAtom(triggersAtom)
   const [biometricLockEnabled, setBiometricLockEnabled] = useAtom(biometricLockEnabledAtom)
   const [backgroundNotificationsEnabled, setBackgroundNotificationsEnabled] = useAtom(
     backgroundNotificationsEnabledAtom,
@@ -109,17 +117,14 @@ export default function SettingsScreen() {
       {
         text: t('settings.logout'),
         style: 'destructive',
-        onPress: async () => {
-          await AsyncStorage.multiRemove([
-            'servers',
-            'currentServerId',
-            'serverSessions',
-            'onboardingCompleted',
-            'triggers',
-            'biometricLockEnabled',
-          ])
-          setBiometricLockEnabled(false)
-          setOnboardingCompleted(false)
+        onPress: () => {
+          // Reset all atoms to their default values using Jotai's RESET symbol
+          setServers(RESET)
+          setCurrentServerId(RESET)
+          setServerSessions(RESET)
+          setOnboardingCompleted(RESET)
+          setTriggers(RESET)
+          setBiometricLockEnabled(RESET)
         },
       },
     ])
