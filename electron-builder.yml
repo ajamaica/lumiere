@@ -1,0 +1,32 @@
+appId: bot.lumiere.app
+productName: Lumiere
+copyright: Copyright © 2025 Lumiere
+
+directories:
+  output: build
+  buildResources: assets
+
+files:
+  - electron/**/*
+  - dist/**/*
+  - assets/icon.png
+
+mac:
+  category: public.app-category.productivity
+  icon: assets/icon.png
+  target:
+    - target: dmg
+      arch:
+        - universal
+    - target: zip
+      arch:
+        - universal
+  darkModeSupport: true
+  hardenedRuntime: true
+
+dmg:
+  title: Lumiere
+  artifactName: Lumiere-${version}-mac.${ext}
+
+extraMetadata:
+  main: electron/main.js

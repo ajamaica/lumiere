@@ -52,7 +52,7 @@
       ],
       "package": "bot.lumiere.app"
     },
-    "platforms": ["ios", "android"],
+    "platforms": ["ios", "android", "web"],
     "scheme": "lumiere",
     "plugins": [
       "expo-router",
