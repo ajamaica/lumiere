@@ -6,6 +6,7 @@ import { AppState, AppStateStatus, View } from 'react-native'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
 
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
+import { ErrorBoundary } from '../src/components/ui'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
@@ -188,7 +189,9 @@ export default function RootLayout() {
   return (
     <KeyboardProvider>
       <ThemeProvider>
-        <AppContent />
+        <ErrorBoundary>
+          <AppContent />
+        </ErrorBoundary>
       </ThemeProvider>
     </KeyboardProvider>
   )
