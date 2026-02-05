@@ -19,7 +19,8 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSMicrophoneUsageDescription": "Lumiere needs access to your microphone to transcribe voice messages.",
-        "NSSpeechRecognitionUsageDescription": "Lumiere uses speech recognition to convert your voice to text."
+        "NSSpeechRecognitionUsageDescription": "Lumiere uses speech recognition to convert your voice to text.",
+        "NSCalendarsUsageDescription": "Lumiere needs access to your calendar to create and store events."
       }
     },
     "android": {
