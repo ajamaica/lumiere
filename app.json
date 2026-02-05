@@ -38,18 +38,12 @@
               "scheme": "lumiere"
             }
           ],
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
+          "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
       "package": "bot.lumiere.app"
     },
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "scheme": "lumiere",
     "plugins": [
       "expo-router",
