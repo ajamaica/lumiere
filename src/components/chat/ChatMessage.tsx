@@ -367,6 +367,28 @@ export function ChatMessage({ message }: ChatMessageProps) {
             setTimeout(() => setIntentCopied(false), 2000)
             break
           }
+          case 'makeCall': {
+            const phone = intent.params.phone
+            if (!phone) {
+              console.warn('No phone number provided for makeCall intent')
+              break
+            }
+            await Linking.openURL(`tel:${encodeURIComponent(phone)}`)
+            break
+          }
+          case 'openMaps': {
+            const { latitude, longitude, label } = intent.params
+            if (!latitude || !longitude) {
+              console.warn('Missing latitude or longitude for openMaps intent')
+              break
+            }
+            // Use geo: URI scheme which works on both iOS and Android
+            const geoUrl = label
+              ? `geo:${latitude},${longitude}?q=${latitude},${longitude}(${encodeURIComponent(label)})`
+              : `geo:${latitude},${longitude}?q=${latitude},${longitude}`
+            await Linking.openURL(geoUrl)
+            break
+          }
           default:
             await Linking.openURL(intent.raw)
         }
