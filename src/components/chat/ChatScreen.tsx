@@ -23,7 +23,6 @@ import Animated, {
   useSharedValue,
   withRepeat,
   withSequence,
-  withSpring,
   withTiming,
 } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -127,10 +126,6 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const statusBubbleAnimatedStyle = useAnimatedStyle(() => ({
     opacity: 1 - searchProgress.value,
     transform: [{ scale: interpolate(searchProgress.value, [0, 1], [1, 0.85]) }],
-  }))
-
-  const statusActionsAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: 1 - searchProgress.value,
   }))
 
   // Track whether we pre-populated from local cache so we can skip the loader
@@ -339,18 +334,18 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
 
   const handleToggleSearch = () => {
     if (isSearchOpen) {
-      searchProgress.value = withSpring(0, { damping: 20, stiffness: 300 })
+      searchProgress.value = withTiming(0, { duration: 250, easing: Easing.out(Easing.ease) })
       setSearchQuery('')
       setIsSearchOpen(false)
     } else {
       setIsSearchOpen(true)
-      searchProgress.value = withSpring(1, { damping: 18, stiffness: 200 })
+      searchProgress.value = withTiming(1, { duration: 300, easing: Easing.out(Easing.ease) })
       setTimeout(() => searchInputRef.current?.focus(), 150)
     }
   }
 
   const handleCloseSearch = () => {
-    searchProgress.value = withSpring(0, { damping: 20, stiffness: 300 })
+    searchProgress.value = withTiming(0, { duration: 250, easing: Easing.out(Easing.ease) })
     setSearchQuery('')
     setTimeout(() => setIsSearchOpen(false), 200)
   }
@@ -423,7 +418,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
               <Text style={styles.connectedText}>Health</Text>
               <Text style={styles.statusOk}>OK</Text>
             </StatusBubbleContainer>
-            <Animated.View style={[styles.statusActions, statusActionsAnimatedStyle]}>
+            <View style={styles.statusActions}>
               <TouchableOpacity onPress={handleToggleSearch} activeOpacity={0.7}>
                 <SettingsButtonContainer {...settingsButtonProps}>
                   <Ionicons name="search" size={22} color={theme.colors.text.secondary} />
@@ -434,7 +429,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
                   <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
                 </SettingsButtonContainer>
               </TouchableOpacity>
-            </Animated.View>
+            </View>
           </Animated.View>
 
           {/* Search bar layer - expands in when search opens */}
@@ -677,8 +672,8 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
       flex: 1,
       fontSize: theme.typography.fontSize.sm,
       color: theme.colors.text.primary,
-      marginLeft: theme.spacing.sm,
-      marginRight: theme.spacing.sm,
+      marginLeft: theme.spacing.md,
+      marginRight: theme.spacing.md,
       paddingVertical: 4,
     },
     searchCount: {
