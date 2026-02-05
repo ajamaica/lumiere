@@ -13,21 +13,21 @@ import { SetupScreen } from './SetupScreen'
 
 const INTRO_STEPS = [
   {
-    title: 'Managing your Agents is easier than ever',
+    title: 'Your AI agents, always at your fingertips',
     description:
-      'Lumiere gives you a beautiful mobile interface to interact with your AI agents on the go. Monitor conversations, send messages, and stay connected from anywhere.',
+      'Chat with your agents on the go with a beautiful mobile interface. Monitor conversations, send messages, and stay connected from anywhere.',
     illustration: AgentIllustration,
   },
   {
     title: 'Full control with powerful features',
     description:
-      'Manage multiple servers, switch between sessions, schedule tasks with cron jobs, and get real-time notifications. Everything you need to stay in command.',
+      'Manage multiple servers and switch between sessions instantly. Schedule tasks with cron jobs, get real-time notifications, and stay in command of your workflow.',
     illustration: FeaturesIllustration,
   },
   {
-    title: 'Highly configurable for custom needs',
+    title: 'Fully customizable to fit your needs',
     description:
-      'Connect to OpenClaw, Ollama, or Echo providers. Customize themes, set up deep link triggers, and tailor the experience to fit your workflow.',
+      'Connect to OpenClaw, Ollama, Echo, and more. Personalize themes, configure custom triggers, and tailor every detail to match your workflow.',
     illustration: ConfigIllustration,
   },
 ]
