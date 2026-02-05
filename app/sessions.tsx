@@ -125,9 +125,6 @@ export default function SessionsScreen() {
     spacer: {
       height: theme.spacing.lg,
     },
-    resetSection: {
-      marginTop: theme.spacing.xl,
-    },
   })
 
   if (!config) {
@@ -178,6 +175,11 @@ export default function SessionsScreen() {
             icon="pencil-outline"
             label="Edit Session"
             onPress={() => handleEditSession(currentSessionKey)}
+          />
+          <SettingRow
+            icon="refresh-outline"
+            label="Reset Current Session"
+            onPress={handleResetSession}
             showDivider={false}
           />
         </Section>
@@ -210,16 +212,6 @@ export default function SessionsScreen() {
             <SettingRow icon="albums-outline" label="No sessions available" showDivider={false} />
           )}
         </Section>
-
-        {/* Reset session */}
-        <View style={styles.resetSection}>
-          <Button
-            title="Reset Current Session"
-            variant="danger"
-            size="lg"
-            onPress={handleResetSession}
-          />
-        </View>
       </ScrollView>
     </SafeAreaView>
   )
