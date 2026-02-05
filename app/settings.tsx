@@ -17,6 +17,7 @@ import {
 } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow } from '../src/components/ui'
+import { getProviderIcon } from '../src/config/providerOptions'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
 import { backgroundCheckTask } from '../src/services/notifications/notificationService'
@@ -187,8 +188,10 @@ export default function SettingsScreen() {
                 }
               >
                 <SettingRow
-                  icon="server-outline"
-                  iconColor={isActive ? theme.colors.primary : undefined}
+                  customIcon={getProviderIcon(
+                    server.providerType || 'molt',
+                    isActive ? theme.colors.primary : theme.colors.text.secondary,
+                  )}
                   label={server.name}
                   subtitle={server.url}
                   value={isActive ? 'Active' : undefined}
