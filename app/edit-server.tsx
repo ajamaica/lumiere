@@ -11,22 +11,17 @@ import {
 } from 'react-native'
 
 import { Button, Dropdown, ScreenHeader, Text, TextInput } from '../src/components/ui'
+import { getBasicProviderOptions } from '../src/config/providerOptions'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
-
-const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
-  { value: 'molt', label: 'OpenClaw' },
-  { value: 'ollama', label: 'Ollama' },
-  { value: 'echo', label: 'Echo Server' },
-]
 
 export default function EditServerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { id } = useLocalSearchParams<{ id: string }>()
   const { servers, updateServer, removeServer } = useServers()
-  const providerOptions = ALL_PROVIDER_OPTIONS
+  const providerOptions = getBasicProviderOptions(theme.colors.text.primary)
 
   const server = id ? servers[id] : null
 

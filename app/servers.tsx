@@ -1,18 +1,20 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 import { Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
+import { getBasicProviderOptions, getProviderIcon } from '../src/config/providerOptions'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
-
-const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
-  { value: 'molt', label: 'OpenClaw' },
-  { value: 'ollama', label: 'Ollama' },
-  { value: 'echo', label: 'Echo Server' },
-]
 
 export default function ServersScreen() {
   const { theme } = useTheme()
@@ -39,8 +41,10 @@ export default function ServersScreen() {
     router.back()
   }
 
+  const providerOptions = getBasicProviderOptions(theme.colors.text.tertiary)
+
   const providerLabel = (type: ProviderType) =>
-    PROVIDER_OPTIONS.find((o) => o.value === type)?.label ?? type
+    providerOptions.find((o) => o.value === type)?.label ?? type
 
   const styles = StyleSheet.create({
     container: {
@@ -71,10 +75,21 @@ export default function ServersScreen() {
     iconButton: {
       padding: theme.spacing.xs,
     },
+    providerRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: 2,
+    },
+    providerIcon: {
+      width: 14,
+      height: 14,
+      marginRight: 4,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     providerBadge: {
       fontSize: 11,
       color: theme.colors.text.tertiary,
-      marginTop: 2,
     },
   })
 
@@ -99,10 +114,15 @@ export default function ServersScreen() {
                       <Text variant="caption" color="secondary" numberOfLines={1}>
                         {server.url}
                       </Text>
-                      <Text style={styles.providerBadge}>
-                        {providerLabel(server.providerType || 'molt')}
-                        {server.model ? ` - ${server.model}` : ''}
-                      </Text>
+                      <View style={styles.providerRow}>
+                        <View style={styles.providerIcon}>
+                          {getProviderIcon(server.providerType || 'molt', theme.colors.text.tertiary)}
+                        </View>
+                        <Text style={styles.providerBadge}>
+                          {providerLabel(server.providerType || 'molt')}
+                          {server.model ? ` - ${server.model}` : ''}
+                        </Text>
+                      </View>
                     </View>
                     <View style={styles.serverActions}>
                       <TouchableOpacity
