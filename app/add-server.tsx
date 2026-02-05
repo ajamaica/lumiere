@@ -11,25 +11,16 @@ import {
 } from 'react-native'
 
 import { Button, Dropdown, ScreenHeader, Text, TextInput } from '../src/components/ui'
+import { getAllProviderOptions } from '../src/config/providerOptions'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
-
-const ALL_PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
-  { value: 'molt', label: 'OpenClaw' },
-  { value: 'ollama', label: 'Ollama' },
-  { value: 'claudie', label: 'Claude' },
-  ...(Platform.OS === 'ios'
-    ? [{ value: 'apple' as ProviderType, label: 'Apple Intelligence' }]
-    : []),
-  { value: 'echo', label: 'Echo Server' },
-]
 
 export default function AddServerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { addServer } = useServers()
-  const providerOptions = ALL_PROVIDER_OPTIONS
+  const providerOptions = getAllProviderOptions(theme.colors.text.primary)
 
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')

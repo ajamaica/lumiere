@@ -12,20 +12,12 @@ import {
 
 import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
 import { Button, Dropdown, Text, TextInput } from '../components/ui'
+import { getAllProviderOptions } from '../config/providerOptions'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
 import { ProviderType } from '../services/providers'
 import { currentSessionKeyAtom, onboardingCompletedAtom, serverSessionsAtom } from '../store'
 import { useTheme } from '../theme'
-
-const PROVIDER_OPTIONS: { value: ProviderType; label: string }[] = [
-  { value: 'molt', label: 'OpenClaw' },
-  { value: 'ollama', label: 'Ollama' },
-  ...(Platform.OS === 'ios' && isAppleAIAvailable()
-    ? [{ value: 'apple' as ProviderType, label: 'Apple Intelligence' }]
-    : []),
-  { value: 'echo', label: 'Echo Server' },
-]
 
 export function SetupScreen() {
   const { theme } = useTheme()
@@ -33,6 +25,11 @@ export function SetupScreen() {
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setServerSessions] = useAtom(serverSessionsAtom)
   const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
+
+  const allOptions = getAllProviderOptions(theme.colors.text.primary)
+  const providerOptionsList = isAppleAIAvailable()
+    ? allOptions
+    : allOptions.filter((o) => o.value !== 'apple')
 
   const [providerType, setProviderType] = useState<ProviderType>('molt')
   const [localUrl, setLocalUrl] = useState('')
@@ -167,7 +164,7 @@ export function SetupScreen() {
         <View style={styles.form}>
           <Dropdown
             label="Provider Type"
-            options={PROVIDER_OPTIONS}
+            options={providerOptionsList}
             value={providerType}
             onValueChange={setProviderType}
           />

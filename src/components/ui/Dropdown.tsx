@@ -8,6 +8,7 @@ import { Text } from './Text'
 export interface DropdownOption<T extends string = string> {
   value: T
   label: string
+  icon?: React.ReactNode
 }
 
 export interface DropdownProps<T extends string = string> {
@@ -55,6 +56,18 @@ export function Dropdown<T extends string = string>({
     },
     triggerDisabled: {
       opacity: 0.5,
+    },
+    triggerContent: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
+    },
+    optionIcon: {
+      width: 24,
+      height: 24,
+      marginRight: theme.spacing.sm,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     triggerText: {
       fontSize: theme.typography.fontSize.base,
@@ -111,7 +124,10 @@ export function Dropdown<T extends string = string>({
         activeOpacity={0.7}
         disabled={disabled}
       >
-        <Text style={styles.triggerText}>{selectedOption?.label ?? ''}</Text>
+        <View style={styles.triggerContent}>
+          {selectedOption?.icon && <View style={styles.optionIcon}>{selectedOption.icon}</View>}
+          <Text style={styles.triggerText}>{selectedOption?.label ?? ''}</Text>
+        </View>
         <Ionicons name="chevron-down" size={18} color={theme.colors.text.secondary} />
       </TouchableOpacity>
       {hint && <Text style={styles.hint}>{hint}</Text>}
@@ -129,14 +145,17 @@ export function Dropdown<T extends string = string>({
                     setOpen(false)
                   }}
                 >
-                  <Text
-                    style={[
-                      styles.menuItemText,
-                      option.value === value && styles.menuItemTextActive,
-                    ]}
-                  >
-                    {option.label}
-                  </Text>
+                  <View style={styles.triggerContent}>
+                    {option.icon && <View style={styles.optionIcon}>{option.icon}</View>}
+                    <Text
+                      style={[
+                        styles.menuItemText,
+                        option.value === value && styles.menuItemTextActive,
+                      ]}
+                    >
+                      {option.label}
+                    </Text>
+                  </View>
                   {option.value === value && (
                     <Ionicons name="checkmark" size={20} color={theme.colors.primary} />
                   )}
