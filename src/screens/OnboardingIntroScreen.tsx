@@ -31,12 +31,13 @@ export function OnboardingIntroScreen({
     },
     content: {
       flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: theme.spacing.xl,
     },
     illustrationContainer: {
       alignItems: 'center',
       marginBottom: theme.spacing.xxxl,
+    },
+    textContent: {
+      paddingHorizontal: theme.spacing.xl,
     },
     title: {
       marginBottom: theme.spacing.lg,
@@ -60,13 +61,15 @@ export function OnboardingIntroScreen({
           <Illustration />
         </View>
 
-        <Text variant="heading1" style={styles.title}>
-          {title}
-        </Text>
+        <View style={styles.textContent}>
+          <Text variant="heading1" style={styles.title}>
+            {title}
+          </Text>
 
-        <Text variant="body" color="secondary" style={styles.description}>
-          {description}
-        </Text>
+          <Text variant="body" color="secondary" style={styles.description}>
+            {description}
+          </Text>
+        </View>
       </View>
 
       <View style={styles.footer}>
