@@ -16,8 +16,6 @@ import {
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller'
 import Animated, {
   Easing,
-  FadeIn,
-  FadeOut,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -434,11 +432,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
 
           {/* Search bar layer - expands in when search opens */}
           {isSearchOpen && (
-            <Animated.View
-              style={[styles.searchBarWrapper, searchBarAnimatedStyle]}
-              entering={FadeIn.duration(150)}
-              exiting={FadeOut.duration(100)}
-            >
+            <Animated.View style={[styles.searchBarWrapper, searchBarAnimatedStyle]}>
               <SearchBarContainer {...searchBarProps}>
                 <Ionicons name="search" size={18} color={theme.colors.text.secondary} />
                 <TextInput
