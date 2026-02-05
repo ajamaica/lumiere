@@ -1,0 +1,153 @@
+{
+  "common": {
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "done": "Terminé",
+    "error": "Erreur",
+    "success": "Succès",
+    "loading": "Chargement...",
+    "retry": "Réessayer",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "skip": "Passer",
+    "confirm": "Confirmer",
+    "active": "Actif"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "servers": "Serveurs",
+    "noServersConfigured": "Aucun serveur configuré",
+    "general": "Général",
+    "colors": "Couleurs",
+    "faceId": "Face ID",
+    "notifications": "Notifications",
+    "favorites": "Favoris",
+    "triggers": "Déclencheurs",
+    "overview": "Aperçu",
+    "cronJobs": "Tâches planifiées",
+    "componentGallery": "Galerie de composants",
+    "logout": "Déconnexion",
+    "logoutConfirmTitle": "Déconnexion",
+    "logoutConfirmMessage": "Êtes-vous sûr de vouloir vous déconnecter ? Tous les serveurs et paramètres seront effacés.",
+    "theme": {
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système"
+    },
+    "biometric": {
+      "unavailable": "Indisponible",
+      "unavailableMessage": "L'authentification biométrique n'est pas disponible sur cet appareil.",
+      "notEnrolled": "Non configuré",
+      "notEnrolledMessage": "Aucune donnée biométrique n'est enregistrée sur cet appareil.",
+      "enablePrompt": "Authentifiez-vous pour activer le verrouillage Face ID"
+    },
+    "language": "Langue"
+  },
+  "home": {
+    "connectionError": "Erreur de connexion",
+    "goToSettings": "Aller aux paramètres",
+    "noServerConfigured": "Aucun serveur configuré",
+    "noServerMessage": "Veuillez ajouter un serveur dans les paramètres pour commencer."
+  },
+  "chat": {
+    "placeholder": "Écrivez un message...",
+    "listening": "Écoute en cours...",
+    "startSpeaking": "Commencez à parler...",
+    "send": "Envoyer"
+  },
+  "addServer": {
+    "title": "Ajouter un serveur",
+    "providerType": "Type de fournisseur",
+    "name": "Nom",
+    "url": "URL",
+    "token": "Jeton",
+    "apiKey": "Clé API",
+    "clientId": "ID client",
+    "model": "Modèle",
+    "addButton": "Ajouter le serveur",
+    "placeholders": {
+      "myServer": "Mon serveur",
+      "myOllama": "Mon Ollama",
+      "myEchoServer": "Mon serveur Echo",
+      "myClaude": "Mon Claude"
+    },
+    "providers": {
+      "openClaw": "OpenClaw",
+      "ollama": "Ollama",
+      "claude": "Claude",
+      "appleIntelligence": "Apple Intelligence",
+      "echoServer": "Serveur Echo"
+    },
+    "appleDescription": "Utilise les modèles Apple Foundation pour exécuter l'IA entièrement sur l'appareil via CoreML. Nécessite iOS 26+ avec support Apple Intelligence.",
+    "errors": {
+      "urlRequired": "L'URL est requise",
+      "tokenRequired": "Le jeton est requis",
+      "apiKeyRequired": "La clé API est requise"
+    }
+  },
+  "editServer": {
+    "title": "Modifier le serveur",
+    "saveChanges": "Enregistrer les modifications",
+    "deleteServer": "Supprimer le serveur",
+    "deleteConfirmTitle": "Supprimer le serveur",
+    "deleteConfirmMessage": "Êtes-vous sûr de vouloir supprimer ce serveur ? Cette action est irréversible."
+  },
+  "biometricLock": {
+    "locked": "Verrouillé",
+    "unlock": "Déverrouiller",
+    "unlockPrompt": "Déverrouiller Lumiere",
+    "authenticateToUnlock": "Authentifiez-vous pour déverrouiller Lumiere",
+    "failed": "Échec de l'authentification",
+    "failedMessage": "Un problème est survenu lors de votre tentative d'authentification.\nVeuillez réessayer.",
+    "authFailed": "Authentification échouée. Appuyez pour réessayer.",
+    "tryAgain": "Réessayer"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Gérer vos agents n'a jamais été aussi simple",
+      "description": "Lumiere vous offre une belle interface mobile pour interagir avec vos agents IA en déplacement. Surveillez les conversations, envoyez des messages et restez connecté où que vous soyez."
+    },
+    "step2": {
+      "title": "Contrôle total avec des fonctionnalités puissantes",
+      "description": "Gérez plusieurs serveurs, passez d'une session à l'autre, planifiez des tâches avec des cron jobs et recevez des notifications en temps réel. Tout ce dont vous avez besoin pour garder le contrôle."
+    },
+    "step3": {
+      "title": "Hautement configurable pour des besoins personnalisés",
+      "description": "Connectez-vous à OpenClaw, Ollama ou aux fournisseurs Echo. Personnalisez les thèmes, configurez des déclencheurs de liens profonds et adaptez l'expérience à votre flux de travail."
+    },
+    "getStarted": "Commencer"
+  },
+  "sessions": {
+    "title": "Sessions",
+    "newSession": "Nouvelle session",
+    "editSession": "Modifier la session",
+    "deleteSession": "Supprimer la session",
+    "sessionName": "Nom de la session",
+    "defaultSession": "Session par défaut"
+  },
+  "favorites": {
+    "title": "Favoris",
+    "noFavorites": "Aucun favori pour le moment",
+    "addFavorite": "Ajouter aux favoris",
+    "removeFavorite": "Retirer des favoris"
+  },
+  "triggers": {
+    "title": "Déclencheurs",
+    "newTrigger": "Nouveau déclencheur",
+    "editTrigger": "Modifier le déclencheur",
+    "deleteTrigger": "Supprimer le déclencheur",
+    "noTriggers": "Aucun déclencheur configuré"
+  },
+  "scheduler": {
+    "title": "Planificateur",
+    "cronJobs": "Tâches planifiées"
+  },
+  "gallery": {
+    "title": "Galerie"
+  },
+  "overview": {
+    "title": "Aperçu"
+  }
+}

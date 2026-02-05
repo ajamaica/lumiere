@@ -4,15 +4,18 @@ import { initReactI18next } from 'react-i18next'
 
 import en from './locales/en.json'
 import es from './locales/es.json'
+import fr from './locales/fr.json'
 
 export const resources = {
   en: { translation: en },
   es: { translation: es },
+  fr: { translation: fr },
 } as const
 
 export const languageNames: Record<string, string> = {
   en: 'English',
   es: 'Español',
+  fr: 'Français',
 }
 
 export const supportedLanguages = Object.keys(resources)
