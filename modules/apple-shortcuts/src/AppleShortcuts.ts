@@ -88,14 +88,11 @@ export function addTriggerListener(callback: (slug: string) => void): () => void
   if (!mod) return () => {}
 
   const emitter = createEventEmitter(mod)
-  const subscription = emitter.addListener(
-    'onShortcutTrigger',
-    (event: ShortcutTriggerEvent) => {
-      if (event.slug) {
-        callback(event.slug)
-      }
-    },
-  )
+  const subscription = emitter.addListener('onShortcutTrigger', (event: ShortcutTriggerEvent) => {
+    if (event.slug) {
+      callback(event.slug)
+    }
+  })
 
   return () => subscription.remove()
 }
