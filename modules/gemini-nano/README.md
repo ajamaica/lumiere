@@ -32,6 +32,7 @@ The module is already configured and ready to use. When you build the Android ap
 3. The module will be available to React Native via the TypeScript wrapper
 
 To build the app:
+
 ```bash
 expo run:android
 ```
@@ -46,13 +47,17 @@ The module is already integrated into the chat provider system. To use it:
 ## API
 
 ### `isAvailable(): boolean`
+
 Check if Gemini Nano is available on the current device.
 
 ### `generateResponse(systemPrompt: string, messages: string): Promise<string>`
+
 Generate a complete response (non-streaming).
 
 ### `startStreaming(systemPrompt: string, messages: string, requestId: string): Promise<void>`
+
 Start streaming a response. Emits events:
+
 - `onStreamingDelta` - Incremental text chunks
 - `onStreamingComplete` - Generation finished
 - `onStreamingError` - Error occurred
@@ -93,16 +98,19 @@ To test the module:
 ## Troubleshooting
 
 ### Module Not Found
+
 - Ensure `expo-module.config.json` is properly configured
 - Run `expo prebuild --clean` to regenerate native code
 - Check that the package is listed in the main app's dependencies
 
 ### Compilation Errors
+
 - Verify Kotlin version compatibility
 - Check that Android SDK is properly configured
 - Ensure all dependencies are compatible with your target SDK version
 
 ### Runtime Errors
+
 - Check device compatibility (Android 14+)
 - Verify Gemini Nano is available on the device
 - Check logcat for detailed error messages: `adb logcat *:E`
