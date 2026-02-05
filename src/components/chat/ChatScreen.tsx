@@ -437,7 +437,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
         <Animated.View style={inputContainerStyle} onLayout={handleInputLayout}>
           <ChatInput
             onSend={handleSend}
-            onOpenSessionMenu={handleOpenSessionMenu}
+            onOpenSessionMenu={capabilities.serverSessions ? handleOpenSessionMenu : undefined}
             disabled={!connected}
             queueCount={queueCount}
             supportsImageAttachments={capabilities.imageAttachments}
