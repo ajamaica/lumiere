@@ -1,3 +1,7 @@
 export { AgentIllustration } from './AgentIllustration'
 export { ConfigIllustration } from './ConfigIllustration'
+export { CustomizableIllustration } from './CustomizableIllustration'
 export { FeaturesIllustration } from './FeaturesIllustration'
+export { FullControlIllustration } from './FullControlIllustration'
+export { ManageAgentsIllustration } from './ManageAgentsIllustration'
+export { SetupIllustration } from './SetupIllustration'
