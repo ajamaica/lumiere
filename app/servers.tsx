@@ -1,14 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React from 'react'
-import {
-  Alert,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
 import { getBasicProviderOptions, getProviderIcon } from '../src/config/providerOptions'
@@ -116,7 +109,10 @@ export default function ServersScreen() {
                       </Text>
                       <View style={styles.providerRow}>
                         <View style={styles.providerIcon}>
-                          {getProviderIcon(server.providerType || 'molt', theme.colors.text.tertiary)}
+                          {getProviderIcon(
+                            server.providerType || 'molt',
+                            theme.colors.text.tertiary,
+                          )}
                         </View>
                         <Text style={styles.providerBadge}>
                           {providerLabel(server.providerType || 'molt')}
