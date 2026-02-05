@@ -143,14 +143,14 @@ const withWidgetExtension = (config) => {
       targetName,
       'app_extension',
       targetName,
-      bundleIdentifier
+      bundleIdentifier,
     )
 
     // Create a PBXGroup for the widget files
     const widgetGroup = xcodeProject.addPbxGroup(
       ['LumiereWidget.swift', 'Info.plist'],
       targetName,
-      targetName
+      targetName,
     )
 
     // Add the group to the main project group
@@ -161,23 +161,25 @@ const withWidgetExtension = (config) => {
     xcodeProject.addSourceFile(
       `${targetName}/LumiereWidget.swift`,
       { target: widgetTarget.uuid },
-      widgetGroup.uuid
+      widgetGroup.uuid,
     )
 
     // Add build settings for the widget target
     const configurations = xcodeProject.pbxXCBuildConfigurationSection()
 
     for (const key in configurations) {
-      if (typeof configurations[key] === 'object' &&
-          configurations[key].buildSettings &&
-          configurations[key].name) {
-
+      if (
+        typeof configurations[key] === 'object' &&
+        configurations[key].buildSettings &&
+        configurations[key].name
+      ) {
         const buildSettings = configurations[key].buildSettings
 
         // Check if this is the widget target's configuration
-        if (buildSettings.PRODUCT_NAME === `"${targetName}"` ||
-            buildSettings.PRODUCT_BUNDLE_IDENTIFIER === `"${bundleIdentifier}"`) {
-
+        if (
+          buildSettings.PRODUCT_NAME === `"${targetName}"` ||
+          buildSettings.PRODUCT_BUNDLE_IDENTIFIER === `"${bundleIdentifier}"`
+        ) {
           Object.assign(buildSettings, {
             ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: 'AccentColor',
             ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME: 'WidgetBackground',
@@ -195,7 +197,8 @@ const withWidgetExtension = (config) => {
             INFOPLIST_KEY_CFBundleDisplayName: 'Lumiere Widget',
             INFOPLIST_KEY_NSHumanReadableCopyright: '""',
             IPHONEOS_DEPLOYMENT_TARGET: '17.0',
-            LD_RUNPATH_SEARCH_PATHS: '"$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"',
+            LD_RUNPATH_SEARCH_PATHS:
+              '"$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"',
             MARKETING_VERSION: '1.0',
             PRODUCT_BUNDLE_IDENTIFIER: `"${bundleIdentifier}"`,
             PRODUCT_NAME: '"$(TARGET_NAME)"',
@@ -214,7 +217,7 @@ const withWidgetExtension = (config) => {
       'PBXCopyFilesBuildPhase',
       'Embed Foundation Extensions',
       mainTargetUuid,
-      'app_extension'
+      'app_extension',
     )
 
     if (embedExtensionsBuildPhase) {
@@ -225,7 +228,7 @@ const withWidgetExtension = (config) => {
       xcodeProject.addToPbxBuildFileSection({
         uuid: xcodeProject.generateUuid(),
         fileRef: widgetTarget.productReference,
-        settings: { ATTRIBUTES: ['RemoveHeadersOnCopy'] }
+        settings: { ATTRIBUTES: ['RemoveHeadersOnCopy'] },
       })
     }
 
