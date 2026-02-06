@@ -27,6 +27,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useChatProvider } from '../../hooks/useChatProvider'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
+import type { ChatHistoryContentItem } from '../../services/providers'
 import { ProviderConfig, readCachedHistory } from '../../services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, pendingTriggerMessageAtom } from '../../store'
 import { useTheme } from '../../theme'
@@ -38,7 +39,7 @@ import {
 } from '../../utils/device'
 import { logger } from '../../utils/logger'
 import { ChatInput } from './ChatInput'
-import { ChatMessage, Message } from './ChatMessage'
+import { ChatMessage, GeneratedImage, Message } from './ChatMessage'
 
 const chatScreenLogger = logger.create('ChatScreen')
 
@@ -62,6 +63,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const glassAvailable = isLiquidGlassAvailable()
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
+  const [currentAgentImages, setCurrentAgentImages] = useState<GeneratedImage[]>([])
   const [currentSessionKey] = useAtom(currentSessionKeyAtom)
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [pendingTriggerMessage, setPendingTriggerMessage] = useAtom(pendingTriggerMessageAtom)
@@ -169,6 +171,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       hasScrolledOnLoadRef.current = false
       shouldAutoScrollRef.current = true
       setCurrentAgentMessage('')
+      setCurrentAgentImages([])
     }
   }, [providerConfig.serverId])
 
@@ -180,9 +183,11 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     currentSessionKey,
     onMessageAdd: (message) => setMessages((prev) => [...prev, message]),
     onAgentMessageUpdate: (text) => setCurrentAgentMessage(text),
+    onAgentImagesUpdate: (images) => setCurrentAgentImages(images),
     onAgentMessageComplete: (message) => {
       setMessages((prev) => [...prev, message])
       setCurrentAgentMessage('')
+      setCurrentAgentImages([])
     },
     onSendStart: () => {
       shouldAutoScrollRef.current = true
@@ -192,19 +197,27 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   // Convert raw history messages into UI Message objects
   const historyToMessages = useCallback(
     (
-      msgs: { role: string; content: Array<{ type: string; text?: string }>; timestamp: number }[],
+      msgs: {
+        role: string
+        content: ChatHistoryContentItem[]
+        timestamp: number
+      }[],
     ): Message[] => {
       return msgs
         .filter((msg) => msg.role === 'user' || msg.role === 'assistant')
         .map((msg, index) => {
           const textContent = msg.content.find((c) => c.type === 'text')
           const text = textContent?.text || ''
-          if (!text) return null
+          const imageContents = msg.content.filter((c) => c.type === 'image_url' && c.image_url)
+          const generatedImages: GeneratedImage[] | undefined =
+            imageContents.length > 0 ? imageContents.map((c) => ({ url: c.image_url! })) : undefined
+          if (!text && !generatedImages) return null
           return {
             id: `history-${msg.timestamp}-${index}`,
             text,
             sender: msg.role === 'user' ? 'user' : 'agent',
             timestamp: new Date(msg.timestamp),
+            generatedImages,
           } as Message
         })
         .filter((msg): msg is Message => msg !== null)
@@ -273,6 +286,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       hasCacheRef.current = false
       setMessages([])
       setCurrentAgentMessage('')
+      setCurrentAgentImages([])
       hasScrolledOnLoadRef.current = false
       loadChatHistory()
     }
@@ -523,9 +537,10 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     return null
   }
 
+  const hasStreamingContent = currentAgentMessage || currentAgentImages.length > 0
   const allMessages = [
     ...messages,
-    ...(currentAgentMessage
+    ...(hasStreamingContent
       ? [
           {
             id: 'streaming',
@@ -533,6 +548,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             sender: 'agent' as const,
             timestamp: new Date(),
             streaming: true,
+            generatedImages: currentAgentImages.length > 0 ? currentAgentImages : undefined,
           },
         ]
       : []),

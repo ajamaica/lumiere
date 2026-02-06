@@ -1,4 +1,4 @@
-import { API_CONFIG, DEFAULT_MODELS } from '../../constants'
+import { API_CONFIG, DEFAULT_MODELS, OPENAI_IMAGE_MODELS } from '../../constants'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -9,6 +9,17 @@ import {
   ProviderConfig,
   SendMessageParams,
 } from '../providers/types'
+
+/** Prefix users can type to generate an image inline (e.g. "/image a sunset") */
+const IMAGE_COMMAND_PREFIX = '/image '
+
+interface OpenAIImageResponse {
+  data: Array<{
+    b64_json?: string
+    url?: string
+    revised_prompt?: string
+  }>
+}
 
 interface OpenAIMessage {
   role: 'user' | 'assistant' | 'system'
@@ -54,6 +65,7 @@ export class OpenAIChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: true,
+    imageGeneration: true,
     serverSessions: false,
     persistentHistory: false,
     scheduler: false,
@@ -134,7 +146,121 @@ export class OpenAIChatProvider implements ChatProvider {
     return this.sessions.get(sessionKey)!
   }
 
+  /**
+   * Check whether the configured model is a known image generation model.
+   */
+  private isImageModel(): boolean {
+    return OPENAI_IMAGE_MODELS.some((prefix) => this.model.startsWith(prefix))
+  }
+
+  /**
+   * Determine whether a message should be routed to image generation.
+   * Returns the image prompt (stripped of the /image prefix) or null.
+   */
+  private getImagePrompt(message: string): string | null {
+    // If the model is an image model, every message is an image prompt
+    if (this.isImageModel()) {
+      return message
+    }
+    // Otherwise, detect the /image command prefix
+    if (message.toLowerCase().startsWith(IMAGE_COMMAND_PREFIX)) {
+      return message.slice(IMAGE_COMMAND_PREFIX.length).trim()
+    }
+    return null
+  }
+
   async sendMessage(
+    params: SendMessageParams,
+    onEvent: (event: ChatProviderEvent) => void,
+  ): Promise<void> {
+    const imagePrompt = this.getImagePrompt(params.message)
+
+    if (imagePrompt) {
+      return this.sendImageGeneration(params, imagePrompt, onEvent)
+    }
+
+    return this.sendChatMessage(params, onEvent)
+  }
+
+  /**
+   * Generate an image using the OpenAI Images API.
+   */
+  private async sendImageGeneration(
+    params: SendMessageParams,
+    prompt: string,
+    onEvent: (event: ChatProviderEvent) => void,
+  ): Promise<void> {
+    const messages = this.getSessionMessages(params.sessionKey)
+
+    // Record the user message in session history
+    messages.push({ role: 'user', content: params.message })
+
+    onEvent({ type: 'lifecycle', phase: 'start' })
+
+    try {
+      const imageModel = this.isImageModel() ? this.model : DEFAULT_MODELS.OPENAI_IMAGE
+
+      const response = await fetch(`${this.baseUrl}/v1/images/generations`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.apiKey}`,
+        },
+        body: JSON.stringify({
+          model: imageModel,
+          prompt,
+          n: 1,
+          size: API_CONFIG.OPENAI_IMAGE_SIZE,
+          quality: API_CONFIG.OPENAI_IMAGE_QUALITY,
+          response_format: 'b64_json',
+        }),
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        throw new Error(`Image generation failed: ${response.status} - ${errorText}`)
+      }
+
+      const result: OpenAIImageResponse = await response.json()
+      const imageData = result.data?.[0]
+
+      if (!imageData?.b64_json) {
+        throw new Error('No image data returned from API')
+      }
+
+      const dataUri = `data:image/png;base64,${imageData.b64_json}`
+
+      // Emit the generated image event
+      onEvent({
+        type: 'image',
+        image: {
+          url: dataUri,
+          revisedPrompt: imageData.revised_prompt,
+        },
+      })
+
+      // If the API revised the prompt, also emit it as text
+      if (imageData.revised_prompt) {
+        onEvent({ type: 'delta', delta: imageData.revised_prompt })
+      }
+
+      // Store assistant response in session history
+      messages.push({
+        role: 'assistant',
+        content: imageData.revised_prompt || `[Generated image for: ${prompt}]`,
+      })
+
+      onEvent({ type: 'lifecycle', phase: 'end' })
+    } catch (err) {
+      onEvent({ type: 'lifecycle', phase: 'end' })
+      throw err
+    }
+  }
+
+  /**
+   * Send a regular chat completion message with streaming.
+   */
+  private async sendChatMessage(
     params: SendMessageParams,
     onEvent: (event: ChatProviderEvent) => void,
   ): Promise<void> {

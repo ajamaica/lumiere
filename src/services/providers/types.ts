@@ -22,11 +22,16 @@ export interface ProviderConfig {
 }
 
 export interface ChatProviderEvent {
-  type: 'delta' | 'lifecycle'
+  type: 'delta' | 'lifecycle' | 'image'
   /** Incremental text chunk (for type === 'delta') */
   delta?: string
   /** Lifecycle phase (for type === 'lifecycle') */
   phase?: 'start' | 'end'
+  /** Generated image data (for type === 'image') */
+  image?: {
+    url: string // base64 data URI (e.g. data:image/png;base64,...)
+    revisedPrompt?: string
+  }
 }
 
 export interface SendMessageParams {
@@ -41,9 +46,16 @@ export interface ProviderAttachment {
   mimeType?: string
 }
 
+export interface ChatHistoryContentItem {
+  type: string
+  text?: string
+  /** Base64 data URI for generated images (e.g. data:image/png;base64,...) */
+  image_url?: string
+}
+
 export interface ChatHistoryMessage {
   role: 'user' | 'assistant'
-  content: Array<{ type: string; text?: string }>
+  content: ChatHistoryContentItem[]
   timestamp: number
 }
 
@@ -67,6 +79,8 @@ export interface ProviderCapabilities {
   chat: boolean
   /** Sending image attachments alongside messages */
   imageAttachments: boolean
+  /** AI image generation (e.g. DALL-E, gpt-image-1) */
+  imageGeneration: boolean
   /** Server-side session persistence (list / switch / reset) */
   serverSessions: boolean
   /** Persistent chat history that survives app restarts */

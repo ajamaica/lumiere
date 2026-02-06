@@ -29,6 +29,7 @@ export class GeminiNanoChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: false,
+    imageGeneration: false,
     serverSessions: false,
     persistentHistory: false,
     scheduler: false,

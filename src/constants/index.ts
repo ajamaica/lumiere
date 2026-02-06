@@ -15,11 +15,19 @@ export const DEFAULT_MODELS = {
   OLLAMA: 'llama3.2',
   /** Default OpenAI model */
   OPENAI: 'gpt-4o',
+  /** Default OpenAI image generation model */
+  OPENAI_IMAGE: 'gpt-image-1',
   /** Default OpenRouter model */
   OPENROUTER: 'openai/gpt-4o',
   /** Default Emergent model */
   EMERGENT: 'claude-sonnet-4-5',
 } as const
+
+/**
+ * Known OpenAI image generation model prefixes.
+ * Used to auto-detect when a configured model should use the images API.
+ */
+export const OPENAI_IMAGE_MODELS = ['dall-e-2', 'dall-e-3', 'gpt-image-1'] as const
 
 /**
  * API configuration constants.
@@ -33,6 +41,10 @@ export const API_CONFIG = {
   OPENAI_MAX_TOKENS: 4096,
   /** Default max tokens for OpenRouter API responses */
   OPENROUTER_MAX_TOKENS: 4096,
+  /** Default image size for OpenAI image generation */
+  OPENAI_IMAGE_SIZE: '1024x1024' as string,
+  /** Default image quality for OpenAI image generation */
+  OPENAI_IMAGE_QUALITY: 'auto' as string,
 } as const
 
 /**

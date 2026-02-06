@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 
-import { MessageAttachment } from '../components/chat/ChatMessage'
+import { GeneratedImage, MessageAttachment } from '../components/chat/ChatMessage'
 import {
   ChatProviderEvent,
   ProviderAttachment,
@@ -19,6 +19,7 @@ interface Message {
   sender: 'user' | 'agent'
   timestamp: Date
   attachments?: MessageAttachment[]
+  generatedImages?: GeneratedImage[]
 }
 
 interface QueuedMessage {
@@ -34,6 +35,7 @@ interface UseMessageQueueProps {
   currentSessionKey: string
   onMessageAdd: (message: Message) => void
   onAgentMessageUpdate: (text: string) => void
+  onAgentImagesUpdate: (images: GeneratedImage[]) => void
   onAgentMessageComplete: (message: Message) => void
   onSendStart?: () => void
 }
@@ -43,6 +45,7 @@ export function useMessageQueue({
   currentSessionKey,
   onMessageAdd,
   onAgentMessageUpdate,
+  onAgentImagesUpdate,
   onAgentMessageComplete,
   onSendStart,
 }: UseMessageQueueProps) {
@@ -62,9 +65,11 @@ export function useMessageQueue({
       onMessageAdd(userMessage)
       setIsAgentResponding(true)
       onAgentMessageUpdate('')
+      onAgentImagesUpdate([])
       onSendStart?.()
 
       let accumulatedText = ''
+      let accumulatedImages: GeneratedImage[] = []
 
       // Convert MessageAttachments to provider attachments
       // Only include image attachments that have base64 data
@@ -87,16 +92,21 @@ export function useMessageQueue({
             if (event.type === 'delta' && event.delta) {
               accumulatedText += event.delta
               onAgentMessageUpdate(accumulatedText)
+            } else if (event.type === 'image' && event.image) {
+              accumulatedImages = [...accumulatedImages, { url: event.image.url }]
+              onAgentImagesUpdate(accumulatedImages)
             } else if (event.type === 'lifecycle' && event.phase === 'end') {
               const agentMessage: Message = {
                 id: generateId('msg'),
                 text: accumulatedText,
                 sender: 'agent',
                 timestamp: new Date(),
+                generatedImages: accumulatedImages.length > 0 ? accumulatedImages : undefined,
               }
               onAgentMessageComplete(agentMessage)
               setIsAgentResponding(false)
               accumulatedText = ''
+              accumulatedImages = []
             }
           },
         )
@@ -104,6 +114,7 @@ export function useMessageQueue({
         queueLogger.logError('Failed to send message', err)
         setIsAgentResponding(false)
         onAgentMessageUpdate('')
+        onAgentImagesUpdate([])
       }
     },
     [
@@ -111,6 +122,7 @@ export function useMessageQueue({
       currentSessionKey,
       onMessageAdd,
       onAgentMessageUpdate,
+      onAgentImagesUpdate,
       onAgentMessageComplete,
       onSendStart,
     ],

@@ -39,6 +39,10 @@ export interface MessageAttachment {
   name?: string
 }
 
+export interface GeneratedImage {
+  url: string // base64 data URI
+}
+
 export interface Message {
   id: string
   text: string
@@ -46,6 +50,7 @@ export interface Message {
   timestamp: Date
   streaming?: boolean
   attachments?: MessageAttachment[]
+  generatedImages?: GeneratedImage[]
 }
 
 interface ChatMessageProps {
@@ -433,17 +438,33 @@ export function ChatMessage({ message }: ChatMessageProps) {
             ))}
           </View>
         )}
-        <Markdown
-          style={markdownStyles}
-          onLinkPress={(url: string) => {
-            handleLinkPress(url)
-            return false
-          }}
-          mergeStyle={true}
-          rules={markdownRules}
-        >
-          {processedText}
-        </Markdown>
+        {message.generatedImages && message.generatedImages.length > 0 && (
+          <View style={styles.generatedImageContainer}>
+            {message.generatedImages.map((img, index) => (
+              <Image
+                key={`gen-${index}`}
+                source={{ uri: img.url }}
+                style={styles.generatedImage}
+                resizeMode="contain"
+                accessibilityLabel={`Generated image ${index + 1}`}
+                accessibilityRole="image"
+              />
+            ))}
+          </View>
+        )}
+        {processedText.trim().length > 0 && (
+          <Markdown
+            style={markdownStyles}
+            onLinkPress={(url: string) => {
+              handleLinkPress(url)
+              return false
+            }}
+            mergeStyle={true}
+            rules={markdownRules}
+          >
+            {processedText}
+          </Markdown>
+        )}
         {message.streaming && (
           <Text style={styles.streamingIndicator} selectable={true}>
             ...
@@ -625,6 +646,15 @@ const createStyles = (theme: Theme) =>
       width: 200,
       height: 200,
       borderRadius: theme.borderRadius.md,
+    },
+    generatedImageContainer: {
+      marginBottom: theme.spacing.sm,
+    },
+    generatedImage: {
+      width: '100%',
+      aspectRatio: 1,
+      borderRadius: theme.borderRadius.md,
+      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
     },
   })
 

@@ -55,6 +55,7 @@ export class ClaudeChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: true,
+    imageGeneration: false,
     serverSessions: false,
     persistentHistory: false,
     scheduler: false,

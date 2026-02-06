@@ -32,6 +32,7 @@ function createMocks() {
   >()
   const onMessageAdd = jest.fn()
   const onAgentMessageUpdate = jest.fn()
+  const onAgentImagesUpdate = jest.fn()
   const onAgentMessageComplete = jest.fn()
   const onSendStart = jest.fn()
 
@@ -40,6 +41,7 @@ function createMocks() {
     currentSessionKey: 'test-session',
     onMessageAdd,
     onAgentMessageUpdate,
+    onAgentImagesUpdate,
     onAgentMessageComplete,
     onSendStart,
   }

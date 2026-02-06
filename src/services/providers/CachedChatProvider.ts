@@ -152,22 +152,33 @@ export class CachedChatProvider implements ChatProvider {
     // Register this session in the index
     await this.addToSessionIndex(params.sessionKey)
 
-    // Accumulate assistant deltas so we can cache the full response
+    // Accumulate assistant deltas and images so we can cache the full response
     let assistantText = ''
+    const assistantImageUrls: string[] = []
 
     await this.inner.sendMessage(params, (event) => {
       if (event.type === 'delta' && event.delta) {
         assistantText += event.delta
       }
+      if (event.type === 'image' && event.image) {
+        assistantImageUrls.push(event.image.url)
+      }
       // Forward every event to the caller unchanged
       onEvent(event)
     })
 
-    // Cache the completed assistant response
-    if (assistantText) {
+    // Cache the completed assistant response (text and/or images)
+    if (assistantText || assistantImageUrls.length > 0) {
+      const content: ChatHistoryMessage['content'] = []
+      if (assistantText) {
+        content.push({ type: 'text', text: assistantText })
+      }
+      for (const url of assistantImageUrls) {
+        content.push({ type: 'image_url', image_url: url })
+      }
       const assistantMsg: ChatHistoryMessage = {
         role: 'assistant',
-        content: [{ type: 'text', text: assistantText }],
+        content,
         timestamp: Date.now(),
       }
       await this.appendToCache(cacheKey, assistantMsg)
