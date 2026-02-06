@@ -65,7 +65,7 @@ export class OpenAIChatProvider implements ChatProvider {
   private model: string
   private connected = false
   private connectionListeners: Array<(connected: boolean, reconnecting: boolean) => void> = []
-  private abortController: AbortController | null = null
+  private activeXhr: XMLHttpRequest | null = null
 
   // In-memory conversation history keyed by session
   private sessions: Map<string, OpenAIMessage[]> = new Map()
@@ -102,9 +102,9 @@ export class OpenAIChatProvider implements ChatProvider {
   }
 
   disconnect(): void {
-    if (this.abortController) {
-      this.abortController.abort()
-      this.abortController = null
+    if (this.activeXhr) {
+      this.activeXhr.abort()
+      this.activeXhr = null
     }
     this.connected = false
     this.notifyConnectionState(false, false)
@@ -174,48 +174,25 @@ export class OpenAIChatProvider implements ChatProvider {
 
     onEvent({ type: 'lifecycle', phase: 'start' })
 
-    this.abortController = new AbortController()
+    // Use XMLHttpRequest for streaming — React Native's fetch does not
+    // support response.body ReadableStream, so XHR with onprogress is
+    // the reliable way to receive incremental SSE data.
+    return new Promise<void>((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      this.activeXhr = xhr
 
-    try {
-      const response = await fetch(`${this.baseUrl}/v1/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.apiKey}`,
-        },
-        body: JSON.stringify({
-          model: this.model,
-          max_tokens: API_CONFIG.OPENAI_MAX_TOKENS,
-          messages: messages.map(this.formatMessageForApi),
-          stream: true,
-        }),
-        signal: this.abortController.signal,
-      })
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(`API error: ${response.status} - ${errorText}`)
-      }
-
-      const reader = response.body?.getReader()
-      if (!reader) {
-        throw new Error('No response body')
-      }
-
-      const decoder = new TextDecoder()
       let fullResponse = ''
-      let buffer = ''
+      let lastIndex = 0
 
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
+      xhr.open('POST', `${this.baseUrl}/v1/chat/completions`)
+      xhr.setRequestHeader('Content-Type', 'application/json')
+      xhr.setRequestHeader('Authorization', `Bearer ${this.apiKey}`)
 
-        buffer += decoder.decode(value, { stream: true })
+      xhr.onprogress = () => {
+        const newData = xhr.responseText.substring(lastIndex)
+        lastIndex = xhr.responseText.length
 
-        // Process SSE events
-        const lines = buffer.split('\n')
-        buffer = lines.pop() || ''
-
+        const lines = newData.split('\n')
         for (const line of lines) {
           if (line.startsWith('data: ')) {
             const data = line.slice(6).trim()
@@ -225,7 +202,9 @@ export class OpenAIChatProvider implements ChatProvider {
               const chunk: OpenAIStreamChunk = JSON.parse(data)
 
               if (chunk.error) {
-                throw new Error(chunk.error.message || 'Stream error')
+                reject(new Error(chunk.error.message || 'Stream error'))
+                xhr.abort()
+                return
               }
 
               const delta = chunk.choices?.[0]?.delta?.content
@@ -233,25 +212,48 @@ export class OpenAIChatProvider implements ChatProvider {
                 fullResponse += delta
                 onEvent({ type: 'delta', delta })
               }
-            } catch (e) {
-              if (e instanceof SyntaxError) continue
-              throw e
+            } catch {
+              // Ignore JSON parse errors from partial chunks
             }
           }
         }
       }
 
-      if (fullResponse) {
-        messages.push({ role: 'assistant', content: fullResponse })
+      xhr.onload = () => {
+        this.activeXhr = null
+        if (xhr.status >= 200 && xhr.status < 300) {
+          if (fullResponse) {
+            messages.push({ role: 'assistant', content: fullResponse })
+          }
+          onEvent({ type: 'lifecycle', phase: 'end' })
+          resolve()
+        } else {
+          onEvent({ type: 'lifecycle', phase: 'end' })
+          reject(new Error(`API error: ${xhr.status} - ${xhr.responseText}`))
+        }
       }
 
-      onEvent({ type: 'lifecycle', phase: 'end' })
-    } catch (error) {
-      onEvent({ type: 'lifecycle', phase: 'end' })
-      throw error
-    } finally {
-      this.abortController = null
-    }
+      xhr.onerror = () => {
+        this.activeXhr = null
+        onEvent({ type: 'lifecycle', phase: 'end' })
+        reject(new Error('Network error'))
+      }
+
+      xhr.onabort = () => {
+        this.activeXhr = null
+        onEvent({ type: 'lifecycle', phase: 'end' })
+        resolve()
+      }
+
+      xhr.send(
+        JSON.stringify({
+          model: this.model,
+          max_tokens: API_CONFIG.OPENAI_MAX_TOKENS,
+          messages: messages.map(this.formatMessageForApi),
+          stream: true,
+        }),
+      )
+    })
   }
 
   private formatMessageForApi(msg: OpenAIMessage): { role: string; content: unknown } {
