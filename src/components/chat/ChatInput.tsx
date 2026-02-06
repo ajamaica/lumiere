@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
+import * as DocumentPicker from 'expo-document-picker'
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import * as ImagePicker from 'expo-image-picker'
 import React, { useCallback, useMemo, useState } from 'react'
@@ -7,6 +8,8 @@ import {
   FlatList,
   Image,
   ImageStyle,
+  Modal,
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -38,6 +41,7 @@ export function ChatInput({
   const { t } = useTranslation()
   const [text, setText] = useState('')
   const [attachments, setAttachments] = useState<MessageAttachment[]>([])
+  const [showAttachmentMenu, setShowAttachmentMenu] = useState(false)
   const { suggestions, hasInput } = useSlashCommands(text)
   const voice = useVoiceTranscription()
 
@@ -57,6 +61,7 @@ export function ChatInput({
   }
 
   const handlePickImage = async () => {
+    setShowAttachmentMenu(false)
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsMultipleSelection: true,
@@ -66,9 +71,49 @@ export function ChatInput({
 
     if (!result.canceled && result.assets.length > 0) {
       const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
+        type: 'image' as const,
         uri: asset.uri,
         base64: asset.base64 ?? undefined,
         mimeType: asset.mimeType ?? 'image/jpeg',
+        name: asset.fileName,
+      }))
+      setAttachments((prev) => [...prev, ...newAttachments])
+    }
+  }
+
+  const handlePickVideo = async () => {
+    setShowAttachmentMenu(false)
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['videos'],
+      allowsMultipleSelection: true,
+      quality: 0.8,
+    })
+
+    if (!result.canceled && result.assets.length > 0) {
+      const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
+        type: 'video' as const,
+        uri: asset.uri,
+        mimeType: asset.mimeType ?? 'video/mp4',
+        name: asset.fileName,
+      }))
+      setAttachments((prev) => [...prev, ...newAttachments])
+    }
+  }
+
+  const handlePickFile = async () => {
+    setShowAttachmentMenu(false)
+    const result = await DocumentPicker.getDocumentAsync({
+      type: '*/*',
+      multiple: true,
+      copyToCacheDirectory: true,
+    })
+
+    if (!result.canceled && result.assets.length > 0) {
+      const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
+        type: 'file' as const,
+        uri: asset.uri,
+        mimeType: asset.mimeType ?? 'application/octet-stream',
+        name: asset.name,
       }))
       setAttachments((prev) => [...prev, ...newAttachments])
     }
@@ -110,6 +155,50 @@ export function ChatInput({
 
   return (
     <>
+      <Modal
+        visible={showAttachmentMenu}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowAttachmentMenu(false)}
+      >
+        <Pressable style={styles.modalOverlay} onPress={() => setShowAttachmentMenu(false)}>
+          <View style={styles.attachmentMenu}>
+            <TouchableOpacity
+              style={styles.attachmentOption}
+              onPress={handlePickImage}
+              accessibilityRole="button"
+              accessibilityLabel="Attach picture"
+            >
+              <View style={styles.attachmentIconContainer}>
+                <Ionicons name="image" size={24} color={theme.colors.primary} />
+              </View>
+              <Text style={styles.attachmentOptionText}>Picture</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.attachmentOption}
+              onPress={handlePickVideo}
+              accessibilityRole="button"
+              accessibilityLabel="Attach video"
+            >
+              <View style={styles.attachmentIconContainer}>
+                <Ionicons name="videocam" size={24} color={theme.colors.primary} />
+              </View>
+              <Text style={styles.attachmentOptionText}>Video</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.attachmentOption}
+              onPress={handlePickFile}
+              accessibilityRole="button"
+              accessibilityLabel="Attach file"
+            >
+              <View style={styles.attachmentIconContainer}>
+                <Ionicons name="document" size={24} color={theme.colors.primary} />
+              </View>
+              <Text style={styles.attachmentOptionText}>File</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
       {hasInput && suggestions.length > 0 && (
         <FlatList
           data={suggestions}
@@ -174,10 +263,25 @@ export function ChatInput({
                 <View style={styles.attachmentPreviewRow}>
                   {attachments.map((attachment, index) => (
                     <View key={index} style={styles.attachmentPreviewItem}>
-                      <Image
-                        source={{ uri: attachment.uri }}
-                        style={styles.attachmentPreviewImage as ImageStyle}
-                      />
+                      {attachment.type === 'image' ? (
+                        <Image
+                          source={{ uri: attachment.uri }}
+                          style={styles.attachmentPreviewImage as ImageStyle}
+                        />
+                      ) : (
+                        <View style={styles.attachmentPreviewPlaceholder}>
+                          <Ionicons
+                            name={attachment.type === 'video' ? 'videocam' : 'document'}
+                            size={32}
+                            color={theme.colors.text.secondary}
+                          />
+                          {attachment.name && (
+                            <Text style={styles.attachmentName} numberOfLines={1}>
+                              {attachment.name}
+                            </Text>
+                          )}
+                        </View>
+                      )}
                       <TouchableOpacity
                         style={styles.removeAttachmentButton}
                         onPress={() => handleRemoveAttachment(index)}
@@ -220,10 +324,10 @@ export function ChatInput({
                 {supportsImageAttachments && (
                   <TouchableOpacity
                     style={[styles.menuButton, disabled && styles.buttonDisabled]}
-                    onPress={handlePickImage}
+                    onPress={() => setShowAttachmentMenu(true)}
                     disabled={disabled}
                     accessibilityRole="button"
-                    accessibilityLabel="Attach image"
+                    accessibilityLabel="Add attachment"
                     accessibilityState={{ disabled }}
                   >
                     <Ionicons
@@ -498,5 +602,57 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
       fontSize: theme.typography.fontSize.sm,
       color: theme.colors.text.inverse,
       fontWeight: theme.typography.fontWeight.semibold,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'flex-end',
+      paddingBottom: 100,
+    },
+    attachmentMenu: {
+      backgroundColor: theme.colors.surface,
+      marginHorizontal: theme.spacing.md,
+      borderRadius: theme.borderRadius.md,
+      padding: theme.spacing.sm,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    attachmentOption: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: theme.spacing.md,
+      paddingHorizontal: theme.spacing.md,
+      borderRadius: theme.borderRadius.sm,
+    },
+    attachmentIconContainer: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: theme.colors.background,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: theme.spacing.md,
+    },
+    attachmentOptionText: {
+      fontSize: theme.typography.fontSize.base,
+      color: theme.colors.text.primary,
+      fontWeight: theme.typography.fontWeight.semibold,
+    },
+    attachmentPreviewPlaceholder: {
+      width: 64,
+      height: 64,
+      borderRadius: theme.borderRadius.md,
+      backgroundColor: theme.colors.background,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    attachmentName: {
+      fontSize: theme.typography.fontSize.xs,
+      color: theme.colors.text.secondary,
+      marginTop: 4,
+      maxWidth: 60,
+      textAlign: 'center',
     },
   })
