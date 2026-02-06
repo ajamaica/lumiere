@@ -139,7 +139,11 @@ export function ChatInput({
                 <View style={styles.recordingDot} />
                 <Text style={styles.recordingLabel}>{t('chat.listening')}</Text>
               </View>
-              <Text style={styles.transcribedText} numberOfLines={3} accessibilityLiveRegion="polite">
+              <Text
+                style={styles.transcribedText}
+                numberOfLines={3}
+                accessibilityLiveRegion="polite"
+              >
                 {voice.transcribedText || t('chat.startSpeaking')}
               </Text>
               <View style={styles.recordingActions}>

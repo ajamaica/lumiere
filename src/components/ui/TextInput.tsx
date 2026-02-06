@@ -62,7 +62,9 @@ export function TextInput({ label, hint, error, style, ...props }: TextInputProp
         {...props}
       />
       {error ? (
-        <Text style={styles.error} accessibilityRole="alert">{error}</Text>
+        <Text style={styles.error} accessibilityRole="alert">
+          {error}
+        </Text>
       ) : hint ? (
         <Text style={styles.hint}>{hint}</Text>
       ) : null}

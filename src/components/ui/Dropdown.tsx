@@ -124,7 +124,9 @@ export function Dropdown<T extends string = string>({
         activeOpacity={0.7}
         disabled={disabled}
         accessibilityRole="button"
-        accessibilityLabel={label ? `${label}: ${selectedOption?.label ?? ''}` : selectedOption?.label}
+        accessibilityLabel={
+          label ? `${label}: ${selectedOption?.label ?? ''}` : selectedOption?.label
+        }
         accessibilityHint={hint || 'Double tap to open dropdown'}
         accessibilityState={{ disabled: !!disabled, expanded: open }}
       >
