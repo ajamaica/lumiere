@@ -14,6 +14,9 @@ import { Button, Card, ScreenHeader, Section, StatCard, Text } from '../src/comp
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { useTheme } from '../src/theme'
+import { logger } from '../src/utils/logger'
+
+const overviewLogger = logger.create('Overview')
 
 export default function OverviewScreen() {
   const { theme } = useTheme()
@@ -73,7 +76,7 @@ export default function OverviewScreen() {
           }
         }
       } catch (err) {
-        console.error('Failed to fetch resource counts:', err)
+        overviewLogger.logError('Failed to fetch resource counts', err)
       }
     }
 
@@ -107,7 +110,7 @@ export default function OverviewScreen() {
     try {
       await connect()
     } catch (err) {
-      console.error('Failed to connect:', err)
+      overviewLogger.logError('Failed to connect', err)
     }
   }
 
@@ -121,7 +124,7 @@ export default function OverviewScreen() {
         setSessionCount(sessionsData.sessions.length)
       }
     } catch (err) {
-      console.error('Failed to refresh:', err)
+      overviewLogger.logError('Failed to refresh', err)
     }
   }
 

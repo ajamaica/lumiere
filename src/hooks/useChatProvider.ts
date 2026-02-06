@@ -10,6 +10,9 @@ import {
   ProviderConfig,
   SendMessageParams,
 } from '../services/providers'
+import { logger } from '../utils/logger'
+
+const providerLogger = logger.create('ChatProvider')
 
 /** Default capabilities before a provider is connected */
 const DEFAULT_CAPABILITIES: ProviderCapabilities = {
@@ -116,14 +119,14 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
             setHealth(healthStatus)
           }
         } catch (err) {
-          console.error('Failed to fetch health:', err)
+          providerLogger.logError('Failed to fetch health', err)
         }
       } catch (err) {
         if (cancelled) return
         const errorMessage = err instanceof Error ? err.message : 'Connection failed'
         setError(errorMessage)
         setConnecting(false)
-        console.error('Failed to connect:', err)
+        providerLogger.logError('Failed to connect', err)
       }
     }
 

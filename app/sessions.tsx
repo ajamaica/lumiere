@@ -11,6 +11,9 @@ import { useMoltGateway } from '../src/services/molt'
 import { ProviderConfig } from '../src/services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { logger } from '../src/utils/logger'
+
+const sessionsLogger = logger.create('Sessions')
 
 interface Session {
   key: string
@@ -70,7 +73,7 @@ export default function SessionsScreen() {
         setSessions(sessionData.sessions)
       }
     } catch (err) {
-      console.error('Failed to fetch sessions:', err)
+      sessionsLogger.logError('Failed to fetch sessions', err)
     } finally {
       setLoading(false)
     }
@@ -104,7 +107,7 @@ export default function SessionsScreen() {
               setClearMessagesTrigger((prev) => prev + 1)
               router.back()
             } catch (err) {
-              console.error('Failed to reset session:', err)
+              sessionsLogger.logError('Failed to reset session', err)
             }
           },
         },

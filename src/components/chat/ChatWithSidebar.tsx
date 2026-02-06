@@ -6,9 +6,12 @@ import { useServers } from '../../hooks/useServers'
 import { useMoltGateway } from '../../services/molt'
 import { ProviderConfig } from '../../services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../../store'
+import { logger } from '../../utils/logger'
 import { SessionSidebar } from '../layout/SessionSidebar'
 import { SidebarLayout } from '../layout/SidebarLayout'
 import { ChatScreen } from './ChatScreen'
+
+const chatSidebarLogger = logger.create('ChatSidebar')
 
 interface Session {
   key: string
@@ -60,7 +63,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
         setSessions(sessionData.sessions)
       }
     } catch (err) {
-      console.error('Failed to fetch sessions:', err)
+      chatSidebarLogger.logError('Failed to fetch sessions', err)
       // Fallback to showing current session
       setSessions([{ key: currentSessionKey }])
     }
@@ -98,7 +101,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
               // Reload sessions to update message counts
               loadSessions()
             } catch (err) {
-              console.error('Failed to reset session:', err)
+              chatSidebarLogger.logError('Failed to reset session', err)
               Alert.alert('Error', 'Failed to reset session')
             }
           },

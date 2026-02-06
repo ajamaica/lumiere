@@ -1,4 +1,5 @@
 import { clientConfig, protocolConfig } from '../../config/gateway.config'
+import { logger } from '../../utils/logger'
 import {
   AgentEvent,
   AgentParams,
@@ -10,6 +11,8 @@ import {
   ResponseFrame,
   SendMessageParams,
 } from './types'
+
+const wsLogger = logger.create('WebSocket')
 
 type EventListener = (event: EventFrame) => void
 type ResponseHandler = (response: ResponseFrame) => void
@@ -43,7 +46,7 @@ export class MoltGatewayClient {
         this.ws = new WebSocket(this.config.url)
 
         this.ws.onopen = () => {
-          console.log('WebSocket connected')
+          wsLogger.info('WebSocket connected')
           this.performHandshake()
             .then((response) => {
               this.connected = true
@@ -60,17 +63,17 @@ export class MoltGatewayClient {
             const frame = JSON.parse(event.data)
             this.handleFrame(frame)
           } catch (error) {
-            console.error('Failed to parse message:', error)
+            wsLogger.logError('Failed to parse message', error)
           }
         }
 
         this.ws.onerror = (error) => {
-          console.error('WebSocket error:', error)
+          wsLogger.logError('WebSocket error', error)
           reject(new Error('WebSocket connection failed'))
         }
 
         this.ws.onclose = () => {
-          console.log('WebSocket closed')
+          wsLogger.info('WebSocket closed')
           this.connected = false
           this.notifyConnectionState()
           this.handleReconnect()
@@ -113,17 +116,17 @@ export class MoltGatewayClient {
       this.reconnecting = true
       this.notifyConnectionState()
       const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1)
-      console.log(`Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts})`)
+      wsLogger.info(`Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts})`)
       this.reconnectTimer = setTimeout(() => {
         this.reconnectTimer = null
         this.connect().catch((error) => {
-          console.error('Reconnection failed:', error)
+          wsLogger.logError('Reconnection failed', error)
           this.reconnecting = false
           this.notifyConnectionState()
         })
       }, delay)
     } else {
-      console.error('Max reconnection attempts reached')
+      wsLogger.error('Max reconnection attempts reached')
       this.reconnecting = false
       this.reconnectExhausted = true
       this.notifyConnectionState()

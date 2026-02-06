@@ -9,6 +9,9 @@ import { ScreenHeader, Section, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { currentServerIdAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { logger } from '../src/utils/logger'
+
+const ollamaLogger = logger.create('OllamaModels')
 
 interface OllamaModel {
   name: string
@@ -64,7 +67,7 @@ export default function OllamaModelsScreen() {
         setModels(data.models)
       }
     } catch (err) {
-      console.error('Failed to fetch Ollama models:', err)
+      ollamaLogger.logError('Failed to fetch Ollama models', err)
       setError('Could not fetch models. Make sure Ollama is running.')
     } finally {
       setLoading(false)

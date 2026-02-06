@@ -252,7 +252,11 @@ describe('useMessageQueue', () => {
       expect(setIsAgentResponding).toHaveBeenCalledWith(false)
       // Should clear the agent message
       expect(mocks.onAgentMessageUpdate).toHaveBeenLastCalledWith('')
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to send message:', expect.any(Error))
+      // The logger formats messages with timestamp, level, and namespace
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('[ERROR] [MessageQueue] Failed to send message'),
+        'network error',
+      )
 
       consoleSpy.mockRestore()
     })

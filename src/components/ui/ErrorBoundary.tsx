@@ -1,8 +1,11 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react'
 import { StyleSheet, View } from 'react-native'
 
+import { logger } from '../../utils/logger'
 import { Button } from './Button'
 import { Text } from './Text'
+
+const errorBoundaryLogger = logger.create('ErrorBoundary')
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -39,8 +42,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     // Log error for debugging in development
     if (__DEV__) {
-      console.error('ErrorBoundary caught an error:', error)
-      console.error('Component stack:', errorInfo.componentStack)
+      errorBoundaryLogger.logError('ErrorBoundary caught an error', error)
+      errorBoundaryLogger.error('Component stack: ' + errorInfo.componentStack)
     }
 
     // Call optional error handler
