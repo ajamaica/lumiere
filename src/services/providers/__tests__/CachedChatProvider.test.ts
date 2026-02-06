@@ -1,7 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { jotaiStorage } from '../../../store'
-import { buildCacheKey, CachedChatProvider } from '../CachedChatProvider'
+import {
+  buildCacheKey,
+  buildSessionIndexKey,
+  CachedChatProvider,
+  readSessionIndex,
+  SessionIndexEntry,
+} from '../CachedChatProvider'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -94,15 +100,30 @@ describe('CachedChatProvider', () => {
       expect(inner.onConnectionStateChange).toHaveBeenCalledWith(listener)
     })
 
-    it('delegates getHealth and listSessions', async () => {
+    it('delegates getHealth', async () => {
       const inner = createMockProvider()
       const cached = new CachedChatProvider(inner, 'srv')
 
       await cached.getHealth()
       expect(inner.getHealth).toHaveBeenCalled()
+    })
+
+    it('delegates listSessions to inner provider when serverSessions is true', async () => {
+      const inner = createMockProvider()
+      inner.capabilities.serverSessions = true
+      const cached = new CachedChatProvider(inner, 'srv')
 
       await cached.listSessions()
       expect(inner.listSessions).toHaveBeenCalled()
+    })
+
+    it('returns local session index when serverSessions is false', async () => {
+      const inner = createMockProvider()
+      const cached = new CachedChatProvider(inner, 'srv')
+
+      const result = await cached.listSessions()
+      expect(inner.listSessions).not.toHaveBeenCalled()
+      expect(result).toEqual({ sessions: [] })
     })
   })
 
@@ -417,5 +438,164 @@ describe('CachedChatProvider', () => {
       // Should return empty, trusting the server's authoritative response
       expect(result.messages).toEqual([])
     })
+  })
+
+  describe('session index', () => {
+    it('registers session in index on first sendMessage', async () => {
+      const inner = createMockProvider({
+        sendMessage: jest.fn(
+          async (_p: SendMessageParams, onEvent: (e: ChatProviderEvent) => void) => {
+            onEvent({ type: 'lifecycle', phase: 'start' })
+            onEvent({ type: 'delta', delta: 'reply' })
+            onEvent({ type: 'lifecycle', phase: 'end' })
+          },
+        ),
+      })
+
+      const cached = new CachedChatProvider(inner, 'srv-idx')
+      await cached.sendMessage({ message: 'hello', sessionKey: 'session-a' }, () => {})
+
+      const entries = await readSessionIndex('srv-idx')
+      expect(entries).toHaveLength(1)
+      expect(entries[0].key).toBe('session-a')
+      expect(entries[0].messageCount).toBe(2) // user + assistant
+      expect(entries[0].lastActivity).toBeGreaterThan(0)
+    })
+
+    it('does not duplicate session in index on subsequent messages', async () => {
+      const inner = createMockProvider({
+        sendMessage: jest.fn(
+          async (_p: SendMessageParams, onEvent: (e: ChatProviderEvent) => void) => {
+            onEvent({ type: 'lifecycle', phase: 'start' })
+            onEvent({ type: 'delta', delta: 'reply' })
+            onEvent({ type: 'lifecycle', phase: 'end' })
+          },
+        ),
+      })
+
+      const cached = new CachedChatProvider(inner, 'srv-idx')
+      await cached.sendMessage({ message: 'msg1', sessionKey: 'session-a' }, () => {})
+      await cached.sendMessage({ message: 'msg2', sessionKey: 'session-a' }, () => {})
+
+      const entries = await readSessionIndex('srv-idx')
+      expect(entries).toHaveLength(1)
+      expect(entries[0].messageCount).toBe(4) // 2 user + 2 assistant
+    })
+
+    it('tracks multiple sessions in the index', async () => {
+      const inner = createMockProvider({
+        sendMessage: jest.fn(
+          async (_p: SendMessageParams, onEvent: (e: ChatProviderEvent) => void) => {
+            onEvent({ type: 'lifecycle', phase: 'start' })
+            onEvent({ type: 'delta', delta: 'reply' })
+            onEvent({ type: 'lifecycle', phase: 'end' })
+          },
+        ),
+      })
+
+      const cached = new CachedChatProvider(inner, 'srv-idx')
+      await cached.sendMessage({ message: 'msg1', sessionKey: 'session-a' }, () => {})
+      await cached.sendMessage({ message: 'msg2', sessionKey: 'session-b' }, () => {})
+
+      const entries = await readSessionIndex('srv-idx')
+      expect(entries).toHaveLength(2)
+      expect(entries.map((e) => e.key).sort()).toEqual(['session-a', 'session-b'])
+    })
+
+    it('removes session from index on resetSession', async () => {
+      const inner = createMockProvider({
+        sendMessage: jest.fn(
+          async (_p: SendMessageParams, onEvent: (e: ChatProviderEvent) => void) => {
+            onEvent({ type: 'lifecycle', phase: 'start' })
+            onEvent({ type: 'delta', delta: 'reply' })
+            onEvent({ type: 'lifecycle', phase: 'end' })
+          },
+        ),
+      })
+
+      const cached = new CachedChatProvider(inner, 'srv-idx')
+      await cached.sendMessage({ message: 'msg', sessionKey: 'session-a' }, () => {})
+      await cached.sendMessage({ message: 'msg', sessionKey: 'session-b' }, () => {})
+
+      await cached.resetSession('session-a')
+
+      const entries = await readSessionIndex('srv-idx')
+      expect(entries).toHaveLength(1)
+      expect(entries[0].key).toBe('session-b')
+    })
+
+    it('listSessions returns indexed sessions sorted by lastActivity', async () => {
+      // Pre-populate the session index with known timestamps to avoid timing issues
+      const indexKey = buildSessionIndexKey('srv-idx')
+      const preEntries: SessionIndexEntry[] = [
+        { key: 'session-old', messageCount: 2, lastActivity: 1000 },
+        { key: 'session-new', messageCount: 2, lastActivity: 2000 },
+      ]
+      await jotaiStorage.setItem(indexKey, preEntries)
+
+      const inner = createMockProvider()
+      const cached = new CachedChatProvider(inner, 'srv-idx')
+
+      const result = (await cached.listSessions()) as { sessions: SessionIndexEntry[] }
+      expect(result.sessions).toHaveLength(2)
+      // Most recent first
+      expect(result.sessions[0].key).toBe('session-new')
+      expect(result.sessions[1].key).toBe('session-old')
+    })
+
+    it('isolates session indexes per server', async () => {
+      const makeInner = () =>
+        createMockProvider({
+          sendMessage: jest.fn(
+            async (_p: SendMessageParams, onEvent: (e: ChatProviderEvent) => void) => {
+              onEvent({ type: 'lifecycle', phase: 'start' })
+              onEvent({ type: 'delta', delta: 'reply' })
+              onEvent({ type: 'lifecycle', phase: 'end' })
+            },
+          ),
+        })
+
+      const cachedA = new CachedChatProvider(makeInner(), 'server-a')
+      const cachedB = new CachedChatProvider(makeInner(), 'server-b')
+
+      await cachedA.sendMessage({ message: 'msg', sessionKey: 'session-1' }, () => {})
+      await cachedB.sendMessage({ message: 'msg', sessionKey: 'session-2' }, () => {})
+
+      const entriesA = await readSessionIndex('server-a')
+      const entriesB = await readSessionIndex('server-b')
+
+      expect(entriesA).toHaveLength(1)
+      expect(entriesA[0].key).toBe('session-1')
+      expect(entriesB).toHaveLength(1)
+      expect(entriesB[0].key).toBe('session-2')
+    })
+  })
+})
+
+describe('buildSessionIndexKey', () => {
+  it('builds a key from serverId', () => {
+    expect(buildSessionIndexKey('server-1')).toBe('session_index:server-1')
+  })
+
+  it('falls back to _local when serverId is undefined', () => {
+    expect(buildSessionIndexKey(undefined)).toBe('session_index:_local')
+  })
+})
+
+describe('readSessionIndex', () => {
+  it('returns empty array when no index exists', async () => {
+    const entries = await readSessionIndex('nonexistent')
+    expect(entries).toEqual([])
+  })
+
+  it('returns stored entries', async () => {
+    const storedEntries: SessionIndexEntry[] = [
+      { key: 'session-1', messageCount: 5, lastActivity: 1000 },
+      { key: 'session-2', messageCount: 3, lastActivity: 2000 },
+    ]
+    await jotaiStorage.setItem(buildSessionIndexKey('srv'), storedEntries)
+
+    const entries = await readSessionIndex('srv')
+    expect(entries).toEqual(storedEntries)
   })
 })

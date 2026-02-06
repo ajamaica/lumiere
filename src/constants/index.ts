@@ -43,4 +43,6 @@ export const CACHE_CONFIG = {
   MAX_CACHED_MESSAGES: 200,
   /** AsyncStorage key prefix for cached chat messages */
   CACHE_KEY_PREFIX: 'chat_cache:',
+  /** AsyncStorage key prefix for tracking known session keys per server */
+  SESSION_INDEX_PREFIX: 'session_index:',
 } as const
