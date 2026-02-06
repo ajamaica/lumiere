@@ -36,11 +36,18 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   // Only molt provider supports server-side sessions
   const supportsServerSessions = providerConfig?.type === 'molt'
 
-  // Load sessions for all servers (only on tablet/foldable)
+  // Load sessions for all servers (always load on tablet/foldable)
   const { serverSessions, reloadServerSessions } = useAllServerSessions(
     isTabletOrFoldable ? serversList : [],
     getServerToken,
   )
+
+  // Debug logging
+  useEffect(() => {
+    console.log('ChatWithSidebar - isTabletOrFoldable:', isTabletOrFoldable)
+    console.log('ChatWithSidebar - serversList:', serversList.length)
+    console.log('ChatWithSidebar - serverSessions size:', serverSessions.size)
+  }, [isTabletOrFoldable, serversList, serverSessions])
 
   const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
     url: providerConfig?.url || '',

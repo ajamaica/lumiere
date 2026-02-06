@@ -55,6 +55,20 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
     new Set(servers?.map((s) => s.server.id) || []),
   )
 
+  // Debug logging
+  React.useEffect(() => {
+    console.log('SessionSidebar - servers:', servers?.length ?? 'undefined')
+    console.log('SessionSidebar - sessions:', sessions.length)
+    console.log('SessionSidebar - supportsServerSessions:', supportsServerSessions)
+    if (servers) {
+      servers.forEach((s) => {
+        console.log(
+          `Server ${s.server.name}: ${s.sessions.length} sessions, connected: ${s.connected}`,
+        )
+      })
+    }
+  }, [servers, sessions, supportsServerSessions])
+
   // Responsive padding based on fold state
   const containerPadding = useFoldResponsiveValue(
     theme.spacing.sm, // folded
