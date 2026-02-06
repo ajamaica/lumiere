@@ -75,7 +75,7 @@ export function ChatInput({
         uri: asset.uri,
         base64: asset.base64 ?? undefined,
         mimeType: asset.mimeType ?? 'image/jpeg',
-        name: asset.fileName,
+        name: asset.fileName ?? undefined,
       }))
       setAttachments((prev) => [...prev, ...newAttachments])
     }
@@ -94,7 +94,7 @@ export function ChatInput({
         type: 'video' as const,
         uri: asset.uri,
         mimeType: asset.mimeType ?? 'video/mp4',
-        name: asset.fileName,
+        name: asset.fileName ?? undefined,
       }))
       setAttachments((prev) => [...prev, ...newAttachments])
     }
