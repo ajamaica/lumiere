@@ -62,6 +62,9 @@ export function ChatInput({
 
   const handlePickImage = async () => {
     setShowAttachmentMenu(false)
+    // Wait for modal dismiss animation to complete before presenting system picker.
+    // Without this delay, the picker silently fails to present on iOS and Android.
+    await new Promise<void>((resolve) => setTimeout(resolve, 500))
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsMultipleSelection: true,
@@ -83,6 +86,7 @@ export function ChatInput({
 
   const handlePickVideo = async () => {
     setShowAttachmentMenu(false)
+    await new Promise<void>((resolve) => setTimeout(resolve, 500))
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['videos'],
       allowsMultipleSelection: true,
@@ -102,6 +106,7 @@ export function ChatInput({
 
   const handlePickFile = async () => {
     setShowAttachmentMenu(false)
+    await new Promise<void>((resolve) => setTimeout(resolve, 500))
     const result = await DocumentPicker.getDocumentAsync({
       type: '*/*',
       multiple: true,
