@@ -44,8 +44,8 @@ jest.mock('react-native-safe-area-context', () => ({
 
 // Mock react-native-reanimated
 jest.mock('react-native-reanimated', () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const Reanimated = require('react-native-reanimated/mock')
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const Reanimated = require('react-native-reanimated/mock')
   Reanimated.default.call = () => {}
   return Reanimated
 })
@@ -119,9 +119,9 @@ jest.mock('../../src/theme', () => {
 jest.mock('jotai', () => ({
   ...jest.requireActual('jotai'),
   useAtom: (atom: any) => {
-    const [value, setValue] = jest.requireActual('react').useState(
-      atom.init !== undefined ? atom.init : null,
-    )
+    const [value, setValue] = jest
+      .requireActual('react')
+      .useState(atom.init !== undefined ? atom.init : null)
     return [value, setValue]
   },
 }))
