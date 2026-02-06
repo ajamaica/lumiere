@@ -21,7 +21,7 @@ interface ChatWithSidebarProps {
 }
 
 export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
-  const { currentServerId } = useServers()
+  const { currentServerId, serversList, switchToServer } = useServers()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [sessionAliases] = useAtom(sessionAliasesAtom)
@@ -111,6 +111,12 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     setCurrentSessionKey(sessionKey)
   }
 
+  const handleSwitchServer = (serverId: string) => {
+    if (serverId !== currentServerId) {
+      switchToServer(serverId)
+    }
+  }
+
   return (
     <SidebarLayout
       sidebar={
@@ -122,6 +128,9 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
           currentSessionKey={currentSessionKey}
           sessionAliases={sessionAliases}
           supportsServerSessions={supportsServerSessions}
+          servers={serversList}
+          currentServerId={currentServerId}
+          onSwitchServer={handleSwitchServer}
         />
       }
     >
