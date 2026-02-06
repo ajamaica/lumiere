@@ -17,6 +17,8 @@ export const DEFAULT_MODELS = {
   OPENAI: 'gpt-4o',
   /** Default OpenRouter model */
   OPENROUTER: 'openai/gpt-4o',
+  /** Default Emergent model */
+  EMERGENT: 'claude-sonnet-4-5-20250514',
 } as const
 
 /**

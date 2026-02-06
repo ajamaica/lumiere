@@ -10,6 +10,7 @@ export type ProviderType =
   | 'openai'
   | 'openrouter'
   | 'gemini-nano'
+  | 'emergent'
 
 export interface ProviderConfig {
   type: ProviderType

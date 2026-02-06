@@ -27,6 +27,7 @@ export function getProviderIcon(type: ProviderType, color: string): React.ReactN
     apple: AppleIcon,
     echo: EchoIcon,
     'gemini-nano': null, // TODO: Add Gemini icon
+    emergent: null, // TODO: Add Emergent icon
   }
 
   const Icon = icons[type]
@@ -59,6 +60,7 @@ export function getAllProviderOptions(color: string) {
           },
         ]
       : []),
+    { value: 'emergent', label: 'Emergent', icon: getProviderIcon('emergent', color) },
     { value: 'echo', label: 'Echo Server', icon: getProviderIcon('echo', color) },
   ]
   return options
@@ -105,6 +107,11 @@ export function getBasicProviderOptions(color: string) {
           },
         ]
       : []),
+    {
+      value: 'emergent' as ProviderType,
+      label: 'Emergent',
+      icon: getProviderIcon('emergent', color),
+    },
     {
       value: 'echo' as ProviderType,
       label: 'Echo Server',

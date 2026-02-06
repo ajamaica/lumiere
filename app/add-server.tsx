@@ -26,9 +26,13 @@ export default function AddServerScreen() {
     providerType !== 'echo' &&
     providerType !== 'apple' &&
     providerType !== 'claude' &&
-    providerType !== 'openai'
+    providerType !== 'openai' &&
+    providerType !== 'emergent'
   const needsToken =
-    providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
+    providerType === 'molt' ||
+    providerType === 'claude' ||
+    providerType === 'openai' ||
+    providerType === 'emergent'
 
   const handleAdd = async () => {
     if (needsUrl && !url.trim()) {
@@ -39,7 +43,7 @@ export default function AddServerScreen() {
     if (needsToken && !token.trim()) {
       Alert.alert(
         'Error',
-        providerType === 'claude' || providerType === 'openai'
+        providerType === 'claude' || providerType === 'openai' || providerType === 'emergent'
           ? 'API Key is required'
           : 'Token is required',
       )
@@ -59,6 +63,8 @@ export default function AddServerScreen() {
       effectiveUrl = 'https://api.anthropic.com'
     } else if (providerType === 'openai' && !effectiveUrl) {
       effectiveUrl = 'https://api.openai.com'
+    } else if (providerType === 'emergent' && !effectiveUrl) {
+      effectiveUrl = 'https://api.emergent.sh'
     }
 
     if (!effectiveToken) {
@@ -75,7 +81,9 @@ export default function AddServerScreen() {
               ? 'Claude'
               : providerType === 'openai'
                 ? 'OpenAI'
-                : 'New Server'),
+                : providerType === 'emergent'
+                  ? 'Emergent'
+                  : 'New Server'),
         url: effectiveUrl,
         clientId: clientId.trim() || 'lumiere-mobile',
         providerType,
@@ -146,7 +154,9 @@ export default function AddServerScreen() {
                         ? 'My Claude'
                         : providerType === 'openai'
                           ? 'My OpenAI'
-                          : 'My Server'
+                          : providerType === 'emergent'
+                            ? 'My Emergent'
+                            : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -259,6 +269,31 @@ export default function AddServerScreen() {
                   value={model}
                   onChangeText={setModel}
                   placeholder="gpt-4o"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+            </>
+          )}
+
+          {providerType === 'emergent' && (
+            <>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="API Key"
+                  value={token}
+                  onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="Model"
+                  value={model}
+                  onChangeText={setModel}
+                  placeholder="claude-sonnet-4-5-20250514"
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
