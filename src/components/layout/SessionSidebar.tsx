@@ -246,7 +246,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
         </View>
 
         {/* Actions Section */}
-        {(
+        {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Actions</Text>
 
@@ -295,7 +295,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
               <Text style={styles.actionText}>Edit Current</Text>
             </TouchableOpacity>
           </View>
-        )}
+        }
 
         {/* Servers & Sessions List */}
         <View style={styles.serversSection}>
