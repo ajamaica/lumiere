@@ -3,14 +3,18 @@ package expo.modules.gemininano
 import android.os.Build
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
+import expo.modules.kotlin.Promise
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import org.json.JSONArray
-import com.google.ai.edge.GenerativeModel
-import com.google.ai.edge.content
+import com.google.ai.edge.aicore.GenerativeModel
+import com.google.ai.edge.aicore.DownloadConfig
+import com.google.ai.edge.aicore.DownloadCallback
+import com.google.ai.edge.aicore.GenerativeAIException
+import com.google.ai.edge.aicore.generationConfig
 
 /**
  * Expo native module that exposes Gemini Nano (on-device AI for Android)
@@ -18,6 +22,7 @@ import com.google.ai.edge.content
  */
 class GeminiNanoModule : Module() {
   private val moduleScope = CoroutineScope(Dispatchers.Main)
+  private var generativeModel: GenerativeModel? = null
 
   override fun definition() = ModuleDefinition {
     Name("GeminiNano")
@@ -28,33 +33,86 @@ class GeminiNanoModule : Module() {
       return@Function checkAvailability()
     }
 
-    AsyncFunction("generateResponse") { systemPrompt: String, messagesJson: String ->
-      return@AsyncFunction doGenerateResponse(systemPrompt, messagesJson)
+    AsyncFunction("generateResponse") { systemPrompt: String, messagesJson: String, promise: Promise ->
+      moduleScope.launch {
+        try {
+          val result = doGenerateResponse(systemPrompt, messagesJson)
+          promise.resolve(result)
+        } catch (e: Exception) {
+          promise.reject("ERR_GEMINI_NANO", e.message, e)
+        }
+      }
     }
 
     AsyncFunction("startStreaming") { systemPrompt: String, messagesJson: String, requestId: String ->
       doStartStreaming(systemPrompt, messagesJson, requestId)
+    }
+
+    OnDestroy {
+      generativeModel?.close()
+      generativeModel = null
     }
   }
 
   // MARK: - Availability Check
 
   private fun checkAvailability(): Boolean {
-    // Check if Android version supports Gemini Nano (Android 14+)
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
       return false
     }
 
     try {
-      // Try to create a model instance to verify SDK is available
-      // This is a lightweight check that doesn't actually load the model
-      Class.forName("com.google.ai.edge.GenerativeModel")
+      Class.forName("com.google.ai.edge.aicore.GenerativeModel")
       return true
     } catch (e: ClassNotFoundException) {
       return false
     } catch (e: Exception) {
       return false
     }
+  }
+
+  // MARK: - Model Initialization
+
+  private fun getOrCreateModel(): GenerativeModel {
+    generativeModel?.let { return it }
+
+    val context = appContext.reactContext
+      ?: throw GeminiNanoException.Unavailable()
+
+    val config = generationConfig {
+      this.context = context
+      this.temperature = 0.7f
+      this.maxOutputTokens = 1024
+      this.topK = 40
+      this.candidateCount = 1
+    }
+
+    val downloadConfig = DownloadConfig(object : DownloadCallback {
+      override fun onDownloadStarted(bytesToDownload: Long) {}
+      override fun onDownloadFailed(failureStatus: String, e: GenerativeAIException) {}
+      override fun onDownloadProgress(totalBytesDownloaded: Long) {}
+      override fun onDownloadCompleted() {}
+    })
+
+    val model = GenerativeModel(config, downloadConfig)
+    generativeModel = model
+    return model
+  }
+
+  // MARK: - Build Prompt
+
+  private fun buildPrompt(systemPrompt: String, messages: List<ChatMessage>): String {
+    val sb = StringBuilder()
+    if (systemPrompt.isNotEmpty()) {
+      sb.appendLine("System: $systemPrompt")
+      sb.appendLine()
+    }
+    for (message in messages) {
+      val role = if (message.role == "user") "User" else "Assistant"
+      sb.appendLine("$role: ${message.content}")
+    }
+    sb.appendLine("Assistant:")
+    return sb.toString()
   }
 
   // MARK: - Non-Streaming Response
@@ -66,24 +124,12 @@ class GeminiNanoModule : Module() {
 
     try {
       val messages = parseMessages(messagesJson)
-
-      // Initialize Gemini Nano model with system instruction
-      val model = GenerativeModel(
-        modelName = "gemini-nano",
-        systemInstruction = content { text(systemPrompt) }
-      )
-
-      // Build conversation history from messages
-      val conversationHistory = messages.map { message ->
-        content(role = message.role) {
-          text(message.content)
-        }
-      }
-
-      // Generate response using the full conversation context
-      val response = model.generateContent(*conversationHistory.toTypedArray())
-
+      val prompt = buildPrompt(systemPrompt, messages)
+      val model = getOrCreateModel()
+      val response = model.generateContent(prompt)
       return response.text ?: ""
+    } catch (e: GeminiNanoException) {
+      throw e
     } catch (e: Exception) {
       throw GeminiNanoException.GenerationFailed(e.message ?: "Unknown error")
     }
@@ -103,24 +149,12 @@ class GeminiNanoModule : Module() {
     moduleScope.launch {
       try {
         val messages = parseMessages(messagesJson)
+        val prompt = buildPrompt(systemPrompt, messages)
+        val model = getOrCreateModel()
 
-        // Initialize Gemini Nano model with system instruction
-        val model = GenerativeModel(
-          modelName = "gemini-nano",
-          systemInstruction = content { text(systemPrompt) }
-        )
-
-        // Build conversation history from messages
-        val conversationHistory = messages.map { message ->
-          content(role = message.role) {
-            text(message.content)
-          }
-        }
-
-        // Stream the response
         var accumulatedText = ""
 
-        model.generateContentStream(*conversationHistory.toTypedArray())
+        model.generateContentStream(prompt)
           .catch { e ->
             sendEvent("onStreamingError", mapOf(
               "error" to (e.message ?: "Stream error"),
@@ -128,11 +162,9 @@ class GeminiNanoModule : Module() {
             ))
           }
           .collect { chunk ->
-            // Accumulate the text from each chunk
             val chunkText = chunk.text ?: ""
             accumulatedText += chunkText
 
-            // Send the accumulated text as delta
             if (accumulatedText.isNotEmpty()) {
               sendEvent("onStreamingDelta", mapOf(
                 "delta" to accumulatedText,
