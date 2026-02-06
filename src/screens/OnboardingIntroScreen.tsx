@@ -47,8 +47,12 @@ export function OnboardingIntroScreen({
     },
     footer: {
       paddingHorizontal: theme.spacing.xl,
-      paddingBottom: theme.spacing.xl,
-      gap: theme.spacing.md,
+      paddingBottom: theme.spacing.md,
+    },
+    skipButton: {
+      alignSelf: 'center',
+      paddingVertical: theme.spacing.sm,
+      marginTop: theme.spacing.md,
     },
   })
 
@@ -74,7 +78,13 @@ export function OnboardingIntroScreen({
 
       <View style={styles.footer}>
         <Button title="Next" size="lg" onPress={onNext} />
-        <Button title="Skip" size="lg" variant="ghost" onPress={onSkip} />
+        <Button
+          title="Skip"
+          size="sm"
+          variant="ghost"
+          onPress={onSkip}
+          style={styles.skipButton}
+        />
       </View>
     </View>
   )

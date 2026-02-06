@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { Dimensions, FlatList, StyleSheet, View, ViewToken } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
@@ -11,6 +11,8 @@ import { StepIndicator } from '../components/ui/StepIndicator'
 import { useTheme } from '../theme'
 import { OnboardingIntroScreen } from './OnboardingIntroScreen'
 import { SetupScreen } from './SetupScreen'
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window')
 
 const INTRO_STEPS = [
   {
@@ -36,6 +38,7 @@ const INTRO_STEPS = [
 export function OnboardingFlow() {
   const { theme } = useTheme()
   const [currentStep, setCurrentStep] = useState(0)
+  const flatListRef = useRef<FlatList>(null)
 
   const totalSteps = INTRO_STEPS.length + 1 // 3 intro + 1 setup
 
@@ -44,27 +47,61 @@ export function OnboardingFlow() {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
+    slideContainer: {
+      width: SCREEN_WIDTH,
+    },
   })
 
   const handleNext = () => {
-    setCurrentStep((prev) => prev + 1)
+    if (currentStep < INTRO_STEPS.length - 1) {
+      flatListRef.current?.scrollToIndex({ index: currentStep + 1, animated: true })
+    } else {
+      setCurrentStep(INTRO_STEPS.length) // Move to setup
+    }
   }
 
   const handleSkip = () => {
     setCurrentStep(INTRO_STEPS.length) // Jump to setup
   }
 
+  const onViewableItemsChanged = useRef(
+    ({ viewableItems }: { viewableItems: ViewToken<(typeof INTRO_STEPS)[number]>[] }) => {
+      if (viewableItems.length > 0 && viewableItems[0].index !== null) {
+        setCurrentStep(viewableItems[0].index)
+      }
+    },
+  ).current
+
+  const viewabilityConfig = useRef({
+    itemVisiblePercentThreshold: 50,
+  }).current
+
   if (currentStep < INTRO_STEPS.length) {
     return (
       <SafeAreaView style={styles.container}>
-        <OnboardingIntroScreen
-          step={currentStep}
-          totalSteps={totalSteps}
-          title={INTRO_STEPS[currentStep].title}
-          description={INTRO_STEPS[currentStep].description}
-          Illustration={INTRO_STEPS[currentStep].illustration}
-          onNext={handleNext}
-          onSkip={handleSkip}
+        <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
+        <FlatList
+          ref={flatListRef}
+          data={INTRO_STEPS}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(_, index) => index.toString()}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewabilityConfig}
+          renderItem={({ item, index }) => (
+            <View style={styles.slideContainer}>
+              <OnboardingIntroScreen
+                step={index}
+                totalSteps={totalSteps}
+                title={item.title}
+                description={item.description}
+                Illustration={item.illustration}
+                onNext={handleNext}
+                onSkip={handleSkip}
+              />
+            </View>
+          )}
         />
       </SafeAreaView>
     )
