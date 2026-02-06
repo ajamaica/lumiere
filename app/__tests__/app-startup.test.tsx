@@ -44,7 +44,8 @@ jest.mock('react-native-safe-area-context', () => ({
 
 // Mock react-native-reanimated
 jest.mock('react-native-reanimated', () => {
-  const Reanimated = require('react-native-reanimated/mock')
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const Reanimated = require('react-native-reanimated/mock')
   Reanimated.default.call = () => {}
   return Reanimated
 })
