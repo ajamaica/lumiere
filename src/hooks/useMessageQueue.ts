@@ -64,11 +64,14 @@ export function useMessageQueue({
       let accumulatedText = ''
 
       // Convert MessageAttachments to provider attachments
-      const providerAttachments: ProviderAttachment[] | undefined = attachments?.map((a) => ({
-        type: 'image' as const,
-        data: a.base64,
-        mimeType: a.mimeType,
-      }))
+      // Only include image attachments that have base64 data
+      const providerAttachments: ProviderAttachment[] | undefined = attachments
+        ?.filter((a) => a.type === 'image' && a.base64)
+        .map((a) => ({
+          type: 'image' as const,
+          data: a.base64,
+          mimeType: a.mimeType,
+        }))
 
       try {
         await providerSendMessage(
