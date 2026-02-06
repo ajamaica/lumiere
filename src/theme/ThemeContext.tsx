@@ -1,3 +1,4 @@
+import { setStatusBarStyle } from 'expo-status-bar'
 import * as SystemUI from 'expo-system-ui'
 import { useAtom } from 'jotai'
 import React, { createContext, ReactNode, useContext, useEffect, useMemo } from 'react'
@@ -40,7 +41,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     SystemUI.setBackgroundColorAsync(theme.colors.background)
     // Set status bar style based on theme: dark icons for light theme, light icons for dark theme
-    SystemUI.setStatusBarStyleAsync(theme.isDark ? 'light' : 'dark')
+    setStatusBarStyle(theme.isDark ? 'light' : 'dark')
   }, [theme])
 
   const toggleTheme = () => {
