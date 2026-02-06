@@ -1,10 +1,21 @@
+import { Ionicons } from '@expo/vector-icons'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useState } from 'react'
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, Dropdown, ScreenHeader, Text, TextInput } from '../src/components/ui'
 import { getBasicProviderOptions } from '../src/config/providerOptions'
+import { useClaudeModels } from '../src/hooks/useClaudeModels'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
@@ -24,6 +35,16 @@ export default function EditServerScreen() {
   const [clientId, setClientId] = useState(server?.clientId || 'lumiere-mobile')
   const [providerType, setProviderType] = useState<ProviderType>(server?.providerType || 'molt')
   const [model, setModel] = useState(server?.model ?? '')
+
+  const {
+    models: claudeModels,
+    loading: claudeModelsLoading,
+    error: claudeModelsError,
+    refetch: refetchClaudeModels,
+  } = useClaudeModels(
+    providerType === 'claude' ? id : undefined,
+    providerType === 'claude' ? url || undefined : undefined,
+  )
 
   const handleSave = async () => {
     if (!id) return
@@ -115,6 +136,39 @@ export default function EditServerScreen() {
       flexDirection: 'row',
       gap: theme.spacing.sm,
       marginTop: theme.spacing.lg,
+    },
+    fieldLabel: {
+      fontSize: theme.typography.fontSize.base,
+      fontWeight: theme.typography.fontWeight.semibold as '600',
+      color: theme.colors.text.primary,
+      marginBottom: theme.spacing.sm,
+    },
+    modelPickerLoading: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: theme.spacing.md,
+    },
+    modelList: {
+      gap: theme.spacing.sm,
+    },
+    modelItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: theme.spacing.md,
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.md,
+    },
+    activeModel: {
+      backgroundColor: theme.colors.primary + '20',
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+    },
+    modelInfo: {
+      flex: 1,
+    },
+    retryLink: {
+      marginTop: theme.spacing.xs,
+      paddingVertical: theme.spacing.xs,
     },
   })
 
@@ -243,24 +297,83 @@ export default function EditServerScreen() {
                   autoCorrect={false}
                 />
               </View>
-              <View style={styles.formRow}>
-                <TextInput
-                  label="Model"
-                  value={model}
-                  onChangeText={setModel}
-                  placeholder={
-                    providerType === 'openai'
-                      ? 'gpt-4o'
-                      : providerType === 'openrouter'
-                        ? 'openai/gpt-4o'
-                        : providerType === 'emergent'
-                          ? 'claude-sonnet-4-5'
+
+              {providerType === 'claude' ? (
+                <View style={styles.formRow}>
+                  <Text style={styles.fieldLabel}>Model</Text>
+                  {claudeModelsLoading ? (
+                    <View style={styles.modelPickerLoading}>
+                      <ActivityIndicator size="small" color={theme.colors.primary} />
+                      <Text color="secondary" style={{ marginLeft: theme.spacing.sm }}>
+                        Loading models...
+                      </Text>
+                    </View>
+                  ) : claudeModelsError ? (
+                    <View>
+                      <TextInput
+                        value={model}
+                        onChangeText={setModel}
+                        placeholder="claude-sonnet-4-5"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                      />
+                      <TouchableOpacity onPress={refetchClaudeModels} style={styles.retryLink}>
+                        <Text variant="caption" color="secondary">
+                          {claudeModelsError} Tap to retry.
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  ) : claudeModels.length > 0 ? (
+                    <View style={styles.modelList}>
+                      {claudeModels.map((m) => {
+                        const isActive = m.id === model
+                        return (
+                          <TouchableOpacity
+                            key={m.id}
+                            style={[styles.modelItem, isActive && styles.activeModel]}
+                            onPress={() => setModel(m.id)}
+                          >
+                            <View style={styles.modelInfo}>
+                              <Text variant="body">{m.display_name}</Text>
+                              <Text variant="caption">{m.id}</Text>
+                            </View>
+                            <Ionicons
+                              name={isActive ? 'checkmark-circle' : 'chevron-forward'}
+                              size={20}
+                              color={isActive ? theme.colors.primary : theme.colors.text.tertiary}
+                            />
+                          </TouchableOpacity>
+                        )
+                      })}
+                    </View>
+                  ) : (
+                    <TextInput
+                      value={model}
+                      onChangeText={setModel}
+                      placeholder="claude-sonnet-4-5"
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                  )}
+                </View>
+              ) : (
+                <View style={styles.formRow}>
+                  <TextInput
+                    label="Model"
+                    value={model}
+                    onChangeText={setModel}
+                    placeholder={
+                      providerType === 'openai'
+                        ? 'gpt-4o'
+                        : providerType === 'openrouter'
+                          ? 'openai/gpt-4o'
                           : 'claude-sonnet-4-5'
-                  }
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
-              </View>
+                    }
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                </View>
+              )}
             </>
           )}
 
