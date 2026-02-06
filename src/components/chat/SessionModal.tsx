@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
@@ -18,6 +19,7 @@ interface SessionModalProps {
   onSelectSession: (sessionKey: string) => void
   sessions: Session[]
   currentSessionKey: string
+  sessionAliases?: Record<string, string>
 }
 
 export function SessionModal({
@@ -28,8 +30,10 @@ export function SessionModal({
   onSelectSession,
   sessions,
   currentSessionKey,
+  sessionAliases = {},
 }: SessionModalProps) {
   const { theme } = useTheme()
+  const router = useRouter()
 
   const styles = StyleSheet.create({
     overlay: {
@@ -63,11 +67,12 @@ export function SessionModal({
       marginBottom: theme.spacing.lg,
     },
     sectionTitle: {
-      fontSize: theme.typography.fontSize.sm,
+      fontSize: theme.typography.fontSize.xs,
       fontWeight: theme.typography.fontWeight.semibold,
       color: theme.colors.text.secondary,
       marginBottom: theme.spacing.sm,
       textTransform: 'uppercase',
+      letterSpacing: 0.5,
     },
     actionButton: {
       flexDirection: 'row',
@@ -76,14 +81,17 @@ export function SessionModal({
       backgroundColor: theme.colors.background,
       borderRadius: theme.borderRadius.md,
       marginBottom: theme.spacing.sm,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
     },
     actionIcon: {
-      marginRight: theme.spacing.md,
+      marginRight: theme.spacing.sm,
     },
     actionText: {
-      fontSize: theme.typography.fontSize.base,
+      fontSize: theme.typography.fontSize.sm,
       color: theme.colors.text.primary,
       flex: 1,
+      fontWeight: theme.typography.fontWeight.medium,
     },
     sessionList: {
       maxHeight: 200,
@@ -94,17 +102,23 @@ export function SessionModal({
       padding: theme.spacing.md,
       backgroundColor: theme.colors.background,
       borderRadius: theme.borderRadius.md,
-      marginBottom: theme.spacing.sm,
+      marginBottom: theme.spacing.xs,
+      borderWidth: 1,
+      borderColor: 'transparent',
     },
     activeSession: {
-      backgroundColor: theme.colors.primary + '20',
-      borderWidth: 1,
+      backgroundColor: theme.colors.primary + '15',
       borderColor: theme.colors.primary,
+      borderWidth: 2,
+    },
+    sessionTextContainer: {
+      flex: 1,
+      marginRight: theme.spacing.sm,
     },
     sessionText: {
       fontSize: theme.typography.fontSize.sm,
       color: theme.colors.text.primary,
-      flex: 1,
+      fontWeight: theme.typography.fontWeight.medium,
     },
     sessionMeta: {
       fontSize: theme.typography.fontSize.xs,
@@ -120,9 +134,21 @@ export function SessionModal({
   })
 
   const formatSessionKey = (key: string) => {
+    // Check if there's an alias
+    if (sessionAliases[key]) {
+      return sessionAliases[key]
+    }
     // Extract readable part from session key
     const parts = key.split(':')
     return parts[parts.length - 1] || key
+  }
+
+  const handleEditSession = () => {
+    router.push({
+      pathname: '/edit-session',
+      params: { key: currentSessionKey },
+    })
+    onClose()
   }
 
   return (
@@ -146,10 +172,12 @@ export function SessionModal({
                   onNewSession()
                   onClose()
                 }}
+                accessibilityRole="button"
+                accessibilityLabel="New Session"
               >
                 <Ionicons
-                  name="add-circle-outline"
-                  size={24}
+                  name="add-circle"
+                  size={22}
                   color={theme.colors.primary}
                   style={styles.actionIcon}
                 />
@@ -162,14 +190,31 @@ export function SessionModal({
                   onResetSession()
                   onClose()
                 }}
+                accessibilityRole="button"
+                accessibilityLabel="Reset Current"
               >
                 <Ionicons
-                  name="refresh-outline"
-                  size={24}
+                  name="refresh"
+                  size={22}
                   color={theme.colors.primary}
                   style={styles.actionIcon}
                 />
-                <Text style={styles.actionText}>Reset Current Session</Text>
+                <Text style={styles.actionText}>Reset Current</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={handleEditSession}
+                accessibilityRole="button"
+                accessibilityLabel="Edit Current"
+              >
+                <Ionicons
+                  name="create"
+                  size={22}
+                  color={theme.colors.primary}
+                  style={styles.actionIcon}
+                />
+                <Text style={styles.actionText}>Edit Current</Text>
               </TouchableOpacity>
             </View>
 
@@ -187,14 +232,19 @@ export function SessionModal({
                           onSelectSession(session.key)
                           onClose()
                         }}
+                        accessibilityRole="button"
+                        accessibilityLabel={`${formatSessionKey(session.key)}${session.messageCount !== undefined ? `, ${session.messageCount} message${session.messageCount !== 1 ? 's' : ''}` : ''}`}
+                        accessibilityState={{ selected: isActive }}
                       >
-                        <View style={{ flex: 1 }}>
-                          <Text style={styles.sessionText}>
+                        <View style={styles.sessionTextContainer}>
+                          <Text style={styles.sessionText} numberOfLines={1}>
                             {formatSessionKey(session.key)}
-                            {isActive && ' (Active)'}
                           </Text>
                           {session.messageCount !== undefined && (
-                            <Text style={styles.sessionMeta}>{session.messageCount} messages</Text>
+                            <Text style={styles.sessionMeta}>
+                              {session.messageCount} message
+                              {session.messageCount !== 1 ? 's' : ''}
+                            </Text>
                           )}
                         </View>
                         <Ionicons
