@@ -10,6 +10,7 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import androidx.core.content.ContextCompat
+import expo.modules.interfaces.permissions.Permissions
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
@@ -44,9 +45,9 @@ class SpeechTranscriptionModule : Module() {
         return@AsyncFunction
       }
 
-      val permissionsManager = appContext.permissions
-      if (permissionsManager != null) {
-        permissionsManager.askForPermissionsWithPermissionsManager(
+      if (appContext.permissions != null) {
+        Permissions.askForPermissionsWithPermissionsManager(
+          appContext.permissions,
           promise,
           Manifest.permission.RECORD_AUDIO
         )

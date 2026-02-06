@@ -1,1 +1,46 @@
-apply plugin: 'expo-module-gradle-plugin'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+group = 'expo.modules.speechtranscription'
+version = '1.0.0'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+if (expoModulesCorePlugin.exists()) {
+  apply from: expoModulesCorePlugin
+  applyKotlinExpoModulesCorePlugin()
+
+  useCoreDependencies()
+  useDefaultAndroidSdkVersions()
+  useExpoPublishing()
+}
+
+android {
+  namespace 'expo.modules.speechtranscription'
+
+  defaultConfig {
+    minSdkVersion 23
+    targetSdkVersion 34
+    versionCode 1
+    versionName "1.0.0"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+}
+
+dependencies {
+  implementation project(':expo-modules-core')
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+}
