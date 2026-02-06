@@ -60,6 +60,15 @@ describe('createChatProvider', () => {
     expect(provider).toBeInstanceOf(CachedChatProvider)
   })
 
+  it('creates a CachedChatProvider wrapping openrouter for openrouter type', () => {
+    const provider = createChatProvider({
+      type: 'openrouter',
+      url: 'https://openrouter.ai/api',
+      token: 'test-key',
+    })
+    expect(provider).toBeInstanceOf(CachedChatProvider)
+  })
+
   it('throws for unknown provider type', () => {
     expect(() =>
       createChatProvider({
