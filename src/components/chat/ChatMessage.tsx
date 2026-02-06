@@ -558,8 +558,9 @@ const createStyles = (theme: Theme) =>
     },
     agentBubble: {
       width: '100%',
-      backgroundColor: theme.colors.message.agent,
-      borderBottomLeftRadius: theme.borderRadius.sm,
+      backgroundColor: 'transparent',
+      borderRadius: 0,
+      paddingHorizontal: 0,
     },
     intentActions: {
       flexDirection: 'row',
