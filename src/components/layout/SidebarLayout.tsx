@@ -1,7 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated'
 
 import { useTheme } from '../../theme'
 import { useDeviceType, useOrientation } from '../../utils/device'
@@ -51,14 +56,14 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
     if (isInitialMount.current) {
       // On first mount, set without animation
       isInitialMount.current = false
-       
+      // eslint-disable-next-line react-hooks/immutability
       sidebarWidthAnim.value = newWidth
     } else {
-      // On device/orientation changes, animate smoothly
-       
-      sidebarWidthAnim.value = withSpring(newWidth, {
-        damping: 20,
-        stiffness: 90,
+      // On device/orientation changes, animate smoothly without bounce
+      // eslint-disable-next-line react-hooks/immutability
+      sidebarWidthAnim.value = withTiming(newWidth, {
+        duration: 300,
+        easing: Easing.out(Easing.cubic),
       })
     }
   }, [deviceType, orientation, shouldShowSidebar, sidebarWidth, isCollapsed, sidebarWidthAnim])
@@ -68,9 +73,9 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
     setIsCollapsed(!isCollapsed)
 
     // eslint-disable-next-line react-hooks/immutability
-    sidebarWidthAnim.value = withSpring(toValue, {
-      damping: 20,
-      stiffness: 90,
+    sidebarWidthAnim.value = withTiming(toValue, {
+      duration: 300,
+      easing: Easing.inOut(Easing.cubic),
     })
   }
 
