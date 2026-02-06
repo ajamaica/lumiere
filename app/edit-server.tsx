@@ -9,6 +9,8 @@ import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
 
+const needsUrl = (type: ProviderType) => type === 'ollama' || type === 'molt'
+
 export default function EditServerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
@@ -28,12 +30,7 @@ export default function EditServerScreen() {
   const handleSave = async () => {
     if (!id) return
 
-    const needsUrlRequired =
-      providerType !== 'echo' &&
-      providerType !== 'apple' &&
-      providerType !== 'claude' &&
-      providerType !== 'openai'
-    if (needsUrlRequired && !url.trim()) {
+    if (needsUrl(providerType) && !url.trim()) {
       Alert.alert('Error', 'URL is required')
       return
     }
@@ -43,10 +40,14 @@ export default function EditServerScreen() {
       effectiveUrl = 'echo://local'
     } else if (providerType === 'apple') {
       effectiveUrl = 'apple://on-device'
-    } else if (providerType === 'claude' && !effectiveUrl) {
-      effectiveUrl = 'https://api.anthropic.com'
-    } else if (providerType === 'openai' && !effectiveUrl) {
-      effectiveUrl = 'https://api.openai.com'
+    } else if (providerType === 'gemini-nano') {
+      effectiveUrl = 'gemini-nano://on-device'
+    } else if (providerType === 'claude') {
+      effectiveUrl = effectiveUrl || 'https://api.anthropic.com'
+    } else if (providerType === 'openai') {
+      effectiveUrl = effectiveUrl || 'https://api.openai.com'
+    } else if (providerType === 'openrouter') {
+      effectiveUrl = effectiveUrl || 'https://openrouter.ai/api/v1'
     }
 
     await updateServer(
@@ -140,42 +141,27 @@ export default function EditServerScreen() {
               label="Name"
               value={name}
               onChangeText={setName}
-              placeholder={
-                providerType === 'ollama'
-                  ? 'My Ollama'
-                  : providerType === 'echo'
-                    ? 'My Echo Server'
-                    : providerType === 'claude'
-                      ? 'My Claude'
-                      : providerType === 'openai'
-                        ? 'My OpenAI'
-                        : 'My Server'
-              }
+              placeholder="Server name"
               autoCapitalize="none"
               autoCorrect={false}
             />
           </View>
 
-          {providerType !== 'echo' &&
-            providerType !== 'apple' &&
-            providerType !== 'claude' &&
-            providerType !== 'openai' && (
-              <View style={styles.formRow}>
-                <TextInput
-                  label="URL"
-                  value={url}
-                  onChangeText={setUrl}
-                  placeholder={
-                    providerType === 'ollama'
-                      ? 'http://localhost:11434'
-                      : 'wss://gateway.example.com'
-                  }
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="url"
-                />
-              </View>
-            )}
+          {needsUrl(providerType) && (
+            <View style={styles.formRow}>
+              <TextInput
+                label="URL"
+                value={url}
+                onChangeText={setUrl}
+                placeholder={
+                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                }
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="url"
+              />
+            </View>
+          )}
 
           {providerType === 'molt' && (
             <>
@@ -215,7 +201,9 @@ export default function EditServerScreen() {
             </View>
           )}
 
-          {(providerType === 'claude' || providerType === 'openai') && (
+          {(providerType === 'claude' ||
+            providerType === 'openai' ||
+            providerType === 'openrouter') && (
             <>
               <View style={styles.formRow}>
                 <TextInput
@@ -232,7 +220,13 @@ export default function EditServerScreen() {
                   label="Model"
                   value={model}
                   onChangeText={setModel}
-                  placeholder={providerType === 'openai' ? 'gpt-4o' : 'claude-sonnet-4-5-20250514'}
+                  placeholder={
+                    providerType === 'claude'
+                      ? 'claude-sonnet-4-5-20250514'
+                      : providerType === 'openrouter'
+                        ? 'openai/gpt-4o'
+                        : 'gpt-4o'
+                  }
                   autoCapitalize="none"
                   autoCorrect={false}
                 />

@@ -9,6 +9,18 @@ import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
 
+const DEFAULT_SERVER_NAMES: Partial<Record<ProviderType, string>> = {
+  apple: 'Apple Intelligence',
+  claude: 'Claude',
+  openai: 'OpenAI',
+  openrouter: 'OpenRouter',
+  'gemini-nano': 'Gemini Nano',
+}
+
+function defaultServerName(type: ProviderType): string {
+  return DEFAULT_SERVER_NAMES[type] || 'New Server'
+}
+
 export default function AddServerScreen() {
   const { theme } = useTheme()
   const router = useRouter()
@@ -22,13 +34,12 @@ export default function AddServerScreen() {
   const [providerType, setProviderType] = useState<ProviderType>('molt')
   const [model, setModel] = useState('')
 
-  const needsUrl =
-    providerType !== 'echo' &&
-    providerType !== 'apple' &&
-    providerType !== 'claude' &&
-    providerType !== 'openai'
+  const needsUrl = providerType === 'ollama' || providerType === 'molt'
   const needsToken =
-    providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
+    providerType === 'molt' ||
+    providerType === 'claude' ||
+    providerType === 'openai' ||
+    providerType === 'openrouter'
 
   const handleAdd = async () => {
     if (needsUrl && !url.trim()) {
@@ -37,12 +48,7 @@ export default function AddServerScreen() {
     }
 
     if (needsToken && !token.trim()) {
-      Alert.alert(
-        'Error',
-        providerType === 'claude' || providerType === 'openai'
-          ? 'API Key is required'
-          : 'Token is required',
-      )
+      Alert.alert('Error', providerType === 'molt' ? 'Token is required' : 'API Key is required')
       return
     }
 
@@ -55,10 +61,15 @@ export default function AddServerScreen() {
     } else if (providerType === 'apple') {
       effectiveUrl = 'apple://on-device'
       effectiveToken = 'apple-no-token'
-    } else if (providerType === 'claude' && !effectiveUrl) {
+    } else if (providerType === 'gemini-nano') {
+      effectiveUrl = 'gemini-nano://on-device'
+      effectiveToken = 'gemini-nano-no-token'
+    } else if (providerType === 'claude') {
       effectiveUrl = 'https://api.anthropic.com'
-    } else if (providerType === 'openai' && !effectiveUrl) {
+    } else if (providerType === 'openai') {
       effectiveUrl = 'https://api.openai.com'
+    } else if (providerType === 'openrouter') {
+      effectiveUrl = 'https://openrouter.ai/api/v1'
     }
 
     if (!effectiveToken) {
@@ -67,15 +78,7 @@ export default function AddServerScreen() {
 
     await addServer(
       {
-        name:
-          name.trim() ||
-          (providerType === 'apple'
-            ? 'Apple Intelligence'
-            : providerType === 'claude'
-              ? 'Claude'
-              : providerType === 'openai'
-                ? 'OpenAI'
-                : 'New Server'),
+        name: name.trim() || defaultServerName(providerType),
         url: effectiveUrl,
         clientId: clientId.trim() || 'lumiere-mobile',
         providerType,
@@ -135,19 +138,7 @@ export default function AddServerScreen() {
               label="Name"
               value={name}
               onChangeText={setName}
-              placeholder={
-                providerType === 'ollama'
-                  ? 'My Ollama'
-                  : providerType === 'echo'
-                    ? 'My Echo Server'
-                    : providerType === 'apple'
-                      ? 'Apple Intelligence'
-                      : providerType === 'claude'
-                        ? 'My Claude'
-                        : providerType === 'openai'
-                          ? 'My OpenAI'
-                          : 'My Server'
-              }
+              placeholder={`My ${defaultServerName(providerType)}`}
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -158,6 +149,14 @@ export default function AddServerScreen() {
               <Text variant="caption" color="secondary">
                 Uses Apple Foundation Models to run AI entirely on-device via CoreML. Requires iOS
                 26+ with Apple Intelligence support.
+              </Text>
+            </View>
+          )}
+
+          {providerType === 'gemini-nano' && (
+            <View style={styles.formRow}>
+              <Text variant="caption" color="secondary">
+                Uses Google Gemini Nano to run AI on-device. Requires a compatible Android device.
               </Text>
             </View>
           )}
@@ -216,7 +215,9 @@ export default function AddServerScreen() {
             </View>
           )}
 
-          {providerType === 'claude' && (
+          {(providerType === 'claude' ||
+            providerType === 'openai' ||
+            providerType === 'openrouter') && (
             <>
               <View style={styles.formRow}>
                 <TextInput
@@ -233,32 +234,13 @@ export default function AddServerScreen() {
                   label="Model"
                   value={model}
                   onChangeText={setModel}
-                  placeholder="claude-sonnet-4-5-20250514"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
-              </View>
-            </>
-          )}
-
-          {providerType === 'openai' && (
-            <>
-              <View style={styles.formRow}>
-                <TextInput
-                  label="API Key"
-                  value={token}
-                  onChangeText={setToken}
-                  secureTextEntry
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
-              </View>
-              <View style={styles.formRow}>
-                <TextInput
-                  label="Model"
-                  value={model}
-                  onChangeText={setModel}
-                  placeholder="gpt-4o"
+                  placeholder={
+                    providerType === 'claude'
+                      ? 'claude-sonnet-4-5-20250514'
+                      : providerType === 'openrouter'
+                        ? 'openai/gpt-4o'
+                        : 'gpt-4o'
+                  }
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
