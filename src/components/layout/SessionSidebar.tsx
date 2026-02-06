@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { useTheme } from '../../theme'
 import { useFoldResponsiveValue } from '../../utils/device'
@@ -31,6 +32,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
 }) => {
   const { theme } = useTheme()
   const router = useRouter()
+  const insets = useSafeAreaInsets()
 
   // Responsive padding based on fold state
   const containerPadding = useFoldResponsiveValue(
@@ -65,6 +67,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
       flex: 1,
       backgroundColor: theme.colors.surface,
       padding: containerPadding,
+      paddingTop: insets.top + containerPadding,
     },
     contentContainer: {
       flex: 1,
@@ -90,6 +93,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
       borderTopWidth: 1,
       borderTopColor: theme.colors.border,
       paddingTop: theme.spacing.md,
+      paddingBottom: insets.bottom,
       marginTop: theme.spacing.md,
     },
     footerButton: {
