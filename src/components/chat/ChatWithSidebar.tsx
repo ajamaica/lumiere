@@ -136,6 +136,9 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   const handleSwitchServer = (serverId: string) => {
     if (serverId !== currentServerId) {
       switchToServer(serverId)
+      // Create a new session key when switching servers
+      const newSessionKey = `agent:main:${Date.now()}`
+      setCurrentSessionKey(newSessionKey)
     }
   }
 
