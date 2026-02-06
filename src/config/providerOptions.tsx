@@ -24,6 +24,7 @@ export function getProviderIcon(type: ProviderType, color: string): React.ReactN
     openai: OpenAIIcon,
     apple: AppleIcon,
     echo: EchoIcon,
+    'gemini-nano': null, // TODO: Add Gemini icon
   }
 
   const Icon = icons[type]
@@ -43,6 +44,15 @@ export function getAllProviderOptions(color: string) {
             value: 'apple' as ProviderType,
             label: 'Apple Intelligence',
             icon: getProviderIcon('apple', color),
+          },
+        ]
+      : []),
+    ...(Platform.OS === 'android'
+      ? [
+          {
+            value: 'gemini-nano' as ProviderType,
+            label: 'Gemini Nano',
+            icon: getProviderIcon('gemini-nano', color),
           },
         ]
       : []),
@@ -75,6 +85,15 @@ export function getBasicProviderOptions(color: string) {
             value: 'apple' as ProviderType,
             label: 'Apple Intelligence',
             icon: getProviderIcon('apple', color),
+          },
+        ]
+      : []),
+    ...(Platform.OS === 'android'
+      ? [
+          {
+            value: 'gemini-nano' as ProviderType,
+            label: 'Gemini Nano',
+            icon: getProviderIcon('gemini-nano', color),
           },
         ]
       : []),

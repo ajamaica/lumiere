@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+group = 'expo.modules.gemininano'
+version = '1.0.0'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+if (expoModulesCorePlugin.exists()) {
+  apply from: expoModulesCorePlugin
+  applyKotlinExpoModulesCorePlugin()
+
+  // Remove this check, but keep the contents
+  useCoreDependencies()
+  useDefaultAndroidSdkVersions()
+  useExpoPublishing()
+}
+
+android {
+  namespace 'expo.modules.gemininano'
+
+  defaultConfig {
+    minSdkVersion 23
+    targetSdkVersion 34
+    versionCode 1
+    versionName "1.0.0"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+}
+
+dependencies {
+  implementation project(':expo-modules-core')
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+
+  // Google AI Edge SDK (Gemini Nano)
+  implementation 'com.google.ai.edge:generativeai:0.2.2'
+}
