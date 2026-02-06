@@ -282,9 +282,7 @@ export class OpenRouterChatProvider implements ChatProvider {
     if (typeof content === 'string') {
       return content
     }
-    const textParts = content.filter(
-      (p): p is OpenRouterTextPart => p.type === 'text' && !!p.text,
-    )
+    const textParts = content.filter((p): p is OpenRouterTextPart => p.type === 'text' && !!p.text)
     return textParts.map((p) => p.text).join('\n')
   }
 
