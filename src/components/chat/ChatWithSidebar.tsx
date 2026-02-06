@@ -134,7 +134,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
         />
       }
     >
-      <ChatScreen providerConfig={providerConfig} />
+      <ChatScreen key={providerConfig.serverId} providerConfig={providerConfig} />
     </SidebarLayout>
   )
 }

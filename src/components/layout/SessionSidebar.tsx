@@ -4,6 +4,7 @@ import React from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { getProviderIcon } from '../../config/providerOptions'
 import type { ServerConfig } from '../../store'
 import { useTheme } from '../../theme'
 import { useFoldResponsiveValue } from '../../utils/device'
@@ -307,11 +308,18 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
                       accessibilityLabel={`${server.name}${isActiveServer ? ' (Active)' : ''}`}
                       accessibilityState={{ expanded: isActiveServer }}
                     >
-                      <Ionicons
-                        name={isActiveServer ? 'cloud' : 'cloud-outline'}
-                        size={18}
-                        color={isActiveServer ? theme.colors.primary : theme.colors.text.secondary}
-                      />
+                      {getProviderIcon(
+                        server.providerType,
+                        isActiveServer ? theme.colors.primary : theme.colors.text.secondary,
+                      ) || (
+                        <Ionicons
+                          name={isActiveServer ? 'cloud' : 'cloud-outline'}
+                          size={18}
+                          color={
+                            isActiveServer ? theme.colors.primary : theme.colors.text.secondary
+                          }
+                        />
+                      )}
                       <Text
                         style={[
                           styles.serverName,
