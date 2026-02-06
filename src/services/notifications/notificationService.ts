@@ -1,4 +1,4 @@
-import * as BackgroundFetch from 'expo-background-fetch'
+import * as BackgroundTask from 'expo-background-task'
 import * as Notifications from 'expo-notifications'
 import * as TaskManager from 'expo-task-manager'
 
@@ -109,13 +109,13 @@ async function resolveAtom<T>(value: T | Promise<T>): Promise<T> {
  * Jotai store, checks Claude and Clawd servers for new assistant messages,
  * and fires a local notification.
  */
-export async function backgroundCheckTask(): Promise<BackgroundFetch.BackgroundFetchResult> {
+export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTaskResult> {
   try {
     const store = getStore()
     const notificationsEnabled = await resolveAtom(store.get(backgroundNotificationsEnabledAtom))
 
     if (!notificationsEnabled) {
-      return BackgroundFetch.BackgroundFetchResult.NoData
+      return BackgroundTask.BackgroundTaskResult.Success
     }
 
     const servers = await resolveAtom(store.get(serversAtom))
@@ -152,12 +152,10 @@ export async function backgroundCheckTask(): Promise<BackgroundFetch.BackgroundF
       }
     }
 
-    return notifiedCount > 0
-      ? BackgroundFetch.BackgroundFetchResult.NewData
-      : BackgroundFetch.BackgroundFetchResult.NoData
+    return BackgroundTask.BackgroundTaskResult.Success
   } catch (error) {
     console.error('[BackgroundCheck] Error:', error)
-    return BackgroundFetch.BackgroundFetchResult.Failed
+    return BackgroundTask.BackgroundTaskResult.Failed
   }
 }
 
@@ -171,34 +169,22 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
 })
 
 /**
- * Enable and register the background fetch with the OS.
- * @param intervalMinutes - Minimum interval between background fetches
+ * Enable and register the background task with the OS.
+ * @param intervalMinutes - Minimum interval between background task executions
  */
 export async function registerBackgroundFetch(intervalMinutes: number = 15): Promise<void> {
-  const status = await BackgroundFetch.getStatusAsync()
-
-  if (
-    status === BackgroundFetch.BackgroundFetchStatus.Restricted ||
-    status === BackgroundFetch.BackgroundFetchStatus.Denied
-  ) {
-    console.warn('[BackgroundFetch] Background fetch is restricted or denied by the OS')
-    return
-  }
-
-  await BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-    minimumInterval: intervalMinutes * 60,
-    stopOnTerminate: false,
-    startOnBoot: true,
+  await BackgroundTask.registerTaskAsync(BACKGROUND_FETCH_TASK, {
+    minimumInterval: intervalMinutes * 60, // Convert minutes to seconds
   })
 }
 
 /**
- * Unregister the background fetch task.
+ * Unregister the background task.
  */
 export async function unregisterBackgroundFetch(): Promise<void> {
   const isRegistered = await TaskManager.isTaskRegisteredAsync(BACKGROUND_FETCH_TASK)
   if (isRegistered) {
-    await BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK)
+    await BackgroundTask.unregisterTaskAsync(BACKGROUND_FETCH_TASK)
   }
 }
 
