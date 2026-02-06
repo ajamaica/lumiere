@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useEffect,useState } from 'react'
-import { Pressable,StyleSheet, View } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { Pressable, StyleSheet, View } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 
 import { useTheme } from '../../theme'
@@ -21,7 +21,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
   const deviceType = useDeviceType()
   const orientation = useOrientation()
   const [isCollapsed, setIsCollapsed] = useState(false)
-  const sidebarWidthAnim = useSharedValue(0)
+  const isInitialMount = useRef(true)
 
   // Determine if we should show sidebar based on device type
   const shouldShowSidebar = deviceType !== 'phone' || showSidebarOnPhone
@@ -41,14 +41,27 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
 
   const sidebarWidth = getSidebarWidth()
 
-  // Initialize sidebar width on mount and when device changes
+  // Initialize shared value - starts at 0, will be set by useEffect without animation
+  const sidebarWidthAnim = useSharedValue(shouldShowSidebar ? sidebarWidth : 0)
+
+  // Update width when device type or orientation changes
   useEffect(() => {
-    if (shouldShowSidebar) {
+    const newWidth = shouldShowSidebar && !isCollapsed ? sidebarWidth : 0
+
+    if (isInitialMount.current) {
+      // On first mount, set without animation
+      isInitialMount.current = false
       // eslint-disable-next-line react-hooks/immutability
-      sidebarWidthAnim.value = isCollapsed ? 0 : sidebarWidth
+      sidebarWidthAnim.value = newWidth
+    } else {
+      // On device/orientation changes, animate smoothly
+      // eslint-disable-next-line react-hooks/immutability
+      sidebarWidthAnim.value = withSpring(newWidth, {
+        damping: 20,
+        stiffness: 90,
+      })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sidebarWidth, shouldShowSidebar])
+  }, [deviceType, orientation, shouldShowSidebar, sidebarWidth, isCollapsed, sidebarWidthAnim])
 
   const toggleSidebar = () => {
     const toValue = isCollapsed ? sidebarWidth : 0
@@ -117,10 +130,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
 
       {/* Animated Toggle Button */}
       <Animated.View style={[styles.toggleButton, animatedButtonStyle]}>
-        <Pressable
-          onPress={toggleSidebar}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
+        <Pressable onPress={toggleSidebar} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
           <Ionicons
             name={isCollapsed ? 'chevron-forward' : 'chevron-back'}
             size={20}
