@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
-import { ChatScreen } from '../src/components/chat'
+import { ChatWithSidebar } from '../src/components/chat/ChatWithSidebar'
 import { Button, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderConfig } from '../src/services/providers'
@@ -96,5 +96,5 @@ export default function HomeScreen() {
     )
   }
 
-  return <ChatScreen key={currentServerId} providerConfig={config} />
+  return <ChatWithSidebar key={currentServerId} providerConfig={config} />
 }
