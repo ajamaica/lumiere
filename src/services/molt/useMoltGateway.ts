@@ -49,12 +49,16 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
   const [snapshot, setSnapshot] = useState<GatewaySnapshot | null>(null)
   const [connectResponse, setConnectResponse] = useState<ConnectResponse | null>(null)
   const clientRef = useRef<MoltGatewayClient | null>(null)
+  const connectingRef = useRef(false)
 
   const connect = useCallback(async () => {
-    if (connecting || connected) {
+    // Use refs for guards to avoid stale closure issues when called from
+    // effects whose cleanup (disconnect) already ran synchronously.
+    if (connectingRef.current || clientRef.current) {
       return
     }
 
+    connectingRef.current = true
     setConnecting(true)
     setError(null)
 
@@ -81,13 +85,13 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       })
 
       // Set up connection state listener
-      newClient.onConnectionStateChange((connected, reconnecting) => {
-        gatewayLogger.info(`Connection state: connected=${connected}, reconnecting=${reconnecting}`)
-        setConnected(connected)
+      newClient.onConnectionStateChange((isConnected, reconnecting) => {
+        gatewayLogger.info(`Connection state: connected=${isConnected}, reconnecting=${reconnecting}`)
+        setConnected(isConnected)
         setConnecting(reconnecting)
         if (reconnecting) {
           setError('Reconnecting...')
-        } else if (connected) {
+        } else if (isConnected) {
           setError(null)
         }
       })
@@ -104,11 +108,13 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       setError(errorMessage)
       gatewayLogger.logError('Failed to connect', err)
     } finally {
+      connectingRef.current = false
       setConnecting(false)
     }
-  }, [config, connecting, connected])
+  }, [config])
 
   const disconnect = useCallback(() => {
+    connectingRef.current = false
     if (clientRef.current) {
       clientRef.current.disconnect()
       clientRef.current = null

@@ -1,7 +1,15 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { getProviderIcon } from '../../config/providerOptions'
@@ -26,6 +34,7 @@ interface SessionSidebarProps {
   servers: ServerConfig[]
   currentServerId: string
   onSwitchServer: (serverId: string) => void
+  loadingSessions?: boolean
 }
 
 export const SessionSidebar: React.FC<SessionSidebarProps> = ({
@@ -38,6 +47,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
   servers,
   currentServerId,
   onSwitchServer,
+  loadingSessions = false,
 }) => {
   const { theme } = useTheme()
   const router = useRouter()
@@ -339,7 +349,13 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
                     {/* Sessions (only for active server) */}
                     {isActiveServer && (
                       <View style={styles.sessionListIndent}>
-                        {sessions.length > 0 ? (
+                        {loadingSessions ? (
+                          <ActivityIndicator
+                            size="small"
+                            color={theme.colors.primary}
+                            style={{ paddingVertical: theme.spacing.lg }}
+                          />
+                        ) : sessions.length > 0 ? (
                           sessions.map((session) => {
                             const isActive = session.key === currentSessionKey
                             return (

@@ -29,6 +29,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [sessionAliases] = useAtom(sessionAliasesAtom)
   const [sessions, setSessions] = useState<Session[]>([])
+  const [loadingSessions, setLoadingSessions] = useState(false)
 
   // Only molt provider supports server-side sessions
   const supportsServerSessions = providerConfig?.type === 'molt'
@@ -50,13 +51,21 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   }, [providerConfig, supportsServerSessions, currentServerId])
 
   const loadSessions = useCallback(async () => {
-    // Only load sessions for providers that support server-side sessions
-    if (!connected || !supportsServerSessions) {
-      // For non-molt providers, just show current session
+    // For non-molt providers, just show current session
+    if (!supportsServerSessions) {
       setSessions([{ key: currentSessionKey }])
+      setLoadingSessions(false)
       return
     }
 
+    // When disconnected (e.g. during a server switch), show a loader
+    // instead of resetting to a fallback.
+    if (!connected) {
+      setLoadingSessions(true)
+      return
+    }
+
+    setLoadingSessions(true)
     try {
       const sessionData = (await listSessions()) as { sessions?: Session[] }
       if (sessionData?.sessions && Array.isArray(sessionData.sessions)) {
@@ -66,6 +75,8 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       chatSidebarLogger.logError('Failed to fetch sessions', err)
       // Fallback to showing current session
       setSessions([{ key: currentSessionKey }])
+    } finally {
+      setLoadingSessions(false)
     }
   }, [connected, listSessions, supportsServerSessions, currentSessionKey])
 
@@ -134,10 +145,11 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
           servers={serversList}
           currentServerId={currentServerId}
           onSwitchServer={handleSwitchServer}
+          loadingSessions={loadingSessions}
         />
       }
     >
-      <ChatScreen key={providerConfig.serverId} providerConfig={providerConfig} />
+      <ChatScreen providerConfig={providerConfig} />
     </SidebarLayout>
   )
 }
