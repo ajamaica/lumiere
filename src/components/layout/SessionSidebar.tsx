@@ -20,6 +20,7 @@ interface SessionSidebarProps {
   sessions: Session[]
   currentSessionKey: string
   sessionAliases: Record<string, string>
+  supportsServerSessions?: boolean
 }
 
 export const SessionSidebar: React.FC<SessionSidebarProps> = ({
@@ -29,6 +30,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
   sessions,
   currentSessionKey,
   sessionAliases,
+  supportsServerSessions = true,
 }) => {
   const { theme } = useTheme()
   const router = useRouter()
@@ -231,7 +233,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
 
         {/* Sessions List */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>All Sessions</Text>
+          {supportsServerSessions && <Text style={styles.sectionTitle}>All Sessions</Text>}
           <ScrollView style={styles.sessionListContainer} showsVerticalScrollIndicator={false}>
             {sessions.length > 0 ? (
               sessions.map((session) => {
