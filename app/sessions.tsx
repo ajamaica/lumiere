@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
