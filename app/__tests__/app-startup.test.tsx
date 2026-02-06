@@ -36,6 +36,33 @@ jest.mock('react-native-keyboard-controller', () => ({
   KeyboardProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }))
 
+// Mock react-native-safe-area-context
+jest.mock('react-native-safe-area-context', () => ({
+  SafeAreaProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
+}))
+
+// Mock react-native-reanimated
+jest.mock('react-native-reanimated', () => {
+  const Reanimated = require('react-native-reanimated/mock')
+  Reanimated.default.call = () => {}
+  return Reanimated
+})
+
+// Mock device utils
+jest.mock('../../src/utils/device', () => ({
+  useDeviceType: () => 'phone',
+  useIsTablet: () => false,
+  useIsFoldable: () => false,
+  useFoldState: () => 'folded',
+  useOrientation: () => 'portrait',
+  useResponsiveValue: (phone: any) => phone,
+  useResponsiveValueWithFoldable: (phone: any) => phone,
+  useFoldResponsiveValue: (folded: any) => folded,
+  useContentContainerStyle: () => ({}),
+  useScreenDimensions: () => ({ width: 375, height: 667 }),
+}))
+
 // Mock secure token storage
 jest.mock('../../src/services/secureTokenStorage', () => ({
   getServerToken: jest.fn().mockResolvedValue(null),
@@ -44,13 +71,21 @@ jest.mock('../../src/services/secureTokenStorage', () => ({
 }))
 
 // Mock chat components to avoid pulling in deep native dependencies
-jest.mock('../../src/components/chat', () => {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { createElement } = require('react')
-  return {
-    ChatScreen: () => createElement('Text', null, 'ChatScreen'),
-  }
-})
+jest.mock('../../src/components/chat/ChatScreen', () => ({
+  ChatScreen: () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { createElement } = require('react')
+    return createElement('Text', null, 'ChatScreen')
+  },
+}))
+
+jest.mock('../../src/components/chat/ChatWithSidebar', () => ({
+  ChatWithSidebar: () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { createElement } = require('react')
+    return createElement('Text', null, 'ChatScreen')
+  },
+}))
 
 // Mock deep linking and notifications hooks
 jest.mock('../../src/hooks/useDeepLinking', () => ({
@@ -78,6 +113,32 @@ jest.mock('../../src/theme', () => {
     }),
   }
 })
+
+// Mock jotai
+jest.mock('jotai', () => ({
+  ...jest.requireActual('jotai'),
+  useAtom: (atom: any) => {
+    const [value, setValue] = jest.requireActual('react').useState(
+      atom.init !== undefined ? atom.init : null,
+    )
+    return [value, setValue]
+  },
+}))
+
+// Mock molt gateway
+jest.mock('../../src/services/molt', () => ({
+  useMoltGateway: () => ({
+    connected: false,
+    connecting: false,
+    error: null,
+    connect: jest.fn(),
+    disconnect: jest.fn(),
+    sendMessage: jest.fn(),
+    listSessions: jest.fn().mockResolvedValue({ sessions: [] }),
+    resetSession: jest.fn(),
+    retry: jest.fn(),
+  }),
+}))
 
 // Mock useServers hook
 const mockGetProviderConfig = jest.fn()

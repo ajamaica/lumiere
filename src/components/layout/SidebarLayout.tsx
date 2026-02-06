@@ -58,11 +58,11 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
     if (isInitialMount.current) {
       // On first mount, set without animation
       isInitialMount.current = false
-       
+
       sidebarWidthAnim.value = newWidth
     } else {
       // On device/orientation changes, animate smoothly without bounce
-       
+
       sidebarWidthAnim.value = withTiming(newWidth, {
         duration: 300,
         easing: Easing.out(Easing.cubic),
