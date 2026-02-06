@@ -95,15 +95,42 @@ export class ClaudeChatProvider implements ChatProvider {
       })
 
       if (!response.ok && response.status !== 400) {
-        throw new Error(`API returned status ${response.status}`)
+        const errorBody = await response.text().catch(() => 'Unable to read error response')
+        throw new Error(
+          `API returned status ${response.status}. Response: ${errorBody.substring(0, 200)}`,
+        )
       }
 
       this.connected = true
       this.notifyConnectionState(true, false)
-    } catch {
+    } catch (error) {
       this.connected = false
       this.notifyConnectionState(false, false)
-      throw new Error(`Cannot connect to Claude API. Check your API key and endpoint.`)
+
+      // Provide detailed error information
+      if (error instanceof Error) {
+        if (error.message.includes('API returned status')) {
+          // API responded but with an error status
+          throw new Error(
+            `Cannot connect to Claude API at ${this.baseUrl}. ${error.message}. Check your API key and endpoint configuration.`,
+          )
+        } else if (error.name === 'TypeError' || error.message.includes('fetch')) {
+          // Network error (cannot reach endpoint)
+          throw new Error(
+            `Network error: Cannot reach Claude API at ${this.baseUrl}. ${error.message}. Verify the endpoint URL is correct and accessible.`,
+          )
+        } else {
+          // Other error
+          throw new Error(
+            `Cannot connect to Claude API: ${error.message}. Check your API key and endpoint.`,
+          )
+        }
+      }
+
+      // Fallback for non-Error objects
+      throw new Error(
+        `Cannot connect to Claude API at ${this.baseUrl}. Check your API key and endpoint.`,
+      )
     }
   }
 
@@ -321,9 +348,10 @@ export class ClaudeChatProvider implements ChatProvider {
       if (response.ok || response.status === 400) {
         return { status: 'healthy' }
       }
-      return { status: 'degraded' }
-    } catch {
-      return { status: 'unhealthy' }
+      return { status: 'degraded', message: `API returned status ${response.status}` }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error'
+      return { status: 'unhealthy', message }
     }
   }
 }

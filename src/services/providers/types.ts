@@ -53,6 +53,7 @@ export interface ChatHistoryResponse {
 
 export interface HealthStatus {
   status: 'healthy' | 'degraded' | 'unhealthy'
+  message?: string
 }
 
 /**
