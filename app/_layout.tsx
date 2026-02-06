@@ -35,16 +35,15 @@ function AppContent() {
   useAppleShortcuts()
   useLanguage() // Initialize language sync
 
-  // Use formSheet presentation on iPad for better UX
+  // Use modal presentation for all devices to ensure content is fully accessible
   const modalOptions = useMemo(
     () =>
       ({
-        presentation: isTablet ? 'formSheet' : 'modal',
+        presentation: 'modal',
         animation: 'slide_from_bottom',
         headerShown: false,
-        sheetCornerRadius: isTablet ? 20 : undefined,
       }) as const,
-    [isTablet],
+    [],
   )
 
   useEffect(() => {
