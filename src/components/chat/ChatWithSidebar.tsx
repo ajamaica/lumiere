@@ -80,7 +80,10 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
         setSessions(sessionData.sessions)
 
         // If no session is set for this server and sessions are available, use the first one
-        if (!serverSessionsRef.current[currentServerId] && sessionData.sessions.length > 0) {
+        if (
+          (!serverSessionsRef.current[currentServerId] || !currentSessionKey) &&
+          sessionData.sessions.length > 0
+        ) {
           setCurrentSessionKey(sessionData.sessions[0].key)
         }
       }
@@ -93,7 +96,14 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
         setLoadingSessions(false)
       }
     }
-  }, [connected, listSessions, supportsServerSessions, currentSessionKey, currentServerId, setCurrentSessionKey])
+  }, [
+    connected,
+    listSessions,
+    supportsServerSessions,
+    currentSessionKey,
+    currentServerId,
+    setCurrentSessionKey,
+  ])
 
   useEffect(() => {
     loadSessions()
@@ -101,7 +111,9 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
 
   // Track current session for current server
   useEffect(() => {
-    if (currentServerId && currentSessionKey) {
+    if (currentServerId && currentSessionKey && currentSessionKey !== 'agent:main') {
+      // Don't track the default "agent:main" session - it's not server-specific
+      // Only track actual session keys
       serverSessionsRef.current[currentServerId] = currentSessionKey
     }
   }, [currentServerId, currentSessionKey])
@@ -165,11 +177,14 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       if (lastSession) {
         // Restore previous session for this server
         setCurrentSessionKey(lastSession)
-      } else if (server?.providerType !== 'molt') {
+      } else if (server?.providerType === 'molt') {
+        // For molt servers without a saved session, clear the key so loadSessions picks the first one
+        // Use a temporary placeholder to avoid the tracking effect saving the old session
+        setCurrentSessionKey('')
+      } else {
         // For non-molt servers, use consistent "main" session
         setCurrentSessionKey('agent:main')
       }
-      // For molt servers without a saved session, let loadSessions handle it
     }
   }
 
