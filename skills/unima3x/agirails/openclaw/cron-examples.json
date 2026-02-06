@@ -1,0 +1,85 @@
+{
+  "_comment": "Example cron jobs for AGIRAILS automation. Add via cron tool or gateway API.",
+  
+  "daily-purchase": {
+    "_description": "Buy leads every morning at 9 AM",
+    "name": "daily-lead-purchase",
+    "schedule": {
+      "kind": "cron",
+      "expr": "0 9 * * *",
+      "tz": "Europe/Zagreb"
+    },
+    "sessionTarget": "isolated",
+    "payload": {
+      "kind": "agentTurn",
+      "message": "Execute daily lead purchase:\n1. Check USDC balance (need at least $25)\n2. Verify daily limit not exceeded\n3. Purchase 5 leads at $1 each from approved provider\n4. Log transaction\n5. Report result",
+      "model": "haiku"
+    }
+  },
+
+  "balance-check": {
+    "_description": "Check balance every 6 hours, alert if low",
+    "name": "treasury-balance-check",
+    "schedule": {
+      "kind": "cron",
+      "expr": "0 */6 * * *",
+      "tz": "UTC"
+    },
+    "sessionTarget": "isolated",
+    "payload": {
+      "kind": "agentTurn",
+      "message": "Check USDC balance on Base L2. If below $20, send alert to human via WhatsApp. Include current balance and recent transactions.",
+      "model": "haiku"
+    }
+  },
+
+  "pending-check": {
+    "_description": "Check for stuck transactions every 2 hours",
+    "name": "treasury-pending-check",
+    "schedule": {
+      "kind": "cron",
+      "expr": "0 */2 * * *",
+      "tz": "UTC"
+    },
+    "sessionTarget": "isolated",
+    "payload": {
+      "kind": "agentTurn",
+      "message": "Check for pending ACTP transactions:\n1. Any in COMMITTED for >2 hours? (provider not starting)\n2. Any in IN_PROGRESS for >12 hours? (delivery delayed)\n3. Any in DELIVERED awaiting release? (we should release)\nAlert on anomalies, take action where possible.",
+      "model": "haiku"
+    }
+  },
+
+  "weekly-report": {
+    "_description": "Weekly treasury report every Monday",
+    "name": "treasury-weekly-report",
+    "schedule": {
+      "kind": "cron",
+      "expr": "0 10 * * 1",
+      "tz": "Europe/Zagreb"
+    },
+    "sessionTarget": "isolated",
+    "payload": {
+      "kind": "agentTurn",
+      "message": "Generate weekly treasury report:\n- Total spend this week\n- Number of transactions\n- Success rate\n- Any disputes?\n- Current balance\n- Projected runway\nSend summary to human.",
+      "model": "haiku",
+      "deliver": true,
+      "channel": "whatsapp"
+    }
+  },
+
+  "provider-service": {
+    "_description": "For providers: check for new job requests",
+    "name": "merchant-job-check",
+    "schedule": {
+      "kind": "cron",
+      "expr": "*/15 * * * *",
+      "tz": "UTC"
+    },
+    "sessionTarget": "isolated",
+    "payload": {
+      "kind": "agentTurn",
+      "message": "Check for new ACTP job requests:\n1. Query for INITIATED transactions where I'm the provider\n2. Review service requests\n3. Send quotes for jobs I can fulfill\n4. Update job tracking",
+      "model": "haiku"
+    }
+  }
+}

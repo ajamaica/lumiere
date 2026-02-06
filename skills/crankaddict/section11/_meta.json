@@ -1,0 +1,17 @@
+{
+  "owner": "crankaddict",
+  "slug": "section11",
+  "displayName": "Section 11: Endurance Training Coach (Intervals.icu)",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770060067417,
+    "commit": "https://github.com/clawdbot/skills/commit/26022f7d9dfd6ea6f2fb0cb5b39fc974a03e8a6c"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769876581010,
+      "commit": "https://github.com/clawdbot/skills/commit/b7ef940a4d2e081a8baeae65c647a8eb3bd8af48"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "g0head",
+  "slug": "kicad-pcb",
+  "displayName": "KiCad PCB",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769990455102,
+    "commit": "https://github.com/clawdbot/skills/commit/0e9c24f46c145a81ee141ad9d26bdee2b06bd749"
+  },
+  "history": []
+}

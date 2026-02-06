@@ -1,0 +1,11 @@
+{
+  "owner": "krajekisbtc",
+  "slug": "polymarketbtc15massistant",
+  "displayName": "Polymarket BTC Up-Down",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770290518228,
+    "commit": "https://github.com/clawdbot/skills/commit/9118e83f2386bed4c495725e29bd1a2b41103c91"
+  },
+  "history": []
+}

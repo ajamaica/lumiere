@@ -1,0 +1,17 @@
+{
+  "owner": "autogame-17",
+  "slug": "feishu-attendance",
+  "displayName": "Feishu Attendance",
+  "latest": {
+    "version": "1.0.9",
+    "publishedAt": 1770118153420,
+    "commit": "https://github.com/clawdbot/skills/commit/2491caee2dd3ef00666c2d92bd079f5f90d73e34"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769892393314,
+      "commit": "https://github.com/clawdbot/skills/commit/ccf326e022a98a71676d971af29be6181b3fbb3d"
+    }
+  ]
+}

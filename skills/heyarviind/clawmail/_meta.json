@@ -1,0 +1,11 @@
+{
+  "owner": "heyarviind",
+  "slug": "clawmail",
+  "displayName": "Claw Mail",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769936383415,
+    "commit": "https://github.com/clawdbot/skills/commit/eda726df486745ba88722a90b0e6d18832f31117"
+  },
+  "history": []
+}

@@ -1,0 +1,10 @@
+# HexMem Python dependencies
+
+# YAML parsing for hex-reflect manifest
+PyYAML>=6.0
+
+# Sentence transformers for semantic search/embeddings (if needed later)
+# sentence-transformers>=2.2.0
+
+# OpenAI for embeddings (if using OpenAI instead of local)
+# openai>=1.0.0

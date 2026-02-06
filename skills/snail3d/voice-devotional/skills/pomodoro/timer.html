@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍅 Clawd Pomodoro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --container-bg: #1a1a2e;
+            --container-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --timer-color: #e2e8f0;
+            --timer-working: #f87171;
+            --timer-break: #4ade80;
+            --primary: #818cf8;
+            --primary-hover: #6366f1;
+            --secondary-bg: #1e293b;
+            --secondary-text: #94a3b8;
+            --input-bg: #0f172a;
+            --input-border: #334155;
+            --task-bg: #1e293b;
+            --border-color: #334155;
+        }
+        :root[data-theme="light"] {
+            --container-bg: white;
+            --container-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --timer-color: #1e293b;
+            --timer-working: #ef4444;
+            --timer-break: #22c55e;
+            --primary: #667eea;
+            --primary-hover: #5a67d8;
+            --secondary-bg: #e2e8f0;
+            --secondary-text: #4a5568;
+            --input-bg: white;
+            --input-border: #e2e8f0;
+            --task-bg: #f7fafc;
+            --border-color: #e2e8f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-primary);
+        }
+        .container {
+            background: var(--container-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--container-shadow);
+            text-align: center;
+            min-width: 400px;
+            position: relative;
+        }
+        h1 {
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        .timer {
+            font-size: 6rem;
+            font-weight: 300;
+            font-variant-numeric: tabular-nums;
+            margin: 2rem 0;
+            color: var(--timer-color);
+            letter-spacing: -2px;
+        }
+        .timer.working { color: var(--timer-working); }
+        .timer.break { color: var(--timer-break); }
+        .status {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .btn-secondary {
+            background: var(--secondary-bg);
+            color: var(--secondary-text);
+        }
+        .btn-secondary:hover { background: var(--border-color); }
+        .settings {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .setting {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .setting label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .setting input {
+            width: 80px;
+            padding: 0.5rem;
+            text-align: center;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            background: var(--input-bg);
+            color: var(--text-primary);
+        }
+        .setting input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .tasks {
+            margin-top: 2rem;
+            text-align: left;
+        }
+        .tasks h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .task-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .task-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: var(--input-bg);
+            color: var(--text-primary);
+        }
+        .task-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .task-list {
+            list-style: none;
+        }
+        .task-list li {
+            padding: 0.75rem;
+            background: var(--task-bg);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-primary);
+        }
+        .task-list li.completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        .checkbox {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+        .sound-toggle, .theme-btn {
+            position: absolute;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+        .sound-toggle:hover, .theme-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+        .sound-toggle { top: 20px; right: 20px; }
+        .theme-btn { top: 20px; left: 20px; }
+        .ios-hint {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            color: #667eea;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            max-width: 200px;
+            display: none;
+        }
+        .ios-hint.visible {
+            display: block;
+        }
+        .bmc-link {
+            margin-top: 1.5rem;
+            padding: 0.6rem;
+            background: #10b981;
+            border-radius: 10px;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .bmc-link.visible {
+            display: block;
+            opacity: 1;
+        }
+        .bmc-link p {
+            color: #ecfdf5;
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+        }
+        .bmc-button {
+            display: inline-block;
+            background: #fff;
+            color: #16a34a;
+            padding: 0.35rem 0.75rem;
+            border-radius: 14px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: background 0.2s ease;
+        }
+        .bmc-button:hover {
+            background: #f0fdf4;
+        }
+        .bmc-button::before {
+            content: "☕ ";
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    <button class="sound-toggle" onclick="toggleSound()">🔔</button>
+    <div class="ios-hint" id="iosHint">🔇 Tap sound button if no audio on iPhone</div>
+    
+    <div class="container">
+        <h1>🍅 Clawd Pomodoro</h1>
+        
+        <div class="status" id="status">Ready to focus</div>
+        
+        <div class="timer" id="timer">27:00</div>
+        
+        <div class="controls">
+            <button class="btn-primary" id="startBtn" onclick="startTimer()">Start</button>
+            <button class="btn-secondary" onclick="pauseTimer()">Pause</button>
+            <button class="btn-secondary" onclick="resetTimer()">Reset</button>
+        </div>
+        
+        <div class="settings">
+            <div class="setting">
+                <label>Focus (min)</label>
+                <input type="number" id="workTime" value="27" min="1" max="60">
+            </div>
+            <div class="setting">
+                <label>Short Break</label>
+                <input type="number" id="shortBreak" value="5" min="1" max="30">
+            </div>
+            <div class="setting">
+                <label>Long Break</label>
+                <input type="number" id="longBreak" value="15" min="1" max="60">
+            </div>
+        </div>
+        
+        <div class="tasks">
+            <h3>📝 Tasks</h3>
+            <div class="task-input">
+                <input type="text" id="taskInput" placeholder="What are you working on?" onkeypress="if(event.key==='Enter')addTask()">
+                <button class="btn-primary" onclick="addTask()">Add</button>
+            </div>
+            <ul class="task-list" id="taskList"></ul>
+        </div>
+        
+        <div class="bmc-link" id="breakPromo">
+            <p>Taking a coffee break? Buy one for Snail too!</p>
+            <a href="https://www.buymeacoffee.com/snail3d" target="_blank" class="bmc-button">Buy Me a Coffee</a>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 27 * 60;
+        let totalTime = 27 * 60;
+        let timerId = null;
+        let isRunning = false;
+        let isWorkTime = true;
+        let pomodoroCount = 0;
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        
+        if (isIOS) {
+            document.getElementById('iosHint').classList.add('visible');
+        }
+
+        let tasks = JSON.parse(localStorage.getItem('clawdPomodoroTasks') || '[]');
+        renderTasks();
+
+        // Theme toggle
+        let darkTheme = true;
+        function toggleTheme() {
+            darkTheme = !darkTheme;
+            document.documentElement.setAttribute('data-theme', darkTheme ? '' : 'light');
+            document.getElementById('themeBtn').textContent = darkTheme ? '🌙' : '☀️';
+        }
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playPulseChime() {
+            if (!soundEnabled) return;
+            
+            try {
+                const ctx = initAudio();
+                if (ctx.state === 'suspended') {
+                    document.getElementById('iosHint').textContent = "Tap Start again to enable sound";
+                    document.getElementById('iosHint').classList.add('visible');
+                    return;
+                }
+                
+                const playPulse = (delay, freq) => {
+                    setTimeout(() => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        
+                        osc.frequency.value = freq;
+                        osc.type = 'sine';
+                        gain.gain.setValueAtTime(0, ctx.currentTime);
+                        gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 0.1);
+                        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+                        
+                        osc.start(ctx.currentTime);
+                        osc.stop(ctx.currentTime + 0.8);
+                    }, delay);
+                };
+                
+                playPulse(0, 523.25);
+                playPulse(400, 659.25);
+                playPulse(800, 783.99);
+            } catch (e) {
+                console.log('Audio blocked:', e);
+            }
+        }
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.title = `${minutes}:${seconds.toString().padStart(2, '0')} - Pomodoro`;
+        }
+
+        function startTimer() {
+            if (isRunning) return;
+            
+            initAudio();
+            
+            if (!isRunning && timeLeft === totalTime && isWorkTime) {
+                totalTime = getCurrentSetting() * 60;
+                timeLeft = totalTime;
+            }
+            
+            isRunning = true;
+            document.getElementById('startBtn').textContent = 'Running...';
+            document.getElementById('status').textContent = isWorkTime ? 'Focusing!' : 'Take a break';
+            document.getElementById('timer').className = isWorkTime ? 'timer working' : 'timer break';
+            
+            const breakPromo = document.getElementById('breakPromo');
+            if (!isWorkTime) {
+                breakPromo.classList.add('visible');
+            } else {
+                breakPromo.classList.remove('visible');
+            }
+            
+            if (isIOS) {
+                document.getElementById('iosHint').classList.remove('visible');
+            }
+            
+            timerId = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+                
+                if (timeLeft <= 0) {
+                    completeTimer();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            if (!isRunning) return;
+            clearInterval(timerId);
+            isRunning = false;
+            document.getElementById('startBtn').textContent = 'Resume';
+            document.getElementById('status').textContent = 'Paused';
+        }
+
+        function resetTimer() {
+            clearInterval(timerId);
+            isRunning = false;
+            isWorkTime = true;
+            totalTime = parseInt(document.getElementById('workTime').value) * 60;
+            timeLeft = totalTime;
+            document.getElementById('startBtn').textContent = 'Start';
+            document.getElementById('status').textContent = 'Ready to focus';
+            document.getElementById('timer').className = 'timer';
+            document.getElementById('breakPromo').classList.remove('visible');
+            updateDisplay();
+        }
+
+        function completeTimer() {
+            clearInterval(timerId);
+            isRunning = false;
+            playPulseChime();
+            
+            if (isWorkTime) {
+                pomodoroCount++;
+                if (pomodoroCount % 4 === 0) {
+                    alert('Great job! Take a long break (15 min)');
+                    totalTime = parseInt(document.getElementById('longBreak').value) * 60;
+                } else {
+                    alert('Focus session complete! Short break (5 min)');
+                    totalTime = parseInt(document.getElementById('shortBreak').value) * 60;
+                }
+            } else {
+                alert('Break over! Ready to focus?');
+                totalTime = parseInt(document.getElementById('workTime').value) * 60;
+            }
+            
+            isWorkTime = !isWorkTime;
+            timeLeft = totalTime;
+            document.getElementById('startBtn').textContent = 'Start';
+            document.getElementById('status').textContent = isWorkTime ? 'Ready to focus' : 'Ready for break';
+            document.getElementById('timer').className = 'timer';
+            updateDisplay();
+        }
+
+        function getCurrentSetting() {
+            return parseInt(document.getElementById('workTime').value);
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.querySelector('.sound-toggle').textContent = soundEnabled ? '🔔' : '🔕';
+            if (soundEnabled && isIOS) {
+                initAudio();
+            }
+        }
+
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const text = input.value.trim();
+            if (!text) return;
+            
+            tasks.push({ id: Date.now(), text, completed: false });
+            saveTasks();
+            renderTasks();
+            input.value = '';
+        }
+
+        function toggleTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasks();
+                renderTasks();
+            }
+        }
+
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks();
+            renderTasks();
+        }
+
+        function saveTasks() {
+            localStorage.setItem('clawdPomodoroTasks', JSON.stringify(tasks));
+        }
+
+        function renderTasks() {
+            const list = document.getElementById('taskList');
+            list.innerHTML = tasks.map(task => `
+                <li class="${task.completed ? 'completed' : ''}">
+                    <span>
+                        <input type="checkbox" class="checkbox" 
+                               ${task.completed ? 'checked' : ''} 
+                               onchange="toggleTask(${task.id})">
+                        ${task.text}
+                    </span>
+                    <button class="btn-secondary" onclick="deleteTask(${task.id})">×</button>
+                </li>
+            `).join('');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+                e.preventDefault();
+                isRunning ? pauseTimer() : startTimer();
+            }
+            if (e.code === 'KeyR' && e.target.tagName !== 'INPUT') {
+                resetTimer();
+            }
+        });
+
+        document.getElementById('workTime').addEventListener('change', () => {
+            if (!isRunning && isWorkTime) {
+                totalTime = parseInt(document.getElementById('workTime').value) * 60;
+                timeLeft = totalTime;
+                updateDisplay();
+            }
+        });
+    </script>
+</body>
+</html>

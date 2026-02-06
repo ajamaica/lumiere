@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "file-search",
+  "displayName": "File Search",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135651974,
+    "commit": "https://github.com/clawdbot/skills/commit/07aae5a5bdbbe26059fb0bd459de352a306cda3d"
+  },
+  "history": []
+}

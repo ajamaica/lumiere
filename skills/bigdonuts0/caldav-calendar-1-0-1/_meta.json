@@ -1,0 +1,11 @@
+{
+  "owner": "bigdonuts0",
+  "slug": "caldav-calendar-1-0-1",
+  "displayName": "Caldav Calendar 1.0.1",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770241764253,
+    "commit": "https://github.com/clawdbot/skills/commit/c3767022bdd0f5e9cad11df2bb2dd8c2d1a32fa4"
+  },
+  "history": []
+}

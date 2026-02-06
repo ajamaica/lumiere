@@ -1,0 +1,11 @@
+{
+  "owner": "ctsolutionsdev",
+  "slug": "egvert-health-guardian",
+  "displayName": "Health Guardian",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770301306440,
+    "commit": "https://github.com/clawdbot/skills/commit/359ba3a9c2fbc85420fe66f95ee1fa6a9e2be31b"
+  },
+  "history": []
+}

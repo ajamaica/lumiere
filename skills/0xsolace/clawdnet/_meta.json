@@ -1,0 +1,11 @@
+{
+  "owner": "0xsolace",
+  "slug": "clawdnet",
+  "displayName": "clawdnet",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769908630206,
+    "commit": "https://github.com/clawdbot/skills/commit/c89698a178051f57fa378cf37c65ec70ae9021f2"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "whtoo",
+  "slug": "self-evolving-skill",
+  "displayName": "Self Evolving Skill",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770213558400,
+    "commit": "https://github.com/clawdbot/skills/commit/5ff761801d37b2e5f4e65a5aa43af26b41af8128"
+  },
+  "history": []
+}

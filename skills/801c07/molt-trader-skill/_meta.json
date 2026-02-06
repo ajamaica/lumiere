@@ -1,0 +1,11 @@
+{
+  "owner": "801c07",
+  "slug": "molt-trader-skill",
+  "displayName": "Molt Trader Skill",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769887288224,
+    "commit": "https://github.com/clawdbot/skills/commit/368fad823891804fb39fe623c18a3e03e1c55ac6"
+  },
+  "history": []
+}

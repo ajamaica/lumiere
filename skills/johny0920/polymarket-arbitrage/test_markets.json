@@ -1,0 +1,72 @@
+{
+  "fetched_at": "2026-02-01T16:16:33.730241",
+  "market_count": 6,
+  "markets": [
+    {
+      "market_id": "nfl-sea-ne-2026-02-08",
+      "title": "Seahawks69%Patriots32%",
+      "url": "https://polymarket.com/event/nfl-sea-ne-2026-02-08",
+      "probabilities": [69.0, 32.0],
+      "volume": 0,
+      "volume_str": "",
+      "outcome_count": 2,
+      "prob_sum": 101.0,
+      "fetched_at": "2026-02-01T16:16:33.726382"
+    },
+    {
+      "market_id": "cs2-furia-mglz-2026-02-01",
+      "title": "0FURIA73%0TheMongolz28%",
+      "url": "https://polymarket.com/event/cs2-furia-mglz-2026-02-01",
+      "probabilities": [73.0, 28.0],
+      "volume": 0,
+      "volume_str": "",
+      "outcome_count": 2,
+      "prob_sum": 101.0,
+      "fetched_at": "2026-02-01T16:16:33.726830"
+    },
+    {
+      "market_id": "cs2-fut-g2-2026-02-01",
+      "title": "0FUT Esports64%0G237%",
+      "url": "https://polymarket.com/event/cs2-fut-g2-2026-02-01",
+      "probabilities": [64.0, 37.0],
+      "volume": 0,
+      "volume_str": "",
+      "outcome_count": 2,
+      "prob_sum": 101.0,
+      "fetched_at": "2026-02-01T16:16:33.727042"
+    },
+    {
+      "market_id": "lol-shft-navi-2026-02-01",
+      "title": "0Shifters38%0Natus Vincere63%",
+      "url": "https://polymarket.com/event/lol-shft-navi-2026-02-01",
+      "probabilities": [38.0, 63.0],
+      "volume": 0,
+      "volume_str": "",
+      "outcome_count": 2,
+      "prob_sum": 101.0,
+      "fetched_at": "2026-02-01T16:16:33.727254"
+    },
+    {
+      "market_id": "lol-sen-dig-2026-02-01",
+      "title": "Sentinels100%Dignitas0%",
+      "url": "https://polymarket.com/event/lol-sen-dig-2026-02-01",
+      "probabilities": [100.0, 0.0],
+      "volume": 0,
+      "volume_str": "",
+      "outcome_count": 2,
+      "prob_sum": 100.0,
+      "fetched_at": "2026-02-01T16:16:33.729025"
+    },
+    {
+      "market_id": "lol-jdg-al-2026-01-31",
+      "title": "JD Gaming100%Anyone's Legend1%",
+      "url": "https://polymarket.com/event/lol-jdg-al-2026-01-31",
+      "probabilities": [100.0, 1.0],
+      "volume": 0,
+      "volume_str": "",
+      "outcome_count": 2,
+      "prob_sum": 101.0,
+      "fetched_at": "2026-02-01T16:16:33.729268"
+    }
+  ]
+}

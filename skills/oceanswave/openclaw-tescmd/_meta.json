@@ -1,0 +1,17 @@
+{
+  "owner": "oceanswave",
+  "slug": "openclaw-tescmd",
+  "displayName": "tescmd",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770306150728,
+    "commit": "https://github.com/clawdbot/skills/commit/4b09721ee501826782da46fd34678694070da6fb"
+  },
+  "history": [
+    {
+      "version": "0.3.4",
+      "publishedAt": 1770093174488,
+      "commit": "https://github.com/clawdbot/skills/commit/cde2770d3b8b95569e709630fc570b7e8c6d09df"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "seanphan",
+  "slug": "template-skill",
+  "displayName": "Template Skill",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769956422050,
+    "commit": "https://github.com/clawdbot/skills/commit/c68b8564f4f8429476182833128a2cd6c1f486e3"
+  },
+  "history": []
+}

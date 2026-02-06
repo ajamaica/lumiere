@@ -1,0 +1,11 @@
+{
+  "owner": "jk-0001",
+  "slug": "automation-workflows",
+  "displayName": "Automation Workflows",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770341582349,
+    "commit": "https://github.com/openclaw/skills/commit/cd8a43774dce634e988b7cd2b2b620387f2837f9"
+  },
+  "history": []
+}

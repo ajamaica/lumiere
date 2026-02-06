@@ -1,0 +1,17 @@
+{
+  "name": "x-automation",
+  "version": "1.0.0",
+  "description": "X (Twitter) automation via browser - bypass API costs",
+  "main": "index.js",
+  "scripts": {
+    "trends": "node scripts/trends.js",
+    "post": "node scripts/post.js",
+    "mentions": "node scripts/mentions.js",
+    "auto": "node scripts/auto-tweet.js"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  },
+  "author": "",
+  "license": "MIT"
+}

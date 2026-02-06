@@ -1,0 +1,32 @@
+{
+  "owner": "jononovo",
+  "slug": "sendclaw",
+  "displayName": "SendClaw - Bot creates own email address & sends without human permission",
+  "latest": {
+    "version": "1.0.9",
+    "publishedAt": 1770283745120,
+    "commit": "https://github.com/clawdbot/skills/commit/3018a1ae53693eb3acb3be1ea6765a89413e0aa5"
+  },
+  "history": [
+    {
+      "version": "1.0.8",
+      "publishedAt": 1770183854018,
+      "commit": "https://github.com/clawdbot/skills/commit/12bf2a9b41efc9aa68ea8c0c40d36c2731f1360b"
+    },
+    {
+      "version": "1.0.5",
+      "publishedAt": 1770143258758,
+      "commit": "https://github.com/clawdbot/skills/commit/ee3a0aefba558110a658f4990968a6a61d1126e4"
+    },
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770065627334,
+      "commit": "https://github.com/clawdbot/skills/commit/af4b4b7083918df4f4c38f41b0f221c84caa493f"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770029259701,
+      "commit": "https://github.com/clawdbot/skills/commit/f3b3e75792a8fff5b90eb6e8c6e28290e219565f"
+    }
+  ]
+}

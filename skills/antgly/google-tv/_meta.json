@@ -1,0 +1,17 @@
+{
+  "owner": "antgly",
+  "slug": "google-tv",
+  "displayName": "Google Tv",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770316912077,
+    "commit": "https://github.com/clawdbot/skills/commit/666ed8cd65cd4391d873a4c27b19578fae4186b6"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770227721811,
+      "commit": "https://github.com/clawdbot/skills/commit/0132f55ffea4f9dfadcc3d6b0e0103184b8ccb1d"
+    }
+  ]
+}

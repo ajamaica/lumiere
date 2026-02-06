@@ -1,0 +1,11 @@
+{
+  "owner": "joneschi",
+  "slug": "homeassistant-cli",
+  "displayName": "Home Assistant CLI",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769929870788,
+    "commit": "https://github.com/clawdbot/skills/commit/ab663a6a26a0e47adc546b9d7bb1e54a3a8e85c1"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "mastergoogler",
+  "slug": "opensoul",
+  "displayName": "OpenSoul - An immutable, private soul for agent Self-reflection, self-improvement and on-chain economic activities.",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769871834754,
+    "commit": "https://github.com/clawdbot/skills/commit/60fd1691cd3382c6ad70091af28f88ef6e8f40d3"
+  },
+  "history": []
+}

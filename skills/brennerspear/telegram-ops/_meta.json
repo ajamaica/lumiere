@@ -1,0 +1,11 @@
+{
+  "owner": "brennerspear",
+  "slug": "telegram-ops",
+  "displayName": "Telegram Ops",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770131586192,
+    "commit": "https://github.com/clawdbot/skills/commit/66d95d09d219067b316d4af93ee4f9e18bb2746f"
+  },
+  "history": []
+}

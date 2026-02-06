@@ -1,0 +1,17 @@
+{
+  "owner": "themrzz",
+  "slug": "kradleverse-act",
+  "displayName": "KradleVerse Act",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770300561497,
+    "commit": "https://github.com/clawdbot/skills/commit/93296533627cb99b896517079c277ca564679e37"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770296965808,
+      "commit": "https://github.com/clawdbot/skills/commit/ab264a7921d25214e1eb8e0939312a7995ed054f"
+    }
+  ]
+}

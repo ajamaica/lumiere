@@ -1,0 +1,175 @@
+{
+  "name": "createos",
+  "version": "1.0.0",
+  "description": "CreateOS Cloud Deployment Platform - Ship anything to production",
+
+  "mcp": {
+    "endpoint": "https://api-createos.nodeops.network/mcp",
+    "transport": "sse",
+    "authentication": "handled_by_mcp_server",
+    "note": "When using MCP (OpenClaw, Claude, etc.), NO API KEY NEEDED. Just call tools directly."
+  },
+
+  "rest_api": {
+    "base_url": "https://api-createos.nodeops.network",
+    "docs_url": "https://api-createos.nodeops.network/api-docs",
+    "authentication": {
+      "type": "bearer_token",
+      "header": "Authorization",
+      "format": "Bearer {api_key}",
+      "obtain_key": "Use CreateAPIKey MCP tool or dashboard"
+    }
+  },
+
+  "dashboard_url": "https://createos.nodeops.network",
+  "docs_url": "https://test-site.nodeops.network/createos/docs/API-MCP",
+
+  "endpoints": {
+    "projects": {
+      "create": "POST /v1/projects",
+      "list": "GET /v1/projects",
+      "get": "GET /v1/projects/{project_id}",
+      "update": "PATCH /v1/projects/{project_id}",
+      "delete": "DELETE /v1/projects/{project_id}",
+      "settings": "PATCH /v1/projects/{project_id}/settings"
+    },
+    "deployments": {
+      "create": "POST /v1/projects/{project_id}/deployments",
+      "list": "GET /v1/projects/{project_id}/deployments",
+      "get": "GET /v1/projects/{project_id}/deployments/{deployment_id}",
+      "trigger": "POST /v1/projects/{project_id}/deployments/trigger",
+      "cancel": "POST /v1/projects/{project_id}/deployments/{deployment_id}/cancel",
+      "retry": "POST /v1/projects/{project_id}/deployments/{deployment_id}/retry",
+      "wake": "POST /v1/projects/{project_id}/deployments/{deployment_id}/wake",
+      "upload_files": "POST /v1/projects/{project_id}/deployments/files",
+      "upload_zip": "POST /v1/projects/{project_id}/deployments/zip",
+      "build_logs": "GET /v1/projects/{project_id}/deployments/{deployment_id}/logs/build",
+      "runtime_logs": "GET /v1/projects/{project_id}/deployments/{deployment_id}/logs/runtime"
+    },
+    "environments": {
+      "create": "POST /v1/projects/{project_id}/environments",
+      "list": "GET /v1/projects/{project_id}/environments",
+      "update": "PATCH /v1/projects/{project_id}/environments/{environment_id}",
+      "delete": "DELETE /v1/projects/{project_id}/environments/{environment_id}",
+      "assign": "POST /v1/projects/{project_id}/environments/{environment_id}/assign",
+      "env_vars": "PATCH /v1/projects/{project_id}/environments/{environment_id}/variables",
+      "resources": "PATCH /v1/projects/{project_id}/environments/{environment_id}/resources",
+      "logs": "GET /v1/projects/{project_id}/environments/{environment_id}/logs"
+    },
+    "domains": {
+      "create": "POST /v1/projects/{project_id}/domains",
+      "list": "GET /v1/projects/{project_id}/domains",
+      "refresh": "POST /v1/projects/{project_id}/domains/{domain_id}/refresh",
+      "assign": "PATCH /v1/projects/{project_id}/domains/{domain_id}/environment",
+      "delete": "DELETE /v1/projects/{project_id}/domains/{domain_id}"
+    },
+    "apps": {
+      "create": "POST /v1/apps",
+      "list": "GET /v1/apps",
+      "update": "PATCH /v1/apps/{app_id}",
+      "delete": "DELETE /v1/apps/{app_id}",
+      "add_projects": "POST /v1/apps/{app_id}/projects",
+      "remove_projects": "DELETE /v1/apps/{app_id}/projects"
+    },
+    "github": {
+      "install": "POST /v1/github/install",
+      "accounts": "GET /v1/github/accounts",
+      "repositories": "GET /v1/github/{installation_id}/repositories",
+      "branches": "GET /v1/github/{installation_id}/repositories/{repo}/branches",
+      "content": "GET /v1/github/{installation_id}/repositories/{repo}/content"
+    },
+    "analytics": {
+      "overview": "GET /v1/projects/{project_id}/environments/{environment_id}/analytics",
+      "requests": "GET /v1/projects/{project_id}/environments/{environment_id}/analytics/requests",
+      "rpm": "GET /v1/projects/{project_id}/environments/{environment_id}/analytics/rpm",
+      "success": "GET /v1/projects/{project_id}/environments/{environment_id}/analytics/success",
+      "top_paths": "GET /v1/projects/{project_id}/environments/{environment_id}/analytics/top-paths",
+      "errors": "GET /v1/projects/{project_id}/environments/{environment_id}/analytics/errors"
+    },
+    "security": {
+      "scan": "POST /v1/projects/{project_id}/deployments/{deployment_id}/security/scan",
+      "get": "GET /v1/projects/{project_id}/deployments/{deployment_id}/security",
+      "download": "GET /v1/projects/{project_id}/deployments/{deployment_id}/security/download"
+    },
+    "api_keys": {
+      "create": "POST /v1/api-keys",
+      "list": "GET /v1/api-keys",
+      "update": "PATCH /v1/api-keys/{api_key_id}",
+      "revoke": "DELETE /v1/api-keys/{api_key_id}"
+    },
+    "user": {
+      "current": "GET /v1/user",
+      "quotas": "GET /v1/user/quotas",
+      "supported_types": "GET /v1/supported-types"
+    }
+  },
+
+  "supported_runtimes": [
+    "node:18",
+    "node:20",
+    "node:22",
+    "python:3.11",
+    "python:3.12",
+    "golang:1.22",
+    "golang:1.25",
+    "rust:1.75",
+    "bun:1.1",
+    "bun:1.3",
+    "static"
+  ],
+
+  "supported_frameworks": [
+    "nextjs",
+    "reactjs-spa",
+    "reactjs-ssr",
+    "vuejs-spa",
+    "vuejs-ssr",
+    "nuxtjs",
+    "astro",
+    "remix",
+    "express",
+    "fastapi",
+    "flask",
+    "django",
+    "gin",
+    "fiber",
+    "actix"
+  ],
+
+  "resource_limits": {
+    "cpu": { "min": 200, "max": 500, "unit": "millicores" },
+    "memory": { "min": 500, "max": 1024, "unit": "MB" },
+    "replicas": { "min": 1, "max": 3 }
+  },
+
+  "naming_constraints": {
+    "unique_name": { "min": 4, "max": 32, "pattern": "^[a-zA-Z0-9-]+$" },
+    "display_name": { "min": 4, "max": 48, "pattern": "^[a-zA-Z0-9 _-]+$" },
+    "description": { "min": 4, "max": 2048 },
+    "api_key_name": { "min": 4, "max": 48, "pattern": "^[a-zA-Z0-9-]+$" }
+  },
+
+  "triggers": [
+    "deploy",
+    "host",
+    "ship",
+    "go live",
+    "launch",
+    "publish",
+    "make it accessible",
+    "put it online",
+    "run in production",
+    "expose an endpoint",
+    "get a URL",
+    "make an API",
+    "deploy my agent",
+    "host my bot",
+    "ship this skill",
+    "need hosting",
+    "deploy this code",
+    "run this server",
+    "make this live",
+    "production ready",
+    "createos"
+  ]
+}

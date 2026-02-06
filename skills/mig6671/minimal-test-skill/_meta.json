@@ -1,0 +1,11 @@
+{
+  "owner": "mig6671",
+  "slug": "minimal-test-skill",
+  "displayName": "Minimal Test",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770326123574,
+    "commit": "https://github.com/openclaw/skills/commit/b809c5120765663756f1a1c8d583fbd7db8807d6"
+  },
+  "history": []
+}

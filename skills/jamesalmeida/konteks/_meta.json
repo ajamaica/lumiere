@@ -1,0 +1,22 @@
+{
+  "owner": "jamesalmeida",
+  "slug": "konteks",
+  "displayName": "Konteks",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770098658625,
+    "commit": "https://github.com/clawdbot/skills/commit/abe90566e91753b66eb1d3de9a22200ce9cacae5"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770090591767,
+      "commit": "https://github.com/clawdbot/skills/commit/20f49905a3c0ca6a0d2f774bd9d854de4d4ba106"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769717932348,
+      "commit": "https://github.com/clawdbot/skills/commit/a75cc65257178433e105a731c34c6045528814a4"
+    }
+  ]
+}

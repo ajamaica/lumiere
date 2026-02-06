@@ -1,0 +1,11 @@
+{
+  "owner": "architect-sis",
+  "slug": "sis-skill",
+  "displayName": "Sovereign Intelligence System - Equilibrium-native reasoning for OpenClaw",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769888399399,
+    "commit": "https://github.com/clawdbot/skills/commit/3afe4dce9fa66cee129954cb924fa2c043db2bf7"
+  },
+  "history": []
+}

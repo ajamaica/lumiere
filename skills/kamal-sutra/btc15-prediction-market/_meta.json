@@ -1,0 +1,11 @@
+{
+  "owner": "kamal-sutra",
+  "slug": "btc15-prediction-market",
+  "displayName": "BTC15 Prediction Market",
+  "latest": {
+    "version": "7.0.0",
+    "publishedAt": 1770304230866,
+    "commit": "https://github.com/clawdbot/skills/commit/5305b7acd4a198a89c8c1c0996fcd842b32e6fed"
+  },
+  "history": []
+}

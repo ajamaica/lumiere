@@ -1,0 +1,11 @@
+{
+  "owner": "g9pedro",
+  "slug": "pdauth",
+  "displayName": "Pdauth",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770175099117,
+    "commit": "https://github.com/clawdbot/skills/commit/a122cd9fb24415406004db82880813d7ad701712"
+  },
+  "history": []
+}

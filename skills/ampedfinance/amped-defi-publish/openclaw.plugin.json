@@ -1,0 +1,37 @@
+{
+  "id": "amped-defi",
+  "kind": "tools",
+  "uiHints": {
+    "walletsJson": {
+      "label": "Wallets JSON",
+      "sensitive": true,
+      "placeholder": "{\"default\": {\"privateKey\": \"0x...\"}}",
+      "help": "JSON object mapping wallet IDs to configs. Or use ${AMPED_OC_WALLETS_JSON}"
+    },
+    "rpcUrlsJson": {
+      "label": "RPC URLs JSON",
+      "placeholder": "{\"sonic\": \"https://rpc.sonic.fantom.network\"}",
+      "help": "JSON object mapping chain IDs to RPC URLs. Or use ${AMPED_OC_RPC_URLS_JSON}"
+    },
+    "mode": {
+      "label": "Execution Mode",
+      "help": "'execute' (default) = execute transactions, 'simulate' = dry-run only"
+    },
+    "dynamicConfig": {
+      "label": "Dynamic SDK Config",
+      "help": "Fetch fresh configuration from SODAX API on startup",
+      "advanced": true
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "walletsJson": { "type": "string" },
+      "rpcUrlsJson": { "type": "string" },
+      "mode": { "type": "string", "enum": ["execute", "simulate"] },
+      "dynamicConfig": { "type": "boolean" }
+    },
+    "required": []
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "id": "og-openclawguard",
+  "name": "OG-OpenClawGuard",
+  "description": "Agent-based prompt injection detection for long content using LLM analysis",
+  "version": "1.1.0",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Enable or disable the guard (default: true)"
+      },
+      "blockOnRisk": {
+        "type": "boolean",
+        "description": "Block tool calls when injection is detected (default: true)"
+      },
+      "maxChunkSize": {
+        "type": "number",
+        "description": "Maximum characters per chunk for analysis (default: 4000)"
+      },
+      "overlapSize": {
+        "type": "number",
+        "description": "Overlap between chunks to catch split attacks (default: 200)"
+      },
+      "timeoutMs": {
+        "type": "number",
+        "description": "Timeout for analysis in milliseconds (default: 60000)"
+      },
+      "dbPath": {
+        "type": "string",
+        "description": "Path to SQLite database for logging (default: ~/.openclaw/openclawguard.db)"
+      }
+    }
+  },
+  "uiHints": {
+    "enabled": {
+      "label": "Enable Guard",
+      "help": "Enable or disable prompt injection detection"
+    },
+    "blockOnRisk": {
+      "label": "Block on Risk",
+      "help": "Block tool calls when prompt injection is detected"
+    },
+    "maxChunkSize": {
+      "label": "Chunk Size",
+      "help": "Maximum characters per analysis chunk (larger = faster but less focused)",
+      "advanced": true
+    },
+    "overlapSize": {
+      "label": "Chunk Overlap",
+      "help": "Characters of overlap between chunks to catch split attacks",
+      "advanced": true
+    },
+    "timeoutMs": {
+      "label": "Timeout (ms)",
+      "help": "Maximum time for analysis",
+      "advanced": true
+    },
+    "dbPath": {
+      "label": "Database Path",
+      "help": "Custom path for the analysis log database",
+      "advanced": true
+    }
+  }
+}

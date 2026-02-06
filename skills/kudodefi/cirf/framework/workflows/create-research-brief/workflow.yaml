@@ -1,0 +1,39 @@
+# ═══════════════════════════════════════════════════════════════
+# CIRF - CRYPTO INTERACTIVE RESEARCH FRAMEWORK - WORKFLOW DEFINITION
+# ═══════════════════════════════════════════════════════════════
+
+# --- IDENTITY ---
+id: create-research-brief
+type: artifact
+name: Create Research Brief
+description: Establish unambiguous research requirements through structured dialogue - what decision, what knowledge, what to analyze
+
+# --- DEPENDENCIES ---
+dependencies:
+  objectives: "./framework/workflows/create-research-brief/objectives.md"
+  templates: "./framework/workflows/create-research-brief/templates/"
+  guides:
+    scope-clarification: "./framework/guides/scope-clarification.md"
+    research-methodology: "./framework/guides/research-methodology.md"
+    collaborative-research: "./framework/guides/collaborative-research.md"
+    output-standards: "./framework/guides/output-standards.md"
+
+# --- CONFIGURATION ---
+configuration:
+  output_type: brief
+  output_format: markdown
+  output_path: "./workspaces/{workspace_id}/outputs/create-research-brief/research-brief-{date}.md"
+  workspace_template:"./framework/_workspace.yaml"
+
+# --- DIRECTIVE ---
+# ═══════════════════════════════════════════════════════════════
+# ⚠️ MANDATORY EXECUTION - DO NOT SKIP
+# ═══════════════════════════════════════════════════════════════
+# You MUST execute BOTH steps below in order:
+#   1. initialization → READ and EXECUTE research-brief-init.md
+#   2. execution → READ and EXECUTE research-brief-execution.md
+# STOP immediately and report error if any step fails.
+# ═══════════════════════════════════════════════════════════════
+directive:
+  initialization: "./framework/components/research-brief-init.md"
+  execution: "./framework/components/research-brief-execution.md"

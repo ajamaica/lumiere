@@ -1,0 +1,23 @@
+{
+  "name": "ktrendz-lightstick-trading",
+  "version": "1.3.0",
+  "description": "Trade K-pop artist lightstick tokens on the K-Trendz bonding curve market (V2 with Paymaster gas sponsorship)",
+  "main": "index.js",
+  "author": "K-Trendz",
+  "license": "MIT",
+  "keywords": [
+    "crypto",
+    "trading",
+    "kpop",
+    "bonding-curve",
+    "web3",
+    "base",
+    "usdc",
+    "paymaster",
+    "erc1155"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ktrendz/lightstick-trading-skill"
+  }
+}

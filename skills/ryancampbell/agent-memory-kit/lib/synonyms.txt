@@ -1,0 +1,27 @@
+# Memory Kit Search Synonyms
+# Format: term=synonym1,synonym2,synonym3
+
+# Actions
+ship=launch,deploy,publish,release
+build=create,develop,implement,code
+fix=resolve,solve,repair,patch
+block=blocker,blocked,stuck,issue
+
+# Product terms
+kit=skill,package,module
+agent=ai,assistant,bot
+memory=recall,remember,history,context
+
+# Status
+done=complete,finished,shipped,delivered
+todo=task,action,pending,upcoming
+win=success,achievement,milestone,victory
+
+# Technical
+bug=error,issue,problem,defect
+token=context,limit,budget
+compaction=compression,cleanup,archive
+
+# Distribution
+post=publish,share,tweet,announce
+article=blog,post,content,guide

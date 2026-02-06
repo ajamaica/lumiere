@@ -1,0 +1,11 @@
+{
+  "owner": "philippwassibauer",
+  "slug": "crunch-protocol-skill",
+  "displayName": "Crunch Protocol Skill",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770310603421,
+    "commit": "https://github.com/clawdbot/skills/commit/f2059b24a3917381ba8e4e5b33161730e404b910"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "kunoiiv",
+  "slug": "uptime-monitor",
+  "displayName": "24/7 OpenClaw Uptime Monitor (Dead/Uptime JSON Tracker)",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770223933421,
+    "commit": "https://github.com/clawdbot/skills/commit/9148d1c4e05ec3c104bbd6acbb601ce368ce0a9d"
+  },
+  "history": []
+}

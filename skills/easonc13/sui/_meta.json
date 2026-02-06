@@ -1,0 +1,11 @@
+{
+  "owner": "easonc13",
+  "slug": "sui",
+  "displayName": "Sui",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1769972044670,
+    "commit": "https://github.com/clawdbot/skills/commit/e85c0da3187ae895e5a007109d6a4476f24eaa75"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "paulpete",
+  "slug": "code-task-generator",
+  "displayName": "Code Task Generator",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770081294061,
+    "commit": "https://github.com/clawdbot/skills/commit/10890298962d610792e6584cf28387dd27a871c1"
+  },
+  "history": []
+}

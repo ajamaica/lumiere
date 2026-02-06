@@ -1,0 +1,11 @@
+{
+  "owner": "reversteam",
+  "slug": "project-orchestrator",
+  "displayName": "Project Orchestrator",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770241841189,
+    "commit": "https://github.com/clawdbot/skills/commit/d1ab273e78bc33901ffe9c345a6ec8a670b10200"
+  },
+  "history": []
+}

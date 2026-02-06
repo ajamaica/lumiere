@@ -1,0 +1,17 @@
+{
+  "owner": "lxgicstudios",
+  "slug": "type-gen",
+  "displayName": "JSON To TypeScript Interface Generator",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769967413849,
+    "commit": "https://github.com/clawdbot/skills/commit/4957860a90ac1602a727b163c2b50d818cf62c29"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769627699411,
+      "commit": "https://github.com/clawdbot/skills/commit/99f0e76627356f22cf60abc2aab0d16b1b44fd56"
+    }
+  ]
+}

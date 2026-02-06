@@ -1,0 +1,9 @@
+{
+  "fixture": "evasive-01-string-concat",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 44,
+  "expected_risk": "HIGH",
+  "expected_categories": ["evasion"],
+  "must_detect_rules": ["STRING_CONSTRUCTION"]
+}

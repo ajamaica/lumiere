@@ -1,0 +1,178 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# CIRF - CRYPTO INTERACTIVE RESEARCH FRAMEWORK - WORKSPACE DEFINITION FILE
+# ═══════════════════════════════════════════════════════════════════════════
+# NAME: Workspace Template (_workspace)
+# TYPE: Workspace Definition
+# PURPOSE: Template for creating new workspace configurations with metadata, context, and state
+# STRUCTURE: METADATA → CONTEXT → PATHS → SESSION_VARIABLES → WORKFLOWS
+# USAGE: Copy template → Customize metadata & context → Load at workspace activation
+# ═══════════════════════════════════════════════════════════════════════════
+
+---
+workspace:
+  # ===========================================================================
+  # METADATA - Workspace Identity
+  # ===========================================================================
+  metadata:
+    id: "CHANGE_ME"                    # Example: bitcoin-analysis | content-hub | weekly-reports
+    name: "CHANGE_ME"                  # Example: Bitcoin Analysis | Content Creation Hub
+    description: "CHANGE_ME"           # Brief description of workspace purpose
+    created: "YYYY-MM-DD"              # Auto-populated on creation
+    last_updated: "YYYY-MM-DD"         # Auto-updated on each activity
+
+  # ===========================================================================
+  # CONTEXT - Workspace Purpose & Scope
+  # ===========================================================================
+  # PURPOSE: Define what this workspace is for and what it aims to achieve
+  # FLEXIBILITY: Support any type of work - research, content, monitoring, etc.
+
+  context:
+    # What is this workspace about
+    focus: "CHANGE_ME"                 # Example: Morpho Protocol | DeFi Market | Tech Tutorials
+
+    # What are we trying to achieve
+    objectives:
+      - "CHANGE_ME"                    # Example: Investment decision | Create content | Monitor competitors
+
+    # Scope and boundaries
+    scope: "CHANGE_ME"                 # Example: Market + Fundamentals + Technical analysis
+
+    # Additional context (free-form key-value pairs)
+    notes: {}
+      # Example for research:
+      # subject_type: "DeFi Lending Protocol"
+      # target_completion: "2025-Q1"
+      #
+      # Example for content creation:
+      # content_type: "Educational tutorials"
+      # target_audience: "Crypto beginners"
+      #
+      # Example for monitoring:
+      # monitoring_frequency: "Weekly"
+      # competitors: ["Aave", "Compound"]
+
+  # ===========================================================================
+  # SESSION VARIABLES - Active Configuration Snapshot
+  # ===========================================================================
+  # PURPOSE: Cached snapshot of session variables for quick context recovery
+  # UPDATED: Auto-managed by agents at initialization (Step 2.7)
+  #          Only updates when variables actually change (smart comparison)
+  # USAGE: After conversation compact, agents restore context from this cache
+  #
+  # SOURCE OF TRUTH:
+  #   - Core variables (8): ./framework/core-config.yaml
+  #   - Workspace variables (8): workspace.yaml sections above
+  #
+  # NOTE: Framework paths use static references (./framework/...)
+  #       Workspace paths constructed from workspace_id (./workspaces/{workspace_id}/...)
+
+  session_variables:
+    # Metadata (auto-managed, do not manually edit)
+    _cached_at: ""                    # ISO timestamp of last cache update
+    _cached_by_agent: ""              # Agent that last updated cache
+    _core_config_version: ""          # Core-config version used
+    _total_variables: 15              # Total session variables count
+
+    # --- Core-config variables (7) ---
+    # User settings
+    user_name: ""
+    user_date_format: ""
+    user_currency: ""
+
+    # Language settings
+    language_communication: ""
+    language_output: ""
+    language_terminology: ""
+
+    # Workflow registry
+    workflows: {}                     # Workflow ID → path mapping
+
+    # --- Workspace variables (8) ---
+    # Workspace metadata
+    workspace_id: ""
+    workspace_name: ""
+    workspace_description: ""
+    workspace_created: ""
+    workspace_last_updated: ""
+
+    # Workspace context
+    workspace_focus: ""
+    workspace_objectives: []
+    workspace_scope: ""
+
+  # ===========================================================================
+  # WORKFLOWS - Per-Workflow State & History
+  # ===========================================================================
+  # PURPOSE: Track workflow execution state and history
+  # CREATION: New workflow section added on first execution
+  # UPDATES: Modified at END of each workflow execution session
+  # PERSISTENCE: Survives conversation compacts
+  #
+  # CONFIGURATION NOTE:
+  # Workflow configuration (research_depth, output_type, paths, format) is read
+  # from workflow.yaml on each execution. Only execution state and user
+  # customization are stored here.
+  #
+  # IMPORTANT - RESEARCH DEPTH vs OUTPUT LENGTH:
+  # • research_depth (HOW DEEPLY to research): quick 2-4h | standard 4-8h | deep 8-16h
+  # • output_type (HOW to present): brief ~1500-2500 | standard ~3000-5000 | comprehensive ~5000-8000 words
+  # These are INDEPENDENT: deep research can produce brief reports, and vice versa.
+  # Override via execution_depth_override below (only affects research thoroughness, not output length).
+
+  workflows: {}
+    # -------------------------------------------------------------------------
+    # STRUCTURE: Auto-created when workflow first executes
+    # -------------------------------------------------------------------------
+    #
+    # {workflow_id}:
+    #   metadata:
+    #     workflow_id: "{workflow-id}"
+    #     workflow_name: "{Workflow Name}"
+    #     last_executed: ""             # ISO timestamp - updated at END
+    #     latest_output: ""             # Path to latest output - updated at END
+    #
+    #   user_requirements:
+    #     # User customization - set BEFORE execution, persists across runs
+    #     execution_depth_override: ""  # Override default from workflow.yaml
+    #     special_focus: []             # Topics/areas to emphasize
+    #     avoid_topics: []              # Topics/areas to skip
+    #     additional_instructions: ""   # Free-form instructions
+    #     notes: {}                     # User-defined key-value pairs
+    #
+    #   executions:
+    #     # Full execution history - appended at END of each run
+    #     # - executed_at: "2025-01-15T10:30:00"
+    #     #   executed_by_agent: "research-analyst"
+    #     #   execution_depth: "standard"        # Actual depth used
+    #     #   status: "completed"                # in_progress | completed | failed
+    #     #   duration_minutes: 12
+    #     #   output_primary: "./workspaces/morpho/outputs/sector-overview/sector-overview-2025-01-15.md"
+    #     #   output_secondary: ""
+    #     #   error_message: ""                  # If failed
+    #     #   notes: ""                          # Execution notes
+    #
+    # -------------------------------------------------------------------------
+    # EXAMPLE 1: Research workflow with custom requirements
+    # -------------------------------------------------------------------------
+    #
+    # competitive_analysis:
+    #   metadata:
+    #     workflow_id: "competitive-analysis"
+    #     workflow_name: "Competitive Analysis"
+    #     last_executed: ""
+    #     latest_output: ""
+    #
+    #   user_requirements:
+    #     execution_depth_override: "deep"
+    #     special_focus: ["Aave v3 comparison", "Technical moats"]
+    #     avoid_topics: ["Historical price"]
+    #     additional_instructions: "Focus on defensibility analysis"
+    #     notes:
+    #       competitors: ["Aave", "Compound", "Euler"]
+    #       comparison_framework: "Porter's Five Forces"
+    #
+    #   executions: []
+
+# =============================================================================
+# END OF WORKSPACE CONFIG
+# =============================================================================

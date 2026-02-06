@@ -1,0 +1,11 @@
+{
+  "owner": "keyfrog-21k",
+  "slug": "openclaw-finnhub",
+  "displayName": "Finnhub Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770079818120,
+    "commit": "https://github.com/clawdbot/skills/commit/0e5066edfd26fc947c02ec9e717480ea2da3dfc9"
+  },
+  "history": []
+}

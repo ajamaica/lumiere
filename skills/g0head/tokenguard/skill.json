@@ -1,0 +1,33 @@
+{
+  "name": "tokenguard",
+  "version": "1.0.0",
+  "description": "API cost guardian for AI agents. Track spending, enforce limits, prevent runaway costs.",
+  "author": "PaxSwarm",
+  "license": "MIT",
+  "keywords": [
+    "cost",
+    "budget",
+    "spending",
+    "limit",
+    "api",
+    "tokens",
+    "guard",
+    "monitor",
+    "billing"
+  ],
+  "triggers": [
+    "cost limit",
+    "spending limit",
+    "budget",
+    "how much spent",
+    "tokenguard",
+    "api cost"
+  ],
+  "requires": {
+    "python": ">=3.8"
+  },
+  "files": ["SKILL.md", "scripts/tokenguard.py"],
+  "entrypoint": "scripts/tokenguard.py",
+  "repository": "https://github.com/PaxSwarm/tokenguard",
+  "homepage": "https://clawhub.com/skills/tokenguard"
+}

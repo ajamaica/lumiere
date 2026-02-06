@@ -1,0 +1,11 @@
+{
+  "owner": "0xmythril",
+  "slug": "clawdtm",
+  "displayName": "Review Skills on Clawdtm",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769942039037,
+    "commit": "https://github.com/clawdbot/skills/commit/9dbc2946daa1610e5a88486a08d654b686d63661"
+  },
+  "history": []
+}

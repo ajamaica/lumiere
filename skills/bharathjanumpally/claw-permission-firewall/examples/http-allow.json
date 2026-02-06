@@ -1,0 +1,20 @@
+{
+  "traceId": "11111111-1111-1111-1111-111111111111",
+  "caller": {
+    "skillName": "DemoSkill",
+    "skillVersion": "0.1.0"
+  },
+  "action": {
+    "type": "http_request",
+    "method": "GET",
+    "url": "https://api.github.com/repos/octocat/Hello-World",
+    "headers": {
+      "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.abc.def"
+    }
+  },
+  "context": {
+    "workspaceRoot": "/workspace",
+    "mode": "strict",
+    "confirmed": false
+  }
+}

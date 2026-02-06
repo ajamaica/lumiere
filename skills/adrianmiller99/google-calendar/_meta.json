@@ -1,0 +1,11 @@
+{
+  "owner": "adrianmiller99",
+  "slug": "google-calendar",
+  "displayName": "Google Calendar",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769879360981,
+    "commit": "https://github.com/clawdbot/skills/commit/053abf6f19de8768ac3ce29f115ff674511f2495"
+  },
+  "history": []
+}

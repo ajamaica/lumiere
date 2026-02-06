@@ -1,0 +1,17 @@
+{
+  "owner": "shaharsha",
+  "slug": "gif-whatsapp",
+  "displayName": "Gif Whatsapp",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770146525530,
+    "commit": "https://github.com/clawdbot/skills/commit/d1f9a0293a7bdc5a7de11c8fea8e6741c619a170"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770140331724,
+      "commit": "https://github.com/clawdbot/skills/commit/0ee50ce665f74cefad64c6b5f093f0adadec7f37"
+    }
+  ]
+}

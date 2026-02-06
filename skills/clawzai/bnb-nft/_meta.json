@@ -1,0 +1,11 @@
+{
+  "owner": "clawzai",
+  "slug": "bnb-nft",
+  "displayName": "BNB Chain NFT",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769940376582,
+    "commit": "https://github.com/clawdbot/skills/commit/d321391eeb5b0742f34310dc4d42b9b1679e5352"
+  },
+  "history": []
+}

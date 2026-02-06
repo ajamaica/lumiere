@@ -1,0 +1,11 @@
+{
+  "owner": "bhoshaga",
+  "slug": "moltauth",
+  "displayName": "MoltAuth",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770076144707,
+    "commit": "https://github.com/clawdbot/skills/commit/32d62b27866ed1f692889d06a0ccbb87b812c075"
+  },
+  "history": []
+}

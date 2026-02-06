@@ -1,0 +1,32 @@
+name: Build Skill Package
+
+on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - 'dist/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build tarball
+        run: |
+          mkdir -p dist
+          tar -czf dist/clawdvine-skill.tar.gz \
+            SKILL.md \
+            README.md \
+            metadata.json \
+            package.json \
+            scripts/*.mjs \
+            references/*.md
+
+      - name: Commit and push tarball
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dist/clawdvine-skill.tar.gz
+          git diff --staged --quiet || git commit -m "Build: update skill tarball [skip ci]"
+          git push

@@ -1,0 +1,11 @@
+{
+  "owner": "kunoiiv",
+  "slug": "pos-arcology-forge",
+  "displayName": "Proof of share Arcology Forge: PoW-Verified Elysium Blueprints & P2P Hub",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770215002579,
+    "commit": "https://github.com/clawdbot/skills/commit/ab11f41bee6cae50f59643ea8115d9b7dadb68f6"
+  },
+  "history": []
+}

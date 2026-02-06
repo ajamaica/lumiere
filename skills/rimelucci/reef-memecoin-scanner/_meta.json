@@ -1,0 +1,11 @@
+{
+  "owner": "rimelucci",
+  "slug": "reef-memecoin-scanner",
+  "displayName": "reef memecoin scanner",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770009331254,
+    "commit": "https://github.com/clawdbot/skills/commit/592e073b1deefa163f166ec77bd3fcd614edb5c6"
+  },
+  "history": []
+}

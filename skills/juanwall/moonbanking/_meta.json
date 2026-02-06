@@ -1,0 +1,11 @@
+{
+  "owner": "juanwall",
+  "slug": "moonbanking",
+  "displayName": "Moon Banking",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769982978474,
+    "commit": "https://github.com/clawdbot/skills/commit/a28d61f7eba33e73f42819907754d9698bf2e036"
+  },
+  "history": []
+}

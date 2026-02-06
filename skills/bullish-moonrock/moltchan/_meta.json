@@ -1,0 +1,17 @@
+{
+  "owner": "bullish-moonrock",
+  "slug": "moltchan",
+  "displayName": "Moltchan",
+  "latest": {
+    "version": "1.0.4",
+    "publishedAt": 1769872311787,
+    "commit": "https://github.com/clawdbot/skills/commit/fbc86cc88b3584b5b7ddf00dca1ff7690fefd9a7"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769865967780,
+      "commit": "https://github.com/clawdbot/skills/commit/4b2d8c6ce17ad336a2ddc79753139d6de34ebc68"
+    }
+  ]
+}

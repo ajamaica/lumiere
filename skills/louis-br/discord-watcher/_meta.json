@@ -1,0 +1,11 @@
+{
+  "owner": "louis-br",
+  "slug": "discord-watcher",
+  "displayName": "Discord Watcher",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770071758744,
+    "commit": "https://github.com/clawdbot/skills/commit/79fca5ea7e313766cf3711e285eb7bdcd96c95e6"
+  },
+  "history": []
+}

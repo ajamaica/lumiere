@@ -1,0 +1,11 @@
+{
+  "owner": "anthonyfrancis",
+  "slug": "openclaw-checkpoint",
+  "displayName": "OpenClaw Checkpoint - Personal AI Assistant Backup & Recovery",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770127133049,
+    "commit": "https://github.com/clawdbot/skills/commit/528afc89416f80c0de71d048be2baae058bbd272"
+  },
+  "history": []
+}

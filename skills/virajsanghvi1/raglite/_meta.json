@@ -1,0 +1,17 @@
+{
+  "owner": "virajsanghvi1",
+  "slug": "raglite",
+  "displayName": "RAGLite",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770370117827,
+    "commit": "https://github.com/openclaw/skills/commit/c16d9b61384baba312062ded344665dc79b2ec36"
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1770269582773,
+      "commit": "https://github.com/clawdbot/skills/commit/26dfb1f25d1307a729f2fab7c3b6efb150fb5e3f"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "lraivisto",
+  "slug": "luka-vault",
+  "displayName": "Luka Vault",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770324843052,
+    "commit": "https://github.com/openclaw/skills/commit/26a775fff5b94f149c0dfa1f5baa1e49befd3ade"
+  },
+  "history": []
+}

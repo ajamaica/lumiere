@@ -1,0 +1,49 @@
+{
+  "name": "skill-scaffold",
+  "version": "1.0.3",
+  "description": "AI agent skill scaffolding CLI. Create OpenClaw, Moltbot, Claude, and MCP skills instantly. Vibe coding ready.",
+  "main": "bin/skill-scaffold.js",
+  "bin": {
+    "skill-scaffold": "bin/skill-scaffold.js",
+    "skillscaffold": "bin/skill-scaffold.js"
+  },
+  "scripts": {
+    "test": "node bin/skill-scaffold.js --help"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "skill",
+    "scaffold",
+    "scaffolding",
+    "openclaw",
+    "moltbot",
+    "openclaw",
+    "claude",
+    "cursor",
+    "mcp",
+    "vibe-coding",
+    "cli",
+    "generator",
+    "template",
+    "boilerplate",
+    "automation",
+    "llm",
+    "gpt",
+    "copilot",
+    "devtools"
+  ],
+  "author": "tytaninc7",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NextFrontierBuilds/skill-scaffold.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NextFrontierBuilds/skill-scaffold/issues"
+  },
+  "homepage": "https://github.com/NextFrontierBuilds/skill-scaffold#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "autogame-17",
+  "slug": "security-sentinel",
+  "displayName": "Security Sentinel",
+  "latest": {
+    "version": "1.1.2",
+    "publishedAt": 1770118194971,
+    "commit": "https://github.com/clawdbot/skills/commit/82a30984737048feaf93f220743a903068c144d9"
+  },
+  "history": []
+}

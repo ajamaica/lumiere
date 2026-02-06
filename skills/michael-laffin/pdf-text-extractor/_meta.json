@@ -1,0 +1,11 @@
+{
+  "owner": "michael-laffin",
+  "slug": "pdf-text-extractor",
+  "displayName": "PDF Text Extractor",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770217918250,
+    "commit": "https://github.com/clawdbot/skills/commit/794b67000ed41f593b2f91571161faf5198c6246"
+  },
+  "history": []
+}

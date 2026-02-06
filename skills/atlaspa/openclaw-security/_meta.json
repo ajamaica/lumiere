@@ -1,0 +1,11 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-security",
+  "displayName": "Openclaw Security",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770315461645,
+    "commit": "https://github.com/openclaw/skills/commit/e21d96b3d5687f424bba0c521a03a14cb39ba05b"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "erichy777",
+  "slug": "parallel-task-executor",
+  "displayName": "Parallel Task Executor",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770302486812,
+    "commit": "https://github.com/clawdbot/skills/commit/430745f3b4ef8b2f7c7a46170145955a8a4bda2a"
+  },
+  "history": []
+}

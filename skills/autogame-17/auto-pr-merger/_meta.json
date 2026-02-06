@@ -1,0 +1,11 @@
+{
+  "owner": "autogame-17",
+  "slug": "auto-pr-merger",
+  "displayName": "Auto Pr Merger",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770118207296,
+    "commit": "https://github.com/clawdbot/skills/commit/9b28e1e1d1a153833fa4ad7d9baac86d55fc8fe7"
+  },
+  "history": []
+}

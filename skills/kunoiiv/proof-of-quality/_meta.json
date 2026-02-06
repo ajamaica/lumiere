@@ -1,0 +1,11 @@
+{
+  "owner": "kunoiiv",
+  "slug": "proof-of-quality",
+  "displayName": "Proof-of-Quality - BTC PoW Verifiable Excellence",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770078631286,
+    "commit": "https://github.com/clawdbot/skills/commit/3878c4b0f77165e748899b1cf1005478c144b4fb"
+  },
+  "history": []
+}

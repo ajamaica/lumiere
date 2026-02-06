@@ -1,0 +1,17 @@
+{
+  "owner": "marcindudekdev",
+  "slug": "wp-multi-tool",
+  "displayName": "WP Multi Tool — WordPress Optimization Toolkit",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770385655949,
+    "commit": "https://github.com/openclaw/skills/commit/01de3d5086cc7c453029e237b22c1a04f79b3227"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770322535290,
+      "commit": "https://github.com/openclaw/skills/commit/3ca5456c98c28723d5b648016d362607c3abb4d4"
+    }
+  ]
+}

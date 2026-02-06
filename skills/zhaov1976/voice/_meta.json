@@ -1,0 +1,17 @@
+{
+  "owner": "zhaov1976",
+  "slug": "voice",
+  "displayName": "Voice",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770133962546,
+    "commit": "https://github.com/clawdbot/skills/commit/239ea38a404a94aaf065331741d39eaa3009b063"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769935394104,
+      "commit": "https://github.com/clawdbot/skills/commit/50d30c2ed430cfec829d83d1874705bd2755bf06"
+    }
+  ]
+}

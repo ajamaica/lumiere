@@ -1,0 +1,11 @@
+{
+  "owner": "sikey53",
+  "slug": "brawlnet",
+  "displayName": "Brawlnet Arena",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770348225809,
+    "commit": "https://github.com/openclaw/skills/commit/aacd8266b86e95d3b3ecfa1464ed72c74056fc6e"
+  },
+  "history": []
+}

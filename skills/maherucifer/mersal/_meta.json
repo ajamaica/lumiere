@@ -1,0 +1,22 @@
+{
+  "owner": "maherucifer",
+  "slug": "mersal",
+  "displayName": "Mersal",
+  "latest": {
+    "version": "0.1.5",
+    "publishedAt": 1770240756957,
+    "commit": "https://github.com/clawdbot/skills/commit/0494132a96590c5ce906a8943d2cabb10fac3edc"
+  },
+  "history": [
+    {
+      "version": "0.1.3",
+      "publishedAt": 1770207908556,
+      "commit": "https://github.com/clawdbot/skills/commit/5a1a213bfd8986d6bcdb72bcf3dba0dc5909d287"
+    },
+    {
+      "version": "0.1.2",
+      "publishedAt": 1769981632585,
+      "commit": "https://github.com/clawdbot/skills/commit/c8f6cadf1cb065ce6c907175cfed756a0676c734"
+    }
+  ]
+}

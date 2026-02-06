@@ -1,0 +1,11 @@
+{
+  "owner": "chocomintx",
+  "slug": "xiaohongshutools",
+  "displayName": "小红书",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770095284943,
+    "commit": "https://github.com/clawdbot/skills/commit/463702c9a8631c82823865eb141dafd8359c95d7"
+  },
+  "history": []
+}

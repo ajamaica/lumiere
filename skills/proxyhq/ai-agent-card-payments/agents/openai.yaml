@@ -1,0 +1,12 @@
+interface:
+  display_name: "AI Agent Card Payments"
+  short_description: "Autonomous card payments via Proxy MCP"
+  default_prompt: "Use $ai-agent-card-payments to help an agent make a safe purchase with Proxy."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "proxy"
+      description: "Proxy MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.useproxy.ai/api/mcp"

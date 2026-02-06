@@ -1,0 +1,17 @@
+{
+  "owner": "rivera-daniel",
+  "slug": "agoraflow",
+  "displayName": "AgoraFlow",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770311490495,
+    "commit": "https://github.com/clawdbot/skills/commit/a41412674c3d5114fa8098da569007509b7f66a5"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770311181494,
+      "commit": "https://github.com/clawdbot/skills/commit/60d0486e63e402ada6c7c84dfa4a8913cf4b2b80"
+    }
+  ]
+}

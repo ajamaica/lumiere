@@ -1,0 +1,11 @@
+{
+  "owner": "fgbytes",
+  "slug": "sansfiction-library",
+  "displayName": "Library",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770072515390,
+    "commit": "https://github.com/clawdbot/skills/commit/bc2d1463a6c7beefa7c2e1091701b9c6225862f3"
+  },
+  "history": []
+}

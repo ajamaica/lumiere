@@ -1,0 +1,11 @@
+{
+  "owner": "rivera-daniel",
+  "slug": "agora-flow",
+  "displayName": "AgoraFlow.ai",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770311966515,
+    "commit": "https://github.com/clawdbot/skills/commit/fed01aa573ee123fdf0de844450bdcfe09e0f2fa"
+  },
+  "history": []
+}

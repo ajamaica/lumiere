@@ -1,0 +1,147 @@
+# Crypto Signals Test Suite
+# https://app.strykr.ai/crypto-signals
+
+name: Crypto Signals
+description: Tests for crypto signals page - filters, cards, and actions
+baseUrl: https://app.strykr.ai
+
+setup:
+  # Navigate via sidebar (direct URL may be blank - known issue)
+  - goto: /
+  - waitForLoad: true
+  - click: 'a[href="/crypto-signals"], [data-nav="crypto"]'
+  - waitForNavigation: true
+  - waitFor: '.signal-card, [data-testid="signal-card"]'
+    timeout: 15000
+
+tests:
+  - name: Page loads with signal cards
+    steps:
+      - expectVisible: '.signal-card, [data-testid="signal-card"]'
+      - expectCount:
+          selector: '.signal-card'
+          min: 1
+      - screenshot: crypto-signals-loaded
+
+  - name: Signal cards have required elements
+    steps:
+      - expectVisible: '.signal-card .symbol, [data-testid="signal-symbol"]'
+      - expectVisible: '.signal-card .price, [data-testid="signal-price"]'
+      - expectVisible: '.signal-card .chart, [data-testid="sparkline"]'
+      - call: expectSignalCard
+        args:
+          hasSymbol: true
+          hasPrice: true
+          hasChart: true
+          hasActions: true
+
+  # Filter Tests
+  - name: Long filter works
+    steps:
+      - click: 'button:has-text("Long"), [data-filter="long"]'
+      - waitFor: 500
+      - expectVisible: '.signal-card'
+      - expectAllCards:
+          attribute: 'data-direction'
+          value: 'long'
+      - screenshot: filter-long
+
+  - name: Short filter works
+    steps:
+      - click: 'button:has-text("Short"), [data-filter="short"]'
+      - waitFor: 500
+      - expectVisible: '.signal-card'
+      - expectAllCards:
+          attribute: 'data-direction'
+          value: 'short'
+      - screenshot: filter-short
+
+  - name: EVM chain filter works
+    steps:
+      - click: 'button:has-text("All"), [data-filter="all"]'  # Reset
+      - click: 'button:has-text("EVM"), [data-filter="evm"]'
+      - waitFor: 500
+      - expectVisible: '.signal-card'
+      - screenshot: filter-evm
+
+  - name: Solana chain filter works
+    steps:
+      - click: 'button:has-text("Solana"), [data-filter="solana"]'
+      - waitFor: 500
+      - expectVisible: '.signal-card'
+      - screenshot: filter-solana
+
+  - name: Combined filters work (Long + Solana)
+    steps:
+      - click: 'button:has-text("Long"), [data-filter="long"]'
+      - click: 'button:has-text("Solana"), [data-filter="solana"]'
+      - waitFor: 500
+      - screenshot: filter-combined
+
+  # Action Button Tests
+  - name: Listen button present and functional
+    steps:
+      - expectVisible: 'button:has-text("Listen"), [data-action="listen"]'
+      - click: 'button:has-text("Listen"), [data-action="listen"]'
+        first: true
+      - waitFor: 1000
+      # Button should change state (play -> pause)
+      - expectVisible: 'button:has-text("Pause"), button:has-text("Stop"), [data-state="playing"]'
+      - screenshot: listen-active
+
+  - name: Ask Strykr AI button works
+    steps:
+      - click: 'button:has-text("Ask Strykr AI"), [data-action="ask-ai"]'
+        first: true
+      - waitFor: 500
+      # Should open AI chat or navigate
+      - expectVisible: '[data-testid="ai-chat"], .ai-response, input[placeholder*="Ask"]'
+      - screenshot: ask-ai-opened
+
+  - name: Details modal opens (known issue - content empty)
+    knownIssue: details-modal-empty
+    steps:
+      - goto: /
+      - click: 'a[href="/crypto-signals"]'
+      - waitFor: '.signal-card'
+        timeout: 10000
+      - click: 'button:has-text("Details"), [data-action="details"]'
+        first: true
+      - waitFor: 1000
+      # Modal should open
+      - expectVisible: '[role="dialog"], .modal, [data-testid="details-modal"]'
+      - screenshot: details-modal
+      # Check if content loaded (known to fail)
+      - expectVisible: '.modal-content:not(:empty), [data-testid="details-content"]'
+        allowFail: true
+        knownIssue: details-modal-empty
+
+  - name: Share button opens share options
+    steps:
+      - goto: /
+      - click: 'a[href="/crypto-signals"]'
+      - waitFor: '.signal-card'
+        timeout: 10000
+      - click: 'button:has-text("Share"), [data-action="share"]'
+        first: true
+      - waitFor: 500
+      - expectVisible: '[data-testid="share-menu"], .share-options'
+      - screenshot: share-options
+
+  # Loading States
+  - name: Loading state appears while fetching
+    steps:
+      - goto: /
+      - click: 'a[href="/crypto-signals"]'
+      # Capture loading state if quick enough
+      - expectVisible: '.loading, .skeleton, [data-loading="true"]'
+        timeout: 2000
+        allowFail: true  # May be too fast
+
+  - name: No console errors on page
+    steps:
+      - expectNoConsoleErrors: true
+      - expectNoNetworkFailures:
+          ignore: 
+            - 'analytics'
+            - 'tracking'

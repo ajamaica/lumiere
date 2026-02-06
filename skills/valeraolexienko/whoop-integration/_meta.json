@@ -1,0 +1,17 @@
+{
+  "owner": "valeraolexienko",
+  "slug": "whoop-integration",
+  "displayName": "WHOOP Integration",
+  "latest": {
+    "version": "2.0.0",
+    "publishedAt": 1770193089207,
+    "commit": "https://github.com/clawdbot/skills/commit/431c22acdc93a14ced07434ac6736794bc86bc54"
+  },
+  "history": [
+    {
+      "version": "1.1.1",
+      "publishedAt": 1770049988559,
+      "commit": "https://github.com/clawdbot/skills/commit/c0f8c963b8af513917507fc00bb4694f2ed0ace7"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-marshal",
+  "displayName": "Openclaw Marshal",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770313157735,
+    "commit": "https://github.com/clawdbot/skills/commit/7e54a1e93e2375adcec60576b6c81b323ec2d2d0"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770290882846,
+      "commit": "https://github.com/clawdbot/skills/commit/ff9de130aa38d799525b4ce7586faec912cbc83f"
+    }
+  ]
+}

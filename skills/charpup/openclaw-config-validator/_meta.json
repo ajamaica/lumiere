@@ -1,0 +1,11 @@
+{
+  "owner": "charpup",
+  "slug": "openclaw-config-validator",
+  "displayName": "Openclaw Config Validator",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770191005372,
+    "commit": "https://github.com/clawdbot/skills/commit/7aa28adf60a274e4e2c989455f135b3489482e89"
+  },
+  "history": []
+}

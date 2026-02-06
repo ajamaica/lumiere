@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "reddit-job-posting-templates",
+  "displayName": "提示词工程 Prompt Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769992745940,
+    "commit": "https://github.com/clawdbot/skills/commit/25fbc663e393394041000c188a4909df17104bb6"
+  },
+  "history": []
+}

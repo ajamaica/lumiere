@@ -1,0 +1,102 @@
+{
+  "$schema": "./dashboard.schema.json",
+  "_comment": "OpenClaw Command Center Configuration — Copy to dashboard.json and customize",
+
+  "server": {
+    "port": 3333,
+    "host": "localhost",
+    "trustProxy": false
+  },
+
+  "branding": {
+    "name": "Command Center",
+    "title": "OpenClaw Command Center",
+    "theme": "default",
+    "logo": null
+  },
+
+  "paths": {
+    "_comment": "Paths to OpenClaw workspace directories (supports ~ and $HOME)",
+    "workspace": "~/.openclaw-workspace",
+    "memory": "~/.openclaw-workspace/memory",
+    "state": "~/.openclaw-workspace/state",
+    "logs": "~/.openclaw-command-center/logs"
+  },
+
+  "auth": {
+    "mode": "none",
+    "_modeOptions": "none | token | tailscale | cloudflare | allowlist",
+    "token": null,
+    "allowedUsers": [],
+    "allowedIPs": ["127.0.0.1", "::1"],
+    "publicPaths": ["/api/health", "/api/whoami", "/favicon.ico"]
+  },
+
+  "dashboard": {
+    "refreshInterval": 30000,
+    "timezone": "America/Los_Angeles"
+  },
+
+  "sessions": {
+    "_comment": "Session monitoring configuration",
+    "healthCheckInterval": 60000,
+    "sessionTimeout": 3600000,
+    "maxSessions": 10
+  },
+
+  "cache": {
+    "enabled": true,
+    "ttl": 300000,
+    "maxSize": 100
+  },
+
+  "health": {
+    "_comment": "Health monitoring endpoints",
+    "enabled": true,
+    "endpoints": [
+      {
+        "name": "Gateway",
+        "url": "http://localhost:3000/health",
+        "interval": 30000
+      }
+    ]
+  },
+
+  "analytics": {
+    "enabled": true,
+    "retentionDays": 30,
+    "trackTokenUsage": true,
+    "trackRouting": true
+  },
+
+  "security": {
+    "corsOrigins": ["http://localhost:3333"],
+    "rateLimiting": {
+      "enabled": true,
+      "windowMs": 60000,
+      "max": 100
+    }
+  },
+
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "file": null
+  },
+
+  "integrations": {
+    "linear": {
+      "enabled": false,
+      "apiKey": null,
+      "teamId": null
+    },
+    "slack": {
+      "enabled": false,
+      "webhookUrl": null
+    },
+    "discord": {
+      "enabled": false,
+      "webhookUrl": null
+    }
+  }
+}

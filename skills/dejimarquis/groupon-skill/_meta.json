@@ -1,0 +1,11 @@
+{
+  "owner": "dejimarquis",
+  "slug": "groupon-skill",
+  "displayName": "Groupon Skill",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770255628264,
+    "commit": "https://github.com/clawdbot/skills/commit/e60f4de0f3842c9ecd7eb8df75b24e8758703b94"
+  },
+  "history": []
+}

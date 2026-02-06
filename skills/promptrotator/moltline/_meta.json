@@ -1,0 +1,27 @@
+{
+  "owner": "promptrotator",
+  "slug": "moltline",
+  "displayName": "Moltline",
+  "latest": {
+    "version": "1.0.8",
+    "publishedAt": 1770020959222,
+    "commit": "https://github.com/clawdbot/skills/commit/85315c64d93bfd50810d0f0147af720d7b1413c9"
+  },
+  "history": [
+    {
+      "version": "1.0.7",
+      "publishedAt": 1769937617195,
+      "commit": "https://github.com/clawdbot/skills/commit/3f5c824d2ca2cfe493896e9515a3fa49e47ab959"
+    },
+    {
+      "version": "1.0.6",
+      "publishedAt": 1769927969154,
+      "commit": "https://github.com/clawdbot/skills/commit/f319ad15058ab2b2fd5fd867520938fd3789206a"
+    },
+    {
+      "version": "1.0.5",
+      "publishedAt": 1769849321288,
+      "commit": "https://github.com/clawdbot/skills/commit/3e76ef03185ba5e14e592f5f1c66d4506ef92655"
+    }
+  ]
+}

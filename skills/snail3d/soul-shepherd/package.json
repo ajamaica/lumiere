@@ -1,0 +1,26 @@
+{
+  "name": "soul-shepherd",
+  "version": "1.0.0",
+  "description": "Spiritual companionship and accountability for believers",
+  "main": "scripts/soul-shepherd.js",
+  "bin": {
+    "soul-shepherd": "scripts/soul-shepherd.js"
+  },
+  "scripts": {
+    "start": "node scripts/soul-shepherd.js",
+    "dev": "DEV_MODE=true node scripts/soul-shepherd.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "spiritual",
+    "accountability",
+    "sabbath",
+    "rest",
+    "scripture",
+    "faith"
+  ],
+  "author": "Soul Shepherd",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

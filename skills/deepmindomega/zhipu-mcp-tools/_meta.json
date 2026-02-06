@@ -1,0 +1,11 @@
+{
+  "owner": "deepmindomega",
+  "slug": "zhipu-mcp-tools",
+  "displayName": "zhipu-mcp-tools",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769886397055,
+    "commit": "https://github.com/clawdbot/skills/commit/94bf7aa6dfe7395363ad21779ec7577d547d7f81"
+  },
+  "history": []
+}

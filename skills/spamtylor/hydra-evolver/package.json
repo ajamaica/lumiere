@@ -1,0 +1,22 @@
+{
+  "name": "hydra-evolver",
+  "version": "1.0.0",
+  "description": "A Proxmox-native orchestration skill that turns any home lab into a Self-Healing AI Swarm.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "openclaw",
+    "proxmox",
+    "swarm",
+    "automation"
+  ],
+  "author": "bradfromtherealworld",
+  "license": "MIT",
+  "bin": {
+    "mesh_scan": "./scripts/scan.py",
+    "mesh_evolve": "./scripts/evolve.py",
+    "mesh_provision": "./scripts/provision.sh"
+  }
+}

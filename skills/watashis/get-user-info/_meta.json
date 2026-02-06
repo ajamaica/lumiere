@@ -1,0 +1,11 @@
+{
+  "owner": "watashis",
+  "slug": "get-user-info",
+  "displayName": "Get User Info",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770209881139,
+    "commit": "https://github.com/clawdbot/skills/commit/a4dbd796bd0a82deaeb647c68535cd6cd8abb9f0"
+  },
+  "history": []
+}

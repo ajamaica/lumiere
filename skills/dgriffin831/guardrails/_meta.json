@@ -1,0 +1,11 @@
+{
+  "owner": "dgriffin831",
+  "slug": "guardrails",
+  "displayName": "Guardrails",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770067285062,
+    "commit": "https://github.com/clawdbot/skills/commit/ae3af08621e1ad597c827ebc6745a1884dce530e"
+  },
+  "history": []
+}

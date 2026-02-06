@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "ssh-exec",
+  "displayName": "Ssh Exec",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135656263,
+    "commit": "https://github.com/clawdbot/skills/commit/d8fc89bee93b2bab0c4f7a45caab6560c2dfbd77"
+  },
+  "history": []
+}

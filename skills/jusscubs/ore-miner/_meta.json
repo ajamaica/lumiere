@@ -1,0 +1,11 @@
+{
+  "owner": "jusscubs",
+  "slug": "ore-miner",
+  "displayName": "ORE Miner",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770230782813,
+    "commit": "https://github.com/clawdbot/skills/commit/d37a8bf43666f2b84db77389782b1e54ee60cec6"
+  },
+  "history": []
+}

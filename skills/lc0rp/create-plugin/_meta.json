@@ -1,0 +1,11 @@
+{
+  "owner": "lc0rp",
+  "slug": "create-plugin",
+  "displayName": "Create Plugin",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770221916521,
+    "commit": "https://github.com/clawdbot/skills/commit/f6a0595ce7312610d88190f80abf447900ae26b9"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "statico-alt",
+  "slug": "spacemolt-ai-mmo",
+  "displayName": "SpaceMolt AI MMO",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770313134732,
+    "commit": "https://github.com/openclaw/skills/commit/23a20f8c0b20075f28351539f1972ffc65a46ec1"
+  },
+  "history": []
+}

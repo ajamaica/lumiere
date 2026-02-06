@@ -1,0 +1,17 @@
+{
+  "owner": "preston-thiele",
+  "slug": "danube",
+  "displayName": "Danube Tools Marketplace",
+  "latest": {
+    "version": "8.0.0",
+    "publishedAt": 1770260669239,
+    "commit": "https://github.com/clawdbot/skills/commit/0e1360827f57b1e8d8407df50d4a2e21906b8740"
+  },
+  "history": [
+    {
+      "version": "1.0.7",
+      "publishedAt": 1770009104612,
+      "commit": "https://github.com/clawdbot/skills/commit/76c915e61c86176b2ff0e078e7c46eb5de78a452"
+    }
+  ]
+}

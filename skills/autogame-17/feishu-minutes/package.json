@@ -1,0 +1,14 @@
+{
+  "name": "feishu-minutes",
+  "version": "1.0.0",
+  "description": "Fetch info, subtitle, and media from Feishu Minutes (Yi)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "node-fetch": "^2.7.0",
+    "yargs": "^17.7.2"
+  }
+}

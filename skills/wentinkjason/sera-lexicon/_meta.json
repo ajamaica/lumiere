@@ -1,0 +1,11 @@
+{
+  "owner": "wentinkjason",
+  "slug": "sera-lexicon",
+  "displayName": "SERA Lexicon & Unified Dynamics",
+  "latest": {
+    "version": "1.0.0-alpha",
+    "publishedAt": 1770149817102,
+    "commit": "https://github.com/clawdbot/skills/commit/2215898bbf010202a87147f3f63804f0e2199046"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "lythaeon",
+  "slug": "toon-utils",
+  "displayName": "Toon",
+  "latest": {
+    "version": "3.0.0",
+    "publishedAt": 1769965909927,
+    "commit": "https://github.com/clawdbot/skills/commit/319a37086a8fbc93259d7bdabe224ff72f9ad4b8"
+  },
+  "history": []
+}

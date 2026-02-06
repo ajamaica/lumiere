@@ -1,0 +1,11 @@
+{
+  "owner": "l-u-c-k-y",
+  "slug": "asana-agent-skill",
+  "displayName": "Asana",
+  "latest": {
+    "version": "0.2.0",
+    "publishedAt": 1769958490004,
+    "commit": "https://github.com/clawdbot/skills/commit/97c77a1c5ce62f4a979d55ce5501c8f159b97828"
+  },
+  "history": []
+}

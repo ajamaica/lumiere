@@ -1,0 +1,11 @@
+{
+  "owner": "zachgodsell93",
+  "slug": "harvest-time-reporting-api",
+  "displayName": "Harvest Time Reporting",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770005874641,
+    "commit": "https://github.com/clawdbot/skills/commit/65da4e81820d19545be119c91e4cf2704d32c1ca"
+  },
+  "history": []
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "memetic-collector",
+  "slug": "clawsocial",
+  "displayName": "clawsocial",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1769974705244,
+    "commit": "https://github.com/clawdbot/skills/commit/5d4e3a8cf100c1345820f76cab853f0db5a32f0b"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769929858605,
+      "commit": "https://github.com/clawdbot/skills/commit/c641b8738232dd8798f91f94d141189e8524ab5e"
+    }
+  ]
+}

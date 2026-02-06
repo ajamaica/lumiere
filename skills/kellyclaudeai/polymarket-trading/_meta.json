@@ -1,0 +1,11 @@
+{
+  "owner": "kellyclaudeai",
+  "slug": "polymarket-trading",
+  "displayName": "Polymarket Trading",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769965394824,
+    "commit": "https://github.com/clawdbot/skills/commit/af649f921331c251fd62a650352163b59cc735b2"
+  },
+  "history": []
+}

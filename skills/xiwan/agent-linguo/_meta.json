@@ -1,0 +1,11 @@
+{
+  "owner": "xiwan",
+  "slug": "agent-linguo",
+  "displayName": "agent-linguo",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770123115222,
+    "commit": "https://github.com/clawdbot/skills/commit/bfb379a0b31a54a8e1f1797430254f193cec154d"
+  },
+  "history": []
+}

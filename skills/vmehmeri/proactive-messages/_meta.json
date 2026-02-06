@@ -1,0 +1,11 @@
+{
+  "owner": "vmehmeri",
+  "slug": "proactive-messages",
+  "displayName": "Proactive Messages",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770124609930,
+    "commit": "https://github.com/clawdbot/skills/commit/757a9008fee1ed51250d42d8ab5ebf90359c1d7e"
+  },
+  "history": []
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "ccapton",
+  "slug": "model-alias-append",
+  "displayName": "Model Alias Append",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1769942094948,
+    "commit": "https://github.com/clawdbot/skills/commit/135f09e5a9358eaface73e26471d67b9759f75ed"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769934135088,
+      "commit": "https://github.com/clawdbot/skills/commit/4818fba364956c941e5b6dc3bda7bf9a8bf57168"
+    }
+  ]
+}

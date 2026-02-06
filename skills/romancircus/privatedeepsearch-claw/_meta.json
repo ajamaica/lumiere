@@ -1,0 +1,11 @@
+{
+  "owner": "romancircus",
+  "slug": "privatedeepsearch-claw",
+  "displayName": "🧿 Deep Private Search (VPN Required)",
+  "latest": {
+    "version": "1.0.8",
+    "publishedAt": 1770211936396,
+    "commit": "https://github.com/clawdbot/skills/commit/89013b0deec799f7b1d80c5a42a3e57e11f38ac6"
+  },
+  "history": []
+}

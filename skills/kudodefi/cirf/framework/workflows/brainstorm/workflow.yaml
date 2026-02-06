@@ -1,0 +1,41 @@
+# ═══════════════════════════════════════════════════════════════
+# CIRF - CRYPTO INTERACTIVE RESEARCH FRAMEWORK - WORKFLOW DEFINITION
+# ═══════════════════════════════════════════════════════════════
+
+# --- IDENTITY ---
+id: brainstorm
+type: session                    # Interactive session type (not research output)
+name: Brainstorm Session
+description: Interactive ideation - AI facilitates structured exploration until user satisfaction
+
+# --- DEPENDENCIES ---
+dependencies:
+  objectives: "./framework/workflows/brainstorm/objectives.md"
+  template: "./framework/workflows/brainstorm/template.md"
+  guides:
+    brainstorming-guide: "./framework/guides/brainstorming-guide.md"
+
+# --- CONFIGURATION ---
+configuration:
+  # Research depth - for on-demand research during session
+  # quick: Fast lookups, essential facts
+  # standard: Balanced research when needed
+  # deep: Thorough research for complex topics
+  research_depth: standard
+
+  # Output format for saved sessions
+  output_format: markdown
+
+  # Output path for session summaries
+  output_path: "./workspaces/{workspace_id}/outputs/brainstorm/brainstorm-{date}.md"
+
+# --- DIRECTIVE ---
+# ═══════════════════════════════════════════════════════════════
+# ⚠️ SPECIALIZED EXECUTION - SINGLE COMPONENT
+# ═══════════════════════════════════════════════════════════════
+# Brainstorm uses combined init+execution component.
+# This workflow is interactive - no fixed end point.
+# Session continues until user satisfaction.
+# ═══════════════════════════════════════════════════════════════
+directive:
+  execution: "./framework/components/brainstorm-session.md"

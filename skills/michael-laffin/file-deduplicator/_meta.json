@@ -1,0 +1,11 @@
+{
+  "owner": "michael-laffin",
+  "slug": "file-deduplicator",
+  "displayName": "File Deduplicator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770217901913,
+    "commit": "https://github.com/clawdbot/skills/commit/702959376ceb1e813d54e28350eaf93980629edf"
+  },
+  "history": []
+}

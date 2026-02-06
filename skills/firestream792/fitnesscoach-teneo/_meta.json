@@ -1,0 +1,22 @@
+{
+  "owner": "firestream792",
+  "slug": "fitnesscoach-teneo",
+  "displayName": "FitnessCoach - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770302185538,
+    "commit": "https://github.com/clawdbot/skills/commit/0f1c130c0f8aad8dc2ce480e2e614e7bf8b6be16"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770216617250,
+      "commit": "https://github.com/clawdbot/skills/commit/48a37e8e70c718be9775f48f5936b953d8132c56"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770215844300,
+      "commit": "https://github.com/clawdbot/skills/commit/cfd45a59ecd49a974adb571142f138172ca4c859"
+    }
+  ]
+}

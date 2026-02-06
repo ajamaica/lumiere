@@ -1,0 +1,65 @@
+{
+  "name": "@glitchward/openclaw-shield",
+  "version": "1.0.0",
+  "description": "LLM Shield prompt injection protection for OpenClaw",
+  "main": "llm-shield-skill.js",
+  "type": "module",
+  "keywords": [
+    "openclaw",
+    "skill",
+    "security",
+    "llm",
+    "prompt-injection",
+    "ai-safety",
+    "glitchward"
+  ],
+  "author": {
+    "name": "Glitchward",
+    "email": "support@glitchward.com",
+    "url": "https://glitchward.com"
+  },
+  "license": "MIT",
+  "homepage": "https://glitchward.com/shield",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/glitchward/openclaw-shield"
+  },
+  "bugs": {
+    "url": "https://github.com/glitchward/openclaw-shield/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "openclaw": {
+    "skill": true,
+    "name": "LLM Shield",
+    "description": "Protect against prompt injection attacks",
+    "icon": "shield",
+    "category": "security",
+    "config": {
+      "apiToken": {
+        "type": "secret",
+        "required": true,
+        "label": "Glitchward API Token",
+        "description": "Get your free token at glitchward.com/shield/settings"
+      },
+      "mode": {
+        "type": "select",
+        "default": "block",
+        "options": [
+          "block",
+          "warn",
+          "log"
+        ],
+        "label": "Protection Mode"
+      },
+      "riskThreshold": {
+        "type": "number",
+        "default": 0.5,
+        "min": 0,
+        "max": 1,
+        "label": "Risk Threshold"
+      }
+    }
+  }
+}

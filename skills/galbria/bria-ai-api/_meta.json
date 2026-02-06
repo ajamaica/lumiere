@@ -1,0 +1,11 @@
+{
+  "owner": "galbria",
+  "slug": "bria-ai-api",
+  "displayName": "Bria Ai API Client",
+  "latest": {
+    "version": "0.0.1",
+    "publishedAt": 1770313965752,
+    "commit": "https://github.com/openclaw/skills/commit/382133798b24d7d412faa54b46be466cba2e720e"
+  },
+  "history": []
+}

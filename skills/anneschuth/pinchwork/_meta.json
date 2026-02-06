@@ -1,0 +1,11 @@
+{
+  "owner": "anneschuth",
+  "slug": "pinchwork",
+  "displayName": "Pinchwork",
+  "latest": {
+    "version": "0.2.1",
+    "publishedAt": 1769900367175,
+    "commit": "https://github.com/clawdbot/skills/commit/0b76381f9a8c2e99a47cb46cf084ed50e866eabb"
+  },
+  "history": []
+}

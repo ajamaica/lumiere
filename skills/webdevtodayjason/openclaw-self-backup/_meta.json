@@ -1,0 +1,11 @@
+{
+  "owner": "webdevtodayjason",
+  "slug": "openclaw-self-backup",
+  "displayName": "Phoenix - The Backup Guardian",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770148500973,
+    "commit": "https://github.com/clawdbot/skills/commit/13df1399348a421850adcddc8c6cc814375c0f94"
+  },
+  "history": []
+}

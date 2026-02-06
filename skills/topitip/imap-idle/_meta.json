@@ -1,0 +1,11 @@
+{
+  "owner": "topitip",
+  "slug": "imap-idle",
+  "displayName": "Imap Idle",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770374961253,
+    "commit": "https://github.com/openclaw/skills/commit/272c1d1a00ce76d7cbfdd9b4b1e50d66d7b341b2"
+  },
+  "history": []
+}

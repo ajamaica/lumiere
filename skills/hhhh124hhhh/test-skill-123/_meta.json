@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "test-skill-123",
+  "displayName": "Test Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769988352023,
+    "commit": "https://github.com/clawdbot/skills/commit/889a0b35244e9813a6bbf0c1243b1fc5ac7e3fc4"
+  },
+  "history": []
+}

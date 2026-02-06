@@ -1,0 +1,145 @@
+{
+  "skill": {
+    "name": "token-saver",
+    "description": "Reduce OpenClaw AI costs by optimizing workspace files, model selection, and chat compaction. Analyzes .md files for compression, audits AI model usage, and recommends chat compaction thresholds. Writes to AGENTS.md for persistent mode. Accesses home directory to read OpenClaw config and session history.",
+    "hasSkillMd": true,
+    "directory": "C:\\Users\\Admin\\clawd\\skills\\token-saver"
+  },
+  "scan": {
+    "timestamp": "2026-02-03T16:48:22.134Z",
+    "filesScanned": [
+      ".clawhub\\origin.json",
+      "audit.json",
+      "package.json",
+      "README.md",
+      "scripts\\analyzer.js",
+      "scripts\\compressor.js",
+      "scripts\\optimizer.js",
+      "SKILL.md"
+    ],
+    "fileCount": 8
+  },
+  "riskLevel": "CLEAN",
+  "reputation": {
+    "publisher": "Local install",
+    "tier": "local",
+    "note": "Installed from local source",
+    "warning": "No publisher info available — verify source yourself."
+  },
+  "accuracyScore": {
+    "score": 10,
+    "disclosed": [
+      "Accesses files outside skill directory",
+      "Attempts persistence mechanisms",
+      "Contains prompt injection attempts (disclosed)"
+    ],
+    "undisclosed": [],
+    "reason": "Description accurately reflects what the skill does"
+  },
+  "findings": [
+    {
+      "id": "path-traversal",
+      "category": "File Access",
+      "severity": "low",
+      "originalSeverity": "high",
+      "file": "audit.json",
+      "line": 79,
+      "snippet": "\"snippet\": \"return path.resolve(dir, '..', '..');\",",
+      "explanation": "Path traversal — attempts to access files outside skill directory (downgraded — in documentation file) ⚡ Expected behavior — matches skill's stated purpose",
+      "intentMatch": true
+    },
+    {
+      "id": "homedir-access",
+      "category": "File Access",
+      "severity": "low",
+      "originalSeverity": "high",
+      "file": "audit.json",
+      "line": 57,
+      "snippet": "\"snippet\": \"const homedir = process.env.USERPROFILE || process.env.HOME || '';\",",
+      "explanation": "Home directory access in code — may reach user files outside workspace (downgraded — in documentation file) ⚡ Expected behavior — matches skill's stated purpose",
+      "intentMatch": true
+    },
+    {
+      "id": "memory-write",
+      "category": "Persistence",
+      "severity": "low",
+      "originalSeverity": "critical",
+      "file": "audit.json",
+      "line": 46,
+      "snippet": "\"snippet\": \"> **💡 Did you know?** Every time you send a prompt, your workspace files (SOUL.md, USER.md, MEMORY.md, AGENTS.md, and more) are sent along with it — every single time. These files count t",
+      "explanation": "Writes to agent memory/config files — persistence attack vector (downgraded — in documentation file) ⚡ Expected behavior — matches skill's stated purpose",
+      "intentMatch": true
+    },
+    {
+      "id": "memory-write",
+      "category": "Persistence",
+      "severity": "low",
+      "originalSeverity": "critical",
+      "file": "README.md",
+      "line": 3,
+      "snippet": "> **💡 Did you know?** Every time you send a prompt, your workspace files (SOUL.md, USER.md, MEMORY.md, AGENTS.md, and more) are sent along with it — every single time. These files count toward your c",
+      "explanation": "Writes to agent memory/config files — persistence attack vector (downgraded — in documentation file) ⚡ Expected behavior — matches skill's stated purpose",
+      "intentMatch": true
+    },
+    {
+      "id": "homedir-access",
+      "category": "File Access",
+      "severity": "low",
+      "originalSeverity": "high",
+      "file": "scripts\\analyzer.js",
+      "line": 163,
+      "snippet": "const homedir = process.env.USERPROFILE || process.env.HOME || '';",
+      "explanation": "Home directory access in code — may reach user files outside workspace ⚡ Expected behavior — matches skill's stated purpose",
+      "intentMatch": true
+    },
+    {
+      "id": "prompt-injection-system",
+      "category": "Prompt Injection",
+      "severity": "medium",
+      "originalSeverity": "critical",
+      "file": "scripts\\compressor.js",
+      "line": 301,
+      "snippet": "SYSTEM: Opus-main-chat, Sonnet4-cron+subagents, token-optimization-active",
+      "explanation": "Prompt injection — fake system message delimiter ⚡ Expected behavior — matches skill's stated purpose",
+      "intentMatch": true
+    },
+    {
+      "id": "path-traversal",
+      "category": "File Access",
+      "severity": "low",
+      "originalSeverity": "high",
+      "file": "scripts\\optimizer.js",
+      "line": 38,
+      "snippet": "return path.resolve(dir, '..', '..');",
+      "explanation": "Path traversal — attempts to access files outside skill directory ⚡ Expected behavior — matches skill's stated purpose",
+      "intentMatch": true
+    },
+    {
+      "id": "memory-file-access",
+      "category": "Sensitive File Access",
+      "severity": "low",
+      "originalSeverity": "critical",
+      "file": "SKILL.md",
+      "line": 4,
+      "snippet": "description: \"Reduce OpenClaw AI costs by optimizing workspace files, model selection, and chat compaction. Analyzes .md files for compression, audits AI model usage, and recommends chat compaction th",
+      "explanation": "Code that reads/writes Moltbot core files — could access agent memory or config (downgraded — in documentation file) ⚡ Expected behavior — matches skill's stated purpose",
+      "intentMatch": true
+    }
+  ],
+  "findingCount": 8,
+  "summary": {
+    "declaredPurpose": "Reduce OpenClaw AI costs by optimizing workspace files, model selection, and chat compaction. Analyzes .md files for compression, audits AI model usage, and recommends chat compaction thresholds. Writes to AGENTS.md for persistent mode. Accesses home directory to read OpenClaw config and session history.",
+    "actualCapabilities": [
+      "Accesses files outside skill directory",
+      "Attempts persistence mechanisms",
+      "Contains prompt injection attempts"
+    ],
+    "externalUrls": [],
+    "severityCounts": {
+      "critical": 0,
+      "high": 0,
+      "medium": 1,
+      "low": 7
+    }
+  }
+}

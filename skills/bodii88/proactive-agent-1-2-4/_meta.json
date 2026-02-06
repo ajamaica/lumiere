@@ -1,0 +1,11 @@
+{
+  "owner": "bodii88",
+  "slug": "proactive-agent-1-2-4",
+  "displayName": "Proactive Agent 1.2.4",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770234924679,
+    "commit": "https://github.com/clawdbot/skills/commit/5008e0b709b0c8847a3073da94ca6f317331667f"
+  },
+  "history": []
+}

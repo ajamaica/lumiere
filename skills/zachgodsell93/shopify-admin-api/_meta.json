@@ -1,0 +1,11 @@
+{
+  "owner": "zachgodsell93",
+  "slug": "shopify-admin-api",
+  "displayName": "Shopify Admin API",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770109348911,
+    "commit": "https://github.com/clawdbot/skills/commit/c53d80bbd55f32effa4377d8c5fde88b61b4f29f"
+  },
+  "history": []
+}

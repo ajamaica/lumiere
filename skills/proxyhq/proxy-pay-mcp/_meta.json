@@ -1,0 +1,17 @@
+{
+  "owner": "proxyhq",
+  "slug": "proxy-pay-mcp",
+  "displayName": "Proxy Pay Mcp",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770316731993,
+    "commit": "https://github.com/clawdbot/skills/commit/329d7206b9760ee4993d0c5e373c6d11d85a5317"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770217250604,
+      "commit": "https://github.com/clawdbot/skills/commit/83bb3f010704ed87097f9f6fd779de9216be56cb"
+    }
+  ]
+}

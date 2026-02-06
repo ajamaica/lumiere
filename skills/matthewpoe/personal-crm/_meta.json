@@ -1,0 +1,11 @@
+{
+  "owner": "matthewpoe",
+  "slug": "personal-crm",
+  "displayName": "Personal CRM",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770164356393,
+    "commit": "https://github.com/clawdbot/skills/commit/f4617de39534f8479bb8eb909d315e0e3199113c"
+  },
+  "history": []
+}

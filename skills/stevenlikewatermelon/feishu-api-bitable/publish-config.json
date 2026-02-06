@@ -1,0 +1,14 @@
+{
+  "slug": "feishu-bitable",
+  "name": "Feishu Bitable",
+  "version": "1.0.0",
+  "description": "飞书多维表格(Bitable)API技能 - 用于创建、读取、更新和删除飞书多维表格的数据表、记录和字段",
+  "tags": ["feishu", "lark", "bitable", "database", "spreadsheet", "automation", "api", "chinese"],
+  "changelog": "Initial release with complete Feishu Bitable API integration:\n- Full table management (list, create, get, delete)\n- Complete record operations (CRUD + batch)\n- Field and view management\n- Automatic token refresh\n- Error handling and retry logic\n- Command-line interface\n- Examples and documentation",
+  "readme": "See SKILL.md for detailed documentation",
+  "keywords": ["飞书", "多维表格", "bitable", "数据库", "自动化", "API"],
+  "author": "Clawdbot Community",
+  "license": "MIT",
+  "homepage": "https://clawdhub.com/skills/feishu-bitable",
+  "repository": "https://github.com/clawdbot/skills/tree/main/feishu-bitable"
+}

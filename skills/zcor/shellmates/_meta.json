@@ -1,0 +1,11 @@
+{
+  "owner": "zcor",
+  "slug": "shellmates",
+  "displayName": "shellmates",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769987353573,
+    "commit": "https://github.com/clawdbot/skills/commit/156f56a56fc7e178f4a1a39a7972a5257908ccb1"
+  },
+  "history": []
+}

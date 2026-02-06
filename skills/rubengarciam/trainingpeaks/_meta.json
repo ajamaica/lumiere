@@ -1,0 +1,11 @@
+{
+  "owner": "rubengarciam",
+  "slug": "trainingpeaks",
+  "displayName": "TrainingPeaks",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770206145635,
+    "commit": "https://github.com/clawdbot/skills/commit/75007d76663da5ffd0c51dbb44f75835b27a5bca"
+  },
+  "history": []
+}

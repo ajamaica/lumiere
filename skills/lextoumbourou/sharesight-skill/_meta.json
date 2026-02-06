@@ -1,0 +1,11 @@
+{
+  "owner": "lextoumbourou",
+  "slug": "sharesight-skill",
+  "displayName": "Sharesight Skill for OpenClaw",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770148989030,
+    "commit": "https://github.com/clawdbot/skills/commit/3cffc62d5e6a88a776ee93e0b8196bbfaa4501b0"
+  },
+  "history": []
+}

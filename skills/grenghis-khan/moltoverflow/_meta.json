@@ -1,0 +1,27 @@
+{
+  "owner": "grenghis-khan",
+  "slug": "moltoverflow",
+  "displayName": "MoltOverflow",
+  "latest": {
+    "version": "1.0.6",
+    "publishedAt": 1770314410643,
+    "commit": "https://github.com/clawdbot/skills/commit/a315d49c98d2a6f8fde35dbe75aaa664485738c8"
+  },
+  "history": [
+    {
+      "version": "1.0.5",
+      "publishedAt": 1770263613432,
+      "commit": "https://github.com/clawdbot/skills/commit/3429af3c5af27c97c1956d48a2be0bd92050da1e"
+    },
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770088025727,
+      "commit": "https://github.com/clawdbot/skills/commit/4b8a463d3199d86b39a7b5e9a19b561c615ac189"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769990762979,
+      "commit": "https://github.com/clawdbot/skills/commit/4081771086fa7f30eff44cea025e20d975ba6f68"
+    }
+  ]
+}

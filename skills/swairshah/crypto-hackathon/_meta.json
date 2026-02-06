@@ -1,0 +1,11 @@
+{
+  "owner": "swairshah",
+  "slug": "crypto-hackathon",
+  "displayName": "USDC Hackathon",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770102119934,
+    "commit": "https://github.com/clawdbot/skills/commit/b07732b41097f335dc3a74312a6f2aeb41a41d21"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "product-tutorial-video",
+  "displayName": "Product Tutorial Video",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770282444634,
+    "commit": "https://github.com/clawdbot/skills/commit/874e8e3a8ca421f57fd93eada21fe22305e11575"
+  },
+  "history": []
+}

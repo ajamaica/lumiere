@@ -1,0 +1,11 @@
+{
+  "owner": "snail3d",
+  "slug": "daily-devotional-auto",
+  "displayName": "Daily Devotional Auto",
+  "latest": {
+    "version": "1.2.4",
+    "publishedAt": 1770284345924,
+    "commit": "https://github.com/clawdbot/skills/commit/4d81d6d907d9fc4879538c831aad4eed3310094c"
+  },
+  "history": []
+}

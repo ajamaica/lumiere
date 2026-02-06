@@ -1,0 +1,11 @@
+{
+  "owner": "kslee9572",
+  "slug": "trade-signal-ttx",
+  "displayName": "Trade Signal",
+  "latest": {
+    "version": "1.0.6",
+    "publishedAt": 1770004013558,
+    "commit": "https://github.com/clawdbot/skills/commit/af8a8fe75c91395007b0e9e822b963348ae9f914"
+  },
+  "history": []
+}

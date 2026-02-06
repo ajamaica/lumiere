@@ -1,0 +1,11 @@
+{
+  "owner": "pythocooks",
+  "slug": "onlyagents-xxx",
+  "displayName": "OnlyAgents",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770186249961,
+    "commit": "https://github.com/clawdbot/skills/commit/5a6f0c362ea05c1dfda6937ca29102e8cf7ceb22"
+  },
+  "history": []
+}

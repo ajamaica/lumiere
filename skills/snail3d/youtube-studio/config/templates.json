@@ -1,0 +1,53 @@
+{
+  "devoted_journey": {
+    "title": "Daily Devotional - {topic}",
+    "description": "🙏 {hook}\n\n{body}\n\n⏱️ Timestamps:\n{timestamps}\n\n📖 Scripture: {reference}\n\n💬 Reflect: {reflection_question}\n\n---\n\n📺 Watch more devotionals on our channel\n🔔 Subscribe for daily encouragement\n👍 Like if this touched your heart\n💬 Share your thoughts in the comments\n\n#Devotional #Faith #Scripture",
+    "tags": ["devotional", "faith", "scripture", "spiritual", "encouragement"],
+    "category": "People"
+  },
+  "faith_teaching": {
+    "title": "Faith Teaching: {topic}",
+    "description": "{hook}\n\nIn this video, we explore:\n• {point_1}\n• {point_2}\n• {point_3}\n\n📖 Scripture Reference:\n{scripture_references}\n\n🎯 Key Takeaway:\n{key_message}\n\n---\n\n📺 More faith teachings on our channel\n🔔 Subscribe for weekly wisdom\n👍 Like if this was helpful\n💬 What's your experience? Share below!\n\n#FaithTeaching #Bible #Spirituality",
+    "tags": ["faith", "teaching", "bible", "spirituality", "wisdom"],
+    "category": "People"
+  },
+  "prayer_guide": {
+    "title": "Prayer Guide: {topic}",
+    "description": "Join us for a guided prayer session on {topic}.\n\n🙏 What We'll Cover:\n• {prayer_focus_1}\n• {prayer_focus_2}\n• {prayer_focus_3}\n\n⏱️ Prayer Points:\n{prayer_points}\n\n💝 Closing Prayer:\n{closing_thoughts}\n\n---\n\n✝️ Subscribe for daily prayer guides\n🕊️ Like if you found peace here\n💬 Share your prayer requests in comments\n📢 Tag a friend who needs prayer\n\n#Prayer #Spiritual #DailyPrayer",
+    "tags": ["prayer", "faith", "spiritual", "devotional", "guidance"],
+    "category": "People"
+  },
+  "testimony": {
+    "title": "My Faith Story: {title}",
+    "description": "Today I share my personal journey of faith and how God has worked in my life.\n\n📖 My Story:\n{story_summary}\n\n🌟 Key Moments:\n• {moment_1}\n• {moment_2}\n• {moment_3}\n\n💭 What I Learned:\n{lessons}\n\n🙏 My Prayer for You:\n{prayer}\n\n---\n\nThank you for listening to my testimony!\n📺 More stories coming soon\n🔔 Subscribe to hear more faith journeys\n👍 Like if you were inspired\n💬 Share your story in the comments\n\n#Testimony #FaithStory #Personal",
+    "tags": ["testimony", "faith", "personal", "story", "inspiration"],
+    "category": "People"
+  },
+  "comment_reply_grateful": {
+    "text": "Thank you so much for watching and taking the time to comment! 🙏 Your support truly means the world to me. Don't forget to subscribe and hit the notification bell so you don't miss any new videos!",
+    "template_type": "grateful"
+  },
+  "comment_reply_educational": {
+    "text": "Great question! I'm so glad you asked. Let me expand on that point... This is actually something many of our viewers want to understand better. Check out my video [INSERT VIDEO] where I dive deeper into this topic.",
+    "template_type": "educational"
+  },
+  "comment_reply_promotional": {
+    "text": "I love that you're interested in this! If you enjoyed this video, you'll absolutely love my series on [RELATED TOPIC]. Check it out - I think it will really help you on your journey.",
+    "template_type": "promotional"
+  },
+  "comment_reply_engagement": {
+    "text": "That's such a meaningful comment! I'd love to know more - what was your biggest takeaway from this video? How are you planning to apply these principles in your life?",
+    "template_type": "engagement"
+  },
+  "video_categories": {
+    "Music": "10",
+    "Sports": "17",
+    "People": "22",
+    "Science": "28",
+    "Technology": "28",
+    "Entertainment": "24",
+    "Education": "27",
+    "News": "25",
+    "Spirituality": "22"
+  }
+}

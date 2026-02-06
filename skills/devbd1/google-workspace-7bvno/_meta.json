@@ -1,0 +1,11 @@
+{
+  "owner": "devbd1",
+  "slug": "google-workspace-7bvno",
+  "displayName": "Google Workspace 7bvno",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770045841323,
+    "commit": "https://github.com/clawdbot/skills/commit/8d5b2976bc0b8c5d149a537c98ec17cd9f033d57"
+  },
+  "history": []
+}

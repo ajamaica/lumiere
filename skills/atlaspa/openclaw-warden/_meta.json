@@ -1,0 +1,11 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-warden",
+  "displayName": "Openclaw Warden",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770313111579,
+    "commit": "https://github.com/clawdbot/skills/commit/9dfa4e134c7bd443dff57ca28c826976a33c4dbd"
+  },
+  "history": []
+}

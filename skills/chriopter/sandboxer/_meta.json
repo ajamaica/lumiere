@@ -1,0 +1,11 @@
+{
+  "owner": "chriopter",
+  "slug": "sandboxer",
+  "displayName": "Sandboxer Integration",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770035934412,
+    "commit": "https://github.com/clawdbot/skills/commit/74bbf20e27e38571cbda7b557c7dfc666f310601"
+  },
+  "history": []
+}

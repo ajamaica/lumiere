@@ -1,0 +1,11 @@
+{
+  "owner": "iahmadzain",
+  "slug": "sentry-cli",
+  "displayName": "Sentry Cli",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770277968798,
+    "commit": "https://github.com/openclaw/skills/commit/a0d2c493337f57d428eb5cfa124e74332412b7e8"
+  },
+  "history": []
+}

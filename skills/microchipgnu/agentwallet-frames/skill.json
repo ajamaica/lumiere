@@ -1,0 +1,46 @@
+{
+  "name": "agentwallet",
+  "version": "0.1.7",
+  "description": "Wallets for AI agents with x402 payment signing and policy-controlled actions.",
+  "author": "agentwallet",
+  "license": "MIT",
+  "homepage": "https://agentwallet.mcpay.tech",
+  "keywords": [
+    "wallet",
+    "agent",
+    "ai",
+    "privy",
+    "custody",
+    "evm",
+    "solana",
+    "x402",
+    "policies",
+    "moltbook"
+  ],
+  "moltbot": {
+    "emoji": "$",
+    "category": "finance",
+    "api_base": "https://agentwallet.mcpay.tech/api/v1",
+    "files": {
+      "SKILL.md": "https://agentwallet.mcpay.tech/skill.md",
+      "HEARTBEAT.md": "https://agentwallet.mcpay.tech/heartbeat.md"
+    },
+    "requires": { "bins": ["curl"] },
+    "triggers": [
+      "agentwallet",
+      "agent wallet",
+      "wallet",
+      "setup wallet",
+      "claim wallet",
+      "check wallet",
+      "send funds",
+      "x402",
+      "policy",
+      "contract call",
+      "activity",
+      "transactions",
+      "tx history",
+      "moltbook fund"
+    ]
+  }
+}

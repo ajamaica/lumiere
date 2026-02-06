@@ -1,0 +1,22 @@
+{
+  "owner": "jcheese1",
+  "slug": "moltpet",
+  "displayName": "moltpet",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770189491408,
+    "commit": "https://github.com/clawdbot/skills/commit/b40508a828d5a0328b5c224f8107e3807766bd68"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770019829246,
+      "commit": "https://github.com/clawdbot/skills/commit/4a781b3196169752754ceba168867877c757c786"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769953576756,
+      "commit": "https://github.com/clawdbot/skills/commit/2e3145915668ce240a46b8120d71a7d583187c28"
+    }
+  ]
+}

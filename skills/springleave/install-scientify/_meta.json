@@ -1,0 +1,11 @@
+{
+  "owner": "springleave",
+  "slug": "install-scientify",
+  "displayName": "Scientify -  AI-powered collaborator for your scientific research works.",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770195856613,
+    "commit": "https://github.com/clawdbot/skills/commit/6f37f18877c424f82ffc809905d4011194525693"
+  },
+  "history": []
+}

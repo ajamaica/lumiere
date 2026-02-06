@@ -1,0 +1,22 @@
+{
+  "owner": "masoncags-tech",
+  "slug": "abstract-onboard",
+  "displayName": "Abstract Onboard",
+  "latest": {
+    "version": "1.6.0",
+    "publishedAt": 1770349769670,
+    "commit": "https://github.com/openclaw/skills/commit/211656711b8c28f27ff7f033e0216f52776fe26c"
+  },
+  "history": [
+    {
+      "version": "1.5.0",
+      "publishedAt": 1770314013834,
+      "commit": "https://github.com/clawdbot/skills/commit/ba0eae784bf119845e269ff0226ddf0b3456d052"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770264654853,
+      "commit": "https://github.com/clawdbot/skills/commit/7d5a5f36787fdc9bebf67fef0f9dff51f2f1a040"
+    }
+  ]
+}

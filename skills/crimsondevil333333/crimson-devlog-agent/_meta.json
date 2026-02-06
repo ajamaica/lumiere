@@ -1,0 +1,11 @@
+{
+  "owner": "crimsondevil333333",
+  "slug": "crimson-devlog-agent",
+  "displayName": "Crimson DevLog",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770280330217,
+    "commit": "https://github.com/clawdbot/skills/commit/09e5b824e60cbf8b2bd0936ab9ae31288f7f6761"
+  },
+  "history": []
+}

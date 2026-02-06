@@ -1,0 +1,158 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0b0f"/>
+      <stop offset="50%" stop-color="#0f1115"/>
+      <stop offset="100%" stop-color="#1a0a20"/>
+    </linearGradient>
+
+    <!-- Logo shell gradient: Pink -> Cyan -->
+    <linearGradient id="shell-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#00f0ff"/>
+    </linearGradient>
+
+    <!-- "Me" text gradient: Pink -> Violet (from-pink-500 to-violet-500) -->
+    <linearGradient id="me-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+
+    <!-- Cyan glow -->
+    <filter id="cyan-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Logo chip glow -->
+    <filter id="chip-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft glow for background elements -->
+    <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="40" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Grid pattern -->
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1a1d25" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bg-gradient)"/>
+
+  <!-- Subtle grid overlay -->
+  <rect width="1200" height="675" fill="url(#grid)" opacity="0.3"/>
+
+  <!-- Background glow orbs -->
+  <ellipse cx="200" cy="200" rx="200" ry="200" fill="#ec4899" opacity="0.08" filter="url(#soft-glow)"/>
+  <ellipse cx="1000" cy="500" rx="250" ry="250" fill="#00f0ff" opacity="0.06" filter="url(#soft-glow)"/>
+
+  <!-- Main content group - centered -->
+  <g transform="translate(600, 337.5)">
+
+    <!-- Logo (scaled to ~180px) centered above text -->
+    <g transform="translate(0, -100) scale(1.8)">
+      <g transform="translate(-50, -50)">
+        <!-- Top Capsule Shell -->
+        <path
+          d="M30 25 C30 11.19 41.19 0 55 0 C68.81 0 80 11.19 80 25 L80 42 L30 42 Z"
+          fill="url(#shell-gradient)"
+          transform="rotate(-45 55 50) translate(-5, -5)"
+          opacity="0.95"
+        />
+
+        <!-- Bottom Capsule Shell -->
+        <path
+          d="M30 58 L80 58 L80 75 C80 88.81 68.81 100 55 100 C41.19 100 30 88.81 30 75 Z"
+          fill="url(#shell-gradient)"
+          transform="rotate(-45 55 50) translate(5, 5)"
+          opacity="0.95"
+        />
+
+        <!-- Core Chip -->
+        <g filter="url(#chip-glow)">
+          <!-- Chip base -->
+          <rect
+            x="43" y="43" width="24" height="24" rx="4"
+            stroke="#00f0ff" stroke-width="2.5" fill="rgba(15, 17, 21, 0.95)"
+          />
+
+          <!-- Chip pins (left) -->
+          <path d="M43 47 H40 M43 55 H40 M43 63 H40" stroke="#00f0ff" stroke-width="2" stroke-linecap="round"/>
+          <!-- Chip pins (right) -->
+          <path d="M67 47 H70 M67 55 H70 M67 63 H70" stroke="#00f0ff" stroke-width="2" stroke-linecap="round"/>
+          <!-- Chip pins (top) -->
+          <path d="M47 43 V40 M55 43 V40 M63 43 V40" stroke="#00f0ff" stroke-width="2" stroke-linecap="round"/>
+          <!-- Chip pins (bottom) -->
+          <path d="M47 67 V70 M55 67 V70 M63 67 V70" stroke="#00f0ff" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Trend arrow (winning green) - centered in chip -->
+          <path
+            d="M48 59 L53 54 L57 58 L63 50 M63 50 H58 M63 50 V55"
+            stroke="#00ff94"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+      </g>
+    </g>
+
+    <!-- PredictMe text with glow -->
+    <g transform="translate(0, 80)">
+      <!-- Glow layer -->
+      <text x="0" y="0" text-anchor="middle" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="72" font-weight="700" fill="#00f0ff" filter="url(#cyan-glow)" opacity="0.5">
+        <tspan>Predict</tspan><tspan fill="#ec4899">Me</tspan>
+      </text>
+      <!-- Main text -->
+      <text x="0" y="0" text-anchor="middle" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="72" font-weight="700" fill="#00f0ff">
+        <tspan>Predict</tspan><tspan fill="url(#me-gradient)">Me</tspan>
+      </text>
+    </g>
+
+    <!-- Tagline -->
+    <text x="0" y="150" text-anchor="middle" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="28" font-weight="400" fill="#e0e0e0" letter-spacing="2">
+      Trade the Future. Predict. Win.
+    </text>
+
+  </g>
+
+  <!-- Decorative price lines (subtle, in background) -->
+  <g opacity="0.15" stroke="#00f0ff" stroke-width="1">
+    <!-- Horizontal dashed lines suggesting price levels -->
+    <line x1="50" y1="150" x2="200" y2="150" stroke-dasharray="8,8"/>
+    <line x1="50" y1="200" x2="180" y2="200" stroke-dasharray="8,8"/>
+    <line x1="50" y1="250" x2="160" y2="250" stroke-dasharray="8,8"/>
+
+    <line x1="1000" y1="450" x2="1150" y2="450" stroke-dasharray="8,8"/>
+    <line x1="1020" y1="500" x2="1150" y2="500" stroke-dasharray="8,8"/>
+    <line x1="1040" y1="550" x2="1150" y2="550" stroke-dasharray="8,8"/>
+  </g>
+
+  <!-- Small price indicators -->
+  <g font-family="JetBrains Mono, monospace" font-size="12" fill="#00f0ff" opacity="0.3">
+    <text x="60" y="145">97,234.50</text>
+    <text x="60" y="195">97,184.25</text>
+    <text x="60" y="245">97,134.00</text>
+
+    <text x="1060" y="445">97,084.75</text>
+    <text x="1060" y="495">97,034.50</text>
+    <text x="1060" y="545">96,984.25</text>
+  </g>
+
+</svg>

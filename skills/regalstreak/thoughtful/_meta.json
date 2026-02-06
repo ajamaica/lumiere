@@ -1,0 +1,17 @@
+{
+  "owner": "regalstreak",
+  "slug": "thoughtful",
+  "displayName": "Thoughtful",
+  "latest": {
+    "version": "1.2.0",
+    "publishedAt": 1770385130274,
+    "commit": "https://github.com/openclaw/skills/commit/853a36f014ec1689b78e1ffc0f48053f9a7dc302"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770039511441,
+      "commit": "https://github.com/clawdbot/skills/commit/b444d6e71e557447545b81b642fb820cf2d63151"
+    }
+  ]
+}

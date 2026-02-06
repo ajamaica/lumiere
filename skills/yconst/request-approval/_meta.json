@@ -1,0 +1,11 @@
+{
+  "owner": "yconst",
+  "slug": "request-approval",
+  "displayName": "Request Approval",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769870189108,
+    "commit": "https://github.com/clawdbot/skills/commit/89a27f6eaa22168d2921bad5c4c20ed4ef51fff1"
+  },
+  "history": []
+}

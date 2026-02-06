@@ -1,0 +1,11 @@
+{
+  "owner": "robin797860",
+  "slug": "stock-watcher",
+  "displayName": "Stock Watcher",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770348343954,
+    "commit": "https://github.com/openclaw/skills/commit/84e25800ac2b1447b0878b6d53c798d9773a345d"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "tairov",
+  "slug": "pasteclaw",
+  "displayName": "PasteClaw",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770069461050,
+    "commit": "https://github.com/clawdbot/skills/commit/a49c957a5605ec8f940af0de824f8cdf95e4a6d8"
+  },
+  "history": []
+}

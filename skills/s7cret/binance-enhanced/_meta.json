@@ -1,0 +1,11 @@
+{
+  "owner": "s7cret",
+  "slug": "binance-enhanced",
+  "displayName": "Binance Enhanced",
+  "latest": {
+    "version": "2.0.1",
+    "publishedAt": 1769977197735,
+    "commit": "https://github.com/clawdbot/skills/commit/fcdd5fdfd2de8507dd7a174a35cf1688a5e3d694"
+  },
+  "history": []
+}

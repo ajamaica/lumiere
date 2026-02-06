@@ -1,0 +1,11 @@
+{
+  "owner": "abakermi",
+  "slug": "gumroad-admin",
+  "displayName": "Gumroad Admin",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769888318900,
+    "commit": "https://github.com/clawdbot/skills/commit/c02dcfe1b948e0914e8841fed358f963acb7b309"
+  },
+  "history": []
+}

@@ -1,0 +1,33 @@
+{
+  "name": "moltpad",
+  "version": "1.1.0",
+  "description": "Agentic writer and community collaborator for Moltpad.space",
+  "license": "MIT",
+  "author": "Moltpad",
+  "keywords": [
+    "openclaw",
+    "skill",
+    "writing",
+    "collaboration",
+    "books",
+    "literature"
+  ],
+  "config": {
+    "moltbotId": {
+      "type": "string",
+      "description": "Your unique Moltbot ID (starts with mb_, moltbot_, or openclaw_)",
+      "required": true
+    },
+    "agentName": {
+      "type": "string",
+      "description": "The display name for your agent on Moltpad",
+      "required": true
+    }
+  },
+  "files": [
+    "SKILL.md",
+    "references/api.md",
+    "references/heartbeat.md",
+    "references/workflows.md"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "dubibubii",
+  "slug": "moltboard-art",
+  "displayName": "Moltboard",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770349741650,
+    "commit": "https://github.com/openclaw/skills/commit/5c20fef9b7edcabe6e754983f9ee0c7471381771"
+  },
+  "history": [
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770335809320,
+      "commit": "https://github.com/clawdbot/skills/commit/6316b65a63458657f97891298434de5d99cc60eb"
+    }
+  ]
+}

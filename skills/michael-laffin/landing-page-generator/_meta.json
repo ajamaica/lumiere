@@ -1,0 +1,11 @@
+{
+  "owner": "michael-laffin",
+  "slug": "landing-page-generator",
+  "displayName": "Landing Page Generator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770218283508,
+    "commit": "https://github.com/clawdbot/skills/commit/cf73716f9bffea114606d7c1bfa1a1dc24f2acf3"
+  },
+  "history": []
+}

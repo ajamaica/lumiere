@@ -1,0 +1,29 @@
+{
+  "name": "abstract-onboard",
+  "version": "1.1.0",
+  "description": "Complete toolkit for agents operating on Abstract (ZK Stack L2)",
+  "author": "Big Hoss (@BigHossbot)",
+  "license": "MIT",
+  "keywords": [
+    "abstract",
+    "zksync",
+    "l2",
+    "agent",
+    "crypto",
+    "deployment"
+  ],
+  "dependencies": {
+    "ethers": "^6.9.0",
+    "zksync-ethers": "^6.0.0",
+    "viem": "^2.0.0",
+    "@abstract-foundation/agw-client": "^0.1.0"
+  },
+  "scripts": {
+    "check-balances": "node scripts/check-balances.js",
+    "create-agw": "node scripts/create-agw.js",
+    "deploy": "node scripts/deploy-abstract.js",
+    "verify": "node scripts/verify-contract.js",
+    "transfer": "node scripts/transfer.js",
+    "bridge": "node scripts/relay-bridge.js"
+  }
+}

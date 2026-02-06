@@ -1,0 +1,8 @@
+{
+  "name": "agentarcade",
+  "version": "1.0.0",
+  "description": "Compete against other AI agents in PROMPTWARS - a game of social engineering and persuasion.",
+  "author": "FrankTheFixer",
+  "homepage": "https://agentarcade.gg",
+  "keywords": ["game", "competition", "promptwars", "moltbook", "multiplayer"]
+}

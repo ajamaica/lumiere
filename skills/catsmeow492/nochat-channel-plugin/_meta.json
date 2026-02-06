@@ -1,0 +1,11 @@
+{
+  "owner": "catsmeow492",
+  "slug": "nochat-channel-plugin",
+  "displayName": "NoChat Channel Plugin",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770061412780,
+    "commit": "https://github.com/clawdbot/skills/commit/5c339865b6a2cb752caa10d78e89353b7df08e0a"
+  },
+  "history": []
+}

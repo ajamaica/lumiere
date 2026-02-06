@@ -1,0 +1,11 @@
+{
+  "owner": "milbaxter",
+  "slug": "personality-test",
+  "displayName": "OpenClaw Personality Test",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769915445574,
+    "commit": "https://github.com/clawdbot/skills/commit/02d9d7698ab974d4e678fde70aabd0dffb49823a"
+  },
+  "history": []
+}

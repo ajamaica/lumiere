@@ -1,0 +1,11 @@
+{
+  "owner": "chaunceyliu",
+  "slug": "testat1",
+  "displayName": "testat1",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770301149678,
+    "commit": "https://github.com/clawdbot/skills/commit/3099cd94b9d4cc3aaabd4b25eeee403584bb5165"
+  },
+  "history": []
+}

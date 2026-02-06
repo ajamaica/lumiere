@@ -1,0 +1,52 @@
+{
+  "owner": "oakencore",
+  "slug": "skillvet",
+  "displayName": "Skillvet",
+  "latest": {
+    "version": "2.0.7",
+    "publishedAt": 1770316726774,
+    "commit": "https://github.com/openclaw/skills/commit/6e9905b0517fa4e508256599d5289a5630a90519"
+  },
+  "history": [
+    {
+      "version": "2.0.5",
+      "publishedAt": 1770316224800,
+      "commit": "https://github.com/clawdbot/skills/commit/40110cc81254212fc863408c34622a6dd95dae8d"
+    },
+    {
+      "version": "2.0.4",
+      "publishedAt": 1770314246003,
+      "commit": "https://github.com/clawdbot/skills/commit/9fc1eca8412a0dad05359567d1223234ed403dd1"
+    },
+    {
+      "version": "2.0.2",
+      "publishedAt": 1770313703576,
+      "commit": "https://github.com/clawdbot/skills/commit/e34e025fc4e6f43db28efb1e8bd6fd7aaca4ab1a"
+    },
+    {
+      "version": "2.0.1",
+      "publishedAt": 1770224338745,
+      "commit": "https://github.com/clawdbot/skills/commit/bad813d349172ea83518ef0b166fc4fb2dca804c"
+    },
+    {
+      "version": "2.0.0",
+      "publishedAt": 1770118600305,
+      "commit": "https://github.com/clawdbot/skills/commit/de57032ac96e7b3e7bb4cff6689725f9044e722e"
+    },
+    {
+      "version": "1.0.5",
+      "publishedAt": 1769914675514,
+      "commit": "https://github.com/clawdbot/skills/commit/28ba00d1ad62a75eb02b12ebf597f82c97091847"
+    },
+    {
+      "version": "1.0.3",
+      "publishedAt": 1769908701249,
+      "commit": "https://github.com/clawdbot/skills/commit/d6e0a42d8288733b7c0244c76c5b0ab1a4b7d1a2"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769886515124,
+      "commit": "https://github.com/clawdbot/skills/commit/bc1216c5676fe0bdee13167e62df66eda6f0ed17"
+    }
+  ]
+}

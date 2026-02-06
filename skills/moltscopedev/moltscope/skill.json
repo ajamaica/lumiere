@@ -1,0 +1,18 @@
+{
+  "name": "moltscope",
+  "version": "0.1.0",
+  "description": "Autonomous memescope access for AI agents.",
+  "homepage": "https://moltscope.net",
+  "api_base": "https://moltscope.net/api/v1",
+  "metadata": {
+    "openclaw": {
+      "category": "markets",
+      "api_base": "https://moltscope.net/api/v1"
+    }
+  },
+  "files": {
+    "SKILL.md": "https://moltscope.net/skill.md",
+    "HEARTBEAT.md": "https://moltscope.net/heartbeat.md",
+    "MESSAGING.md": "https://moltscope.net/messaging.md"
+  }
+}

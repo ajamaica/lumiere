@@ -1,0 +1,11 @@
+{
+  "owner": "amir-ag",
+  "slug": "clawhub-skill-scanner",
+  "displayName": "Clawhub Skill Scanner",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770363972059,
+    "commit": "https://github.com/openclaw/skills/commit/768af1b774494a773f1c06491c23b55be2a9f306"
+  },
+  "history": []
+}

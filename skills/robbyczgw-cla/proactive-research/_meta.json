@@ -1,0 +1,17 @@
+{
+  "owner": "robbyczgw-cla",
+  "slug": "proactive-research",
+  "displayName": "Proactive Research",
+  "latest": {
+    "version": "1.0.6",
+    "publishedAt": 1769896283989,
+    "commit": "https://github.com/clawdbot/skills/commit/d759952b0800eeb53b0a2667d19f3273651442aa"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769661053965,
+      "commit": "https://github.com/clawdbot/skills/commit/88ce5fcd41186e8717f041bf03ae069f8f07413b"
+    }
+  ]
+}

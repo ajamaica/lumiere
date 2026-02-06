@@ -1,0 +1,11 @@
+{
+  "owner": "autogame-17",
+  "slug": "feishu-file",
+  "displayName": "Feishu File",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770317576414,
+    "commit": "https://github.com/openclaw/skills/commit/a656364614485deeb7f3ac9b77804810ef8d945e"
+  },
+  "history": []
+}

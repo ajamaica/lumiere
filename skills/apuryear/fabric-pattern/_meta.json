@@ -1,0 +1,11 @@
+{
+  "owner": "apuryear",
+  "slug": "fabric-pattern",
+  "displayName": "Fabric Patterns",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769911358400,
+    "commit": "https://github.com/clawdbot/skills/commit/fedcb3714e862afae870220660aa42f1ff0941d2"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "rnijhara",
+  "slug": "beads",
+  "displayName": "Beads Task Tracker",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770200277946,
+    "commit": "https://github.com/clawdbot/skills/commit/99bf298b76026a01a3fcacb1af61b411f63147fe"
+  },
+  "history": []
+}

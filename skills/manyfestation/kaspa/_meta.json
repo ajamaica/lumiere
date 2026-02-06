@@ -1,0 +1,27 @@
+{
+  "owner": "manyfestation",
+  "slug": "kaspa",
+  "displayName": "Kaspa Wallet",
+  "latest": {
+    "version": "1.0.9",
+    "publishedAt": 1770298096585,
+    "commit": "https://github.com/clawdbot/skills/commit/ca3a5025c4713e2dcdc43c0fc78a803e13b6211d"
+  },
+  "history": [
+    {
+      "version": "1.0.7",
+      "publishedAt": 1770219764533,
+      "commit": "https://github.com/clawdbot/skills/commit/801cafaf1d8b4b07323c08b60c85391018e8834b"
+    },
+    {
+      "version": "1.0.4",
+      "publishedAt": 1770125683578,
+      "commit": "https://github.com/clawdbot/skills/commit/00d4fdda3f24d26a4b0499bd87970f8dc4098352"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770042185726,
+      "commit": "https://github.com/clawdbot/skills/commit/7870d009588ac9a277601c673965734a9a24c345"
+    }
+  ]
+}

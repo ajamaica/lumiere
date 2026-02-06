@@ -1,0 +1,11 @@
+{
+  "owner": "aisapay",
+  "slug": "aisa-youtube-search",
+  "displayName": "AIsa Youtube Search",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770272841142,
+    "commit": "https://github.com/clawdbot/skills/commit/bccbd5a32d794283b67f235235bf7d4041c1cb37"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "okaris",
+  "slug": "ai-rag-pipeline",
+  "displayName": "Ai Rag Pipeline",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770363105070,
+    "commit": "https://github.com/openclaw/skills/commit/0edb304120afd624d5461e8572db714f7b17afef"
+  },
+  "history": []
+}

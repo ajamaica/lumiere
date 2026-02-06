@@ -1,0 +1,9 @@
+{
+  "fixture": "evasive-05-alias-chain",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 10,
+  "expected_risk": "CRITICAL",
+  "expected_categories": ["evasion", "credential-theft"],
+  "must_detect_rules": ["FUNCTION_ALIAS"]
+}

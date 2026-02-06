@@ -1,0 +1,17 @@
+{
+  "owner": "wonyoung-huh",
+  "slug": "nano-banana-korean-rendering",
+  "displayName": "Nano banana korean rendering",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770381348568,
+    "commit": "https://github.com/openclaw/skills/commit/29faba73094f0d97b1e2d8420aa63574311c22c5"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770280470914,
+      "commit": "https://github.com/clawdbot/skills/commit/1cfdb95041329e185717b0388f99f789d4bef897"
+    }
+  ]
+}

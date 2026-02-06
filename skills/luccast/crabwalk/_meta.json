@@ -1,0 +1,17 @@
+{
+  "owner": "luccast",
+  "slug": "crabwalk",
+  "displayName": "Crabwalk",
+  "latest": {
+    "version": "0.1.2",
+    "publishedAt": 1770091944827,
+    "commit": "https://github.com/clawdbot/skills/commit/664c48af81ec06f7fd8fd0264b8940c86f88eaaf"
+  },
+  "history": [
+    {
+      "version": "0.1.1",
+      "publishedAt": 1770074994540,
+      "commit": "https://github.com/clawdbot/skills/commit/9fd54684acc34d78e1653ba9e0c627660406e500"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "name": "mamo-cli",
+  "version": "1.0.0",
+  "description": "CLI for Mamo DeFi yield aggregator - manage yield strategies on Moonwell/Base",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "mamo": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "mamo": "tsx src/index.ts",
+    "mamo:legacy": "node scripts/mamo.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "lint:eslint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run lint && npm run test && npm run build"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "siwe": "^2.3.2",
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vitest/coverage-v8": "^1.6.0",
+    "eslint": "^8.57.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "defi",
+    "yield",
+    "moonwell",
+    "base",
+    "mamo",
+    "cli",
+    "ethereum",
+    "crypto",
+    "yield-aggregator",
+    "web3"
+  ],
+  "author": "Moonwell <hello@moonwell.fi> (https://moonwell.fi)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonwell-fi/openclaw-mamo-skill.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonwell-fi/openclaw-mamo-skill/issues"
+  },
+  "homepage": "https://github.com/moonwell-fi/openclaw-mamo-skill#readme"
+}

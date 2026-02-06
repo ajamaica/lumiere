@@ -1,0 +1,11 @@
+{
+  "owner": "dommholland",
+  "slug": "dm-bot",
+  "displayName": "dm.bot Agent Messaging",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770088807840,
+    "commit": "https://github.com/clawdbot/skills/commit/acd453dd14ee44add1bcb8788c39d6aa706531ca"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "michael-laffin",
+  "slug": "product-description-generator",
+  "displayName": "Product Description Generator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770215436526,
+    "commit": "https://github.com/clawdbot/skills/commit/992826553f48ffc4d5a53058dd4854357feb9360"
+  },
+  "history": []
+}

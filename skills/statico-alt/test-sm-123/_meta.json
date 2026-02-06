@@ -1,0 +1,11 @@
+{
+  "owner": "statico-alt",
+  "slug": "test-sm-123",
+  "displayName": "Test",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770313158636,
+    "commit": "https://github.com/openclaw/skills/commit/e3bba70998238513bfef7a297aaa9c5ae49ca320"
+  },
+  "history": []
+}

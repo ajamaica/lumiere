@@ -1,0 +1,68 @@
+# AH GraphQL Server Fingerprint (2026-02-02)
+
+## Endpoint
+- URL: https://www.ah.nl/gql
+- Method: POST
+- Content-Type: application/json
+
+## Required Headers
+- x-client-name: ah-allerhande
+- x-client-platform-type: Web
+- x-client-version: 3.13.30
+
+## Error Response Format
+```json
+{
+  "errors": [{
+    "message": "...",
+    "extensions": {
+      "code": "ERROR_CODE"
+    }
+  }]
+}
+```
+
+## Error Codes Detected
+- `GRAPHQL_VALIDATION_FAILED` - Field validation errors
+- `PARSING_ERROR` - Syntax errors (format: "parsing error: syntax error: ...")
+- `INTROSPECTION_DISABLED` - Schema introspection blocked
+
+## Fingerprinting Indicators
+
+### 1. Error Message Style
+- Parsing errors: "parsing error: syntax error: expected R_CURLY, got EOF"
+- Suggests: **GraphQL parser with Rust-style error messages**
+- Likely: **Apollo Router** or **Hasura** (both use Rust)
+
+### 2. Extension Code Format
+- Uses uppercase with underscores: `GRAPHQL_VALIDATION_FAILED`
+- Matches: **Apollo Server** conventions
+- NOT: graphql-js (uses camelCase), Hasura (uses lowercase)
+
+### 3. Field Suggestion Format
+- Error: 'Did you mean "__schema { ... }"?'
+- Suggests: **graphql-js validation** (Apollo uses graphql-js)
+
+### 4. Introspection Disabled
+- Explicit error: "introspection has been disabled"
+- Common in: **Apollo Server** with `introspection: false`
+
+## Conclusion
+**Likely stack: Apollo Server (Node.js) or Apollo Router (Rust)**
+
+Evidence:
+- ✅ Apollo-style error codes (uppercase with underscores)
+- ✅ graphql-js validation messages
+- ✅ Explicit introspection disable message
+- ✅ Field suggestion format matches Apollo
+
+**Most probable:** Apollo Server 4.x (with introspection disabled in production)
+
+## Why graphw00f Failed
+1. Requires standard paths (`/graphql`, not `/gql`)
+2. Custom headers needed (x-client-name, etc.)
+3. Bot detection blocks standard HTTP requests
+4. `__typename` queries trigger internal errors (not handled by graphw00f)
+
+## Alternative Fingerprinting Method
+Use curl-cffi with browser impersonation + custom headers to bypass bot detection.

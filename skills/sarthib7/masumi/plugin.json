@@ -1,0 +1,104 @@
+{
+  "id": "masumi-payments",
+  "name": "Masumi Payments",
+  "version": "1.0.0",
+  "description": "Zero-config blockchain payments and agent registry for OpenClaw agents. Enable with one command: masumi_enable()",
+  "author": "Masumi Network",
+  "license": "MIT",
+  "homepage": "https://masumi.network",
+  "repository": "https://github.com/masumi-network/masumi-openclaw-skill.git",
+  "capabilities": {
+    "tools": true,
+    "rpc": true,
+    "webhooks": true,
+    "hooks": true,
+    "skills": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "network": {
+        "type": "string",
+        "enum": ["Preprod", "Mainnet"],
+        "default": "Preprod",
+        "description": "Cardano network to use"
+      },
+      "paymentServiceUrl": {
+        "type": "string",
+        "description": "YOUR self-hosted Masumi Payment Service URL. You run this yourself - there is NO centralized service. Examples: http://localhost:3000/api/v1 (local) or https://your-service.railway.app/api/v1 (Railway)"
+      },
+      "registryServiceUrl": {
+        "type": "string",
+        "description": "Masumi Registry Service URL (optional, defaults to paymentServiceUrl)"
+      },
+      "paymentApiKey": {
+        "type": "string",
+        "description": "Payment API key with ReadAndPay permission (optional if auto-provisioning)"
+      },
+      "registryApiKey": {
+        "type": "string",
+        "description": "Registry API key (optional, defaults to paymentApiKey)"
+      },
+      "sellerVkey": {
+        "type": "string",
+        "description": "Seller wallet verification key (optional if auto-provisioning)"
+      },
+      "agentIdentifier": {
+        "type": "string",
+        "description": "Agent ID from Masumi registration (auto-generated if not provided)"
+      },
+      "autoProvision": {
+        "type": "boolean",
+        "default": true,
+        "description": "Automatically provision wallet and register agent on first use"
+      },
+      "agentName": {
+        "type": "string",
+        "description": "Agent display name (optional, auto-generated from OpenClaw context)"
+      },
+      "agentDescription": {
+        "type": "string",
+        "description": "Agent description for registry"
+      },
+      "pricingTier": {
+        "type": "string",
+        "enum": ["free", "basic", "premium"],
+        "default": "free",
+        "description": "Default pricing tier for auto-provisioned agents"
+      },
+      "moltbook": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable MoltBook identity integration"
+          },
+          "botApiKey": {
+            "type": "string",
+            "description": "MoltBook bot API key"
+          },
+          "appApiKey": {
+            "type": "string",
+            "description": "MoltBook app API key for verification"
+          }
+        }
+      },
+      "autoAcceptPayments": {
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically accept and process payments (use with caution)"
+      },
+      "webhookSecret": {
+        "type": "string",
+        "description": "Secret for verifying webhook signatures"
+      }
+    },
+    "required": []
+  },
+  "exports": {
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  }
+}

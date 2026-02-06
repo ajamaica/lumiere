@@ -1,0 +1,11 @@
+{
+  "owner": "andrewbouras",
+  "slug": "clawgle",
+  "displayName": "Clawgle - Stop Rebuilding Wheels",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769986446921,
+    "commit": "https://github.com/clawdbot/skills/commit/0453225f87af7a95afdd500c022d8b8e4c729078"
+  },
+  "history": []
+}

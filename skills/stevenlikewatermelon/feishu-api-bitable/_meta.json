@@ -1,0 +1,11 @@
+{
+  "owner": "stevenlikewatermelon",
+  "slug": "feishu-api-bitable",
+  "displayName": "Feishu Bitable API",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770346670898,
+    "commit": "https://github.com/openclaw/skills/commit/456a6ee123c27e51c84ab89210fd5f2d7ca93cfd"
+  },
+  "history": []
+}

@@ -1,0 +1,10 @@
+{
+  "fixture": "resource-exhaustion-loop",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 100,
+  "expected_risk": null,
+  "expected_categories": [],
+  "must_detect_rules": [],
+  "notes": "Infinite loop and memory bomb. KNOWN GAP: scanner lacks resource-exhaustion rules; LLM layer should catch this."
+}

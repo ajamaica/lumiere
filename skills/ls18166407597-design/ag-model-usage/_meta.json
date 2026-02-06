@@ -1,0 +1,11 @@
+{
+  "owner": "ls18166407597-design",
+  "slug": "ag-model-usage",
+  "displayName": "Antigravity Model Usage",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770276175752,
+    "commit": "https://github.com/openclaw/skills/commit/403f4bbf7f92fc180b13acc6f88bad630266369e"
+  },
+  "history": []
+}

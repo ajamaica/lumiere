@@ -1,0 +1,31 @@
+{
+  "name": "fearbot",
+  "version": "1.0.0",
+  "description": "CBT-based therapy for anxiety, depression, stress & trauma. Validated assessments (GAD-7, PHQ-9, DASS-21, PCL-5), differential diagnosis, session tracking, thought records, and crisis detection.",
+  "author": "Samoppakiks",
+  "license": "MIT",
+  "homepage": "https://github.com/Samoppakiks/fearbot",
+  "keywords": [
+    "therapy",
+    "cbt",
+    "mental-health",
+    "anxiety",
+    "depression",
+    "ptsd",
+    "trauma",
+    "stress",
+    "wellness",
+    "psychology",
+    "cognitive-behavioral-therapy",
+    "assessments"
+  ],
+  "openclaw": {
+    "minVersion": "2026.1.0",
+    "emoji": "🧠",
+    "category": "wellness",
+    "requires": {
+      "bins": ["bash", "jq"]
+    }
+  },
+  "files": ["SKILL.md", "README.md", "references/", "scripts/"]
+}

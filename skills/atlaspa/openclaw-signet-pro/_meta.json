@@ -1,0 +1,11 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-signet-pro",
+  "displayName": "OpenClaw Signet Pro",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770281180178,
+    "commit": "https://github.com/clawdbot/skills/commit/71d28c1fa15b6e716de4fe0bdff49ec4f154f5e0"
+  },
+  "history": []
+}

@@ -1,0 +1,10 @@
+{
+  "symbol": "BTC/USDT",
+  "strategy": "bb_breakout",
+  "intervals": ["15m", "1h"],
+  "targets": [],
+  "filters": {
+    "volume_spike": true,
+    "trend_filter": false
+  }
+}

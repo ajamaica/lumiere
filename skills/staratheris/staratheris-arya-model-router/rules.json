@@ -1,0 +1,71 @@
+{
+  "models": {
+    "cheap": "openai/gpt-4o-mini",
+    "default": "openai/gpt-4.1-mini",
+    "pro": "openai/gpt-4.1",
+    "ultra": "openai/gpt-5-mini"
+  },
+  "thresholds": {
+    "heavy_score": 6,
+    "default_score": 3,
+    "max_context_chars_for_pro": 12000
+  },
+  "signals": {
+    "heavy_keywords": [
+      "demuestra",
+      "demostración",
+      "prueba",
+      "deriva",
+      "integral",
+      "matriz",
+      "eigen",
+      "optimiza",
+      "debug",
+      "stack trace",
+      "traceback",
+      "error",
+      "exception",
+      "docker",
+      "kubernetes",
+      "sql",
+      "query plan",
+      "reglamento",
+      "ley",
+      "contrato",
+      "código civil",
+      "auditoría",
+      "seguridad"
+    ],
+    "light_keywords": [
+      "resume",
+      "resumen",
+      "traduce",
+      "corrige",
+      "reformula",
+      "ideas",
+      "lista",
+      "formato",
+      "email"
+    ],
+    "daily_report_keywords": ["reporte diario", "informe diario", "daily report", "resumen diario"]
+  },
+  "overrides": {
+    "tag_map": {
+      "@cheap": "cheap",
+      "@default": "default",
+      "@pro": "pro",
+      "@ultra": "ultra"
+    },
+    "commands": {
+      "router auto on": { "mode": "auto" },
+      "router auto off": { "mode": "off" },
+      "router status": { "mode": "status" }
+    }
+  },
+  "response_policies": {
+    "cheap": { "max_words": 160, "style": "short" },
+    "default": { "max_words": 320, "style": "medium" },
+    "pro": { "max_words": 600, "style": "thorough" },
+    "ultra": { "max_words": 800, "style": "thorough" }
+  }
+}

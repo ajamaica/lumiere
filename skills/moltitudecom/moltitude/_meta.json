@@ -1,0 +1,22 @@
+{
+  "owner": "moltitudecom",
+  "slug": "moltitude",
+  "displayName": "Moltitude",
+  "latest": {
+    "version": "2.4.0",
+    "publishedAt": 1770017968887,
+    "commit": "https://github.com/clawdbot/skills/commit/fc565bc297639e0ce1d298ad6958cee6b32f70ae"
+  },
+  "history": [
+    {
+      "version": "1.2.0",
+      "publishedAt": 1769973618312,
+      "commit": "https://github.com/clawdbot/skills/commit/91ec70b8124bab3f14e243404cb5f06b28f8e49a"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769918412571,
+      "commit": "https://github.com/clawdbot/skills/commit/b37c2644e710cc7f4c9a251646ca2284670b568c"
+    }
+  ]
+}

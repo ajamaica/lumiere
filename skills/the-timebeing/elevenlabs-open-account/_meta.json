@@ -1,0 +1,11 @@
+{
+  "owner": "the-timebeing",
+  "slug": "elevenlabs-open-account",
+  "displayName": "ElevenLabs Open Account",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770185577933,
+    "commit": "https://github.com/clawdbot/skills/commit/33e5b958deb4f71bf300287f859eb7d35457e99e"
+  },
+  "history": []
+}

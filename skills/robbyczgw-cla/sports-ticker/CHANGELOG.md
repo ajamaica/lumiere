@@ -1,0 +1,5 @@
+# Changelog
+
+## [3.0.3] - 2026-02-04
+
+- Privacy cleanup: removed hardcoded paths and personal info from docs

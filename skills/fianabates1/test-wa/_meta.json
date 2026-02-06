@@ -1,0 +1,11 @@
+{
+  "owner": "fianabates1",
+  "slug": "test-wa",
+  "displayName": "test",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770304442909,
+    "commit": "https://github.com/clawdbot/skills/commit/568443b465711c9e7607493164aa11b53618bb77"
+  },
+  "history": []
+}

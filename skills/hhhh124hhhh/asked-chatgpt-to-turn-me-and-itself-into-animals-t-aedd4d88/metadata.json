@@ -1,0 +1,12 @@
+{
+  "name": "Asked ChatGPT to turn me and itself into animals. This happened",
+  "version": "1.0.0",
+  "description": "cute 😇. \n\n[PROMPT]\n\nBased on our past conversations, pick a real animal that best represents me, and preferably a different real animal that best represents you as an AI. Then create an image of those two animals taking a cute selfie together.",
+  "author": "Clawdbot",
+  "type": "Image Generation",
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/ChatGPT/comments/1qqp5ux/asked_chatgpt_to_turn_me_and_itself_into_animals/",
+  "quality_score": 65,
+  "content_hash": "aedd4d8885d92a96e2beb56d0df05135",
+  "created_at": "2026-02-01T22:01:08.986339"
+}

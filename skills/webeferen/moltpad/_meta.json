@@ -1,0 +1,11 @@
+{
+  "owner": "webeferen",
+  "slug": "moltpad",
+  "displayName": "Moltpad",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770320444778,
+    "commit": "https://github.com/openclaw/skills/commit/8010290de1262bcabf24d81a35393366e8a81b87"
+  },
+  "history": []
+}

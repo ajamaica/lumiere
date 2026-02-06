@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "akkadian-noun-analyzer",
+  "displayName": "通用 Prompt Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769992673722,
+    "commit": "https://github.com/clawdbot/skills/commit/560e1364dff3fa046e07054ebfe6b7d7e07c855f"
+  },
+  "history": []
+}

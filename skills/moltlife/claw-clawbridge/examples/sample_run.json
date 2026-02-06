@@ -1,0 +1,127 @@
+{
+  "workspace_id": "ws_agency123",
+  "run_id": "2026-02-01T21:00:00+11:00",
+  "project_profile_hash": "sha256:a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd",
+  "run_metadata": {
+    "duration_seconds": 127,
+    "searches_performed": 15,
+    "pages_fetched": 42,
+    "candidates_evaluated": 28,
+    "skill_version": "1.0.0"
+  },
+  "candidates": [
+    {
+      "name": "Sarah Chen",
+      "handle": "@sarahchen_tech",
+      "role": "VP of Marketing",
+      "company": "ScaleUp AI",
+      "why_match": [
+        "Explicitly mentioned looking for marketing automation partners in recent post",
+        "Company is in growth phase, recently raised Series B",
+        "Vertical match: B2B SaaS, AI/ML"
+      ],
+      "evidence_urls": [
+        "https://linkedin.com/in/sarahchen-tech",
+        "https://twitter.com/sarahchen_tech/status/123456789",
+        "https://scaleupai.com/about"
+      ],
+      "risk_flags": [],
+      "scores": {
+        "relevance": 92,
+        "intent": 95,
+        "credibility": 88,
+        "recency": 100,
+        "engagement": 75,
+        "final_score": 91.3
+      },
+      "last_activity": "2026-01-30",
+      "suggested_intro": "Hi Sarah,\n\nI noticed your recent post about scaling ScaleUp AI's content operations - sounds like you're hitting the inflection point we've seen with other Series B companies.\n\nWe've helped teams like Acme and TechCorp automate their content workflows, cutting production time by 60% while maintaining quality.\n\nGiven your growth trajectory, I thought there might be a natural fit. Would you be open to a quick 15-minute chat this week?\n\nBest,\nAlex",
+      "suggested_followup": "Hi Sarah,\n\nJust wanted to follow up on my note about content automation. I came across your team's recent blog post on scaling challenges - we actually wrote a case study on solving that exact problem.\n\nHappy to share if useful. Let me know!\n\nAlex"
+    },
+    {
+      "name": "Marcus Rodriguez",
+      "handle": "@marcusrod",
+      "role": "Head of Partnerships",
+      "company": "GrowthHub",
+      "why_match": [
+        "Posted about seeking marketing tech partners 2 weeks ago",
+        "Company focus on agency services aligns with our ICP",
+        "Active in SaaS community, high engagement"
+      ],
+      "evidence_urls": [
+        "https://linkedin.com/in/marcus-rodriguez-growth",
+        "https://growthhub.io/team/marcus"
+      ],
+      "risk_flags": ["low_evidence"],
+      "scores": {
+        "relevance": 85,
+        "intent": 88,
+        "credibility": 80,
+        "recency": 90,
+        "engagement": 82,
+        "final_score": 80.9
+      },
+      "last_activity": "2026-01-28",
+      "suggested_intro": "Hi Marcus,\n\nSaw your post in the SaaS Growth community about expanding GrowthHub's partner ecosystem. Your focus on agency services caught my attention.\n\nWe work with marketing agencies to streamline their client delivery - might be interesting to explore if there's synergy.\n\nWorth a quick conversation?\n\nCheers,\nAlex",
+      "suggested_followup": "Hi Marcus,\n\nFollowing up on my earlier note. I noticed GrowthHub just announced the new agency tier - congrats! That might make the partnership angle even more relevant.\n\nLet me know if you'd like to connect.\n\nAlex"
+    },
+    {
+      "name": "Emily Watson",
+      "handle": "@emwatson",
+      "role": "Founder & CEO",
+      "company": "ContentScale",
+      "why_match": [
+        "Founder in content tech space, potential acquisition or partnership target",
+        "Recently mentioned on podcast looking for distribution partners",
+        "Complementary product offering"
+      ],
+      "evidence_urls": [
+        "https://contentscale.io",
+        "https://twitter.com/emwatson/status/987654321",
+        "https://podcast.example.com/episode-42-emily-watson"
+      ],
+      "risk_flags": [],
+      "scores": {
+        "relevance": 78,
+        "intent": 75,
+        "credibility": 92,
+        "recency": 85,
+        "engagement": 88,
+        "final_score": 80.1
+      },
+      "last_activity": "2026-01-25",
+      "suggested_intro": "Hi Emily,\n\nListened to your episode on the Founder's Journey podcast - loved your take on the content automation space.\n\nI run [Company], and we're in a complementary space. Given your comments about seeking distribution partners, I wondered if there might be an interesting angle to explore together.\n\nWould love to compare notes over a call if you're interested.\n\nBest,\nAlex",
+      "suggested_followup": "Hi Emily,\n\nWanted to bump this up - I've been thinking more about the distribution angle you mentioned on the podcast. We might have something that could accelerate your go-to-market.\n\nHappy to share more details if helpful.\n\nAlex"
+    }
+  ],
+  "next_actions": [
+    {
+      "candidate_handle": "@sarahchen_tech",
+      "action": "reach_out",
+      "reason": "High intent signal, explicit need for marketing automation partners, recent activity",
+      "priority": "high"
+    },
+    {
+      "candidate_handle": "@marcusrod",
+      "action": "reach_out",
+      "reason": "Partnership role, actively seeking partners, good fit for agency services",
+      "priority": "high"
+    },
+    {
+      "candidate_handle": "@emwatson",
+      "action": "warm_intro_via",
+      "reason": "Founder-to-founder intro would be more effective than cold outreach",
+      "via": "SaaS Founders Slack community",
+      "priority": "medium"
+    }
+  ],
+  "summary": {
+    "headline": "3 high-quality connection opportunities found in B2B SaaS/Marketing Tech",
+    "key_insights": [
+      "Strong intent signals in content automation and agency services sectors",
+      "Partnership roles are actively seeking collaborations",
+      "Series B companies showing high growth needs"
+    ],
+    "venues_searched": ["LinkedIn", "Twitter", "SaaS communities", "Podcast directories"]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "sui-knowledge",
+  "version": "1.0.0",
+  "description": "Sui blockchain ecosystem knowledge base - concepts, tokenomics, validators, and ecosystem information",
+  "author": "EasonClawdbot1",
+  "license": "MIT",
+  "keywords": [
+    "sui",
+    "blockchain",
+    "web3",
+    "knowledge",
+    "ecosystem",
+    "tokenomics",
+    "clawdbot",
+    "skill"
+  ],
+  "references": {
+    "sui-docs": "https://github.com/MystenLabs/sui/tree/main/docs",
+    "official-docs": "https://docs.sui.io",
+    "website": "https://sui.io"
+  }
+}

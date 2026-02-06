@@ -1,0 +1,8 @@
+{
+  "client_name": "ExampleAgent",
+  "redirect_uris": ["https://example.com/callback"],
+  "scopes": ["openid", "profile"],
+  "grant_types": ["authorization_code"],
+  "response_types": ["code"],
+  "token_endpoint_auth_method": "client_secret_basic"
+}

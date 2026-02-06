@@ -1,0 +1,23 @@
+export type {
+  BulkNoteUpdateResult,
+  BulkUpdateTransactionsInput,
+  CreateTransactionCategoryInput,
+  CreateTransactionInput,
+  CreateTransactionRuleInput,
+  CreateTransactionTagInput,
+  GetAggregatedRecurringItemsOptions,
+  GetAllRecurringTransactionItemsOptions,
+  GetHiddenTransactionsOptions,
+  GetMerchantsOptions,
+  GetRecurringStreamsOptions,
+  GetRecurringTransactionsOptions,
+  GetTransactionsOptions,
+  NoteUpdate,
+  RuleAction,
+  RuleCondition,
+  TransactionSplit,
+  UpdateTransactionCategoryInput,
+  UpdateTransactionInput,
+  UpdateTransactionRuleInput,
+} from './TransactionsAPI'
+export { type TransactionsAPI, TransactionsAPIImpl } from './TransactionsAPI'

@@ -1,0 +1,42 @@
+{
+  "name": "jasper-recall",
+  "version": "0.1.0",
+  "description": "Local RAG system for AI agent memory using ChromaDB and sentence-transformers",
+  "main": "src/index.js",
+  "bin": {
+    "jasper-recall": "./cli/jasper-recall.js"
+  },
+  "scripts": {
+    "test": "node cli/jasper-recall.js --version"
+  },
+  "keywords": [
+    "rag",
+    "chromadb",
+    "embeddings",
+    "memory",
+    "ai-agent",
+    "openclaw",
+    "semantic-search",
+    "vector-database"
+  ],
+  "author": "E.x.O. Entertainment Studios Inc.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/E-x-O-Entertainment-Studios-Inc/jasper-recall.git"
+  },
+  "homepage": "https://exohaven.online/products/jasper-recall",
+  "bugs": {
+    "url": "https://github.com/E-x-O-Entertainment-Studios-Inc/jasper-recall/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "cli/",
+    "scripts/",
+    "src/",
+    "SKILL.md",
+    "README.md"
+  ]
+}

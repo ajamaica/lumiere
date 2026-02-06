@@ -1,0 +1,11 @@
+{
+  "owner": "aleph8",
+  "slug": "virustotal-security-scanner",
+  "displayName": "VirusTotal Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770309579731,
+    "commit": "https://github.com/clawdbot/skills/commit/98e83ed4e46afd3e99928bfb539e6f6ba4cd518f"
+  },
+  "history": []
+}

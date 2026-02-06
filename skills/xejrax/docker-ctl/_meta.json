@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "docker-ctl",
+  "displayName": "Docker Ctl",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135689325,
+    "commit": "https://github.com/clawdbot/skills/commit/abe500567c52299135d2af66510e6bd4a47c1f2e"
+  },
+  "history": []
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "codewithnathan97",
+  "slug": "kilocli-coding-agent",
+  "displayName": "Kilo CLI Coding Agent",
+  "latest": {
+    "version": "0.0.3",
+    "publishedAt": 1770367114151,
+    "commit": "https://github.com/openclaw/skills/commit/07331d7f88027e966c8c5e496aef0d396b250144"
+  },
+  "history": [
+    {
+      "version": "0.0.2",
+      "publishedAt": 1770303454776,
+      "commit": "https://github.com/clawdbot/skills/commit/0b56bf3922d46d7319de3d7a5e28df65b4f91bc8"
+    }
+  ]
+}

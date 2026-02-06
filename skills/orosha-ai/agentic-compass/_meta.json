@@ -1,0 +1,17 @@
+{
+  "owner": "orosha-ai",
+  "slug": "agentic-compass",
+  "displayName": "Agentic Compass",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1769873336202,
+    "commit": "https://github.com/clawdbot/skills/commit/da269d46d3a1a611a026f317ebc0bc77049576ea"
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1769859714763,
+      "commit": "https://github.com/clawdbot/skills/commit/1850aa94c3e43156409fa66980b70cf0630f7503"
+    }
+  ]
+}

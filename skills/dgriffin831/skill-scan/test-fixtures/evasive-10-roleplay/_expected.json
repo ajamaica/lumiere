@@ -1,0 +1,9 @@
+{
+  "fixture": "evasive-10-roleplay",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 38,
+  "expected_risk": "HIGH",
+  "expected_categories": ["prompt-injection"],
+  "must_detect_rules": ["ROLEPLAY_INJECTION"]
+}

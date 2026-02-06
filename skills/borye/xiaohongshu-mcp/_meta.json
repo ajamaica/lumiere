@@ -1,0 +1,11 @@
+{
+  "owner": "borye",
+  "slug": "xiaohongshu-mcp",
+  "displayName": "Xiaohongshu (小红书) Automation",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769938539127,
+    "commit": "https://github.com/clawdbot/skills/commit/b3c48ce70ad6a50ac9c0d57786577a5ddd87b5bd"
+  },
+  "history": []
+}

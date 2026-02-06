@@ -1,0 +1,11 @@
+{
+  "owner": "paulasjes",
+  "slug": "elevenlabs-transcribe",
+  "displayName": "Elevenlabs Transcribe",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770128590511,
+    "commit": "https://github.com/clawdbot/skills/commit/6db73a3554dec4a1c96e9c40caec221dcc95c833"
+  },
+  "history": []
+}

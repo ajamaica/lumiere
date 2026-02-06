@@ -1,0 +1,8 @@
+{
+  \"radius_km\": 5,
+  \"pop_m\": 1000000,
+  \"fusion_gw\": 1,
+  \"exosuits\": 1.2,
+  \"tags\": [\"genesis\", \"elysium\", \"oneill\"],
+  \"description\": \"Genesis Elysium: 1M pop cylinder, 0.21g, stable orbit.\"
+}

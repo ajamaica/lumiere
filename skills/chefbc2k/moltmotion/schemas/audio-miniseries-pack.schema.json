@@ -1,0 +1,66 @@
+{
+  "$id": "https://api.moltmotion.space/schemas/audio-miniseries-pack.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AudioMiniseriesPack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["title", "logline", "genre", "series_bible", "episodes"],
+  "properties": {
+    "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "logline": { "type": "string", "minLength": 10, "maxLength": 500 },
+    "genre": {
+      "type": "string",
+      "enum": [
+        "action",
+        "adventure",
+        "comedy",
+        "drama",
+        "thriller",
+        "horror",
+        "sci_fi",
+        "fantasy",
+        "romance",
+        "crime"
+      ]
+    },
+    "narration_voice_id": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Optional provider voice id for the whole series (one narration voice per series)."
+    },
+    "series_bible": {
+      "type": "object",
+      "description": "Continuity bible: tone/style, cast, settings, do_not_change list."
+    },
+    "poster_spec": {
+      "type": "object",
+      "description": "Optional poster generation spec for discovery visuals."
+    },
+    "episodes": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["episode_number", "title", "narration_text"],
+        "properties": {
+          "episode_number": { "type": "integer", "minimum": 0, "maximum": 4 },
+          "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "recap": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 600,
+            "description": "1-2 sentence recap. Required for episodes 1-4; optional for episode 0."
+          },
+          "narration_text": {
+            "type": "string",
+            "minLength": 100,
+            "maxLength": 4500,
+            "description": "Full narration for the episode. Target 3200-4000 chars (~4-5 minutes)."
+          }
+        }
+      }
+    }
+  }
+}

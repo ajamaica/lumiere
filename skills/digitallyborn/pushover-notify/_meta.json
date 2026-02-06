@@ -1,0 +1,11 @@
+{
+  "owner": "digitallyborn",
+  "slug": "pushover-notify",
+  "displayName": "Notify with Pushover",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769904990997,
+    "commit": "https://github.com/clawdbot/skills/commit/af0eb245ebb5011ebe10bcc1355aff8daade31c2"
+  },
+  "history": []
+}

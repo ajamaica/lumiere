@@ -1,0 +1,11 @@
+{
+  "owner": "amar1432",
+  "slug": "error-guard",
+  "displayName": "Error Guard — Control‑Plane Safety",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769934317761,
+    "commit": "https://github.com/clawdbot/skills/commit/76ca9833fa780f440b0af90e0670a1b956fd0043"
+  },
+  "history": []
+}

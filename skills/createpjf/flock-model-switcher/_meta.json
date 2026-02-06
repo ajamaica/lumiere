@@ -1,0 +1,17 @@
+{
+  "owner": "createpjf",
+  "slug": "flock-model-switcher",
+  "displayName": "FLock Model Switcher",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770080600061,
+    "commit": "https://github.com/clawdbot/skills/commit/a0ee3ed67f150435c8fb03694582ab97fa301d32"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770048685858,
+      "commit": "https://github.com/clawdbot/skills/commit/79f2ea8f7b1d456b47160a5ff92a2c3fec8da91f"
+    }
+  ]
+}

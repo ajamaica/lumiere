@@ -1,0 +1,30 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    SKILL COMPATIBILITY CHECKER REPORT                      ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+Skill: windows-only-skill
+Path:  /Users/ericwoodard/clawd/windows-only-skill
+Date:  2026-01-29T16:45:00.000Z
+
+┌─ INSTALLATION READINESS ─────────────────────────────────────────────────┐
+│ ❌ BLOCKED - Do not install
+│
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ SYSTEM REQUIREMENTS ────────────────────────────────────────────────────┐
+│ Your System: darwin / arm64 / Node 25.4.0
+│
+│ ❌ Requires Windows, but you're on darwin (arm64)
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ SECURITY SCAN ──────────────────────────────────────────────────────────┐
+│ Risk Level: 🟢 SAFE
+│ No dangerous patterns detected
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ RECOMMENDATION ─────────────────────────────────────────────────────────┐
+│ ❌ BLOCKED - Do not install.
+│
+│ Issues preventing installation:
+│ • System requirements not met (OS/arch/Node version)
+└────────────────────────────────────────────────────────────────────────────┘

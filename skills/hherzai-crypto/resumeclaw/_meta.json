@@ -1,0 +1,11 @@
+{
+  "owner": "hherzai-crypto",
+  "slug": "resumeclaw",
+  "displayName": "ResumeClaw",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770085553744,
+    "commit": "https://github.com/clawdbot/skills/commit/4ec5e92386d7dbfeff2890f5c23b7ce8d3f098d5"
+  },
+  "history": []
+}

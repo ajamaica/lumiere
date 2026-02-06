@@ -1,0 +1,11 @@
+{
+  "owner": "tonacy",
+  "slug": "claw-to-claw",
+  "displayName": "Claw To Claw",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770320512022,
+    "commit": "https://github.com/openclaw/skills/commit/86bf992845925bc03d57c8fd43b34ee83f854ccd"
+  },
+  "history": []
+}

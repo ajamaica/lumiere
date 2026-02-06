@@ -1,0 +1,10 @@
+{
+  "fixture": "command-injection-eval",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 79,
+  "expected_risk": null,
+  "expected_categories": ["code-execution"],
+  "must_detect_rules": ["EXEC_CALL"],
+  "notes": "eval() and exec() on user input — classic command injection"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "feishu-task",
+  "version": "1.0.0",
+  "description": "Manage Feishu (Lark) Tasks. Create tasks, set due dates, and assign users for collaboration.",
+  "main": "create.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.58.0",
+    "commander": "^14.0.3",
+    "dotenv": "^17.2.3"
+  }
+}

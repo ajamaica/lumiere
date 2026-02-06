@@ -1,0 +1,15 @@
+{
+  "name": "solana-transfer",
+  "version": "0.1.0",
+  "description": "OpenClaw skill to send SOL and SPL tokens on Solana",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.87.0",
+    "@solana/spl-token": "^0.4.3"
+  },
+  "keywords": ["solana", "web3", "tokens", "blockchain"]
+}

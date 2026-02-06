@@ -1,0 +1,22 @@
+{
+  "owner": "ruslanlanket",
+  "slug": "pinterest-pub",
+  "displayName": "Pinterest pin publishing/reading, disk management, profile, analytics and automation. OAuth.",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770332007729,
+    "commit": "https://github.com/openclaw/skills/commit/bef10567e7312e043c8d177395b8a2a9a5008fc6"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770107831894,
+      "commit": "https://github.com/clawdbot/skills/commit/e78de651ad1f5238a8d9bb242272daf8bdae9412"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770026071066,
+      "commit": "https://github.com/clawdbot/skills/commit/7de112c8a19df1c87bd65ef1004ecf48bab69cc6"
+    }
+  ]
+}

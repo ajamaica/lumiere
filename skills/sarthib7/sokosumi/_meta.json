@@ -1,0 +1,22 @@
+{
+  "owner": "sarthib7",
+  "slug": "sokosumi",
+  "displayName": "Sokosumi Agentic Marketplace",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770308630992,
+    "commit": "https://github.com/clawdbot/skills/commit/4820110406b69dc89b146b77c8b2440ba44202a2"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770242148202,
+      "commit": "https://github.com/clawdbot/skills/commit/e26fa63aad7e04e72ada5a11324c6d139998b7f6"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770050764798,
+      "commit": "https://github.com/clawdbot/skills/commit/48e9895aaf14f269b8cbc174dd251d5d2ba4f977"
+    }
+  ]
+}

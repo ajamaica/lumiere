@@ -1,0 +1,5 @@
+{
+  "rpc": "https://api.mainnet-beta.solana.com",
+  "network": "mainnet-beta",
+  "commitment": "confirmed"
+}

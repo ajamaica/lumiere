@@ -1,0 +1,11 @@
+{
+  "owner": "timvandervoord",
+  "slug": "trein-plus",
+  "displayName": "Trein extended",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770156013748,
+    "commit": "https://github.com/clawdbot/skills/commit/8f2cb04ceec12ae16aba61179a51c4c9b833e31b"
+  },
+  "history": []
+}

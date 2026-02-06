@@ -1,0 +1,15 @@
+{
+  "name": "text-preserve-skill",
+  "version": "1.0.0",
+  "description": "다국어 텍스트 프리렌더링 스킬 - 한글/한자/일본어 등을 정확히 이미지로 렌더링",
+  "type": "module",
+  "scripts": {
+    "setup": "node setup.mjs",
+    "detect": "node render.mjs detect",
+    "render": "node render.mjs render"
+  },
+  "dependencies": {
+    "canvas": "^3.1.0",
+    "@google/generative-ai": "^0.21.0"
+  }
+}

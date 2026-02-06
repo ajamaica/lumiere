@@ -1,0 +1,11 @@
+{
+  "owner": "prairie2cloud",
+  "slug": "treelisty-openclaw-skill",
+  "displayName": "TreeListy",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770128658704,
+    "commit": "https://github.com/clawdbot/skills/commit/677bc41e790a30e93a92f784daaa696adb825b32"
+  },
+  "history": []
+}

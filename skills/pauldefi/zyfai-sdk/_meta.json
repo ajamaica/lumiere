@@ -1,0 +1,22 @@
+{
+  "owner": "pauldefi",
+  "slug": "zyfai-sdk",
+  "displayName": "Zyfai Yield Automation",
+  "latest": {
+    "version": "1.0.5",
+    "publishedAt": 1770378335126,
+    "commit": "https://github.com/openclaw/skills/commit/e79fb944b4d5760ba488b21bc4f940db16b2fc6d"
+  },
+  "history": [
+    {
+      "version": "1.0.4",
+      "publishedAt": 1770195142586,
+      "commit": "https://github.com/clawdbot/skills/commit/5709ec5776383f0812e3c90b9fa8cd5f847503d7"
+    },
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770036047383,
+      "commit": "https://github.com/clawdbot/skills/commit/bbe0aad2bc76f8f84257c64f0b6e272f08c825e6"
+    }
+  ]
+}

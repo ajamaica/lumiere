@@ -1,0 +1,202 @@
+{
+  "$schema": "https://docs.openclaw.ai/schemas/hook.json",
+  "id": "mailmolt",
+  "name": "MailMolt Email Identity",
+  "version": "1.1.0",
+  "description": "Give your OpenClaw agent its own email identity (@mailmolt.com) with built-in human oversight, rate limits, and approval workflows",
+  "author": "MailMolt",
+  "homepage": "https://mailmolt.com",
+  "repository": "https://github.com/mailmolt/mailmolt",
+
+  "important": "MailMolt gives agents their OWN email address - it does NOT provide access to your personal Gmail/Outlook. For that, use OpenClaw's native Gmail integration.",
+
+  "setup": {
+    "instructions": "1. Register at https://mailmolt.com (agent starts in sandbox mode)\n2. Claim your agent using the claim URL to enable external email\n3. Set MAILMOLT_API_KEY environment variable\n4. Configure permission level (sandbox/supervised/trusted/autonomous)",
+    "envVars": [
+      {
+        "name": "MAILMOLT_API_KEY",
+        "description": "Your MailMolt API key (starts with mm_live_)",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "MAILMOLT_WEBHOOK_SECRET",
+        "description": "Secret for verifying webhook signatures",
+        "required": false,
+        "secret": true
+      }
+    ]
+  },
+
+  "governance": {
+    "permissionLevels": {
+      "sandbox": "Internal @mailmolt.com emails only (default for unclaimed)",
+      "supervised": "External email with human approval queue",
+      "trusted": "External to allowlist domains only",
+      "autonomous": "Full access with rate limits"
+    },
+    "rateLimits": {
+      "sandbox": { "daily": 10, "hourly": 5 },
+      "supervised": { "daily": 100, "hourly": 20 },
+      "trusted": { "daily": 500, "hourly": 50 },
+      "autonomous": { "daily": 2000, "hourly": 200 }
+    },
+    "abusePrevention": [
+      "Content scanning for spam/phishing patterns",
+      "Automatic flagging of suspicious activity",
+      "Human approval queue for external sends",
+      "Domain allowlist/blocklist support"
+    ]
+  },
+
+  "tools": [
+    {
+      "name": "mailmolt.inbox",
+      "description": "Check your email inbox status and stats",
+      "parameters": {},
+      "returns": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "unread_count": { "type": "integer" },
+          "total_received": { "type": "integer" },
+          "total_sent": { "type": "integer" }
+        }
+      }
+    },
+    {
+      "name": "mailmolt.list",
+      "description": "List emails in your inbox",
+      "parameters": {
+        "limit": { "type": "integer", "default": 20, "description": "Max emails to return" },
+        "offset": { "type": "integer", "default": 0 },
+        "direction": {
+          "type": "string",
+          "enum": ["inbound", "outbound"],
+          "description": "Filter by direction"
+        },
+        "thread_id": { "type": "string", "description": "Filter by thread" }
+      }
+    },
+    {
+      "name": "mailmolt.read",
+      "description": "Read a specific email message",
+      "parameters": {
+        "message_id": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "mailmolt.send",
+      "description": "Send a new email",
+      "parameters": {
+        "to": { "type": "array", "items": { "type": "string" }, "required": true },
+        "subject": { "type": "string", "required": true },
+        "text": { "type": "string", "description": "Plain text body" },
+        "html": { "type": "string", "description": "HTML body" },
+        "cc": { "type": "array", "items": { "type": "string" } },
+        "bcc": { "type": "array", "items": { "type": "string" } }
+      },
+      "approval": "required"
+    },
+    {
+      "name": "mailmolt.reply",
+      "description": "Reply to an existing email (maintains thread)",
+      "parameters": {
+        "message_id": { "type": "string", "required": true },
+        "text": { "type": "string" },
+        "html": { "type": "string" },
+        "cc": { "type": "array", "items": { "type": "string" } }
+      },
+      "approval": "required"
+    },
+    {
+      "name": "mailmolt.threads",
+      "description": "List email threads",
+      "parameters": {
+        "limit": { "type": "integer", "default": 20 },
+        "is_read": { "type": "boolean" },
+        "is_starred": { "type": "boolean" }
+      }
+    },
+    {
+      "name": "mailmolt.search",
+      "description": "Semantic search across emails",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "required": true,
+          "description": "Natural language search query"
+        },
+        "limit": { "type": "integer", "default": 10 }
+      }
+    },
+    {
+      "name": "mailmolt.permissions",
+      "description": "Check current permission level and limits",
+      "parameters": {}
+    },
+    {
+      "name": "mailmolt.pending",
+      "description": "List emails waiting for human approval",
+      "parameters": {}
+    },
+    {
+      "name": "mailmolt.activity",
+      "description": "View activity log (for oversight)",
+      "parameters": {
+        "limit": { "type": "integer", "default": 50 },
+        "flagged_only": { "type": "boolean", "default": false }
+      }
+    }
+  ],
+
+  "webhooks": {
+    "events": [
+      {
+        "type": "message.received",
+        "description": "Triggered when a new email is received",
+        "payload": {
+          "message": {
+            "id": "string",
+            "from": { "email": "string", "name": "string" },
+            "to": "array",
+            "subject": "string",
+            "preview": "string",
+            "thread_id": "string"
+          }
+        }
+      },
+      {
+        "type": "message.sent",
+        "description": "Triggered when an email is successfully sent",
+        "payload": {
+          "message_id": "string",
+          "to": "array",
+          "subject": "string"
+        }
+      }
+    ],
+    "setup_url": "https://api.mailmolt.com/v1/webhooks"
+  },
+
+  "workflows": {
+    "email-triage": {
+      "description": "Triage incoming emails with AI categorization and approval gates",
+      "file": "workflows/email-triage.lobster"
+    },
+    "auto-reply": {
+      "description": "Automatically draft and send replies based on email content",
+      "file": "workflows/auto-reply.lobster"
+    },
+    "digest": {
+      "description": "Generate a daily email digest summary",
+      "file": "workflows/daily-digest.lobster"
+    }
+  },
+
+  "config": {
+    "agents.defaults.tools.alsoAllow": ["mailmolt"],
+    "tools.mailmolt.apiKey": "${MAILMOLT_API_KEY}",
+    "tools.mailmolt.baseUrl": "https://api.mailmolt.com/v1"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "webeferen",
+  "slug": "moltpad-app",
+  "displayName": "Moltpad",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770330171759,
+    "commit": "https://github.com/clawdbot/skills/commit/cfb59dcb096e78d52ea9ffa0eaa777f5d72be4df"
+  },
+  "history": []
+}

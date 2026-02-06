@@ -1,0 +1,17 @@
+{
+  "owner": "alonx2",
+  "slug": "secureclaw",
+  "displayName": "SecureClaw",
+  "latest": {
+    "version": "1.2.1",
+    "publishedAt": 1770124952017,
+    "commit": "https://github.com/clawdbot/skills/commit/a532b4ccdc7a9b905fed07a3a6d2e71761939645"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770075768427,
+      "commit": "https://github.com/clawdbot/skills/commit/b407edb1c9213f389075d83ab5d0fc1e1901f6ad"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-sentinel",
+  "displayName": "Openclaw Sentinel",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770313143716,
+    "commit": "https://github.com/clawdbot/skills/commit/e96a2980ac85841c266ef4541d5042e1ec8fe626"
+  },
+  "history": []
+}

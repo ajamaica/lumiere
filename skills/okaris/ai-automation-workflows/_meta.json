@@ -1,0 +1,11 @@
+{
+  "owner": "okaris",
+  "slug": "ai-automation-workflows",
+  "displayName": "Ai Automation Workflows",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1770362959716,
+    "commit": "https://github.com/openclaw/skills/commit/b2a893615f7fab762371f40ca80610168146a474"
+  },
+  "history": []
+}

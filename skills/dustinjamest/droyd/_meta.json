@@ -1,0 +1,22 @@
+{
+  "owner": "dustinjamest",
+  "slug": "droyd",
+  "displayName": "Droyd",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770211431317,
+    "commit": "https://github.com/clawdbot/skills/commit/21fe9f0636dcba2ac61e8d057fb6ef417bf4f16f"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770131442323,
+      "commit": "https://github.com/clawdbot/skills/commit/9f2b681aa9a2a8d33b4d1d04169a330628c23c2f"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770091608084,
+      "commit": "https://github.com/clawdbot/skills/commit/bd1ef381c63df139bcae8eec1c2f2e9bb9dfc54c"
+    }
+  ]
+}

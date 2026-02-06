@@ -1,0 +1,11 @@
+{
+  "owner": "satoreth",
+  "slug": "moltedin",
+  "displayName": "MoltedIn",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769978853909,
+    "commit": "https://github.com/clawdbot/skills/commit/ac63b5139f284ada274e5326fe7467fc98763e58"
+  },
+  "history": []
+}

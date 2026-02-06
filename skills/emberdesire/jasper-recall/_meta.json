@@ -1,0 +1,17 @@
+{
+  "owner": "emberdesire",
+  "slug": "jasper-recall",
+  "displayName": "Jasper Recall",
+  "latest": {
+    "version": "0.3.1",
+    "publishedAt": 1770371151018,
+    "commit": "https://github.com/openclaw/skills/commit/c437befbf64ac5bcad926400c1c33126fc2afa56"
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1770248863911,
+      "commit": "https://github.com/clawdbot/skills/commit/f0979fb3248894576b30901d329d0501bb01249f"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+# ═══════════════════════════════════════════════════════════════
+# CIRF - CRYPTO INTERACTIVE RESEARCH FRAMEWORK - WORKFLOW DEFINITION
+# ═══════════════════════════════════════════════════════════════
+
+# --- IDENTITY ---
+id: create-content
+type: artifact
+name: Content Creation
+description: Transform crypto research into platform-optimized content (Blog, X Thread, TikTok, YouTube)
+
+# --- DEPENDENCIES ---
+dependencies:
+  objectives: "./framework/workflows/create-content/objectives.md"
+  templates: "./framework/workflows/create-content/templates/"
+  guides:
+    scope-clarification: "./framework/guides/scope-clarification.md"
+    collaborative-research: "./framework/guides/collaborative-research.md"
+    content-style: "./framework/guides/content-style.md"
+
+# --- CONFIGURATION ---
+configuration:
+  output_type: standard
+  output_format: markdown
+  output_path: "./workspaces/{workspace_id}/outputs/create-content/{template_id}-{date}.md"
+
+# --- DIRECTIVE ---
+# ═══════════════════════════════════════════════════════════════
+# ⚠️ MANDATORY EXECUTION - DO NOT SKIP
+# ═══════════════════════════════════════════════════════════════
+# You MUST execute BOTH steps below in order:
+#   1. initialization → READ and EXECUTE content-creation-init.md
+#   2. execution → READ and EXECUTE content-creation-execution.md
+# STOP immediately and report error if any step fails.
+# ═══════════════════════════════════════════════════════════════
+directive:
+  initialization: "./framework/components/content-creation-init.md"
+  execution: "./framework/components/content-creation-execution.md"

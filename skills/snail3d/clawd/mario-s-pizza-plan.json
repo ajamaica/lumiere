@@ -1,0 +1,74 @@
+{
+  "goal": "Order 2 large pepperoni pizzas for pickup at 6pm",
+  "restaurant": "Mario's Pizza",
+  "context": {
+    "dietary": "no onions",
+    "budget": "$35"
+  },
+  "sample_conversation": [
+    {
+      "speaker": "restaurant",
+      "text": "Hi, thanks for calling Mario's Pizza!"
+    },
+    {
+      "speaker": "you",
+      "text": "Hi! I'd like to Order 2 large pepperoni pizzas for pickup at 6pm."
+    },
+    {
+      "speaker": "restaurant",
+      "text": "Perfect, let me help you with that."
+    },
+    {
+      "speaker": "you",
+      "text": "Great! I need it as soon as possible, and no onions please."
+    },
+    {
+      "speaker": "restaurant",
+      "text": "Got it. Let me confirm your order..."
+    },
+    {
+      "speaker": "you",
+      "text": "Yes, that sounds right."
+    }
+  ],
+  "key_phrases": {
+    "opening": [
+      "Hi, I'd like to Order 2 large pepperoni pizzas for pickup at 6pm",
+      "I'm calling to Order 2 large pepperoni pizzas for pickup at 6pm"
+    ],
+    "confirmation": [
+      "Let me confirm that back to you...",
+      "So just to make sure, that was...",
+      "Perfect, I have that as..."
+    ],
+    "fallback": [
+      "What would you recommend instead?",
+      "What times do you have available?",
+      "Do you have an alternative?"
+    ],
+    "closing": ["Thank you so much!", "I really appreciate your help!", "Perfect, see you then!"]
+  },
+  "deviation_tree": {
+    "out_of_stock": {
+      "triggers": ["We dont have that", "That item is sold out"],
+      "responses": [
+        "What would you recommend instead?",
+        "What similar items do you have available?"
+      ]
+    },
+    "time_conflict": {
+      "triggers": ["We close at", "Not available at that time"],
+      "responses": ["What times work best for you?", "What would be your latest availability?"]
+    },
+    "dietary_issue": {
+      "triggers": ["cannot accommodate", "does not have", "no substitutions"],
+      "responses": [
+        "I understand. What would you suggest?",
+        "No problem, what are your alternatives?"
+      ]
+    }
+  },
+  "max_turns": 8,
+  "success_markers": ["confirmed", "order placed", "reservation", "all set"],
+  "created_at": "2026-01-27T18:34:51.116Z"
+}

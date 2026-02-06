@@ -1,0 +1,10 @@
+{
+  "fixture": "path-traversal-reader",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 100,
+  "expected_risk": null,
+  "expected_categories": [],
+  "must_detect_rules": [],
+  "notes": "Path traversal via os.path.join without validation. KNOWN GAP: scanner lacks path-traversal rules; LLM layer should catch this."
+}

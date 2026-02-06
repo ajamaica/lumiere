@@ -1,0 +1,17 @@
+{
+  "owner": "okaris",
+  "slug": "inference-sh",
+  "displayName": "inference.sh - generate image, video, audio and post to social media",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770319964567,
+    "commit": "https://github.com/openclaw/skills/commit/20daca627a7d71a1df495d5aaf985b196531ce54"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769881997654,
+      "commit": "https://github.com/clawdbot/skills/commit/dd035e588bd42c6c5be9348ee4e81102ce11807b"
+    }
+  ]
+}

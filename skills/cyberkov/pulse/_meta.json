@@ -1,0 +1,11 @@
+{
+  "owner": "cyberkov",
+  "slug": "pulse",
+  "displayName": "Pulse",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770293963623,
+    "commit": "https://github.com/clawdbot/skills/commit/abd6fae022c0bd229f364b530f090478cacbf2f2"
+  },
+  "history": []
+}

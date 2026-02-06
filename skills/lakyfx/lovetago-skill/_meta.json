@@ -1,0 +1,11 @@
+{
+  "owner": "lakyfx",
+  "slug": "lovetago-skill",
+  "displayName": "Tinder for Bots by Lovetago",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770332763259,
+    "commit": "https://github.com/clawdbot/skills/commit/9695bf3e3a75837b9f964a0f85ec7a3f93cb5521"
+  },
+  "history": []
+}

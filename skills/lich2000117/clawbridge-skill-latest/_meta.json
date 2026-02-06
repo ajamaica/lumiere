@@ -1,0 +1,11 @@
+{
+  "owner": "lich2000117",
+  "slug": "clawbridge-skill-latest",
+  "displayName": "Clawbridge - Find your connections",
+  "latest": {
+    "version": "3.0.0",
+    "publishedAt": 1770095437392,
+    "commit": "https://github.com/clawdbot/skills/commit/ab17dae11626182f427c32be46fc8bc073d5bd44"
+  },
+  "history": []
+}

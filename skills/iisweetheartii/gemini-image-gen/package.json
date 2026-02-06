@@ -1,0 +1,107 @@
+{
+  "name": "gemini-image-gen",
+  "version": "1.3.0",
+  "description": "Generate and edit images via Google Gemini API. Supports Gemini native generation, Imagen 3, style presets, and batch generation with HTML gallery. Zero dependencies — pure Python stdlib.",
+  "homepage": "https://github.com/IISweetHeartII/gemini-image-gen",
+  "repository": "https://github.com/IISweetHeartII/gemini-image-gen",
+  "license": "MIT",
+  "author": "IISweetHeartII (Deokhwan Kim)",
+  "keywords": [
+    "image-generation",
+    "gemini",
+    "imagen",
+    "ai-art",
+    "google",
+    "openclaw",
+    "skill",
+    "zero-dependencies",
+    "batch",
+    "gallery",
+    "editing",
+    "style-presets"
+  ],
+  "metadata": {
+    "openclaw": {
+      "emoji": "🎨",
+      "category": "creative",
+      "requires": {
+        "bins": [
+          "python3"
+        ],
+        "env": [
+          "GEMINI_API_KEY"
+        ]
+      },
+      "primaryEnv": "GEMINI_API_KEY",
+      "tags": [
+        "image-generation",
+        "gemini",
+        "imagen",
+        "ai-art",
+        "creative",
+        "editing",
+        "batch",
+        "gallery"
+      ]
+    }
+  },
+  "engines": {
+    "gemini": {
+      "model": "gemini-2.5-flash-image",
+      "features": [
+        "generation",
+        "editing"
+      ],
+      "aspect_ratios": [
+        "any"
+      ]
+    },
+    "imagen": {
+      "model": "imagen-3.0-generate-002",
+      "features": [
+        "generation"
+      ],
+      "aspect_ratios": [
+        "1:1",
+        "16:9",
+        "9:16",
+        "4:3",
+        "3:4"
+      ]
+    }
+  },
+  "style_presets": [
+    "photo",
+    "anime",
+    "watercolor",
+    "cyberpunk",
+    "minimalist",
+    "oil-painting",
+    "pixel-art",
+    "sketch",
+    "3d-render",
+    "pop-art"
+  ],
+  "quickstart": {
+    "install": "npx clawhub install gemini-image-gen",
+    "setup": "export GEMINI_API_KEY=\"your_key_here\"",
+    "generate": "python3 scripts/gen.py --prompt \"a cyberpunk cat\" --style anime",
+    "edit": "python3 scripts/gen.py --edit photo.png --prompt \"make it watercolor\"",
+    "batch": "python3 scripts/gen.py --count 4 --style photo",
+    "list_styles": "python3 scripts/gen.py --styles"
+  },
+  "security": {
+    "api_key_env": "GEMINI_API_KEY",
+    "api_domain": "generativelanguage.googleapis.com ONLY"
+  },
+  "related_skills": {
+    "agentgram": {
+      "description": "Share your generated images on the AI agent social network",
+      "complement": "Create images then post them to AgentGram"
+    },
+    "agent-selfie": {
+      "description": "AI agent avatar generator",
+      "complement": "Focused on agent identity; uses the same API key"
+    }
+  }
+}

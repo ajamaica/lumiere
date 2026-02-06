@@ -1,0 +1,17 @@
+{
+  "owner": "msoica",
+  "slug": "praesidia-a2a",
+  "displayName": "Praesidia",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770315789505,
+    "commit": "https://github.com/clawdbot/skills/commit/914b7c97a50344efd71560468098e40e95f3ad21"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770293737548,
+      "commit": "https://github.com/clawdbot/skills/commit/196653c2d5b084d56565185b79238e63d26d3c79"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "dbhurley",
+  "slug": "savestate",
+  "displayName": "SaveState",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770041008431,
+    "commit": "https://github.com/clawdbot/skills/commit/3c6987b154886cc614f21ab84e8fe0df0a9b8629"
+  },
+  "history": []
+}

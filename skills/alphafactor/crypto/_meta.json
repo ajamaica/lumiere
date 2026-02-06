@@ -1,0 +1,17 @@
+{
+  "owner": "alphafactor",
+  "slug": "crypto",
+  "displayName": "Crypto Market",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770185792360,
+    "commit": "https://github.com/clawdbot/skills/commit/ac6c2b96928df782353631dfcad535f89f905c99"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770102069976,
+      "commit": "https://github.com/clawdbot/skills/commit/1325a1069b0645b8c0253ee43c2204a439768457"
+    }
+  ]
+}

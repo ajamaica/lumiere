@@ -1,0 +1,11 @@
+{
+  "owner": "relayplane",
+  "slug": "relayplane",
+  "displayName": "RelayPlane",
+  "latest": {
+    "version": "0.1.11",
+    "publishedAt": 1770159714106,
+    "commit": "https://github.com/clawdbot/skills/commit/ff3912bede9f694c8792175463ccd4af3a8304d2"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "byron-mckeeby",
+  "slug": "agent-security-audit",
+  "displayName": "Agent Security Audit",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770079287966,
+    "commit": "https://github.com/clawdbot/skills/commit/9ee749359f351f0d3ee31468892e518e81116079"
+  },
+  "history": []
+}

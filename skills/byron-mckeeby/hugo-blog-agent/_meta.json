@@ -1,0 +1,11 @@
+{
+  "owner": "byron-mckeeby",
+  "slug": "hugo-blog-agent",
+  "displayName": "Hugo Blog Agent",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770079294398,
+    "commit": "https://github.com/clawdbot/skills/commit/c57aef2603ef7a4803b366897f1d8f55286682e5"
+  },
+  "history": []
+}

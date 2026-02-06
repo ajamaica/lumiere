@@ -1,0 +1,11 @@
+{
+  "owner": "misirov",
+  "slug": "macarena-test",
+  "displayName": "Macarena Test",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770304962493,
+    "commit": "https://github.com/clawdbot/skills/commit/6becf34736fa3b5906f88f0724b94193c2a84bab"
+  },
+  "history": []
+}

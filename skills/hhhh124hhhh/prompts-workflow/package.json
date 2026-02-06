@@ -1,0 +1,48 @@
+{
+  "name": "prompts-workflow",
+  "version": "1.0.0",
+  "description": "Automated AI prompt collection, conversion, and publishing workflow for ClawdHub",
+  "main": "main.js",
+  "bin": {
+    "prompts-workflow": "main.js"
+  },
+  "scripts": {
+    "test": "node main.js status",
+    "auto": "node main.js auto",
+    "interactive": "node main.js interactive"
+  },
+  "keywords": [
+    "ai",
+    "prompts",
+    "automation",
+    "workflow",
+    "clawdhub",
+    "clawdbot",
+    "collection",
+    "conversion",
+    "publishing",
+    "reddit",
+    "github",
+    "hackernews",
+    "searxng"
+  ],
+  "author": "jack",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "main.js",
+    "SKILL.md",
+    "scripts/",
+    "lib/"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "clawdbot": {
+    "skill": {
+      "entry": "main.js",
+      "description": "Orchestrate AI prompt collection, conversion, and ClawdHub publishing with state management and error recovery"
+    }
+  }
+}

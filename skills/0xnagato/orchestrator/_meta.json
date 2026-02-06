@@ -1,0 +1,11 @@
+{
+  "owner": "0xnagato",
+  "slug": "orchestrator",
+  "displayName": "Orchestrator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770300633018,
+    "commit": "https://github.com/clawdbot/skills/commit/fe2015076c5f6b04aad8a4e31c5684b689a4c563"
+  },
+  "history": []
+}

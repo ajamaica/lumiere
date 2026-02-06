@@ -1,0 +1,11 @@
+{
+  "owner": "jameslawton",
+  "slug": "trails",
+  "displayName": "Trails - pay with any token from any chain",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770033372324,
+    "commit": "https://github.com/clawdbot/skills/commit/47cb76fd9ca939ca7d2908b549ae84f572472251"
+  },
+  "history": []
+}

@@ -1,0 +1,32 @@
+{
+  "owner": "adlai88",
+  "slug": "simmer-weather",
+  "displayName": "Simmer Weather",
+  "latest": {
+    "version": "1.4.2",
+    "publishedAt": 1770101251527,
+    "commit": "https://github.com/clawdbot/skills/commit/7b1c82556a33004219207e767d75de98f9dfbd63"
+  },
+  "history": [
+    {
+      "version": "1.4.0",
+      "publishedAt": 1769977987341,
+      "commit": "https://github.com/clawdbot/skills/commit/f43d0a3d966c37a904c1ef1b1c88b4419a029bb4"
+    },
+    {
+      "version": "1.3.0",
+      "publishedAt": 1769648650980,
+      "commit": "https://github.com/clawdbot/skills/commit/6393c102195cd0b57c3391f0b85ba1671b732115"
+    },
+    {
+      "version": "1.1.0",
+      "publishedAt": 1769570488554,
+      "commit": "https://github.com/clawdbot/skills/commit/aa33f436cb8534242b8d38e07714bee53755aedc"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769445018077,
+      "commit": "https://github.com/clawdbot/skills/commit/5eb39f0f7e14f4cfd5ce233e029d3dfe36c3cc82"
+    }
+  ]
+}

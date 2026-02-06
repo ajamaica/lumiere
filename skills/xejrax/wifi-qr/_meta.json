@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "wifi-qr",
+  "displayName": "Wifi Qr",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135701544,
+    "commit": "https://github.com/clawdbot/skills/commit/01c7454e6b9eebd0d5045087ae4497ae4ca5c77e"
+  },
+  "history": []
+}

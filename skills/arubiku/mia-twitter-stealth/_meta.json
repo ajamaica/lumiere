@@ -1,0 +1,11 @@
+{
+  "owner": "arubiku",
+  "slug": "mia-twitter-stealth",
+  "displayName": "Mia Twitter Stealth",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770259180814,
+    "commit": "https://github.com/clawdbot/skills/commit/3519649717fdcc1f75fe275513aa16ba5a5a2256"
+  },
+  "history": []
+}

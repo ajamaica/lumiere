@@ -1,0 +1,22 @@
+{
+  "owner": "edwardirby",
+  "slug": "youdotcom-cli",
+  "displayName": "You.com CLI",
+  "latest": {
+    "version": "1.2.1",
+    "publishedAt": 1770286344589,
+    "commit": "https://github.com/clawdbot/skills/commit/ab4ffae43160fcc7cc23cdaeeda2cadceba7bd52"
+  },
+  "history": [
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770151231574,
+      "commit": "https://github.com/clawdbot/skills/commit/eb88b99620b81e9040db21d0d96ed236adb9a96d"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769928747997,
+      "commit": "https://github.com/clawdbot/skills/commit/feb4d3f7b81b881d4863259d27c23fad6e00ed48"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "autogame-17",
+  "slug": "feishu-pcec",
+  "displayName": "Feishu Pcec",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769956986655,
+    "commit": "https://github.com/clawdbot/skills/commit/9fc68c085133732a2299173f95404b2a8584c18a"
+  },
+  "history": []
+}

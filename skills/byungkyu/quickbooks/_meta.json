@@ -1,0 +1,22 @@
+{
+  "owner": "byungkyu",
+  "slug": "quickbooks",
+  "displayName": "QuickBooks",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770343729198,
+    "commit": "https://github.com/openclaw/skills/commit/5a31673d5473f740ad3464f4a58e2ba80d934f84"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770117528756,
+      "commit": "https://github.com/clawdbot/skills/commit/ff20e42870e9705b3b35e8da1e36a1df6439a362"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770023744767,
+      "commit": "https://github.com/clawdbot/skills/commit/293ca88e5812999c4d60bddc11fb9a0e7e582420"
+    }
+  ]
+}

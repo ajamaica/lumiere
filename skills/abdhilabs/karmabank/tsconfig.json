@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "strictNullChecks": false
+  },
+  "include": [
+    "src/adapters/**/*",
+    "src/models/**/*",
+    "src/services/ledger.ts",
+    "src/data/**/*",
+    "src/scoring.ts",
+    "src/types.ts",
+    "src/cli-simple.ts",
+    "src/cli/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist", "src/**/*.test.ts", "src/services/credit.ts"]
+}

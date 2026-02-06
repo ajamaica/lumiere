@@ -1,0 +1,11 @@
+{
+  "owner": "daaab",
+  "slug": "walletconnect-agent",
+  "displayName": "WalletConnect Agent",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770292315751,
+    "commit": "https://github.com/clawdbot/skills/commit/b39480cfefb94d40c5fdddc2ce785ab770f97bab"
+  },
+  "history": []
+}

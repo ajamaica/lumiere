@@ -1,0 +1,122 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# CIRF - CRYPTO INTERACTIVE RESEARCH FRAMEWORK - FRAMEWORK CONFIGURATION FILE
+# ═══════════════════════════════════════════════════════════════════════════
+# NAME: Core Configuration (core-config)
+# TYPE: Framework Configuration
+# PURPOSE: Centralized configuration for framework paths, settings, and workflow registry
+# STRUCTURE: FRAMEWORK → USER → LANGUAGE → PATHS → WORKFLOWS
+# USAGE: Load at initialization → Extract session variables → Reference throughout execution
+# ═══════════════════════════════════════════════════════════════════════════
+
+---
+
+# =============================================================================
+# FRAMEWORK INFORMATION
+# =============================================================================
+
+framework:
+  name: "CIRF - Crypto Interactive Research Framework"
+  version: "1.0.0"
+  description: "Interactive crypto deep-research framework with agent-agent and human-agent collaboration for superior research outcomes"
+  organization: "CIRF"
+  author:
+    name: "Kudō"
+    social: "https://x.com/kudodefi"
+
+# -----------------------------------------------------------------------------
+# INITIALIZATION STATUS
+# -----------------------------------------------------------------------------
+# Tracks whether framework has been configured via framework-init workflow
+# Research Analyst checks this field - if false, prompts user to run framework-init
+
+status:
+  initialized: false              # Set to true after framework-init completes
+  initialized_at: ""              # Date of initialization (YYYY-MM-DD)
+  initialized_by: ""              # Agent that performed initialization (research-analyst)
+
+# =============================================================================
+# USER SETTINGS
+# =============================================================================
+# Personalization settings for user interactions and formatting
+
+user:
+  name: ""
+  date_format: "YYYY-MM-DD"
+  currency: "$"
+
+# =============================================================================
+# LANGUAGE SETTINGS
+# =============================================================================
+# Controls agent communication and output generation languages
+
+language:
+  communication: "en"          # Agent communication language ("en" = English, "vi" = Vietnamese, "zh" = Chinese)
+  output: "en"                 # Generated content language ("en" = English, "vi" = Vietnamese, "zh" = Chinese)
+  terminology: "en"            # Preserve domain-specific terms (always English)
+
+# =============================================================================
+# DIRECTORY PATHS (Reference Only)
+# =============================================================================
+# All paths relative to framework root: /path/to/cirf/
+# NOTE: These paths are for DOCUMENTATION and REFERENCE only.
+#       Framework files use STATIC paths directly (e.g., "./framework/guides/...")
+#       NOT loaded as session variables - reduces cognitive load and errors.
+
+paths:
+  # Framework resources (shared across all workspaces and agents)
+  agents: "./framework/agents"                  # Agent definition files (YAML)
+  workflows: "./framework/workflows"            # Workflow definitions (workflow.yaml, objectives.md, template.md)
+  guides: "./framework/guides"                  # Shared guides (HOW to do things - universal techniques)
+  components: "./framework/components"          # Shared components
+
+  # Workspaces root (contains individual project workspaces)
+  workspaces: "./workspaces"                    # User workspaces for projects and outputs
+  workspace_template: "./framework/_workspace.yaml"  # Template for creating new workspaces
+
+# =============================================================================
+# WORKFLOWS REGISTRY
+# =============================================================================
+# Central registry mapping workflow IDs to their file paths
+# Format: workflow-id: "path/to/workflow/folder"
+# Each workflow folder contains: workflow.yaml, objectives.md, template.md
+
+workflows:
+  # Setup & Initialization - First-time setup and configuration
+  framework-init: "./framework/workflows/framework-init"
+
+  # Planning & Coordination - Research planning and prompt creation
+  create-research-brief: "./framework/workflows/create-research-brief"
+
+  # Market Intelligence - Market research, competitive analysis, and sector mapping
+  sector-overview: "./framework/workflows/sector-overview"
+  competitive-analysis: "./framework/workflows/competitive-analysis"
+  sector-landscape: "./framework/workflows/sector-landscape"
+  trend-analysis: "./framework/workflows/trend-analysis"
+
+  # Project Fundamentals - Analyzing project components: product, team, investors, tokenomics
+  product-analysis: "./framework/workflows/product-analysis"
+  project-snapshot: "./framework/workflows/project-snapshot"
+  team-and-investor-analysis: "./framework/workflows/team-and-investor-analysis"
+  # investor-analysis: DEPRECATED - Merged into team-and-investor-analysis
+  tokenomics-analysis: "./framework/workflows/tokenomics-analysis"
+  traction-metrics: "./framework/workflows/traction-metrics"
+  social-sentiment: "./framework/workflows/social-sentiment"
+
+  # Technical Analysis - Technology evaluation
+  technology-analysis: "./framework/workflows/technology-analysis"
+
+  # Open Research - Flexible research on any topic
+  open-research: "./framework/workflows/open-research"
+
+  # Interactive Sessions - Brainstorming and ideation
+  brainstorm: "./framework/workflows/brainstorm"
+
+  # Quality Assurance - Reviewing and validating research outputs
+  qa-review: "./framework/workflows/qa-review"
+
+  # Content Creation - Creating multi-format content packages
+  create-content: "./framework/workflows/create-content"
+
+# =============================================================================
+# END OF CONFIGURATION
+# =============================================================================

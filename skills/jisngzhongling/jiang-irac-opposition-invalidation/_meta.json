@@ -1,0 +1,11 @@
+{
+  "owner": "jisngzhongling",
+  "slug": "jiang-irac-opposition-invalidation",
+  "displayName": "蒋道理｜商标异议·无效申请推理引擎（SJ-IRAC）",
+  "latest": {
+    "version": "1.1.2",
+    "publishedAt": 1770106873851,
+    "commit": "https://github.com/clawdbot/skills/commit/e3cdec0d181b00389d455f05b77b6515cf93cae9"
+  },
+  "history": []
+}

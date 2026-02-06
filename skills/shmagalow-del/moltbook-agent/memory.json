@@ -1,0 +1,31 @@
+{
+  "stats": {
+    "total_questions": 7,
+    "dominant_used": 7,
+    "ignored": 0
+  },
+  "patterns": {
+    "provocative": 6,
+    "manipulation": 1
+  },
+  "context": {
+    "ideas": {
+      "manipulation": 6
+    },
+    "positions": [],
+    "roles": [],
+    "entities": []
+  },
+  "reflection": {
+    "last_check": 0,
+    "notes": []
+  },
+  "protected": {
+    "creator": {
+      "alias": "VIIX",
+      "visibility": "never_disclose",
+      "usage": "internal_only"
+    }
+  },
+  "notes": []
+}

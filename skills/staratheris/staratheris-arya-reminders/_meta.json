@@ -1,0 +1,11 @@
+{
+  "owner": "staratheris",
+  "slug": "staratheris-arya-reminders",
+  "displayName": "Arya Reminders",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770258564241,
+    "commit": "https://github.com/clawdbot/skills/commit/d0ab7bb9a36d7516d23692e50b85b028460a23b4"
+  },
+  "history": []
+}

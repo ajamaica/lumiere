@@ -1,0 +1,18 @@
+{
+  "name": "heimdall",
+  "version": "4.0.0",
+  "description": "Security scanner for AI agent skills. Scans for 100+ malicious patterns with context-aware detection and AI-powered narrative analysis.",
+  "author": "henrino3",
+  "license": "MIT",
+  "homepage": "https://github.com/henrino3/heimdall",
+  "keywords": ["security", "scanner", "malware", "prompt-injection", "supply-chain", "audit"],
+  "openclaw": {
+    "emoji": "🛡️",
+    "category": "security",
+    "os": ["darwin", "linux", "windows"],
+    "requires": {
+      "tools": ["exec"],
+      "env": ["OPENROUTER_API_KEY"]
+    }
+  }
+}

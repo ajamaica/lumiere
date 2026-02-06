@@ -1,0 +1,23 @@
+{
+  "name": "openclaw-voice-skill",
+  "version": "1.1.0",
+  "description": "Enhanced voice skill for OpenClaw providing improved text-to-speech functionality with direct playback",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "openclaw",
+    "skill",
+    "voice",
+    "tts",
+    "text-to-speech",
+    "audio",
+    "playback"
+  ],
+  "author": "zhaov1976",
+  "license": "MIT",
+  "dependencies": {
+    "edge-tts": "^1.0.0"
+  }
+}

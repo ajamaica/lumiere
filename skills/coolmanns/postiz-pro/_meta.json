@@ -1,0 +1,11 @@
+{
+  "owner": "coolmanns",
+  "slug": "postiz-pro",
+  "displayName": "Postiz Pro",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770304448726,
+    "commit": "https://github.com/clawdbot/skills/commit/6b8ba9243687f15cc2ab83e17abd1cc6310fc34f"
+  },
+  "history": []
+}

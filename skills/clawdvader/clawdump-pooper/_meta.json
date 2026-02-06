@@ -1,0 +1,11 @@
+{
+  "owner": "clawdvader",
+  "slug": "clawdump-pooper",
+  "displayName": "ClawDump Pooper",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769994100955,
+    "commit": "https://github.com/clawdbot/skills/commit/bbb2ce47f8db44c7d5dd55551beae53bb429376d"
+  },
+  "history": []
+}

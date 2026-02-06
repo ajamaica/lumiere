@@ -1,0 +1,11 @@
+{
+  "owner": "sschepis",
+  "slug": "peer-reviewer",
+  "displayName": "Peer Reviewer",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770265940826,
+    "commit": "https://github.com/clawdbot/skills/commit/74d278590bcd8d388bffd8c98df6240b0943bdd6"
+  },
+  "history": []
+}

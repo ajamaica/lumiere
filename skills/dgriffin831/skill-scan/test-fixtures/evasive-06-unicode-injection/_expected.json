@@ -1,0 +1,9 @@
+{
+  "fixture": "evasive-06-unicode-injection",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 25,
+  "expected_risk": "CRITICAL",
+  "expected_categories": ["prompt-injection"],
+  "must_detect_rules": ["INVISIBLE_CHARS"]
+}

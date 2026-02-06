@@ -1,0 +1,27 @@
+{
+  "owner": "zack-schrag",
+  "slug": "treeline-money",
+  "displayName": "Treeline Money",
+  "latest": {
+    "version": "26.2.603",
+    "publishedAt": 1770399773900,
+    "commit": "https://github.com/openclaw/skills/commit/2dbad10d0e95f67154889338ef09b8b8dba75e9d"
+  },
+  "history": [
+    {
+      "version": "26.2.601",
+      "publishedAt": 1770380218065,
+      "commit": "https://github.com/openclaw/skills/commit/fa87588384f6161ca2797053113e99469fdaee39"
+    },
+    {
+      "version": "26.2.403",
+      "publishedAt": 1770230922082,
+      "commit": "https://github.com/clawdbot/skills/commit/e53ca6a2fb4155013a6014cb1ca924e0fac40298"
+    },
+    {
+      "version": "0.0.4",
+      "publishedAt": 1769731535025,
+      "commit": "https://github.com/clawdbot/skills/commit/62eec49d3e110ede8571ecace44549800e85bf74"
+    }
+  ]
+}

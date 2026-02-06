@@ -1,0 +1,37 @@
+{
+  "owner": "lraivisto",
+  "slug": "researchvault",
+  "displayName": "ResearchVault",
+  "latest": {
+    "version": "2.4.1",
+    "publishedAt": 1770325149814,
+    "commit": "https://github.com/openclaw/skills/commit/4ad307c832320c03589098ed076c43232558a6f3"
+  },
+  "history": [
+    {
+      "version": "2.3.0",
+      "publishedAt": 1770324619322,
+      "commit": "https://github.com/clawdbot/skills/commit/97bac8bfe21dcc6f785af4557466bdf727e01e53"
+    },
+    {
+      "version": "2.2.2",
+      "publishedAt": 1770324472828,
+      "commit": "https://github.com/clawdbot/skills/commit/45da4fefee212da1c1a585ec4da8e75070c40e34"
+    },
+    {
+      "version": "2.1.9",
+      "publishedAt": 1770324408769,
+      "commit": "https://github.com/clawdbot/skills/commit/f2530a159d9170719d8ee3a8ee6d230a6ef03e06"
+    },
+    {
+      "version": "1.2.0",
+      "publishedAt": 1770151530394,
+      "commit": "https://github.com/clawdbot/skills/commit/56d38681c2fba69fb8d5cd57efd912c504c3ebc6"
+    },
+    {
+      "version": "1.1.2",
+      "publishedAt": 1770056907775,
+      "commit": "https://github.com/clawdbot/skills/commit/b1add13eb56c35852178099ce128b86dbfd25673"
+    }
+  ]
+}

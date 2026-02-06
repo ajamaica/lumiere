@@ -1,0 +1,20 @@
+From: mike.johnson@techcorp.com
+To: team@techcorp.com
+Subject: Team Lunch Tomorrow
+Date: Tue, 4 Feb 2025 09:15:22 +0800
+
+Hi everyone,
+
+Just a quick reminder that we have our monthly team lunch tomorrow at 12:30 PM. We'll be going to the new Italian restaurant on 5th Street.
+
+Please let me know by EOD today if you have any dietary restrictions I should inform the restaurant about.
+
+Looking forward to seeing everyone there!
+
+Cheers,
+Mike
+
+---
+Mike Johnson
+Engineering Manager
+TechCorp Inc.

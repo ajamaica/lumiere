@@ -1,0 +1,19 @@
+{
+  "id": "serper-search",
+  "name": "Serper Google Search",
+  "description": "Google Search via Serper.dev API",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "description": "Serper.dev API key"
+      },
+      "defaultNumResults": {
+        "type": "number",
+        "description": "Default number of results to return"
+      }
+    }
+  }
+}

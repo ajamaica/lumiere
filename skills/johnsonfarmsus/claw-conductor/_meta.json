@@ -1,0 +1,37 @@
+{
+  "owner": "johnsonfarmsus",
+  "slug": "claw-conductor",
+  "displayName": "Claw Conductor",
+  "latest": {
+    "version": "0.1.7",
+    "publishedAt": 1770087397287,
+    "commit": "https://github.com/clawdbot/skills/commit/9c5c5212c4b7f69c86c6c334df0846b269585888"
+  },
+  "history": [
+    {
+      "version": "0.1.6",
+      "publishedAt": 1770054205044,
+      "commit": "https://github.com/clawdbot/skills/commit/faf42ee6cd6fdd9897351eb2fe9ef16a2480ba2c"
+    },
+    {
+      "version": "0.1.5",
+      "publishedAt": 1769987997219,
+      "commit": "https://github.com/clawdbot/skills/commit/34df720c02014a551544cace8b5ca81b4ef5daf8"
+    },
+    {
+      "version": "0.1.4",
+      "publishedAt": 1769969825629,
+      "commit": "https://github.com/clawdbot/skills/commit/7a0b1c777f1f9db95eef8343a418265b829176e1"
+    },
+    {
+      "version": "0.1.3",
+      "publishedAt": 1769931575686,
+      "commit": "https://github.com/clawdbot/skills/commit/b83fd8ed90aa03772e1fae134f8e1f56a702d67e"
+    },
+    {
+      "version": "0.1.1",
+      "publishedAt": 1769916863683,
+      "commit": "https://github.com/clawdbot/skills/commit/6a95f860a709932594741333d312cf4ac849bcbf"
+    }
+  ]
+}

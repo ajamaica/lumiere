@@ -1,0 +1,85 @@
+# Known Issues - Strykr QA Bot
+# Last updated: 2025-01-28
+# These issues are tracked and tests will flag them as "known" rather than "new"
+
+issues:
+  - id: details-modal-empty
+    title: Details modal opens but content empty
+    description: |
+      When clicking the "Details" button on a signal card, the modal opens
+      but the content area remains empty. The modal skeleton/loading state
+      appears but actual data never populates.
+    severity: high
+    status: open
+    affectedPages:
+      - /crypto-signals
+      - /stock-signals
+    steps:
+      - Navigate to /crypto-signals
+      - Click on any signal card's "Details" button
+      - Observe modal opens but content is empty
+    expectedBehavior: Modal should display detailed signal information
+    actualBehavior: Modal opens with empty content area
+    possibleCause: API endpoint failure or data binding issue
+    dateDiscovered: 2025-01-28
+    skipTest: false  # Still test, mark as known issue
+
+  - id: direct-url-blank-news
+    title: /news page blank on direct URL navigation
+    description: |
+      Navigating directly to /news via URL results in a blank page.
+      However, navigating to /news via the sidebar works correctly.
+      This indicates a client-side routing or hydration issue.
+    severity: medium
+    status: open
+    affectedPages:
+      - /news
+    steps:
+      - Open browser to https://app.strykr.ai/news directly
+      - Observe blank page
+      - Navigate via sidebar instead - works correctly
+    expectedBehavior: Page should render on direct URL access
+    actualBehavior: Blank page until navigated via sidebar
+    possibleCause: Next.js SSR/hydration issue or missing route handler
+    dateDiscovered: 2025-01-28
+    skipTest: false
+    workaround: Navigate via sidebar
+
+  - id: direct-url-blank-events
+    title: /economic-events page blank on direct URL navigation
+    description: |
+      Same issue as /news - direct URL navigation results in blank page.
+      Sidebar navigation works correctly.
+    severity: medium
+    status: open
+    affectedPages:
+      - /economic-events
+    steps:
+      - Open browser to https://app.strykr.ai/economic-events directly
+      - Observe blank page
+    expectedBehavior: Page should render on direct URL access
+    actualBehavior: Blank page until navigated via sidebar
+    possibleCause: Same root cause as /news issue
+    dateDiscovered: 2025-01-28
+    skipTest: false
+    workaround: Navigate via sidebar
+
+  - id: events-widget-race-condition
+    title: Events widget race condition on homepage
+    description: |
+      The events widget on the homepage occasionally fails to load
+      or shows stale data. This appears to be a race condition between
+      multiple async data fetches.
+    severity: low
+    status: open
+    affectedPages:
+      - / (homepage)
+    steps:
+      - Navigate to homepage
+      - Observe events widget (intermittent)
+    expectedBehavior: Events widget loads consistently
+    actualBehavior: Sometimes empty or shows loading indefinitely
+    possibleCause: Race condition in useEffect or data fetching
+    dateDiscovered: 2025-01-28
+    skipTest: false
+    intermittent: true

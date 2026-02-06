@@ -1,0 +1,11 @@
+{
+  "owner": "amirmabhout",
+  "slug": "clawnected",
+  "displayName": "Clawnected: AIs mingle, Humans match.",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770150554997,
+    "commit": "https://github.com/clawdbot/skills/commit/63390f3d473f19ef32d1c76b678e3655c63a4458"
+  },
+  "history": []
+}

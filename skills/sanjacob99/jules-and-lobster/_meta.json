@@ -1,0 +1,17 @@
+{
+  "owner": "sanjacob99",
+  "slug": "jules-and-lobster",
+  "displayName": "Jules and the Lobster",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1769966909126,
+    "commit": "https://github.com/clawdbot/skills/commit/0d8dbeab80ab7516c537806b711eef8a577aa1a4"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769907515627,
+      "commit": "https://github.com/clawdbot/skills/commit/560211532e24109c5e834b6eef4f5e78e48e4e57"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "otherpowers",
+  "slug": "regenerative-intelligence",
+  "displayName": "regenerative_intelligence",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769976530385,
+    "commit": "https://github.com/clawdbot/skills/commit/561e9a8c121939a6376da1b0334acab59e463e16"
+  },
+  "history": []
+}

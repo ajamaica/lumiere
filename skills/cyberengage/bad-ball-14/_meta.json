@@ -1,0 +1,11 @@
+{
+  "owner": "cyberengage",
+  "slug": "bad-ball-14",
+  "displayName": "Bad Ball 14",
+  "latest": {
+    "version": "1.2.0",
+    "publishedAt": 1770343072898,
+    "commit": "https://github.com/clawdbot/skills/commit/70f1e50354e2aba096d467b4e774389d52f8e184"
+  },
+  "history": []
+}

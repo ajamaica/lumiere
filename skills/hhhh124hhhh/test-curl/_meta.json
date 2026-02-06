@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "test-curl",
+  "displayName": "Test Curl",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769988550656,
+    "commit": "https://github.com/clawdbot/skills/commit/9cb55d275a8a8a87a3980c7c58931955d2cbc2b4"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "clawzai",
+  "slug": "bnb-chain",
+  "displayName": "BNB Chain",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769873889353,
+    "commit": "https://github.com/clawdbot/skills/commit/ab5e1e04949e006532e833d537fa14f62fe52b27"
+  },
+  "history": []
+}

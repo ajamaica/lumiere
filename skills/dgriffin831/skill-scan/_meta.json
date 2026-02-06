@@ -1,0 +1,11 @@
+{
+  "owner": "dgriffin831",
+  "slug": "skill-scan",
+  "displayName": "Skill Scan",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770063427151,
+    "commit": "https://github.com/clawdbot/skills/commit/906e2ab67bbe81c3effb2bc0fd82b406f6904247"
+  },
+  "history": []
+}

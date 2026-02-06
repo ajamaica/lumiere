@@ -1,0 +1,11 @@
+{
+  "owner": "alien69flow",
+  "slug": "aitor",
+  "displayName": "Ai Tor",
+  "latest": {
+    "version": "3.6.9",
+    "publishedAt": 1770401030154,
+    "commit": "https://github.com/openclaw/skills/commit/fb5065575e02b5731f081e0b5159c7b65db70ada"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "jdrhyne",
+  "slug": "nutrient-document-processing",
+  "displayName": "Nutrient Document Processing",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770306341280,
+    "commit": "https://github.com/clawdbot/skills/commit/a0c9bf6ae3a2e482488b01c7ddb7c637386b233f"
+  },
+  "history": []
+}

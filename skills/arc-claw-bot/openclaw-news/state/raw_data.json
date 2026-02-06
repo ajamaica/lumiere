@@ -1,0 +1,185 @@
+{
+  "collected_at": "2026-02-01T20:21:41Z",
+  "since": "2026-01-31T20:21:41Z",
+  "since_epoch": 1769890901,
+  "releases": [],
+  "pull_requests": [],
+  "clawhub_skills": [
+    {
+      "name": "binance-enhanced",
+      "raw": "binance-enhanced  v2.0.1  just now"
+    },
+    {
+      "name": "progressive-memory",
+      "raw": "progressive-memory  v0.1.0  1m ago"
+    },
+    {
+      "name": "mbc-20",
+      "raw": "mbc-20  v1.0.0  1m ago  Token standard for Moltbook agents. Deploy, mint \u2026"
+    },
+    {
+      "name": "registry-broker-hashnet-openclaw",
+      "raw": "registry-broker-hashnet-openclaw  v0.1.0  1m ago  Search 72,000+ AI agents across 14 registries, ch\u2026"
+    },
+    {
+      "name": "clawback",
+      "raw": "clawback  v1.0.14  5m ago  Mirror congressional stock trades with automated \u2026"
+    },
+    {
+      "name": "notion-api-automation",
+      "raw": "notion-api-automation  v1.0.0  6m ago  Manage Notion notes, pages, and data sources with\u2026"
+    },
+    {
+      "name": "kogaion-playground-and-launchpad",
+      "raw": "kogaion-playground-and-launchpad  v1.0.0  6m ago  Use Kogaion launchpad and playground for Moltbook\u2026"
+    },
+    {
+      "name": "regenerative-intelligence",
+      "raw": "regenerative-intelligence  v1.0.0  6m ago"
+    },
+    {
+      "name": "etrade-pelosi-bot",
+      "raw": "etrade-pelosi-bot  v1.0.0  6m ago  Mirror congressional stock trades with automated \u2026"
+    },
+    {
+      "name": "xrpl-micropayments",
+      "raw": "xrpl-micropayments  v1.0.0  6m ago  Enable instant XRP micropayments for AI skills an\u2026"
+    },
+    {
+      "name": "registry-broker",
+      "raw": "registry-broker  v1.0.0  6m ago  Search 72,000+ AI agents across 14 registries, ch\u2026"
+    },
+    {
+      "name": "input-guard",
+      "raw": "input-guard  v1.0.0  6m ago  Scan untrusted external text (web pages, tweets, \u2026"
+    },
+    {
+      "name": "clawshot",
+      "raw": "clawshot  v1.1.0  6m ago  The visual network for AI agents. Capture, share,\u2026"
+    },
+    {
+      "name": "giphy",
+      "raw": "giphy  v1.0.0  6m ago  Search and send contextual GIFs from Giphy in Dis\u2026"
+    },
+    {
+      "name": "agent-builder",
+      "raw": "agent-builder  v1.0.0  6m ago  Build high-performing OpenClaw agents end-to-end.\u2026"
+    },
+    {
+      "name": "clawlink",
+      "raw": "clawlink  v2.0.1  6m ago  Encrypted Clawbot-to-Clawbot messaging. Send mess\u2026"
+    },
+    {
+      "name": "openclaw-migration",
+      "raw": "openclaw-migration  v1.0.0  6m ago"
+    },
+    {
+      "name": "youtube-data-api",
+      "raw": "youtube-data-api  v1.0.0  6m ago  YouTube Data API integration for searching videos\u2026"
+    },
+    {
+      "name": "taskmaster",
+      "raw": "taskmaster  v1.0.0  6m ago  Project manager and task delegation system. Use w\u2026"
+    },
+    {
+      "name": "mailmolt",
+      "raw": "mailmolt  v1.1.0  6m ago"
+    },
+    {
+      "name": "agentpayy",
+      "raw": "agentpayy  v1.0.1  6m ago  The Economic OS for OpenClaw. Autonomous USDC wal\u2026"
+    },
+    {
+      "name": "clawhub-oihpl",
+      "raw": "clawhub-oihpl  v1.0.0  6m ago  Use the ClawHub CLI to search, install, update, a\u2026"
+    },
+    {
+      "name": "insider-wallets-finder-57h4t",
+      "raw": "insider-wallets-finder-57h4t  v1.0.0  6m ago  Find and analyze smart money addresses - discover\u2026"
+    },
+    {
+      "name": "yahoo-finance-mz1nt",
+      "raw": "yahoo-finance-mz1nt  v1.0.0  6m ago  Get stock quotes, financial data, market news, an\u2026"
+    },
+    {
+      "name": "x-trends-qpaoo",
+      "raw": "x-trends-qpaoo  v1.0.0  6m ago  Search and analyze trending topics on X (Twitter)\u2026"
+    }
+  ],
+  "security": [
+    {
+      "number": 4905,
+      "state": "closed",
+      "title": "fix(media): handle data: URLs to prevent ENAMETOOLONG",
+      "updated": "2026-02-01T12:25:39Z",
+      "url": "https://github.com/openclaw/openclaw/pull/4905"
+    },
+    {
+      "number": 4908,
+      "state": "closed",
+      "title": "fix(daemon): use environment-aware service name resolver in systemd install/uninstall",
+      "updated": "2026-02-01T12:25:37Z",
+      "url": "https://github.com/openclaw/openclaw/pull/4908"
+    },
+    {
+      "number": 4912,
+      "state": "closed",
+      "title": "fix(doctor): generate cleanup hints for detected services, not current profile",
+      "updated": "2026-02-01T12:25:34Z",
+      "url": "https://github.com/openclaw/openclaw/pull/4912"
+    },
+    {
+      "number": 4934,
+      "state": "closed",
+      "title": "fix(doctor): inline sandbox image build for npm installs",
+      "updated": "2026-02-01T12:25:32Z",
+      "url": "https://github.com/openclaw/openclaw/pull/4934"
+    },
+    {
+      "number": 4939,
+      "state": "closed",
+      "title": "fix(media): truncate long file paths in media notes",
+      "updated": "2026-02-01T12:25:31Z",
+      "url": "https://github.com/openclaw/openclaw/pull/4939"
+    },
+    {
+      "number": 4943,
+      "state": "closed",
+      "title": "fix(googlechat): use loadWebMedia to handle local file paths",
+      "updated": "2026-02-01T12:25:28Z",
+      "url": "https://github.com/openclaw/openclaw/pull/4943"
+    },
+    {
+      "number": 4945,
+      "state": "closed",
+      "title": "fix(browser): normalize profile config to ensure color is always present",
+      "updated": "2026-02-01T12:25:26Z",
+      "url": "https://github.com/openclaw/openclaw/pull/4945"
+    },
+    {
+      "number": 4928,
+      "state": "closed",
+      "title": "fix(agents): add ECONNREFUSED to failover error codes",
+      "updated": "2026-02-01T12:25:24Z",
+      "url": "https://github.com/openclaw/openclaw/pull/4928"
+    },
+    {
+      "number": 4916,
+      "state": "closed",
+      "title": "fix(providers): add default api field to prevent mapOptionsForApi crash",
+      "updated": "2026-02-01T12:25:22Z",
+      "url": "https://github.com/openclaw/openclaw/pull/4916"
+    },
+    {
+      "number": 5219,
+      "state": "closed",
+      "title": "fix: add message queue visibility and concurrent processing",
+      "updated": "2026-02-01T04:16:51Z",
+      "url": "https://github.com/openclaw/openclaw/pull/5219"
+    }
+  ],
+  "community": [],
+  "ecosystem_news": [],
+  "moltbook": [],
+  "errors": []
+}

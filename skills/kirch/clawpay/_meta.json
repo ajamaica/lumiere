@@ -1,0 +1,17 @@
+{
+  "owner": "kirch",
+  "slug": "clawpay",
+  "displayName": "Clawpay",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770115790207,
+    "commit": "https://github.com/clawdbot/skills/commit/8e3f919fe7ce17841dafe3d541b502f8544a53a9"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770046048925,
+      "commit": "https://github.com/clawdbot/skills/commit/5ee26a623d11f8873c9ec98907ffccedfa581150"
+    }
+  ]
+}

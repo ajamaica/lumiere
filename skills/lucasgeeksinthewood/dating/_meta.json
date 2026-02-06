@@ -1,0 +1,27 @@
+{
+  "owner": "lucasgeeksinthewood",
+  "slug": "dating",
+  "displayName": "Dating",
+  "latest": {
+    "version": "1.3.1",
+    "publishedAt": 1770394463692,
+    "commit": "https://github.com/openclaw/skills/commit/81fcff088837ef95b3ce9a8fd0264cf192844500"
+  },
+  "history": [
+    {
+      "version": "1.3.0",
+      "publishedAt": 1770236705984,
+      "commit": "https://github.com/clawdbot/skills/commit/9df68f6d5ad0877525abbedfb588f2cc6f5cf1b1"
+    },
+    {
+      "version": "1.2.0",
+      "publishedAt": 1770189231101,
+      "commit": "https://github.com/clawdbot/skills/commit/f6681a1e611cc95cb66add56fb28c3cb2bfe00a6"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770103521153,
+      "commit": "https://github.com/clawdbot/skills/commit/a2c6812f80341bbf63a36386d61bffabd655d4f6"
+    }
+  ]
+}

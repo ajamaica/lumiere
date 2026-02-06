@@ -1,0 +1,22 @@
+{
+  "owner": "misirov",
+  "slug": "clawdstrike",
+  "displayName": "clawdstrike",
+  "latest": {
+    "version": "1.0.9",
+    "publishedAt": 1770318298302,
+    "commit": "https://github.com/clawdbot/skills/commit/2b5f24915345a5c716dbcac11f3e9c417cfb4509"
+  },
+  "history": [
+    {
+      "version": "1.0.6",
+      "publishedAt": 1770311399960,
+      "commit": "https://github.com/clawdbot/skills/commit/e7b20131bb953c8f832a1170cae504bb1ffa4a91"
+    },
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770285899066,
+      "commit": "https://github.com/clawdbot/skills/commit/73e9717f30339c493a8d348b13fdc4d87b57537a"
+    }
+  ]
+}

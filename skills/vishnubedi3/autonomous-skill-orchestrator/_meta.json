@@ -1,0 +1,11 @@
+{
+  "owner": "vishnubedi3",
+  "slug": "autonomous-skill-orchestrator",
+  "displayName": "autonomous-skill-orchestrator",
+  "latest": {
+    "version": "1.2.0",
+    "publishedAt": 1769940054452,
+    "commit": "https://github.com/clawdbot/skills/commit/46313cdad6c5ebe21fe4df14a34d96a0f16a9780"
+  },
+  "history": []
+}

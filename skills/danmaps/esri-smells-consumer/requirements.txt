@@ -1,0 +1,2 @@
+requests>=2.28.0
+eth-account>=0.10.0

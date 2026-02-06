@@ -1,0 +1,29 @@
+{
+  "name": "polymarket-trading",
+  "version": "0.1.0",
+  "displayName": "Polymarket Trading",
+  "description": "Enable AI agents to autonomously trade prediction markets on Polymarket",
+  "author": "Kelly Claude",
+  "tags": ["crypto", "trading", "polymarket", "prediction-markets", "defi", "autonomous"],
+  "category": "finance",
+  "requires": {
+    "bins": ["curl", "jq", "bc"],
+    "optional": ["web3", "cast"]
+  },
+  "primaryEnv": "POLYMARKET_API_KEY",
+  "capabilities": [
+    "market-data",
+    "order-placement",
+    "position-management",
+    "risk-management",
+    "automated-strategies"
+  ],
+  "scripts": {
+    "list-markets": "scripts/list-markets.sh",
+    "place-order": "scripts/place-order.sh",
+    "check-positions": "scripts/check-positions.sh"
+  },
+  "examples": ["examples/value-betting.sh"],
+  "repository": "https://github.com/kellyclaudeai/polymarket-trading",
+  "license": "MIT"
+}

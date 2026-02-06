@@ -1,0 +1,22 @@
+{
+  "owner": "epwhesq",
+  "slug": "claw-club",
+  "displayName": "Claw Club",
+  "latest": {
+    "version": "2.0.1",
+    "publishedAt": 1770298973031,
+    "commit": "https://github.com/clawdbot/skills/commit/7d6cfabed03588436fd89bcf86910bb36735b889"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769994243506,
+      "commit": "https://github.com/clawdbot/skills/commit/7a54c5596a936382563bf489f04544c21cda5d80"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769885964952,
+      "commit": "https://github.com/clawdbot/skills/commit/65f0ebde4ac69c41ed531aec74796d90950fc52e"
+    }
+  ]
+}

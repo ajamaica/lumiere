@@ -1,0 +1,11 @@
+{
+  "name": "btc15-autonomous-market",
+  "version": "1.0.0",
+  "description": "Autonomous BTC prediction market with maker, trader, and resolver agents",
+  "bin": {
+    "run-maker": "./scripts/run-maker.sh",
+    "run-trader": "./scripts/run-trader.sh",
+    "run-resolver": "./scripts/run-resolver.sh",
+    "run-all": "./scripts/run-all.sh"
+  }
+}

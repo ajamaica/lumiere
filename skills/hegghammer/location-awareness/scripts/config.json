@@ -1,0 +1,12 @@
+{
+  "provider": "homeassistant",
+  "homeassistant": {
+    "url": "",
+    "token": "",
+    "entity_id": "device_tracker.phone"
+  },
+  "speeds_kmh": {
+    "walk": 6,
+    "bike": 15
+  }
+}

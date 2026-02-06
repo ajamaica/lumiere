@@ -1,0 +1,11 @@
+{
+  "owner": "galor34",
+  "slug": "v-nomad-netrunner",
+  "displayName": "V - Nomad Netrunner",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1769944075450,
+    "commit": "https://github.com/clawdbot/skills/commit/7300738546938d5d3b89c3fb20184a10c331cef4"
+  },
+  "history": []
+}

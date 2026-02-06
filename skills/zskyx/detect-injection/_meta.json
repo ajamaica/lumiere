@@ -1,0 +1,11 @@
+{
+  "owner": "zskyx",
+  "slug": "detect-injection",
+  "displayName": "Prompt injection detection skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770047689138,
+    "commit": "https://github.com/clawdbot/skills/commit/60d950c11a0ec368edbff93e38aeba362332c5dc"
+  },
+  "history": []
+}

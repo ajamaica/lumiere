@@ -1,0 +1,17 @@
+{
+  "owner": "crimsondevil333333",
+  "slug": "policy-lawyer",
+  "displayName": "Policy Lawyer",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770279781303,
+    "commit": "https://github.com/clawdbot/skills/commit/16befecce11eaf59bd4524c3956ba8f157ff0080"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770103055690,
+      "commit": "https://github.com/clawdbot/skills/commit/630de6ac91c905db7b94442f8cd707505182133c"
+    }
+  ]
+}

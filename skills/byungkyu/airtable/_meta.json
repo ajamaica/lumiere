@@ -1,0 +1,27 @@
+{
+  "owner": "byungkyu",
+  "slug": "airtable",
+  "displayName": "Airtable",
+  "latest": {
+    "version": "1.0.4",
+    "publishedAt": 1770344332992,
+    "commit": "https://github.com/openclaw/skills/commit/f3eebff31fb8ab767c10ba5539ecc3f6f0bc400c"
+  },
+  "history": [
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770255313284,
+      "commit": "https://github.com/clawdbot/skills/commit/0397c2fd61cc2b8ebdac1717ad3e505d493b2dc0"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770117955113,
+      "commit": "https://github.com/clawdbot/skills/commit/32055e254e7b30464b496e5054a9b1fee997f845"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770019441457,
+      "commit": "https://github.com/clawdbot/skills/commit/c9788819b4223ec9b560e08240a506bf4f516232"
+    }
+  ]
+}

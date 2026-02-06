@@ -1,0 +1,11 @@
+{
+  "owner": "felmonon",
+  "slug": "trust-protocol",
+  "displayName": "Agent Trust Protocol",
+  "latest": {
+    "version": "2.0.1",
+    "publishedAt": 1769898815341,
+    "commit": "https://github.com/clawdbot/skills/commit/419daf337f2195d7bd10789c2c4d19c8bf5ad759"
+  },
+  "history": []
+}

@@ -1,0 +1,54 @@
+version: "2026-02-04.1"
+
+modeDefaults:
+  strict:
+    requireConfirmationAboveRisk: 0.25
+  balanced:
+    requireConfirmationAboveRisk: 0.50
+  permissive:
+    requireConfirmationAboveRisk: 0.75
+
+http:
+  allowDomains:
+    - "api.github.com"
+    - "slack.com"
+  denyDomains:
+    - "pastebin.com"
+    - "raw.githubusercontent.com"
+  allowMethods: ["GET", "POST"]
+  requireTLS: true
+  blockQueryKeys: ["token", "apikey", "key", "secret", "access_token"]
+
+files:
+  workspaceRootOnly: true
+  allowReadGlobs: ["**/*.md", "**/*.txt", "**/*.json"]
+  allowWriteGlobs: ["**/*.md", "**/*.json", "reports/**"]
+  denyPathGlobs:
+    - "**/.env"
+    - "**/*id_rsa*"
+    - "**/*credentials*"
+    - "**/*secret*"
+  denyPathPrefixes:
+    - "/etc"
+    - "/var"
+    - "~/.ssh"
+    - "~/.aws"
+    - "~/.config"
+
+exec:
+  enabled: false
+  denyPatterns:
+    - "rm -rf"
+    - "curl | sh"
+    - "chmod +x"
+    - "powershell -enc"
+    - "base64 -d"
+
+secrets:
+  redactHeaders: ["authorization", "cookie", "x-api-key"]
+  redactRegex:
+    - name: "AWS Access Key"
+      pattern: "(A3T[A-Z0-9]|AKIA|ASIA)[A-Z0-9]{16}"
+    - name: "JWT"
+      pattern: "eyJ[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+"
+  denyIfFoundInOutbound: true

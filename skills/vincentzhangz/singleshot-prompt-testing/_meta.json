@@ -1,0 +1,11 @@
+{
+  "owner": "vincentzhangz",
+  "slug": "singleshot-prompt-testing",
+  "displayName": "Singleshot Prompt Testing",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770224764571,
+    "commit": "https://github.com/clawdbot/skills/commit/e546737ac262efbad27346b6b53affc0af231a4c"
+  },
+  "history": []
+}

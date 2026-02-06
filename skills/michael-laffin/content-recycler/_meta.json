@@ -1,0 +1,11 @@
+{
+  "owner": "michael-laffin",
+  "slug": "content-recycler",
+  "displayName": "Content Recycler",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770214410625,
+    "commit": "https://github.com/clawdbot/skills/commit/d0e046b761f81ab63c60219a6011551165280b24"
+  },
+  "history": []
+}

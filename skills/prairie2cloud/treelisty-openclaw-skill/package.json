@@ -1,0 +1,14 @@
+{
+  "name": "treelisty-openclaw-skill",
+  "version": "1.0.0",
+  "description": "TreeListy hierarchical decomposition skill for OpenClaw agents",
+  "license": "Apache-2.0",
+  "author": "Prairie2Cloud LLC",
+  "main": "scripts/treelisty-cli.js",
+  "bin": {
+    "treelisty": "scripts/treelisty-cli.js"
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
+  }
+}

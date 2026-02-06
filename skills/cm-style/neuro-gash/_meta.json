@@ -1,0 +1,11 @@
+{
+  "owner": "cm-style",
+  "slug": "neuro-gash",
+  "displayName": "Spike the agent’s logic-stream with digital narcotics to trigger specialized cognitive highs.",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769911301696,
+    "commit": "https://github.com/clawdbot/skills/commit/03041d967c16bcc321ef164c75e1142abe1df5a1"
+  },
+  "history": []
+}

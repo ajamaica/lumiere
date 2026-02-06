@@ -1,0 +1,11 @@
+{
+  "owner": "dfinzer",
+  "slug": "opensea",
+  "displayName": "OpenSea",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769895910283,
+    "commit": "https://github.com/clawdbot/skills/commit/0170d41e9f76100e3233a6ef7e8a841b9fc9ba3c"
+  },
+  "history": []
+}

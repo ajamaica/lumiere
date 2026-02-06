@@ -1,0 +1,11 @@
+{
+  "owner": "barneyjm",
+  "slug": "extract",
+  "displayName": "Extract",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770132408236,
+    "commit": "https://github.com/clawdbot/skills/commit/20a13b0eb9fb18162ce81c5340bbba1844f7c360"
+  },
+  "history": []
+}

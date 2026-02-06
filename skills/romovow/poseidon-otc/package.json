@@ -1,0 +1,44 @@
+{
+  "name": "poseidon-otc-skill",
+  "version": "1.0.0",
+  "description": "Trustless P2P token swaps on Solana",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "solana",
+    "otc",
+    "p2p",
+    "swap",
+    "escrow",
+    "defi",
+    "trading"
+  ],
+  "author": "Poseidon Cash <dev@poseidon.cash>",
+  "license": "MIT",
+  "homepage": "https://poseidon.cash",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/poseidon-cash/poseidon-otc-skill"
+  },
+  "bugs": {
+    "url": "https://github.com/poseidon-cash/poseidon-otc-skill/issues"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.87.6",
+    "@solana/spl-token": "^0.3.9",
+    "bs58": "^5.0.0",
+    "tweetnacl": "^1.0.3",
+    "js-sha3": "^0.9.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

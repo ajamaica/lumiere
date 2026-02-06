@@ -1,0 +1,30 @@
+{
+  "name": "openclaw-multi-brain",
+  "version": "0.1.0",
+  "description": "Multi-LLM perspective synthesis for OpenClaw agents",
+  "author": "Danny Veiga",
+  "license": "MIT",
+  "main": "src/daemon.js",
+  "bin": {
+    "dual-brain": "./bin/dual-brain.js"
+  },
+  "keywords": [
+    "openclaw",
+    "ai",
+    "multi-llm",
+    "perspective",
+    "daemon"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/openclaw-dual-brain.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/openclaw-dual-brain/issues"
+  }
+}

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g fill="none" fill-rule="evenodd">
+    <polygon fill="#E17726" points="16 0 16 0 6.2 9.8 6.2 9.8 6.2 22.2 10.5 26.5 16 32 21.5 26.5 25.8 22.2 25.8 9.8"/>
+    <polygon fill="#E27625" points="29.4 10.4 25.8 9.8 25.8 22.2 21.5 26.5 16 26.5 16 32 28.3 19.7"/>
+    <polygon fill="#E27625" points="2.6 10.4 6.2 9.8 6.2 22.2 10.5 26.5 16 26.5 16 32 3.7 19.7"/>
+    <polygon fill="#D5BFB2" points="10.5 17.3 6.2 22.2 16 22.2 16 17.3"/>
+    <polygon fill="#D5BFB2" points="21.5 17.3 25.8 22.2 16 22.2 16 17.3"/>
+    <polygon fill="#233447" points="10.5 17.3 10.5 26.5 16 22.2"/>
+    <polygon fill="#233447" points="21.5 17.3 21.5 26.5 16 22.2"/>
+    <polygon fill="#CC6228" points="6.2 9.8 10.5 17.3 16 17.3 16 0"/>
+    <polygon fill="#CC6228" points="25.8 9.8 21.5 17.3 16 17.3 16 0"/>
+    <polygon fill="#E27625" points="10.5 17.3 6.2 9.8 2.6 10.4 6.2 22.2"/>
+    <polygon fill="#E27625" points="21.5 17.3 25.8 9.8 29.4 10.4 25.8 22.2"/>
+    <polygon fill="#F5841F" points="16 12.5 10.5 17.3 16 17.3"/>
+    <polygon fill="#F5841F" points="16 12.5 21.5 17.3 16 17.3"/>
+  </g>
+</svg>

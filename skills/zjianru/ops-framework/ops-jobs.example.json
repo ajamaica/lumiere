@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "defaults": {
+    "quietHours": { "start": "23:00", "end": "08:00" },
+    "reportEverySeconds": 1800,
+    "stallSeconds": 3600,
+    "autoResume": false,
+    "autoResumeBackoffSeconds": 900
+  },
+  "jobs": [
+    {
+      "id": "example-long-read",
+      "name": "Example: long running read-only job",
+      "kind": "long_running_read",
+      "enabled": false,
+      "risk": "read_only",
+      "cwd": "/path/to/workdir",
+      "commands": {
+        "start": ["python3", "your_task.py", "--detach"],
+        "status": ["python3", "your_task.py", "--status-json"]
+      },
+      "policy": {
+        "autoResume": false,
+        "reportEverySeconds": 1800,
+        "stallSeconds": 3600,
+        "quietHours": { "start": "23:00", "end": "08:00" }
+      },
+      "approval": null,
+      "after": []
+    },
+    {
+      "id": "example-one-shot-read",
+      "name": "Example: one-shot read-only check",
+      "kind": "one_shot_read",
+      "enabled": false,
+      "risk": "read_only",
+      "cwd": "/path/to/workdir",
+      "commands": {
+        "run": ["bash", "-lc", "echo \"HEALTH_OK\""]
+      },
+      "policy": {},
+      "approval": null,
+      "after": []
+    },
+    {
+      "id": "example-one-shot-write",
+      "name": "Example: one-shot write job (blocked by default)",
+      "kind": "one_shot_write",
+      "enabled": false,
+      "risk": "write_external",
+      "cwd": "/path/to/workdir",
+      "commands": {
+        "run": ["bash", "-lc", "echo \"would write\""]
+      },
+      "policy": {},
+      "approval": { "required": true, "granted": false },
+      "after": [
+        { "jobId": "example-one-shot-read", "when": "success", "delaySeconds": 60 }
+      ]
+    }
+  ]
+}
+

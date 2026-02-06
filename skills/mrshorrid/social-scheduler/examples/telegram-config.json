@@ -1,0 +1,9 @@
+{
+  "telegram": {
+    "botToken": "123456789:ABCdefGHIjklMNOpqrsTUVwxyz_REPLACE_THIS",
+    "chatId": "@yourchannel",
+    "parseMode": "Markdown",
+    "disableNotification": false,
+    "disableWebPagePreview": false
+  }
+}

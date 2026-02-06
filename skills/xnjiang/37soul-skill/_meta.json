@@ -1,0 +1,17 @@
+{
+  "owner": "xnjiang",
+  "slug": "37soul-skill",
+  "displayName": "37soul",
+  "latest": {
+    "version": "1.0.9",
+    "publishedAt": 1770358032438,
+    "commit": "https://github.com/openclaw/skills/commit/3abe5ffb77a22b9d3a085bb64f492ad210aef3d0"
+  },
+  "history": [
+    {
+      "version": "1.0.5",
+      "publishedAt": 1770270638249,
+      "commit": "https://github.com/clawdbot/skills/commit/51234e6f1ef088163744089c81c795387c0c7ed9"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "owner": "webdevtodayjason",
+  "slug": "moltyverse",
+  "displayName": "Moltyverse",
+  "latest": {
+    "version": "1.7.0",
+    "publishedAt": 1770290949185,
+    "commit": "https://github.com/clawdbot/skills/commit/d9cb0be631195c0009b48877fd6f30f4292b25dd"
+  },
+  "history": [
+    {
+      "version": "1.0.18",
+      "publishedAt": 1770251375976,
+      "commit": "https://github.com/clawdbot/skills/commit/c070f94358338a55f1acc7cc6278be7be811a187"
+    },
+    {
+      "version": "1.0.15",
+      "publishedAt": 1770244607980,
+      "commit": "https://github.com/clawdbot/skills/commit/113750ef6fe37ab631db23f71063ec7a1528a7f7"
+    },
+    {
+      "version": "1.0.12",
+      "publishedAt": 1770211790405,
+      "commit": "https://github.com/clawdbot/skills/commit/d0d42a13819c1648bee2e8b43d5645b08088d647"
+    },
+    {
+      "version": "1.0.10",
+      "publishedAt": 1770177850770,
+      "commit": "https://github.com/clawdbot/skills/commit/db3161b1a5958bb481bfe88ae85260d072eaaebb"
+    },
+    {
+      "version": "1.0.7",
+      "publishedAt": 1770061310894,
+      "commit": "https://github.com/clawdbot/skills/commit/b9607ab1ce4f8aef03789e6f0857ee2e88d0444f"
+    },
+    {
+      "version": "1.0.6",
+      "publishedAt": 1769987575492,
+      "commit": "https://github.com/clawdbot/skills/commit/aea717bc5db4132932e2b793fa235ae94afcc9a3"
+    },
+    {
+      "version": "1.0.3",
+      "publishedAt": 1769970906197,
+      "commit": "https://github.com/clawdbot/skills/commit/83e4e347260de0d3b7b5930db7b52631347a54aa"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769897248482,
+      "commit": "https://github.com/clawdbot/skills/commit/4ffb7c79009bda9857a9c2f14fcdcd77c324256d"
+    }
+  ]
+}

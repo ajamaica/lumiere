@@ -1,0 +1,17 @@
+{
+  "owner": "davemorin",
+  "slug": "clawdlink",
+  "displayName": "ClawdLink",
+  "latest": {
+    "version": "2.0.0",
+    "publishedAt": 1769973300263,
+    "commit": "https://github.com/clawdbot/skills/commit/15c0307825e3db199f71e06b332aa7a4a2e4d1a5"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769143210082,
+      "commit": "https://github.com/clawdbot/skills/commit/3422ad9501f56017ee5f0e8be0dce2f4d06df636"
+    }
+  ]
+}

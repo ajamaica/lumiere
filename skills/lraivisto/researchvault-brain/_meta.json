@@ -1,0 +1,11 @@
+{
+  "owner": "lraivisto",
+  "slug": "researchvault-brain",
+  "displayName": "ResearchVault Brain",
+  "latest": {
+    "version": "2.0.4",
+    "publishedAt": 1770322933073,
+    "commit": "https://github.com/openclaw/skills/commit/f0b897019a50c1bd83b084095594fb2ba1237b9b"
+  },
+  "history": []
+}

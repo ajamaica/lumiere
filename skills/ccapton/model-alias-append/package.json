@@ -1,0 +1,86 @@
+{
+  "name": "model-alias-append",
+  "version": "1.0.2",
+  "description": "Automatically appends the model alias to the end of every response with integrated hook functionality and configuration change notifications",
+  "keywords": [
+    "openclaw",
+    "skill",
+    "model",
+    "alias",
+    "response",
+    "hook",
+    "transparency",
+    "configuration",
+    "monitoring"
+  ],
+  "author": "OpenClaw Community",
+  "contributors": [
+    "ccapton <ccapton@users.noreply.github.com>"
+  ],
+  "homepage": "https://github.com/ccapton/openclaw-skills/model-alias-append",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccapton/openclaw-skills.git",
+    "directory": "skills/model-alias-append"
+  },
+  "bugs": {
+    "url": "https://github.com/ccapton/openclaw-skills/issues"
+  },
+  "license": "MIT",
+  "openclaw": {
+    "type": "skill",
+    "skill": {
+      "name": "model-alias-append",
+      "displayName": "Model Alias Append",
+      "description": "Automatically appends the model alias to the end of every response with integrated hook functionality and configuration change notifications",
+      "version": "1.0.2",
+      "author": "OpenClaw Community",
+      "category": "utility",
+      "tags": [
+        "model",
+        "alias",
+        "transparency",
+        "configuration",
+        "monitoring"
+      ],
+      "main": "main.js",
+      "files": [
+        "SKILL.md",
+        "README.md",
+        "enhanced-feature.md",
+        "test-config.json",
+        "main.js",
+        "scripts/**/*",
+        "hooks/**/*"
+      ],
+      "hooks": [
+        {
+          "name": "response-alias-injector",
+          "displayName": "Response Alias Injector",
+          "description": "Automatically injects model alias at the end of every response with configuration change detection",
+          "type": "response:pre-send",
+          "files": [
+            "hooks/response-alias-injector/HOOK.md",
+            "hooks/response-alias-injector/handler.js"
+          ]
+        }
+      ],
+      "capabilities": [
+        "response-interception",
+        "configuration-monitoring",
+        "dynamic-updates"
+      ],
+      "requirements": [
+        "configured-model-aliases"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

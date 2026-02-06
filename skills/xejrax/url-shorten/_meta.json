@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "url-shorten",
+  "displayName": "Url Shorten",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135668849,
+    "commit": "https://github.com/clawdbot/skills/commit/e7b4435b0a665e0af16f0143a81f65677b0e2286"
+  },
+  "history": []
+}

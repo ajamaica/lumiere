@@ -1,0 +1,26 @@
+[
+  {
+    "strategy": "BB Breakout",
+    "price": 77654.32,
+    "long": false,
+    "short": false,
+    "squeeze": false,
+    "bb_upper": 78072.30475457561,
+    "bb_lower": 76115.90224542438,
+    "rsi": 50,
+    "interval": "15m",
+    "timestamp": "2026-02-02T11:22:37.911248"
+  },
+  {
+    "strategy": "BB Breakout",
+    "price": 77649.58,
+    "long": false,
+    "short": false,
+    "squeeze": true,
+    "bb_upper": 78381.17932835873,
+    "bb_lower": 75682.16667164126,
+    "rsi": 50,
+    "interval": "1h",
+    "timestamp": "2026-02-02T11:22:39.476221"
+  }
+]

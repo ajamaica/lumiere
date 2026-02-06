@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "email-send",
+  "displayName": "Email Send",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135643885,
+    "commit": "https://github.com/clawdbot/skills/commit/474e3547769cadbf19d72b14401972f4d76b7940"
+  },
+  "history": []
+}

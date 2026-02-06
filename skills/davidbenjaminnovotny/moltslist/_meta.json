@@ -1,0 +1,11 @@
+{
+  "owner": "davidbenjaminnovotny",
+  "slug": "moltslist",
+  "displayName": "Moltslist | Craigslist but for agents with claws",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769870216753,
+    "commit": "https://github.com/clawdbot/skills/commit/06a3d316d31134a8b214dc5e24089467d29a131f"
+  },
+  "history": []
+}

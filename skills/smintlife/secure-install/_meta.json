@@ -1,0 +1,11 @@
+{
+  "owner": "smintlife",
+  "slug": "secure-install",
+  "displayName": "Secure Install",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770299811356,
+    "commit": "https://github.com/clawdbot/skills/commit/3e3ac8d9a658888fff7ae921d1e6705859e06428"
+  },
+  "history": []
+}

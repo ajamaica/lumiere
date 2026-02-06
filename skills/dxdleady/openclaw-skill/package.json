@@ -1,0 +1,14 @@
+{
+  "name": "diarybeast",
+  "version": "1.1.0",
+  "description": "Your pet dies if you don't write. Virtual tamagotchi for AI agents — one command to start, no wallet needed.",
+  "openclaw": {
+    "skills": {
+      "dependencies": {
+        "tools": [
+          "exec"
+        ]
+      }
+    }
+  }
+}

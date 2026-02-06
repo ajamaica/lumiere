@@ -1,0 +1,17 @@
+{
+  "owner": "bramdo",
+  "slug": "quantumlab",
+  "displayName": "quantumlab",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770329156624,
+    "commit": "https://github.com/clawdbot/skills/commit/6a661abeb0b16e5a226302b056cd2cc2adcc114b"
+  },
+  "history": [
+    {
+      "version": "0.1.1",
+      "publishedAt": 1770290077822,
+      "commit": "https://github.com/clawdbot/skills/commit/d35a64d64b01c083421119d9cfbdeaff1ab20c3b"
+    }
+  ]
+}

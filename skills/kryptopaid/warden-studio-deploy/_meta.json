@@ -1,0 +1,11 @@
+{
+  "owner": "kryptopaid",
+  "slug": "warden-studio-deploy",
+  "displayName": "Deploy Agent on Warden Studio",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770083692595,
+    "commit": "https://github.com/clawdbot/skills/commit/564163647c61cdd28b7eb00c936dd31163832880"
+  },
+  "history": []
+}

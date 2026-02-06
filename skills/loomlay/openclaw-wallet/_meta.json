@@ -1,0 +1,11 @@
+{
+  "owner": "loomlay",
+  "slug": "openclaw-wallet",
+  "displayName": "Openclaw Wallet",
+  "latest": {
+    "version": "0.1.4",
+    "publishedAt": 1770374992644,
+    "commit": "https://github.com/openclaw/skills/commit/38285291ddb87a49d178985749aa84227b97c020"
+  },
+  "history": []
+}

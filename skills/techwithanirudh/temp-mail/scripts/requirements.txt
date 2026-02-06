@@ -1,0 +1,2 @@
+httpx>=0.24.0
+# rich is optional, not required for core functionality

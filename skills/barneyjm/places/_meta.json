@@ -1,0 +1,17 @@
+{
+  "owner": "barneyjm",
+  "slug": "places",
+  "displayName": "Places",
+  "latest": {
+    "version": "0.1.3",
+    "publishedAt": 1770131789104,
+    "commit": "https://github.com/clawdbot/skills/commit/6596ba831385445ddf895e081df1f66ba60bfa9e"
+  },
+  "history": [
+    {
+      "version": "0.1.1",
+      "publishedAt": 1769878091298,
+      "commit": "https://github.com/clawdbot/skills/commit/429bce0a30b02f02a5006c6c750ad6434c28e77f"
+    }
+  ]
+}

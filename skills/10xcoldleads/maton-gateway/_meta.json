@@ -1,0 +1,11 @@
+{
+  "owner": "10xcoldleads",
+  "slug": "maton-gateway",
+  "displayName": "Maton",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770310519342,
+    "commit": "https://github.com/clawdbot/skills/commit/482af4b1dece1cc97c7fe0c90ef88709c8915e56"
+  },
+  "history": []
+}

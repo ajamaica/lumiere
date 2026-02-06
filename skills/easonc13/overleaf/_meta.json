@@ -1,0 +1,11 @@
+{
+  "owner": "easonc13",
+  "slug": "overleaf",
+  "displayName": "Overleaf",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770271028560,
+    "commit": "https://github.com/clawdbot/skills/commit/779397937088365a6ee42dff2c2ace52684be4ef"
+  },
+  "history": []
+}

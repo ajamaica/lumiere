@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "x-finder-teneo",
+  "displayName": "X Finder - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770302225263,
+    "commit": "https://github.com/clawdbot/skills/commit/433f35cdf1428d648c733f92fe0c4e092d0d30c3"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770216691056,
+      "commit": "https://github.com/clawdbot/skills/commit/dc61d523a6c816c288ea3cecd396da6ba5d07053"
+    }
+  ]
+}

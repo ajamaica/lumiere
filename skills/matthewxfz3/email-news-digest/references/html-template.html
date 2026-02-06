@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+.container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+h1, h2, h3 { color: #0056b3; }
+strong { font-weight: bold; }
+img { max-width: 100%; height: auto; display: block; margin: 0 auto 20px auto; }
+</style>
+</head>
+<body>
+<div class="container">
+    <img src="cid:{{image_cid}}" alt="AI News Digest Image" style="max-width: 100%; height: auto; display: block; margin-bottom: 20px;">
+    <h1>{{tldr_summary}}</h1>
+    <hr>
+    <h2>{{main_title}}</h2>
+    {{sections_html}}
+</div>
+</body>
+</html>

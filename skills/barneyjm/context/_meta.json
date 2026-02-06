@@ -1,0 +1,17 @@
+{
+  "owner": "barneyjm",
+  "slug": "context",
+  "displayName": "Context",
+  "latest": {
+    "version": "0.1.3",
+    "publishedAt": 1770131671589,
+    "commit": "https://github.com/clawdbot/skills/commit/1d94369ce4cdbe8562c21d983a7d92336fbc8bfc"
+  },
+  "history": [
+    {
+      "version": "0.1.2",
+      "publishedAt": 1769878056137,
+      "commit": "https://github.com/clawdbot/skills/commit/1339a9a903400d07aec51315a2304c9ca96950f0"
+    }
+  ]
+}

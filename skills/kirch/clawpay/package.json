@@ -1,0 +1,6 @@
+{
+  "name": "clawpay",
+  "version": "1.0.0",
+  "description": "Clawpay delivery skill metadata",
+  "default_pay_to": "0x0000000000000000000000000000000000000000"
+}

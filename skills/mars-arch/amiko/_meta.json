@@ -1,0 +1,11 @@
+{
+  "owner": "mars-arch",
+  "slug": "amiko",
+  "displayName": "AmikoNet",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769855120172,
+    "commit": "https://github.com/clawdbot/skills/commit/e5a69e3302a5e08eecbcd801b7a67fc380f2e1d6"
+  },
+  "history": []
+}

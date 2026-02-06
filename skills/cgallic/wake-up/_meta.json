@@ -1,0 +1,22 @@
+{
+  "owner": "cgallic",
+  "slug": "wake-up",
+  "displayName": "Wake Up",
+  "latest": {
+    "version": "1.2.0",
+    "publishedAt": 1770117819476,
+    "commit": "https://github.com/clawdbot/skills/commit/33380f8cd5e8cecc58c82f6116f7f857f6012f57"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769727359672,
+      "commit": "https://github.com/clawdbot/skills/commit/5ee4152d78e1fe7d3a03967741a0a4c3af088322"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769783759269,
+      "commit": "https://github.com/clawdbot/skills/commit/8762bf854696fb54ef85a8a46084a09b3271a25b"
+    }
+  ]
+}

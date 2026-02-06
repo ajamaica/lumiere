@@ -1,0 +1,11 @@
+{
+  "owner": "nerkn",
+  "slug": "deepgram",
+  "displayName": "DeepGram Speech platform",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770068477391,
+    "commit": "https://github.com/clawdbot/skills/commit/a91975eb0235542f0b621a230b896f1b11509b18"
+  },
+  "history": []
+}

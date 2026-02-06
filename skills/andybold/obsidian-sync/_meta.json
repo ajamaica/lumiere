@@ -1,0 +1,11 @@
+{
+  "owner": "andybold",
+  "slug": "obsidian-sync",
+  "displayName": "Obsidian Sync",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769962118168,
+    "commit": "https://github.com/clawdbot/skills/commit/3e661feba91333f4df12fd10ae640a6d84ebdefa"
+  },
+  "history": []
+}

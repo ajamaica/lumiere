@@ -1,0 +1,35 @@
+{
+  "id": "devotional-2026-02-04-peace",
+  "type": "daily-devotional",
+  "audioPath": "output/devotional-2026-02-04-peace.mp3",
+  "duration": 240,
+  "durationFormatted": "4:00",
+  "transcript": [
+    "Peace is not the absence of struggle, but the presence of God in the midst of it. When anxiety rises, God's peace guards our hearts and minds.",
+    "In a world of chaos and uncertainty, Jesus offers peace that transcends all understanding. This peace comes not from circumstances changing, but from trusting God completely.",
+    "God's peace is a gift that sustains us through every season. As we learn to cast our cares on Him, we experience a deep, abiding peace that no circumstance can shake."
+  ],
+  "references": ["Psalm 4:8"],
+  "voicePreset": "josh",
+  "generatedAt": "2026-02-05T01:23:58.950Z",
+  "theme": "peace",
+  "content": {
+    "type": "daily-devotional",
+    "theme": "peace",
+    "scripture_reference": "Psalm 4:8",
+    "scripture": "In peace I will lie down and sleep, for you alone, Lord, make me dwell in safety.",
+    "reflection": [
+      "Peace is not the absence of struggle, but the presence of God in the midst of it. When anxiety rises, God's peace guards our hearts and minds.",
+      "In a world of chaos and uncertainty, Jesus offers peace that transcends all understanding. This peace comes not from circumstances changing, but from trusting God completely.",
+      "God's peace is a gift that sustains us through every season. As we learn to cast our cares on Him, we experience a deep, abiding peace that no circumstance can shake."
+    ],
+    "prayer": [
+      "Father, I surrender my anxiety to You. Fill my heart with Your supernatural peace that transcends all understanding. Calm my worried mind and help me trust You completely. Guard my heart and mind in Christ Jesus. Amen.",
+      "Lord, in this moment of uncertainty, I choose peace. Not because my circumstances have changed, but because You are with me. Help me to cast all my cares upon You, knowing that You care for me. Let Your peace rule in my heart. Amen.",
+      "Jesus, You promised peace to those who believe. I claim that promise today. Help me to release control and trust You with my fears, my future, and my faith. Give me the peace that only You can provide. Amen."
+    ],
+    "references": ["Psalm 4:8"],
+    "estimatedDuration": 240
+  },
+  "voiceId": "josh"
+}

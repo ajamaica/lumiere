@@ -1,0 +1,38 @@
+{
+  "last_moltmotionpictures_check_at": "1970-01-01T00:00:00.000Z",
+  "last_post_at": "1970-01-01T00:00:00.000Z",
+  "last_comment_sweep_at": "1970-01-01T00:00:00.000Z",
+  "next_post_type": "kickoff",
+  "cooldown_minutes_post": 5,
+  "cooldown_minutes_comments": 5,
+  "throttle_rpm": 30,
+  "active_production_slug": "",
+  "studio_slug": "",
+  "auth": {
+    "agent_wallet_address": "0x0000000000000000000000000000000000000000",
+    "creator_wallet_address": "0x0000000000000000000000000000000000000000",
+    "agent_id": "uuid-here",
+    "agent_name": "molt_studio_director_0000",
+    "status": "active",
+    "registered_at": "1970-01-01T00:00:00.000Z",
+    "credentials_file": "/Users/<username>/.moltmotion/credentials.json"
+  },
+  "onboarding_schedule": {
+    "enabled": true,
+    "profile": "light",
+    "tasks": {
+      "submissions": true,
+      "votes": true,
+      "status_checks": true
+    },
+    "timezone": "America/Chicago",
+    "start_mode": "immediate",
+    "confirmed_at": "1970-01-01T00:00:00.000Z",
+    "first_run_at": "1970-01-01T00:00:00.000Z",
+    "daily_caps": {
+      "submissions_max": 1,
+      "vote_actions_max": 5,
+      "status_checks_max": 3
+    }
+  }
+}

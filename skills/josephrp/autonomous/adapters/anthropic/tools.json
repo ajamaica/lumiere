@@ -1,0 +1,94 @@
+[
+  {
+    "name": "run_prediction",
+    "description": "Stock prediction for a symbol (e.g. AAPL). Returns forecast and model_id. May require x402 payment (402 → pay via facilitator → retry with PAYMENT-SIGNATURE).",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": { "type": "string", "description": "Stock ticker symbol" },
+        "horizon": { "type": "integer", "description": "Prediction horizon in days", "default": 30 }
+      },
+      "required": ["symbol"]
+    }
+  },
+  {
+    "name": "run_backtest",
+    "description": "Backtest a trading strategy for a symbol. Returns total_return, sharpe_ratio, max_drawdown, win_rate, n_trades, equity_curve, trades. May require x402 payment.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "symbol": { "type": "string", "description": "Stock ticker symbol" },
+        "start": { "type": "string", "description": "Start date YYYY-MM-DD" },
+        "end": { "type": "string", "description": "End date YYYY-MM-DD" },
+        "strategy": { "type": "string", "description": "Strategy name", "default": "chronos" }
+      },
+      "required": ["symbol"]
+    }
+  },
+  {
+    "name": "open_bank_account",
+    "description": "Start CornerStone bank link flow to open/link a bank account. May require x402 payment (Base/EVM).",
+    "input_schema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  {
+    "name": "get_borrower_score",
+    "description": "Get CornerStone borrower score for an agent wallet. Query param wallet=0x... May require x402 payment.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "wallet": { "type": "string", "description": "Agent wallet address (0x...)" }
+      },
+      "required": ["wallet"]
+    }
+  },
+  {
+    "name": "get_agent_reputation_score",
+    "description": "Get agent reputation score for a wallet. Query param wallet=0x... May require x402 payment.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "wallet": { "type": "string", "description": "Agent wallet address (0x...)" }
+      },
+      "required": ["wallet"]
+    }
+  },
+  {
+    "name": "get_agent_reputation_score_by_email",
+    "description": "Get agent reputation score by email (resolves from onboarding submissions). Higher price (base + extra). Requires SCORE_BY_EMAIL_ENABLED. May require x402 payment.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email address (must exist in onboarding submissions)"
+        },
+        "payment_payload": {
+          "type": "object",
+          "description": "x402 payment payload after 402 response"
+        }
+      },
+      "required": ["email"]
+    }
+  },
+  {
+    "name": "get_borrower_score_by_email",
+    "description": "Get CornerStone borrower score by email (resolves from onboarding submissions). Higher price (base + extra). Requires SCORE_BY_EMAIL_ENABLED. May require x402 payment.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email address (must exist in onboarding submissions)"
+        },
+        "payment_payload": {
+          "type": "object",
+          "description": "x402 payment payload after 402 response"
+        }
+      },
+      "required": ["email"]
+    }
+  }
+]

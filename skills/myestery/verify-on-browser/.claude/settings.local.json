@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:claude.ai)",
+      "WebFetch(domain:chromedevtools.github.io)",
+      "Bash(find:*)",
+      "Bash(cat:*)"
+    ]
+  }
+}

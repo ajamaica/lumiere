@@ -1,0 +1,11 @@
+{
+  "owner": "normallygaussian",
+  "slug": "parallel-enrichment",
+  "displayName": "Parallel Enrichment",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770154204448,
+    "commit": "https://github.com/clawdbot/skills/commit/b885a89fafb5e9247e0de1742148b844a2dac048"
+  },
+  "history": []
+}

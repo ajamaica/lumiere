@@ -1,0 +1,11 @@
+{
+  "owner": "0xnagato",
+  "slug": "antigravity-swarm",
+  "displayName": "Antigravity Swarm",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770300642025,
+    "commit": "https://github.com/clawdbot/skills/commit/b11e0142a448a0454772fcc33717b5b494e7d776"
+  },
+  "history": []
+}

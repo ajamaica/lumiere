@@ -1,0 +1,96 @@
+{
+  "cron": {
+    "schedule": "15 10 * * *",
+    "description": "Runs daily at 10:15 AM Mountain Standard Time",
+    "timezone": "America/Denver"
+  },
+  "telegram": {
+    "enabled": true,
+    "channel": "telegram",
+    "targetId": "-1003892992445",
+    "targetType": "group",
+    "sendBriefing": true,
+    "sendSkillDiscoverySummary": true
+  },
+  "briefing": {
+    "components": {
+      "youtube": {
+        "enabled": true,
+        "skill": "youtube-analytics",
+        "args": ["--last24h"]
+      },
+      "email": {
+        "enabled": true,
+        "skill": "gmail-summary",
+        "args": []
+      },
+      "weather": {
+        "enabled": true,
+        "skill": "weather",
+        "args": ["--location", "Denver", "--units", "F"]
+      },
+      "calendar": {
+        "enabled": true,
+        "skill": "calendar",
+        "args": ["--range", "48h"]
+      },
+      "news": {
+        "enabled": true,
+        "topics": [
+          "AI coding agents Claude AutoGPT",
+          "Clawdbot new features updates",
+          "3D printing new technology announcements"
+        ]
+      },
+      "researchBriefs": {
+        "enabled": true,
+        "categories": [
+          "3D printing (new products, techniques, announcements)",
+          "Agentic coding (Claude, AutoGPT, reasoning patterns)",
+          "Clawdbot ecosystem (new features, community updates)",
+          "Trending Clawdbot skills (top installed, new releases)"
+        ]
+      }
+    }
+  },
+  "skillDiscovery": {
+    "enabled": true,
+    "interests": {
+      "3D_PRINTING": {
+        "keywords": ["3d print", "3d model", "molten", "fdm", "resin", "filament"]
+      },
+      "AGENTIC_CODING": {
+        "keywords": ["agent", "claude", "autogpt", "reasoning", "loop", "tool use", "agentic"]
+      },
+      "CLAWDBOT": {
+        "keywords": ["clawdbot", "skill", "gateway", "telegram", "discord", "automation"]
+      },
+      "AI_ML": {
+        "keywords": ["ai", "machine learning", "llm", "neural", "deep learning"]
+      },
+      "ELECTRONICS": {
+        "keywords": ["esp32", "arduino", "microcontroller", "iot", "embedded"]
+      }
+    },
+    "skillValidation": {
+      "minimumAgeDays": 2,
+      "securityScan": true,
+      "autoInstallSafe": true,
+      "skipCautionWarnings": false
+    }
+  },
+  "logging": {
+    "logDir": "/Users/ericwoodard/clawd/logs",
+    "logFile": "morning-briefing.log",
+    "logLevel": "info",
+    "maxLogSize": "10MB",
+    "retentionDays": 30
+  },
+  "advanced": {
+    "workspace": "/Users/ericwoodard/clawd",
+    "memoryDir": "/Users/ericwoodard/clawd/memory",
+    "scriptsDir": "/Users/ericwoodard/clawd/scripts",
+    "timeoutMs": 30000,
+    "retryAttempts": 2
+  }
+}

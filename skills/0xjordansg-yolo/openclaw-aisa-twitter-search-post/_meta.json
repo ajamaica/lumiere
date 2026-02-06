@@ -1,0 +1,11 @@
+{
+  "owner": "0xjordansg-yolo",
+  "slug": "openclaw-aisa-twitter-search-post",
+  "displayName": "X Twitter Command Center (Search + Post)",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770279290486,
+    "commit": "https://github.com/openclaw/skills/commit/2b08506492b453df1625316037c69b268b55bae2"
+  },
+  "history": []
+}

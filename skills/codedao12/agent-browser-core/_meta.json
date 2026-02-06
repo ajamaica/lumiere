@@ -1,0 +1,11 @@
+{
+  "owner": "codedao12",
+  "slug": "agent-browser-core",
+  "displayName": "Agent Browser Core",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770369553491,
+    "commit": "https://github.com/openclaw/skills/commit/d651a713a937442afea73418ae57149833e2b8e8"
+  },
+  "history": []
+}

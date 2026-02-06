@@ -1,0 +1,11 @@
+{
+  "owner": "hugosbl",
+  "slug": "french-services",
+  "displayName": "French Services",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770058304220,
+    "commit": "https://github.com/clawdbot/skills/commit/e15aa7ee768aad1717628fd7c6a995b8395a7ebd"
+  },
+  "history": []
+}

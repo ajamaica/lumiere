@@ -1,0 +1,11 @@
+{
+  "owner": "zsvedic",
+  "slug": "gembox-skill",
+  "displayName": "gembox-skill",
+  "latest": {
+    "version": "0.9.0",
+    "publishedAt": 1769964950004,
+    "commit": "https://github.com/clawdbot/skills/commit/9e2ac93429ef1694e225c0b6bde919d6848a6dd2"
+  },
+  "history": []
+}

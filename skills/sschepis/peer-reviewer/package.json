@@ -1,0 +1,35 @@
+{
+  "name": "@sschepis/peer-reviewer",
+  "version": "1.0.0",
+  "description": "AI-powered academic paper reviewer using OpenClaw agentic patterns",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "ts-node src/test.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "openclaw",
+    "skill",
+    "academic",
+    "review",
+    "ai"
+  ],
+  "author": "Sebastian Schepis",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.4.0",
+    "google-auth-library": "^9.6.0",
+    "xml2js": "^0.6.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/xml2js": "^0.4.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  }
+}

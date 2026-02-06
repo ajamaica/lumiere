@@ -1,0 +1,17 @@
+{
+  "owner": "crimsondevil333333",
+  "slug": "collaboration-helper",
+  "displayName": "Collaboration Helper",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770279763318,
+    "commit": "https://github.com/clawdbot/skills/commit/fa697f2287e58dcc3ec0b17a8f87c44203070fdb"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770103061235,
+      "commit": "https://github.com/clawdbot/skills/commit/79b70b5a9f06d8c9d64755d773fc0f537ffcd2bf"
+    }
+  ]
+}

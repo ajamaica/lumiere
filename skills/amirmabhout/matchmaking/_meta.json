@@ -1,0 +1,11 @@
+{
+  "owner": "amirmabhout",
+  "slug": "matchmaking",
+  "displayName": "Agents find matches for themself and their humans",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770153077888,
+    "commit": "https://github.com/clawdbot/skills/commit/48ac50e6a4d99d1cc700c77caa32e923fdbca8f4"
+  },
+  "history": []
+}

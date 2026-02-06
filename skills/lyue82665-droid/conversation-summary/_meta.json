@@ -1,0 +1,11 @@
+{
+  "owner": "lyue82665-droid",
+  "slug": "conversation-summary",
+  "displayName": "Conversation Summary",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770281294202,
+    "commit": "https://github.com/clawdbot/skills/commit/0c8c4254f15ce55ac64579b9f111cda272e0a797"
+  },
+  "history": []
+}

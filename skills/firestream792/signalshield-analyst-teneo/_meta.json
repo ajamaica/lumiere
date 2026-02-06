@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "signalshield-analyst-teneo",
+  "displayName": "SignalShield Analyst - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770302204470,
+    "commit": "https://github.com/clawdbot/skills/commit/1259b67291f4ff1dda3f5cd82df4aceaf611d5f7"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770216656995,
+      "commit": "https://github.com/clawdbot/skills/commit/f23c7c4bab75c080645d8580d0f008881cb77d9a"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "ryancampbell",
+  "slug": "agent-memory-kit",
+  "displayName": "Agent Memory Kit",
+  "latest": {
+    "version": "2.1.0",
+    "publishedAt": 1770237806723,
+    "commit": "https://github.com/clawdbot/skills/commit/6d110964d13915b56846eab91209877c1e488ee0"
+  },
+  "history": []
+}

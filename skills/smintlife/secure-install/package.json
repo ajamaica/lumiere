@@ -1,0 +1,16 @@
+{
+  "name": "secure-install",
+  "version": "1.2.0",
+  "description": "Scans skills via ClawDex API by https://www.koi.ai/ before installing.",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2"
+  },
+  "peerDependencies": {
+    "openclaw": "latest"
+  }
+}

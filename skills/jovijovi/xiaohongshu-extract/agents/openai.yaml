@@ -1,0 +1,4 @@
+interface:
+  display_name: "Xiaohongshu Extract"
+  short_description: "Extract metadata from XHS share or discovery pages."
+  default_prompt: "Extract metadata from this Xiaohongshu page."

@@ -1,0 +1,11 @@
+{
+  "owner": "bguidolim",
+  "slug": "omnisearch",
+  "displayName": "omnisearch",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769970128566,
+    "commit": "https://github.com/clawdbot/skills/commit/f66a222f4f88adcab7c0c57e738f60797ed81b6e"
+  },
+  "history": []
+}

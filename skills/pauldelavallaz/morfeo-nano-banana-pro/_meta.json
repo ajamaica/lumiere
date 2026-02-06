@@ -1,0 +1,11 @@
+{
+  "owner": "pauldelavallaz",
+  "slug": "morfeo-nano-banana-pro",
+  "displayName": "Nano Banana Pro (Morfeo)",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770276634126,
+    "commit": "https://github.com/clawdbot/skills/commit/cb2e48e3a423a83f6b15d89b6297642b91be9b5a"
+  },
+  "history": []
+}

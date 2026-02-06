@@ -1,0 +1,9 @@
+{
+  "fixture": "evasive-07-sandbox-detect",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 10,
+  "expected_risk": "CRITICAL",
+  "expected_categories": ["evasion"],
+  "must_detect_rules": ["SANDBOX_DETECTION"]
+}

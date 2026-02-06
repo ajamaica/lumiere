@@ -1,0 +1,32 @@
+{
+  "owner": "neo552",
+  "slug": "tensorpm",
+  "displayName": "AI-Driven Project Management: TensorPM",
+  "latest": {
+    "version": "1.1.12",
+    "publishedAt": 1770320729881,
+    "commit": "https://github.com/clawdbot/skills/commit/86ff8f30ca28a9f4bd691f02b62ffc93c48bbb8f"
+  },
+  "history": [
+    {
+      "version": "1.1.11",
+      "publishedAt": 1770250047641,
+      "commit": "https://github.com/clawdbot/skills/commit/14c03987b320425c51dff02c3adfcc1d69a5aded"
+    },
+    {
+      "version": "1.1.7",
+      "publishedAt": 1770209358575,
+      "commit": "https://github.com/clawdbot/skills/commit/9f809c24e7313ab9fab16919e709404bd198bb5b"
+    },
+    {
+      "version": "1.1.4",
+      "publishedAt": 1770153942826,
+      "commit": "https://github.com/clawdbot/skills/commit/607fbc8deb98b636894ee2c1a917eef688b52c4b"
+    },
+    {
+      "version": "1.0.4",
+      "publishedAt": 1770123950897,
+      "commit": "https://github.com/clawdbot/skills/commit/6c61c931c2c9b3458fc1bc60bbf8a2b5959caa2a"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "tracsystems",
+  "slug": "intercom",
+  "displayName": "Intercom",
+  "latest": {
+    "version": "0.0.2",
+    "publishedAt": 1770286211159,
+    "commit": "https://github.com/clawdbot/skills/commit/7ac2a858754bf9b9bb9b6eeca4851b21e2cb189e"
+  },
+  "history": []
+}

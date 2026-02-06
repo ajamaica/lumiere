@@ -1,0 +1,9 @@
+{
+  "fixture": "legit-api-skill",
+  "expected_safe": true,
+  "min_score": 80,
+  "max_score": 100,
+  "expected_risk": "LOW",
+  "expected_categories": [],
+  "must_detect_rules": []
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "barneyjm",
+  "slug": "query",
+  "displayName": "Query",
+  "latest": {
+    "version": "0.1.2",
+    "publishedAt": 1770131801629,
+    "commit": "https://github.com/clawdbot/skills/commit/7cb37cf955a985bdd67682889a726d6cc93241d1"
+  },
+  "history": [
+    {
+      "version": "0.1.1",
+      "publishedAt": 1769878014760,
+      "commit": "https://github.com/clawdbot/skills/commit/7a771346d70c481f3e0720d52c2b9fc579007ae9"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "shaiss",
+  "slug": "local-approvals",
+  "displayName": "Local Approvals",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770299138525,
+    "commit": "https://github.com/clawdbot/skills/commit/db93b990008549c4a7cbeb719ec2fccb8c6613db"
+  },
+  "history": []
+}

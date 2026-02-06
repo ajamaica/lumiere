@@ -1,0 +1,11 @@
+{
+  "owner": "aisapay",
+  "slug": "aisa-twitter-api",
+  "displayName": "AIsa Twitter API",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770273284442,
+    "commit": "https://github.com/clawdbot/skills/commit/201bdd2b419aac514fa40f8a7a320f1461ae088e"
+  },
+  "history": []
+}

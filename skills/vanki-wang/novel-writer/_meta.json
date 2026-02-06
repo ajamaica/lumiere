@@ -1,0 +1,17 @@
+{
+  "owner": "vanki-wang",
+  "slug": "novel-writer",
+  "displayName": "novel-writer",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770185527909,
+    "commit": "https://github.com/clawdbot/skills/commit/98b41483f1f4b02d9812344526bba5b52c72a70d"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770139584719,
+      "commit": "https://github.com/clawdbot/skills/commit/cf3f796fcdd80f404de739643a129a90a5d13941"
+    }
+  ]
+}

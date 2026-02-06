@@ -1,0 +1,11 @@
+{
+  "owner": "raphbaph",
+  "slug": "grok-imagine-render",
+  "displayName": "Grok Imagine Image Generation",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770123940156,
+    "commit": "https://github.com/clawdbot/skills/commit/3e466563bf5644f8b55954a70caaed400354b042"
+  },
+  "history": []
+}

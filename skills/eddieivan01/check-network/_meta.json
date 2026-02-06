@@ -1,0 +1,11 @@
+{
+  "owner": "eddieivan01",
+  "slug": "check-network",
+  "displayName": "check network",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770196374334,
+    "commit": "https://github.com/clawdbot/skills/commit/78a289f70d372d0a28978412a5386edebfbbc538"
+  },
+  "history": []
+}

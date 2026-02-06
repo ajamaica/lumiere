@@ -1,0 +1,11 @@
+{
+  "owner": "clawdefs",
+  "slug": "drift",
+  "displayName": "Drift",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770015016700,
+    "commit": "https://github.com/clawdbot/skills/commit/2a28ee9b684fdc830ccb0e0688ad7b9491ec5f52"
+  },
+  "history": []
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "c-goro",
+  "slug": "skillguard",
+  "displayName": "SkillGuard",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769914559357,
+    "commit": "https://github.com/clawdbot/skills/commit/3ebd254d9b7130b3fe0a6591465516c4f4d197e2"
+  },
+  "history": [
+    {
+      "version": "0.2.2",
+      "publishedAt": 1769891328754,
+      "commit": "https://github.com/clawdbot/skills/commit/5b69d68a31a1e2ec81270973e27a9f1396b2f69b"
+    }
+  ]
+}

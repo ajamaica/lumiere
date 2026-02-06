@@ -1,0 +1,11 @@
+{
+  "owner": "gchapim",
+  "slug": "phoenix-api-gen",
+  "displayName": "Phoenix API Generator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770104943689,
+    "commit": "https://github.com/clawdbot/skills/commit/ea34b80a0cccc1a925c21d48003a27fedc808e56"
+  },
+  "history": []
+}

@@ -1,0 +1,8 @@
+{
+  "name": "@jasper-recall/openclaw-plugin",
+  "version": "0.1.0",
+  "description": "OpenClaw plugin for Jasper Recall semantic memory search",
+  "main": "index.ts",
+  "type": "module",
+  "dependencies": {}
+}

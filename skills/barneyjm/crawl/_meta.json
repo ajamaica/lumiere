@@ -1,0 +1,11 @@
+{
+  "owner": "barneyjm",
+  "slug": "crawl",
+  "displayName": "Crawl",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770132378843,
+    "commit": "https://github.com/clawdbot/skills/commit/1d6de0b01d30811d461c2c2e8a380f8b83448549"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "gigi-trifle",
+  "slug": "github-mentions",
+  "displayName": "GitHub Mentions",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769996368115,
+    "commit": "https://github.com/clawdbot/skills/commit/5426c24d03ca87e6a4e3401fb6039bbc5a480f34"
+  },
+  "history": []
+}

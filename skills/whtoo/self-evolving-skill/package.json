@@ -1,0 +1,39 @@
+{
+  "name": "self-evolving-skill",
+  "version": "1.0.2",
+  "description": "元认知自学习系统 - 基于预测编码和价值驱动的Skill自动演化",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "openclaw": {
+    "category": "learning",
+    "mcp": {
+      "tools": [
+        "skill_create",
+        "skill_execute",
+        "skill_analyze",
+        "skill_list",
+        "skill_stats",
+        "skill_save",
+        "skill_load"
+      ]
+    }
+  },
+  "keywords": [
+    "self-evolution",
+    "meta-cognition",
+    "predictive-coding",
+    "skill-learning",
+    "openclaw-skill"
+  ],
+  "author": "OpenClaw",
+  "license": "MIT"
+}

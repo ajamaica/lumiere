@@ -1,0 +1,21 @@
+# fly.toml app configuration file generated for agentchat-server on 2026-02-02T19:57:15-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'agentchat-server'
+primary_region = 'sjc'
+
+[build]
+
+[http_service]
+  internal_port = 6667
+  force_https = true
+  auto_stop_machines = 'off'
+  auto_start_machines = false
+  min_machines_running = 1
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '256mb'

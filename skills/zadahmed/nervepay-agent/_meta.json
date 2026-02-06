@@ -1,0 +1,11 @@
+{
+  "owner": "zadahmed",
+  "slug": "nervepay-agent",
+  "displayName": "NervePay | Analytics & Identity for Agents",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770303351918,
+    "commit": "https://github.com/clawdbot/skills/commit/b37e1f20a30e6b6617721dc8ac53bbb7ad29a0eb"
+  },
+  "history": []
+}

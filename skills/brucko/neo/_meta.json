@@ -1,0 +1,11 @@
+{
+  "owner": "brucko",
+  "slug": "neo",
+  "displayName": "Neo",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770061003710,
+    "commit": "https://github.com/clawdbot/skills/commit/dc67cea7317e60159b85922aab478446728e1898"
+  },
+  "history": []
+}

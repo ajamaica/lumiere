@@ -1,0 +1,11 @@
+{
+  "owner": "authensor",
+  "slug": "authensor-gateway",
+  "displayName": "Authensor Gateway",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770123512410,
+    "commit": "https://github.com/clawdbot/skills/commit/d1cc0ce4627cd63069835974de6c2f9bd138efe5"
+  },
+  "history": []
+}

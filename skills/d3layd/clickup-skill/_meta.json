@@ -1,0 +1,17 @@
+{
+  "owner": "d3layd",
+  "slug": "clickup-skill",
+  "displayName": "ClickUp Skill",
+  "latest": {
+    "version": "1.1.1",
+    "publishedAt": 1769899513738,
+    "commit": "https://github.com/clawdbot/skills/commit/2f502b701d4dbd2f583f9a687a169e178feaa34e"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769879125430,
+      "commit": "https://github.com/clawdbot/skills/commit/1895a21e97ba486867461496135f47410204a44f"
+    }
+  ]
+}

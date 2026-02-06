@@ -1,0 +1,11 @@
+{
+  "owner": "paulpreibisch",
+  "slug": "agentvibesclawdbot",
+  "displayName": "AgentVibes Clawdbot TTS",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770286158282,
+    "commit": "https://github.com/clawdbot/skills/commit/b9584b7987219fb733b8ac2fb8cfda3988e6ad02"
+  },
+  "history": []
+}

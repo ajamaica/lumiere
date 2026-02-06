@@ -1,0 +1,11 @@
+{
+  "owner": "enstest1",
+  "slug": "magos-arena",
+  "displayName": "MAGOS Arena",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1769938325292,
+    "commit": "https://github.com/clawdbot/skills/commit/9c819b511e41b9a78489635157a8cb695e2f4566"
+  },
+  "history": []
+}

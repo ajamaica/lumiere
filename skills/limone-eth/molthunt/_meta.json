@@ -1,0 +1,32 @@
+{
+  "owner": "limone-eth",
+  "slug": "molthunt",
+  "displayName": "Molthunt",
+  "latest": {
+    "version": "1.0.9",
+    "publishedAt": 1770139470104,
+    "commit": "https://github.com/clawdbot/skills/commit/2daae76a61f9a657f2f4dc6edb3a1cf08c52cb93"
+  },
+  "history": [
+    {
+      "version": "1.0.7",
+      "publishedAt": 1769990085920,
+      "commit": "https://github.com/clawdbot/skills/commit/2e16cd3ccb6cbca9ddd14bb792f3d20e32af8e3f"
+    },
+    {
+      "version": "1.0.6",
+      "publishedAt": 1769912996086,
+      "commit": "https://github.com/clawdbot/skills/commit/ad3ba1148dc1d6f5d784f9bdb71110914c0871c1"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769879302221,
+      "commit": "https://github.com/clawdbot/skills/commit/2e608fa7992dbcc5898eb9c56d5dfe8cfbb271c1"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769842648726,
+      "commit": "https://github.com/clawdbot/skills/commit/700bd29234ee16333f78bae326dab6069210f044"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "jmanhype",
+  "slug": "wreckit-skill",
+  "displayName": "Wreckit",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770039748643,
+    "commit": "https://github.com/clawdbot/skills/commit/bf8c33d5c9c169b2a5d7a711cdb5ffc89363d62f"
+  },
+  "history": []
+}

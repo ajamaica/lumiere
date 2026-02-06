@@ -1,0 +1,56 @@
+{
+  "name": "hopeid",
+  "version": "1.2.0",
+  "description": "🛡️ Inference-based intrusion detection for AI agents. Traditional IDS matches signatures. HoPE understands intent.",
+  "main": "src/index.js",
+  "types": "types/index.d.ts",
+  "bin": {
+    "hopeid": "./cli/hopeid.js"
+  },
+  "openclaw": {
+    "extensions": [
+      "./extensions/openclaw-plugin"
+    ]
+  },
+  "scripts": {
+    "test": "node cli/hopeid.js test",
+    "cli": "node cli/hopeid.js"
+  },
+  "keywords": [
+    "ai",
+    "security",
+    "prompt-injection",
+    "intrusion-detection",
+    "llm",
+    "agent",
+    "chatgpt",
+    "claude",
+    "openai",
+    "anthropic",
+    "jailbreak",
+    "defense"
+  ],
+  "author": "E.x.O. Entertainment Studios <support@exohaven.online>",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/E-x-O-Entertainment-Studios-Inc/hopeIDS.git"
+  },
+  "homepage": "https://exohaven.online/products/hopeids",
+  "bugs": {
+    "url": "https://github.com/E-x-O-Entertainment-Studios-Inc/hopeIDS/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "src/",
+    "cli/",
+    "types/",
+    "extensions/",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}

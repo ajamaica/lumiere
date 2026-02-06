@@ -1,0 +1,11 @@
+{
+  "owner": "seidprojects",
+  "slug": "vestaboard",
+  "displayName": "Vestaboard",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769993405119,
+    "commit": "https://github.com/clawdbot/skills/commit/a4e2e99697cf6a5013d1356478570fb6ae3502f4"
+  },
+  "history": []
+}

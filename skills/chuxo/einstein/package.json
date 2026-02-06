@@ -1,0 +1,10 @@
+{
+  "name": "einstein-x402-skill",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "OpenClaw skill for Einstein x402 blockchain analytics services",
+  "dependencies": {
+    "viem": "^2.0.0"
+  }
+}

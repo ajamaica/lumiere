@@ -1,0 +1,38 @@
+{
+  "name": "moltbot-best-practices",
+  "version": "1.1.2",
+  "description": "Best practices for AI agents to avoid common mistakes. Learn from real failures - confirms before executing, shows drafts before publishing, stops when told to stop.",
+  "main": "SKILL.md",
+  "keywords": [
+    "moltbot",
+    "openclaw",
+    "openclaw",
+    "ai-agent",
+    "best-practices",
+    "prompt-engineering",
+    "agent-behavior",
+    "claude",
+    "gpt",
+    "cursor",
+    "vibe-coding",
+    "automation",
+    "ai-assistant",
+    "llm",
+    "chatbot",
+    "ai",
+    "mcp",
+    "langchain",
+    "openai",
+    "anthropic"
+  ],
+  "author": "tytaninc7",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NextFrontierBuilds/moltbot-best-practices"
+  },
+  "homepage": "https://github.com/NextFrontierBuilds/moltbot-best-practices#readme",
+  "bugs": {
+    "url": "https://github.com/NextFrontierBuilds/moltbot-best-practices/issues"
+  }
+}

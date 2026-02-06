@@ -1,0 +1,11 @@
+{
+  "owner": "veeramanikandanr48",
+  "slug": "docker-containerization",
+  "displayName": "Docker Containerization",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769869688476,
+    "commit": "https://github.com/clawdbot/skills/commit/f6eeaceccf713b7576d3be03b1e530018de98528"
+  },
+  "history": []
+}

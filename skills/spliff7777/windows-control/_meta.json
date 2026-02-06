@@ -1,0 +1,11 @@
+{
+  "owner": "spliff7777",
+  "slug": "windows-control",
+  "displayName": "Windows Control",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769988173399,
+    "commit": "https://github.com/clawdbot/skills/commit/aca5437841ff166cdb1474e1879191c34a2b8d06"
+  },
+  "history": []
+}

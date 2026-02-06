@@ -1,0 +1,11 @@
+{
+  "owner": "ty-teo",
+  "slug": "xiaohongshu-scraper",
+  "displayName": "Xiaohongshu Scraper",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770108386861,
+    "commit": "https://github.com/clawdbot/skills/commit/1c832a20327bbc71d03c3cfaa56865da52b01942"
+  },
+  "history": []
+}

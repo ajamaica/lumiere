@@ -1,0 +1,11 @@
+{
+  "owner": "seungdols",
+  "slug": "kimchi-premium",
+  "displayName": "kimchi-premium for crypto",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769923782914,
+    "commit": "https://github.com/clawdbot/skills/commit/eeb993b0225af2e4a46e79f772651a036c7873b4"
+  },
+  "history": []
+}

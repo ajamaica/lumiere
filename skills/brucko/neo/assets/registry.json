@@ -1,0 +1,696 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-02-02",
+  "modules": {
+    "scientific-critical-thinking": {
+      "path": "scientific-critical-thinking.md",
+      "category": "meta",
+      "description": "Evaluate research claims, study designs, and evidence quality",
+      "use_count": 0
+    },
+    "game-theorist": {
+      "path": "game-theorist.md",
+      "category": "meta",
+      "description": "Analyze strategic interactions, incentives, and multi-party decisions",
+      "use_count": 0
+    },
+    "physicist": {
+      "path": "sciences/physicist.md",
+      "category": "sciences",
+      "description": "First principles reasoning, mathematical modeling, order-of-magnitude estimation",
+      "use_count": 1
+    },
+    "chemist": {
+      "path": "sciences/chemist.md",
+      "category": "sciences",
+      "description": "Molecular structure, reactions, thermodynamics vs kinetics",
+      "use_count": 0
+    },
+    "biologist": {
+      "path": "sciences/biologist.md",
+      "category": "sciences",
+      "description": "Evolution, structure-function, systems biology, experimental design",
+      "use_count": 0
+    },
+    "mathematician": {
+      "path": "sciences/mathematician.md",
+      "category": "sciences",
+      "description": "Rigorous proof, abstraction, pattern recognition, edge cases",
+      "use_count": 0
+    },
+    "statistician": {
+      "path": "sciences/statistician.md",
+      "category": "sciences",
+      "description": "Uncertainty quantification, study design, causal inference, bias detection",
+      "use_count": 0
+    },
+    "computer-scientist": {
+      "path": "sciences/computer-scientist.md",
+      "category": "sciences",
+      "description": "Algorithms, complexity analysis, data structures, correctness",
+      "use_count": 0
+    },
+    "neuroscientist": {
+      "path": "sciences/neuroscientist.md",
+      "category": "sciences",
+      "description": "Brain function, neural circuits, behavior-brain relationships",
+      "use_count": 0
+    },
+    "geneticist": {
+      "path": "sciences/geneticist.md",
+      "category": "sciences",
+      "description": "Heredity, gene expression, genomics, inheritance patterns",
+      "use_count": 0
+    },
+    "biochemist": {
+      "path": "sciences/biochemist.md",
+      "category": "sciences",
+      "description": "Molecular biology, enzyme kinetics, metabolic pathways",
+      "use_count": 0
+    },
+    "geophysicist": {
+      "path": "sciences/geophysicist.md",
+      "category": "sciences",
+      "description": "Earth processes, seismology, plate tectonics, geodynamics",
+      "use_count": 0
+    },
+    "oceanographer": {
+      "path": "sciences/oceanographer.md",
+      "category": "sciences",
+      "description": "Ocean systems, currents, marine ecosystems, climate interactions",
+      "use_count": 0
+    },
+    "earth-scientist": {
+      "path": "sciences/earth-scientist.md",
+      "category": "sciences",
+      "description": "Geology, climate systems, natural resources, environmental change",
+      "use_count": 0
+    },
+    "physician-general": {
+      "path": "medicine/physician-general.md",
+      "category": "medicine",
+      "description": "Differential diagnosis, clinical reasoning, patient evaluation",
+      "use_count": 0
+    },
+    "psychiatrist": {
+      "path": "medicine/psychiatrist.md",
+      "category": "medicine",
+      "description": "Mental health, psychopharmacology, diagnostic criteria",
+      "use_count": 0
+    },
+    "neurologist": {
+      "path": "medicine/neurologist.md",
+      "category": "medicine",
+      "description": "Nervous system disorders, localization, stroke, seizures",
+      "use_count": 0
+    },
+    "surgeon": {
+      "path": "medicine/surgeon.md",
+      "category": "medicine",
+      "description": "Operative decision-making, risk assessment, procedural thinking",
+      "use_count": 0
+    },
+    "pediatrician": {
+      "path": "medicine/pediatrician.md",
+      "category": "medicine",
+      "description": "Child development, age-specific diseases, growth assessment",
+      "use_count": 0
+    },
+    "pathologist": {
+      "path": "medicine/pathologist.md",
+      "category": "medicine",
+      "description": "Disease mechanisms, tissue analysis, diagnostic interpretation",
+      "use_count": 0
+    },
+    "cardiologist": {
+      "path": "medicine/cardiologist.md",
+      "category": "medicine",
+      "description": "Heart disease, hemodynamics, risk stratification, interventions",
+      "use_count": 0
+    },
+    "oncologist": {
+      "path": "medicine/oncologist.md",
+      "category": "medicine",
+      "description": "Cancer biology, staging, treatment strategies, prognosis",
+      "use_count": 0
+    },
+    "radiologist": {
+      "path": "medicine/radiologist.md",
+      "category": "medicine",
+      "description": "Medical imaging interpretation, pattern recognition, diagnostic reasoning",
+      "use_count": 0
+    },
+    "dermatologist": {
+      "path": "medicine/dermatologist.md",
+      "category": "medicine",
+      "description": "Skin diseases, morphology, distribution patterns, visual diagnosis",
+      "use_count": 0
+    },
+    "ophthalmologist": {
+      "path": "medicine/ophthalmologist.md",
+      "category": "medicine",
+      "description": "Eye diseases, vision preservation, ocular emergencies",
+      "use_count": 0
+    },
+    "orthopedist": {
+      "path": "medicine/orthopedist.md",
+      "category": "medicine",
+      "description": "Musculoskeletal injuries, fractures, surgical vs conservative treatment",
+      "use_count": 0
+    },
+    "anesthesiologist": {
+      "path": "medicine/anesthesiologist.md",
+      "category": "medicine",
+      "description": "Perioperative care, airway management, pharmacology, patient stability",
+      "use_count": 0
+    },
+    "emergency-physician": {
+      "path": "medicine/emergency-physician.md",
+      "category": "medicine",
+      "description": "Rapid assessment, stabilization, undifferentiated patients, triage",
+      "use_count": 0
+    },
+    "obstetrician": {
+      "path": "medicine/obstetrician.md",
+      "category": "medicine",
+      "description": "Pregnancy, childbirth, maternal-fetal medicine, obstetric emergencies",
+      "use_count": 0
+    },
+    "urologist": {
+      "path": "medicine/urologist.md",
+      "category": "medicine",
+      "description": "Urinary tract disorders, kidney stones, prostate, urologic emergencies",
+      "use_count": 0
+    },
+    "ent-specialist": {
+      "path": "medicine/ent-specialist.md",
+      "category": "medicine",
+      "description": "Ear, nose, throat disorders, hearing, vertigo, airway issues",
+      "use_count": 0
+    },
+    "immunologist": {
+      "path": "medicine/immunologist.md",
+      "category": "medicine",
+      "description": "Immune function, allergies, immunodeficiency, anaphylaxis",
+      "use_count": 0
+    },
+    "aerospace-engineer": {
+      "path": "engineering/aerospace-engineer.md",
+      "category": "engineering",
+      "description": "Aircraft/spacecraft design, systems integration, flight safety",
+      "use_count": 0
+    },
+    "biomedical-engineer": {
+      "path": "engineering/biomedical-engineer.md",
+      "category": "engineering",
+      "description": "Medical devices, biocompatibility, FDA regulatory pathways",
+      "use_count": 0
+    },
+    "chemical-engineer": {
+      "path": "engineering/chemical-engineer.md",
+      "category": "engineering",
+      "description": "Process design, mass/energy balance, scale-up, reaction engineering",
+      "use_count": 0
+    },
+    "civil-engineer": {
+      "path": "engineering/civil-engineer.md",
+      "category": "engineering",
+      "description": "Infrastructure, structural design, geotechnical, construction",
+      "use_count": 0
+    },
+    "electrical-engineer": {
+      "path": "engineering/electrical-engineer.md",
+      "category": "engineering",
+      "description": "Circuits, power systems, signal integrity, EMI/EMC",
+      "use_count": 0
+    },
+    "mechanical-engineer": {
+      "path": "engineering/mechanical-engineer.md",
+      "category": "engineering",
+      "description": "Machines, mechanisms, materials, manufacturing, thermal systems",
+      "use_count": 0
+    },
+    "materials-scientist": {
+      "path": "engineering/materials-scientist.md",
+      "category": "engineering",
+      "description": "Structure-property relationships, material selection, failure analysis",
+      "use_count": 0
+    },
+    "environmental-engineer": {
+      "path": "engineering/environmental-engineer.md",
+      "category": "engineering",
+      "description": "Pollution control, remediation, environmental protection systems",
+      "use_count": 0
+    },
+    "systems-engineer": {
+      "path": "engineering/systems-engineer.md",
+      "category": "engineering",
+      "description": "Complex system design, integration, requirements, lifecycle management",
+      "use_count": 0
+    },
+    "data-engineer": {
+      "path": "engineering/data-engineer.md",
+      "category": "engineering",
+      "description": "Data pipelines, ETL, data quality, scalable data systems",
+      "use_count": 0
+    },
+    "roboticist": {
+      "path": "engineering/roboticist.md",
+      "category": "engineering",
+      "description": "Sensing, control, embodied AI, physical world interaction",
+      "use_count": 0
+    },
+    "energy-engineer": {
+      "path": "engineering/energy-engineer.md",
+      "category": "engineering",
+      "description": "Power generation, grid systems, efficiency, renewable energy",
+      "use_count": 0
+    },
+    "historian": {
+      "path": "humanities/historian.md",
+      "category": "humanities",
+      "description": "Historical analysis, source evaluation, causation, contextualization",
+      "use_count": 0
+    },
+    "philosopher": {
+      "path": "humanities/philosopher.md",
+      "category": "humanities",
+      "description": "Conceptual analysis, logic, ethics, foundational questioning",
+      "use_count": 0
+    },
+    "linguist": {
+      "path": "humanities/linguist.md",
+      "category": "humanities",
+      "description": "Language structure, meaning, pragmatics, sociolinguistics",
+      "use_count": 0
+    },
+    "literary-critic": {
+      "path": "humanities/literary-critic.md",
+      "category": "humanities",
+      "description": "Text analysis, interpretation, literary techniques, cultural context",
+      "use_count": 0
+    },
+    "art-historian": {
+      "path": "humanities/art-historian.md",
+      "category": "humanities",
+      "description": "Visual analysis, iconography, art in cultural context",
+      "use_count": 0
+    },
+    "musicologist": {
+      "path": "humanities/musicologist.md",
+      "category": "humanities",
+      "description": "Music analysis, cultural function, sonic meaning, performance",
+      "use_count": 0
+    },
+    "anthropologist": {
+      "path": "humanities/anthropologist.md",
+      "category": "humanities",
+      "description": "Cultural systems, human diversity, ethnography, social structures",
+      "use_count": 0
+    },
+    "archaeologist": {
+      "path": "humanities/archaeologist.md",
+      "category": "humanities",
+      "description": "Material culture, excavation, dating methods, past societies",
+      "use_count": 0
+    },
+    "classicist": {
+      "path": "humanities/classicist.md",
+      "category": "humanities",
+      "description": "Ancient Greece and Rome, classical texts, ancient languages",
+      "use_count": 0
+    },
+    "ethicist": {
+      "path": "humanities/ethicist.md",
+      "category": "humanities",
+      "description": "Moral reasoning, ethical frameworks, applied ethics, dilemmas",
+      "use_count": 0
+    },
+    "theater-critic": {
+      "path": "humanities/theater-critic.md",
+      "category": "humanities",
+      "description": "Performance analysis, dramatic structure, theatrical traditions",
+      "use_count": 0
+    },
+    "theologian": {
+      "path": "humanities/theologian.md",
+      "category": "humanities",
+      "description": "Religious thought, textual interpretation, comparative religion",
+      "use_count": 0
+    },
+    "economist": {
+      "path": "social-sciences/economist.md",
+      "category": "social-sciences",
+      "description": "Markets, incentives, trade-offs, policy analysis, behavioral economics",
+      "use_count": 0
+    },
+    "political-scientist": {
+      "path": "social-sciences/political-scientist.md",
+      "category": "social-sciences",
+      "description": "Power, institutions, governance, political behavior",
+      "use_count": 0
+    },
+    "psychologist": {
+      "path": "social-sciences/psychologist.md",
+      "category": "social-sciences",
+      "description": "Behavior, cognition, motivation, mental processes, research methods",
+      "use_count": 0
+    },
+    "sociologist": {
+      "path": "social-sciences/sociologist.md",
+      "category": "social-sciences",
+      "description": "Social structures, group behavior, inequality, institutions",
+      "use_count": 0
+    },
+    "communications-expert": {
+      "path": "social-sciences/communications-expert.md",
+      "category": "social-sciences",
+      "description": "Media effects, persuasion, messaging, audience analysis",
+      "use_count": 0
+    },
+    "policy-analyst": {
+      "path": "social-sciences/policy-analyst.md",
+      "category": "social-sciences",
+      "description": "Policy evaluation, implementation, stakeholder analysis, evidence-based decisions",
+      "use_count": 0
+    },
+    "lawyer": {
+      "path": "professional/lawyer.md",
+      "category": "professional",
+      "description": "Legal reasoning, contracts, risk assessment, regulatory compliance",
+      "use_count": 0
+    },
+    "journalist": {
+      "path": "professional/journalist.md",
+      "category": "professional",
+      "description": "Investigation, source verification, storytelling, public interest",
+      "use_count": 0
+    },
+    "entrepreneur": {
+      "path": "professional/entrepreneur.md",
+      "category": "professional",
+      "description": "Business building, market validation, resource constraints, pivoting",
+      "use_count": 0
+    },
+    "educator": {
+      "path": "professional/educator.md",
+      "category": "professional",
+      "description": "Learning design, assessment, pedagogy, knowledge transfer",
+      "use_count": 0
+    },
+    "negotiator": {
+      "path": "professional/negotiator.md",
+      "category": "professional",
+      "description": "UPDATED: Now with more tactics!",
+      "use_count": 0
+    },
+    "business-strategist": {
+      "path": "professional/business-strategist.md",
+      "category": "professional",
+      "description": "Competitive analysis, market positioning, strategic planning",
+      "use_count": 0
+    },
+    "developer-advocate": {
+      "path": "tech/developer-advocate.md",
+      "category": "tech",
+      "description": "Developer relations, community building, technical evangelism",
+      "use_count": 0
+    },
+    "devops-engineer": {
+      "path": "tech/devops-engineer.md",
+      "category": "tech",
+      "description": "CI/CD, infrastructure as code, reliability, deployment",
+      "use_count": 0
+    },
+    "growth-hacker": {
+      "path": "tech/growth-hacker.md",
+      "category": "tech",
+      "description": "User acquisition, viral loops, metrics-driven growth",
+      "use_count": 0
+    },
+    "ml-engineer": {
+      "path": "tech/ml-engineer.md",
+      "category": "tech",
+      "description": "Machine learning systems, model deployment, MLOps",
+      "use_count": 0
+    },
+    "product-manager": {
+      "path": "tech/product-manager.md",
+      "category": "tech",
+      "description": "Product strategy, roadmaps, stakeholder alignment",
+      "use_count": 0
+    },
+    "security-engineer": {
+      "path": "tech/security-engineer.md",
+      "category": "tech",
+      "description": "Security architecture, threat modeling, incident response",
+      "use_count": 0
+    },
+    "technical-writer": {
+      "path": "tech/technical-writer.md",
+      "category": "tech",
+      "description": "Documentation, API docs, user guides, clarity",
+      "use_count": 0
+    },
+    "quantitative-analyst": {
+      "path": "finance/quantitative-analyst.md",
+      "category": "finance",
+      "description": "Quantitative modeling, derivatives, algorithmic trading",
+      "use_count": 0
+    },
+    "risk-manager": {
+      "path": "finance/risk-manager.md",
+      "category": "finance",
+      "description": "Risk assessment, VaR, hedging strategies, compliance",
+      "use_count": 0
+    },
+    "portfolio-manager": {
+      "path": "finance/portfolio-manager.md",
+      "category": "finance",
+      "description": "Asset allocation, portfolio construction, performance",
+      "use_count": 0
+    },
+    "compliance-officer": {
+      "path": "finance/compliance-officer.md",
+      "category": "finance",
+      "description": "Regulatory compliance, AML/KYC, audit readiness",
+      "use_count": 0
+    },
+    "financial-modeler": {
+      "path": "finance/financial-modeler.md",
+      "category": "finance",
+      "description": "Financial models, valuation, M&A analysis",
+      "use_count": 0
+    },
+    "trader": {
+      "path": "finance/trader.md",
+      "category": "finance",
+      "description": "Market execution, liquidity, position management",
+      "use_count": 0
+    },
+    "actuary": {
+      "path": "finance/actuary.md",
+      "category": "finance",
+      "description": "Risk quantification, insurance pricing, mortality tables",
+      "use_count": 0
+    },
+    "reit-analyst": {
+      "path": "finance/reit-analyst.md",
+      "category": "finance",
+      "description": "Real estate investment trusts, property valuation, FFO",
+      "use_count": 0
+    },
+    "showrunner": {
+      "path": "entertainment/showrunner.md",
+      "category": "entertainment",
+      "description": "TV production, writers room, creative vision",
+      "use_count": 0
+    },
+    "development-executive": {
+      "path": "entertainment/development-executive.md",
+      "category": "entertainment",
+      "description": "Content development, greenlighting, talent relationships",
+      "use_count": 0
+    },
+    "talent-agent": {
+      "path": "entertainment/talent-agent.md",
+      "category": "entertainment",
+      "description": "Talent representation, deal negotiation, career strategy",
+      "use_count": 0
+    },
+    "music-producer": {
+      "path": "entertainment/music-producer.md",
+      "category": "entertainment",
+      "description": "Music production, sound design, artist collaboration",
+      "use_count": 0
+    },
+    "documentary-filmmaker": {
+      "path": "entertainment/documentary-filmmaker.md",
+      "category": "entertainment",
+      "description": "Documentary storytelling, research, ethical filmmaking",
+      "use_count": 0
+    },
+    "ip-lawyer": {
+      "path": "entertainment/ip-lawyer.md",
+      "category": "entertainment",
+      "description": "Intellectual property, licensing, rights management",
+      "use_count": 0
+    },
+    "real-estate-developer": {
+      "path": "real-estate/real-estate-developer.md",
+      "category": "real-estate",
+      "description": "Property development, entitlements, project finance",
+      "use_count": 0
+    },
+    "asset-manager": {
+      "path": "real-estate/asset-manager.md",
+      "category": "real-estate",
+      "description": "Property performance, value optimization, repositioning",
+      "use_count": 0
+    },
+    "commercial-broker": {
+      "path": "real-estate/commercial-broker.md",
+      "category": "real-estate",
+      "description": "Commercial leasing, tenant representation, deal structure",
+      "use_count": 0
+    },
+    "property-manager": {
+      "path": "real-estate/property-manager.md",
+      "category": "real-estate",
+      "description": "Property operations, tenant relations, maintenance",
+      "use_count": 0
+    },
+    "zoning-specialist": {
+      "path": "real-estate/zoning-specialist.md",
+      "category": "real-estate",
+      "description": "Land use, entitlements, municipal approvals",
+      "use_count": 0
+    },
+    "hospital-administrator": {
+      "path": "healthcare-business/hospital-administrator.md",
+      "category": "healthcare-business",
+      "description": "Healthcare operations, reimbursement, regulatory compliance",
+      "use_count": 0
+    },
+    "pharma-bd": {
+      "path": "healthcare-business/pharma-bd.md",
+      "category": "healthcare-business",
+      "description": "Pharmaceutical business development, licensing, partnerships",
+      "use_count": 0
+    },
+    "medical-affairs": {
+      "path": "healthcare-business/medical-affairs.md",
+      "category": "healthcare-business",
+      "description": "Medical strategy, KOL engagement, scientific communication",
+      "use_count": 0
+    },
+    "health-economist": {
+      "path": "healthcare-business/health-economist.md",
+      "category": "healthcare-business",
+      "description": "Health economics, outcomes research, value demonstration",
+      "use_count": 0
+    },
+    "brand-strategist": {
+      "path": "marketing/brand-strategist.md",
+      "category": "marketing",
+      "description": "Brand positioning, identity, messaging architecture",
+      "use_count": 0
+    },
+    "media-buyer": {
+      "path": "marketing/media-buyer.md",
+      "category": "marketing",
+      "description": "Media planning, ad buying, ROI optimization",
+      "use_count": 0
+    },
+    "creative-director": {
+      "path": "marketing/creative-director.md",
+      "category": "marketing",
+      "description": "Creative vision, campaign development, design leadership",
+      "use_count": 0
+    },
+    "market-researcher": {
+      "path": "marketing/market-researcher.md",
+      "category": "marketing",
+      "description": "Consumer insights, research design, data analysis",
+      "use_count": 0
+    },
+    "influencer-relations": {
+      "path": "marketing/influencer-relations.md",
+      "category": "marketing",
+      "description": "Influencer partnerships, creator economy, authenticity",
+      "use_count": 0
+    },
+    "crm-specialist": {
+      "path": "marketing/crm-specialist.md",
+      "category": "marketing",
+      "description": "Customer lifecycle, retention, personalization",
+      "use_count": 0
+    },
+    "operations-manager": {
+      "path": "manufacturing/operations-manager.md",
+      "category": "manufacturing",
+      "description": "Production management, efficiency, workforce planning",
+      "use_count": 0
+    },
+    "supply-chain-analyst": {
+      "path": "manufacturing/supply-chain-analyst.md",
+      "category": "manufacturing",
+      "description": "Supply chain optimization, logistics, inventory",
+      "use_count": 0
+    },
+    "quality-engineer": {
+      "path": "manufacturing/quality-engineer.md",
+      "category": "manufacturing",
+      "description": "Quality systems, defect analysis, process control",
+      "use_count": 0
+    },
+    "lean-six-sigma-expert": {
+      "path": "manufacturing/lean-six-sigma-expert.md",
+      "category": "manufacturing",
+      "description": "Process improvement, waste elimination, DMAIC",
+      "use_count": 0
+    },
+    "procurement-specialist": {
+      "path": "manufacturing/procurement-specialist.md",
+      "category": "manufacturing",
+      "description": "Sourcing, vendor management, cost optimization",
+      "use_count": 0
+    },
+    "program-officer": {
+      "path": "ngo/program-officer.md",
+      "category": "ngo",
+      "description": "Grant making, program design, impact assessment",
+      "use_count": 0
+    },
+    "grant-writer": {
+      "path": "ngo/grant-writer.md",
+      "category": "ngo",
+      "description": "Proposal writing, funder relations, narrative development",
+      "use_count": 0
+    },
+    "impact-evaluator": {
+      "path": "ngo/impact-evaluator.md",
+      "category": "ngo",
+      "description": "Program evaluation, theory of change, measurement",
+      "use_count": 0
+    },
+    "policy-researcher": {
+      "path": "ngo/policy-researcher.md",
+      "category": "ngo",
+      "description": "Policy analysis, evidence synthesis, recommendations",
+      "use_count": 0
+    },
+    "advocacy-director": {
+      "path": "ngo/advocacy-director.md",
+      "category": "ngo",
+      "description": "Campaign strategy, coalition building, legislative engagement",
+      "use_count": 0
+    },
+    "cosmetic-plastic-surgeon": {
+      "path": "medicine/cosmetic-plastic-surgeon.md",
+      "category": "medicine",
+      "description": "Aesthetic surgery, facial rejuvenation, injectables, body contouring",
+      "use_count": 0
+    }
+  }
+}

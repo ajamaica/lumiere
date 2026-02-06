@@ -1,0 +1,11 @@
+{
+  "owner": "kosasih",
+  "slug": "quantum-forge",
+  "displayName": "QuantumForge",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770285244403,
+    "commit": "https://github.com/clawdbot/skills/commit/5b18fd0c76e43e9f411a98c455f0ceff588a6ca8"
+  },
+  "history": []
+}

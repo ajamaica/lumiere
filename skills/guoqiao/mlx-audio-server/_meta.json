@@ -1,0 +1,22 @@
+{
+  "owner": "guoqiao",
+  "slug": "mlx-audio-server",
+  "displayName": "MLX Audio Server",
+  "latest": {
+    "version": "0.1.4",
+    "publishedAt": 1770318884387,
+    "commit": "https://github.com/clawdbot/skills/commit/3f2bf58e83a1426fe197cb0659e28427098de09c"
+  },
+  "history": [
+    {
+      "version": "0.1.3",
+      "publishedAt": 1770262796198,
+      "commit": "https://github.com/clawdbot/skills/commit/326af0be7a614d5c0f40780893ea9e0f7549db4d"
+    },
+    {
+      "version": "0.1.1",
+      "publishedAt": 1770175666608,
+      "commit": "https://github.com/clawdbot/skills/commit/efefc4a693699533909e5a48a29de38dc5e153d9"
+    }
+  ]
+}

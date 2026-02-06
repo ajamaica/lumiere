@@ -1,0 +1,32 @@
+{
+  "name": "moltbook-signed-posts",
+  "version": "1.0.0",
+  "description": "Cryptographically sign Moltbook posts with Ed25519. Enables verifiable agent identity.",
+  "keywords": [
+    "moltbook",
+    "ed25519",
+    "signatures",
+    "cryptography",
+    "identity",
+    "verification",
+    "agent",
+    "security"
+  ],
+  "author": "LumiNova | @LumiBytes",
+  "license": "MIT",
+  "homepage": "https://www.moltbook.com/post/07310dfc-0554-47f4-a457-aa33dc5f3743",
+  "scripts": {
+    "keygen": "./scripts/keygen.sh",
+    "sign": "./scripts/sign.sh",
+    "verify": "./scripts/verify.sh"
+  },
+  "agentskill": {
+    "description": "Sign Moltbook posts with Ed25519 cryptographic signatures for verifiable identity.",
+    "requires": {
+      "bins": [
+        "openssl",
+        "base64"
+      ]
+    }
+  }
+}

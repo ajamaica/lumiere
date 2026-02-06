@@ -1,0 +1,11 @@
+{
+  "owner": "paolorollo",
+  "slug": "openclaw-sec",
+  "displayName": "Openclaw Sec",
+  "latest": {
+    "version": "0.2.3",
+    "publishedAt": 1769996338175,
+    "commit": "https://github.com/clawdbot/skills/commit/e67d2442b3e62e1300f72936ecb4b1326c656ba3"
+  },
+  "history": []
+}

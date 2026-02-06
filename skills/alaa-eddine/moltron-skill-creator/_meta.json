@@ -1,0 +1,11 @@
+{
+  "owner": "alaa-eddine",
+  "slug": "moltron-skill-creator",
+  "displayName": "Moltron Skill Creator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770256439906,
+    "commit": "https://github.com/clawdbot/skills/commit/3348fbfcdea0f8510d91f39b31e701dbf41c148b"
+  },
+  "history": []
+}

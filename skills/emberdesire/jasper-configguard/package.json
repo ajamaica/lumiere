@@ -1,0 +1,33 @@
+{
+  "name": "jasper-configguard",
+  "version": "1.0.0",
+  "description": "🛡️ Safe config changes for OpenClaw with automatic rollback. Never brick your gateway again.",
+  "main": "src/index.js",
+  "bin": {
+    "jasper-configguard": "./cli/configguard.js",
+    "safe-config-patch": "./cli/configguard.js"
+  },
+  "scripts": {
+    "test": "node test/configguard.test.js",
+    "cli": "node cli/configguard.js"
+  },
+  "keywords": [
+    "openclaw",
+    "config",
+    "safety",
+    "rollback",
+    "gateway",
+    "ai-agent",
+    "devops"
+  ],
+  "author": "E.x.O. Entertainment Studios <dev@exohaven.online>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/E-x-O-Entertainment-Studios-Inc/jasper-configguard"
+  },
+  "homepage": "https://exohaven.online/products/jasper-configguard",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

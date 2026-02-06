@@ -1,0 +1,19 @@
+{
+  "name": "file-deduplicator",
+  "version": "1.0.0",
+  "description": "Find and remove duplicate files intelligently. Save storage space, keep your system clean.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "deduplication",
+    "storage",
+    "cleanup",
+    "file-management",
+    "duplicate",
+    "disk-space"
+  ],
+  "author": "Vernox",
+  "license": "MIT"
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "johny0920",
+  "slug": "polymarket-arbitrage",
+  "displayName": "Polymarket Arbitrage",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770156353777,
+    "commit": "https://github.com/clawdbot/skills/commit/d30db4c74a951f1d4e5d09d3b1b8103309177c7c"
+  },
+  "history": []
+}

@@ -1,0 +1,12 @@
+{
+  "name": "identity-manager",
+  "version": "1.0.0",
+  "description": "Manages user identity mappings (Feishu OpenID <-> Name/Role) to prevent mix-ups. Provides CLI to add, list, and lookup users.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js list"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0"
+  }
+}

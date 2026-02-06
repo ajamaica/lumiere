@@ -1,0 +1,11 @@
+{
+  "owner": "0xnagato",
+  "slug": "skill-porter",
+  "displayName": "Skill Porter",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770300654355,
+    "commit": "https://github.com/clawdbot/skills/commit/c980172529d16149480061bdc8a8742d8ec8b2f3"
+  },
+  "history": []
+}

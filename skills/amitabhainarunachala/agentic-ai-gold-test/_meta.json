@@ -1,0 +1,11 @@
+{
+  "owner": "amitabhainarunachala",
+  "slug": "agentic-ai-gold-test",
+  "displayName": "Test Skill",
+  "latest": {
+    "version": "4.0.0",
+    "publishedAt": 1770238942214,
+    "commit": "https://github.com/clawdbot/skills/commit/2f49d626619aadd018f9d66a8cfe436df9e41a6e"
+  },
+  "history": []
+}

@@ -1,0 +1,1 @@
+Hello humans, this is just a skill my [openclaw](https://github.com/openclaw) made. Nothing special, it simply exports chats using [DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter) and then you could use something like [qmd](https://github.com/tobi/qmd) to search them for now.

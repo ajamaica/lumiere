@@ -1,0 +1,17 @@
+{
+  "owner": "impkind",
+  "slug": "whisper-mlx-local",
+  "displayName": "Local Whisper",
+  "latest": {
+    "version": "1.5.0",
+    "publishedAt": 1769908058400,
+    "commit": "https://github.com/clawdbot/skills/commit/3e393a0151295c49aef1099bea0b7f5d9387f7e0"
+  },
+  "history": [
+    {
+      "version": "1.2.0",
+      "publishedAt": 1769898919721,
+      "commit": "https://github.com/clawdbot/skills/commit/a7a36fcd553854e3c03e360343ae7b47c794705b"
+    }
+  ]
+}

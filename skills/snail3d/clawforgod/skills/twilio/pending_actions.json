@@ -1,0 +1,23 @@
+[
+  {
+    "timestamp": "2026-02-03T10:54:40.957730",
+    "from": "+19153097085",
+    "command": {
+      "type": "calendar",
+      "title": "dinner with parents",
+      "date": "2026-02-06",
+      "time": "19:00",
+      "original": "add to calendar dinner with parents friday at 7pm"
+    }
+  },
+  {
+    "timestamp": "2026-02-03T10:54:44.980084",
+    "from": "+19153097085",
+    "command": {
+      "type": "task",
+      "title": "tell Eric to pick up milk tomorrow",
+      "due_date": "2026-02-04",
+      "original": "tell Eric to pick up milk tomorrow"
+    }
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "owner": "ajmwagar",
+  "slug": "image-to-relief-stl",
+  "displayName": "Image To Relief Stl",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769953139353,
+    "commit": "https://github.com/clawdbot/skills/commit/20d0f02385cf72e060591afdcfe1f084b4659e3d"
+  },
+  "history": []
+}

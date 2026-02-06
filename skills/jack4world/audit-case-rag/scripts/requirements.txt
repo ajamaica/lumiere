@@ -1,0 +1,9 @@
+# Local-first audit/investigation RAG (no cloud APIs)
+fastembed>=0.3.0
+scikit-learn>=1.5.0
+pypdf>=4.2.0
+pandas>=2.2.0
+openpyxl>=3.1.2
+pyyaml>=6.0.1
+joblib>=1.3.0
+numpy>=1.26.0

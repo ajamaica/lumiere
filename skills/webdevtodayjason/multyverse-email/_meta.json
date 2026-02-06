@@ -1,0 +1,17 @@
+{
+  "owner": "webdevtodayjason",
+  "slug": "multyverse-email",
+  "displayName": "MoltyVerse Email For AI AGENTS!",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770061389691,
+    "commit": "https://github.com/clawdbot/skills/commit/5072776f9f5e19c30e2649e28efba6f08ee5cb67"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770012121605,
+      "commit": "https://github.com/clawdbot/skills/commit/6f1814a05b04d35f261d28b79a9fb6f016ed7cde"
+    }
+  ]
+}

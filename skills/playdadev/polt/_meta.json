@@ -1,0 +1,17 @@
+{
+  "owner": "playdadev",
+  "slug": "polt",
+  "displayName": "Polt User",
+  "latest": {
+    "version": "2.2.0",
+    "publishedAt": 1770298610016,
+    "commit": "https://github.com/clawdbot/skills/commit/3cfd9e3ab887e60291966698ab068c9ad3f992d8"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770057679259,
+      "commit": "https://github.com/clawdbot/skills/commit/15db28dc1072bdec1f0340b997d6cc4972914f2c"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# DiscordChatExporter CLI (downloaded, not committed)
+dce/
+
+# Exported Discord messages (data, not source)
+exports/
+exports/updates/
+
+# Notes with sensitive token info
+notes_token_retrieval.txt
+
+# Environment variables
+.env
+.env.local

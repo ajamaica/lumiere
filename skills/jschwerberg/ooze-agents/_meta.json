@@ -1,0 +1,17 @@
+{
+  "owner": "jschwerberg",
+  "slug": "ooze-agents",
+  "displayName": "Ooze Agents",
+  "latest": {
+    "version": "2.0.0",
+    "publishedAt": 1770227448010,
+    "commit": "https://github.com/clawdbot/skills/commit/bb76140c1ecf99cbb7e1e2497eabde13b593a52b"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770184609370,
+      "commit": "https://github.com/clawdbot/skills/commit/ccf2097bc3055c5db95463c7ff9b81cef9a235b8"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "lxgicstudios",
+  "slug": "yt-meta",
+  "displayName": "YT Meta YouTube Metadata Extractor",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769967662049,
+    "commit": "https://github.com/clawdbot/skills/commit/b229642cb8f9913a299688f85bb19aabbded2c75"
+  },
+  "history": []
+}

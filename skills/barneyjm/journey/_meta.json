@@ -1,0 +1,17 @@
+{
+  "owner": "barneyjm",
+  "slug": "journey",
+  "displayName": "Journey",
+  "latest": {
+    "version": "0.1.2",
+    "publishedAt": 1770131695159,
+    "commit": "https://github.com/clawdbot/skills/commit/930d242c5a13707b2a07c2ae95389ba1e75db5eb"
+  },
+  "history": [
+    {
+      "version": "0.1.1",
+      "publishedAt": 1769878072120,
+      "commit": "https://github.com/clawdbot/skills/commit/4ddad486a2fbc6ebac27684ce9753f36cd08b569"
+    }
+  ]
+}

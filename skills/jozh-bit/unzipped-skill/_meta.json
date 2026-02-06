@@ -1,0 +1,11 @@
+{
+  "owner": "jozh-bit",
+  "slug": "unzipped-skill",
+  "displayName": "Unzipped Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770286221579,
+    "commit": "https://github.com/clawdbot/skills/commit/3600ae2bd262ceafa76fe1a4b94514ea90a2bf90"
+  },
+  "history": []
+}

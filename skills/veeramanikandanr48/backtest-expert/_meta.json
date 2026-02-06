@@ -1,0 +1,11 @@
+{
+  "owner": "veeramanikandanr48",
+  "slug": "backtest-expert",
+  "displayName": "Backtest Expert",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769870095738,
+    "commit": "https://github.com/clawdbot/skills/commit/b84d6d482e686556eb4971ba7436978de1ff73e2"
+  },
+  "history": []
+}

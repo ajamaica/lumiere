@@ -1,0 +1,30 @@
+{
+  "name": "claw-clawbridge",
+  "display_name": "Clawbridge: The Intelligent Connection Bridge",
+  "slug": "claw-clawbridge",
+  "version": "1.0.0",
+  "description": "A high-signal scouting agent that runs nightly to bridge you with the right people, matching your intent with real-world connections.",
+  "main": "SKILL.md",
+  "keywords": [
+    "claw-skill",
+    "openclaw",
+    "clawhub",
+    "networking",
+    "scouting",
+    "lead-generation",
+    "outreach",
+    "warm-intros",
+    "connection-brief"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/clawbridge-skill.git"
+  },
+  "homepage": "https://clawhub.com/skills/claw-clawbridge",
+  "clawbridge": {
+    "prompts": "./prompts",
+    "venues": "./venues"
+  },
+  "author": "moltlife",
+  "license": "MIT"
+}

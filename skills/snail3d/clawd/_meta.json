@@ -1,0 +1,11 @@
+{
+  "owner": "snail3d",
+  "slug": "clawd",
+  "displayName": "Clawd",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770256170034,
+    "commit": "https://github.com/clawdbot/skills/commit/74a6501cc0e6f2b2bb75ffff9aabab87760bb043"
+  },
+  "history": []
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "tvdofficial",
+  "slug": "sportsbet-advisor",
+  "displayName": "Sportsbet Advisor",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770045082416,
+    "commit": "https://github.com/clawdbot/skills/commit/b483b75c07bad09c4827aa4a902739043aabc788"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770014470511,
+      "commit": "https://github.com/clawdbot/skills/commit/4eea0f41ccbb4ab59c83f109e8fbb7ac62f77cca"
+    }
+  ]
+}

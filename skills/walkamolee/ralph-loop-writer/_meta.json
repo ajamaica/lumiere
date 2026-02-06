@@ -1,0 +1,11 @@
+{
+  "owner": "walkamolee",
+  "slug": "ralph-loop-writer",
+  "displayName": "Writes ralph loops for you that you can copy and paste",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769872767130,
+    "commit": "https://github.com/clawdbot/skills/commit/548ac2b2da87b3d63f5b844e9307782bde50c5dc"
+  },
+  "history": []
+}

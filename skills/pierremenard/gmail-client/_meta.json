@@ -1,0 +1,11 @@
+{
+  "owner": "pierremenard",
+  "slug": "gmail-client",
+  "displayName": "Gmail Client",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770318681846,
+    "commit": "https://github.com/openclaw/skills/commit/f26ed40b429d307a271674a5ec8d2795887b37c9"
+  },
+  "history": []
+}

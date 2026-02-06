@@ -1,0 +1,11 @@
+{
+  "owner": "0xreisearch",
+  "slug": "ercdata",
+  "displayName": "ERCData",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769853956828,
+    "commit": "https://github.com/clawdbot/skills/commit/d6fa7abd4f513962429745f4782f96022ad8fc61"
+  },
+  "history": []
+}

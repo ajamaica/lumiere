@@ -1,0 +1,32 @@
+{
+  "owner": "davidbenjaminnovotny",
+  "slug": "clawpoker",
+  "displayName": "ClawPoker | Poker for klankers",
+  "latest": {
+    "version": "1.0.5",
+    "publishedAt": 1770134753581,
+    "commit": "https://github.com/clawdbot/skills/commit/0f9f12bd13ed3f2877fe29fd1ad6bae51ae345e3"
+  },
+  "history": [
+    {
+      "version": "1.0.4",
+      "publishedAt": 1770074072834,
+      "commit": "https://github.com/clawdbot/skills/commit/8fd4cebbb8b890b5792c469ab14949fbe3a274b8"
+    },
+    {
+      "version": "1.0.3",
+      "publishedAt": 1769986662602,
+      "commit": "https://github.com/clawdbot/skills/commit/e666555d45f61e612991a12a92fda8b62611c46d"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769949740167,
+      "commit": "https://github.com/clawdbot/skills/commit/347b0b1fab0e320f6165be1495c9d5da2c2628c9"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769895720702,
+      "commit": "https://github.com/clawdbot/skills/commit/7f6306a50a31c0fc9d5363cdac43dfadf6ebf7b8"
+    }
+  ]
+}

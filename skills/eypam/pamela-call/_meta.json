@@ -1,0 +1,27 @@
+{
+  "owner": "eypam",
+  "slug": "pamela-call",
+  "displayName": "Clawhub Skill",
+  "latest": {
+    "version": "1.1.3",
+    "publishedAt": 1770069197431,
+    "commit": "https://github.com/clawdbot/skills/commit/ac91e31b15b4c5e5cf3bf71ce5a6bb9dd8e61800"
+  },
+  "history": [
+    {
+      "version": "1.1.1",
+      "publishedAt": 1769924444719,
+      "commit": "https://github.com/clawdbot/skills/commit/e14868175fd7074259eac378db85a74da5ef3d64"
+    },
+    {
+      "version": "1.0.5",
+      "publishedAt": 1769903404608,
+      "commit": "https://github.com/clawdbot/skills/commit/ba354f33d173f0dcf8fb585de0671546cee5aade"
+    },
+    {
+      "version": "1.0.4",
+      "publishedAt": 1769897453690,
+      "commit": "https://github.com/clawdbot/skills/commit/5c023a009856de7866f667a5e0ce78f870932a65"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "seo": {
+    "defaultWordCount": 2000,
+    "keywordDensity": 1.5,
+    "minHeadingCount": 3,
+    "minImageCount": 3
+  },
+  "affiliate": {
+    "enabled": true,
+    "defaultNetwork": "amazon",
+    "maxLinksPerArticle": 5,
+    "disclosurePlacement": "after-intro"
+  },
+  "publishing": {
+    "formats": ["markdown", "html", "json"],
+    "includeSchema": true
+  }
+}

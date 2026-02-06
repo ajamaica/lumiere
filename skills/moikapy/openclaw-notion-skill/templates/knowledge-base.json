@@ -1,0 +1,121 @@
+{
+  "name": "Knowledge Base",
+  "description": "Living wiki for SOPs, troubleshooting, and reference materials",
+  "icon": "📚",
+  "properties": {
+    "Title": {
+      "type": "title",
+      "description": "Article or topic name"
+    },
+    "Category": {
+      "type": "select",
+      "options": [
+        "SOP - Standard Procedure",
+        "Troubleshooting",
+        "Design Patterns",
+        "Material Guide",
+        "Tool Reference",
+        "Business Process",
+        "Research Notes",
+        "Inspiration",
+        "Archived"
+      ]
+    },
+    "Subcategory": {
+      "type": "select",
+      "options": [
+        "3D Printing",
+        "Post-Processing",
+        "Design",
+        "Slicing",
+        "Business",
+        "Marketing",
+        "Tools",
+        "Troubleshooting"
+      ]
+    },
+    "Status": {
+      "type": "status",
+      "options": ["Draft", "In Review", "Published", "Outdated", "Archived"],
+      "default": "Draft"
+    },
+    "Priority": {
+      "type": "select",
+      "options": ["Critical", "High", "Medium", "Low"]
+    },
+    "Summary": {
+      "type": "rich_text",
+      "description": "Quick overview (for AI retrieval)"
+    },
+    "Tags": {
+      "type": "multi_select",
+      "options": [
+        "Bambu Lab",
+        "PLA",
+        "PETG",
+        "Modeling",
+        "Blender",
+        "TinkerCAD",
+        "Midjourney",
+        "Shopify",
+        "Pricing",
+        "Quick Reference"
+      ]
+    },
+    "Related To": {
+      "type": "relation",
+      "description": "Link related articles"
+    },
+    "Last Verified": {
+      "type": "date",
+      "description": "When info was last confirmed accurate"
+    },
+    "Created": {
+      "type": "created_time"
+    },
+    "Last Updated": {
+      "type": "last_edited_time"
+    }
+  },
+  "views": [
+    {
+      "name": "All Articles",
+      "type": "table"
+    },
+    {
+      "name": "Quick Reference",
+      "type": "table",
+      "filter": {
+        "property": "Tags",
+        "multi_select": {
+          "contains": "Quick Reference"
+        }
+      }
+    },
+    {
+      "name": "By Category",
+      "type": "board",
+      "group_by": "Category"
+    },
+    {
+      "name": "Needs Review",
+      "type": "table",
+      "filter": {
+        "or": [
+          {
+            "property": "Last Verified",
+            "date": {
+              "before": "30 days ago"
+            }
+          },
+          {
+            "property": "Status",
+            "status": {
+              "equals": "Draft"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "startTime": "2026-02-01T05:02:44.821Z",
+  "endTime": "2026-02-01T05:02:44.944Z",
+  "mode": "manual",
+  "steps": {
+    "collect": {
+      "status": "pending",
+      "startTime": null,
+      "endTime": null,
+      "error": null
+    },
+    "convert": {
+      "status": "completed",
+      "startTime": "2026-02-01T05:02:44.825Z",
+      "endTime": "2026-02-01T05:02:44.943Z",
+      "error": null
+    },
+    "publish": {
+      "status": "pending",
+      "startTime": null,
+      "endTime": null,
+      "error": null
+    }
+  }
+}

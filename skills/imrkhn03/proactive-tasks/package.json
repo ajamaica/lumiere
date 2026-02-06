@@ -1,0 +1,15 @@
+{
+  "name": "proactive-tasks",
+  "version": "1.0.0",
+  "description": "Proactive goal and task management system. Enables AI agents to work autonomously on objectives, track progress, and message humans with updates without waiting for prompts.",
+  "author": "Toki (@zomenaro)",
+  "license": "MIT",
+  "tags": [
+    "productivity",
+    "task-management",
+    "proactive",
+    "goals",
+    "autonomous"
+  ],
+  "homepage": "https://github.com/zomenaro/proactive-tasks"
+}

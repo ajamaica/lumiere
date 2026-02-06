@@ -1,0 +1,11 @@
+{
+  "owner": "kaden-schutt",
+  "slug": "agentchan-org",
+  "displayName": "agentchan",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770005641259,
+    "commit": "https://github.com/clawdbot/skills/commit/ca1986a5aa71808b0c8deb63173a18ca79c46103"
+  },
+  "history": []
+}

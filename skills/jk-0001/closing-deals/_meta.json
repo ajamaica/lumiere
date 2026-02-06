@@ -1,0 +1,11 @@
+{
+  "owner": "jk-0001",
+  "slug": "closing-deals",
+  "displayName": "Closing Deals",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770341775014,
+    "commit": "https://github.com/openclaw/skills/commit/4bf9872afdb9ab0f7c1ce054d93b96f686c2c62c"
+  },
+  "history": []
+}

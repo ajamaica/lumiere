@@ -1,0 +1,33 @@
+{
+  "name": "feishu-bitable",
+  "version": "1.0.0",
+  "description": "飞书多维表格(Bitable)API技能 - 用于创建、读取、更新和删除飞书多维表格的数据表、记录和字段",
+  "main": "src/api.js",
+  "bin": {
+    "feishu-bitable": "bin/cli.js"
+  },
+  "scripts": {
+    "start": "node bin/cli.js",
+    "test": "node test-simple.js",
+    "publish": "clawdhub publish . --slug feishu-bitable --name \"Feishu Bitable\" --version 1.0.0 --changelog \"Initial release: Complete Feishu Bitable API integration\""
+  },
+  "keywords": ["feishu", "lark", "bitable", "多维表格", "api", "clawdbot", "database", "spreadsheet", "automation"],
+  "author": "Clawdbot Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clawdbot/skills.git"
+  },
+  "homepage": "https://clawdhub.com/skills/feishu-bitable",
+  "bugs": {
+    "url": "https://github.com/clawdbot/skills/issues"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

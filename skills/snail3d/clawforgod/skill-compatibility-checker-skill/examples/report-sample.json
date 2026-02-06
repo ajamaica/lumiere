@@ -1,0 +1,56 @@
+{
+  "skill": {
+    "name": "my-awesome-skill",
+    "path": "/Users/ericwoodard/clawd/my-awesome-skill",
+    "description": "Does something really cool with AI"
+  },
+  "readiness": "CAUTION",
+  "timestamp": "2026-01-29T16:20:00.000Z",
+  "system": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "nodeVersion": "25.4.0",
+    "osVersion": "26.2"
+  },
+  "conflicts": {
+    "conflicts": [],
+    "warnings": [
+      {
+        "type": "port-usage",
+        "port": "3000",
+        "message": "Skill uses port 3000 - ensure no conflicts on your system"
+      }
+    ]
+  },
+  "systemRequirements": {
+    "issues": [],
+    "warnings": []
+  },
+  "dependencies": {
+    "missingCLITools": [
+      {
+        "tool": "ffmpeg",
+        "installCommand": "brew install ffmpeg"
+      }
+    ],
+    "missingApiKeys": ["groq", "elevenlabs"],
+    "clawdbotVersionRequired": null,
+    "warnings": [
+      {
+        "type": "npm-deps",
+        "message": "Requires 4 npm packages - will be installed via \"npm install\"",
+        "packages": ["axios", "dotenv", "express", "sharp"]
+      }
+    ]
+  },
+  "security": {
+    "riskLevel": "CAUTION",
+    "findings": [
+      "⚠️  child_process detected - script spawning external commands",
+      "⚠️  process.env access - ensure no secret theft",
+      "ℹ️  HTTP module imported - network calls expected"
+    ],
+    "message": "Review findings before installation"
+  },
+  "recommendation": "Install missing CLI tools (ffmpeg); Configure missing API keys (groq, elevenlabs); Review security findings"
+}

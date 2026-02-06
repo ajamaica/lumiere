@@ -1,0 +1,22 @@
+{
+  "owner": "endlessjour9527",
+  "slug": "r-wmi",
+  "displayName": "openclaw-lingzhu",
+  "latest": {
+    "version": "0.0.4",
+    "publishedAt": 1770261684122,
+    "commit": "https://github.com/clawdbot/skills/commit/5c925f91356ec03fad0bb43cea63da5afaa45eb0"
+  },
+  "history": [
+    {
+      "version": "0.0.3",
+      "publishedAt": 1770176034312,
+      "commit": "https://github.com/clawdbot/skills/commit/5db529def4e53b6e69f3fdfd6410b700c4562206"
+    },
+    {
+      "version": "0.0.1",
+      "publishedAt": 1770017451640,
+      "commit": "https://github.com/clawdbot/skills/commit/90d1ccac3275523bcfd4680d55513a424641597c"
+    }
+  ]
+}

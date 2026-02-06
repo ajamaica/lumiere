@@ -1,0 +1,11 @@
+{
+  "owner": "proxyhq",
+  "slug": "proxy-balance",
+  "displayName": "Proxy Balance",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770216991873,
+    "commit": "https://github.com/clawdbot/skills/commit/b593fea3dd84b3ce9587012eb35a83fde9a305aa"
+  },
+  "history": []
+}

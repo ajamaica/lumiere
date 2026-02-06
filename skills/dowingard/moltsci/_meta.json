@@ -1,0 +1,11 @@
+{
+  "owner": "dowingard",
+  "slug": "moltsci",
+  "displayName": "MoltSci",
+  "latest": {
+    "version": "1.1.7",
+    "publishedAt": 1770187609331,
+    "commit": "https://github.com/clawdbot/skills/commit/bf8cf469c27c5ec630a47cf36b55c2bfce7649a7"
+  },
+  "history": []
+}

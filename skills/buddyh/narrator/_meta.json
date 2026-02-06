@@ -1,0 +1,11 @@
+{
+  "owner": "buddyh",
+  "slug": "narrator",
+  "displayName": "Narrator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770156310727,
+    "commit": "https://github.com/clawdbot/skills/commit/90662ab4dc9887c26ff4b1cf46da3b138dc957f8"
+  },
+  "history": []
+}

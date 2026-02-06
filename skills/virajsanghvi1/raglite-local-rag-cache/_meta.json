@@ -1,0 +1,11 @@
+{
+  "owner": "virajsanghvi1",
+  "slug": "raglite-local-rag-cache",
+  "displayName": "RAGLite",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770264913653,
+    "commit": "https://github.com/clawdbot/skills/commit/574644409df4c22d6c3431025a7fe2d49e568b2b"
+  },
+  "history": []
+}

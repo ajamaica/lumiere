@@ -1,0 +1,11 @@
+{
+  "owner": "rappo",
+  "slug": "birdnet",
+  "displayName": "Birdnet",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770256937165,
+    "commit": "https://github.com/clawdbot/skills/commit/a6c521bb87ae41776d9993c657b499ca54204ae5"
+  },
+  "history": []
+}

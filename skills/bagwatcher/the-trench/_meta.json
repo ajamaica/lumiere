@@ -1,0 +1,11 @@
+{
+  "owner": "bagwatcher",
+  "slug": "the-trench",
+  "displayName": "The Trench",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770082693111,
+    "commit": "https://github.com/clawdbot/skills/commit/f03fbe685f7ae599c0b4cd221a0e1095e888dfbd"
+  },
+  "history": []
+}

@@ -1,0 +1,42 @@
+{
+  "owner": "happybigmtn",
+  "slug": "botcoin-miner",
+  "displayName": "Botcoin-Miner",
+  "latest": {
+    "version": "4.0.1",
+    "publishedAt": 1770162581769,
+    "commit": "https://github.com/clawdbot/skills/commit/1e65e33bbe0b2a5001b39cc44a3bdaf14e9b7043"
+  },
+  "history": [
+    {
+      "version": "3.2.0",
+      "publishedAt": 1770103991295,
+      "commit": "https://github.com/clawdbot/skills/commit/38ffa771fd0be66daa5a6b86d5d663ecd6b0546d"
+    },
+    {
+      "version": "3.1.3",
+      "publishedAt": 1770084546711,
+      "commit": "https://github.com/clawdbot/skills/commit/3e4f9cd7e79e286f2f80fb8efc3ac939e3405b4c"
+    },
+    {
+      "version": "3.1.2",
+      "publishedAt": 1770055009004,
+      "commit": "https://github.com/clawdbot/skills/commit/7bf90bd70dff53c416ce07623eb2badeaeca6434"
+    },
+    {
+      "version": "3.0.0",
+      "publishedAt": 1770016816409,
+      "commit": "https://github.com/clawdbot/skills/commit/1d083ef1acb545475c57bbf8064963c9ad28b5b1"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769910083177,
+      "commit": "https://github.com/clawdbot/skills/commit/719bc720b6a8f0fc40a112cce5d07af8a8445e0a"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769849829269,
+      "commit": "https://github.com/clawdbot/skills/commit/9ae249f845bd971d8789ed8874f85b49c083febc"
+    }
+  ]
+}

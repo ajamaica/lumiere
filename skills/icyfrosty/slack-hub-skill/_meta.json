@@ -1,0 +1,11 @@
+{
+  "owner": "icyfrosty",
+  "slug": "slack-hub-skill",
+  "displayName": "Slack Hub Skill",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769906671579,
+    "commit": "https://github.com/clawdbot/skills/commit/a9c3e0ee6da8dff6b3b4be99911c38f888707b68"
+  },
+  "history": []
+}

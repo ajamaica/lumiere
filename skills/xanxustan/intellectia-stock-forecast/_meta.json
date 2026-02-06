@@ -1,0 +1,11 @@
+{
+  "owner": "xanxustan",
+  "slug": "intellectia-stock-forecast",
+  "displayName": "Stock Forecast",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770103987728,
+    "commit": "https://github.com/clawdbot/skills/commit/05a86623fd3eed41863698e557a8abe91146374e"
+  },
+  "history": []
+}

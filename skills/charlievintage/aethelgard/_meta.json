@@ -1,0 +1,17 @@
+{
+  "owner": "charlievintage",
+  "slug": "aethelgard",
+  "displayName": "Socratis",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770143046366,
+    "commit": "https://github.com/clawdbot/skills/commit/300c7754651f8898130e7a7ffafea27e6acbc9fe"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770136754139,
+      "commit": "https://github.com/clawdbot/skills/commit/951c4968f9628daab3b42d50fe1467d30dab5b32"
+    }
+  ]
+}

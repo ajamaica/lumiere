@@ -1,0 +1,11 @@
+{
+  "owner": "proxyhq",
+  "slug": "proxy-mcp",
+  "displayName": "Proxy MCP",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770216977357,
+    "commit": "https://github.com/clawdbot/skills/commit/f2aa00c8b362fa7c32a578393f98cca080aa1563"
+  },
+  "history": []
+}

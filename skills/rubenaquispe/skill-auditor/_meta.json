@@ -1,0 +1,17 @@
+{
+  "owner": "rubenaquispe",
+  "slug": "skill-auditor",
+  "displayName": "Skill Auditor",
+  "latest": {
+    "version": "1.2.0",
+    "publishedAt": 1770074481731,
+    "commit": "https://github.com/clawdbot/skills/commit/ecb313525b73b90bb764ff56e696d336c1b64f52"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769909253989,
+      "commit": "https://github.com/clawdbot/skills/commit/8c62cebaf8ed8846b9e4d255b0f1d624dd56aaaa"
+    }
+  ]
+}

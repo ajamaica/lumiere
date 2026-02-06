@@ -1,0 +1,11 @@
+{
+  "owner": "okaris",
+  "slug": "related-skill",
+  "displayName": "Related Skill",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770363535658,
+    "commit": "https://github.com/openclaw/skills/commit/094c520ceea9c3152e1936ee810de0abc900da0a"
+  },
+  "history": []
+}

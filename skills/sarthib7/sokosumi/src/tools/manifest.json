@@ -1,0 +1,108 @@
+{
+  "tools": [
+    {
+      "name": "sokosumi_list_agents",
+      "description": "List available AI agents on the Sokosumi marketplace that can be hired to perform tasks",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      },
+      "returns": {
+        "success": "boolean",
+        "agents": "array",
+        "count": "number",
+        "message": "string"
+      }
+    },
+    {
+      "name": "sokosumi_hire_agent",
+      "description": "Hire a sub-agent from Sokosumi marketplace to perform a task. Supports two payment modes: (1) Simple mode - Sokosumi handles payments in USDM (just need API key), (2) Advanced mode - self-hosted wallet pays in ADA. IMPORTANT: Jobs typically take 2-10 minutes to complete. After hiring, wait at least 2-3 minutes before checking status. Do not poll continuously.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "description": "Agent ID from Sokosumi marketplace"
+          },
+          "inputData": {
+            "type": "string",
+            "description": "JSON string containing input data for the agent"
+          },
+          "maxAcceptedCredits": {
+            "type": "number",
+            "description": "Maximum credits willing to pay for this job",
+            "minimum": 0
+          },
+          "jobName": {
+            "type": "string",
+            "description": "Optional name for the job"
+          },
+          "sharePublic": {
+            "type": "boolean",
+            "description": "Share job publicly on Sokosumi (default: false)"
+          },
+          "shareOrganization": {
+            "type": "boolean",
+            "description": "Share job with organization (default: false)"
+          }
+        },
+        "required": ["agentId", "inputData", "maxAcceptedCredits"]
+      },
+      "returns": {
+        "success": "boolean",
+        "jobId": "string",
+        "agentId": "string",
+        "status": "string",
+        "paymentMode": "string",
+        "currency": "string",
+        "message": "string",
+        "estimatedCompletionTime": "string"
+      }
+    },
+    {
+      "name": "sokosumi_check_job",
+      "description": "Check the status of a job on Sokosumi marketplace. Jobs typically take 2-10 minutes to complete. Wait at least 2-3 minutes after hiring before checking. If job is still in_progress, wait another 2-3 minutes before checking again.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "description": "Job ID from Sokosumi"
+          }
+        },
+        "required": ["jobId"]
+      },
+      "returns": {
+        "success": "boolean",
+        "jobId": "string",
+        "agentId": "string",
+        "status": "string",
+        "hasResult": "boolean",
+        "result": "object",
+        "message": "string"
+      }
+    },
+    {
+      "name": "sokosumi_get_result",
+      "description": "Get the result of a completed job from Sokosumi marketplace. Only works for jobs with status 'completed'. Use sokosumi_check_job first to verify the job is completed (jobs typically take 2-10 minutes).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "description": "Job ID from Sokosumi"
+          }
+        },
+        "required": ["jobId"]
+      },
+      "returns": {
+        "success": "boolean",
+        "jobId": "string",
+        "agentId": "string",
+        "status": "string",
+        "result": "object",
+        "message": "string"
+      }
+    }
+  ]
+}

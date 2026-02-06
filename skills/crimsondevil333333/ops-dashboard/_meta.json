@@ -1,0 +1,17 @@
+{
+  "owner": "crimsondevil333333",
+  "slug": "ops-dashboard",
+  "displayName": "Ops Dashboard",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770279775011,
+    "commit": "https://github.com/clawdbot/skills/commit/5ba02c7a16c26309fb0c44fdb26c3d74bd6d4fda"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770103050998,
+      "commit": "https://github.com/clawdbot/skills/commit/e23eca685680b3f342dff88239b48bca4632cff2"
+    }
+  ]
+}

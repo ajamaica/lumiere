@@ -1,0 +1,11 @@
+{
+  "owner": "hegghammer",
+  "slug": "newsapi-search",
+  "displayName": "NewsAPI Search",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770329770019,
+    "commit": "https://github.com/clawdbot/skills/commit/ca2f4292d5b32881b1f56a26276ff14c9e97a5ef"
+  },
+  "history": []
+}

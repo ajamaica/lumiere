@@ -1,0 +1,17 @@
+{
+  "owner": "vincent-labarthe",
+  "slug": "whatsapp-automation",
+  "displayName": "📱 WhatsApp Automation",
+  "latest": {
+    "version": "1.0.5",
+    "publishedAt": 1770194965599,
+    "commit": "https://github.com/clawdbot/skills/commit/7678efedbc97c6f1fb7eb40f5afd78d30b206cc5"
+  },
+  "history": [
+    {
+      "version": "1.0.4",
+      "publishedAt": 1770132797084,
+      "commit": "https://github.com/clawdbot/skills/commit/4e35c131f3b100335eb275da146de0ee010a0cdc"
+    }
+  ]
+}

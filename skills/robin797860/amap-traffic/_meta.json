@@ -1,0 +1,11 @@
+{
+  "owner": "robin797860",
+  "slug": "amap-traffic",
+  "displayName": "Amap Traffic",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770348326568,
+    "commit": "https://github.com/openclaw/skills/commit/67650e674f2153c7d3ce4e1fd3ab0377a6c72565"
+  },
+  "history": []
+}

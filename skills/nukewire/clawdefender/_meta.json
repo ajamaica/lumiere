@@ -1,0 +1,11 @@
+{
+  "owner": "nukewire",
+  "slug": "clawdefender",
+  "displayName": "ClawDefender - OpenClaw Security - Prompt injection, rogue skills etc",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769980686291,
+    "commit": "https://github.com/clawdbot/skills/commit/efd6f466ce5637bac6a095ae253f20f1d94f7dd9"
+  },
+  "history": []
+}

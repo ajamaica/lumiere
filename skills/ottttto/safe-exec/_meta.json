@@ -1,0 +1,11 @@
+{
+  "owner": "ottttto",
+  "slug": "safe-exec",
+  "displayName": "SafeExec",
+  "latest": {
+    "version": "0.3.2",
+    "publishedAt": 1769952725688,
+    "commit": "https://github.com/clawdbot/skills/commit/1d7c1450cb434316c33391939c72fb0464deffc4"
+  },
+  "history": []
+}

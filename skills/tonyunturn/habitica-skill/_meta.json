@@ -1,0 +1,22 @@
+{
+  "owner": "tonyunturn",
+  "slug": "habitica-skill",
+  "displayName": "Habitica",
+  "latest": {
+    "version": "0.1.3",
+    "publishedAt": 1770124407828,
+    "commit": "https://github.com/clawdbot/skills/commit/2b20b9bbdacda5cd138419bf4b52b4bf97dba9f5"
+  },
+  "history": [
+    {
+      "version": "0.1.1",
+      "publishedAt": 1770046270969,
+      "commit": "https://github.com/clawdbot/skills/commit/4b009d05778ffe247efed277a85b0b1c5b2433c7"
+    },
+    {
+      "version": "0.1.0",
+      "publishedAt": 1770044751576,
+      "commit": "https://github.com/clawdbot/skills/commit/dbf527b2f506cdc5cfa749dc4ecdc23a28a5ad8c"
+    }
+  ]
+}

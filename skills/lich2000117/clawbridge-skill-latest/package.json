@@ -1,0 +1,21 @@
+{
+  "name": "claw-clawbridge",
+  "display_name": "Clawbridge",
+  "slug": "claw-clawbridge",
+  "version": "1.0.0",
+  "description": "Chat command to trigger Clawbridge runner. Optional convenience for OpenClaw users.",
+  "main": "SKILL.md",
+  "keywords": [
+    "claw-skill",
+    "openclaw",
+    "clawhub",
+    "clawbridge"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moltlife/clawbridge-skill.git"
+  },
+  "homepage": "https://clawbridge.cloud",
+  "author": "moltlife",
+  "license": "MIT"
+}

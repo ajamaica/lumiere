@@ -1,0 +1,11 @@
+{
+  "owner": "duffycoder",
+  "slug": "qwen-image-plus-sophnet",
+  "displayName": "Qwen Image Plus Sophnet",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770109527834,
+    "commit": "https://github.com/clawdbot/skills/commit/9c40014e12c7518f22a9a9013d5b09129393c3dd"
+  },
+  "history": []
+}

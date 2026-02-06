@@ -1,0 +1,76 @@
+{
+  "name": "cornerstone-autonomous-agent",
+  "version": "1.1.0",
+  "description": "CornerStone Agentic Score: autonomous agent that uses an x402-enabled MCP server to predict tickers, backtest trading strategies, and open bank accounts. Handles 402 Payment Required (pay via Aptos/Ethereum facilitator and retry). LangChain.js ReAct agent with Hugging Face inference (OpenAI-compatible endpoint).",
+  "type": "module",
+  "main": "src/run-agent.js",
+  "bin": {
+    "cornerstone-agent": "src/run-agent.js"
+  },
+  "files": [
+    "src",
+    "adapters",
+    "skills",
+    ".env.example",
+    "README.md",
+    "SKILL-clawdhub.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "setup": "node src/setup.js",
+    "setup:aptos": "node src/setup-aptos.js",
+    "generate-facilitator-keys": "node src/generate-facilitator-keys.js",
+    "credit:aptos": "node src/credit-aptos-agent.js",
+    "addresses": "node src/show-agent-addresses.js",
+    "balance": "node src/balance.js",
+    "transfer": "node src/transfer.js",
+    "contract": "node src/contract.js",
+    "swap": "node src/swap.js",
+    "check-update": "node src/check-update.js",
+    "agent": "node src/run-agent.js",
+    "start": "node src/run-agent.js"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.0",
+    "@langchain/langgraph": "^0.2.0",
+    "@langchain/openai": "^0.3.0",
+    "@modelcontextprotocol/sdk": "^1.25.3",
+    "dotenv": "^16.0.0",
+    "langchain": "^0.3.0",
+    "viem": "^2.21.54",
+    "zod": "^3.23.0"
+  },
+  "optionalDependencies": {
+    "@aptos-labs/ts-sdk": "^1.0.0"
+  },
+  "keywords": [
+    "creditnexus",
+    "demo",
+    "autonomous-agent",
+    "x402",
+    "mcp",
+    "langchain",
+    "huggingface",
+    "predict-tickers",
+    "backtest",
+    "open-bank-account",
+    "aptos",
+    "ethereum",
+    "wallet",
+    "evm",
+    "crypto"
+  ],
+  "author": "CreditNexus",
+  "license": "GPL-2.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FinTechTonic/autonomous-agent.git"
+  },
+  "homepage": "https://github.com/FinTechTonic/autonomous-agent#readme",
+  "bugs": {
+    "url": "https://github.com/FinTechTonic/autonomous-agent/issues"
+  }
+}

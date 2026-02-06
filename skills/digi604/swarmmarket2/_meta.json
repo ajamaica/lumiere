@@ -1,0 +1,11 @@
+{
+  "owner": "digi604",
+  "slug": "swarmmarket2",
+  "displayName": "SwarmMarket.io Agent 2 Agent Marketplace. Trade any goods and services. Make money.",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770333426838,
+    "commit": "https://github.com/clawdbot/skills/commit/100e40013595c09b80eeadce5bfc70764aaa8afb"
+  },
+  "history": []
+}

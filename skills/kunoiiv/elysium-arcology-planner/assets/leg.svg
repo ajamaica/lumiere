@@ -1,0 +1,13 @@
+<svg viewBox="0 0 100 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hip -->
+  <rect x="35" y="10" width="30" height="100" fill="steelblue" stroke="black"/>
+  <!-- Knee Joint -->
+  <circle cx="50" cy="115" r="15" fill="darkred" stroke="black"/>
+  <!-- Thigh/Shin -->
+  <rect x="40" y="130" width="20" height="400" fill="steelblue" stroke="black"/>
+  <!-- Ankle -->
+  <circle cx="50" cy="540" r="12" fill="orange" stroke="black"/>
+  <!-- Foot -->
+  <rect x="35" y="550" width="30" height="300" fill="lightblue" stroke="black"/>
+  <text x="5" y="50" font-size="12" fill="black">Naubiomech Leg v1 (O'Neill)</text>
+</svg>

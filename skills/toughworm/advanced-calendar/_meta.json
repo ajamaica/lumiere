@@ -1,0 +1,22 @@
+{
+  "owner": "toughworm",
+  "slug": "advanced-calendar",
+  "displayName": "advanced-calendar",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770122791674,
+    "commit": "https://github.com/clawdbot/skills/commit/f74ef101429c70c76cd098e53d3af6a11738c69f"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770105175993,
+      "commit": "https://github.com/clawdbot/skills/commit/99604cf7d2b94963cd90a1ab19092966d3c60f9b"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770041291836,
+      "commit": "https://github.com/clawdbot/skills/commit/6c8823be052c2cb193a5393f26d92f13989f3d90"
+    }
+  ]
+}

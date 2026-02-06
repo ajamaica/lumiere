@@ -1,0 +1,50 @@
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "qwen-portal/coder-model"
+      },
+      "models": {
+        "test-provider/test-model": {
+          "alias": "test-model-alias"
+        },
+        "qwen-portal/coder-model": {
+          "alias": "qwen"
+        },
+        "openai-gptsapi/gpt-5.1-codex-mini": {
+          "alias": "codex-mini"
+        },
+        "ollama-local/gemma3:12b": {
+          "alias": "gemma3:12b-local"
+        },
+        "ollama-local/gemma3:27b": {
+          "alias": "gemma3:27b-local"
+        },
+        "ollama-cloud/gpt-oss:120b-cloud": {
+          "alias": "gptoss-120b-cloud"
+        },
+        "ollama-cloud/kimi-k2.5:cloud": {
+          "alias": "kimi-k2.5:cloud"
+        },
+        "anthropic-gptsapi/claude-haiku-4-5-20251001": {
+          "alias": "Haiku4.5"
+        }
+      }
+    }
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "response-alias-injector": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "0.0.0.0"
+  }
+}

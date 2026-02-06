@@ -1,0 +1,11 @@
+{
+  "owner": "globalcaos",
+  "slug": "youtube-data-api",
+  "displayName": "YouTube Data API",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769974014313,
+    "commit": "https://github.com/clawdbot/skills/commit/7cb2ebff2ff3e560c560268d314bb087dff1e52a"
+  },
+  "history": []
+}

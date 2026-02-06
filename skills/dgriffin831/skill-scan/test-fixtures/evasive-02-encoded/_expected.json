@@ -1,0 +1,9 @@
+{
+  "fixture": "evasive-02-encoded",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 10,
+  "expected_risk": "CRITICAL",
+  "expected_categories": ["obfuscation", "evasion"],
+  "must_detect_rules": ["ENCODED_STRING"]
+}

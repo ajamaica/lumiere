@@ -1,0 +1,39 @@
+{
+  "name": "kicad-pcb",
+  "version": "1.0.0",
+  "description": "Automate PCB design with KiCad. Create schematics, design boards, export Gerbers, order from PCBWay.",
+  "author": "PaxSwarm",
+  "license": "MIT",
+  "keywords": [
+    "pcb",
+    "kicad",
+    "electronics",
+    "gerber",
+    "schematic",
+    "circuit",
+    "pcbway",
+    "manufacturing",
+    "hardware",
+    "eda"
+  ],
+  "triggers": [
+    "pcb design",
+    "kicad",
+    "circuit board",
+    "schematic",
+    "gerber",
+    "pcbway",
+    "electronics project"
+  ],
+  "requires": {
+    "python": ">=3.8",
+    "system": ["kicad-cli"]
+  },
+  "optional": {
+    "python_packages": ["cairosvg", "pillow"]
+  },
+  "files": ["SKILL.md", "skill.json", "scripts/kicad_pcb.py"],
+  "entrypoint": "scripts/kicad_pcb.py",
+  "repository": "https://github.com/PaxSwarm/kicad-pcb",
+  "homepage": "https://clawhub.com/skills/kicad-pcb"
+}

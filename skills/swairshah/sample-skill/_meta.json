@@ -1,0 +1,11 @@
+{
+  "owner": "swairshah",
+  "slug": "sample-skill",
+  "displayName": "sample skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770279121753,
+    "commit": "https://github.com/openclaw/skills/commit/3eb3b6bc195f885bc4caf5520da221cdea019046"
+  },
+  "history": []
+}

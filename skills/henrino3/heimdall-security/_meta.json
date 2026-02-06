@@ -1,0 +1,11 @@
+{
+  "owner": "henrino3",
+  "slug": "heimdall-security",
+  "displayName": "Heimdall Security Scanner",
+  "latest": {
+    "version": "4.0.0",
+    "publishedAt": 1770297297101,
+    "commit": "https://github.com/clawdbot/skills/commit/7a4577a17069af38623c2da786634ef918384493"
+  },
+  "history": []
+}

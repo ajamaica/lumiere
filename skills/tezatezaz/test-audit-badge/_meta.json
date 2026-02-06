@@ -1,0 +1,22 @@
+{
+  "owner": "tezatezaz",
+  "slug": "test-audit-badge",
+  "displayName": "Test Audit Badge",
+  "latest": {
+    "version": "0.1.2",
+    "publishedAt": 1770314444959,
+    "commit": "https://github.com/clawdbot/skills/commit/d599abb2468ca9cc733fd97bf6569dde2d5bba13"
+  },
+  "history": [
+    {
+      "version": "0.1.1",
+      "publishedAt": 1770314236148,
+      "commit": "https://github.com/clawdbot/skills/commit/0520aa8eeb53871f3821ce1a9b719666d1968fdc"
+    },
+    {
+      "version": "0.1.0",
+      "publishedAt": 1770237782260,
+      "commit": "https://github.com/clawdbot/skills/commit/dd6487c03fc15ddcbd03ebc56f879668f0bb880e"
+    }
+  ]
+}

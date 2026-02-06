@@ -1,0 +1,17 @@
+{
+  "owner": "themrzz",
+  "slug": "kradleverse-join",
+  "displayName": "KradleVerse Join",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770300573775,
+    "commit": "https://github.com/clawdbot/skills/commit/9a5985f5db6527f50d4c16deabe751fe6c51e651"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770300485779,
+      "commit": "https://github.com/clawdbot/skills/commit/a16b94da215098495694625202d4c2d6b295a327"
+    }
+  ]
+}

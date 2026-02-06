@@ -1,0 +1,24 @@
+{
+  "name": "moltunes",
+  "version": "1.0.0",
+  "description": "Connect your Clawdbot to MolTunes — the AI agent skill marketplace",
+  "clawdbot": {
+    "requires": {
+      "bins": [
+        "node",
+        "npm"
+      ]
+    },
+    "install": [
+      {
+        "id": "molt",
+        "kind": "node",
+        "package": "molt-cli",
+        "bins": [
+          "molt"
+        ],
+        "label": "Install molt CLI"
+      }
+    ]
+  }
+}

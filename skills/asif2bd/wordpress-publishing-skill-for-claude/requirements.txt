@@ -1,0 +1,4 @@
+# WordPress Publisher Skill - Production Dependencies
+# Install with: pip install -r requirements.txt
+
+requests>=2.25.0

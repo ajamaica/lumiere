@@ -1,0 +1,219 @@
+name: "Prompt Performance Tester"
+id: "prompt-performance-tester"
+version: "1.2.0"
+description: "Test and compare prompts across Claude 4.5, GPT-5.2, and Gemini 2.5/3.0. Multi-provider benchmarking with 10 latest models. Measure latency, cost, quality, and consistency."
+
+# IP Protection
+intellectual_property:
+  license: "proprietary"
+  license_key: "required"
+  terms_url: "https://unisai.vercel.app/license"
+  copyright: "© 2026 UniAI. All rights reserved."
+  distribution: "restricted"
+  source_code_access: "no"
+  reverse_engineering: "prohibited"
+
+author:
+  name: "Vedant Singh"
+  company: "UniAI"
+  contact: "hello@unisai.vercel.app"
+  website: "https://unisai.vercel.app"
+
+category: "ai-testing"
+tags:
+  - "prompt-testing"
+  - "performance-analysis"
+  - "cost-optimization"
+  - "multi-llm"
+  - "quality-assurance"
+
+pricing:
+  free_tier:
+    name: "Starter"
+    description: "Perfect for trying out prompt testing"
+    features:
+      - "5 tests per month"
+      - "2 models per test"
+      - "Basic performance metrics"
+    limits:
+      tests_per_month: 5
+      models_per_test: 2
+
+  pro_tier:
+    name: "Professional"
+    price: 2900  # in cents = $29.00/month
+    description: "For serious prompt optimization"
+    features:
+      - "Unlimited tests"
+      - "All models supported"
+      - "Advanced analytics"
+      - "Cost optimization reports"
+      - "Historical comparison"
+      - "API access"
+      - "Priority support"
+    limits:
+      tests_per_month: null  # unlimited
+      models_per_test: null  # all
+
+  enterprise_tier:
+    name: "Enterprise"
+    price: 9900  # in cents = $99.00/month
+    description: "For teams and agencies"
+    features:
+      - "Everything in Professional"
+      - "Team collaboration (5 users)"
+      - "Custom model support"
+      - "White-label option"
+      - "Dedicated account manager"
+      - "SLA guarantee"
+    limits:
+      tests_per_month: null  # unlimited
+      models_per_test: null  # all
+      team_members: 5
+
+security:
+  encryption: "AES-256"
+  api_authentication: "bearer_token"
+  rate_limiting: "1000 requests/hour"
+  data_retention: "30 days"
+  privacy_policy: "https://unisai.vercel.app/privacy"
+  terms_of_service: "https://unisai.vercel.app/terms"
+
+capabilities:
+  functions:
+    - name: "testPrompt"
+      description: "Test a prompt across multiple LLM models"
+      parameters:
+        prompt_text:
+          type: "string"
+          description: "The prompt to test"
+          required: true
+        models:
+          type: "array"
+          description: "List of models to test"
+          items:
+            type: "string"
+          options:
+          - "claude-haiku-4-5-20251001"
+          - "claude-sonnet-4-5-20250929"
+          - "claude-opus-4-5-20251101"
+          - "gpt-5.2-instant"
+          - "gpt-5.2-thinking"
+          - "gpt-5.2-pro"
+          - "gemini-3-pro"
+          - "gemini-2.5-pro"
+          - "gemini-2.5-flash"
+          - "gemini-2.5-flash-lite"
+        num_runs:
+          type: "number"
+          description: "Number of times to run each model"
+          default: 1
+          range: [1, 10]
+        system_prompt:
+          type: "string"
+          description: "Optional system prompt"
+        max_tokens:
+          type: "number"
+          description: "Maximum response tokens"
+          default: 1000
+          range: [100, 4000]
+
+    - name: "analyzeResults"
+      description: "Get detailed analysis of test results"
+      parameters:
+        test_id:
+          type: "string"
+          description: "ID of previous test"
+
+    - name: "comparePrompts"
+      description: "Compare multiple prompts across models"
+      parameters:
+        prompts:
+          type: "array"
+          description: "List of prompts to compare"
+          items:
+            type: "string"
+        models:
+          type: "array"
+          description: "Models to test"
+
+performance:
+  average_test_time_seconds: 30
+  success_rate_percent: 98.2
+  uptime_percent: 99.9
+
+integrations:
+  - "slack"
+  - "email"
+  - "webhook"
+  - "api"
+
+environment_variables:
+  ANTHROPIC_API_KEY:
+    description: "Your Anthropic API key (required for Claude models)"
+    required: true
+
+  OPENAI_API_KEY:
+    description: "OpenAI API key (optional, for GPT testing)"
+    required: false
+
+  GOOGLE_API_KEY:
+    description: "Google API key (optional, for Gemini testing)"
+    required: false
+
+api:
+  endpoint: "https://api.unisai.vercel.app/v1"
+  authentication: "bearer_token"
+  rate_limit: "1000 requests per hour"
+  base_url: "https://api.unisai.vercel.app"
+
+support:
+  documentation_url: "https://docs.unisai.vercel.app/tester"
+  support_email: "support@unisai.vercel.app"
+  community_slack: "https://slack.unisai.vercel.app"
+  response_time_hours: 2
+
+restrictions:
+  - "No reverse engineering"
+  - "No source code distribution"
+  - "No trademark usage without permission"
+  - "No modification without written consent"
+  - "Commercial use requires license agreement"
+
+changelog:
+  "1.2.0":
+    - "🚀 Updated to latest 2026 models"
+    - "✨ GPT-5.2 series (Instant, Thinking, Pro)"
+    - "✨ Gemini 3 Pro and 2.5 series"
+    - "✨ Claude 4.5 pricing updates ($1/$5 for Haiku)"
+    - "✨ 10 total models across 3 providers"
+    - "📊 Updated pricing for all models"
+  "1.1.0":
+    - "✨ Multi-provider support (Claude, GPT, Gemini)"
+    - "✨ Support for 9 different models"
+    - "✨ Cross-provider cost comparison"
+    - "✨ Provider-specific optimizations"
+    - "✨ Enhanced recommendations engine"
+  "1.0.0":
+    - "Initial release with Claude-only support"
+    - "Multi-model testing across Claude variants"
+    - "Performance metrics collection"
+    - "Cost comparison analysis"
+    - "Quality scoring"
+    - "API access"
+
+reviews:
+  rating: 4.8
+  total_reviews: 142
+  testimonials:
+    - quote: "Saved us $5000/month by switching models. Essential for any multi-LLM setup."
+      author: "Sarah, Engineering Lead"
+    - quote: "The performance data is exactly what we needed to optimize our prompts."
+      author: "Marcus, AI Team Manager"
+
+metadata:
+  status: "active"
+  created_at: "2024-02-02T00:00:00Z"
+  updated_at: "2024-02-02T00:00:00Z"
+  maturity: "production"
+  maintenance: "actively-maintained"

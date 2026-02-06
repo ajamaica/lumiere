@@ -1,0 +1,110 @@
+{
+  "josh": {
+    "voice_id": "pNInz6obpgDQGcFmaJgB",
+    "name": "Josh",
+    "tone": "devotional",
+    "gender": "male",
+    "age": "adult",
+    "accent": "american",
+    "stability": 0.3,
+    "similarity_boost": 0.75,
+    "style": 0.5,
+    "description": "Deep, calm, reverent voice perfect for devotionals, meditations, and spiritual reflection",
+    "best_for": ["daily-devotional", "scripture-reading", "meditation"],
+    "speed": 1.0,
+    "pitch": 0.9
+  },
+  "chris": {
+    "voice_id": "iP95p4xoKVk53GoZ742B",
+    "name": "Chris",
+    "tone": "teaching",
+    "gender": "male",
+    "age": "adult",
+    "accent": "american",
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.5,
+    "description": "Clear, engaging, authoritative voice for teaching, explanations, and group study",
+    "best_for": ["teaching", "roman-road", "explanation"],
+    "speed": 1.1,
+    "pitch": 1.0
+  },
+  "bella": {
+    "voice_id": "EXAVITQu4EsNXjlNFYcV",
+    "name": "Bella",
+    "tone": "meditation",
+    "gender": "female",
+    "age": "adult",
+    "accent": "american",
+    "stability": 0.2,
+    "similarity_boost": 0.75,
+    "style": 0.6,
+    "description": "Soft, contemplative, soothing voice ideal for meditation, bedtime devotionals, and deep reflection",
+    "best_for": ["meditation", "sleep-devotional", "contemplative-reading"],
+    "speed": 0.9,
+    "pitch": 1.1
+  },
+  "adam": {
+    "voice_id": "VR6AewLW7D5NU7FoM3Ut",
+    "name": "Adam",
+    "tone": "conversational",
+    "gender": "male",
+    "age": "adult",
+    "accent": "american",
+    "stability": 0.4,
+    "similarity_boost": 0.75,
+    "style": 0.3,
+    "description": "Natural, conversational male voice for casual teaching and storytelling",
+    "best_for": ["teaching", "storytelling", "commentary"],
+    "speed": 1.0,
+    "pitch": 0.95
+  },
+  "sam": {
+    "voice_id": "knn7n7zXAvc0G2xRNXlj",
+    "name": "Sam",
+    "tone": "narrative",
+    "gender": "male",
+    "age": "adult",
+    "accent": "american",
+    "stability": 0.35,
+    "similarity_boost": 0.75,
+    "style": 0.4,
+    "description": "Smooth narrative voice perfect for extended scripture readings and storytelling",
+    "best_for": ["scripture-reading", "narrative", "extended-reading"],
+    "speed": 0.95,
+    "pitch": 0.85
+  },
+  "defaults": {
+    "model_id": "eleven_monolingual_v1",
+    "alternative_model": "eleven_turbo_v2",
+    "language": "en-US",
+    "format": "mp3",
+    "bit_rate": "128k"
+  },
+  "presets": {
+    "calm": {
+      "stability": 0.2,
+      "similarity_boost": 0.8,
+      "style": 0.6,
+      "description": "Maximum calm and serenity"
+    },
+    "natural": {
+      "stability": 0.4,
+      "similarity_boost": 0.75,
+      "style": 0.5,
+      "description": "Natural, balanced speaking"
+    },
+    "energetic": {
+      "stability": 0.6,
+      "similarity_boost": 0.7,
+      "style": 0.3,
+      "description": "More energetic and dynamic"
+    },
+    "expressive": {
+      "stability": 0.3,
+      "similarity_boost": 0.8,
+      "style": 0.8,
+      "description": "Highly expressive and emotional"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "jesserod329",
+  "slug": "philips-hue-thinking",
+  "displayName": "Philips Hue Thinking Indicator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769969579043,
+    "commit": "https://github.com/clawdbot/skills/commit/c926943bbe85e3f8c566ea3427b1ef192a2084f7"
+  },
+  "history": []
+}

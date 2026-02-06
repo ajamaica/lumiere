@@ -1,0 +1,17 @@
+{
+  "owner": "dustinjamest",
+  "slug": "dynamic-skills",
+  "displayName": "Dynamic Skill Search",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770350913494,
+    "commit": "https://github.com/openclaw/skills/commit/ae8fcb103e19a8719a1626dede4e014fecbcf512"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770333579380,
+      "commit": "https://github.com/clawdbot/skills/commit/3668770fd616b082a16a993765d65194634936c0"
+    }
+  ]
+}

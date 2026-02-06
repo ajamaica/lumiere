@@ -1,0 +1,17 @@
+{
+  "name": "sparkbtcbot-skill",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Claude Code skill for setting up Spark Bitcoin L2 wallet capabilities for AI agents",
+  "dependencies": {
+    "@buildonspark/spark-sdk": "^0.5.8",
+    "dotenv": "^16.4.7"
+  },
+  "scripts": {
+    "example:setup": "node examples/wallet-setup.js",
+    "example:balance": "node examples/balance-and-deposits.js",
+    "example:payments": "node examples/payment-flow.js",
+    "example:tokens": "node examples/token-operations.js",
+    "example:agent": "node examples/spark-agent.js"
+  }
+}

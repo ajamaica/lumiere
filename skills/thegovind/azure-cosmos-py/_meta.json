@@ -1,0 +1,11 @@
+{
+  "owner": "thegovind",
+  "slug": "azure-cosmos-py",
+  "displayName": "Azure Cosmos DB Python",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769871000833,
+    "commit": "https://github.com/clawdbot/skills/commit/5d899250834af954bf963d43fe2a978fa43c8c5f"
+  },
+  "history": []
+}

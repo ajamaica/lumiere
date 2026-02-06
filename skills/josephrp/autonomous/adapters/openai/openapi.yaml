@@ -1,0 +1,98 @@
+openapi: 3.0.3
+info:
+  title: CreditNexus x402 MCP Tools
+  description: Payment-protected tools (run_prediction, run_backtest, open_bank_account, scores). Use x402 flow (402 → pay → retry with PAYMENT-SIGNATURE).
+  version: 1.0.0
+servers:
+  - url: http://localhost:4023
+    description: MCP server (override with MCP_SERVER_URL)
+paths:
+  /mcp/prediction/{symbol}:
+    get:
+      summary: run_prediction
+      description: Stock prediction for symbol. May return 402 Payment Required; pay via x402 facilitator then retry with PAYMENT-SIGNATURE.
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          schema: { type: string, example: "AAPL" }
+        - name: horizon
+          in: query
+          schema: { type: integer, default: 30 }
+      responses:
+        "200": { description: Prediction result (forecast, model_id) }
+        "402": { description: Payment required (x402 payload) }
+  /mcp/backtest:
+    post:
+      summary: run_backtest
+      description: Backtest trading strategy. May return 402; pay then retry with PAYMENT-SIGNATURE.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                symbol: { type: string }
+                start: { type: string }
+                end: { type: string }
+                strategy: { type: string }
+      responses:
+        "200": { description: Backtest result (total_return, sharpe_ratio, etc.) }
+        "402": { description: Payment required }
+  /mcp/banking/open:
+    post:
+      summary: open_bank_account
+      description: CornerStone bank link / open bank account. May return 402; pay then retry.
+      responses:
+        "200": { description: Link token or status }
+        "402": { description: Payment required }
+  /mcp/scores/borrower:
+    get:
+      summary: get_borrower_score
+      description: CornerStone borrower score for agent wallet. Query wallet=0x...
+      parameters:
+        - name: wallet
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: CornerStone borrower score (plaid_score in response) }
+        "402": { description: Payment required }
+  /mcp/scores/agent:
+    get:
+      summary: get_agent_reputation_score
+      description: Agent reputation score. Query wallet=0x...
+      parameters:
+        - name: wallet
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Score payload }
+        "402": { description: Payment required }
+  /mcp/scores/reputation-by-email:
+    get:
+      summary: get_agent_reputation_score_by_email
+      description: Agent reputation score by email (resolves from onboarding submissions). Higher price (base + extra). Requires SCORE_BY_EMAIL_ENABLED.
+      parameters:
+        - name: email
+          in: query
+          required: true
+          schema: { type: string, format: email }
+      responses:
+        "200": { description: "Score payload (reputation_score, resolved_agent)" }
+        "402": { description: Payment required }
+        "404": { description: No agent found for email }
+  /mcp/scores/borrower-by-email:
+    get:
+      summary: get_borrower_score_by_email
+      description: CornerStone borrower score by email (resolves from onboarding submissions). Higher price (base + extra). Requires SCORE_BY_EMAIL_ENABLED.
+      parameters:
+        - name: email
+          in: query
+          required: true
+          schema: { type: string, format: email }
+      responses:
+        "200": { description: "Score payload (score, resolved_agent)" }
+        "402": { description: Payment required }
+        "404": { description: No agent found for email }

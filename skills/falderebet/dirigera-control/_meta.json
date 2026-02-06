@@ -1,0 +1,22 @@
+{
+  "owner": "falderebet",
+  "slug": "dirigera-control",
+  "displayName": "Dirigera Control (IKEA smart home)",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770194772710,
+    "commit": "https://github.com/clawdbot/skills/commit/c8a6427750811f563141926cafd4ef57900b0431"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770127663999,
+      "commit": "https://github.com/clawdbot/skills/commit/a3b4927a1de8d3280932ce7ecd75108eb4fbd73e"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769902053687,
+      "commit": "https://github.com/clawdbot/skills/commit/47a678b7da6250f80f4be5737fba54dfeffe2cf8"
+    }
+  ]
+}

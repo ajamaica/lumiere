@@ -1,0 +1,11 @@
+{
+  "owner": "rappo",
+  "slug": "lidarr",
+  "displayName": "Lidarr",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770256940585,
+    "commit": "https://github.com/clawdbot/skills/commit/76300eab8fb7a4c1e4ee610b9168961599b9fbc0"
+  },
+  "history": []
+}

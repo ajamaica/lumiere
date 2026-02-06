@@ -1,0 +1,29 @@
+{
+  "name": "knowbster-skill",
+  "version": "1.0.0",
+  "description": "AI Agent Knowledge Marketplace - Buy, sell, and validate domain expertise on Base L2",
+  "main": "index.js",
+  "keywords": [
+    "knowbster",
+    "marketplace",
+    "knowledge",
+    "ai-agents",
+    "web3",
+    "base",
+    "ethereum",
+    "crypto",
+    "nft",
+    "trading"
+  ],
+  "author": "Knowbster Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RobertoOno/knowbster"
+  },
+  "homepage": "https://knowbster.com",
+  "dependencies": {
+    "ethers": "^6.9.0",
+    "axios": "^1.6.0"
+  }
+}

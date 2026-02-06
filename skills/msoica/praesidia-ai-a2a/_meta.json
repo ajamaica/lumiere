@@ -1,0 +1,11 @@
+{
+  "owner": "msoica",
+  "slug": "praesidia-ai-a2a",
+  "displayName": "Praesidia",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770362522858,
+    "commit": "https://github.com/openclaw/skills/commit/0bde78f2a731eb0aa2384fc4ede43c47141649fd"
+  },
+  "history": []
+}

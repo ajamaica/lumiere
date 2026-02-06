@@ -1,0 +1,17 @@
+{
+  "owner": "ls18166407597-design",
+  "slug": "screen-vision",
+  "displayName": "Screen Vision",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770351208855,
+    "commit": "https://github.com/openclaw/skills/commit/b70be2858014fdb3609b65b39438a66587e02fd4"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770266776743,
+      "commit": "https://github.com/clawdbot/skills/commit/16584539b42d61a080b4e34bcb1e82d067ff3b34"
+    }
+  ]
+}

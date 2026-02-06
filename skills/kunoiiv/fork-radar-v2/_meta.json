@@ -1,0 +1,11 @@
+{
+  "owner": "kunoiiv",
+  "slug": "fork-radar-v2",
+  "displayName": "Fork Radar v2 - Production Fork Monitor",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770042411160,
+    "commit": "https://github.com/clawdbot/skills/commit/5a203e658c9f5c19b84a21ca15d67ddca2c53dfc"
+  },
+  "history": []
+}

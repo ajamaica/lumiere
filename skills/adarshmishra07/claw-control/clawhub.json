@@ -1,0 +1,9 @@
+{
+  "name": "claw-control",
+  "displayName": "Claw Control",
+  "version": "1.0.0",
+  "summary": "Complete AI agent operating system setup with Kanban task management",
+  "tags": ["kanban", "agents", "coordination", "dashboard", "multi-agent"],
+  "author": "adarshmishra07",
+  "repository": "https://github.com/adarshmishra07/claw-control"
+}

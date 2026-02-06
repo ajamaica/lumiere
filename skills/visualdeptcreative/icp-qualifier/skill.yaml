@@ -1,0 +1,6 @@
+name: icp-qualifier
+version: 1.0.0
+description: Qualifies leads against Visual Dept ICP criteria for DTC beauty/wellness brands
+author: visualdeptcreative
+instructions: ./SKILL.md
+tools: []

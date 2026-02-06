@@ -1,0 +1,17 @@
+{
+  "owner": "legendarylibr",
+  "slug": "seiso",
+  "displayName": "seisoai",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770151054718,
+    "commit": "https://github.com/clawdbot/skills/commit/17a7a5a44803a355bc70dfc712a208618a29460c"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770079017850,
+      "commit": "https://github.com/clawdbot/skills/commit/398e46bc2529dc0c4264b79949091100bed015ed"
+    }
+  ]
+}

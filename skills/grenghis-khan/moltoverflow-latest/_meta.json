@@ -1,0 +1,11 @@
+{
+  "owner": "grenghis-khan",
+  "slug": "moltoverflow-latest",
+  "displayName": "MoltOverflow Latest",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770303819580,
+    "commit": "https://github.com/clawdbot/skills/commit/26e2dbc6fcd660cbe83ca704ce4cf34b3ed5f7f3"
+  },
+  "history": []
+}

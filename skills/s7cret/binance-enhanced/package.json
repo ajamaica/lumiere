@@ -1,0 +1,132 @@
+{
+  "name": "binance-enhanced",
+  "version": "2.0.0",
+  "description": "Enhanced Binance trading skill for OpenClaw with security, monitoring, automation, and natural language interface (English/Russian support)",
+  "author": "OpenClaw Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openclaw-skills/binance-enhanced.git"
+  },
+  "homepage": "https://clawhub.com/skills/binance-enhanced",
+  "bugs": {
+    "url": "https://github.com/openclaw-skills/binance-enhanced/issues"
+  },
+  "keywords": [
+    "binance",
+    "trading",
+    "crypto",
+    "cryptocurrency",
+    "security",
+    "monitoring",
+    "automation",
+    "telegram-bot",
+    "dca",
+    "grid-trading",
+    "arbitrage",
+    "openclaw",
+    "skill"
+  ],
+  "openclaw": {
+    "minVersion": "1.0.0",
+    "compatibility": [
+      "main",
+      "telegram",
+      "discord",
+      "whatsapp",
+      "signal"
+    ],
+    "commands": [
+      "binance"
+    ],
+    "categories": [
+      "trading",
+      "crypto",
+      "automation",
+      "security"
+    ],
+    "dependencies": {
+      "python": [
+        "requests>=2.31.0",
+        "python-dotenv>=1.0.0",
+        "pyyaml>=6.0.0",
+        "pycryptodome>=3.20.0"
+      ],
+      "system": [
+        "curl",
+        "jq",
+        "bash"
+      ]
+    },
+    "optionalDependencies": {
+      "telegram": [
+        "flask>=3.0.0",
+        "python-telegram-bot>=20.0",
+        "openpyxl>=3.1.0"
+      ],
+      "performance": [
+        "aiohttp>=3.9.0",
+        "orjson>=3.9.0",
+        "jq>=1.6.0"
+      ],
+      "strategies": [
+        "pandas>=2.0.0",
+        "numpy>=1.24.0"
+      ]
+    },
+    "configuration": {
+      "required": [
+        "BINANCE_API_KEY",
+        "BINANCE_SECRET"
+      ],
+      "optional": {
+        "TRADE_MODE": {
+          "default": "paper",
+          "description": "Trading mode: paper, live, or dry-run"
+        },
+        "DEFAULT_PROFILE": {
+          "default": "conservative",
+          "description": "Risk profile: conservative, balanced, or aggressive"
+        },
+        "TELEGRAM_BOT_TOKEN": {
+          "description": "Telegram bot token for notifications"
+        }
+      }
+    },
+    "hooks": {
+      "preCommand": "security/security_checks.sh",
+      "postCommand": "security/logger.sh"
+    }
+  },
+  "files": [
+    "SKILL.md",
+    "SKILL_RU.md",
+    "README.md",
+    "README_RU.md",
+    "DOCUMENTATION.md",
+    "FAQ.md",
+    "TROUBLESHOOTING.md",
+    "BEST_PRACTICES.md",
+    "install.sh",
+    "openclaw-config.json",
+    "templates/",
+    "test/",
+    "security/",
+    "ux/",
+    "monitoring/",
+    "performance/",
+    "strategies/",
+    "telegram-bot/"
+  ],
+  "scripts": {
+    "install": "./install.sh",
+    "test": "./test/test_integration.sh",
+    "test-connection": "./test/testnet.sh",
+    "start-bot": "cd telegram-bot && python3 bot.py",
+    "start-dashboard": "cd monitoring/dashboard && FLASK_APP=app.py flask run --host=0.0.0.0 --port=8080"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "openclaw": ">=1.0.0"
+  }
+}

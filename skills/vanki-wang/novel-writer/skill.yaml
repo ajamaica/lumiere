@@ -1,0 +1,11 @@
+name: novel-writer
+description: 《fangcunzhijian》AI章节生成器
+triggers:
+  - "写第{chapter_num}章：{prompt}"
+parameters:
+  chapter_num: string
+  prompt: string
+entrypoint: run.py
+permissions:
+  - filesystem:write
+  - shell:execute

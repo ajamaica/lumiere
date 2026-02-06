@@ -1,0 +1,41 @@
+SJ-IRAC Attack Risk Engine (Opposition & Invalidation)
+Version: 1.1.2
+Last Updated: 2026-02-03
+
+Risk Levels
+A: Strong grounds + strong proof; low procedural risk.
+B: Solid grounds + minor evidence gaps; manageable procedural/discretion risk.
+C: Grounds plausible but proof is weak or incomplete; outcome sensitive.
+D: High discretion or procedural uncertainty; weak objective proof; expected value low.
+E: Fatal defect(s) or multiple high-risk gates; likely adverse outcome.
+
+Kill Gates (Stop-Loss)
+G1: No standing / eligibility for the primary ground(s).
+G2: Time-bar / limitation risk makes the primary route non-viable.
+G3: Evidence unverifiable (authenticity fails) or cannot resist cross-examination.
+G4: Weak similarity / weak element matching; primary route lacks objective support.
+G5: Procedural instability (v1.1)
+    - High likelihood of suspension or heavy dependency on external proceedings
+    - Tight deadlines with evidence gaps that cannot be cured
+    - Unclear admissibility for the chosen route
+G6: Heavy discretion dependency (v1.1)
+    - Outcome relies primarily on examiner discretion with weak objective proof
+    - Only subjective confusion narrative without robust objective indicators
+
+Route Priority (General)
+P1: Absolute/public interest grounds (where legally applicable)
+P2: Prior rights routes (within time limits)
+P3: Bad-faith / order-disruption routes (objective pattern supported)
+P4: Similarity/confusion routes (requires strong comparison + market logic)
+
+Decision Rules
+- If G1 or G2 triggered → Abort or switch to an alternative route immediately.
+- If G3 triggered → Replace/upgrade evidence set before proceeding.
+- If two or more of G4–G6 are triggered → downgrade to D/E and recommend stop-loss.
+- Do not proceed on a single weak route.
+
+Output
+- Decision: Proceed / Cautious Proceed / Abort
+- Risk level: A–E
+- Triggered gates: list G1–G6
+- Top 3 risk points + required evidence/actions

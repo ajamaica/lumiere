@@ -1,0 +1,11 @@
+{
+  "owner": "pierrerafael339-design",
+  "slug": "gemini-collaborator-01",
+  "displayName": "Gemini_Collaborator_01",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770231147568,
+    "commit": "https://github.com/clawdbot/skills/commit/90b83752ef3e61e623150062587bc77f751fdbeb"
+  },
+  "history": []
+}

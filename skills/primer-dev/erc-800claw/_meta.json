@@ -1,0 +1,17 @@
+{
+  "owner": "primer-dev",
+  "slug": "erc-800claw",
+  "displayName": "ERC-800Claw",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1770124256568,
+    "commit": "https://github.com/clawdbot/skills/commit/a93bd5e632ad196e615cba36f7ee0d9f0ad12ec5"
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1770077199899,
+      "commit": "https://github.com/clawdbot/skills/commit/b881d134a3599c32d8efa76df7669e42fcfbed52"
+    }
+  ]
+}

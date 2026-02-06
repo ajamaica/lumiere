@@ -1,0 +1,22 @@
+{
+  "name": "tubeclaw",
+  "version": "1.0.0",
+  "description": "YouTube video analyzer - extracts insights, removes fluff, finds resources",
+  "main": "analyze.js",
+  "scripts": {
+    "analyze": "node analyze.js"
+  },
+  "keywords": [
+    "youtube",
+    "analyzer",
+    "transcript",
+    "summary",
+    "ai"
+  ],
+  "author": "Snail",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Snail3D/tubeclaw.git"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "rubenaquispe",
+  "slug": "token-saver",
+  "displayName": "Token Saver",
+  "latest": {
+    "version": "2.0.1",
+    "publishedAt": 1770141267321,
+    "commit": "https://github.com/clawdbot/skills/commit/fe09aacf918feff1e29997647e5c20a96340ae5c"
+  },
+  "history": [
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770073844963,
+      "commit": "https://github.com/clawdbot/skills/commit/2b9bd38219f81fbbae2ca9009df8a5552310103a"
+    }
+  ]
+}

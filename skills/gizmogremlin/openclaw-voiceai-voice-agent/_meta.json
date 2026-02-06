@@ -1,0 +1,17 @@
+{
+  "owner": "gizmogremlin",
+  "slug": "openclaw-voiceai-voice-agent",
+  "displayName": "Voice.Ai Voice Agents",
+  "latest": {
+    "version": "0.1.4",
+    "publishedAt": 1769869257452,
+    "commit": "https://github.com/clawdbot/skills/commit/17d378734ca70fc35049227297f26c0ee2bb35ac"
+  },
+  "history": [
+    {
+      "version": "0.1.3",
+      "publishedAt": 1769864921292,
+      "commit": "https://github.com/clawdbot/skills/commit/a369a291cc8bf749e26254ca7defbd49557e44b0"
+    }
+  ]
+}

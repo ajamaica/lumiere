@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "meshtastic": {
+      "command": "python",
+      "args": ["/path/to/meshtastic-skill/scripts/mcp_server.py"],
+      "env": {}
+    }
+  }
+}

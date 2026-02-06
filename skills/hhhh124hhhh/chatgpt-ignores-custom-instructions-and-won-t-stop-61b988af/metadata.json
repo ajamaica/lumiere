@@ -1,0 +1,12 @@
+{
+  "name": "ChatGPT ignores custom instructions, and won't stop using the asinine \"that's not X; that's Y\" structure in everything it writes.",
+  "version": "1.0.0",
+  "description": "This speech pattern is extremely stupid. It's basically inventing a non-sequitur strawman interpretation of the situation that no one made, in order to say it's \"not \\[that\\]\" but something else.\n\nIts relentless use of this phantom contrast framing structure poisons every output.\n\n  \nI have asked it countless times to stop doing that. It's in my custom instructions; in fact it's the only custom instruction. It makes no difference. It still does it, multiple times in almost every output.\n\nI've ha...",
+  "author": "Clawdbot",
+  "type": "Text Prompt",
+  "source": "reddit",
+  "url": "https://www.reddit.com/r/ChatGPT/comments/1qryi6l/chatgpt_ignores_custom_instructions_and_wont_stop/",
+  "quality_score": 85,
+  "content_hash": "61b988af35af146418a3c9406ef26c46",
+  "created_at": "2026-02-01T22:01:08.989276"
+}

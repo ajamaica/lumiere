@@ -1,0 +1,11 @@
+{
+  "owner": "jlpjavawayup",
+  "slug": "baidu-scholar-search",
+  "displayName": "baidu scholar search",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770217047413,
+    "commit": "https://github.com/clawdbot/skills/commit/6824ad5e946ce3b0ee2445b51e86ac62922b6cd0"
+  },
+  "history": []
+}

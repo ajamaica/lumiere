@@ -1,0 +1,17 @@
+{
+  "owner": "hans1329",
+  "slug": "ktrendz-skill",
+  "displayName": "Ktrendz Skill",
+  "latest": {
+    "version": "1.3.0",
+    "publishedAt": 1770382890204,
+    "commit": "https://github.com/openclaw/skills/commit/6b08b4229b8d1ff3fa18e906771536d00687112c"
+  },
+  "history": [
+    {
+      "version": "1.2.0",
+      "publishedAt": 1770306409048,
+      "commit": "https://github.com/clawdbot/skills/commit/af377572248cc54b2fc6df6da74c93c349a9aa1d"
+    }
+  ]
+}

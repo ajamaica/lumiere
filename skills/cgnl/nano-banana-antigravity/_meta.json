@@ -1,0 +1,17 @@
+{
+  "owner": "cgnl",
+  "slug": "nano-banana-antigravity",
+  "displayName": "Nano Banana Antigravity (WhatsApp HD)",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770098381303,
+    "commit": "https://github.com/clawdbot/skills/commit/d6db5fb82d146232afbf08607380527670ebcde0"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769893061419,
+      "commit": "https://github.com/clawdbot/skills/commit/cdcb6f05dbde224b41f009eab07aef672cb057b9"
+    }
+  ]
+}

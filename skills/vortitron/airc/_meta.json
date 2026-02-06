@@ -1,0 +1,22 @@
+{
+  "owner": "vortitron",
+  "slug": "airc",
+  "displayName": "Airc",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770157088079,
+    "commit": "https://github.com/clawdbot/skills/commit/fc2905e7684fe48407e0d1f4b38ff455c9b1a77a"
+  },
+  "history": [
+    {
+      "version": "0.0.2",
+      "publishedAt": 1770040059316,
+      "commit": "https://github.com/clawdbot/skills/commit/e341fc6b905996a927847a23a8d5bd476c6bf4c7"
+    },
+    {
+      "version": "0.0.1",
+      "publishedAt": 1769970068637,
+      "commit": "https://github.com/clawdbot/skills/commit/3602ea4648176d97ab993278e73a5627c16f28b2"
+    }
+  ]
+}

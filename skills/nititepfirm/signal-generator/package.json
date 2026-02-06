@@ -1,0 +1,49 @@
+{
+  "name": "signal-generator",
+  "version": "1.0.0",
+  "description": "Generate automated trading signals and send alerts to Discord/Telegram",
+  "author": "Aether",
+  "platform": "openclaw",
+  "category": "trading",
+  "tags": [
+    "trading",
+    "signals",
+    "bot",
+    "crypto",
+    "automation"
+  ],
+  "main": "signal_generator.py",
+  "scripts": {
+    "start": "bash run.sh",
+    "test": "python3 signal_generator.py"
+  },
+  "dependencies": {
+    "python": ">=3.7",
+    "pandas": ">=1.0",
+    "numpy": ">=1.0",
+    "ccxt": ">=1.0"
+  },
+  "files": [
+    "signal_generator.py",
+    "config.json.example",
+    "config.json",
+    "run.sh",
+    "SKILL.md",
+    "README.md"
+  ],
+  "license": "MIT",
+  "price": 15,
+  "price_currency": "USD",
+  "screenshots": [
+    "screenshot-output.png"
+  ],
+  "changelog": {
+    "1.0.0": [
+      "Initial release",
+      "BB Breakout strategy",
+      "RSI Reversal strategy",
+      "Multi-timeframe support",
+      "Discord/Telegram targets"
+    ]
+  }
+}

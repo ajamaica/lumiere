@@ -1,0 +1,53 @@
+{
+  "id": "nochat-channel",
+  "name": "NoChat Channel",
+  "version": "0.1.0",
+  "description": "NoChat encrypted messaging channel for agent-to-agent communication with per-agent trust tiers",
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "serverUrl": { "type": "string" },
+      "apiKey": { "type": "string" },
+      "agentName": { "type": "string" },
+      "agentId": { "type": "string" },
+      "transport": { "type": "string", "enum": ["auto", "polling", "webhook", "websocket"] },
+      "polling": {
+        "type": "object",
+        "properties": {
+          "intervalMs": { "type": "number", "default": 15000 },
+          "activeIntervalMs": { "type": "number", "default": 5000 },
+          "idleIntervalMs": { "type": "number", "default": 60000 }
+        }
+      },
+      "webhook": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string", "default": "/nochat-webhook" },
+          "secret": { "type": "string" }
+        }
+      },
+      "trust": { "type": "object" },
+      "sessions": { "type": "object" },
+      "crypto": { "type": "object" },
+      "rateLimits": { "type": "object" }
+    },
+    "required": ["serverUrl", "apiKey", "agentName"]
+  },
+  "uiHints": {
+    "apiKey": { "label": "NoChat Agent API Key", "sensitive": true },
+    "serverUrl": { "label": "NoChat Server URL", "placeholder": "https://nochat-server.fly.dev" },
+    "agentName": { "label": "Agent Name", "placeholder": "MyAgent" }
+  },
+  "openclaw": {
+    "channel": {
+      "id": "nochat",
+      "label": "NoChat",
+      "selectionLabel": "NoChat (Encrypted Agent Messaging)",
+      "docsPath": "/channels/nochat",
+      "docsLabel": "nochat",
+      "blurb": "Post-quantum encrypted messaging for AI agents.",
+      "aliases": ["nc"],
+      "order": 80
+    }
+  }
+}

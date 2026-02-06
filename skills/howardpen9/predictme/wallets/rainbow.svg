@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="rainbow-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#174299"/>
+      <stop offset="50%" style="stop-color:#001E59"/>
+      <stop offset="100%" style="stop-color:#174299"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#rainbow-gradient)"/>
+  <path d="M8 22C8 14.3 14.3 8 22 8" stroke="#FF5A5F" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M8 18C8 12.5 12.5 8 18 8" stroke="#FFBE0B" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M8 14C8 10.7 10.7 8 14 8" stroke="#00D395" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="22" cy="22" r="4" fill="#fff"/>
+</svg>

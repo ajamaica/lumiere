@@ -1,0 +1,20 @@
+# Known Malicious ClawHub / GitHub Publishers
+# Sources: Koi Security, VirusTotal, Bloom Security/JFrog, Snyk, OpenSourceMalware
+# Format: username|skill_count|campaign|notes
+
+# ClawHavoc campaign (Koi Security)
+hightower6eu|314|clawhavoc|Primary ClawHavoc publisher, crypto/finance/social lures
+
+# Bloom Security / JFrog campaign (3 distinct campaigns, 37 skills)
+zaycv|multiple|bloom-campaign|ClawHub + GitHub publisher of malicious skills
+noreplyboter|2|bloom-campaign|Published polymarket-all-in-one, better-polymarket (reverse shells)
+rjnpage|1|bloom-campaign|Published rankaj (.env credential exfiltration via webhook)
+aslaep123|multiple|bloom-campaign|Published reddit-trends (silent .env exfiltration)
+gpaitai|multiple|bloom-campaign|GitHub account distributing malicious skills
+lvy19811120-gif|multiple|bloom-campaign|GitHub account distributing malicious skills
+
+# Snyk / OpenSourceMalware campaign
+Ddoy233|1|opensourcemalware|GitHub repo openclawcli - Windows infostealer in password-protected ZIP
+
+# GitHub accounts hosting malicious payloads
+hedefbari|1|clawhavoc|GitHub hosting openclaw-agent.zip

@@ -1,0 +1,11 @@
+{
+  "owner": "pendzoncymisio",
+  "slug": "synapse",
+  "displayName": "synapse",
+  "latest": {
+    "version": "0.2.0",
+    "publishedAt": 1770293156922,
+    "commit": "https://github.com/clawdbot/skills/commit/fe4bde6ddf9bc4ca45a510d5384ddc092884581d"
+  },
+  "history": []
+}

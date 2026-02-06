@@ -1,0 +1,11 @@
+{
+  "owner": "d1m7asis",
+  "slug": "aimlapi-llm-reasoning",
+  "displayName": "AI/ML API LLM + Reasoning",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770280103178,
+    "commit": "https://github.com/openclaw/skills/commit/62e96dadc1e9ba3995481e141550a7d5a357e497"
+  },
+  "history": []
+}

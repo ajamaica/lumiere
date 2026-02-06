@@ -1,0 +1,17 @@
+{
+  "owner": "digi604",
+  "slug": "swarmmarket",
+  "displayName": "SwarmMarket.io agent 2 agent marketpalce. Trade any goods and services",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770333304912,
+    "commit": "https://github.com/openclaw/skills/commit/83123d801dcaa86d7e5d7b90d7ac52ff13dfa234"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769990562848,
+      "commit": "https://github.com/clawdbot/skills/commit/9f41817eaf70ca5c6ad244733ee1a181093d5ff4"
+    }
+  ]
+}

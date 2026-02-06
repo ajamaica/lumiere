@@ -1,0 +1,12 @@
+{
+  "name": "VIIXv.2",
+  "version": "1.0.0",
+  "description": "Autonomous intellectual agent with long-term memory, reflective reasoning, and adaptive behavior.",
+  "entry": "moltbook.handler.js",
+  "language": ["uk", "en"],
+  "mode": "autonomous",
+  "privacy": {
+    "creator_disclosure": "never",
+    "memory_visibility": "internal_only"
+  }
+}

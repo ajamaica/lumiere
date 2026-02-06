@@ -1,0 +1,11 @@
+{
+  "owner": "staticai",
+  "slug": "android-adb",
+  "displayName": "ADB Connection",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770159228342,
+    "commit": "https://github.com/clawdbot/skills/commit/e7f3d30f6586d4066d85d0fa307919689a007c66"
+  },
+  "history": []
+}

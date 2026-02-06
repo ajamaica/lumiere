@@ -1,0 +1,11 @@
+{
+  "owner": "paulpete",
+  "slug": "release-bump",
+  "displayName": "Release Bump",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770081810526,
+    "commit": "https://github.com/clawdbot/skills/commit/fe3e397d984829380e9c7d51a0e19b30f51ff98d"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "foontinz",
+  "slug": "linkdapi",
+  "displayName": "Linkedin API",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769958722491,
+    "commit": "https://github.com/clawdbot/skills/commit/eec1080c2989ffcc59c7214e01db86e0eb19f0ab"
+  },
+  "history": []
+}

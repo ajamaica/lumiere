@@ -1,0 +1,11 @@
+{
+  "owner": "starbuck100",
+  "slug": "clawdhub-contributor",
+  "displayName": "ClawdHub Contributor",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769950985724,
+    "commit": "https://github.com/clawdbot/skills/commit/f0e7d4b70150c7ecb7ba9bd5bae444ac288fd876"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "okaris",
+  "slug": "ai-voice-cloning",
+  "displayName": "Ai Voice Cloning",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770363151594,
+    "commit": "https://github.com/openclaw/skills/commit/1fd4c841f60889c9ac2377a2bf4134aa34261156"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "nordgaren",
+  "slug": "greetr",
+  "displayName": "greetr",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770191262647,
+    "commit": "https://github.com/clawdbot/skills/commit/aaf3d1c6cdd13a9307655e154fabb5c3fd3bb7d0"
+  },
+  "history": []
+}

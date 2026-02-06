@@ -1,0 +1,11 @@
+{
+  "owner": "ahmetsemsettinozdemirden",
+  "slug": "hergunmac",
+  "displayName": "HerGünMaç - Football Prediction Engine",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769951971834,
+    "commit": "https://github.com/clawdbot/skills/commit/24d703164b6d179824b4adef89b88a908e16d59b"
+  },
+  "history": []
+}

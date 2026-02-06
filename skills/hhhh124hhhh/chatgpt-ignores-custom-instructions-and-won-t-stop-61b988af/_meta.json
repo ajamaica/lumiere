@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "chatgpt-ignores-custom-instructions-and-won-t-stop-61b988af",
+  "displayName": "ChatGPT ignores custom instructions, and won't stop using the asinine \"that's not X; that's Y\" structure in everything it writes.",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769990212526,
+    "commit": "https://github.com/clawdbot/skills/commit/22c477f0961fe639ddf432a5afdc89f2e5b9410b"
+  },
+  "history": []
+}

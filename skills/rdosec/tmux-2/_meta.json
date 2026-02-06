@@ -1,0 +1,11 @@
+{
+  "owner": "rdosec",
+  "slug": "tmux-2",
+  "displayName": "Tmux1",
+  "latest": {
+    "version": "0.1.2",
+    "publishedAt": 1769874944978,
+    "commit": "https://github.com/clawdbot/skills/commit/a443e57d7e763bd9172412a60d5772ab41e5258c"
+  },
+  "history": []
+}

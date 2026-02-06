@@ -1,0 +1,11 @@
+{
+  "owner": "arubiku",
+  "slug": "mia-polymarket-trader",
+  "displayName": "Mia Polymarket Trader",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770259175592,
+    "commit": "https://github.com/clawdbot/skills/commit/4228f94bf5f93e7a349e2f51db366e1db9445f6c"
+  },
+  "history": []
+}

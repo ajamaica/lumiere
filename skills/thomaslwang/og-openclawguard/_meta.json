@@ -1,0 +1,11 @@
+{
+  "owner": "thomaslwang",
+  "slug": "og-openclawguard",
+  "displayName": "OG-OpenClawGuard",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770305985962,
+    "commit": "https://github.com/clawdbot/skills/commit/e383ac21f27834408a9d8b1658dffb5956407fba"
+  },
+  "history": []
+}

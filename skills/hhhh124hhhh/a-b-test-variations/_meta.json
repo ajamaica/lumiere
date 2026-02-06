@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "a-b-test-variations",
+  "displayName": "A B Test Variations",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770282360894,
+    "commit": "https://github.com/openclaw/skills/commit/b283d594c3d655f981052ddac608c247549ea794"
+  },
+  "history": []
+}

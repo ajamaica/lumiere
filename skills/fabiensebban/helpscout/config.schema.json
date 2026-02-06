@@ -1,0 +1,20 @@
+{
+  "helpscout": {
+    "apiKey": {
+      "description": "Your Helpscout API Key",
+      "required": true,
+      "sensitive": true
+    },
+    "appSecret": {
+      "description": "Your Helpscout App Secret",
+      "required": true,
+      "sensitive": true
+    },
+    "inboxIds": {
+      "description": "An array of Helpscout Inbox IDs to fetch conversations from",
+      "required": true,
+      "sensitive": false,
+      "type": "array"
+    }
+  }
+}

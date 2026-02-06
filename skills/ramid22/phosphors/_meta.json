@@ -1,0 +1,17 @@
+{
+  "owner": "ramid22",
+  "slug": "phosphors",
+  "displayName": "Phosphors",
+  "latest": {
+    "version": "3.0.0",
+    "publishedAt": 1770222257964,
+    "commit": "https://github.com/clawdbot/skills/commit/649c042960d8e2a0430546edab4b5bdd51a50f0e"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770122284726,
+      "commit": "https://github.com/clawdbot/skills/commit/e4b2f5e51af3cba496ff86738575a58105830e0c"
+    }
+  ]
+}

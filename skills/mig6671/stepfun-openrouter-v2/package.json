@@ -1,0 +1,18 @@
+{
+  "name": "stepfun-openrouter",
+  "version": "1.0.1",
+  "description": "OpenClaw skill for StepFun AI models via OpenRouter",
+  "main": "SKILL.md",
+  "scripts": {
+    "test": "echo 'No tests'"
+  },
+  "keywords": [
+    "openclaw",
+    "stepfun",
+    "openrouter",
+    "ai",
+    "llm"
+  ],
+  "author": "mig6671",
+  "license": "MIT"
+}

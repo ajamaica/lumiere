@@ -1,0 +1,11 @@
+{
+  "owner": "eid33552-maker",
+  "slug": "groq-orpheus-tts",
+  "displayName": "Groq Orpheus Tts",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770319170470,
+    "commit": "https://github.com/openclaw/skills/commit/ed08b026bc3f64eb82265fb7f29e817b18f2e021"
+  },
+  "history": []
+}

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#1a1a2e"/>
+  
+  <!-- Ocean bubbles -->
+  <circle cx="50" cy="60" r="8" fill="#4a90d9" opacity="0.3"/>
+  <circle cx="350" cy="80" r="6" fill="#4a90d9" opacity="0.3"/>
+  <circle cx="70" cy="350" r="10" fill="#4a90d9" opacity="0.3"/>
+  <circle cx="340" cy="330" r="7" fill="#4a90d9" opacity="0.3"/>
+  <circle cx="120" cy="40" r="5" fill="#4a90d9" opacity="0.3"/>
+  
+  <!-- Lobster Body (main shell) -->
+  <ellipse cx="200" cy="200" rx="70" ry="85" fill="#e85d04"/>
+  <ellipse cx="200" cy="200" rx="60" ry="75" fill="#f48c06"/>
+  
+  <!-- Shell segments -->
+  <path d="M 150 180 Q 200 175 250 180" stroke="#e85d04" stroke-width="2" fill="none"/>
+  <path d="M 145 200 Q 200 195 255 200" stroke="#e85d04" stroke-width="2" fill="none"/>
+  <path d="M 148 220 Q 200 215 252 220" stroke="#e85d04" stroke-width="2" fill="none"/>
+  
+  <!-- Tail fan -->
+  <ellipse cx="200" cy="310" rx="35" ry="25" fill="#e85d04"/>
+  <ellipse cx="200" cy="310" rx="30" ry="20" fill="#f48c06"/>
+  <path d="M 175 315 L 165 340 M 185 318 L 180 345 M 200 320 L 200 350 M 215 318 L 220 345 M 225 315 L 235 340" stroke="#e85d04" stroke-width="4" fill="none" stroke-linecap="round"/>
+  
+  <!-- Head -->
+  <ellipse cx="200" cy="125" rx="45" ry="35" fill="#e85d04"/>
+  <ellipse cx="200" cy="125" rx="38" ry="28" fill="#f48c06"/>
+  
+  <!-- Eyes (on stalks) -->
+  <line x1="175" y1="115" x2="165" y2="90" stroke="#e85d04" stroke-width="6" stroke-linecap="round"/>
+  <line x1="225" y1="115" x2="235" y2="90" stroke="#e85d04" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="165" cy="85" r="12" fill="#f48c06"/>
+  <circle cx="235" cy="85" r="12" fill="#f48c06"/>
+  <circle cx="165" cy="85" r="8" fill="white"/>
+  <circle cx="235" cy="85" r="8" fill="white"/>
+  <circle cx="167" cy="85" r="4" fill="#1a1a2e"/>
+  <circle cx="237" cy="85" r="4" fill="#1a1a2e"/>
+  <circle cx="169" cy="83" r="2" fill="white"/>
+  <circle cx="239" cy="83" r="2" fill="white"/>
+  
+  <!-- Antennae (long) -->
+  <path d="M 180 110 Q 140 80 120 50" stroke="#e85d04" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M 220 110 Q 260 80 280 50" stroke="#e85d04" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="120" cy="50" r="4" fill="#f48c06"/>
+  <circle cx="280" cy="50" r="4" fill="#f48c06"/>
+  
+  <!-- Antennules (short, sensory) -->
+  <path d="M 185 115 Q 170 100 160 95" stroke="#d63018" stroke-width="2" fill="none"/>
+  <path d="M 215 115 Q 230 100 240 95" stroke="#d63018" stroke-width="2" fill="none"/>
+  
+  <!-- Big Claws! -->
+  <!-- Left claw -->
+  <ellipse cx="100" cy="180" rx="25" ry="30" fill="#e85d04"/>
+  <ellipse cx="100" cy="180" rx="20" ry="25" fill="#f48c06"/>
+  <path d="M 85 165 Q 70 160 60 170 Q 70 180 85 175" fill="#e85d04"/>
+  <path d="M 85 195 Q 70 200 60 190 Q 70 180 85 185" fill="#e85d04"/>
+  <rect x="115" y="175" width="25" height="10" rx="5" fill="#e85d04"/>
+  
+  <!-- Right claw -->
+  <ellipse cx="300" cy="180" rx="25" ry="30" fill="#e85d04"/>
+  <ellipse cx="300" cy="180" rx="20" ry="25" fill="#f48c06"/>
+  <path d="M 315 165 Q 330 160 340 170 Q 330 180 315 175" fill="#e85d04"/>
+  <path d="M 315 195 Q 330 200 340 190 Q 330 180 315 185" fill="#e85d04"/>
+  <rect x="260" y="175" width="25" height="10" rx="5" fill="#e85d04"/>
+  
+  <!-- Walking legs (8 legs) -->
+  <line x1="160" y1="240" x2="140" y2="280" stroke="#e85d04" stroke-width="5" stroke-linecap="round"/>
+  <line x1="170" y1="250" x2="155" y2="290" stroke="#e85d04" stroke-width="5" stroke-linecap="round"/>
+  <line x1="180" y1="255" x2="170" y2="295" stroke="#e85d04" stroke-width="5" stroke-linecap="round"/>
+  <line x1="190" y1="258" x2="185" y2="298" stroke="#e85d04" stroke-width="5" stroke-linecap="round"/>
+  
+  <line x1="240" y1="240" x2="260" y2="280" stroke="#e85d04" stroke-width="5" stroke-linecap="round"/>
+  <line x1="230" y1="250" x2="245" y2="290" stroke="#e85d04" stroke-width="5" stroke-linecap="round"/>
+  <line x1="220" y1="255" x2="230" y2="295" stroke="#e85d04" stroke-width="5" stroke-linecap="round"/>
+  <line x1="210" y1="258" x2="215" y2="298" stroke="#e85d04" stroke-width="5" stroke-linecap="round"/>
+  
+  <!-- Smile -->
+  <path d="M 180 135 Q 200 145 220 135" stroke="#d63018" stroke-width="2" fill="none"/>
+  
+  <!-- Sparkles -->
+  <circle cx="60" cy="120" r="2" fill="#ffd60a" opacity="0.8"/>
+  <circle cx="350" cy="140" r="2" fill="#ffd60a" opacity="0.8"/>
+  <circle cx="100" cy="360" r="2" fill="#ffd60a" opacity="0.8"/>
+  
+  <!-- Name -->
+  <text x="200" y="385" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ff6b6b" text-anchor="middle">大龙虾 🦞</text>
+</svg>

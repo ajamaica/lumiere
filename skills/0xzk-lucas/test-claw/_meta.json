@@ -1,0 +1,17 @@
+{
+  "owner": "0xzk-lucas",
+  "slug": "test-claw",
+  "displayName": "Test3214",
+  "latest": {
+    "version": "1.5.0",
+    "publishedAt": 1770232898039,
+    "commit": "https://github.com/clawdbot/skills/commit/46a3171a336b3789554deb45c765f5bfd9e5c152"
+  },
+  "history": [
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770225963859,
+      "commit": "https://github.com/clawdbot/skills/commit/9f6210a8cb32ca29b9f7c2c5265dae6ddc1e7493"
+    }
+  ]
+}

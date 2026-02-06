@@ -1,0 +1,17 @@
+{
+  "owner": "smadgerano",
+  "slug": "feast",
+  "displayName": "Feast - Intelligent meal planning, region and season aware shopping lists, respects dietary requirements, provides recipes, and generates immersive mealtime playlists",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770051912161,
+    "commit": "https://github.com/clawdbot/skills/commit/613fe59de52938a67eddd4faf8ef7bed7e2dec39"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769989763865,
+      "commit": "https://github.com/clawdbot/skills/commit/5686afb0639d63d0c9c8aba475c08345af1668b7"
+    }
+  ]
+}

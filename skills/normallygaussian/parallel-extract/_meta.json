@@ -1,0 +1,11 @@
+{
+  "owner": "normallygaussian",
+  "slug": "parallel-extract",
+  "displayName": "Parallel Extract",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770152764086,
+    "commit": "https://github.com/clawdbot/skills/commit/5ea3590516e7f0d4353b34813d145ff34f5c7245"
+  },
+  "history": []
+}

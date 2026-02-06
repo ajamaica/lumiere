@@ -1,0 +1,11 @@
+{
+  "owner": "jk-0001",
+  "slug": "business-plan",
+  "displayName": "Business Plan",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770341763669,
+    "commit": "https://github.com/openclaw/skills/commit/567db2d8d3b5b5cdf437bc6acbbad72776fd5340"
+  },
+  "history": []
+}

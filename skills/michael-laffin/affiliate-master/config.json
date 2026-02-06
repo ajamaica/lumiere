@@ -1,0 +1,44 @@
+{
+  "networks": {
+    "amazon": {
+      "enabled": false,
+      "accessKey": "",
+      "secretKey": "",
+      "associateId": "",
+      "region": "us-east-1"
+    },
+    "shareasale": {
+      "enabled": false,
+      "apiKey": "",
+      "affiliateId": ""
+    },
+    "cj": {
+      "enabled": false,
+      "apiKey": "",
+      "websiteId": ""
+    },
+    "impact": {
+      "enabled": false,
+      "apiKey": "",
+      "accountId": ""
+    }
+  },
+  "disclosure": {
+    "text": "This post contains affiliate links. If you buy through these links, we may earn a commission at no extra cost to you.",
+    "placement": "top",
+    "platforms": {
+      "blog": "above-fold",
+      "twitter": "end",
+      "email": "footer",
+      "reddit": "inline"
+    }
+  },
+  "analytics": {
+    "enabled": true,
+    "retentionDays": 90
+  },
+  "shortener": {
+    "enabled": true,
+    "domain": "amzn.to"
+  }
+}

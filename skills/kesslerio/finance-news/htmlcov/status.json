@@ -1,0 +1,224 @@
+{
+  "note": "This file is an internal implementation detail to speed up HTML report generation. Its format can change at any time. You might be looking for the JSON report: https://coverage.rtfd.io/cmd.html#cmd-json",
+  "format": 5,
+  "version": "7.13.2",
+  "globals": "4be31ca40797e8400fa13be69cbf6b96",
+  "files": {
+    "z_de1a740d5dc98ffd_alerts_py": {
+      "hash": "9256045bbdf042ec8ac79100b07f6e16",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_alerts_py.html",
+        "file": "scripts/alerts.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 292,
+          "n_excluded": 2,
+          "n_missing": 118,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_briefing_py": {
+      "hash": "8762987b6cbda4b3959d184f0fd43f44",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_briefing_py.html",
+        "file": "scripts/briefing.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 87,
+          "n_excluded": 2,
+          "n_missing": 38,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_earnings_py": {
+      "hash": "313062c04b56cd9a2f238c0c041e795c",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_earnings_py.html",
+        "file": "scripts/earnings.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 329,
+          "n_excluded": 2,
+          "n_missing": 181,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_fetch_news_py": {
+      "hash": "6cc00fcf9c47d99abd6109edce33ab1c",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_fetch_news_py.html",
+        "file": "scripts/fetch_news.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 589,
+          "n_excluded": 2,
+          "n_missing": 377,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_portfolio_py": {
+      "hash": "291475985d04ed7b91150b8eb45bb333",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_portfolio_py.html",
+        "file": "scripts/portfolio.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 183,
+          "n_excluded": 2,
+          "n_missing": 124,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_ranking_py": {
+      "hash": "1118174517ba630eb85b35f61798c37f",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_ranking_py.html",
+        "file": "scripts/ranking.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 147,
+          "n_excluded": 9,
+          "n_missing": 21,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_research_py": {
+      "hash": "f70f5afdad459e2a82b06d76961b0502",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_research_py.html",
+        "file": "scripts/research.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 130,
+          "n_excluded": 2,
+          "n_missing": 45,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_setup_py": {
+      "hash": "2b936e494283c91a1b0c1ac177ca3d23",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_setup_py.html",
+        "file": "scripts/setup.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 168,
+          "n_excluded": 2,
+          "n_missing": 124,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_stocks_py": {
+      "hash": "a631cf0e894b87b0a89f70f06987e155",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_stocks_py.html",
+        "file": "scripts/stocks.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 184,
+          "n_excluded": 2,
+          "n_missing": 87,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_summarize_py": {
+      "hash": "d04f1c3e26fe60ac2710db72a49b8e21",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_summarize_py.html",
+        "file": "scripts/summarize.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 972,
+          "n_excluded": 2,
+          "n_missing": 462,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_translate_portfolio_py": {
+      "hash": "74687196bc47c7bcc8dd5ef4e7a118d2",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_translate_portfolio_py.html",
+        "file": "scripts/translate_portfolio.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 88,
+          "n_excluded": 2,
+          "n_missing": 88,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    },
+    "z_de1a740d5dc98ffd_utils_py": {
+      "hash": "fd9700472399838a648d2182ce916cd4",
+      "index": {
+        "url": "z_de1a740d5dc98ffd_utils_py.html",
+        "file": "scripts/utils.py",
+        "description": "",
+        "nums": {
+          "precision": 0,
+          "n_files": 1,
+          "n_statements": 34,
+          "n_excluded": 0,
+          "n_missing": 10,
+          "n_branches": 0,
+          "n_partial_branches": 0,
+          "n_missing_branches": 0
+        }
+      }
+    }
+  }
+}

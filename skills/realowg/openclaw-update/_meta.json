@@ -1,0 +1,11 @@
+{
+  "owner": "realowg",
+  "slug": "openclaw-update",
+  "displayName": "openclaw-update",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1769858354913,
+    "commit": "https://github.com/clawdbot/skills/commit/100a093e7eeb68852951826b7dce91c8e726ded9"
+  },
+  "history": []
+}

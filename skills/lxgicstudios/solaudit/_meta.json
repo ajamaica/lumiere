@@ -1,0 +1,11 @@
+{
+  "owner": "lxgicstudios",
+  "slug": "solaudit",
+  "displayName": "Solaudit Smart Contract Security Scanner",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1769967624442,
+    "commit": "https://github.com/clawdbot/skills/commit/326ff8e45d222f67030dda047e1e0d00f81087ee"
+  },
+  "history": []
+}

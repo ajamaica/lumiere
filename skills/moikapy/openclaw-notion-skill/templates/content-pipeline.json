@@ -1,0 +1,119 @@
+{
+  "name": "Content Pipeline",
+  "description": "Editorial calendar for content creators - track ideas through publication",
+  "icon": "📝",
+  "properties": {
+    "Title": {
+      "type": "title",
+      "description": "Content title or working title"
+    },
+    "Status": {
+      "type": "select",
+      "options": ["Idea", "Researching", "Drafting", "Review", "Scheduled", "Posted", "Archived"],
+      "default": "Idea"
+    },
+    "Platform": {
+      "type": "multi_select",
+      "options": [
+        "X/Twitter",
+        "YouTube",
+        "MakerWorld",
+        "Blog",
+        "Instagram",
+        "TikTok",
+        "LinkedIn",
+        "Email Newsletter"
+      ]
+    },
+    "Content Type": {
+      "type": "select",
+      "options": [
+        "Quick Post",
+        "Thread",
+        "Video",
+        "Tutorial",
+        "Behind the Scenes",
+        "Product Showcase",
+        "Industry Commentary"
+      ]
+    },
+    "Publish Date": {
+      "type": "date",
+      "description": "When to publish"
+    },
+    "Tags": {
+      "type": "multi_select",
+      "options": [
+        "3D Printing",
+        "AI",
+        "Entrepreneurship",
+        "Maker",
+        "Tutorial",
+        "Product",
+        "Opinion",
+        "News",
+        "Community"
+      ]
+    },
+    "Priority": {
+      "type": "select",
+      "options": ["Low", "Medium", "High", "Evergreen"]
+    },
+    "Draft Content": {
+      "type": "rich_text",
+      "description": "Full draft text, script, or outline"
+    },
+    "Research Notes": {
+      "type": "rich_text",
+      "description": "Links, findings, inspiration"
+    },
+    "Media Assets": {
+      "type": "files",
+      "description": "Images, videos, attachments"
+    },
+    "URL": {
+      "type": "url",
+      "description": "Link to published content"
+    },
+    "Performance": {
+      "type": "rich_text",
+      "description": "Views, engagement, metrics"
+    },
+    "Created": {
+      "type": "created_time"
+    },
+    "Last Edited": {
+      "type": "last_edited_time"
+    }
+  },
+  "views": [
+    {
+      "name": "Board",
+      "type": "board",
+      "group_by": "Status"
+    },
+    {
+      "name": "Calendar",
+      "type": "calendar",
+      "date_property": "Publish Date"
+    },
+    {
+      "name": "By Platform",
+      "type": "table",
+      "filter": {
+        "property": "Platform",
+        "is_not_empty": true
+      }
+    },
+    {
+      "name": "Ideas Only",
+      "type": "table",
+      "filter": {
+        "property": "Status",
+        "select": {
+          "equals": "Idea"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Introduction to Prompt Templates in LangChain - Comet",
+  "version": "1.0.0",
+  "description": "Templates in LangChain - Comet Build AI tools in our virtual hackathon | $30,000 in prizes",
+  "author": "Clawdbot",
+  "type": "Text Prompt",
+  "source": "chatgpt",
+  "url": "https://www.comet.com/site/blog/introduction-to-prompt-templates-in-langchain/",
+  "quality_score": 60,
+  "content_hash": "31d3d7316b1ecd5c063baacef590eca9",
+  "created_at": "2026-02-01T22:01:09.026505"
+}

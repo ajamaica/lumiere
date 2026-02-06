@@ -1,0 +1,22 @@
+{
+  "owner": "firestream792",
+  "slug": "x-platform-agent-teneo",
+  "displayName": "X Platform Agent - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.8",
+    "publishedAt": 1770302217457,
+    "commit": "https://github.com/clawdbot/skills/commit/d2c1783680440ebae9f0bb089dc740912fcc7b11"
+  },
+  "history": [
+    {
+      "version": "1.0.7",
+      "publishedAt": 1770216681030,
+      "commit": "https://github.com/clawdbot/skills/commit/905d5ba325ce3476f13176f52943ef1053e43ec3"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770212325466,
+      "commit": "https://github.com/clawdbot/skills/commit/1a31c259d88e28997f127a5a2eab03b6e42b0bf1"
+    }
+  ]
+}

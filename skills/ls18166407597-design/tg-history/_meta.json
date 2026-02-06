@@ -1,0 +1,17 @@
+{
+  "owner": "ls18166407597-design",
+  "slug": "tg-history",
+  "displayName": "Tg History",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770351314534,
+    "commit": "https://github.com/openclaw/skills/commit/21fc88dcd640d4c3417647b8804fe299bf2653fc"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770267547426,
+      "commit": "https://github.com/clawdbot/skills/commit/2bffd4f3e1a38040e69019d161041b2f55989041"
+    }
+  ]
+}

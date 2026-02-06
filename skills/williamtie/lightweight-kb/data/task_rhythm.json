@@ -1,0 +1,64 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-02-05T01:00:00Z",
+  "daily": [
+    {
+      "id": 1,
+      "name": "晨间检查",
+      "time": "08:00",
+      "action": "check_rhythm",
+      "description": "检查任务节奏和知识库状态",
+      "enabled": true
+    }
+  ],
+  "weekly": [
+    {
+      "id": 35,
+      "name": "综合复盘",
+      "day": "sunday",
+      "time": "20:00",
+      "action": "weekly_review",
+      "description": "评估六大领域协同效果，调整资源权重",
+      "enabled": true
+    },
+    {
+      "id": 36,
+      "name": "深度了解对话",
+      "day": "sunday",
+      "time": "21:00",
+      "action": "deep_dialogue",
+      "description": "自然对话采集用户信息，更新画像",
+      "enabled": true
+    }
+  ],
+  "monthly": [
+    {
+      "id": 101,
+      "name": "月度回顾",
+      "day": 1,
+      "time": "10:00",
+      "action": "monthly_review",
+      "description": "月度总结与下月规划",
+      "enabled": false
+    }
+  ],
+  "automated": [
+    {
+      "id": 92,
+      "name": "凌晨优化任务",
+      "cron": "0 1 * * *",
+      "action": "daily_evolve",
+      "description": "每日凌晨1:00自动优化知识图谱",
+      "enabled": true
+    }
+  ],
+  "flexibility_rules": {
+    "drift_allowed": "时间可漂移±30min，不影响任务本质",
+    "skip_conditions": [
+      "用户明确表示不需要",
+      "系统资源紧张",
+      "紧急情况覆盖"
+    ],
+    "recovery": "错过任务在下一周期补执行"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "shaivpidadi",
+  "slug": "arc-security",
+  "displayName": "Arc Security - Agent Trust Protocol",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770239693565,
+    "commit": "https://github.com/clawdbot/skills/commit/19d5df053942c89d01de07789150395e1e12715e"
+  },
+  "history": []
+}

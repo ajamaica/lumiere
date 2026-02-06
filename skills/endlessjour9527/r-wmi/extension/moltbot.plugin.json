@@ -1,0 +1,34 @@
+{
+  "id": "lingzhu",
+  "uiHints": {
+    "enabled": {
+      "label": "启用灵珠接入"
+    },
+    "authAk": {
+      "label": "鉴权密钥 (AK)",
+      "sensitive": true,
+      "help": "灵珠平台调用时携带的 Bearer Token，留空则自动生成"
+    },
+    "agentId": {
+      "label": "智能体 ID",
+      "help": "使用的 OpenClaw 智能体 ID，默认 main"
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true
+      },
+      "authAk": {
+        "type": "string"
+      },
+      "agentId": {
+        "type": "string",
+        "default": "main"
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "owner": "impkind",
+  "slug": "hippocampus-memory",
+  "displayName": "Hippocampus",
+  "latest": {
+    "version": "3.8.6",
+    "publishedAt": 1770323640353,
+    "commit": "https://github.com/openclaw/skills/commit/4b63ff60a26518775513fa8ddcc41142678f739b"
+  },
+  "history": [
+    {
+      "version": "3.8.5",
+      "publishedAt": 1770290869491,
+      "commit": "https://github.com/clawdbot/skills/commit/198f251ffefaec48d226535f857d4808655a85ab"
+    },
+    {
+      "version": "3.7.3",
+      "publishedAt": 1770049894496,
+      "commit": "https://github.com/clawdbot/skills/commit/cf953d3b02a22703c2eb9e20bfa7be922fb11a64"
+    },
+    {
+      "version": "3.7.2",
+      "publishedAt": 1770046955579,
+      "commit": "https://github.com/clawdbot/skills/commit/63d1f0473d3907971fe2d77f93a0ca614f58a338"
+    },
+    {
+      "version": "3.1.3",
+      "publishedAt": 1769952977189,
+      "commit": "https://github.com/clawdbot/skills/commit/2aada65c61d8246795ef5e33e1830b7a643257bc"
+    },
+    {
+      "version": "3.1.2",
+      "publishedAt": 1769896994405,
+      "commit": "https://github.com/clawdbot/skills/commit/36bb8c783379bc9322ddb4530dd154fa837ed07b"
+    }
+  ]
+}

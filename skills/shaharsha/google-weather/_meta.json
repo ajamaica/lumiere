@@ -1,0 +1,11 @@
+{
+  "owner": "shaharsha",
+  "slug": "google-weather",
+  "displayName": "Google Weather",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770224130504,
+    "commit": "https://github.com/clawdbot/skills/commit/302e9d60163ea32d773b0e2056049bad2733b042"
+  },
+  "history": []
+}

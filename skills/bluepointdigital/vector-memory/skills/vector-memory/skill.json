@@ -1,0 +1,57 @@
+{
+  "name": "vector-memory",
+  "version": "2.1.1",
+  "description": "Smart memory search with automatic vector fallback. Uses semantic embeddings when available, falls back to built-in search otherwise. Zero configuration - works immediately after install.",
+  "author": "Nyx",
+  "tools": [
+    {
+      "name": "memory_search",
+      "description": "Search memory files with automatic method selection. Uses vector embeddings (semantic search) if indexed, otherwise falls back to built-in keyword search. Zero configuration required.",
+      "command": "node {{workspace}}/vector-memory/smart_memory.js --search \"{{query}}\" --max-results {{max_results|5}}",
+      "args": {
+        "query": {
+          "type": "string",
+          "description": "The search query - natural language, concepts, or keywords",
+          "required": true
+        },
+        "max_results": {
+          "type": "number",
+          "description": "Maximum number of results to return",
+          "default": 5
+        }
+      }
+    },
+    {
+      "name": "memory_get",
+      "description": "Get full content from a memory file by path and line range.",
+      "command": "node {{workspace}}/vector-memory/smart_memory.js --get \"{{file_path}}\" {{from_line}} {{line_count}}",
+      "args": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to memory file (e.g., MEMORY.md or memory/2026-02-04.md)",
+          "required": true
+        },
+        "from_line": {
+          "type": "number",
+          "description": "Starting line number (1-indexed)",
+          "required": true
+        },
+        "line_count": {
+          "type": "number",
+          "description": "Number of lines to retrieve",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "memory_sync",
+      "description": "Sync memory files to vector index for better search quality. Run after editing memory files.",
+      "command": "node {{workspace}}/vector-memory/smart_memory.js --sync"
+    },
+    {
+      "name": "memory_status",
+      "description": "Check memory system status - vector index ready, chunks indexed, last sync time.",
+      "command": "node {{workspace}}/vector-memory/smart_memory.js --status"
+    }
+  ]
+}

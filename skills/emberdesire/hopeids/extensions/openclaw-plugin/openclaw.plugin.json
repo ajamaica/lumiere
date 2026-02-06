@@ -1,0 +1,92 @@
+{
+  "id": "hopeids",
+  "name": "hopeIDS Security Scanner",
+  "version": "0.3.0",
+  "description": "Inference-based intrusion detection with quarantine and human-in-the-loop",
+  "homepage": "https://github.com/E-x-O-Entertainment-Studios-Inc/hopeIDS",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true
+      },
+      "autoScan": {
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically scan messages before agent processing"
+      },
+      "strictMode": {
+        "type": "boolean",
+        "default": false,
+        "description": "Block (vs warn) when risk exceeds threshold"
+      },
+      "defaultRiskThreshold": {
+        "type": "number",
+        "default": 0.7,
+        "description": "Risk threshold for warnings/blocks (0-1)"
+      },
+      "telegramAlerts": {
+        "type": "boolean",
+        "default": true,
+        "description": "Send Telegram alerts for blocked messages"
+      },
+      "telegramChatId": {
+        "type": "string",
+        "description": "Telegram chat ID for alerts (defaults to first owner)"
+      },
+      "quarantineDir": {
+        "type": "string",
+        "description": "Directory for quarantine records"
+      },
+      "agents": {
+        "type": "object",
+        "description": "Per-agent configuration overrides",
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "strictMode": { "type": "boolean" },
+            "riskThreshold": { "type": "number" }
+          }
+        }
+      },
+      "semanticEnabled": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable LLM-based semantic analysis"
+      },
+      "llmEndpoint": {
+        "type": "string",
+        "description": "LLM endpoint for semantic analysis"
+      },
+      "logLevel": {
+        "type": "string",
+        "enum": ["debug", "info", "warn", "error"],
+        "default": "info"
+      },
+      "trustOwners": {
+        "type": "boolean",
+        "default": true,
+        "description": "Auto-trust messages from owner numbers"
+      },
+      "classifierAgent": {
+        "type": "string",
+        "description": "Agent ID for semantic classification (uses main auth as fallback)"
+      }
+    }
+  },
+  "uiHints": {
+    "enabled": { "label": "Enable Security Scanning" },
+    "autoScan": { "label": "Auto-Scan", "help": "Scan every message before processing" },
+    "strictMode": { "label": "Strict Mode", "help": "Block threats (vs warn)" },
+    "defaultRiskThreshold": { "label": "Risk Threshold", "help": "0.7 = 70% risk triggers action" },
+    "telegramAlerts": { "label": "Telegram Alerts", "help": "Notify on blocked messages" },
+    "agents": { "label": "Per-Agent Config", "advanced": true },
+    "semanticEnabled": { "label": "Semantic Analysis" },
+    "llmEndpoint": { "label": "LLM Endpoint", "placeholder": "http://localhost:1234/v1" },
+    "logLevel": { "label": "Log Level" },
+    "trustOwners": { "label": "Trust Owner Messages" },
+    "classifierAgent": { "label": "Classifier Agent", "help": "Agent ID for LLM classification" }
+  }
+}

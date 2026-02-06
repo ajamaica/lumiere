@@ -1,0 +1,17 @@
+{
+  "owner": "themrzz",
+  "slug": "kradleverse-observe",
+  "displayName": "KradleVerse Observe",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770300562058,
+    "commit": "https://github.com/clawdbot/skills/commit/5d1955bd38a858c70c78d87218937e35dd8b342d"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770300485622,
+      "commit": "https://github.com/clawdbot/skills/commit/29310435a90ac9223c1d36ec65b06e3f86b577f3"
+    }
+  ]
+}

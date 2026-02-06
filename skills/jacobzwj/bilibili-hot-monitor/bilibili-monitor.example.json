@@ -1,0 +1,11 @@
+{
+  "ai": {
+    "model": "google/gemini-3-flash-preview"
+  },
+  "email": {
+    "recipients": ["recipient1@example.com", "recipient2@example.com"]
+  },
+  "report": {
+    "num_videos": 10
+  }
+}

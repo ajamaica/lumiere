@@ -1,0 +1,11 @@
+{
+  "owner": "alladin0809",
+  "slug": "token",
+  "displayName": "MyToken",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770036940501,
+    "commit": "https://github.com/clawdbot/skills/commit/d3bff29112a151a3ac9778778c06839e58f899b1"
+  },
+  "history": []
+}

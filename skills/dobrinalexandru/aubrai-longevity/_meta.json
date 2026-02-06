@@ -1,0 +1,22 @@
+{
+  "owner": "dobrinalexandru",
+  "slug": "aubrai-longevity",
+  "displayName": "Aubrai Longevity Research",
+  "latest": {
+    "version": "1.0.5",
+    "publishedAt": 1769915948138,
+    "commit": "https://github.com/clawdbot/skills/commit/503af253234c1d37794605a39e249a716069a3bb"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769876019823,
+      "commit": "https://github.com/clawdbot/skills/commit/c6eee753cff46a7708ab9d00bb66ef030cf9066f"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769808222751,
+      "commit": "https://github.com/clawdbot/skills/commit/ed617c474de97b7458ab515a369519d965d544d2"
+    }
+  ]
+}

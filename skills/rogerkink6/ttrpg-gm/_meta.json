@@ -1,0 +1,11 @@
+{
+  "owner": "rogerkink6",
+  "slug": "ttrpg-gm",
+  "displayName": "TTRPG Game Master",
+  "latest": {
+    "version": "2.1.0",
+    "publishedAt": 1770331939885,
+    "commit": "https://github.com/clawdbot/skills/commit/9912789f0f20f1db3951f48729cae152050d39ca"
+  },
+  "history": []
+}

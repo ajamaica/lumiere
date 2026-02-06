@@ -1,0 +1,31 @@
+{
+  "name": "bookmark-intelligence",
+  "version": "1.0.0",
+  "description": "Monitor X bookmarks, analyze content, extract actionable insights",
+  "main": "monitor.js",
+  "type": "module",
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "test": "node monitor.js --dry-run",
+    "start": "node monitor.js",
+    "daemon": "pm2 start ecosystem.config.js",
+    "uninstall": "node scripts/uninstall.js",
+    "verify": "node scripts/verify-package.js",
+    "license:check": "node scripts/license.js check",
+    "license:upgrade": "node scripts/upgrade.js",
+    "admin:licenses": "node scripts/admin.js dashboard",
+    "admin:issue": "node scripts/admin.js issue",
+    "admin:payments": "node scripts/admin.js payments",
+    "admin:revenue": "node scripts/admin.js revenue"
+  },
+  "keywords": [
+    "bookmarks",
+    "analysis",
+    "intelligence",
+    "x",
+    "twitter"
+  ],
+  "author": "OpenClaw",
+  "license": "MIT",
+  "dependencies": {}
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "antoniocirclemind",
+  "slug": "smooth-browser",
+  "displayName": "Smooth Browser",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770306640642,
+    "commit": "https://github.com/clawdbot/skills/commit/dc5bc2bda77709d4829b6d72c5e892da3d0d752e"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770112860672,
+      "commit": "https://github.com/clawdbot/skills/commit/c02be73e354085e8aef9bc5b7b55769f7d6b8a0a"
+    }
+  ]
+}

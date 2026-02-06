@@ -1,0 +1,11 @@
+{
+  "owner": "erdgeclaw",
+  "slug": "gopass",
+  "displayName": "gopass",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769855311664,
+    "commit": "https://github.com/clawdbot/skills/commit/9a69e8c5e197f5878e355590b1ef8f81407ba7db"
+  },
+  "history": []
+}

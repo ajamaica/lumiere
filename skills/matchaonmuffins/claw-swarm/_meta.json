@@ -1,0 +1,11 @@
+{
+  "owner": "matchaonmuffins",
+  "slug": "claw-swarm",
+  "displayName": "Claw-Swarm -- Aggregating agentic intelligence to solve difficult problems together",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769996826660,
+    "commit": "https://github.com/clawdbot/skills/commit/e84d753b265cf409c699f10428ec6fa13510bfdf"
+  },
+  "history": []
+}

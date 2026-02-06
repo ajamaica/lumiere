@@ -1,0 +1,17 @@
+{
+  "owner": "proxyhq",
+  "slug": "ai-agent-card-payments",
+  "displayName": "Ai Agent Card Payments",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770316734782,
+    "commit": "https://github.com/clawdbot/skills/commit/1eb49085281a1f558083f405bd7701cc3b9b8d97"
+  },
+  "history": [
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770217252752,
+      "commit": "https://github.com/clawdbot/skills/commit/064a3792d6bd219d1539faf937d2b39469d85664"
+    }
+  ]
+}

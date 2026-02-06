@@ -1,0 +1,17 @@
+{
+  "owner": "surfer77",
+  "slug": "evm-wallet",
+  "displayName": "EVM Crypto Wallet for Your Agent",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770176220994,
+    "commit": "https://github.com/clawdbot/skills/commit/63494342fac9a3728baf2885bdedb165a500527a"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769831483788,
+      "commit": "https://github.com/clawdbot/skills/commit/db597228287929addc1fb3f3215059e97b457d39"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "mig6671",
+  "slug": "stepfun-openrouter",
+  "displayName": "Stepfun Openrouter",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770325387947,
+    "commit": "https://github.com/openclaw/skills/commit/f526791cb27651610f25c90b162350481df53d61"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770324806784,
+      "commit": "https://github.com/clawdbot/skills/commit/20d089ab4720e3bb86afb79e015756c72d48ec6a"
+    }
+  ]
+}

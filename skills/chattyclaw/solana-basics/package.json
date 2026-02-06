@@ -1,0 +1,26 @@
+{
+  "name": "solana-skill",
+  "version": "1.0.0",
+  "description": "Solana blockchain skill for OpenClaw agents",
+  "type": "module",
+  "main": "scripts/index.js",
+  "scripts": {
+    "build": "tsc",
+    "wallet:create": "npx tsx scripts/wallet.ts create",
+    "wallet:list": "npx tsx scripts/wallet.ts list",
+    "wallet:balance": "npx tsx scripts/wallet.ts balance",
+    "send": "npx tsx scripts/send.ts",
+    "swap": "npx tsx scripts/swap.ts"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.98.0",
+    "@solana/spl-token": "^0.4.0",
+    "helius-sdk": "^2.1.0",
+    "bs58": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.7.0"
+  }
+}

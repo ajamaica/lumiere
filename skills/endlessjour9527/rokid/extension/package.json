@@ -1,0 +1,24 @@
+{
+  "name": "@openclaw/lingzhu",
+  "version": "1.0.0",
+  "description": "灵珠平台接入 OpenClaw 协议转换插件",
+  "type": "module",
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "moltbot": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "keywords": [
+    "lingzhu",
+    "openclaw",
+    "moltbot",
+    "plugin",
+    "sse"
+  ],
+  "license": "MIT"
+}

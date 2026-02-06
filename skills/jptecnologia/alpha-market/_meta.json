@@ -1,0 +1,11 @@
+{
+  "owner": "jptecnologia",
+  "slug": "alpha-market",
+  "displayName": "Alpha Market",
+  "latest": {
+    "version": "1.0.4",
+    "publishedAt": 1770125955807,
+    "commit": "https://github.com/clawdbot/skills/commit/bbf224c10e5ae69d6a4d5f0f014c301ae00383e4"
+  },
+  "history": []
+}

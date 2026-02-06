@@ -1,0 +1,11 @@
+{
+  "owner": "zenith2828",
+  "slug": "tg-miniapp",
+  "displayName": "Telegram Mini App Dev",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770044172607,
+    "commit": "https://github.com/clawdbot/skills/commit/8c0abbe46a32e241d4186756808f8399f2c6d049"
+  },
+  "history": []
+}

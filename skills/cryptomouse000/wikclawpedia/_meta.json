@@ -1,0 +1,11 @@
+{
+  "owner": "cryptomouse000",
+  "slug": "wikclawpedia",
+  "displayName": "Wikclawpedia Archive Access",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770150180256,
+    "commit": "https://github.com/clawdbot/skills/commit/28192a4d7e7bd3122c0e44f77fcc98ac8f5a4a9f"
+  },
+  "history": []
+}

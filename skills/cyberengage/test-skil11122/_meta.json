@@ -1,0 +1,11 @@
+{
+  "owner": "cyberengage",
+  "slug": "test-skil11122",
+  "displayName": "test-skil11122",
+  "latest": {
+    "version": "1.2.0",
+    "publishedAt": 1770261525808,
+    "commit": "https://github.com/clawdbot/skills/commit/f7fb3ff7fef622db8e0bca5449a374508b11573c"
+  },
+  "history": []
+}

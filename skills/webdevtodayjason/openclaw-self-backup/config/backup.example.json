@@ -1,0 +1,67 @@
+{
+  "workspace": "/Users/sem/argent",
+  "backupDir": "/Users/sem/backups/argent",
+  "targets": {
+    "local": {
+      "enabled": true,
+      "path": "/Users/sem/backups/argent"
+    },
+    "git": {
+      "enabled": false,
+      "repo": "git@github.com:yourusername/agent-backup.git",
+      "branch": "main",
+      "autoCommit": true
+    },
+    "s3": {
+      "enabled": false,
+      "bucket": "my-agent-backups",
+      "prefix": "argent/",
+      "storageClass": "STANDARD_IA"
+    },
+    "r2": {
+      "enabled": false,
+      "accountId": "YOUR_CLOUDFLARE_ACCOUNT_ID",
+      "bucket": "agent-backups",
+      "prefix": "argent/",
+      "accessKeyId": "YOUR_R2_ACCESS_KEY",
+      "secretAccessKey": "YOUR_R2_SECRET_KEY"
+    }
+  },
+  "include": [
+    "MEMORY.md",
+    "SOUL.md",
+    "USER.md",
+    "AGENTS.md",
+    "IDENTITY.md",
+    "TOOLS.md",
+    "HEARTBEAT.md",
+    "BOOTSTRAP.md",
+    "memory/*.md",
+    "scripts/",
+    "config/",
+    "~/.openclaw-mem/memory.db"
+  ],
+  "exclude": [
+    "*.log",
+    "node_modules/",
+    ".git/",
+    "*.tmp",
+    ".DS_Store"
+  ],
+  "compression": true,
+  "retention": {
+    "daily": 7,
+    "weekly": 4,
+    "monthly": 12
+  },
+  "notifications": {
+    "enabled": false,
+    "onSuccess": "silent",
+    "onFailure": "alert"
+  },
+  "encryption": {
+    "enabled": false,
+    "method": "gpg",
+    "keyId": ""
+  }
+}

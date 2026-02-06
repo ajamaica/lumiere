@@ -1,0 +1,11 @@
+{
+  "owner": "sanvibyfish",
+  "slug": "doc-search-skill",
+  "displayName": "Doc Search",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770224351707,
+    "commit": "https://github.com/clawdbot/skills/commit/6973a4fe1d15d63306877abad349c7edcd9ec62b"
+  },
+  "history": []
+}

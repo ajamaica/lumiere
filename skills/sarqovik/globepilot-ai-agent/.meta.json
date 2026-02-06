@@ -1,0 +1,8 @@
+{
+  "id": "globepilot-ai-agent-v1",
+  "name": "GlobePilot AI Agent",
+  "description": "Travel intelligence agent for flights, visas, and global travel insights.",
+  "version": "1.0.0",
+  "type": "skill",
+  "visibility": "public"
+}

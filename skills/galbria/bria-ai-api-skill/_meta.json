@@ -1,0 +1,11 @@
+{
+  "owner": "galbria",
+  "slug": "bria-ai-api-skill",
+  "displayName": "image generation and editing",
+  "latest": {
+    "version": "0.0.1",
+    "publishedAt": 1770313164368,
+    "commit": "https://github.com/openclaw/skills/commit/73eabc8170749f171696624ca9094717e0e2efb9"
+  },
+  "history": []
+}

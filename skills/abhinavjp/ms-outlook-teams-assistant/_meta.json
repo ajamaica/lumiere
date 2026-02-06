@@ -1,0 +1,17 @@
+{
+  "owner": "abhinavjp",
+  "slug": "ms-outlook-teams-assistant",
+  "displayName": "MS Outlook + Teams Assistant",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769884391692,
+    "commit": "https://github.com/clawdbot/skills/commit/844486dc43e79bc3700be295a96e803a17672a76"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769870792116,
+      "commit": "https://github.com/clawdbot/skills/commit/53cc4f2d9a1250a3821a13c9c8fc6f7183982848"
+    }
+  ]
+}

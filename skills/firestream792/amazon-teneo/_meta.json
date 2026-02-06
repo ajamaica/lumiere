@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "amazon-teneo",
+  "displayName": "Amazon - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.7",
+    "publishedAt": 1770302169485,
+    "commit": "https://github.com/clawdbot/skills/commit/5921ee3b87136f48119e18de54b16f1fcdf63a4e"
+  },
+  "history": [
+    {
+      "version": "1.0.6",
+      "publishedAt": 1770216601543,
+      "commit": "https://github.com/clawdbot/skills/commit/9efd3b211d27d33dce8943725ee738a17ff650c4"
+    }
+  ]
+}

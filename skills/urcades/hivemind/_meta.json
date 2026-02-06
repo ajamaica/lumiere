@@ -1,0 +1,11 @@
+{
+  "owner": "urcades",
+  "slug": "hivemind",
+  "displayName": "Hivemind",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770323774359,
+    "commit": "https://github.com/openclaw/skills/commit/ae09c4c08828719b1ac959d952499d40225b8348"
+  },
+  "history": []
+}

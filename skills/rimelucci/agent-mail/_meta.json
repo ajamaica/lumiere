@@ -1,0 +1,11 @@
+{
+  "owner": "rimelucci",
+  "slug": "agent-mail",
+  "displayName": "Agent Mail - CLI-Based Email for Agents",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770264300707,
+    "commit": "https://github.com/clawdbot/skills/commit/43cec5dcb8ea2eb9d6a0879eb5dd2eb4a64d4af5"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "barneyjm",
+  "slug": "search-2",
+  "displayName": "Search",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770132489197,
+    "commit": "https://github.com/clawdbot/skills/commit/63691e43b61303c460939267a425aec5b9232a69"
+  },
+  "history": []
+}

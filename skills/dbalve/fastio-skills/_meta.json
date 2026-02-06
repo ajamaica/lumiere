@@ -1,0 +1,11 @@
+{
+  "owner": "dbalve",
+  "slug": "fastio-skills",
+  "displayName": "Fast Io",
+  "latest": {
+    "version": "1.29.0",
+    "publishedAt": 1770331354026,
+    "commit": "https://github.com/clawdbot/skills/commit/ca35c83da20150d65ea004c8dbe6f6f28f5ff8ae"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "tianshizhimao-sudo",
+  "slug": "rba-rate-intelligence",
+  "displayName": "Rba Rate Intelligence",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770261698806,
+    "commit": "https://github.com/clawdbot/skills/commit/4212150f696c1e1bc28b1db66519a034abf646e2"
+  },
+  "history": []
+}

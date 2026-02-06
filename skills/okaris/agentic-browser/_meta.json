@@ -1,0 +1,11 @@
+{
+  "owner": "okaris",
+  "slug": "agentic-browser",
+  "displayName": "Agent Browser",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1770362949965,
+    "commit": "https://github.com/openclaw/skills/commit/a2da5e2acba21eac2ed61d001da99f31435a20d7"
+  },
+  "history": []
+}

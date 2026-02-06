@@ -1,0 +1,11 @@
+{
+  "owner": "omar-khaleel",
+  "slug": "qr-code-intelligence",
+  "displayName": "QR Code Generator & Reader",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770331557920,
+    "commit": "https://github.com/clawdbot/skills/commit/6c9bb191e3c938b579e96000608c7c780958d3f1"
+  },
+  "history": []
+}

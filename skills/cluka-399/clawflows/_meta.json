@@ -1,0 +1,17 @@
+{
+  "owner": "cluka-399",
+  "slug": "clawflows",
+  "displayName": "Clawflows",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769868716399,
+    "commit": "https://github.com/clawdbot/skills/commit/6d1e1afb200c20e1adadf52c688fde9fb941aed3"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769804804215,
+      "commit": "https://github.com/clawdbot/skills/commit/ca79c6131afaabe238f4fa15ed07fb028d0a99ff"
+    }
+  ]
+}

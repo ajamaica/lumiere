@@ -1,0 +1,11 @@
+{
+  "owner": "spamtylor",
+  "slug": "hydra-evolver",
+  "displayName": "Hydra Evolver",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770262953522,
+    "commit": "https://github.com/clawdbot/skills/commit/f8dc73cc387edcaa2fb9a6b6c1851317f1386bb6"
+  },
+  "history": []
+}

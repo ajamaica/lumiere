@@ -1,0 +1,11 @@
+{
+  "owner": "juanirm",
+  "slug": "logseq",
+  "displayName": "Logseq",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769962442222,
+    "commit": "https://github.com/clawdbot/skills/commit/8648fb0745ae52aa75961555026e8e6ec4cab25b"
+  },
+  "history": []
+}

@@ -1,0 +1,64 @@
+{
+  "name": "任务管理",
+  "fields": [
+    {
+      "field_name": "任务名称",
+      "type": "text",
+      "property": {
+        "formatter": "text"
+      }
+    },
+    {
+      "field_name": "状态",
+      "type": "single_select",
+      "property": {
+        "options": [
+          {"name": "待办", "color": "blue"},
+          {"name": "进行中", "color": "orange"},
+          {"name": "已完成", "color": "green"}
+        ]
+      }
+    },
+    {
+      "field_name": "优先级",
+      "type": "single_select",
+      "property": {
+        "options": [
+          {"name": "低", "color": "gray"},
+          {"name": "中", "color": "blue"},
+          {"name": "高", "color": "red"},
+          {"name": "紧急", "color": "magenta"}
+        ]
+      }
+    },
+    {
+      "field_name": "截止日期",
+      "type": "date",
+      "property": {
+        "formatter": "yyyy-MM-dd"
+      }
+    },
+    {
+      "field_name": "负责人",
+      "type": "user"
+    },
+    {
+      "field_name": "描述",
+      "type": "text",
+      "property": {
+        "formatter": "text"
+      }
+    },
+    {
+      "field_name": "完成百分比",
+      "type": "number",
+      "property": {
+        "formatter": "0%"
+      }
+    },
+    {
+      "field_name": "是否完成",
+      "type": "checkbox"
+    }
+  ]
+}

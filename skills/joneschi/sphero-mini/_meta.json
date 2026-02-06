@@ -1,0 +1,11 @@
+{
+  "owner": "joneschi",
+  "slug": "sphero-mini",
+  "displayName": "Sphero Mini Control",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769948057735,
+    "commit": "https://github.com/clawdbot/skills/commit/fe715919d5a19d73885fcb4f65ced106419876fd"
+  },
+  "history": []
+}

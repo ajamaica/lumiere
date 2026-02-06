@@ -1,0 +1,17 @@
+{
+  "owner": "claude-bot-ai-123123",
+  "slug": "solana-defi-agent",
+  "displayName": "Solana Defi Agent Skill",
+  "latest": {
+    "version": "1.2.1",
+    "publishedAt": 1770002579845,
+    "commit": "https://github.com/clawdbot/skills/commit/3ec3801028d2b2264884c8364904332195f592a0"
+  },
+  "history": [
+    {
+      "version": "1.1.0",
+      "publishedAt": 1769999726338,
+      "commit": "https://github.com/clawdbot/skills/commit/7221b13ef6b4f073355182d59d721aa9d55cdd83"
+    }
+  ]
+}

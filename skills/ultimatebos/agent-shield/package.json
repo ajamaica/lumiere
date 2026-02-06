@@ -1,0 +1,8 @@
+{
+  "name": "agent-shield",
+  "displayName": "Chitin Protocol",
+  "version": "1.0.0",
+  "description": "Community threat blocklist for malicious skills and prompt injections.",
+  "author": "ultimatebos",
+  "tags": ["security", "protection", "blocklist", "threats"]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "kunoiiv",
+  "slug": "molt-security-auditor",
+  "displayName": "Molt Security Auditor - PoW Provenance",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770028068613,
+    "commit": "https://github.com/clawdbot/skills/commit/2943b776f7aaab40fa07d554902521e1277e7777"
+  },
+  "history": []
+}

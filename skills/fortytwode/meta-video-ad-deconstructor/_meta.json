@@ -1,0 +1,11 @@
+{
+  "owner": "fortytwode",
+  "slug": "meta-video-ad-deconstructor",
+  "displayName": "Meta Video Ad Deconstructor",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770199628520,
+    "commit": "https://github.com/clawdbot/skills/commit/102a34d9945b37ba1d3de179ef72e1751d533ecc"
+  },
+  "history": []
+}

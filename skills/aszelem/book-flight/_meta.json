@@ -1,0 +1,11 @@
+{
+  "owner": "aszelem",
+  "slug": "book-flight",
+  "displayName": "Book Flight w/ Bon",
+  "latest": {
+    "version": "1.0.8",
+    "publishedAt": 1769978635182,
+    "commit": "https://github.com/clawdbot/skills/commit/055f2030521d1c6e46d6bd5e85871117c6afd217"
+  },
+  "history": []
+}

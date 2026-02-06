@@ -1,0 +1,27 @@
+{
+  "name": "google-messages-skill",
+  "version": "1.0.0",
+  "description": "OpenClaw skill for Google Messages SMS/RCS automation",
+  "main": "sms-webhook-server.js",
+  "scripts": {
+    "start": "node sms-webhook-server.js",
+    "webhook": "node sms-webhook-server.js"
+  },
+  "keywords": [
+    "openclaw",
+    "sms",
+    "google-messages",
+    "rcs",
+    "automation",
+    "browser"
+  ],
+  "author": "OpenClaw",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openclaw/google-messages-skill.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

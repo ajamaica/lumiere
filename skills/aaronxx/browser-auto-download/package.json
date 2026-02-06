@@ -1,0 +1,55 @@
+{
+  "name": "browser-auto-download",
+  "version": "5.0.0",
+  "description": "Intelligent browser-automated file downloads with multi-modal support",
+  "main": "scripts/auto_download.py",
+  "scripts": {
+    "test": "python scripts/auto_download.py --url \"https://www.python.org/downloads/\"",
+    "test:wechat": "python scripts/auto_download.py --wechat",
+    "test:meitu": "python scripts/auto_download.py --meitu",
+    "test:eclipse": "python scripts/auto_download.py --eclipse",
+    "optimize": "python ../skills/browser-auto-download/apply-optimizations.py"
+  },
+  "keywords": [
+    "download",
+    "automation",
+    "playwright",
+    "browser",
+    "web-scraping",
+    "openclaw",
+    "skill"
+  ],
+  "author": "OpenClaw Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openclaw/browser-auto-download"
+  },
+  "homepage": "https://clawhub.com/skills/browser-auto-download",
+  "bugs": {
+    "url": "https://github.com/openclaw/browser-auto-download/issues"
+  },
+  "engines": {
+    "python": ">=3.8"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  },
+  "devDependencies": {},
+  "openclaw": {
+    "skill_version": "5.0.0",
+    "min_openclaw_version": "1.0.0",
+    "category": "automation",
+    "tags": [
+      "download",
+      "browser",
+      "automation",
+      "web"
+    ],
+    "capabilities": [
+      "download",
+      "browser_automation",
+      "cross_platform"
+    ]
+  }
+}

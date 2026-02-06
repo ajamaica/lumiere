@@ -1,0 +1,44 @@
+{
+  "name": "@masumi/masumi-payments-skill",
+  "version": "1.0.0",
+  "description": "Masumi payments and registry skill for OpenClaw - install payment service, generate API keys, register agents, handle payments",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "masumi",
+    "openclaw",
+    "blockchain",
+    "payments",
+    "ai-agents",
+    "cardano",
+    "web3",
+    "cryptocurrency"
+  ],
+  "author": "Masumi Network",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.22.4",
+    "node-fetch": "^3.3.2",
+    "canonicaljson": "^1.0.0",
+    "@meshsdk/core": "^1.7.9",
+    "@meshsdk/core-cst": "^1.9.0-beta.90",
+    "@emurgo/cardano-serialization-lib-nodejs": "^15.0.3",
+    "@blockfrost/blockfrost-js": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/node-fetch": "^2.6.11",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "openclaw": "*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

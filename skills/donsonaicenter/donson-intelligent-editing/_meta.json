@@ -1,0 +1,11 @@
+{
+  "owner": "donsonaicenter",
+  "slug": "donson-intelligent-editing",
+  "displayName": "Intelligent Editing",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770015595975,
+    "commit": "https://github.com/clawdbot/skills/commit/f6a4b6aa08268e6bb1f22d28b0bd549e951dfeb2"
+  },
+  "history": []
+}

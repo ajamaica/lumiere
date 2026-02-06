@@ -1,0 +1,32 @@
+{
+  "owner": "nteg-dev",
+  "slug": "keep-protocol",
+  "displayName": "Keep Protocol",
+  "latest": {
+    "version": "1.1.1",
+    "publishedAt": 1770305006151,
+    "commit": "https://github.com/clawdbot/skills/commit/dfecf073041467ee223dbd42d499051f83414978"
+  },
+  "history": [
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770304609281,
+      "commit": "https://github.com/clawdbot/skills/commit/9e4e5bb16a9d04d95e781aae2e3244dce4fa31b4"
+    },
+    {
+      "version": "1.0.4",
+      "publishedAt": 1770149871482,
+      "commit": "https://github.com/clawdbot/skills/commit/8fec81d4ca60fded088ee8b88c5c13ef7e6dc207"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770118465091,
+      "commit": "https://github.com/clawdbot/skills/commit/11baa6f8c254df7f72f5d6b3952d7a5ebc4ef8ef"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770052110368,
+      "commit": "https://github.com/clawdbot/skills/commit/1467d4e90c112041a8bde8c3098d18c2b535d348"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "d1m7asis",
+  "slug": "aimlapi-media-gen",
+  "displayName": "Generate images and videos via the AI/ML API",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770280017315,
+    "commit": "https://github.com/openclaw/skills/commit/34418b2336aed1b36f6eb2e9dce1c6b09d5ccd1a"
+  },
+  "history": []
+}

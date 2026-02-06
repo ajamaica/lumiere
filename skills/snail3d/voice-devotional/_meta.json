@@ -1,0 +1,11 @@
+{
+  "owner": "snail3d",
+  "slug": "voice-devotional",
+  "displayName": "Voice-Devotional",
+  "latest": {
+    "version": "1.0.4",
+    "publishedAt": 1770256210932,
+    "commit": "https://github.com/clawdbot/skills/commit/26d9341aee1914b03c0d5dcd2f33a32ddfd252fa"
+  },
+  "history": []
+}

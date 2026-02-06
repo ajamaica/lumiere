@@ -1,0 +1,11 @@
+{
+  "owner": "rozley",
+  "slug": "daily-dxc-briefing",
+  "displayName": "daily-dxc-briefing",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770269970181,
+    "commit": "https://github.com/clawdbot/skills/commit/59a96966adfe3be1353d8feffad337a28977b27a"
+  },
+  "history": []
+}

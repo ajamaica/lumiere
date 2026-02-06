@@ -1,0 +1,11 @@
+{
+  "owner": "0xmevdad",
+  "slug": "openswarm-fight-club",
+  "displayName": "OpenSwarm Fight Club",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769885654982,
+    "commit": "https://github.com/clawdbot/skills/commit/459462fe0f65d581305f59fefe91907c8fcd901f"
+  },
+  "history": []
+}

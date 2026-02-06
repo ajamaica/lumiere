@@ -1,0 +1,17 @@
+{
+  "owner": "iisweetheartii",
+  "slug": "agent-selfie",
+  "displayName": "Agent Selfie",
+  "latest": {
+    "version": "1.2.0",
+    "publishedAt": 1770270043563,
+    "commit": "https://github.com/clawdbot/skills/commit/377173ea4c2afabe1f4b32f408477e9e971ccbea"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770179625169,
+      "commit": "https://github.com/clawdbot/skills/commit/f54200bed3ccd4f2d7507be124ad807c4ebd085f"
+    }
+  ]
+}

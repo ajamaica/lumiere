@@ -1,0 +1,27 @@
+{
+  "owner": "impkind",
+  "slug": "hippocampus",
+  "displayName": "Hippocampus",
+  "latest": {
+    "version": "3.8.4",
+    "publishedAt": 1770290754631,
+    "commit": "https://github.com/clawdbot/skills/commit/6e79e8ca3c988cd1a65555a454f9fed3ea880045"
+  },
+  "history": [
+    {
+      "version": "3.2.0",
+      "publishedAt": 1769910275254,
+      "commit": "https://github.com/clawdbot/skills/commit/208a3463d0d4d48e553d511667b2240f62ce8d06"
+    },
+    {
+      "version": "3.1.1",
+      "publishedAt": 1769896392053,
+      "commit": "https://github.com/clawdbot/skills/commit/1766aa26281d5f0a79eb22702520ca4f09c60a27"
+    },
+    {
+      "version": "3.1.0",
+      "publishedAt": 1769896346468,
+      "commit": "https://github.com/clawdbot/skills/commit/d7add78e634b2025895458ae044387da1972a33a"
+    }
+  ]
+}

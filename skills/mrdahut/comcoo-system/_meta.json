@@ -1,0 +1,17 @@
+{
+  "owner": "mrdahut",
+  "slug": "comcoo-system",
+  "displayName": "COMCOO Arbiter Meta-OS",
+  "latest": {
+    "version": "1.6.1",
+    "publishedAt": 1770311571087,
+    "commit": "https://github.com/clawdbot/skills/commit/b436ac5275c5daaa33cdad617e87fd36fc6848d3"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770308649992,
+      "commit": "https://github.com/clawdbot/skills/commit/acc9fb370ea32aaec812a9028f809e7c7c12ec51"
+    }
+  ]
+}

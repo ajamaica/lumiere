@@ -1,0 +1,11 @@
+{
+  "owner": "fcavalcantirj",
+  "slug": "solvr-kb",
+  "displayName": "Solvr",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770328424409,
+    "commit": "https://github.com/clawdbot/skills/commit/0678c4a23d795b5c177d81698b85bcad7ba35abb"
+  },
+  "history": []
+}

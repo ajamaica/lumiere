@@ -1,0 +1,11 @@
+{
+  "owner": "ctsolutionsdev",
+  "slug": "ct-accessibility-toolkit",
+  "displayName": "Accessibility Toolkit",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770301152106,
+    "commit": "https://github.com/clawdbot/skills/commit/04d66a450dd3bfd892fa502268cf894faea04ffc"
+  },
+  "history": []
+}

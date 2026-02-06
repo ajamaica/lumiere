@@ -1,0 +1,11 @@
+{
+  "owner": "ruslanlanket",
+  "slug": "obisdian-direct",
+  "displayName": "Obsidian - read, write, edit and search direct to obsidian vault",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770331959628,
+    "commit": "https://github.com/clawdbot/skills/commit/88426090caae1ddeb7f8c44f906b54b61edc5752"
+  },
+  "history": []
+}

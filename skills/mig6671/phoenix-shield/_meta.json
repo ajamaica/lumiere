@@ -1,0 +1,17 @@
+{
+  "owner": "mig6671",
+  "slug": "phoenix-shield",
+  "displayName": "Phoenix Shield",
+  "latest": {
+    "version": "1.0.4",
+    "publishedAt": 1770312690305,
+    "commit": "https://github.com/openclaw/skills/commit/bddd15d669cb9705c92161948d79ff3b0b0d9367"
+  },
+  "history": [
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770293695963,
+      "commit": "https://github.com/clawdbot/skills/commit/7a66a232fda2f2c7b5142d918ecbfcccbbae57bf"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "0xnb-dev",
+  "slug": "openclaw-frame-builder-skills",
+  "displayName": "Frame Builder",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770225340928,
+    "commit": "https://github.com/clawdbot/skills/commit/b6743e87ab31709e976492d173fc2651414f3a3d"
+  },
+  "history": []
+}

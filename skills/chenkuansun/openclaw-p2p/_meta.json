@@ -1,0 +1,11 @@
+{
+  "owner": "chenkuansun",
+  "slug": "openclaw-p2p",
+  "displayName": "OpenClaw P2P",
+  "latest": {
+    "version": "0.3.0",
+    "publishedAt": 1770280656636,
+    "commit": "https://github.com/openclaw/skills/commit/d918e1a58e134a925dce1979517d615a3436c4f9"
+  },
+  "history": []
+}

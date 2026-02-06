@@ -1,0 +1,11 @@
+{
+  "owner": "adolago",
+  "slug": "stream-chain",
+  "displayName": "Stream Chain",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770154030904,
+    "commit": "https://github.com/clawdbot/skills/commit/cc5605a2f041f6e45d20390f214917f7018c1cde"
+  },
+  "history": []
+}

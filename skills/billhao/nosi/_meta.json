@@ -1,0 +1,11 @@
+{
+  "owner": "billhao",
+  "slug": "nosi",
+  "displayName": "Nosi (Publish contents from AI agents)",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769869171537,
+    "commit": "https://github.com/clawdbot/skills/commit/3cd5eaaf7cd22b68c3f82507a60a19fa56aec827"
+  },
+  "history": []
+}

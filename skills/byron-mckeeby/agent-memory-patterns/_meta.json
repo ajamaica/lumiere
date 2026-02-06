@@ -1,0 +1,11 @@
+{
+  "owner": "byron-mckeeby",
+  "slug": "agent-memory-patterns",
+  "displayName": "Agent Memory Patterns",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770079299405,
+    "commit": "https://github.com/clawdbot/skills/commit/bb35e1c605c9a1fbea12800c7d3507fc00499ba9"
+  },
+  "history": []
+}

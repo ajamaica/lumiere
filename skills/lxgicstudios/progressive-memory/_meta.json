@@ -1,0 +1,11 @@
+{
+  "owner": "lxgicstudios",
+  "slug": "progressive-memory",
+  "displayName": "Progressive Memory Token-Efficient AI Agent Memory System",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769977228053,
+    "commit": "https://github.com/clawdbot/skills/commit/4a7009492978a321508cf4cd861d0f1f3663f0ea"
+  },
+  "history": []
+}

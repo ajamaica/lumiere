@@ -1,0 +1,20 @@
+{
+  "name": "token-saver",
+  "version": "1.0.0",
+  "description": "Cut your OpenClaw AI costs by 40-90%. Dashboard with workspace file compression and AI model audit.",
+  "main": "scripts/optimizer.js",
+  "scripts": {
+    "start": "node scripts/optimizer.js",
+    "dashboard": "node scripts/optimizer.js dashboard",
+    "tokens": "node scripts/optimizer.js tokens",
+    "agents": "node scripts/optimizer.js agents"
+  },
+  "keywords": [
+    "tokens",
+    "optimization",
+    "ai",
+    "cost-savings"
+  ],
+  "author": "OpenClaw Community",
+  "license": "MIT"
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "kyya",
+  "slug": "balance-checker",
+  "displayName": "Balance Checker",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770199771426,
+    "commit": "https://github.com/clawdbot/skills/commit/671d9e1eb5c3d4c2fd400ec0a5cccdfbc10ba8b9"
+  },
+  "history": []
+}

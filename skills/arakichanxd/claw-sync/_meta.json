@@ -1,0 +1,11 @@
+{
+  "owner": "arakichanxd",
+  "slug": "claw-sync",
+  "displayName": "Claw Sync",
+  "latest": {
+    "version": "2.0.2",
+    "publishedAt": 1770053081061,
+    "commit": "https://github.com/clawdbot/skills/commit/4db636001783df1a2a5827c08414053cf47baf24"
+  },
+  "history": []
+}

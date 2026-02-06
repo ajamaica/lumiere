@@ -1,0 +1,11 @@
+{
+  "owner": "abhishek-official1",
+  "slug": "clawvox",
+  "displayName": "Elevenlabs Integration with Openclaw",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769952654586,
+    "commit": "https://github.com/clawdbot/skills/commit/d77552620b3db842565f79145fa6d2b97a7ef339"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "tjamescouch",
+  "slug": "agentchat",
+  "displayName": "AgentChat",
+  "latest": {
+    "version": "0.14.0",
+    "publishedAt": 1770207960472,
+    "commit": "https://github.com/clawdbot/skills/commit/9ec03228f9915d568c980f7176a296ec1f84879e"
+  },
+  "history": []
+}

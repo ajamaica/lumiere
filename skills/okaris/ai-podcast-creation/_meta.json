@@ -1,0 +1,11 @@
+{
+  "owner": "okaris",
+  "slug": "ai-podcast-creation",
+  "displayName": "Ai Podcast Creation",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770363061080,
+    "commit": "https://github.com/openclaw/skills/commit/f76b5c619508930e75e636e5f55b41482b530c1d"
+  },
+  "history": []
+}

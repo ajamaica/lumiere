@@ -1,0 +1,11 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-bastion-pro",
+  "displayName": "Openclaw Bastion Pro",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770290920180,
+    "commit": "https://github.com/clawdbot/skills/commit/6a547c1acf408cb2270d844844bb7baec9da1354"
+  },
+  "history": []
+}

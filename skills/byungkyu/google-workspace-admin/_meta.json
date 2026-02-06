@@ -1,0 +1,17 @@
+{
+  "owner": "byungkyu",
+  "slug": "google-workspace-admin",
+  "displayName": "Google Workspace Admin",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770343200721,
+    "commit": "https://github.com/openclaw/skills/commit/d7d7eddaac1b37206686236ab773521143ce5435"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770160140456,
+      "commit": "https://github.com/clawdbot/skills/commit/97179da97ea2ee38c351e9b953d9c5d13f71861e"
+    }
+  ]
+}

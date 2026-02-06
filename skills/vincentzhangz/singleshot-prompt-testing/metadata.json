@@ -1,0 +1,37 @@
+{
+  "name": "singleshot-prompt-testing",
+  "version": "0.1.0",
+  "description": "prompt cost testing with single shot",
+  "author": "vincentzhangz",
+  "tags": [
+    "prompt-testing",
+    "optimization",
+    "benchmarking",
+    "token-efficiency",
+    "cost-analysis"
+  ],
+  "commands": [
+    "singleshot"
+  ],
+  "install": {
+    "homebrew": {
+      "tap": "vincentzhangz/singleshot",
+      "formula": "singleshot"
+    },
+    "cargo": "cargo install singleshot"
+  },
+  "triggers": [
+    "test prompt",
+    "optimize prompt",
+    "benchmark prompt",
+    "token efficiency",
+    "prompt cost",
+    "compare models",
+    "singleshot"
+  ],
+  "requirements": [
+    "singleshot CLI installed",
+    "API keys for providers (optional)"
+  ],
+  "repository": "https://github.com/vincentzhangz/singleshot"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "diagram-generator",
+  "version": "1.0.0",
+  "description": "Generate and edit diagrams (drawio, mermaid, excalidraw)."
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Risk Classification Output",
+  "description": "Schema for the risk classification output from classify-risks.py",
+  "type": "object",
+  "required": ["timestamp", "overallRiskLevel", "risksByCategory", "risksBySkill"],
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of when classification was performed"
+    },
+    "overallRiskLevel": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH"],
+      "description": "Overall risk level based on discovered skills"
+    },
+    "risksByCategory": {
+      "type": "object",
+      "description": "Skills grouped by risk category",
+      "properties": {
+        "destructive": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Skills that can delete or destroy data"
+        },
+        "external_comms": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Skills that can send external communications"
+        },
+        "data_read": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Skills that can read or access data"
+        },
+        "data_write": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Skills that can write or modify data"
+        },
+        "data_exfiltration": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Skills that can export or share data externally"
+        },
+        "impersonation": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Skills that can act on behalf of the user"
+        },
+        "system_modification": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Skills that can modify system configuration"
+        },
+        "financial": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Skills that can perform financial transactions"
+        }
+      }
+    },
+    "risksBySkill": {
+      "type": "object",
+      "description": "Risk categories for each skill",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Risk categories this skill belongs to"
+          },
+          "description": {
+            "type": "string",
+            "description": "Skill description from SKILL.md"
+          }
+        }
+      }
+    },
+    "uncoveredCategories": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Risk categories with no matching skills"
+    },
+    "riskCategoryDescriptions": {
+      "type": "object",
+      "description": "Descriptions of each risk category",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "keywords": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

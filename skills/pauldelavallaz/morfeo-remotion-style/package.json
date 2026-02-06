@@ -1,0 +1,24 @@
+{
+  "name": "morfeo-remotion-style",
+  "version": "1.0.0",
+  "description": "Morfeo Academy's Remotion video style guide - colors, fonts, animations, and component patterns for creating branded video content",
+  "keywords": [
+    "remotion",
+    "video",
+    "style-guide",
+    "morfeo",
+    "clawdbot-skill",
+    "animation",
+    "react"
+  ],
+  "author": "Paul de Lavallaz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PauldeLavallaz/morfeo-remotion-style"
+  },
+  "files": [
+    "SKILL.md",
+    "references/"
+  ]
+}

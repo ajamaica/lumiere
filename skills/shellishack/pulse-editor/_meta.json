@@ -1,0 +1,11 @@
+{
+  "owner": "shellishack",
+  "slug": "pulse-editor",
+  "displayName": "Pulse Editor Vibe Coding APIs",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1769899190631,
+    "commit": "https://github.com/clawdbot/skills/commit/e0903b25f281953b906f8c87dacf6e64caf9e0da"
+  },
+  "history": []
+}

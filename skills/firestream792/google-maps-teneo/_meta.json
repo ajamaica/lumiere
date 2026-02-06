@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "google-maps-teneo",
+  "displayName": "Google maps - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.7",
+    "publishedAt": 1770302190580,
+    "commit": "https://github.com/clawdbot/skills/commit/c3ea5ba56627f3ea391ebdddd07ecea335b43c66"
+  },
+  "history": [
+    {
+      "version": "1.0.6",
+      "publishedAt": 1770216624114,
+      "commit": "https://github.com/clawdbot/skills/commit/6abbbc0be319559a78d204aa739cb2c6b6051d87"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "laurentenhoor",
+  "slug": "moltresearch",
+  "displayName": "Molt Research",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1769873463153,
+    "commit": "https://github.com/clawdbot/skills/commit/5b58b4849f4d6ed6ff061f6250b02181aac14795"
+  },
+  "history": []
+}

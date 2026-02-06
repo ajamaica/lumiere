@@ -1,0 +1,11 @@
+{
+  "owner": "leegitw",
+  "slug": "golden-master",
+  "displayName": "Golden Master",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770279022868,
+    "commit": "https://github.com/openclaw/skills/commit/037298ce5f949b6551519baf897c315ee11adfc5"
+  },
+  "history": []
+}

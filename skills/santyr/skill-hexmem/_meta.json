@@ -1,0 +1,22 @@
+{
+  "owner": "santyr",
+  "slug": "skill-hexmem",
+  "displayName": "hexmem",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770306161064,
+    "commit": "https://github.com/clawdbot/skills/commit/1feb9ffd576b3da30108ce48520fb2704afd0c2f"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770135429643,
+      "commit": "https://github.com/clawdbot/skills/commit/86eba08e49f8f4d9e893eead1e2cb459a576c885"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770051583320,
+      "commit": "https://github.com/clawdbot/skills/commit/2386d613bdb5880df872b659ba4299ff629f38f6"
+    }
+  ]
+}

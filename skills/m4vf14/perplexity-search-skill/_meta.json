@@ -1,0 +1,11 @@
+{
+  "owner": "m4vf14",
+  "slug": "perplexity-search-skill",
+  "displayName": "Perplexity Search Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770240602168,
+    "commit": "https://github.com/clawdbot/skills/commit/c699b435d4a85fd330e5d9b530620234ddd0f8c8"
+  },
+  "history": []
+}

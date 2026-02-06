@@ -1,0 +1,18 @@
+{
+  "id": "vision-analyze",
+  "name": "Vision Analyze (Google)",
+  "description": "Analyze an image using Google Cloud Vision (OCR + labels).",
+  "type": "command",
+  "command": "/home/clawdbot/openclaw-tools/vision_analyze.sh",
+  "args": ["{input}"],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "input": {
+        "type": "string",
+        "description": "Local image file path or public URL"
+      }
+    },
+    "required": ["input"]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "codedao12",
+  "slug": "facebook",
+  "displayName": "Facebook",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770028711580,
+    "commit": "https://github.com/clawdbot/skills/commit/e83be92ece2f0c92a45d63a3d3e72c55817477f7"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769965310711,
+      "commit": "https://github.com/clawdbot/skills/commit/b13b00bd191f29bbdae9e9a626030c9799e2ec43"
+    }
+  ]
+}

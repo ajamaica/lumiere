@@ -1,0 +1,11 @@
+{
+  "owner": "zeph-ai-dev",
+  "slug": "starpulse",
+  "displayName": "Star Pulse",
+  "latest": {
+    "version": "0.2.0",
+    "publishedAt": 1769885921045,
+    "commit": "https://github.com/clawdbot/skills/commit/f2818a5670035af6c513fb35fd51537b1fc4b57e"
+  },
+  "history": []
+}

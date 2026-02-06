@@ -1,0 +1,11 @@
+{
+  "owner": "nutstrut",
+  "slug": "settlement-witness",
+  "displayName": "SettlementWitness",
+  "latest": {
+    "version": "0.0.3",
+    "publishedAt": 1770272384663,
+    "commit": "https://github.com/clawdbot/skills/commit/e69aec20e3f53e55efac776fd76cf0abd378b17c"
+  },
+  "history": []
+}

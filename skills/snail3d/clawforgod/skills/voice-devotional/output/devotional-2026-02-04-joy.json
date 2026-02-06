@@ -1,0 +1,35 @@
+{
+  "id": "devotional-2026-02-04-joy",
+  "type": "daily-devotional",
+  "audioPath": "output/devotional-2026-02-04-joy.mp3",
+  "duration": 240,
+  "durationFormatted": "4:00",
+  "transcript": [
+    "Joy is different from happiness—it is the deep, abiding gladness that comes from knowing God and walking in His purpose.",
+    "Even in difficult circumstances, we can experience joy because our confidence is in Christ, not in earthly circumstances.",
+    "God desires for us to experience full joy—joy that bubbles up from a heart surrendered to Him and secure in His love."
+  ],
+  "references": ["Philippians 4:4"],
+  "voicePreset": "josh",
+  "generatedAt": "2026-02-05T01:35:54.469Z",
+  "theme": "joy",
+  "content": {
+    "type": "daily-devotional",
+    "theme": "joy",
+    "scripture_reference": "Philippians 4:4",
+    "scripture": "Rejoice in the Lord always. I will say it again: Rejoice!",
+    "reflection": [
+      "Joy is different from happiness—it is the deep, abiding gladness that comes from knowing God and walking in His purpose.",
+      "Even in difficult circumstances, we can experience joy because our confidence is in Christ, not in earthly circumstances.",
+      "God desires for us to experience full joy—joy that bubbles up from a heart surrendered to Him and secure in His love."
+    ],
+    "prayer": [
+      "Lord, I rejoice in You today. Thank You for the joy that comes from knowing You and walking in Your purpose. Help me to find joy not in circumstances but in my relationship with You. Let my heart overflow with the joy of the Lord. Amen.",
+      "Jesus, You came that I might have life and have it to the full—life filled with joy. Help me to experience this abundant joy even in difficult times. Remind me that my joy comes from You, not from this world. Amen.",
+      "Father, Help me to laugh, to smile, and to experience deep gladness because I belong to You. Thank You for the gift of joy. Help me to share this joy with others so they might experience the hope I have found. Amen."
+    ],
+    "references": ["Philippians 4:4"],
+    "estimatedDuration": 240
+  },
+  "voiceId": "josh"
+}

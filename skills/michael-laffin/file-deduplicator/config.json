@@ -1,0 +1,33 @@
+{
+  "detection": {
+    "defaultMethod": "content",
+    "sizeTolerancePercent": 0,
+    "nameSimilarity": 0.7,
+    "includeSubdirs": true
+  },
+  "removal": {
+    "defaultAction": "delete",
+    "defaultKeep": "newest",
+    "archivePath": "./archive",
+    "sizeThreshold": 10485760,
+    "autoConfirm": false,
+    "dryRunDefault": false
+  },
+  "exclude": {
+    "patterns": [".git", "node_modules", ".vscode", ".idea"],
+    "whitelist": ["important", "work", "projects"]
+  },
+  "logging": {
+    "logFile": "deduplication.log",
+    "maxLogSize": 10485760
+  },
+  "batching": {
+    "maxConcurrent": 10,
+    "progressInterval": 1000
+  },
+  "hashing": {
+    "algorithm": "md5",
+    "bufferSize": 8192,
+    "maxFileSize": 104857600
+  }
+}

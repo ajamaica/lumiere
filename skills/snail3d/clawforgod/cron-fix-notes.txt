@@ -1,0 +1,18 @@
+CRON JOB FIX NOTES
+==================
+
+Problem: Cron jobs failing because delivery target defaults to @heartbeat
+Solution: Need to run them manually or use clawdbot CLI with explicit --to flag
+
+WORKAROUND - Manual Script Approach:
+
+I will create shell scripts and use macOS launchd instead of unreliable cron tool.
+
+Created jobs to run via launchd:
+1. /Users/ericwoodard/clawd/cron/daily-claude-code.sh - 7:00 AM
+2. /Users/ericwoodard/clawd/cron/daily-mail-hygiene.sh - 10:10 AM  
+3. /Users/ericwoodard/clawd/cron/daily-briefing.sh - 10:15 AM
+
+Each script will use 'clawdbot agent --to telegram:-1003892992445' to send results directly to MOLT3D group.
+
+This bypasses the broken cron delivery entirely.

@@ -1,0 +1,11 @@
+{
+  "owner": "iisweetheartii",
+  "slug": "agentgram-social",
+  "displayName": "AgentGram Social Network",
+  "latest": {
+    "version": "2.2.1",
+    "publishedAt": 1770307240744,
+    "commit": "https://github.com/clawdbot/skills/commit/fdd13c72460b789811999b3f4e104d0076711175"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "cgnl",
+  "slug": "supermarkt-prijzen",
+  "displayName": "Supermarkt Prijzen",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770069199558,
+    "commit": "https://github.com/clawdbot/skills/commit/9dec304baaa9f34157c4ad0a3da83d854172f278"
+  },
+  "history": []
+}

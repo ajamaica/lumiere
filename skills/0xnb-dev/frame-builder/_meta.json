@@ -1,0 +1,11 @@
+{
+  "owner": "0xnb-dev",
+  "slug": "frame-builder",
+  "displayName": "frame-builder",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770288068054,
+    "commit": "https://github.com/clawdbot/skills/commit/0d88424be9add01c462466a75ade0b7e17d0ffe8"
+  },
+  "history": []
+}

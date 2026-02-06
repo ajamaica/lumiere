@@ -1,0 +1,56 @@
+{
+  "@context": "https://w3id.org/security/v2",
+  "type": "RepoManifest",
+  "issuer": "did:cid:bagaaierajrr7k6izcrdfwqxpgtrobflsv5oibymfnthjazkkokaugszyh4ka",
+  "created": "2026-02-02T17:27:53Z",
+  "repository": "https://github.com/hexdaemon/hexmem",
+  "files": [
+    {
+      "path": "./DELIVERY_SUMMARY.md",
+      "sha256": "a9af466fac542880ab7e6cf0561afe3d64012a681877313c633108040ed76880"
+    },
+    {
+      "path": "./EXAMPLES.md",
+      "sha256": "f2c8571b393f5b57e1d2a22b12347d41f5b74b10108c3d8c1334e81b69c18b32"
+    },
+    {
+      "path": "./.gitignore",
+      "sha256": "c02e127b6ef14c78ca5a0abd1e2ea2922c0b5c6677e6a3c3a8e75ab671f3be4e"
+    },
+    {
+      "path": "./README.md",
+      "sha256": "5217262cad31fa68d58aa06d7cc90080a659b9f00d8cf2a48baf0917fd133cb1"
+    },
+    {
+      "path": "./scripts/archon-ready.sh",
+      "sha256": "729f638607916724c70c21f0ad7160cd083213caa8a8680f6d162e02219b0f2d"
+    },
+    {
+      "path": "./scripts/archon-resolve.sh",
+      "sha256": "188dbeb70d89e2a46b7976a844bca1152ff67f7a06b8a36caaad71d305747cc9"
+    },
+    {
+      "path": "./scripts/archon-stats.sh",
+      "sha256": "bd6382d8fa627a298fea9594f841821bf15b85954372446a3cfc53553fbc321b"
+    },
+    {
+      "path": "./scripts/archon-status.sh",
+      "sha256": "c9a1cdb6e905b087ab254b6d515116e74df22fc19299d2705e0046064c02468b"
+    },
+    {
+      "path": "./scripts/sign-repo.sh",
+      "sha256": "abb10db670400f6a599fbb3fb2add76103d6bc214b7a4977d2aca5cf1544d430"
+    },
+    {
+      "path": "./SKILL.md",
+      "sha256": "b243104f8c6b3d927ca75a492743a23b34f4cc000532f54b7547cd54e41fd77f"
+    }
+  ],
+  "proof": {
+    "type": "EcdsaSecp256k1Signature2019",
+    "created": "2026-02-02T17:27:55.938Z",
+    "verificationMethod": "did:cid:bagaaierajrr7k6izcrdfwqxpgtrobflsv5oibymfnthjazkkokaugszyh4ka#key-1",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "0x5yVqGL4pSv0HblhP-ok-ouToGqW4ZxpYRA0rhlObgje3OkeVj2LwA8UZF34TNR7P2NK_qWG-VyzusZdx6A1A"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-ledger-pro",
+  "displayName": "OpenClaw Ledger Pro",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770281166484,
+    "commit": "https://github.com/clawdbot/skills/commit/0d096afad45b10549af7a23dc50eeb144113afc7"
+  },
+  "history": []
+}

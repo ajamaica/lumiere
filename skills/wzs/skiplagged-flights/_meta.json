@@ -1,0 +1,11 @@
+{
+  "owner": "wzs",
+  "slug": "skiplagged-flights",
+  "displayName": "Skiplagged Flights",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769873663107,
+    "commit": "https://github.com/clawdbot/skills/commit/bd2d9bf4b6b48cbfd8dd55006f286d06d8cf2149"
+  },
+  "history": []
+}

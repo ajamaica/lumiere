@@ -1,0 +1,46 @@
+{
+  "name": "philips-hue-thinking",
+  "version": "1.0.0",
+  "description": "Visual AI activity indicator using Philips Hue lights",
+  "author": "Jesse & Kate (Clawdbot)",
+  "license": "MIT",
+  "homepage": "https://github.com/yourusername/philips-hue-thinking",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/philips-hue-thinking.git"
+  },
+  "keywords": [
+    "philips-hue",
+    "smart-lights",
+    "ai",
+    "productivity",
+    "ambient",
+    "visual-indicator"
+  ],
+  "bin": {
+    "hue": "./hue"
+  },
+  "files": [
+    "hue",
+    "SKILL.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "bash": ">=4.0"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "clawhub": {
+    "emoji": "🚦",
+    "category": "productivity",
+    "install_type": "script",
+    "requirements": [
+      "Philips Hue Bridge",
+      "Philips Hue color bulb(s)",
+      "curl"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "networktheoryappliedresearchinstitute",
+  "slug": "anthropology",
+  "displayName": "Anthropology",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1769903814395,
+    "commit": "https://github.com/clawdbot/skills/commit/218b6d7ca53c46a7302590f00418f0455f7f83fc"
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1769901857292,
+      "commit": "https://github.com/clawdbot/skills/commit/2a0eeafd74ff0bffe42ad0377bdcdb4ec9ddb5d6"
+    }
+  ]
+}

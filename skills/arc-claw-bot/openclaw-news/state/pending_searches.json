@@ -1,0 +1,13 @@
+{
+  "community": [
+    "OpenClaw AI agent site:news.ycombinator.com",
+    "OpenClaw site:reddit.com",
+    "OpenClaw bot agent Twitter"
+  ],
+  "ecosystem": [
+    "\"OpenClaw\" news",
+    "\"OpenClaw\" integration announcement",
+    "OpenClaw AI agent article"
+  ],
+  "moltbook": ["site:moltbook.com trending"]
+}

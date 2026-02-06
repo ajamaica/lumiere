@@ -1,0 +1,11 @@
+{
+  "owner": "ansonfreeman",
+  "slug": "hostex",
+  "displayName": "Hostex",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1770107375732,
+    "commit": "https://github.com/clawdbot/skills/commit/505b792119dcea3dcbd088fbe708cfc7dc6e1fe1"
+  },
+  "history": []
+}

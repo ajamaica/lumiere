@@ -1,0 +1,22 @@
+{
+  "owner": "mainfraame",
+  "slug": "clawback",
+  "displayName": "Clawback",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1769981499803,
+    "commit": "https://github.com/clawdbot/skills/commit/885f67c3fd090648956b488c114a1974a78ea0d0"
+  },
+  "history": [
+    {
+      "version": "1.0.14",
+      "publishedAt": 1769976961777,
+      "commit": "https://github.com/clawdbot/skills/commit/ca3ad52e1f450148dd3cb0a13c09d04bcd9ce845"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769915664280,
+      "commit": "https://github.com/clawdbot/skills/commit/3ba61a60ba563a6e63ecfa06509499e99df6a83f"
+    }
+  ]
+}

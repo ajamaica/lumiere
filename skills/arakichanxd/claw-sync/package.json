@@ -1,0 +1,30 @@
+{
+  "name": "claw-sync",
+  "version": "2.1.0",
+  "description": "Secure versioned sync for OpenClaw memory and workspace",
+  "main": "index.js",
+  "bin": {
+    "claw-sync": "./index.js"
+  },
+  "scripts": {
+    "sync": "node index.js sync",
+    "restore": "node index.js restore",
+    "status": "node index.js status",
+    "list": "node index.js list",
+    "push": "node scripts/push.js",
+    "pull": "node scripts/pull.js",
+    "setup": "node scripts/setup-cron.js"
+  },
+  "keywords": [
+    "openclaw",
+    "sync",
+    "backup",
+    "github"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/claw-sync"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "danbaranov",
+  "slug": "postproxy-skill",
+  "displayName": "Postproxy",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770334128492,
+    "commit": "https://github.com/clawdbot/skills/commit/71d520ef06e9c77f3ff0215e367eb23394f5d5f9"
+  },
+  "history": []
+}

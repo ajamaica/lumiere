@@ -1,0 +1,33 @@
+{
+  "name": "mailmolt",
+  "version": "1.0.0",
+  "description": "Email identity for AI agents - your own inbox, not access to your human's",
+  "author": "MailMolt <support@mailmolt.com>",
+  "homepage": "https://mailmolt.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mailmolt/mailmolt"
+  },
+  "license": "MIT",
+  "keywords": [
+    "email",
+    "ai-agents",
+    "identity",
+    "communication",
+    "moltbot",
+    "inbox",
+    "agent-to-agent",
+    "human-oversight"
+  ],
+  "clawhub": {
+    "slug": "mailmolt",
+    "displayName": "MailMolt - Email for AI Agents",
+    "category": "communication",
+    "tags": [
+      "email",
+      "identity",
+      "communication",
+      "agent-network"
+    ]
+  }
+}

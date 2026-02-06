@@ -1,0 +1,17 @@
+{
+  "owner": "matanle51",
+  "slug": "agentic-paper-digest",
+  "displayName": "Agentic Research Paper Digest",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770325587763,
+    "commit": "https://github.com/openclaw/skills/commit/4d8104e1639d6ccc9a04838ca74c98de1fc994fd"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770281067929,
+      "commit": "https://github.com/clawdbot/skills/commit/7603a47d49334dd09b7e77535d322ada118f2c05"
+    }
+  ]
+}

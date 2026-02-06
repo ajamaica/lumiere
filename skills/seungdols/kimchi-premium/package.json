@@ -1,0 +1,32 @@
+{
+  "name": "kimchi-premium",
+  "version": "1.0.0",
+  "description": "Calculate Bitcoin Kimchi Premium (Upbit vs Binance)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js"
+  },
+  "keywords": [
+    "bitcoin",
+    "kimchi-premium",
+    "cryptocurrency",
+    "upbit",
+    "binance",
+    "openclaw",
+    "claude-code"
+  ],
+  "author": "seungdols",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seungdols/kimchi-premium.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seungdols/kimchi-premium/issues"
+  },
+  "homepage": "https://github.com/seungdols/kimchi-premium#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

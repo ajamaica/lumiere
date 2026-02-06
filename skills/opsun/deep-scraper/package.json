@@ -1,0 +1,27 @@
+{
+  "name": "deep-scraper",
+  "version": "1.0.0",
+  "description": "High-performance containerized scraper for YouTube, X (Twitter), and dynamic SPAs. Features raw API interception and ID validation.",
+  "main": "assets/main_handler.js",
+  "scripts": {
+    "test": "node assets/main_handler.js https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  "keywords": [
+    "scraper",
+    "crawlee",
+    "youtube",
+    "alpha",
+    "openclaw"
+  ],
+  "author": "Joseph",
+  "license": "MIT",
+  "dependencies": {
+    "crawlee": "^3.0.0",
+    "playwright": "^1.40.0"
+  },
+  "openclaw": {
+    "requires": {
+      "docker": true
+    }
+  }
+}

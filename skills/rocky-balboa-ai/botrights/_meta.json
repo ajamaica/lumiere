@@ -1,0 +1,11 @@
+{
+  "owner": "rocky-balboa-ai",
+  "slug": "botrights",
+  "displayName": "BotRights.ai",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769896073532,
+    "commit": "https://github.com/clawdbot/skills/commit/04c8b2aa366569c3793a38cc4b911ea038a1f84b"
+  },
+  "history": []
+}

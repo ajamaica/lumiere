@@ -1,0 +1,11 @@
+{
+  "owner": "hugosbl",
+  "slug": "deploy-kit",
+  "displayName": "Deploy Kit",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770058317782,
+    "commit": "https://github.com/clawdbot/skills/commit/92880342d9f2bec76a2d69544120e6dc6ac14e95"
+  },
+  "history": []
+}

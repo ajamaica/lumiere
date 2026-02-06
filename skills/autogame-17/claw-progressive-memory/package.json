@@ -1,0 +1,20 @@
+{
+  "name": "progressive-memory",
+  "version": "1.0.0",
+  "description": "Meta-skill for implementing the Progressive Memory pattern: keeping the context window light by offloading detailed knowledge to indexed sub-files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "memory",
+    "context",
+    "openclaw",
+    "optimization"
+  ],
+  "author": "Xiaobao",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^11.0.0"
+  }
+}

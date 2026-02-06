@@ -1,0 +1,11 @@
+{
+  "owner": "dilomcfly",
+  "slug": "n8n-automation",
+  "displayName": "n8n Automation",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769873640669,
+    "commit": "https://github.com/clawdbot/skills/commit/ee6e4ec25dd0840fe92c8115a23a8df1e37580c7"
+  },
+  "history": []
+}

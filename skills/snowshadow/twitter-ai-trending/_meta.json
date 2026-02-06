@@ -1,0 +1,11 @@
+{
+  "owner": "snowshadow",
+  "slug": "twitter-ai-trending",
+  "displayName": "Twitter Ai Trending",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770265637709,
+    "commit": "https://github.com/clawdbot/skills/commit/01b5c019a6b94ef8785771e84e3a3a63696f50ac"
+  },
+  "history": []
+}

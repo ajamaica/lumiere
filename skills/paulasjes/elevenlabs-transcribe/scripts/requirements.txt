@@ -1,0 +1,11 @@
+# Pure Python packages - pinned with hashes for supply chain security
+elevenlabs==2.34.0 \
+    --hash=sha256:3a46b40e69ac2841b2183a00d651a68bd11733d95d32a5ed8163d3aa6a0b13be
+pydub==0.25.1 \
+    --hash=sha256:65617e33033874b59d87db603aa1ed450633288aefead953b30bded59cb599a6
+python-dotenv==1.0.1 \
+    --hash=sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a
+
+# Platform-specific packages - pinned versions only (hashes vary by platform)
+sounddevice==0.5.1
+numpy>=1.24.0

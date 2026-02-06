@@ -1,0 +1,32 @@
+{
+  "name": "claw-permission-firewall",
+  "version": "1.0.0",
+  "description": "Runtime least-privilege firewall for agent skill actions (HTTP/files/exec) with redaction, risk scoring, and audit logs.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "claw-permission-firewall": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "policy.yaml",
+    "README.md",
+    "SKILL.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "node --loader ts-node/esm src/index.ts",
+    "test:smoke": "node dist/index.js evaluate --input examples/http-allow.json",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "minimatch": "^9.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

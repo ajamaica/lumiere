@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "crypto-tracker-ai-v2-teneo",
+  "displayName": "Crypto Tracker AI V2 - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770302177749,
+    "commit": "https://github.com/clawdbot/skills/commit/2ac7984c404b16105076336be2cb4a6521255aa1"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770216608414,
+      "commit": "https://github.com/clawdbot/skills/commit/4c9a241e94a6fe34686cce41622e2594b09cad65"
+    }
+  ]
+}

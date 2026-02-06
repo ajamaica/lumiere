@@ -1,0 +1,12 @@
+# Scout CLI Dependencies
+# Install: pip install -r requirements.txt
+
+# x402 Protocol - handles payment signing/submission
+x402[httpx,svm]>=2.0.0
+
+# Solana - for wallet operations
+solana>=0.34.0
+solders>=0.21.0
+
+# Utilities
+base58>=2.1.0

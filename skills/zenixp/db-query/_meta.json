@@ -1,0 +1,11 @@
+{
+  "owner": "zenixp",
+  "slug": "db-query",
+  "displayName": "MYSQL QUERY",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769857259065,
+    "commit": "https://github.com/clawdbot/skills/commit/501b2e2e46378bfab812cf13a05109a5b87a68db"
+  },
+  "history": []
+}

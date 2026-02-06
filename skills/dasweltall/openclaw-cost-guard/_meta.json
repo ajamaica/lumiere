@@ -1,0 +1,11 @@
+{
+  "owner": "dasweltall",
+  "slug": "openclaw-cost-guard",
+  "displayName": "OpenClaw Cost Guard (Budgets + Token-Saving Playbook)",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770130082691,
+    "commit": "https://github.com/clawdbot/skills/commit/3b3fe03354986641f947e384c1fa2bd292aeea80"
+  },
+  "history": []
+}

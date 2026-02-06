@@ -1,0 +1,44 @@
+{
+  // Schema for pending approval requests in the local-approvals skill
+  // This file tracks all requests awaiting user approval
+
+  "requests": [
+    // Each request object represents a pending approval
+    // id: Unique identifier for this request (UUID format)
+    //      Example: "550e8400-e29b-41d4-a716-446655440000"
+    //
+    // agent: The agent or skill that originated the request
+    //        Example: "assistant", "calendar", "email"
+    //
+    // timestamp: ISO 8601 datetime when the request was created
+    //            Example: "2026-02-05T08:34:00.000Z"
+    //
+    // category: High-level classification of the request type
+    //           Examples: "email", "calendar", "task", "system", "notification"
+    //
+    // operation: The specific action being requested
+    //            Examples: "send_email", "create_event", "delete_task", "install_plugin"
+    //
+    // reasoning: Human-readable explanation of why this request needs approval
+    //            Provides context for the user's decision
+    //            Example: "Attempting to send email to new recipient outside whitelist"
+    //
+    // status: Current state of the request
+    //         Values: "pending", "approved", "rejected", "expired"
+    //
+    // expiresAt: ISO 8601 datetime when the request automatically expires if not acted upon
+    //            Prevents indefinite queue buildup
+    //            Example: "2026-02-05T09:34:00.000Z"
+
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "agent": "assistant",
+      "timestamp": "2026-02-05T08:34:00.000Z",
+      "category": "email",
+      "operation": "send_email",
+      "reasoning": "Attempting to send email to new recipient outside whitelist",
+      "status": "pending",
+      "expiresAt": "2026-02-05T09:34:00.000Z"
+    }
+  ]
+}

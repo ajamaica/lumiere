@@ -1,0 +1,11 @@
+{
+  "owner": "humberto0o0",
+  "slug": "vision-analyze",
+  "displayName": "Vision Analyze (Google)",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769930786645,
+    "commit": "https://github.com/clawdbot/skills/commit/5e6be55f61a538222691f37838884533a3c94dd0"
+  },
+  "history": []
+}

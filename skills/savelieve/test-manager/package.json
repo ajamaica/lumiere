@@ -1,0 +1,18 @@
+{
+  "name": "clawdbot-skill-clickup",
+  "version": "1.0.0",
+  "description": "ClickUp integration skill for Clawdbot",
+  "main": "skill.js",
+  "type": "module",
+  "author": "Evgeny",
+  "license": "MIT",
+  "keywords": [
+    "clawdbot",
+    "clickup",
+    "productivity",
+    "task-management"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

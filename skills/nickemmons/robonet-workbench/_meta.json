@@ -1,0 +1,11 @@
+{
+  "owner": "nickemmons",
+  "slug": "robonet-workbench",
+  "displayName": "Robonet",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770084204091,
+    "commit": "https://github.com/clawdbot/skills/commit/73a401a7908135cd54069cc856144b5933923d1d"
+  },
+  "history": []
+}

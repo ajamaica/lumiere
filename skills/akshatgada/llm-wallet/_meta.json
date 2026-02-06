@@ -1,0 +1,11 @@
+{
+  "owner": "akshatgada",
+  "slug": "llm-wallet",
+  "displayName": "LLM Wallet - x402 stabelcoin payments on Polygon",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769880419384,
+    "commit": "https://github.com/clawdbot/skills/commit/54505714f13b593707673696e83dcf7098d18737"
+  },
+  "history": []
+}

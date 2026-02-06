@@ -1,0 +1,11 @@
+{
+  "owner": "hi-yu",
+  "slug": "mcdonald",
+  "displayName": "Mcdonald",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770291369527,
+    "commit": "https://github.com/clawdbot/skills/commit/6c7143756cf68318d2d72ecec232a13ba6d04a51"
+  },
+  "history": []
+}

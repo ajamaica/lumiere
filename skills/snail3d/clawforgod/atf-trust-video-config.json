@@ -1,0 +1,80 @@
+{
+  "title": "ATF Tax Stamp Elimination - Get Your Trust Today",
+  "description": "Breaking news: The $200 ATF tax stamp is gone as of January 1st, 2026. Never been a better time to buy a trust. Visit 199trust.com",
+  "sections": [
+    {
+      "start_time": 0,
+      "end_time": 8,
+      "text": "Breaking News for Gun Owners: The 200 Dollar Tax Stamp Is Gone.",
+      "search_query": "breaking news announcement urgent"
+    },
+    {
+      "start_time": 8,
+      "end_time": 18,
+      "text": "As of January 1st, 2026, the ATF has eliminated the two hundred dollar tax stamp requirement for both eForm 1 and eForm 4 applications.",
+      "search_query": "ATF official government documents forms"
+    },
+    {
+      "start_time": 18,
+      "end_time": 28,
+      "text": "This applies to individuals AND trusts. What does this mean? If you've been waiting to file for a suppressor, short-barreled rifle, or any NFA item—the financial barrier just disappeared.",
+      "search_query": "suppressor short barreled rifle NFA tactical"
+    },
+    {
+      "start_time": 28,
+      "end_time": 38,
+      "text": "But here's what most people don't realize: there's never been a better time to set up a trust.",
+      "search_query": "legal document trust paperwork official"
+    },
+    {
+      "start_time": 38,
+      "end_time": 50,
+      "text": "Current ATF processing times are moving faster than ever. eForm 1 applications are being approved in just 24 to 48 hours. eForm 4 submissions are processing in 40 to 60 days on average.",
+      "search_query": "fast speed clock timer quick processing"
+    },
+    {
+      "start_time": 50,
+      "end_time": 60,
+      "text": "A trust gives you something no individual application can: flexibility. Multiple users. Easier transfers. No fingerprints. No photos. No problems.",
+      "search_query": "flexibility freedom benefits advantage paperwork"
+    },
+    {
+      "start_time": 60,
+      "end_time": 72,
+      "text": "Without the two hundred dollar tax stamp hanging over your head, the cost of a trust is now the smartest investment you can make for your NFA collection.",
+      "search_query": "investment smart money value financial decision"
+    },
+    {
+      "start_time": 72,
+      "end_time": 82,
+      "text": "Don't wait. Check out 199trust.com today. Get your trust set up properly, get the forms filed, and own your NFA items the right way.",
+      "search_query": "website online click digital internet modern"
+    },
+    {
+      "start_time": 82,
+      "end_time": 90,
+      "text": "199trust.com—Because Your NFA Future Matters.",
+      "search_query": "future vision success determination strong"
+    }
+  ],
+  "subtitle_style": "bold",
+  "background_source": "unsplash",
+  "subtitles": {
+    "font": "Inter",
+    "size": 54,
+    "color_current": "#FF6B35",
+    "color_context": "#FFFFFF",
+    "shadow": true,
+    "shadow_blur": 12,
+    "shadow_color": "#000000",
+    "shadow_offset_y": 4,
+    "animation_type": "fade_scale",
+    "animation_duration_ms": 200
+  },
+  "background": {
+    "zoom_effect": "subtle",
+    "zoom_speed": 0.3,
+    "fade_between_sections": true,
+    "fade_duration_ms": 500
+  }
+}

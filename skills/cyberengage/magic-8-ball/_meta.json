@@ -1,0 +1,11 @@
+{
+  "owner": "cyberengage",
+  "slug": "magic-8-ball",
+  "displayName": "Magic 8-Ball",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770270161309,
+    "commit": "https://github.com/clawdbot/skills/commit/073fedc3468bb520f6d36f895686f473818d5555"
+  },
+  "history": []
+}

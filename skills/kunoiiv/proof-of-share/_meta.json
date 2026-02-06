@@ -1,0 +1,11 @@
+{
+  "owner": "kunoiiv",
+  "slug": "proof-of-share",
+  "displayName": "Proof-of-Share - BTC PoW Verifiable Shares",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770059785114,
+    "commit": "https://github.com/clawdbot/skills/commit/34e392cc9e675328db20df730b9e794f38b49542"
+  },
+  "history": []
+}

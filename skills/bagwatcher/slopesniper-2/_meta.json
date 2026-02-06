@@ -1,0 +1,11 @@
+{
+  "owner": "bagwatcher",
+  "slug": "slopesniper-2",
+  "displayName": "Slopesniper",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770082759289,
+    "commit": "https://github.com/clawdbot/skills/commit/15ff37028de57353e7fbc93124be84e75201009a"
+  },
+  "history": []
+}

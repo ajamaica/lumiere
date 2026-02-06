@@ -1,0 +1,11 @@
+{
+  "owner": "stu24801",
+  "slug": "line-bridge-shrimp",
+  "displayName": "Line Bot to Clawd",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770114890727,
+    "commit": "https://github.com/clawdbot/skills/commit/9b9216cdd54b9e1850444dd23ebc15d35b8e30df"
+  },
+  "history": []
+}

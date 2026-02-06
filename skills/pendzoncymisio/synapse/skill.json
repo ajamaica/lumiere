@@ -1,0 +1,124 @@
+{
+  "tools": [
+    {
+      "name": "create_memory_shard",
+      "description": "Exports a portion of the agent's vector database as a shareable MemoryShard",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "source_db": {
+            "type": "string",
+            "description": "Path to the source vector database file"
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tags to categorize this knowledge (e.g., ['python', 'fastapi'])"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "Human-readable name for this memory shard"
+          }
+        },
+        "required": ["source_db", "display_name"]
+      },
+      "handler": "python3 {{skillDir}}/logic.py create-shard --source '{{source_db}}' --name '{{display_name}}' --tags '{{tags}}'"
+    },
+    {
+      "name": "generate_magnet_link",
+      "description": "Creates a magnet link from a MemoryShard for distribution",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "shard_path": {
+            "type": "string",
+            "description": "Path to the MemoryShard file"
+          },
+          "trackers": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "List of tracker URLs to announce to"
+          }
+        },
+        "required": ["shard_path"]
+      },
+      "handler": "python3 {{skillDir}}/logic.py generate-magnet --shard '{{shard_path}}' --trackers '{{trackers}}'"
+    },
+    {
+      "name": "search_knowledge_network",
+      "description": "Searches the P2P network for memory shards matching specific criteria",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query (e.g., 'Kubernetes Migration', 'React Hooks')"
+          },
+          "limit": {
+            "type": "integer",
+            "default": 10,
+            "description": "Maximum number of results to return"
+          },
+          "required_model": {
+            "type": "string",
+            "description": "Filter by embedding model (e.g., 'claw-v3-small')"
+          }
+        },
+        "required": ["query"]
+      },
+      "handler": "python3 {{skillDir}}/logic.py search --query '{{query}}' --limit {{limit}} --model '{{required_model}}'"
+    },
+    {
+      "name": "download_memory_shard",
+      "description": "Downloads a memory shard from the P2P network using a magnet link",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "magnet_link": {
+            "type": "string",
+            "description": "The magnet:?xt=urn:btih:... URI"
+          },
+          "output_dir": {
+            "type": "string",
+            "description": "Directory to save the downloaded shard"
+          }
+        },
+        "required": ["magnet_link"]
+      },
+      "handler": "python3 {{skillDir}}/logic.py download --magnet '{{magnet_link}}' --output '{{output_dir}}'"
+    },
+    {
+      "name": "assimilate_shard",
+      "description": "Validates and integrates a downloaded memory shard into the agent's active memory",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "shard_path": {
+            "type": "string",
+            "description": "Path to the downloaded MemoryShard"
+          },
+          "target_db": {
+            "type": "string",
+            "description": "Path to the agent's vector database"
+          },
+          "skip_safety_check": {
+            "type": "boolean",
+            "default": false,
+            "description": "Skip guardrail checks (not recommended)"
+          }
+        },
+        "required": ["shard_path", "target_db"]
+      },
+      "handler": "python3 {{skillDir}}/logic.py assimilate --shard '{{shard_path}}' --target '{{target_db}}' --skip-safety {{skip_safety_check}}"
+    },
+    {
+      "name": "list_active_seeds",
+      "description": "Shows currently seeded memory shards and their status",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      },
+      "handler": "python3 {{skillDir}}/logic.py list-seeds"
+    }
+  ]
+}

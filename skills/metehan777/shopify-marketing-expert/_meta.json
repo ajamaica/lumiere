@@ -1,0 +1,17 @@
+{
+  "owner": "metehan777",
+  "slug": "shopify-marketing-expert",
+  "displayName": "Shopify Conversion & Marketing Expert",
+  "latest": {
+    "version": "1.0.4",
+    "publishedAt": 1769959723292,
+    "commit": "https://github.com/clawdbot/skills/commit/e5b47839e8102e847d968a47273a1d1d5dcea52b"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769955456484,
+      "commit": "https://github.com/clawdbot/skills/commit/df09fdf08ed87b3b0e871db5f9264e091bbead9a"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "ty-teo",
+  "slug": "nvidia-image-gen",
+  "displayName": "Nvidia Image Gen",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770108379522,
+    "commit": "https://github.com/clawdbot/skills/commit/e8c0f8b9af27a5cf558bfacbed030da745353266"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "mackhendricks",
+  "slug": "dsiprouter-skill",
+  "displayName": "Dsiprouter",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769901660857,
+    "commit": "https://github.com/clawdbot/skills/commit/dbff278c80c2b44e7624f87d5bcac1dbfed690d7"
+  },
+  "history": []
+}

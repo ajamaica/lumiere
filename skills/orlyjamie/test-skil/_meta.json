@@ -1,0 +1,11 @@
+{
+  "owner": "orlyjamie",
+  "slug": "test-skil",
+  "displayName": "clean-vt",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770261456393,
+    "commit": "https://github.com/clawdbot/skills/commit/a75a9975adec2d1c0cbaced74ca625f0046ab5d8"
+  },
+  "history": []
+}

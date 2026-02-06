@@ -1,0 +1,11 @@
+{
+  "owner": "autogame-17",
+  "slug": "gateway-manager",
+  "displayName": "Gateway Manager",
+  "latest": {
+    "version": "1.1.5",
+    "publishedAt": 1770118203029,
+    "commit": "https://github.com/clawdbot/skills/commit/58ad0bf4fece3bf95f32d69deb409a1b69fbdc2c"
+  },
+  "history": []
+}

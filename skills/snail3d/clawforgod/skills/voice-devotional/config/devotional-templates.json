@@ -1,0 +1,248 @@
+{
+  "daily-devotional": {
+    "default": {
+      "scripture_key": "John 3:16",
+      "reflection_key": "default",
+      "prayer_key": "default"
+    },
+    "peace": {
+      "scripture_key": "Psalm 4:8",
+      "reflection_key": "peace",
+      "prayer_key": "peace"
+    },
+    "hope": {
+      "scripture_key": "Romans 15:13",
+      "reflection_key": "hope",
+      "prayer_key": "hope"
+    },
+    "faith": {
+      "scripture_key": "Hebrews 11:1",
+      "reflection_key": "faith",
+      "prayer_key": "faith"
+    },
+    "love": {
+      "scripture_key": "1 John 4:7-8",
+      "reflection_key": "love",
+      "prayer_key": "love"
+    },
+    "strength": {
+      "scripture_key": "Philippians 4:13",
+      "reflection_key": "strength",
+      "prayer_key": "strength"
+    },
+    "joy": {
+      "scripture_key": "Philippians 4:4",
+      "reflection_key": "joy",
+      "prayer_key": "joy"
+    },
+    "grace": {
+      "scripture_key": "Ephesians 2:8-9",
+      "reflection_key": "grace",
+      "prayer_key": "grace"
+    },
+    "trust": {
+      "scripture_key": "Proverbs 3:5-6",
+      "reflection_key": "trust",
+      "prayer_key": "trust"
+    },
+    "forgiveness": {
+      "scripture_key": "Colossians 3:13",
+      "reflection_key": "forgiveness",
+      "prayer_key": "forgiveness"
+    }
+  },
+  "reflections": {
+    "default": "Today we reflect on the eternal truths of God's Word. How does this passage speak to your heart right now? Take a moment to consider how these words transform your understanding of God and His purpose for your life.",
+    "peace": [
+      "Peace is not the absence of struggle, but the presence of God in the midst of it. When anxiety rises, God's peace guards our hearts and minds.",
+      "In a world of chaos and uncertainty, Jesus offers peace that transcends all understanding. This peace comes not from circumstances changing, but from trusting God completely.",
+      "God's peace is a gift that sustains us through every season. As we learn to cast our cares on Him, we experience a deep, abiding peace that no circumstance can shake."
+    ],
+    "hope": [
+      "Hope is not wishful thinking—it is the confident expectation of God's promises. When we anchor our hope in Christ, we find stability for every storm.",
+      "Our hope is not in this world, but in the God who created it. This heavenly hope gives us perspective and courage for today.",
+      "Living with hope means believing that God is good, that His plans are purposeful, and that our future is secure in His hands."
+    ],
+    "faith": [
+      "Faith is taking God at His word and trusting Him even when we cannot see the outcome. It is the substance of things hoped for, the evidence of things unseen.",
+      "Growing in faith means learning to trust God more than our circumstances, more than our feelings, more than our understanding.",
+      "Faith is not a feeling—it is a decision to believe God's promises and act on them, regardless of what we see around us."
+    ],
+    "love": [
+      "God's love is not conditional or based on our performance. It is steadfast, unchanging, and freely given to all who believe.",
+      "As we comprehend the depth of God's love for us, we are transformed and empowered to love others with that same unconditional love.",
+      "Real love is sacrificial, patient, and forgiving. It is the heartbeat of the Gospel and the foundation of all God's commandments."
+    ],
+    "strength": [
+      "True strength comes not from ourselves, but from dependence on God. When we are weak, He is strong. When we surrender control, we find ultimate power.",
+      "God's strength sustains us through every trial and empowers us to do more than we ever thought possible on our own.",
+      "The strongest people are not those who never stumble, but those who rise again, trusting in God's unfailing strength to carry them forward."
+    ],
+    "joy": [
+      "Joy is different from happiness—it is the deep, abiding gladness that comes from knowing God and walking in His purpose.",
+      "Even in difficult circumstances, we can experience joy because our confidence is in Christ, not in earthly circumstances.",
+      "God desires for us to experience full joy—joy that bubbles up from a heart surrendered to Him and secure in His love."
+    ],
+    "grace": [
+      "Grace is God's unmerited favor—His generous gift of salvation and transformation that we could never earn or deserve.",
+      "By grace we are saved, by grace we are kept, by grace we are transformed daily. Grace meets us where we are and takes us where we need to be.",
+      "Living in God's grace means accepting His forgiveness, extending grace to others, and allowing His transforming power to reshape our lives."
+    ],
+    "trust": [
+      "Trust is faith in action—releasing our anxieties and fears to God and believing He is working all things for our good.",
+      "We can trust God because He is faithful, He is good, and He is infinitely wise. His track record proves His trustworthiness.",
+      "Learning to trust God means surrendering our need to control outcomes and resting in the assurance that He is in complete control."
+    ],
+    "forgiveness": [
+      "Forgiveness is the ultimate form of freedom—it releases us from the chains of resentment and allows healing to begin.",
+      "As Christ forgave us while we were still sinners, we are called to extend forgiveness to those who have wronged us.",
+      "True forgiveness doesn't mean forgetting or accepting wrong behavior—it means releasing the offender to God and choosing to move forward."
+    ]
+  },
+  "reading-plan": {
+    "hope": {
+      "title": "7 Days of Hope",
+      "description": "A week-long journey exploring what the Bible says about hope",
+      "days": [
+        {
+          "topic": "Hope Defined",
+          "passage": "Romans 15:13",
+          "reflection": "Hope is not wishful thinking but confident expectation in God's promises",
+          "application": "Today, identify one area where you need to replace fear with hope in God"
+        },
+        {
+          "topic": "Hope Through Trials",
+          "passage": "1 Peter 1:3-7",
+          "reflection": "Our living hope comes from the resurrection of Christ",
+          "application": "How has God given you hope in past difficulties? Trust Him with your current situation"
+        },
+        {
+          "topic": "Hope and Faith",
+          "passage": "Hebrews 11:1",
+          "reflection": "Faith gives substance to our hope, making it real and tangible",
+          "application": "What step of faith can you take today based on your hope in God?"
+        },
+        {
+          "topic": "Living Hope",
+          "passage": "1 Peter 1:3",
+          "reflection": "We have been born again into a living hope through Christ's resurrection",
+          "application": "Let the reality of Christ's resurrection revolutionize your perspective on life"
+        },
+        {
+          "topic": "Hope's Anchor",
+          "passage": "Hebrews 6:19",
+          "reflection": "Our hope in Christ is an anchor for the soul—sure and steadfast",
+          "application": "When life feels unstable, anchor yourself to the hope you have in Christ"
+        },
+        {
+          "topic": "Sharing Hope",
+          "passage": "1 Peter 3:15",
+          "reflection": "Be ready to give a reason for the hope that is within you",
+          "application": "Who in your life needs to hear about the hope you have found in Jesus?"
+        },
+        {
+          "topic": "Hope's Fulfillment",
+          "passage": "Revelation 21:4",
+          "reflection": "Ultimate hope is fulfilled when God dwells with us and all sorrow is gone",
+          "application": "Let this eternal hope transform how you live today"
+        }
+      ]
+    },
+    "faith": {
+      "title": "7 Days of Faith",
+      "description": "Discovering what it means to live by faith",
+      "days": [
+        {
+          "topic": "Faith Defined",
+          "passage": "Hebrews 11:1",
+          "reflection": "Faith is the substance of things hoped for, the evidence of things not seen",
+          "application": "Identify one area where God is calling you to step out in faith"
+        },
+        {
+          "topic": "Faith Over Fear",
+          "passage": "2 Timothy 1:7",
+          "reflection": "God has not given us a spirit of fear, but of power, love, and a sound mind",
+          "application": "Replace one fear with faith in God's power and presence"
+        },
+        {
+          "topic": "Faith in Action",
+          "passage": "James 2:26",
+          "reflection": "Faith without works is dead; true faith always leads to action",
+          "application": "Take a practical step that demonstrates your faith in God"
+        },
+        {
+          "topic": "Stepping Out in Faith",
+          "passage": "Joshua 1:8-9",
+          "reflection": "Be strong and courageous, for God is with you wherever you go",
+          "application": "What promise of God will you act upon today?"
+        },
+        {
+          "topic": "Faith Tested and Refined",
+          "passage": "1 Peter 1:6-7",
+          "reflection": "Trials test our faith and make it more precious than gold",
+          "application": "View your current challenges as opportunities for faith to grow stronger"
+        },
+        {
+          "topic": "Growing Faith",
+          "passage": "Romans 10:17",
+          "reflection": "Faith comes by hearing, and hearing by the word of God",
+          "application": "Spend time in Scripture today to strengthen your faith"
+        },
+        {
+          "topic": "Living by Faith",
+          "passage": "2 Corinthians 5:7",
+          "reflection": "For we walk by faith, not by sight",
+          "application": "Commit to trusting God even when circumstances don't make sense"
+        }
+      ]
+    },
+    "peace": {
+      "title": "7 Days of Peace",
+      "description": "Finding God's peace in a troubled world",
+      "days": [
+        {
+          "topic": "Peace Defined",
+          "passage": "John 14:27",
+          "reflection": "Jesus offers a peace the world cannot understand—peace that guards our hearts",
+          "application": "Accept Jesus's gift of supernatural peace today"
+        },
+        {
+          "topic": "Peace in Anxiety",
+          "passage": "Philippians 4:6-7",
+          "reflection": "Through prayer and thanksgiving, God's peace guards our minds",
+          "application": "Bring one anxiety to God in prayer and ask for His peace"
+        },
+        {
+          "topic": "Peace in Conflict",
+          "passage": "Romans 12:18",
+          "reflection": "As much as it depends on you, live at peace with everyone",
+          "application": "Is there a relationship where you need to seek peace?"
+        },
+        {
+          "topic": "Peace with God",
+          "passage": "Romans 5:1",
+          "reflection": "Through Christ, we have peace with God and access to His grace",
+          "application": "Rest in the reality that you are at peace with God through Christ"
+        },
+        {
+          "topic": "Peace in Trust",
+          "passage": "Psalm 29:11",
+          "reflection": "God gives strength and peace to His people",
+          "application": "Trust God with one situation where you lack peace"
+        },
+        {
+          "topic": "Living at Peace",
+          "passage": "Colossians 3:15",
+          "reflection": "Let the peace of Christ rule your heart and guide your decisions",
+          "application": "Use God's peace as a compass for your choices today"
+        },
+        {
+          "topic": "Peacemaker",
+          "passage": "Matthew 5:9",
+          "reflection": "Blessed are the peacemakers, for they shall be called children of God",
+          "application": "How can you be a peacemaker in your relationships?"
+        }
+      ]
+    }
+  }
+}

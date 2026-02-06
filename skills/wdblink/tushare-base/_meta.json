@@ -1,0 +1,11 @@
+{
+  "owner": "wdblink",
+  "slug": "tushare-base",
+  "displayName": "tushare-base",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770259896528,
+    "commit": "https://github.com/clawdbot/skills/commit/28f0effdf272df9c9abe22b30df46499f0af2e1f"
+  },
+  "history": []
+}

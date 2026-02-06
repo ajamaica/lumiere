@@ -1,0 +1,11 @@
+{
+  "owner": "musallat-dev",
+  "slug": "musallat-bot",
+  "displayName": "Musallat Bot",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770258062210,
+    "commit": "https://github.com/clawdbot/skills/commit/82dc0e45322bae9ea4fe28efa93afe8b18b6b255"
+  },
+  "history": []
+}

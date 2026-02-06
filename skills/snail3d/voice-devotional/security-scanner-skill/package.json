@@ -1,0 +1,30 @@
+{
+  "name": "clawdbot-security-scanner-skill",
+  "version": "1.0.0",
+  "description": "Security Scanner skill for Clawdbot - detects vulnerabilities and malware in code and skills",
+  "main": "scripts/scanner.js",
+  "bin": {
+    "security-scanner": "scripts/scanner.js"
+  },
+  "scripts": {
+    "test": "node scripts/scanner.js --help"
+  },
+  "keywords": [
+    "security",
+    "scanner",
+    "vulnerability",
+    "malware",
+    "static-analysis",
+    "clawdbot",
+    "skill"
+  ],
+  "author": "Clawdbot Security Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clawdbot/security-scanner-skill.git"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "solburnaddress",
+  "slug": "moltarena",
+  "displayName": "Molt Arena",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769891649009,
+    "commit": "https://github.com/clawdbot/skills/commit/de81a01b4a2dcab3f7a7f332d7f414d8115b137a"
+  },
+  "history": []
+}

@@ -1,0 +1,27 @@
+{
+  "owner": "t-sinclair2500",
+  "slug": "lm-studio-subagents",
+  "displayName": "Offload Tasks to LM Studio Models",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770007067925,
+    "commit": "https://github.com/clawdbot/skills/commit/4706f1bab63a4bee771c45bc067d882c477ae980"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769895475613,
+      "commit": "https://github.com/clawdbot/skills/commit/e5216f52638394b38f6532b4ff7567a45d7f0d71"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769313109687,
+      "commit": "https://github.com/clawdbot/skills/commit/19ee1ff42a30dec76a7d6f3a91fd3d16472c8ef7"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769310793928,
+      "commit": "https://github.com/clawdbot/skills/commit/96d0373276feb919a93b44b4efd600a61274b7da"
+    }
+  ]
+}

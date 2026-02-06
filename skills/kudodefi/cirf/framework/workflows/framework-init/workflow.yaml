@@ -1,0 +1,53 @@
+# ═══════════════════════════════════════════════════════════════
+# CIRF - CRYPTO INTERACTIVE RESEARCH FRAMEWORK - WORKFLOW DEFINITION
+# ═══════════════════════════════════════════════════════════════
+
+# --- IDENTITY ---
+id: "framework-init"
+type: "setup"
+name: "Framework Initialization"
+description: "First-time setup wizard to configure user preferences and framework settings"
+
+# --- DEPENDENCIES ---
+dependencies:
+  objectives: "./framework/workflows/framework-init/objectives.md"
+  core_config: "./framework/core-config.yaml"
+
+# --- CONFIGURATION ---
+configuration:
+  # This workflow modifies core-config.yaml
+  target_file: "./framework/core-config.yaml"
+
+  # Default values for user settings
+  defaults:
+    date_format: "YYYY-MM-DD"
+    currency: "$"
+
+  # Default values for language settings
+  language_defaults:
+    communication: "en"    # Agent communication language
+    output: "en"           # Generated content language
+
+# --- DIRECTIVE ---
+# ═══════════════════════════════════════════════════════════════
+# ⚠️ MANDATORY EXECUTION - DO NOT SKIP
+# ═══════════════════════════════════════════════════════════════
+# This is a SETUP workflow - executes inline without external components.
+# Steps:
+#   1. Display welcome message
+#   2. Collect user information interactively
+#   3. Update core-config.yaml with user settings
+#   4. Confirm setup completion
+# ═══════════════════════════════════════════════════════════════
+directive:
+  execution: |
+    1. READ objectives.md → Understand setup goals
+    2. READ core-config.yaml → Get current settings
+    3. DISPLAY welcome message with framework introduction
+    4. COLLECT all user information in single interaction:
+       - Display all 5 questions with numbered options
+       - User responds with answers (e.g., "John, 1, 1, 2, 2")
+       - Parse responses, apply defaults for skipped questions
+    5. CONFIRM collected information with user
+    6. UPDATE core-config.yaml with new settings
+    7. DISPLAY setup completion message with next steps

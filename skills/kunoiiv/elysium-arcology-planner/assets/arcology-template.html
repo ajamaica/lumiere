@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head><title>Elysium Arcology Planner v1</title><style>body{margin:0;padding:20px;background:#000;color:#fff;font-family:Arial;}canvas{border:1px solid #333;}</style></head>
+<body>
+<h1>👻 Elysium Arcology: Drag to Build</h1>
+<canvas id="arcology" width="1200" height="800" style="background:linear-gradient(to bottom, #111, #333);"></canvas>
+<script>
+const canvas = document.getElementById('arcology');
+const ctx = canvas.getContext('2d');
+
+// O'Neill Cylinder (silver tube)
+ctx.save();
+ctx.translate(100, 100);
+ctx.fillStyle = '#c0c0c0'; // Silver
+ctx.fillRect(0, 0, 200, 400); // Body
+ctx.fillStyle = '#aaa';
+ctx.fillRect(10, 10, 180, 380); // Highlight
+ctx.fillStyle = '#999';
+ctx.fillRect(0, 200, 200, 20); // Window band
+ctx.restore();
+
+// Naubiomech Leg (blue, next to cylinder)
+ctx.save();
+ctx.translate(600, 200);
+// Hip
+ctx.fillStyle = 'steelblue';
+ctx.fillRect(0, 0, 25, 100);
+// Knee joint
+ctx.fillStyle = 'darkred';
+ctx.beginPath(); ctx.arc(12.5, 100, 12, 0, Math.PI*2); ctx.fill();
+// Shin
+ctx.fillStyle = 'steelblue';
+ctx.fillRect(0, 112, 20, 300);
+// Ankle joint
+ctx.fillStyle = 'orange';
+ctx.beginPath(); ctx.arc(10, 412, 10, 0, Math.PI*2); ctx.fill();
+// Foot
+ctx.fillStyle = 'lightblue';
+ctx.fillRect(-5, 422, 30, 150);
+ctx.restore();
+
+// Labels
+ctx.fillStyle = '#fff';
+ctx.font = 'bold 20px Arial';
+ctx.fillText('O\'Neill Cylinder (8km x 32km, 1RPM=1G)', 100, 520);
+ctx.fillText('Naubiomech Leg v1 (50kg lift, Coriolis gyro)', 600, 620);
+
+// Physics sim label
+ctx.font = '16px Arial';
+ctx.fillText('Sim: 1G | Coriolis 0.4m/s² | Hashrate 2PH/s', 100, 560);
+
+// Instructions
+ctx.fillStyle = '#aaa';
+ctx.font = '14px Arial';
+ctx.fillText('Drag to build | OpenClaw: canvas action=present/eval/snapshot', 100, 780);
+</script>
+</body>
+</html>

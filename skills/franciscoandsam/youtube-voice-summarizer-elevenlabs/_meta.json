@@ -1,0 +1,11 @@
+{
+  "owner": "franciscoandsam",
+  "slug": "youtube-voice-summarizer-elevenlabs",
+  "displayName": "Youtube Podcast summarizer via Elevenlabs",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769966158524,
+    "commit": "https://github.com/clawdbot/skills/commit/efbb6f5a6b2386c503bd9343faf5c8818b3fb0d2"
+  },
+  "history": []
+}

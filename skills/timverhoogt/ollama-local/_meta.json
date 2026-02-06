@@ -1,0 +1,11 @@
+{
+  "owner": "timverhoogt",
+  "slug": "ollama-local",
+  "displayName": "Ollama Local",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770105930012,
+    "commit": "https://github.com/clawdbot/skills/commit/752b58bb32f778d1651b7ae50d65ed645665bb84"
+  },
+  "history": []
+}

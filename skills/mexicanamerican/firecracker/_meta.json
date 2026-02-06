@@ -1,0 +1,17 @@
+{
+  "owner": "mexicanamerican",
+  "slug": "firecracker",
+  "displayName": "Firecracker",
+  "latest": {
+    "version": "1.0.5",
+    "publishedAt": 1770322617375,
+    "commit": "https://github.com/openclaw/skills/commit/95a0a6f11766f7134db7e70e51231e0324b854e6"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770319797676,
+      "commit": "https://github.com/clawdbot/skills/commit/55f67f2b08cc94d075f3cc132082e0ee0fdd0e5b"
+    }
+  ]
+}

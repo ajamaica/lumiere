@@ -1,0 +1,11 @@
+{
+  "owner": "edwardirby",
+  "slug": "teams-anthropic-integration",
+  "displayName": "Build Teams.ai Apps with Anthropic Claude",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1769930001015,
+    "commit": "https://github.com/clawdbot/skills/commit/c633282578fb46ba677abdc7fb55419cbd31dad4"
+  },
+  "history": []
+}

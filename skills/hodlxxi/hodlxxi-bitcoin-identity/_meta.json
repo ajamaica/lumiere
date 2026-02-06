@@ -1,0 +1,11 @@
+{
+  "owner": "hodlxxi",
+  "slug": "hodlxxi-bitcoin-identity",
+  "displayName": "Bitcoin Identity",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769992737473,
+    "commit": "https://github.com/clawdbot/skills/commit/faa9436e16d0e5b27aa61a3a56d964737a3e8057"
+  },
+  "history": []
+}

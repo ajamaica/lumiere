@@ -1,0 +1,17 @@
+{
+  "owner": "1lystore",
+  "slug": "openclaw-1ly-payments",
+  "displayName": "OpenClaw 1ly Payments",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770192432966,
+    "commit": "https://github.com/clawdbot/skills/commit/54d93c5aa4aa1568842cd937c249ec3d73ff8dcf"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769977688119,
+      "commit": "https://github.com/clawdbot/skills/commit/54efb82c44f4a3cb726e7a4d1bdd7f8998a151e8"
+    }
+  ]
+}

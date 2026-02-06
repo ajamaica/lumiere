@@ -1,0 +1,11 @@
+{
+  "owner": "cyberengage",
+  "slug": "hello",
+  "displayName": "Hello Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770201276496,
+    "commit": "https://github.com/clawdbot/skills/commit/e376f827a939b9ab88bf7b21c29df43e86470b7f"
+  },
+  "history": []
+}

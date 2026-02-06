@@ -1,0 +1,11 @@
+{
+  "owner": "proxyhq",
+  "slug": "agent-card-provisioning",
+  "displayName": "Agent Card Provisioning",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770216982992,
+    "commit": "https://github.com/clawdbot/skills/commit/ef44cfb2346c359e41762b096347b3d020aea918"
+  },
+  "history": []
+}

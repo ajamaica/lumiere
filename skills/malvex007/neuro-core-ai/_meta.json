@@ -1,0 +1,11 @@
+{
+  "owner": "malvex007",
+  "slug": "neuro-core-ai",
+  "displayName": "NeuroCoreAi",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770286706279,
+    "commit": "https://github.com/clawdbot/skills/commit/02e2c90b092f241d3571d1b9bd7e9970d0d717bd"
+  },
+  "history": []
+}

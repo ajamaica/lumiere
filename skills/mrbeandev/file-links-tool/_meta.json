@@ -1,0 +1,17 @@
+{
+  "owner": "mrbeandev",
+  "slug": "file-links-tool",
+  "displayName": "File Links Creator",
+  "latest": {
+    "version": "1.0.9",
+    "publishedAt": 1770021095534,
+    "commit": "https://github.com/clawdbot/skills/commit/09cd848eb6b41b53eace0574521d6a1d3cda2693"
+  },
+  "history": [
+    {
+      "version": "1.0.8",
+      "publishedAt": 1769937959126,
+      "commit": "https://github.com/clawdbot/skills/commit/c8ee22d7fb205d55d9b1c4e7ab73407b56e122ff"
+    }
+  ]
+}

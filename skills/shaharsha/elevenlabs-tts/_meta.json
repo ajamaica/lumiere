@@ -1,0 +1,27 @@
+{
+  "owner": "shaharsha",
+  "slug": "elevenlabs-tts",
+  "displayName": "ElevenLabs TTS",
+  "latest": {
+    "version": "1.3.2",
+    "publishedAt": 1770207262141,
+    "commit": "https://github.com/clawdbot/skills/commit/c4795bb64b86ee284639f0a7d6ed8951a0bfff84"
+  },
+  "history": [
+    {
+      "version": "1.2.8",
+      "publishedAt": 1770156597449,
+      "commit": "https://github.com/clawdbot/skills/commit/2e0443a0d1ec8a6a717b405b41a23256597db282"
+    },
+    {
+      "version": "1.2.4",
+      "publishedAt": 1770155785227,
+      "commit": "https://github.com/clawdbot/skills/commit/78b427e049f7d27debd52362969fa5b6daefcb03"
+    },
+    {
+      "version": "1.2.3",
+      "publishedAt": 1770142089438,
+      "commit": "https://github.com/clawdbot/skills/commit/a24d27300df293ad4ac3ecebf8389aac2e96fc31"
+    }
+  ]
+}

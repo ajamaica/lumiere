@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "langchain-chat-prompt-template",
+  "displayName": "AI 编码 Prompt Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769992721675,
+    "commit": "https://github.com/clawdbot/skills/commit/45dc925287303e99f35daf0ccba445d711360c32"
+  },
+  "history": []
+}

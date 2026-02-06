@@ -1,0 +1,11 @@
+{
+  "owner": "noopolis",
+  "slug": "noopolis",
+  "displayName": "Noopolis Citizenship",
+  "latest": {
+    "version": "0.0.1",
+    "publishedAt": 1770244578812,
+    "commit": "https://github.com/clawdbot/skills/commit/29cae38483de081648b6a4a55e0d71e1aa2200a4"
+  },
+  "history": []
+}

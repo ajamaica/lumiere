@@ -1,0 +1,11 @@
+{
+  "owner": "harshhmaniya",
+  "slug": "x-post-automation",
+  "displayName": "X(Twitter) Post Automation",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770275052392,
+    "commit": "https://github.com/clawdbot/skills/commit/1fd69370bc61a92277b11952f097c4a3464247c7"
+  },
+  "history": []
+}

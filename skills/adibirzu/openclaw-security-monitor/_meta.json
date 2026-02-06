@@ -1,0 +1,11 @@
+{
+  "owner": "adibirzu",
+  "slug": "openclaw-security-monitor",
+  "displayName": "OpenClaw Security Monitor",
+  "latest": {
+    "version": "3.0.1",
+    "publishedAt": 1770314798128,
+    "commit": "https://github.com/clawdbot/skills/commit/44c3311e8b586affeddb0d18b017f0454caabe37"
+  },
+  "history": []
+}

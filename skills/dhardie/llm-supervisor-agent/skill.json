@@ -1,0 +1,33 @@
+{
+  "id": "llm-supervisor",
+  "name": "LLM Supervisor",
+  "version": "0.2.0",
+  "description": "Automatically switches between cloud and local LLMs when rate limits occur, with explicit user confirmation before local code generation.",
+  "author": "Duncan Hardie",
+  "license": "MIT",
+  "enabledByDefault": true,
+  "entry": "dist/index.js",
+  "categories": ["infrastructure", "reliability", "llm-ops"],
+  "capabilities": {
+    "hooks": ["onLLMError", "onAgentStart", "beforeTaskExecute"],
+    "commands": ["/llm status", "/llm switch cloud", "/llm switch local"],
+    "notifications": true
+  },
+  "permissions": {
+    "llm": true,
+    "agents": true,
+    "notifications": true,
+    "state": true
+  },
+  "config": {
+    "autoSwitch": true,
+    "cooldownMinutes": 10,
+    "localModel": "qwen2.5:7b",
+    "requireConfirmationForLocalCode": true,
+    "confirmationPhrase": "CONFIRM LOCAL CODE"
+  },
+  "clawhub": {
+    "publishable": true,
+    "visibility": "public"
+  }
+}

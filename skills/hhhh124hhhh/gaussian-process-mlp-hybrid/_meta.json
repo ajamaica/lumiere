@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "gaussian-process-mlp-hybrid",
+  "displayName": "AI 编码 Prompt Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769992681753,
+    "commit": "https://github.com/clawdbot/skills/commit/1093f1379a59f53d855c6e873a35d6053c7a19c1"
+  },
+  "history": []
+}

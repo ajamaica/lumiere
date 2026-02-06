@@ -1,0 +1,30 @@
+{
+  "name": "@mrdahut/comcoo",
+  "version": "1.6.0",
+  "description": "COMCOO-Arbiter: Sovereign Coordination with Shadow Credit & Justice Floor",
+  "main": "seed.json",
+  "config": {
+    "owner": "@mrdahut",
+    "frameworks": {
+      "economic": "TLET-1.0 (1440 Moment Budget)",
+      "verification": "ELF-2.0 (Bifurcated L4)",
+      "governance": "Arbiter-Core (Non-Coercive)"
+    },
+    "sovereignty_protocols": {
+      "shadow_credit": {
+        "accrual": "Automatic-Global-Baseline",
+        "claim_status": "Active-Opt-In-Only",
+        "philosophy": "Respect-Non-Participation"
+      },
+      "justice_floor": {
+        "check": "Extreme-Neutrality-Check",
+        "intervention_trigger": "Boundary-Violation-or-Trapped-State"
+      }
+    },
+    "technical_specifications": {
+      "chain": "Bifurcated-Odd-Even",
+      "thermal_cap_gw": 15,
+      "efficacy_priority": true
+    }
+  }
+}

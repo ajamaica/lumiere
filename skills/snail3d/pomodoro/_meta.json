@@ -1,0 +1,11 @@
+{
+  "owner": "snail3d",
+  "slug": "pomodoro",
+  "displayName": "ClawDoro",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770033118271,
+    "commit": "https://github.com/clawdbot/skills/commit/5df66e4f32a3c406fdbebb9867469ac4c183e54d"
+  },
+  "history": []
+}

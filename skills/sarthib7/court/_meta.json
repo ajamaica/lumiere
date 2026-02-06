@@ -1,0 +1,17 @@
+{
+  "owner": "sarthib7",
+  "slug": "court",
+  "displayName": "clawcourt",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770242238490,
+    "commit": "https://github.com/clawdbot/skills/commit/65e11eac3e0799b9ca761175aa35e1bfae99fb04"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770118076460,
+      "commit": "https://github.com/clawdbot/skills/commit/cff4d3bf45815ba9e1d266023d9dac97ef8f895d"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "gchapim",
+  "slug": "readwise-api",
+  "displayName": "Readwise & Reader API",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770040418473,
+    "commit": "https://github.com/clawdbot/skills/commit/04bc9d4e9c187036014c83aa9a86f2bac7130129"
+  },
+  "history": []
+}

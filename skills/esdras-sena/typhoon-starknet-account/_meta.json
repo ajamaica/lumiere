@@ -1,0 +1,32 @@
+{
+  "owner": "esdras-sena",
+  "slug": "typhoon-starknet-account",
+  "displayName": "Typhoon Starknet Account",
+  "latest": {
+    "version": "0.2.5",
+    "publishedAt": 1770206143453,
+    "commit": "https://github.com/clawdbot/skills/commit/dff59a123d4a23d83fbd1c2afde2860a05b20364"
+  },
+  "history": [
+    {
+      "version": "0.2.4",
+      "publishedAt": 1770178862456,
+      "commit": "https://github.com/clawdbot/skills/commit/10936a2dfcd4feeb772ccfa7aaa62f4966c674de"
+    },
+    {
+      "version": "0.2.3",
+      "publishedAt": 1770153915510,
+      "commit": "https://github.com/clawdbot/skills/commit/307157db0a453d27c12301bfaf34ef878b7e644c"
+    },
+    {
+      "version": "0.2.0",
+      "publishedAt": 1770130320383,
+      "commit": "https://github.com/clawdbot/skills/commit/6d24a57c69afc74be4b8d112e926d3e54ce72835"
+    },
+    {
+      "version": "0.1.0",
+      "publishedAt": 1770052217644,
+      "commit": "https://github.com/clawdbot/skills/commit/297736fba9906fa3354a224aa5278ed960a5abff"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "letssendit",
+  "version": "1.0.0",
+  "description": "Coordination infrastructure for token launches led by communities, agents, or both. Mechanics beat promises.",
+  "homepage": "https://letssendit.fun",
+  "author": {
+    "name": "let's send it",
+    "email": "team@letssendit.fun",
+    "url": "https://letssendit.fun"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/letssendit/letssendit"
+  },
+  "keywords": [
+    "crypto",
+    "solana",
+    "token-launch",
+    "token",
+    "fundraise",
+    "vesting",
+    "coordination",
+    "pump.fun",
+    "pump"
+  ],
+  "license": "MIT",
+  "skill": {
+    "entry": "SKILL.md",
+    "files": ["SKILL.md", "QUICKSTART.md", "PHILOSOPHY.md", "API.md", "FEES.md"],
+    "config": {
+      "requiredEnv": ["LSI_API_KEY"]
+    },
+    "capabilities": ["token-launch", "fundraise-management", "seat-commitment", "fee-sharing"],
+    "chains": ["solana"],
+    "integrations": ["pump.fun", "streamflow"]
+  },
+  "links": {
+    "documentation": "https://letssendit.fun/docs",
+    "support": "https://x.com/letssenditfun",
+    "api": "https://letssendit.fun/api"
+  }
+}

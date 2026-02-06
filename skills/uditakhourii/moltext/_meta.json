@@ -1,0 +1,11 @@
+{
+  "owner": "uditakhourii",
+  "slug": "moltext",
+  "displayName": "Moltext",
+  "latest": {
+    "version": "1.2.3",
+    "publishedAt": 1770065246228,
+    "commit": "https://github.com/clawdbot/skills/commit/6d7d814e3a931baaae38da97ad8fa004e844eadb"
+  },
+  "history": []
+}

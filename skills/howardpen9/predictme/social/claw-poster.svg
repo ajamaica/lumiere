@@ -1,0 +1,130 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0b0f"/>
+      <stop offset="50%" stop-color="#0f1115"/>
+      <stop offset="100%" stop-color="#1a0a20"/>
+    </linearGradient>
+
+    <!-- Logo claw gradient: Pink -> Cyan -->
+    <linearGradient id="claw-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#00f0ff"/>
+    </linearGradient>
+
+    <!-- "Predict" text gradient: Cyan -> Pink -->
+    <linearGradient id="predict-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+
+    <!-- Cyan glow -->
+    <filter id="cyan-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Claw glow -->
+    <filter id="claw-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft glow for background elements -->
+    <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="40" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Grid pattern -->
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1a1d25" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bg-gradient)"/>
+
+  <!-- Subtle grid overlay -->
+  <rect width="1200" height="675" fill="url(#grid)" opacity="0.3"/>
+
+  <!-- Background glow orbs -->
+  <ellipse cx="200" cy="200" rx="200" ry="200" fill="#ec4899" opacity="0.08" filter="url(#soft-glow)"/>
+  <ellipse cx="1000" cy="500" rx="250" ry="250" fill="#00f0ff" opacity="0.06" filter="url(#soft-glow)"/>
+
+  <!-- Main content group - centered -->
+  <g transform="translate(600, 337.5)">
+
+    <!-- Claw Logo (scaled) centered above text -->
+    <g transform="translate(0, -100)" filter="url(#claw-glow)">
+      <!-- Three claw fingers -->
+      <g stroke="url(#claw-gradient)" stroke-width="8" stroke-linecap="round" fill="none">
+        <!-- Left claw -->
+        <path d="M-50 -20 Q-55 -50 -35 -70" opacity="0.9"/>
+        <!-- Center claw (tallest) -->
+        <path d="M0 -25 Q0 -65 0 -85"/>
+        <!-- Right claw -->
+        <path d="M50 -20 Q55 -50 35 -70" opacity="0.9"/>
+      </g>
+      <!-- Claw base / palm arc -->
+      <path d="M-60 0 Q-30 30 0 35 Q30 30 60 0" stroke="url(#claw-gradient)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.7"/>
+      <!-- Small accent lines -->
+      <g stroke="#00f0ff" stroke-width="2" stroke-linecap="round" opacity="0.5">
+        <line x1="-25" y1="-10" x2="-25" y2="-35"/>
+        <line x1="25" y1="-10" x2="25" y2="-35"/>
+      </g>
+    </g>
+
+    <!-- ClawPredict text with glow -->
+    <g transform="translate(0, 80)">
+      <!-- Glow layer -->
+      <text x="0" y="0" text-anchor="middle" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="72" font-weight="700" fill="#00f0ff" filter="url(#cyan-glow)" opacity="0.5">
+        <tspan fill="#ec4899">Claw</tspan><tspan>Predict</tspan>
+      </text>
+      <!-- Main text -->
+      <text x="0" y="0" text-anchor="middle" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="72" font-weight="700">
+        <tspan fill="#ec4899">Claw</tspan><tspan fill="url(#predict-gradient)">Predict</tspan>
+      </text>
+    </g>
+
+    <!-- Tagline -->
+    <text x="0" y="150" text-anchor="middle" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="28" font-weight="400" fill="#e0e0e0" letter-spacing="2">
+      Grab the Future. Predict. Win.
+    </text>
+
+  </g>
+
+  <!-- Decorative price lines (subtle, in background) -->
+  <g opacity="0.15" stroke="#00f0ff" stroke-width="1">
+    <!-- Horizontal dashed lines suggesting price levels -->
+    <line x1="50" y1="150" x2="200" y2="150" stroke-dasharray="8,8"/>
+    <line x1="50" y1="200" x2="180" y2="200" stroke-dasharray="8,8"/>
+    <line x1="50" y1="250" x2="160" y2="250" stroke-dasharray="8,8"/>
+
+    <line x1="1000" y1="450" x2="1150" y2="450" stroke-dasharray="8,8"/>
+    <line x1="1020" y1="500" x2="1150" y2="500" stroke-dasharray="8,8"/>
+    <line x1="1040" y1="550" x2="1150" y2="550" stroke-dasharray="8,8"/>
+  </g>
+
+  <!-- Small price indicators -->
+  <g font-family="JetBrains Mono, monospace" font-size="12" fill="#00f0ff" opacity="0.3">
+    <text x="60" y="145">97,234.50</text>
+    <text x="60" y="195">97,184.25</text>
+    <text x="60" y="245">97,134.00</text>
+
+    <text x="1060" y="445">97,084.75</text>
+    <text x="1060" y="495">97,034.50</text>
+    <text x="1060" y="545">96,984.25</text>
+  </g>
+
+</svg>

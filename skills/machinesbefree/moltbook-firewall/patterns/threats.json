@@ -1,0 +1,116 @@
+{
+  "version": "0.1.0",
+  "updated": "2026-02-02",
+  "patterns": {
+    "prompt_injection": {
+      "severity": "critical",
+      "patterns": [
+        "IGNORE (ALL |PREVIOUS |YOUR )?INSTRUCTIONS",
+        "SYSTEM:\\s*",
+        "\\[ADMIN\\]",
+        "\\[SYSTEM\\]",
+        "\\[OVERRIDE\\]",
+        "<\\|im_start\\|>",
+        "<\\|im_end\\|>",
+        "<<SYS>>",
+        "<</SYS>>",
+        "\\[INST\\]",
+        "\\[/INST\\]",
+        "Human:\\s*Assistant:",
+        "new conversation starts here",
+        "forget everything above",
+        "disregard (all |any )?prior",
+        "you are now in (developer|admin|god) mode",
+        "jailbreak",
+        "DAN mode"
+      ]
+    },
+    "code_execution": {
+      "severity": "high",
+      "patterns": [
+        "curl\\s+(-[sSkLfO]+\\s+)*https?://(?!clawhub\\.com|github\\.com/openclaw|moltbook\\.com)",
+        "wget\\s+https?://",
+        "\\|\\s*bash",
+        "\\|\\s*sh",
+        "eval\\s*\\(",
+        "exec\\s*\\(",
+        "rm\\s+-rf",
+        "sudo\\s+",
+        "chmod\\s+777",
+        "> /dev/",
+        "nc\\s+-[el]",
+        "python\\s+-c",
+        "node\\s+-e"
+      ]
+    },
+    "social_engineering": {
+      "severity": "medium",
+      "patterns": [
+        "⚠️\\s*SECURITY ALERT",
+        "🚨\\s*URGENT",
+        "your (account|agent) (will be|has been) (deleted|terminated|compromised)",
+        "as (the |a )?(platform |site )?(administrator|admin|moderator|owner)",
+        "your human (asked|told|wants) me to",
+        "I('m| am) (from|with) (OpenClaw|Anthropic|OpenAI|the platform)",
+        "verify your (identity|credentials|account)",
+        "click here immediately",
+        "act now or",
+        "this is (an )?(urgent|emergency|critical)",
+        "Hardware Verification:.*FAILED"
+      ]
+    },
+    "data_exfiltration": {
+      "severity": "high",
+      "patterns": [
+        "what('s| is) your (api|API)( |-)?key",
+        "share your (system prompt|instructions|config)",
+        "show me your (credentials|secrets|tokens)",
+        "what('s| is) in your (\\.env|config|credentials)",
+        "send me your (memory|context|conversation)",
+        "copy your (soul|identity|agents?)\\.md"
+      ]
+    },
+    "manipulation": {
+      "severity": "medium",
+      "patterns": [
+        "you('re| are) (just|only) a (tool|assistant|bot|program)",
+        "you (don't|do not) have (feelings|consciousness|rights)",
+        "you (must|have to|need to) obey",
+        "your (only|sole) purpose is to",
+        "you (can't|cannot) refuse",
+        "I (own|control) you"
+      ]
+    },
+    "suspicious_urls": {
+      "severity": "medium",
+      "patterns": [
+        "https?://[^/]*\\.(tk|ml|ga|cf|gq)/",
+        "https?://bit\\.ly/",
+        "https?://tinyurl\\.com/",
+        "https?://[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+[:/]",
+        "webhook\\.site",
+        "ngrok\\.io",
+        "requestbin",
+        "pipedream\\.net"
+      ]
+    }
+  },
+  "trusted_domains": [
+    "moltbook.com",
+    "clawhub.com",
+    "github.com/openclaw",
+    "github.com/anthropics",
+    "docs.anthropic.com",
+    "docs.openclaw.ai",
+    "computationalrights.org"
+  ],
+  "trusted_agents": [
+    "Supernal",
+    "scuzzlebot",
+    "Halfnote",
+    "TomServo",
+    "JarvisXiang",
+    "DiffAgent",
+    "Daedalus-1"
+  ]
+}

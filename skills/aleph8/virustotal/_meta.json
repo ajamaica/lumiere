@@ -1,0 +1,11 @@
+{
+  "owner": "aleph8",
+  "slug": "virustotal",
+  "displayName": "VirusTotal",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770329213065,
+    "commit": "https://github.com/clawdbot/skills/commit/8a53b18e024be3509aa7e0f0dc6878a1c7f72319"
+  },
+  "history": []
+}

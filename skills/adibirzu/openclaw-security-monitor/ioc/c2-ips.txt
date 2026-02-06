@@ -1,0 +1,19 @@
+# OpenClaw Known C2 IP Addresses
+# Source: Koi Security ClawHavoc report, VirusTotal, community reports
+# Format: IP|campaign|first_seen|notes
+#
+# Usage: grep patterns in this file match network connections and skill content
+
+# ClawHavoc primary C2 (AMOS stealer delivery)
+91.92.242.30|clawhavoc|2026-01-27|Primary AMOS C2, 335 skills
+95.92.242.30|clawhavoc|2026-01-27|Secondary C2
+96.92.242.30|clawhavoc|2026-01-27|Secondary C2
+
+# Reverse shell endpoint
+54.91.154.110|clawhavoc-revshell|2026-01-28|Reverse shell target port 13338
+
+# Payload distribution
+202.161.50.59|clawhavoc|2026-01-28|Payload staging
+
+# Catch-all pattern for the 91.92.242.x range
+# 91.92.242.*|clawhavoc-range|2026-01-27|Entire /24 suspect

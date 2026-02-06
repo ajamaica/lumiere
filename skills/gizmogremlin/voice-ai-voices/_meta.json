@@ -1,0 +1,17 @@
+{
+  "owner": "gizmogremlin",
+  "slug": "voice-ai-voices",
+  "displayName": "Voice.ai Voices",
+  "latest": {
+    "version": "0.1.2",
+    "publishedAt": 1769868734366,
+    "commit": "https://github.com/clawdbot/skills/commit/72e9e945d99393deedfd536191f2be9c95762bdf"
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1769863073402,
+      "commit": "https://github.com/clawdbot/skills/commit/08417d5291a4c3af427856c083203509d4fd3ad9"
+    }
+  ]
+}

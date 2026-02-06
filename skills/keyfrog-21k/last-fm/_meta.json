@@ -1,0 +1,11 @@
+{
+  "owner": "keyfrog-21k",
+  "slug": "last-fm",
+  "displayName": "last.fm",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770258574330,
+    "commit": "https://github.com/clawdbot/skills/commit/bb0d41cb6131ac2bdd16fcc757ae08bfbe3e21d7"
+  },
+  "history": []
+}

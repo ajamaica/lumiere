@@ -1,0 +1,17 @@
+{
+  "owner": "akshat-mishra101",
+  "slug": "wachai-mandates",
+  "displayName": "wachaimandates",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770199997465,
+    "commit": "https://github.com/clawdbot/skills/commit/3a122000048a742f9a02571db2b089a3b0282023"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770009922457,
+      "commit": "https://github.com/clawdbot/skills/commit/8ccfadc5519c5fc8878a82a5e3e57a62a6dceb65"
+    }
+  ]
+}

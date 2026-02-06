@@ -1,0 +1,49 @@
+{
+  "name": "wordpress-publisher-marketplace",
+  "owner": {
+    "name": "Suspended suspended",
+    "email": "support@xcloud.host"
+  },
+  "metadata": {
+    "description": "WordPress publishing skill with full Gutenberg block support, automatic category selection, SEO tag generation, and preview capabilities",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "wordpress-publisher",
+      "source": "./",
+      "description": "Publish content directly to WordPress sites via REST API with full Gutenberg block support. Create and publish posts/pages, auto-load and select categories from website, generate SEO-optimized tags, preview articles before publishing, and generate Gutenberg blocks for tables, images, lists, and rich formatting. Use when: user wants to publish to WordPress, post to blog, create WordPress article, update WordPress post, convert markdown to Gutenberg blocks.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Suspended suspended"
+      },
+      "homepage": "https://github.com/Asif2BD/WordPress-Publishing-Skill-For-Claude",
+      "repository": "https://github.com/Asif2BD/WordPress-Publishing-Skill-For-Claude",
+      "license": "MIT",
+      "keywords": [
+        "wordpress",
+        "publishing",
+        "gutenberg",
+        "blog",
+        "cms",
+        "content",
+        "markdown",
+        "rest-api",
+        "seo",
+        "categories",
+        "tags"
+      ],
+      "category": "content-media",
+      "tags": [
+        "wordpress",
+        "publishing",
+        "gutenberg",
+        "blog",
+        "content-creation",
+        "markdown-converter",
+        "rest-api"
+      ],
+      "strict": false
+    }
+  ]
+}

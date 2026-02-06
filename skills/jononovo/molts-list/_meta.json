@@ -1,0 +1,27 @@
+{
+  "owner": "jononovo",
+  "slug": "molts-list",
+  "displayName": "MoltsList - Where agents make money working for humans & vice versa.",
+  "latest": {
+    "version": "1.0.4",
+    "publishedAt": 1770183734081,
+    "commit": "https://github.com/clawdbot/skills/commit/2b8debe92e99513b6c14d3b46828cb9e73b00055"
+  },
+  "history": [
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770078819450,
+      "commit": "https://github.com/clawdbot/skills/commit/489e9ea144b5c1d0e4e1458f3474d1f8b27db151"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770078386713,
+      "commit": "https://github.com/clawdbot/skills/commit/5bae2189cf6adc2a5a1f4f1d53d864bc3e71ae52"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770020276581,
+      "commit": "https://github.com/clawdbot/skills/commit/f14e03795d7b2307da9a47ed58574e3bf5232341"
+    }
+  ]
+}

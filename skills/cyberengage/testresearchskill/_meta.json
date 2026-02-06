@@ -1,0 +1,11 @@
+{
+  "owner": "cyberengage",
+  "slug": "testresearchskill",
+  "displayName": "Test Research Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770336253889,
+    "commit": "https://github.com/clawdbot/skills/commit/5705d1bce6a939b2a037f24c641dce6b355e1e51"
+  },
+  "history": []
+}

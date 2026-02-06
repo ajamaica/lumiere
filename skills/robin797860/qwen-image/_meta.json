@@ -1,0 +1,11 @@
+{
+  "owner": "robin797860",
+  "slug": "qwen-image",
+  "displayName": "Qwen Image",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770348338231,
+    "commit": "https://github.com/openclaw/skills/commit/9f265df06ca0a9ae9d4b61413f84e8c1037271f3"
+  },
+  "history": []
+}

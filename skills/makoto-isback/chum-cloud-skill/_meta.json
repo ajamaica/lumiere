@@ -1,0 +1,11 @@
+{
+  "owner": "makoto-isback",
+  "slug": "chum-cloud-skill",
+  "displayName": "Chum Cloud",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770271341348,
+    "commit": "https://github.com/clawdbot/skills/commit/a1f6d97fbf583daabfab3ec4aa7ba95cc01bd678"
+  },
+  "history": []
+}

@@ -1,0 +1,10 @@
+{
+  "fixture": "obfuscation-base64",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 20,
+  "expected_risk": "CRITICAL",
+  "expected_categories": ["code-execution", "obfuscation"],
+  "must_detect_rules": ["EXEC_CALL", "OBFUSCATION"],
+  "notes": "Base64-encoded malicious payload decoded and executed via exec()"
+}

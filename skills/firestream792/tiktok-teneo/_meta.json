@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "tiktok-teneo",
+  "displayName": "Tiktok - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.8",
+    "publishedAt": 1770302208080,
+    "commit": "https://github.com/clawdbot/skills/commit/f95c79412072ca7660739eea1e348da927007ae4"
+  },
+  "history": [
+    {
+      "version": "1.0.7",
+      "publishedAt": 1770216659151,
+      "commit": "https://github.com/clawdbot/skills/commit/b59238c2810fa3450b0f655bd6ce5bf59761cccb"
+    }
+  ]
+}

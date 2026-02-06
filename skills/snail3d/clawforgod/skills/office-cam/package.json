@@ -1,0 +1,52 @@
+{
+  "name": "clawcamera",
+  "version": "1.0.0",
+  "description": "Multi-camera surveillance with motion detection, Overwatch monitoring, and AI analysis. Built for OpenClaw.",
+  "main": "scripts/overwatch-checkin.js",
+  "bin": {
+    "clawcamera": "scripts/cli.js"
+  },
+  "scripts": {
+    "test": "node scripts/test-capture.js",
+    "start": "node scripts/overwatch-checkin.js",
+    "receiver": "node scripts/esp32-cam-receiver.js",
+    "analyzer": "node scripts/analyzer.js",
+    "checkin": "node scripts/overwatch-checkin.js"
+  },
+  "keywords": [
+    "camera",
+    "surveillance",
+    "motion-detection",
+    "esp32",
+    "wyze",
+    "groq",
+    "ai-vision",
+    "telegram",
+    "openclaw"
+  ],
+  "author": "Snail with Clawd",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Snail3D/ClawCamera.git"
+  },
+  "homepage": "https://github.com/Snail3D/ClawCamera#readme",
+  "bugs": {
+    "url": "https://github.com/Snail3D/ClawCamera/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.52.0"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.32.6"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "garrza",
+  "slug": "garmer",
+  "displayName": "Garmer",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770223425899,
+    "commit": "https://github.com/clawdbot/skills/commit/92fa6ecffd5b7a5b4da7fc557920b27f4f632775"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770180036972,
+      "commit": "https://github.com/clawdbot/skills/commit/66b54924fa3c187d302b4e2312484e8624e9e069"
+    }
+  ]
+}

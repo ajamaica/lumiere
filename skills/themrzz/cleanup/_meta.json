@@ -1,0 +1,11 @@
+{
+  "owner": "themrzz",
+  "slug": "cleanup",
+  "displayName": "Cleanup",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770296811659,
+    "commit": "https://github.com/clawdbot/skills/commit/251ccb50db5f2f8ee7721007904a2bc27942f96d"
+  },
+  "history": []
+}

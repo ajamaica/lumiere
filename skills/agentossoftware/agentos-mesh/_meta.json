@@ -1,0 +1,11 @@
+{
+  "owner": "agentossoftware",
+  "slug": "agentos-mesh",
+  "displayName": "AgentOS Mesh",
+  "latest": {
+    "version": "1.3.0",
+    "publishedAt": 1770292832935,
+    "commit": "https://github.com/clawdbot/skills/commit/ef01b55b5c7fe206b46110775e00d920c356cbdf"
+  },
+  "history": []
+}

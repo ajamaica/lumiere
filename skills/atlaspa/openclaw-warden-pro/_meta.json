@@ -1,0 +1,11 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-warden-pro",
+  "displayName": "OpenClaw Warden Pro",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770277336739,
+    "commit": "https://github.com/openclaw/skills/commit/3075f3cab4b2fff194ddb4da0f8da6cd805aebb3"
+  },
+  "history": []
+}

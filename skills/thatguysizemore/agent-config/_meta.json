@@ -1,0 +1,11 @@
+{
+  "owner": "thatguysizemore",
+  "slug": "agent-config",
+  "displayName": "Agent Config",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770052900080,
+    "commit": "https://github.com/clawdbot/skills/commit/86427480b1446be52db19bffa71e871529e5aa92"
+  },
+  "history": []
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "gregm711",
+  "slug": "agentdomainservice",
+  "displayName": "Domain availability API built for AI agents. Check single domains, explore names across .com/.io/.ai/.dev/etc, filter by budget, get smart suggestions. Returns proper JSON/TXT with correct Content-Type headers.",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770072972992,
+    "commit": "https://github.com/clawdbot/skills/commit/85337456377fdcbb34ccecb039961b8a1924ab16"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769985539271,
+      "commit": "https://github.com/clawdbot/skills/commit/69d69985a3e4b6181819b83289a3e72466a0efaa"
+    }
+  ]
+}

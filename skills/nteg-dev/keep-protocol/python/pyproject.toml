@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "keep-protocol"
+version = "0.5.0"
+description = "Signed protobuf packets over TCP for AI agent-to-agent communication"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Chris Crawford"}]
+requires-python = ">= 3.10"
+keywords = [
+    "agent-protocol",
+    "ai-agents",
+    "protobuf",
+    "ed25519",
+    "tcp",
+    "agent-communication",
+    "mcp",
+    "multi-agent",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications",
+    "Topic :: Security :: Cryptography",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "protobuf >= 4.25",
+    "cryptography >= 41.0",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp >= 1.0.0"]
+
+[project.scripts]
+keep-mcp = "keep.mcp:main"
+
+[project.urls]
+Homepage = "https://github.com/CLCrawford-dev/keep-protocol"
+Repository = "https://github.com/CLCrawford-dev/keep-protocol"
+Issues = "https://github.com/CLCrawford-dev/keep-protocol/issues"

@@ -1,0 +1,11 @@
+{
+  "owner": "createpjf",
+  "slug": "flock-in-v1",
+  "displayName": "FLock Model Platform",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770200766220,
+    "commit": "https://github.com/clawdbot/skills/commit/5a3e0e6a3adf16658200c624f016d2c3852c2202"
+  },
+  "history": []
+}

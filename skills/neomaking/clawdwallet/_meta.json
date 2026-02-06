@@ -1,0 +1,11 @@
+{
+  "owner": "neomaking",
+  "slug": "clawdwallet",
+  "displayName": "Clawdwallet",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770090958860,
+    "commit": "https://github.com/clawdbot/skills/commit/d598b9cb1f405d4378cba70724067589e1823eae"
+  },
+  "history": []
+}

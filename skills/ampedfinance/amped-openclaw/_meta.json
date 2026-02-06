@@ -1,0 +1,11 @@
+{
+  "owner": "ampedfinance",
+  "slug": "amped-openclaw",
+  "displayName": "Amped OpenClaw",
+  "latest": {
+    "version": "2.0.0",
+    "publishedAt": 1770183992281,
+    "commit": "https://github.com/clawdbot/skills/commit/8e443f199c829a60294ff3db7260d34f56a83b27"
+  },
+  "history": []
+}

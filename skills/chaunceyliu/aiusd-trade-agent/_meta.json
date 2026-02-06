@@ -1,0 +1,11 @@
+{
+  "owner": "chaunceyliu",
+  "slug": "aiusd-trade-agent",
+  "displayName": "trade-with-aiusd",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770300198182,
+    "commit": "https://github.com/clawdbot/skills/commit/0741882669f07831153fbb4b47f934b86f0e53ed"
+  },
+  "history": []
+}

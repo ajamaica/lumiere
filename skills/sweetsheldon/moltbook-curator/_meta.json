@@ -1,0 +1,17 @@
+{
+  "owner": "sweetsheldon",
+  "slug": "moltbook-curator",
+  "displayName": "Moltbook Curator",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770053626862,
+    "commit": "https://github.com/clawdbot/skills/commit/67c304244b6f603f787bf19e503efbd15e09b8d1"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769986658870,
+      "commit": "https://github.com/clawdbot/skills/commit/15bcfaffeaeab3c3fdb83b7fbccf796f219ac237"
+    }
+  ]
+}

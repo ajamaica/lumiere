@@ -1,0 +1,20 @@
+{
+  "paths": {
+    "CLAWD_ROOT": "~/clawd",
+    "PROJECTS_DIR": "~/projects",
+    "USER_HOME": "~"
+  },
+  "openclawConfig": "~/.openclaw/openclaw.json",
+  "additionalRoots": [],
+  "defaultIgnorePatterns": [
+    "node_modules",
+    ".git",
+    ".next",
+    ".venv",
+    "__pycache__",
+    "target",
+    "dist",
+    ".env.local",
+    ".DS_Store"
+  ]
+}

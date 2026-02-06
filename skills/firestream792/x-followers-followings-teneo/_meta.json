@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "x-followers-followings-teneo",
+  "displayName": "X Followers & Followings - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.6",
+    "publishedAt": 1770302214542,
+    "commit": "https://github.com/clawdbot/skills/commit/ba84ddd674cd6a40ca50a5b6ee020b300b107068"
+  },
+  "history": [
+    {
+      "version": "1.0.5",
+      "publishedAt": 1770216663441,
+      "commit": "https://github.com/clawdbot/skills/commit/1f4e763d12d4e101647b583b33372f60cbf7af19"
+    }
+  ]
+}

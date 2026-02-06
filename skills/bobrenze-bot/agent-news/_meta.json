@@ -1,0 +1,11 @@
+{
+  "owner": "bobrenze-bot",
+  "slug": "agent-news",
+  "displayName": "Agent News",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769876699077,
+    "commit": "https://github.com/clawdbot/skills/commit/78bcba2df90f556a90a06add3902fb51ad8f4e1c"
+  },
+  "history": []
+}

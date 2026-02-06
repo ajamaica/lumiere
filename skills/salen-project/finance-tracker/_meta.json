@@ -1,0 +1,17 @@
+{
+  "owner": "salen-project",
+  "slug": "finance-tracker",
+  "displayName": "Finance Tracker",
+  "latest": {
+    "version": "2.0.0",
+    "publishedAt": 1769925179589,
+    "commit": "https://github.com/clawdbot/skills/commit/fea5a723138944f9d62373f54cac4e2e4ed95e46"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769863482457,
+      "commit": "https://github.com/clawdbot/skills/commit/221bfbe0ef554502e6e9f287fa08a6207143f9ca"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "snowshadow",
+  "slug": "feishu-doc-reader",
+  "displayName": "Feishu Doc Reader",
+  "latest": {
+    "version": "1.1.1",
+    "publishedAt": 1770265630020,
+    "commit": "https://github.com/clawdbot/skills/commit/6bc79f479fe2763460a523ef2d0fe3081ee4e530"
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1769858465227,
+      "commit": "https://github.com/clawdbot/skills/commit/a0cac4a337f0c025cdca0ab31c27df4ec980d7e2"
+    }
+  ]
+}

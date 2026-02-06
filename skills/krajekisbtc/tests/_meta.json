@@ -1,0 +1,11 @@
+{
+  "owner": "krajekisbtc",
+  "slug": "tests",
+  "displayName": "test",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770145007133,
+    "commit": "https://github.com/clawdbot/skills/commit/50f30f6bd1048cd68b60631c1043858c5e902e21"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "gonzih",
+  "slug": "amai-id",
+  "displayName": "AMAI ID",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770178758356,
+    "commit": "https://github.com/clawdbot/skills/commit/8d92e5390f2ada299b21f89de845ed5982158717"
+  },
+  "history": []
+}

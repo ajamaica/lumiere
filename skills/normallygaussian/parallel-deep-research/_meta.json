@@ -1,0 +1,11 @@
+{
+  "owner": "normallygaussian",
+  "slug": "parallel-deep-research",
+  "displayName": "Parallel Deep Research",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770154179786,
+    "commit": "https://github.com/clawdbot/skills/commit/47baef4b412fb015209572b51f47741f4527c7e2"
+  },
+  "history": []
+}

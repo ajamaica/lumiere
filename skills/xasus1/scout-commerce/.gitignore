@@ -1,0 +1,9 @@
+# Credentials - DO NOT COMMIT
+credentials.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/

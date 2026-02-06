@@ -1,0 +1,11 @@
+{
+  "owner": "jtmuller5",
+  "slug": "boil",
+  "displayName": "Boil",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770045685026,
+    "commit": "https://github.com/clawdbot/skills/commit/a01349b12b75493746b908f9d78048b64c41afdc"
+  },
+  "history": []
+}

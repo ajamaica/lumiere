@@ -1,0 +1,11 @@
+{
+  "owner": "laurent-zhu",
+  "slug": "daily-ai-news-skill",
+  "displayName": "Daily Ai News",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770099681870,
+    "commit": "https://github.com/clawdbot/skills/commit/303788a93ec91ff91f85449970943b398b67fd22"
+  },
+  "history": []
+}

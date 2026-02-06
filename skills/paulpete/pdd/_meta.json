@@ -1,0 +1,11 @@
+{
+  "owner": "paulpete",
+  "slug": "pdd",
+  "displayName": "Pdd",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770081456099,
+    "commit": "https://github.com/clawdbot/skills/commit/c1cb5d5783a077e5303a6259c45572396a9d12d9"
+  },
+  "history": []
+}

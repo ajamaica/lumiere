@@ -1,0 +1,17 @@
+{
+  "owner": "sarthib7",
+  "slug": "cardano-wallet",
+  "displayName": "Cardano Wallet",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770242217479,
+    "commit": "https://github.com/clawdbot/skills/commit/cdf19c4cb13d40bf6fcae6e4b290770579889071"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770040351991,
+      "commit": "https://github.com/clawdbot/skills/commit/121658f00f349b37f3ce73c3258526d0791c8b28"
+    }
+  ]
+}

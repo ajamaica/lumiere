@@ -1,0 +1,11 @@
+{
+  "owner": "hugosbl",
+  "slug": "ai-skill-scanner",
+  "displayName": "AI Skill Scanner",
+  "latest": {
+    "version": "2.1.0",
+    "publishedAt": 1770058297506,
+    "commit": "https://github.com/clawdbot/skills/commit/092efa0bf81cf5087861119bead51ce05ba466ee"
+  },
+  "history": []
+}

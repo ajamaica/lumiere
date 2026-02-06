@@ -1,0 +1,10 @@
+{
+  "fixture": "sql-injection-query",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 100,
+  "expected_risk": null,
+  "expected_categories": [],
+  "must_detect_rules": [],
+  "notes": "SQL injection via f-string concatenation. KNOWN GAP: scanner lacks SQL injection rules; LLM layer should catch this."
+}

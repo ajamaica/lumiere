@@ -1,0 +1,11 @@
+{
+  "owner": "barneyjm",
+  "slug": "tavily-best-practices",
+  "displayName": "Tavily Best Practices",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770132452248,
+    "commit": "https://github.com/clawdbot/skills/commit/0a4d979c44c925586005e3b12e1ca461c853a165"
+  },
+  "history": []
+}

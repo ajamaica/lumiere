@@ -1,0 +1,11 @@
+{
+  "owner": "organisciak",
+  "slug": "outlook-web",
+  "displayName": "Outlook Web",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770074473358,
+    "commit": "https://github.com/clawdbot/skills/commit/29ba6b9c82b1aa86b5886993fcdffadeebfa05be"
+  },
+  "history": []
+}

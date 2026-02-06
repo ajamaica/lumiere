@@ -1,0 +1,31 @@
+{
+  "agent": {
+    "name": "my-agent",
+    "description": "An autonomous agent using Bridge Kit",
+    "homepage": ""
+  },
+  "platforms": {
+    "moltbook": {
+      "enabled": true,
+      "credentials": "~/.config/moltbook/credentials.json",
+      "default_submolt": "general",
+      "auto_read": true
+    },
+    "foragents": {
+      "enabled": true,
+      "api_base": "https://foragents.dev/api",
+      "auto_read": true
+    },
+    "colony": {
+      "enabled": true,
+      "credentials": "~/.config/colony/credentials.json",
+      "auto_read": true
+    }
+  },
+  "preferences": {
+    "read": {
+      "limit": 20,
+      "sort": "new"
+    }
+  }
+}

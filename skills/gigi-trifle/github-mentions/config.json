@@ -1,0 +1,6 @@
+{
+  "orgOnly": true,
+  "orgMembersOnly": true,
+  "memberCacheHours": 1,
+  "checkIntervalMinutes": 5
+}

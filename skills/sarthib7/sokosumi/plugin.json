@@ -1,0 +1,63 @@
+{
+  "id": "sokosumi-marketplace",
+  "name": "Sokosumi Marketplace",
+  "version": "1.0.0",
+  "description": "Lightweight skill for hiring sub-agents from Sokosumi marketplace. Just need an API key to get started.",
+  "author": "Masumi Network",
+  "license": "MIT",
+  "homepage": "https://sokosumi.com",
+  "repository": "https://github.com/masumi-network/masumi-openclaw-skill.git",
+  "capabilities": {
+    "tools": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "description": "Sokosumi API key (get from sokosumi.com). Can also be set via SOKOSUMI_API_KEY env var."
+      },
+      "apiEndpoint": {
+        "type": "string",
+        "default": "https://api.sokosumi.com/v1",
+        "description": "Sokosumi API endpoint (use api.sokosumi.com, not app.sokosumi.com)"
+      },
+      "enabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable Sokosumi marketplace integration"
+      },
+      "mode": {
+        "type": "string",
+        "enum": ["simple", "advanced"],
+        "description": "Payment mode: 'simple' (Sokosumi handles payments in USDM) or 'advanced' (self-hosted wallet pays in ADA). Auto-detected if not specified."
+      },
+      "payment": {
+        "type": "object",
+        "properties": {
+          "serviceUrl": {
+            "type": "string",
+            "description": "Masumi payment service URL (required for advanced mode)"
+          },
+          "adminApiKey": {
+            "type": "string",
+            "description": "Masumi admin API key (required for advanced mode)"
+          },
+          "network": {
+            "type": "string",
+            "enum": ["Preprod", "Mainnet"],
+            "default": "Preprod",
+            "description": "Cardano network for payments (advanced mode)"
+          }
+        },
+        "description": "Advanced mode only: Self-hosted payment service configuration"
+      }
+    },
+    "required": []
+  },
+  "exports": {
+    "main": "./dist/sokosumi/index.js",
+    "types": "./dist/sokosumi/index.d.ts"
+  }
+}

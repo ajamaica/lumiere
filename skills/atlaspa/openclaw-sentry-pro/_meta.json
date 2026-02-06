@@ -1,0 +1,11 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-sentry-pro",
+  "displayName": "OpenClaw Sentry Pro",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770281131068,
+    "commit": "https://github.com/clawdbot/skills/commit/1f8efee4c1387863d527e370edcedcdbf5345a2f"
+  },
+  "history": []
+}

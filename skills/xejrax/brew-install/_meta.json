@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "brew-install",
+  "displayName": "Brew Install",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135706448,
+    "commit": "https://github.com/clawdbot/skills/commit/dbf5740ab7bd8afcb2e44e970e1fdf8750e7c3d5"
+  },
+  "history": []
+}

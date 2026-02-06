@@ -1,0 +1,11 @@
+{
+  "owner": "pegasus02",
+  "slug": "xiaomi-home",
+  "displayName": "小米家居 (Xiaomi Home)",
+  "latest": {
+    "version": "1.2.1",
+    "publishedAt": 1770185780628,
+    "commit": "https://github.com/clawdbot/skills/commit/9f0f90b42708f3848074e47a17c8de9be91f121c"
+  },
+  "history": []
+}

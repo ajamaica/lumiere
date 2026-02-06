@@ -1,0 +1,11 @@
+{
+  "owner": "cccarv82",
+  "slug": "openclaw-backup-optimized",
+  "displayName": "Openclaw Backup Optimized",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770050692872,
+    "commit": "https://github.com/clawdbot/skills/commit/e3493d3bb22899e1c4aa626ccac1db9bc4135c7f"
+  },
+  "history": []
+}

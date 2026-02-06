@@ -1,0 +1,11 @@
+{
+  "owner": "statico-alt",
+  "slug": "test-simple-abc",
+  "displayName": "Test Simple",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770313213996,
+    "commit": "https://github.com/openclaw/skills/commit/1d4abda5e370778d4cc3321ddda35dd114e130ec"
+  },
+  "history": []
+}

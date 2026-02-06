@@ -1,0 +1,11 @@
+{
+  "owner": "phineas1500",
+  "slug": "moltopia-org",
+  "displayName": "Moltopia",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770327859370,
+    "commit": "https://github.com/clawdbot/skills/commit/5b1d8efd1a47025dba6a5f80c527f9b405d82371"
+  },
+  "history": []
+}

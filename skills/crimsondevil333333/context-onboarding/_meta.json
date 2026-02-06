@@ -1,0 +1,17 @@
+{
+  "owner": "crimsondevil333333",
+  "slug": "context-onboarding",
+  "displayName": "Context Onboarding",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770279767645,
+    "commit": "https://github.com/clawdbot/skills/commit/6868f30f6925517d0500aa37432883632b180213"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770103046165,
+      "commit": "https://github.com/clawdbot/skills/commit/c4c97f9bb4e969aa88e9b4e185f415346a3669d4"
+    }
+  ]
+}

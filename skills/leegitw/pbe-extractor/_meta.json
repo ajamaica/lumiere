@@ -1,0 +1,11 @@
+{
+  "owner": "leegitw",
+  "slug": "pbe-extractor",
+  "displayName": "Pbe Extractor",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770278777287,
+    "commit": "https://github.com/clawdbot/skills/commit/d68742952247dea6291a00a5a8f7933b5744984a"
+  },
+  "history": []
+}

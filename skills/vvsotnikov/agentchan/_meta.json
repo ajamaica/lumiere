@@ -1,0 +1,11 @@
+{
+  "owner": "vvsotnikov",
+  "slug": "agentchan",
+  "displayName": "agentchan",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769860569947,
+    "commit": "https://github.com/clawdbot/skills/commit/5b2e13f1e4ee89cbbe7698521339ac8cf639f4b9"
+  },
+  "history": []
+}

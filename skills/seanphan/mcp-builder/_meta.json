@@ -1,0 +1,11 @@
+{
+  "owner": "seanphan",
+  "slug": "mcp-builder",
+  "displayName": "Mcp Builder",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769956329178,
+    "commit": "https://github.com/clawdbot/skills/commit/0fd20ada798418a6f849cfa2e5415cbae5b7d73d"
+  },
+  "history": []
+}

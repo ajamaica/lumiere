@@ -1,0 +1,11 @@
+{
+  "owner": "jeffjhunter",
+  "slug": "ai-daily-briefing",
+  "displayName": "AI Daily Briefing",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770143080318,
+    "commit": "https://github.com/clawdbot/skills/commit/0342ee54974f16f7ea0d1be78d9fbf59e39412c1"
+  },
+  "history": []
+}

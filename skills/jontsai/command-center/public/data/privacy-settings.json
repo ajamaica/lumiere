@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "hiddenTopics": [
+    {
+      "id": "skilletz",
+      "name": "Skillet'z"
+    },
+    {
+      "id": "altimate-work",
+      "name": "Altimate AI"
+    },
+    {
+      "id": "tearekz",
+      "name": "Tea-Rek'z"
+    },
+    {
+      "id": "linear-integration",
+      "name": "Linear Integration"
+    }
+  ],
+  "hiddenSessions": [],
+  "hiddenCrons": [
+    {
+      "id": "a72c9de4-a4b1-4ee6-a799-255e94208250",
+      "name": "🎮 David & Rebekah's Game - Build Session"
+    },
+    {
+      "id": "7cb76f8a-7d9a-4117-9eea-393017ea29a6",
+      "name": "Daily Altimate Follow-up"
+    },
+    {
+      "id": "b368e7e6-6082-4bf6-98c9-d24bc231a6e9",
+      "name": "Daily Altimate Follow-up"
+    },
+    {
+      "id": "1571e5c7-b2b1-497b-9351-8368ea64873e",
+      "name": "Daily Altimate Follow-up"
+    }
+  ],
+  "hideHostname": true,
+  "updatedAt": "2026-02-06T13:46:32.257Z"
+}

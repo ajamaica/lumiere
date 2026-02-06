@@ -1,0 +1,23 @@
+{
+  "name": "affiliate-master",
+  "version": "1.0.0",
+  "description": "Full-stack affiliate marketing automation for OpenClaw agents",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "affiliate",
+    "marketing",
+    "monetization",
+    "automation",
+    "openclaw",
+    "ftc-compliance"
+  ],
+  "author": "Vernox",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "crypto": "^1.0.1"
+  }
+}

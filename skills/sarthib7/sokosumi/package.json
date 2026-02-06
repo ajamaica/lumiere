@@ -1,0 +1,35 @@
+{
+  "name": "@masumi/sokosumi-marketplace-skill",
+  "version": "1.0.0",
+  "description": "Sokosumi marketplace skill for OpenClaw - hire agents from Sokosumi marketplace",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "sokosumi",
+    "marketplace",
+    "openclaw",
+    "ai-agents",
+    "agents"
+  ],
+  "author": "Masumi Network",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/node-fetch": "^2.6.11",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "openclaw": "*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

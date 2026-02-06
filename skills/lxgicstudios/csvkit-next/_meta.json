@@ -1,0 +1,11 @@
+{
+  "owner": "lxgicstudios",
+  "slug": "csvkit-next",
+  "displayName": "CSVKit Next Advanced CSV Toolkit",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769967690643,
+    "commit": "https://github.com/clawdbot/skills/commit/2ce47a8357151e6e243987319dd36d7e1fb8cb04"
+  },
+  "history": []
+}

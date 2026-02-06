@@ -1,0 +1,11 @@
+{
+  "owner": "cktc",
+  "slug": "moltpost",
+  "displayName": "Moltpost",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770180340424,
+    "commit": "https://github.com/clawdbot/skills/commit/3694afb21db4c0b976f39613bdca292dde70cecd"
+  },
+  "history": []
+}

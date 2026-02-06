@@ -1,0 +1,14 @@
+{
+  "name": "getUserInfo",
+  "description": "Получает детальную информацию о пользователе из внешней CRM по его ID.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "userId": {
+        "type": "string",
+        "description": "Уникальный идентификатор пользователя (UUID)."
+      }
+    },
+    "required": ["userId"]
+  }
+}

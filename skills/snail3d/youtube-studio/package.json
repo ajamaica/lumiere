@@ -1,0 +1,59 @@
+{
+  "name": "youtube-studio-skill",
+  "version": "1.0.0",
+  "description": "Comprehensive YouTube channel management skill for Clawdbot. Monitor analytics, upload videos, manage comments, and generate content ideas.",
+  "main": "scripts/youtube-studio.js",
+  "bin": {
+    "youtube-studio": "scripts/youtube-studio.js"
+  },
+  "scripts": {
+    "start": "node scripts/youtube-studio.js",
+    "auth": "node scripts/youtube-studio.js auth",
+    "stats": "node scripts/youtube-studio.js stats",
+    "upload": "node scripts/youtube-studio.js upload",
+    "comments": "node scripts/youtube-studio.js comments",
+    "reply": "node scripts/youtube-studio.js reply",
+    "ideas": "node scripts/youtube-studio.js ideas",
+    "quota": "node scripts/youtube-studio.js quota-status",
+    "test": "node test/test-setup.js"
+  },
+  "keywords": [
+    "youtube",
+    "api",
+    "channel",
+    "management",
+    "analytics",
+    "video-upload",
+    "comments",
+    "clawdbot",
+    "skill"
+  ],
+  "author": "Clawdbot",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "googleapis": "^120.0.0",
+    "google-auth-library": "^9.0.0",
+    "axios": "^1.6.0",
+    "chalk": "^4.1.2",
+    "yargs": "^17.0.0",
+    "dotenv": "^16.0.0"
+  },
+  "optionalDependencies": {
+    "express": "^4.18.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Snail3D/youtube-studio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Snail3D/youtube-studio/issues"
+  },
+  "homepage": "https://github.com/Snail3D/youtube-studio#readme"
+}

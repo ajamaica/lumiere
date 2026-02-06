@@ -1,0 +1,17 @@
+{
+  "owner": "chefbc2k",
+  "slug": "moltmotion",
+  "displayName": "Molt Motion Picture",
+  "latest": {
+    "version": "1.0.4",
+    "publishedAt": 1770351535974,
+    "commit": "https://github.com/openclaw/skills/commit/a7961e0eb65d41e52b062d0d59ddc8d861021aa7"
+  },
+  "history": [
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770351433390,
+      "commit": "https://github.com/openclaw/skills/commit/9347c14ae103c498652d00e27aaffe3ea5e44ecb"
+    }
+  ]
+}

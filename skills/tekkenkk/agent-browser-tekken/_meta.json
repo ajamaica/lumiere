@@ -1,0 +1,11 @@
+{
+  "owner": "tekkenkk",
+  "slug": "agent-browser-tekken",
+  "displayName": "Agent Browser",
+  "latest": {
+    "version": "0.8.6",
+    "publishedAt": 1769925873416,
+    "commit": "https://github.com/clawdbot/skills/commit/f9a898574a3b3c8327db6a5638f643eb45cdb5bd"
+  },
+  "history": []
+}

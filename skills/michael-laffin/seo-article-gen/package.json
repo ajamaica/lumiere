@@ -1,0 +1,21 @@
+{
+  "name": "seo-article-gen",
+  "version": "1.0.0",
+  "description": "SEO-optimized article generator with automatic affiliate link integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "seo",
+    "content",
+    "article",
+    "affiliate",
+    "writing",
+    "automation",
+    "openclaw"
+  ],
+  "author": "Vernox",
+  "license": "MIT",
+  "dependencies": {}
+}

@@ -1,0 +1,20 @@
+{
+  "name": "gekko-yield-scripts",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "setup": "npx tsx setup.ts",
+    "status": "npx tsx status.ts",
+    "deposit": "npx tsx deposit.ts",
+    "withdraw": "npx tsx withdraw.ts",
+    "report": "npx tsx report.ts",
+    "compound": "npx tsx compound.ts"
+  },
+  "dependencies": {
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

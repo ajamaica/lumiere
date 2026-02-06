@@ -1,0 +1,11 @@
+{
+  "owner": "impkind",
+  "slug": "basal-ganglia-memory",
+  "displayName": "Basal Ganglia Memory",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1769910291131,
+    "commit": "https://github.com/clawdbot/skills/commit/3966474826a73c0eba604c5bb0c334ebf0745ab6"
+  },
+  "history": []
+}

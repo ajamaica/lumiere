@@ -1,0 +1,11 @@
+{
+  "owner": "stolot0mt0m",
+  "slug": "voice-reply",
+  "displayName": "Voice Reply",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770046947534,
+    "commit": "https://github.com/clawdbot/skills/commit/124d6a84490df4ef3797c6b678611d6e5bb9f206"
+  },
+  "history": []
+}

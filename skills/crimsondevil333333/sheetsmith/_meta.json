@@ -1,0 +1,17 @@
+{
+  "owner": "crimsondevil333333",
+  "slug": "sheetsmith",
+  "displayName": "Sheetsmith",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770280049905,
+    "commit": "https://github.com/clawdbot/skills/commit/b74f61710a89a79ee39d24b61dc8556f5fd461e9"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770103033450,
+      "commit": "https://github.com/clawdbot/skills/commit/9bc8febd545c948c128095a7d0071cb99f096af6"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "veeramanikandanr48",
+  "slug": "agent-development",
+  "displayName": "Agent Development",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769871109001,
+    "commit": "https://github.com/clawdbot/skills/commit/e1e0e62340721305316df0c7c7ea9d9473e26bfa"
+  },
+  "history": []
+}

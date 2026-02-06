@@ -1,0 +1,11 @@
+{
+  "owner": "yogesharc",
+  "slug": "supalytics",
+  "displayName": "Supalytics - Web Analytics",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770111048518,
+    "commit": "https://github.com/clawdbot/skills/commit/e0c098c8315301cf0f0ea810bf2eca0810d634a9"
+  },
+  "history": []
+}

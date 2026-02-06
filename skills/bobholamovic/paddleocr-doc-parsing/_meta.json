@@ -1,0 +1,11 @@
+{
+  "owner": "bobholamovic",
+  "slug": "paddleocr-doc-parsing",
+  "displayName": "PaddleOCR Document Parsing",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770273970261,
+    "commit": "https://github.com/clawdbot/skills/commit/6ca4f768b578fb3312318494ed807bbb2adaf505"
+  },
+  "history": []
+}

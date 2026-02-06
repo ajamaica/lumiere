@@ -1,0 +1,17 @@
+{
+  "owner": "hughpyle",
+  "slug": "keep",
+  "displayName": "Keep",
+  "latest": {
+    "version": "0.8.1",
+    "publishedAt": 1770173490721,
+    "commit": "https://github.com/clawdbot/skills/commit/63a0df502fe01ad0aa6afd3f22907a41f2202725"
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1769885406128,
+      "commit": "https://github.com/clawdbot/skills/commit/40599dff9ee0358ac67ada98913308395f1d9a6e"
+    }
+  ]
+}

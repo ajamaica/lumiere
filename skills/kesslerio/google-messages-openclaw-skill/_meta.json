@@ -1,0 +1,11 @@
+{
+  "owner": "kesslerio",
+  "slug": "google-messages-openclaw-skill",
+  "displayName": "Google Messages",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769928644580,
+    "commit": "https://github.com/clawdbot/skills/commit/37250c98cecde64569a6349a4e1bf563b2e24fb2"
+  },
+  "history": []
+}

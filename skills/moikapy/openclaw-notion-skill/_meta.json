@@ -1,0 +1,11 @@
+{
+  "owner": "moikapy",
+  "slug": "openclaw-notion-skill",
+  "displayName": "Notion Enhanced",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770098060202,
+    "commit": "https://github.com/clawdbot/skills/commit/70c415f291a869d51f200440b6aa2590152e6edd"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "playdadev",
+  "slug": "solana-dev",
+  "displayName": "Solana Dev",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770296637275,
+    "commit": "https://github.com/clawdbot/skills/commit/8af960393d158a8ba2c7772d0e07c28dae6d440e"
+  },
+  "history": []
+}

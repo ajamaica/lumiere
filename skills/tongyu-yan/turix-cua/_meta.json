@@ -1,0 +1,27 @@
+{
+  "owner": "tongyu-yan",
+  "slug": "turix-cua",
+  "displayName": "TuriX-Computer-Use",
+  "latest": {
+    "version": "1.0.6",
+    "publishedAt": 1769940388395,
+    "commit": "https://github.com/clawdbot/skills/commit/2a18c60b65b02ce6169fb1fdb7adec514d9e38a9"
+  },
+  "history": [
+    {
+      "version": "1.0.5",
+      "publishedAt": 1769863509046,
+      "commit": "https://github.com/clawdbot/skills/commit/2dcfe3eb7e0600e9b2f36c8b5682ebd710bad82f"
+    },
+    {
+      "version": "1.0.4",
+      "publishedAt": 1769844350329,
+      "commit": "https://github.com/clawdbot/skills/commit/c08dd2b0f9b550cf5f54c2c79ce14e9960a9f6d6"
+    },
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769837282004,
+      "commit": "https://github.com/clawdbot/skills/commit/31eea404f2fbec09e5003e3e933462bdde6f9c38"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "feishu-native-emoji",
+  "version": "1.0.0",
+  "description": "Feishu native emoji mapping resources.",
+  "main": "emoji_list.txt"
+}

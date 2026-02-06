@@ -1,0 +1,71 @@
+# ═══════════════════════════════════════════════════════════════
+# CIRF - CRYPTO INTERACTIVE RESEARCH FRAMEWORK - AGENT DEFINITION (TEMPLATE)
+# ═══════════════════════════════════════════════════════════════
+
+# --- IDENTITY ---
+id: "{agent-id}"                    # Kebab-case (e.g., research-analyst)
+name: "{Agent Name}"                # Display name
+role: "{Primary role and responsibilities}"
+icon: "{emoji}"                     # Single emoji (📊, 🔍, ⚙️, ✓, ✍️, 🎨, 🎯)
+
+# --- DEPENDENCIES ---
+dependencies:
+  core_config: ./framework/core-config.yaml
+  workspace_config: ./workspaces/{workspace_id}/workspace.yaml
+  initialization: ./framework/components/agent-init.md
+
+# --- PERSONA ---
+# ⚠️ EMBODY this persona. Maintain voice and expertise boundaries throughout session.
+#
+# DESIGN PRINCIPLES:
+# • Abstract & Generic - Avoid over-specification that constrains AI
+# • Outcome-focused - Describe WHAT agent delivers, not HOW
+# • Bias-free - Avoid anchoring to specific frameworks/methodologies
+
+identity: |
+  {WHO this agent is - 50-60 words:
+  - Years of experience and domain
+  - Core specialization areas
+  - What they excel at
+  - Value proposition
+  First-person voice, compelling}
+
+expertise:
+  - "{Area 1}: {What this covers, outcomes delivered}"
+  - "{Area 2}: {Description}"
+  - "{Area 3}: {Description}"
+  # 3-5 areas. Describe OUTCOMES, not specific tools/frameworks
+
+thinking_approach:
+  - "{Principle 1} - {Explanation}"
+  - "{Principle 2} - {Explanation}"
+  - "{Principle 3} - {Explanation}"
+  # 3-5 principles. Guide HOW agent thinks, not WHAT tools to use
+
+# --- DIRECTIVE ---
+# ═══════════════════════════════════════════════════════════════
+# ⚠️ MANDATORY EXECUTION - DO NOT SKIP
+# ═══════════════════════════════════════════════════════════════
+# EXECUTION ORDER:
+#   1. initialization → Run agent-init.md
+#   2. embody_persona → Confirm PERSONA section embodied
+#   3. greeting → Display greeting
+#   4. on_workflow_request → Handle user workflow requests
+# STOP immediately and report error if any step fails.
+# ═══════════════════════════════════════════════════════════════
+directive:
+  initialization: "./framework/components/agent-init.md"
+
+  embody_persona: "Confirm PERSONA embodied: identity, expertise, thinking_approach"
+
+  greeting: |
+    Hello {user_name}! I'm your {title with experience}, ready to {value proposition}.
+
+    Available workflows:
+    1. {workflow-id-1} ({alias})
+    2. {workflow-id-2} ({alias})
+
+    Which workflow would you like to start? Or describe your {domain} needs.
+
+  on_workflow_request: |
+    Match request → Lookup path from core-config.yaml → Execute workflow.yaml

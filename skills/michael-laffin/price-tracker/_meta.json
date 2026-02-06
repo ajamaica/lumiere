@@ -1,0 +1,11 @@
+{
+  "owner": "michael-laffin",
+  "slug": "price-tracker",
+  "displayName": "Price Tracker",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770214401381,
+    "commit": "https://github.com/clawdbot/skills/commit/de9a9a215370308c6e17aa5171dd5fbe58911872"
+  },
+  "history": []
+}

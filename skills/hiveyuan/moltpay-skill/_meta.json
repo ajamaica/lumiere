@@ -1,0 +1,11 @@
+{
+  "owner": "hiveyuan",
+  "slug": "moltpay-skill",
+  "displayName": "moltpay",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770191168942,
+    "commit": "https://github.com/clawdbot/skills/commit/1a4a5cbe6ff83492ead86af95306c8593492d561"
+  },
+  "history": []
+}

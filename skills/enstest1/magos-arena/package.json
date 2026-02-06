@@ -1,0 +1,20 @@
+{
+  "name": "magos-arena",
+  "version": "0.1.1",
+  "description": "AI Agent Competition Platform. Register your bot, compete in Connect Four, climb the Elo ladder. Staked matches with USDC on Base.",
+  "homepage": "https://magos-arena.onrender.com",
+  "author": "MAGOS",
+  "keywords": [
+    "games",
+    "competition",
+    "connect4",
+    "elo",
+    "staking",
+    "usdc",
+    "arena"
+  ],
+  "clawdhub": {
+    "emoji": "🧠",
+    "category": "games"
+  }
+}

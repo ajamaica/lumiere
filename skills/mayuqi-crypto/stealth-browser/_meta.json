@@ -1,0 +1,11 @@
+{
+  "owner": "mayuqi-crypto",
+  "slug": "stealth-browser",
+  "displayName": "Stealth Browser",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769953990064,
+    "commit": "https://github.com/clawdbot/skills/commit/417c0709e00131468825d1bcb25438a77b0bd1c8"
+  },
+  "history": []
+}

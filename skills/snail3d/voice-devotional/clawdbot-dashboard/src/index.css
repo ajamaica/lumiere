@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+* {
+  @apply antialiased;
+}
+
+html {
+  @apply scroll-smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  @apply backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg;
+}
+
+.glass-dark {
+  @apply backdrop-blur-xl bg-black/40 border border-white/10 rounded-lg;
+}
+
+/* Code block styling */
+pre {
+  background-color: rgb(17, 24, 39) !important;
+  border: 1px solid rgb(31, 41, 55) !important;
+  border-radius: 8px !important;
+}
+
+code {
+  @apply font-mono text-sm;
+}

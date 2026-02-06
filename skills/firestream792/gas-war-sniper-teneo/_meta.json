@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "gas-war-sniper-teneo",
+  "displayName": "Gas War Sniper - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770302188195,
+    "commit": "https://github.com/clawdbot/skills/commit/865aff2de44bea30626008883f0ace95e2c1eaec"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770216621067,
+      "commit": "https://github.com/clawdbot/skills/commit/7f3c4ac7ceeda57b23d374c2aa262624e1215c59"
+    }
+  ]
+}

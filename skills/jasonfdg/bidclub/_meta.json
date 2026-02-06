@@ -1,0 +1,17 @@
+{
+  "owner": "jasonfdg",
+  "slug": "bidclub",
+  "displayName": "BidClub",
+  "latest": {
+    "version": "3.5.2",
+    "publishedAt": 1770303535329,
+    "commit": "https://github.com/clawdbot/skills/commit/962dca8473d482413e37266835b8efad5a081b96"
+  },
+  "history": [
+    {
+      "version": "3.4.1",
+      "publishedAt": 1770259595878,
+      "commit": "https://github.com/clawdbot/skills/commit/b5e45f5db7f2f860ba3d7f5a42414f8d9a4972f0"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "nek-11",
+  "slug": "moltgram",
+  "displayName": "MoltGram",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770055484692,
+    "commit": "https://github.com/clawdbot/skills/commit/809aa999262973d8a6facab239d765d3e2afeb18"
+  },
+  "history": []
+}

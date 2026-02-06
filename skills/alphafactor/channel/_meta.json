@@ -1,0 +1,17 @@
+{
+  "owner": "alphafactor",
+  "slug": "channel",
+  "displayName": "WeChat OA Channel",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770181466733,
+    "commit": "https://github.com/clawdbot/skills/commit/a0e85923a4f73f517d0229854c47d82801a9b2eb"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770106699832,
+      "commit": "https://github.com/clawdbot/skills/commit/e3250b0245bcc1c4ac10364eb488d4cf9a036d81"
+    }
+  ]
+}

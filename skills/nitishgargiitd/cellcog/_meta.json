@@ -1,0 +1,22 @@
+{
+  "owner": "nitishgargiitd",
+  "slug": "cellcog",
+  "displayName": "cellcog",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770270502818,
+    "commit": "https://github.com/clawdbot/skills/commit/908ad1ac8e08c41c0fb3f772915bd87948710880"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770176223445,
+      "commit": "https://github.com/clawdbot/skills/commit/ba0c7f822e2a1fc21f702e1c08b6d9bc78ff0a4c"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770104190626,
+      "commit": "https://github.com/clawdbot/skills/commit/b2d331100b12b69b4cfadb510732b70a655844c6"
+    }
+  ]
+}

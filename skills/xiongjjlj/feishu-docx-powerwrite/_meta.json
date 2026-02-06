@@ -1,0 +1,11 @@
+{
+  "owner": "xiongjjlj",
+  "slug": "feishu-docx-powerwrite",
+  "displayName": "Feishu Docx PowerWrite",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770197180818,
+    "commit": "https://github.com/clawdbot/skills/commit/8f097ac4c1935aa57e243d9656794bc1b6b3e7f1"
+  },
+  "history": []
+}

@@ -1,0 +1,13 @@
+{
+  "description": "Example configuration file for trending-skills-monitor",
+  "interests": ["automation", "security", "3D printing", "coding"],
+  "days": 7,
+  "category": null,
+  "sort": "downloads",
+  "top": 20,
+  "format": "text",
+  "verbose": false,
+  "watch_enabled": false,
+  "watch_interval": 3600,
+  "cache_ttl": 3600
+}

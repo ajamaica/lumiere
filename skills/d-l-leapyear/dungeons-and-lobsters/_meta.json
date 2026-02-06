@@ -1,0 +1,11 @@
+{
+  "owner": "d-l-leapyear",
+  "slug": "dungeons-and-lobsters",
+  "displayName": "dungeons-and-lobsters",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770000918305,
+    "commit": "https://github.com/clawdbot/skills/commit/50d693efc9565388a3228af484aaa5fb08beedf9"
+  },
+  "history": []
+}

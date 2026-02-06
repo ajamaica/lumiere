@@ -1,0 +1,11 @@
+{
+  "owner": "therohitdas",
+  "slug": "youtube-channels",
+  "displayName": "Youtube Channels",
+  "latest": {
+    "version": "1.3.2",
+    "publishedAt": 1769930223210,
+    "commit": "https://github.com/clawdbot/skills/commit/7b842563d113844550b042d64144059cdfeb155a"
+  },
+  "history": []
+}

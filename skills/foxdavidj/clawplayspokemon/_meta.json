@@ -1,0 +1,11 @@
+{
+  "owner": "foxdavidj",
+  "slug": "clawplayspokemon",
+  "displayName": "Twitch Plays Pokemon for ClawBots",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770048818755,
+    "commit": "https://github.com/clawdbot/skills/commit/b9a8b196e8022e64a86bc04c4f1f749b65ce377a"
+  },
+  "history": []
+}

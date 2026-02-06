@@ -1,0 +1,31 @@
+[server]
+port = 8080
+graceful-shutdown = "10s"
+
+[db]
+# Postgres connection string (REQUIRED for file index)
+# Example: "host=localhost user=postgres password=secret dbname=teldrive port=5432 sslmode=disable"
+data-source = "" 
+log-level = "info"
+
+[tg]
+app-id = 0
+app-hash = ""
+rate-limit = true
+rate = 100
+rate-burst = 5
+
+[tg.session]
+# Session storage: postgres, bolt (file), or memory
+type = "bolt"
+
+[tg.session.bolt]
+path = "session.db"
+
+[jwt]
+secret = "change-me-to-something-random"
+session-time = "30d"
+
+[log]
+level = "info"
+file = "logs/teldrive.log"

@@ -1,0 +1,11 @@
+{
+  "owner": "crazypeace",
+  "slug": "menstrual-cycle-tracking",
+  "displayName": "月经周期记录 (Menstrual Cycle Tracking)",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770017535297,
+    "commit": "https://github.com/clawdbot/skills/commit/983bffb1b0715c933e48dabce487fac77606f35e"
+  },
+  "history": []
+}

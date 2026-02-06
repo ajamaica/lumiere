@@ -1,0 +1,23 @@
+{
+  "crypto": {
+    "enabled": true,
+    "acceptedTokens": ["USDT", "USDC"],
+    "acceptedChains": ["polygon", "bsc", "ethereum", "arbitrum", "optimism", "base"],
+    "revenueWallet": "YOUR_WALLET_ADDRESS_HERE",
+    "trustWallet": "YOUR_TRUST_WALLET_HERE",
+    "withdrawalPolicy": "trust-wallet-only",
+    "confirmations": 2,
+    "notes": "Revenue can only be swept to Trust Wallet address"
+  },
+  "pricing": {
+    "pro": {
+      "monthly": 9.0,
+      "yearly": 90.0
+    },
+    "enterprise": {
+      "monthly": 29.0,
+      "yearly": 290.0
+    }
+  },
+  "paymentMethods": ["crypto"]
+}

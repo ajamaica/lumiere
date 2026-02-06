@@ -1,0 +1,11 @@
+{
+  "owner": "easonc13",
+  "slug": "sui-move",
+  "displayName": "Sui Move",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769970138002,
+    "commit": "https://github.com/clawdbot/skills/commit/293dbcbcbf8c3d44a0de234e2b15ebbe4572c0c6"
+  },
+  "history": []
+}

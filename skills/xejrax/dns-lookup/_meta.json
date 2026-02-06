@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "dns-lookup",
+  "displayName": "Dns Lookup",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135660293,
+    "commit": "https://github.com/clawdbot/skills/commit/f4e3594a897b5cc06ee74e2b1ecdf87f46db146c"
+  },
+  "history": []
+}

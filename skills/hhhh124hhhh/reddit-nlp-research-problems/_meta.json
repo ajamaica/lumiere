@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "reddit-nlp-research-problems",
+  "displayName": "通用 Prompt Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769992753859,
+    "commit": "https://github.com/clawdbot/skills/commit/63551d0618e2b7fbdc321e1f5a262eb5b79d0bd2"
+  },
+  "history": []
+}

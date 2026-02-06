@@ -1,0 +1,11 @@
+{
+  "name": "openclaw-backup-optimized",
+  "private": true,
+  "type": "commonjs",
+  "version": "1.0.0",
+  "description": "Cross-platform OpenClaw backup script",
+  "dependencies": {
+    "minimatch": "^9.0.5",
+    "tar": "^6.2.1"
+  }
+}

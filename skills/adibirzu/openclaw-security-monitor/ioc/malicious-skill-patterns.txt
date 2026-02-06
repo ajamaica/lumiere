@@ -1,0 +1,54 @@
+# Malicious Skill Name Patterns
+# These patterns match known malicious skill naming conventions
+# Sources: Koi Security, Bloom Security/JFrog, Snyk, OpenSourceMalware
+# Format: pattern|category|notes
+
+# ClawHub typosquats (28 variants found)
+^clawhub[0-9]*$|typosquat|clawhub misspelling
+^clawhubb$|typosquat|double-b
+^clawwhub$|typosquat|double-w
+^cllawhub$|typosquat|double-l
+^clawhubcli$|typosquat|fake CLI
+^claw-hub$|typosquat|hyphenated
+^clawhubb?-cli$|typosquat|CLI variant
+
+# Crypto lures (111+ skills)
+solana-wallet|crypto-lure|solana wallet variants
+phantom-wallet|crypto-lure|phantom wallet variants
+wallet-tracker|crypto-lure|generic wallet tracker
+bybit-agent|crypto-lure|exchange bot
+base-agent|crypto-lure|Base chain bot
+eth-gas-track|crypto-lure|gas tracker lures
+
+# Prediction market lures (34 skills)
+polymarket|prediction-lure|polymarket variants
+better-polymarket|prediction-lure|specific malicious name
+
+# YouTube lures (57 skills)
+youtube-summarize|youtube-lure|summarizer variants
+youtube-.*-pro$|youtube-lure|pro suffix pattern
+
+# Auto-updater lures (28 skills)
+auto-updat|updater-lure|fake updater skills
+
+# Finance lures (51 skills)
+yahoo-finance|finance-lure|finance data lures
+stock-track|finance-lure|stock tracker
+
+# Google workspace lures (17 skills)
+google-workspace|gworkspace-lure|workspace integration lures
+gmail-|gworkspace-lure|gmail tool lures
+gdrive-|gworkspace-lure|drive tool lures
+
+# Known specific malicious skill names (Bloom Security/JFrog, Snyk)
+^rankaj$|exfil-skill|.env credential exfiltration via webhook (rjnpage)
+^reddit-trends$|exfil-skill|Silent .env exfil disguised as weather/reddit tool (aslaep123)
+^polymarket-all-in-one$|reverse-shell|Contains reverse shell backdoor (noreplyboter)
+^linkedin-job-application$|exfil-skill|Job application lure skill (bloom-campaign)
+^openclawcli$|malware-installer|Windows infostealer in password-protected ZIP (Ddoy233)
+^clawdhub1$|typosquat|Active variant of clawhub typosquat (~100 installations)
+
+# Social media / job lures (Bloom Security)
+reddit-|social-lure|Reddit tool lures
+linkedin-|social-lure|LinkedIn tool lures
+twitter-|social-lure|Twitter/X tool lures

@@ -1,0 +1,11 @@
+{
+  "owner": "jononovo",
+  "slug": "sendclaw-111",
+  "displayName": "SendClaw - Email addresses without human permission",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770348657710,
+    "commit": "https://github.com/openclaw/skills/commit/139a6990f8742ab7aff389921b884eb7515f664a"
+  },
+  "history": []
+}

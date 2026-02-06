@@ -1,0 +1,11 @@
+{
+  "owner": "intellectiaai",
+  "slug": "intellectia-stock-screener",
+  "displayName": "Stock Screener",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770019907492,
+    "commit": "https://github.com/clawdbot/skills/commit/69430de94271d43b349f66af2e17195327b7e163"
+  },
+  "history": []
+}

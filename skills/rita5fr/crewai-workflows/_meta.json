@@ -1,0 +1,11 @@
+{
+  "owner": "rita5fr",
+  "slug": "crewai-workflows",
+  "displayName": "Crewai Workflows",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770311314208,
+    "commit": "https://github.com/clawdbot/skills/commit/bf81046e8f01ad6b9591b6085a12688d76276808"
+  },
+  "history": []
+}

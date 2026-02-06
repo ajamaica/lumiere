@@ -1,0 +1,17 @@
+{
+  "owner": "hqman",
+  "slug": "mijia",
+  "displayName": "Mijia",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769910345187,
+    "commit": "https://github.com/clawdbot/skills/commit/37c2c58d5525444d75729e8824b027807eb0df0e"
+  },
+  "history": [
+    {
+      "version": "0.1.1",
+      "publishedAt": 1769760111857,
+      "commit": "https://github.com/clawdbot/skills/commit/7151f3a0f772feaa23e4b3e028485e2ae0d6b210"
+    }
+  ]
+}

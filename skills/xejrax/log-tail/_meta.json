@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "log-tail",
+  "displayName": "Log Tail",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135697062,
+    "commit": "https://github.com/clawdbot/skills/commit/a5a1e891669648e6de25686debd6e8a5c9f5d4a5"
+  },
+  "history": []
+}

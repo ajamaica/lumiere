@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "coindeskfeedagent-teneo",
+  "displayName": "CoindeskFeedAgent - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770302174718,
+    "commit": "https://github.com/clawdbot/skills/commit/fcb2a1bc672b6062e93bd6fd7612625609725779"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770216606105,
+      "commit": "https://github.com/clawdbot/skills/commit/5d202a22e73578ca7f9a190d3706b61b761eaeb9"
+    }
+  ]
+}

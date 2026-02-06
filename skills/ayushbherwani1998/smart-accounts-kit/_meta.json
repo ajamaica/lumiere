@@ -1,0 +1,17 @@
+{
+  "owner": "ayushbherwani1998",
+  "slug": "smart-accounts-kit",
+  "displayName": "MetaMask Smart Accounts KIt",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770271304157,
+    "commit": "https://github.com/clawdbot/skills/commit/2bd2d818fa4bc7b54794a4e4a1469df82fbfd61d"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770220600500,
+      "commit": "https://github.com/clawdbot/skills/commit/4a41996ecc4d4f7e172f34d64da45fff60f1458b"
+    }
+  ]
+}

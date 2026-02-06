@@ -1,0 +1,11 @@
+{
+  "owner": "autogame-17",
+  "slug": "duby",
+  "displayName": "Duby TTS",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769892384484,
+    "commit": "https://github.com/clawdbot/skills/commit/113e4d367f9eefc314e48c5b7317fde811032de9"
+  },
+  "history": []
+}

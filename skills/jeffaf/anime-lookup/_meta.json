@@ -1,0 +1,11 @@
+{
+  "owner": "jeffaf",
+  "slug": "anime-lookup",
+  "displayName": "Anime",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770257797652,
+    "commit": "https://github.com/openclaw/skills/commit/3c50a21cefe58e2bd1b72bf80491c4ba05a96072"
+  },
+  "history": []
+}

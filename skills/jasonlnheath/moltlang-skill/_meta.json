@@ -1,0 +1,11 @@
+{
+  "owner": "jasonlnheath",
+  "slug": "moltlang-skill",
+  "displayName": "Moltlang Translator",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1770222552958,
+    "commit": "https://github.com/clawdbot/skills/commit/94c53be40319e02406820832f5b4a2d8cd2bd621"
+  },
+  "history": []
+}

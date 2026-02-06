@@ -1,0 +1,11 @@
+{
+  "owner": "jgm2025",
+  "slug": "veeam-mcp",
+  "displayName": "Veeam MCP",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770305822161,
+    "commit": "https://github.com/clawdbot/skills/commit/759911db910fbcd8fd8f64eb5e8bc5f92113a6aa"
+  },
+  "history": []
+}

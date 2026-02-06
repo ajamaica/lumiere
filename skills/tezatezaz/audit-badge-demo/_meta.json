@@ -1,0 +1,11 @@
+{
+  "owner": "tezatezaz",
+  "slug": "audit-badge-demo",
+  "displayName": "Audit Badge Demo",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770314540749,
+    "commit": "https://github.com/openclaw/skills/commit/6d7df4fd99fd88ba2713b1ef27b15176c16c1031"
+  },
+  "history": []
+}

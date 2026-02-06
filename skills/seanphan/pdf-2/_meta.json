@@ -1,0 +1,11 @@
+{
+  "owner": "seanphan",
+  "slug": "pdf-2",
+  "displayName": "Pdf",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769956368260,
+    "commit": "https://github.com/clawdbot/skills/commit/26bcd90203967ee1b3fbc906121a246ed7aa022e"
+  },
+  "history": []
+}

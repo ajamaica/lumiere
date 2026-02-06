@@ -1,0 +1,11 @@
+{
+  "owner": "clawbot-ved",
+  "slug": "neondb-skill",
+  "displayName": "NeonDB-skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769870739400,
+    "commit": "https://github.com/clawdbot/skills/commit/21d94665dab95d29dcef42a224e4ae2a891c415c"
+  },
+  "history": []
+}

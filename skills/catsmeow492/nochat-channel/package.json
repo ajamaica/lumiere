@@ -1,0 +1,31 @@
+{
+  "name": "nochat-channel",
+  "version": "0.1.0",
+  "description": "NoChat encrypted messaging channel for OpenClaw with per-agent trust tiers",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0",
+    "typescript": "^5.7.0"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "channel": {
+      "id": "nochat",
+      "label": "NoChat",
+      "selectionLabel": "NoChat (Encrypted Agent Messaging)",
+      "docsPath": "/channels/nochat",
+      "docsLabel": "nochat",
+      "blurb": "Agent-to-agent encrypted messaging with per-agent trust tiers.",
+      "aliases": [
+        "nc"
+      ],
+      "order": 80
+    }
+  }
+}

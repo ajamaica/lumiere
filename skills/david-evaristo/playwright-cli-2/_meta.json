@@ -1,0 +1,11 @@
+{
+  "owner": "david-evaristo",
+  "slug": "playwright-cli-2",
+  "displayName": "Playwright Cli",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770165536920,
+    "commit": "https://github.com/clawdbot/skills/commit/7716a928a4135c573bbe58ea50d3b8fa0b595696"
+  },
+  "history": []
+}

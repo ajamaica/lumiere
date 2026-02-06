@@ -1,0 +1,40 @@
+{
+  "name": "agent-team-kit",
+  "version": "1.0.0",
+  "description": "Self-sustaining process framework for AI agent teams",
+  "keywords": [
+    "openclaw",
+    "agent",
+    "team",
+    "process",
+    "workflow",
+    "autonomous",
+    "multi-agent"
+  ],
+  "author": "OpenClaw Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openclaw/agent-team-kit"
+  },
+  "openclaw": {
+    "type": "skill",
+    "category": "process",
+    "requires": [],
+    "provides": [
+      "intake-loop",
+      "role-definitions",
+      "heartbeat-patterns"
+    ],
+    "files": {
+      "skill": "SKILL.md",
+      "readme": "README.md",
+      "templates": "templates/"
+    }
+  },
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "templates/"
+  ]
+}

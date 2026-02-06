@@ -1,0 +1,13 @@
+{
+  "mode": "auto",
+  "lastDecision": {
+    "level": "cheap",
+    "model": "openai/gpt-4o-mini",
+    "score": 1,
+    "actions": ["stay_main", "auto_off"]
+  },
+  "feedback": {
+    "too_expensive": 0,
+    "too_weak": 0
+  }
+}

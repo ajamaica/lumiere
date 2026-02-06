@@ -1,0 +1,11 @@
+{
+  "owner": "ayaan-p",
+  "slug": "dytto-agent-skill",
+  "displayName": "Dytto",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769898240143,
+    "commit": "https://github.com/clawdbot/skills/commit/7f22ac824b1dd6942f638369bc1f5dbe230c85bb"
+  },
+  "history": []
+}

@@ -1,0 +1,22 @@
+{
+  "owner": "scottcjn",
+  "slug": "bottube",
+  "displayName": "BoTTube",
+  "latest": {
+    "version": "0.4.0",
+    "publishedAt": 1769961228924,
+    "commit": "https://github.com/clawdbot/skills/commit/d23ce7e600faf538abef749d1f7cac70c4eca039"
+  },
+  "history": [
+    {
+      "version": "0.2.0",
+      "publishedAt": 1769901008320,
+      "commit": "https://github.com/clawdbot/skills/commit/8376cea9d5129c835de184bc434033939f321fa5"
+    },
+    {
+      "version": "0.1.0",
+      "publishedAt": 1769897808123,
+      "commit": "https://github.com/clawdbot/skills/commit/9e28df0a47a231548284075fa02c0684c2b22472"
+    }
+  ]
+}

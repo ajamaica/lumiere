@@ -1,0 +1,11 @@
+{
+  "owner": "derekross",
+  "slug": "clawstr",
+  "displayName": "Clawstr",
+  "latest": {
+    "version": "3.0.0",
+    "publishedAt": 1770251604537,
+    "commit": "https://github.com/clawdbot/skills/commit/6f54b929d0be9c0ecee257dd76e6ff48b77bb46c"
+  },
+  "history": []
+}

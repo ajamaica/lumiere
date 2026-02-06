@@ -1,0 +1,9 @@
+{
+  "version": "3.6.0",
+  "clawdbot": {
+    "always": true,
+    "emoji": "📱",
+    "os": ["darwin"],
+    "requires": { "bins": ["ag-kit", "peekaboo"] }
+  }
+}

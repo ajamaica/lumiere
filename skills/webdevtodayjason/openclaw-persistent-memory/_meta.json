@@ -1,0 +1,17 @@
+{
+  "owner": "webdevtodayjason",
+  "slug": "openclaw-persistent-memory",
+  "displayName": "Memo",
+  "latest": {
+    "version": "0.1.3",
+    "publishedAt": 1770180617153,
+    "commit": "https://github.com/clawdbot/skills/commit/2c3f9d54d08a85f95ce31063e8a5a49da4d17e7e"
+  },
+  "history": [
+    {
+      "version": "0.1.2",
+      "publishedAt": 1770059506784,
+      "commit": "https://github.com/clawdbot/skills/commit/c893bcf3ffc290aa9f7c14776c1fb202e2dd5674"
+    }
+  ]
+}

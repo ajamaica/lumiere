@@ -1,0 +1,34 @@
+{
+  "name": "meshtastic-skill",
+  "version": "1.0.0",
+  "description": "Comprehensive Meshtastic LoRa mesh control via Mesh Master API",
+  "main": "scripts/meshtastic-agent.js",
+  "bin": {
+    "meshtastic": "scripts/meshtastic-cli.js"
+  },
+  "scripts": {
+    "test": "node tests/test-connection.js",
+    "start": "node scripts/meshtastic-cli.js",
+    "cli": "node scripts/meshtastic-cli.js",
+    "check": "node scripts/meshtastic-agent.js"
+  },
+  "keywords": [
+    "meshtastic",
+    "mesh",
+    "lora",
+    "mesh-master",
+    "radio",
+    "network"
+  ],
+  "author": "Snail",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Snail3D/meshtastic-skill.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "nikkijasmine",
+  "slug": "job-search-mcp-jobspy",
+  "displayName": "Job Search MCP (JobSpy)",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770055342683,
+    "commit": "https://github.com/clawdbot/skills/commit/48fb3539ee8d5ba87f8d805ef678aa6d4cefb002"
+  },
+  "history": []
+}

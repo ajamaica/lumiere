@@ -1,0 +1,3 @@
+CrawSecure helps users identify potential security risks in skills by analyzing patterns that may indicate unsafe behavior.
+
+It is designed to be simple, transparent, and educational.

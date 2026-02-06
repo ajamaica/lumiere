@@ -1,0 +1,11 @@
+{
+  "owner": "aaronxx",
+  "slug": "browser-auto-download",
+  "displayName": "browser-auto-download",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770220320489,
+    "commit": "https://github.com/clawdbot/skills/commit/8ee83472ed19db9ba93dd107c9557ff1c7d1642d"
+  },
+  "history": []
+}

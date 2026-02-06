@@ -1,0 +1,17 @@
+{
+  "owner": "oki3505f",
+  "slug": "telegram-cloud-storage",
+  "displayName": "Telegram Cloud Storage",
+  "latest": {
+    "version": "1.8.2",
+    "publishedAt": 1770120544370,
+    "commit": "https://github.com/clawdbot/skills/commit/f19c08ae63e9b72513c554edf099722116102ca8"
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1770109442567,
+      "commit": "https://github.com/clawdbot/skills/commit/d0f4b9bb78613b995ecf3f37da7c4b6908383255"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "mrinvincible29",
+  "slug": "exchange-rates",
+  "displayName": "Exchange Rates",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769868423163,
+    "commit": "https://github.com/clawdbot/skills/commit/0e9bed5878261a2707bf7f6f074b6eea98b25105"
+  },
+  "history": []
+}

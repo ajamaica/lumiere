@@ -1,0 +1,17 @@
+{
+  "owner": "justindobbs",
+  "slug": "openclaw-safety-coach",
+  "displayName": "Openclaw Safety Coach",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770059647216,
+    "commit": "https://github.com/clawdbot/skills/commit/a2aabb47e76eddba82eeb77d383057fc0da5a766"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770011920753,
+      "commit": "https://github.com/clawdbot/skills/commit/e7272f974cc271d141ff1a351bcc4e2792cd3f7e"
+    }
+  ]
+}

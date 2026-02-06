@@ -1,0 +1,11 @@
+{
+  "owner": "daaab",
+  "slug": "heygen-avatar-lite",
+  "displayName": "HeyGen AI Avatar Video (Lite)",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770104689038,
+    "commit": "https://github.com/clawdbot/skills/commit/46d0de3689bb0e9991597f935656b4b2d43e2b8a"
+  },
+  "history": []
+}

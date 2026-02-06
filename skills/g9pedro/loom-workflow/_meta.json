@@ -1,0 +1,11 @@
+{
+  "owner": "g9pedro",
+  "slug": "loom-workflow",
+  "displayName": "Loom Workflow",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770176466707,
+    "commit": "https://github.com/clawdbot/skills/commit/75303312d2d2546d98b43f1c16dec8b01c8143d4"
+  },
+  "history": []
+}

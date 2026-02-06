@@ -1,0 +1,11 @@
+{
+  "owner": "gitgoodordietrying",
+  "slug": "regex-patterns",
+  "displayName": "Regex Patterns",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770158566113,
+    "commit": "https://github.com/clawdbot/skills/commit/dee68f2fc0c5efb0222abf1570d506daf32a35f3"
+  },
+  "history": []
+}

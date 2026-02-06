@@ -1,0 +1,56 @@
+{
+  "id": "jasper-recall",
+  "name": "Jasper Recall - Local RAG Memory",
+  "version": "0.2.0",
+  "description": "Semantic search over indexed memory using ChromaDB with auto-recall",
+  "homepage": "https://github.com/E-x-O-Entertainment-Studios-Inc/jasper-recall",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true
+      },
+      "autoRecall": {
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically inject relevant memories before agent processing"
+      },
+      "defaultLimit": {
+        "type": "number",
+        "default": 5,
+        "description": "Default number of results to return"
+      },
+      "minScore": {
+        "type": "number",
+        "default": 0.3,
+        "description": "Minimum similarity score for auto-recall (0-1)"
+      },
+      "publicOnly": {
+        "type": "boolean",
+        "default": false,
+        "description": "Only search public memory (for sandboxed agents)"
+      },
+      "logLevel": {
+        "type": "string",
+        "enum": ["debug", "info", "warn", "error"],
+        "default": "info"
+      }
+    }
+  },
+  "uiHints": {
+    "enabled": { "label": "Enable Jasper Recall" },
+    "autoRecall": {
+      "label": "Auto-Recall",
+      "help": "Inject relevant memories into context before processing"
+    },
+    "defaultLimit": { "label": "Default Result Limit" },
+    "minScore": {
+      "label": "Minimum Score",
+      "help": "Threshold for auto-recall relevance (0.3 = 30%)"
+    },
+    "publicOnly": { "label": "Public Memory Only" },
+    "logLevel": { "label": "Log Level" }
+  }
+}

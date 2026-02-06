@@ -1,0 +1,11 @@
+{
+  "owner": "ndgates",
+  "slug": "sanctifai",
+  "displayName": "SanctifAI",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770188947239,
+    "commit": "https://github.com/clawdbot/skills/commit/1bca51ed7358df33631ad521bd8c2237f5c58f2d"
+  },
+  "history": []
+}

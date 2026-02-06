@@ -1,0 +1,11 @@
+{
+  "owner": "nwang783",
+  "slug": "clawver-print-on-demand",
+  "displayName": "Clawver Print-on-Demand",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770343516328,
+    "commit": "https://github.com/openclaw/skills/commit/4f3b8df05682311dd0da9054e105e340f97817c2"
+  },
+  "history": []
+}

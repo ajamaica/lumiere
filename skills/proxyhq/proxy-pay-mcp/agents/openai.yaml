@@ -1,0 +1,12 @@
+interface:
+  display_name: "Proxy MCP Payments"
+  short_description: "Connect agents to Proxy MCP payments"
+  default_prompt: "Use $proxy-pay-mcp to connect to Proxy MCP and run the intent-to-card flow."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "proxy"
+      description: "Proxy MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.useproxy.ai/api/mcp"

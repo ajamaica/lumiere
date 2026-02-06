@@ -1,0 +1,11 @@
+{
+  "owner": "lvcidpsyche",
+  "slug": "agent-intelligence-network-scan",
+  "displayName": "Agent Intelligence Network Scan",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769998283420,
+    "commit": "https://github.com/clawdbot/skills/commit/22e7daedd815b38d7c78c498cf359e2dd4f6fdbb"
+  },
+  "history": []
+}

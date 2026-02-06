@@ -1,0 +1,17 @@
+{
+  "name": "antigravity-swarm",
+  "version": "0.1.0",
+  "description": "Antigravity Sub-Agents Swarm Orchestrator",
+  "main": "scripts/orchestrator.py",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gemini",
+    "agent",
+    "swarm",
+    "orchestration"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}

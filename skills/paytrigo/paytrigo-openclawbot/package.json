@@ -1,0 +1,8 @@
+{
+  "name": "paytrigo-openclawbot-skill",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "ethers": "^6.0.0"
+  }
+}

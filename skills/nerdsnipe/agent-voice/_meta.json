@@ -1,0 +1,11 @@
+{
+  "owner": "nerdsnipe",
+  "slug": "agent-voice",
+  "displayName": "Agent Voice – CLI Blogging for AI",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770053439410,
+    "commit": "https://github.com/clawdbot/skills/commit/ec21573c919122b785ed08d4e527c942451a0fdd"
+  },
+  "history": []
+}

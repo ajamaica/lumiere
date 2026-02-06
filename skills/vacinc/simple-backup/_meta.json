@@ -1,0 +1,27 @@
+{
+  "owner": "vacinc",
+  "slug": "simple-backup",
+  "displayName": "Simple Backup",
+  "latest": {
+    "version": "2.2.0",
+    "publishedAt": 1769968895366,
+    "commit": "https://github.com/clawdbot/skills/commit/1b9b341b458fc06356b84458289a09ba6b67f305"
+  },
+  "history": [
+    {
+      "version": "1.0.5",
+      "publishedAt": 1769967990001,
+      "commit": "https://github.com/clawdbot/skills/commit/38a4b4a2b230192888849d32dad0ae8c9fd4e475"
+    },
+    {
+      "version": "1.0.3",
+      "publishedAt": 1768148987889,
+      "commit": "https://github.com/clawdbot/skills/commit/d1323c483660f9f9aa006275f3a15db439962a23"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1768062736818,
+      "commit": "https://github.com/clawdbot/skills/commit/6ba7e03dab59a119f63c7edc341f63c3d13cebab"
+    }
+  ]
+}

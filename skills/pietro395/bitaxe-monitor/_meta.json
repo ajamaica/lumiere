@@ -1,0 +1,11 @@
+{
+  "owner": "pietro395",
+  "slug": "bitaxe-monitor",
+  "displayName": "Bitaxe Monitor",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770296996970,
+    "commit": "https://github.com/clawdbot/skills/commit/21fa71e14a6a7c8c2f290ed8399b30ebd4fa4afc"
+  },
+  "history": []
+}

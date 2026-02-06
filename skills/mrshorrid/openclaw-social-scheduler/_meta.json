@@ -1,0 +1,11 @@
+{
+  "owner": "mrshorrid",
+  "slug": "openclaw-social-scheduler",
+  "displayName": "Openclaw Social Scheduler",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770160213383,
+    "commit": "https://github.com/clawdbot/skills/commit/2c7e5b8aa1e81822939efddc969a99161abe675c"
+  },
+  "history": []
+}

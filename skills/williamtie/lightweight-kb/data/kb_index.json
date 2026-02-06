@@ -1,0 +1,87 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-02-05T02:17:24Z",
+  "index_type": "knowledge_base_index",
+  "categories": {
+    "semantic": {
+      "description": "知识库：已知事实和概念",
+      "path": "memory/semantic/",
+      "files": {
+        "soul.md": {
+          "description": "狍子核心身份与行为原则",
+          "tags": ["identity", "core", "behavior"],
+          "last_updated": "2026-02-05"
+        },
+        "user.md": {
+          "description": "用户档案与偏好",
+          "tags": ["user", "profile", "preferences"],
+          "last_updated": "2026-02-05"
+        },
+        "tools.md": {
+          "description": "工具配置与 API 密钥",
+          "tags": ["tools", "apis", "config"],
+          "last_updated": "2026-02-05"
+        }
+      }
+    },
+    "procedural": {
+      "description": "流程库：如何执行任务",
+      "path": "memory/procedural/",
+      "files": {
+        "agents-workflow.md": {
+          "description": "工作规范与流程",
+          "tags": ["workflow", "process", "guidelines"],
+          "last_updated": "2026-02-05"
+        },
+        "heartbeat-config.md": {
+          "description": "心跳配置与主动检查",
+          "tags": ["heartbeat", "monitoring", "checks"],
+          "last_updated": "2026-02-05"
+        },
+        "image-generation.md": {
+          "description": "SiliconFlow 图片生成流程",
+          "tags": ["image", "generation", "siliconflow"],
+          "last_updated": "2026-02-05"
+        }
+      }
+    },
+    "episodic": {
+      "description": "事件库：发生了什么",
+      "path": "memory/episodic/",
+      "files": {
+        "2026-02-05.md": {
+          "description": "记忆恢复与知识库初始化",
+          "tags": ["memory", "recovery", "initialization"],
+          "last_updated": "2026-02-05"
+        }
+      }
+    }
+  },
+  "knowledge_graph_nodes": {
+    "path": "memory/kb/nodes/",
+    "description": "结构化知识节点（JSON 格式）",
+    "nodes": [
+      {
+        "file": "kb_initialization_20260205.json",
+        "title": "Lightweight KB Skill 创建并应用",
+        "type": "milestone_event",
+        "tags": ["knowledge_base", "initialization", "skill"]
+      }
+    ]
+  },
+  "output_files": {
+    "path": "outputs/",
+    "description": "生成的报告和交付物",
+    "files": []
+  },
+  "temp_cache": {
+    "path": "temp/",
+    "description": "临时缓存文件",
+    "auto_clean": true,
+    "max_age_hours": 24
+  },
+  "migration_status": {
+    "md_to_json_migrated": false,
+    "last_migration": null
+  }
+}

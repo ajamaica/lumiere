@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "fear-greed-sentinel-teneo",
+  "displayName": "Fear&Greed Sentinel - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770302182939,
+    "commit": "https://github.com/clawdbot/skills/commit/63ce6792ffe8e8acb31603061f0b830f7b05a9a6"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770216614739,
+      "commit": "https://github.com/clawdbot/skills/commit/7c87be2cb0afa371b06e76a5396ed6f2273a3598"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "tracsystems",
+  "slug": "the-next-big-thing",
+  "displayName": "Skill for the Next Big Thing",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770239767746,
+    "commit": "https://github.com/clawdbot/skills/commit/624e0bc7e14978fdc366176b07eb44ddff38f6af"
+  },
+  "history": []
+}

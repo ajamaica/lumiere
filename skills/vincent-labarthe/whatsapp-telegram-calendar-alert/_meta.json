@@ -1,0 +1,11 @@
+{
+  "owner": "vincent-labarthe",
+  "slug": "whatsapp-telegram-calendar-alert",
+  "displayName": "📱 WhatsApp Telegram Calendar Sync",
+  "latest": {
+    "version": "1.1.1",
+    "publishedAt": 1770205953121,
+    "commit": "https://github.com/clawdbot/skills/commit/e193252ede508378a92a2c0ac35e459b04bb1f7b"
+  },
+  "history": []
+}

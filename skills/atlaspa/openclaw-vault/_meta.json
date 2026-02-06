@@ -1,0 +1,17 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-vault",
+  "displayName": "Openclaw Vault",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770313148713,
+    "commit": "https://github.com/clawdbot/skills/commit/5b9a4d534ccf5053c360060d65cf4f223e8356df"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770290867067,
+      "commit": "https://github.com/clawdbot/skills/commit/3a31e15556b77b587b82e70a21238642766b4e05"
+    }
+  ]
+}

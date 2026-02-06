@@ -1,0 +1,11 @@
+{
+  "owner": "niczy",
+  "slug": "claw-voice",
+  "displayName": "ClawVoice",
+  "latest": {
+    "version": "0.0.2",
+    "publishedAt": 1770157498785,
+    "commit": "https://github.com/clawdbot/skills/commit/62679e605cdbb89eb99fb0cdf99b42edd08210b1"
+  },
+  "history": []
+}

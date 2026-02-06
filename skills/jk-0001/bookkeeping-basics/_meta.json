@@ -1,0 +1,11 @@
+{
+  "owner": "jk-0001",
+  "slug": "bookkeeping-basics",
+  "displayName": "Bookkeeping Basics",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770341652115,
+    "commit": "https://github.com/openclaw/skills/commit/87c4426ffad8202812bb8c6eb04156f59009270f"
+  },
+  "history": []
+}

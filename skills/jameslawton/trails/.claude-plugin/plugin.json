@@ -1,0 +1,24 @@
+{
+  "name": "trails",
+  "slug": "trails",
+  "displayName": "Trails",
+  "version": "1.0.0",
+  "description": "Integrate Trails cross-chain infrastructure — Widget, Headless SDK, or Direct API",
+  "owner": {
+    "name": "0xtrails",
+    "email": "jlawton@polygon.technology"
+  },
+  "homepage": "https://trails.build",
+  "repository": "https://github.com/0xtrails/skills",
+  "license": "MIT",
+  "keywords": ["trails", "cross-chain", "swap", "bridge", "defi", "web3", "payments"],
+  "skills": [
+    {
+      "name": "trails",
+      "slug": "trails",
+      "displayName": "Trails",
+      "path": "SKILL.md",
+      "description": "Complete Trails integration assistant"
+    }
+  ]
+}

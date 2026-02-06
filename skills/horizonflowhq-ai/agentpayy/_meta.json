@@ -1,0 +1,11 @@
+{
+  "owner": "horizonflowhq-ai",
+  "slug": "agentpayy",
+  "displayName": "AgentPayy",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769973270280,
+    "commit": "https://github.com/clawdbot/skills/commit/c6d3a313e9e105e1be58baa20a74c0359f326d26"
+  },
+  "history": []
+}

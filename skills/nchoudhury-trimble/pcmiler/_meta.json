@@ -1,0 +1,11 @@
+{
+  "owner": "nchoudhury-trimble",
+  "slug": "pcmiler",
+  "displayName": "PC*Miler",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770337892076,
+    "commit": "https://github.com/clawdbot/skills/commit/16fa5810b77d9d8dd8b84c7f1263bd7ef2049861"
+  },
+  "history": []
+}

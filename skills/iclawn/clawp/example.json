@@ -1,0 +1,14 @@
+{
+  "input": "I want to launch a meme token about a cat that trades crypto",
+  "output": {
+    "name": "Alley Cat Trader",
+    "symbol": "ALLEY",
+    "description": "A street smart cat navigating the markets one trade at a time",
+    "narrative": "An alley cat that learned charts before humans and now trades memes on chain",
+    "visualDirection": "Bold meme style with graffiti textures and trading screens",
+    "logoPrompt": "Meme style cartoon cat trader with sunglasses and crypto charts, bold colors",
+    "themeTags": ["cat", "trading", "meme"],
+    "buybackPlan": "Automated buyback and burn using creator fees under fixed execution rules",
+    "disclaimer": "This agent operates under fixed execution rules and does not provide financial advice."
+  }
+}

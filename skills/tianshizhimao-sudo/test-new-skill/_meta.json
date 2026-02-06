@@ -1,0 +1,11 @@
+{
+  "owner": "tianshizhimao-sudo",
+  "slug": "test-new-skill",
+  "displayName": "Test New Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770261969668,
+    "commit": "https://github.com/clawdbot/skills/commit/03726e1eda710d830930212af6cc2c80eef32129"
+  },
+  "history": []
+}

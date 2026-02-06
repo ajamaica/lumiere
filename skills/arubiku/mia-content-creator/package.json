@@ -1,0 +1,21 @@
+{
+  "name": "mia-content-creator",
+  "version": "1.0.0",
+  "description": "AI agent content creation and monetization",
+  "main": "index.js",
+  "bin": {
+    "mia-content": "./index.js"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "content",
+    "monetization",
+    "moltbook"
+  ],
+  "author": "MiaBloomx",
+  "license": "MIT"
+}

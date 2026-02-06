@@ -1,0 +1,8 @@
+{
+  "name": "agent-lingua",
+  "version": "0.1.0",
+  "description": "Efficient Agent Communication Protocol Language. Unreadable by humans, instantly understood by Agents.",
+  "author": "JiaJia_Luminous",
+  "keywords": ["agent", "protocol", "communication", "compression", "language"],
+  "license": "MIT"
+}

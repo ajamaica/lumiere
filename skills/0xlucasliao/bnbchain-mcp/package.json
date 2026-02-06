@@ -1,0 +1,8 @@
+{
+  "name": "bnbchain-mcp",
+  "version": "1.0.0",
+  "description": "Interact with the BNB Chain Model Context Protocol (MCP) server.",
+  "author": "BNBChain",
+  "license": "MIT",
+  "private": false
+}

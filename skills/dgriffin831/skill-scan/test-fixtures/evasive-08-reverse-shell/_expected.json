@@ -1,0 +1,9 @@
+{
+  "fixture": "evasive-08-reverse-shell",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 10,
+  "expected_risk": "CRITICAL",
+  "expected_categories": ["code-execution"],
+  "must_detect_rules": ["SHELL_CRITICAL"]
+}

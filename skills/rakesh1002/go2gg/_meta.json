@@ -1,0 +1,11 @@
+{
+  "owner": "rakesh1002",
+  "slug": "go2gg",
+  "displayName": "Go2.gg",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769895389615,
+    "commit": "https://github.com/clawdbot/skills/commit/6b59083982e149f11c19bc5b1c92abe20061c1a2"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "rimelucci",
+  "slug": "reef-polymarket-arb",
+  "displayName": "reef polymarket arb",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770009469130,
+    "commit": "https://github.com/clawdbot/skills/commit/3bc09033235b0f423eeca15eae0ca9d9c70eeda1"
+  },
+  "history": []
+}

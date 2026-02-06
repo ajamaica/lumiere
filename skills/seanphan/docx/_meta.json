@@ -1,0 +1,11 @@
+{
+  "owner": "seanphan",
+  "slug": "docx",
+  "displayName": "Docx",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769956295742,
+    "commit": "https://github.com/clawdbot/skills/commit/0dc2229419d9493e0a6e43c01537918b820c9921"
+  },
+  "history": []
+}

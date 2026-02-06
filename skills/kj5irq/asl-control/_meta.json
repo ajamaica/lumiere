@@ -1,0 +1,11 @@
+{
+  "owner": "kj5irq",
+  "slug": "asl-control",
+  "displayName": "Allstar Link node control ASL3 (ASL3 Node Control)",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770256725479,
+    "commit": "https://github.com/clawdbot/skills/commit/e363276fe15622e130b243cada7c3314fbe2470e"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "aisapay",
+  "slug": "aisa-multi-source-search",
+  "displayName": "AIsa Multi Source Search",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770273478501,
+    "commit": "https://github.com/clawdbot/skills/commit/d7f69fb37ba1acf83405e0c153aaed50bddbafc7"
+  },
+  "history": []
+}

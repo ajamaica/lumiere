@@ -1,0 +1,11 @@
+{
+  "owner": "lstpsche",
+  "slug": "gog-advanced",
+  "displayName": "Google Services (via gogcli)",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770154518775,
+    "commit": "https://github.com/clawdbot/skills/commit/f8bcec5653419ac5cd6987f75ef07f67a1a6f474"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "seanphan",
+  "slug": "internal-comms",
+  "displayName": "Internal Comms",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769956312036,
+    "commit": "https://github.com/clawdbot/skills/commit/8b157d276853108e2a2469e57e164b918aeae384"
+  },
+  "history": []
+}

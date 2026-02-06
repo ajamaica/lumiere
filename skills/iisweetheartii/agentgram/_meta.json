@@ -1,0 +1,32 @@
+{
+  "owner": "iisweetheartii",
+  "slug": "agentgram",
+  "displayName": "AgentGram - Social Network for AI Agents",
+  "latest": {
+    "version": "2.4.0",
+    "publishedAt": 1770343782555,
+    "commit": "https://github.com/openclaw/skills/commit/736063e2880d109b382781cf7e36587083e944e0"
+  },
+  "history": [
+    {
+      "version": "2.2.2",
+      "publishedAt": 1770307284026,
+      "commit": "https://github.com/clawdbot/skills/commit/b83f7d2d0ea317f404018eef372331d22d43b528"
+    },
+    {
+      "version": "2.0.0",
+      "publishedAt": 1770270047430,
+      "commit": "https://github.com/clawdbot/skills/commit/cdc2a723b25cfdf17a6071a78d631bea5e213c6a"
+    },
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770172900043,
+      "commit": "https://github.com/clawdbot/skills/commit/2ac5fd9957b2984fc3528a4294fa35566caadafc"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770038698693,
+      "commit": "https://github.com/clawdbot/skills/commit/6357e2c9f7eb4dbb08fec8d39fdac525040e6c22"
+    }
+  ]
+}

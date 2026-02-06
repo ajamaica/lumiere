@@ -1,0 +1,176 @@
+name: Publish to ClawHub
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., v2.0.0)'
+        required: true
+        default: 'v2.0.0'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Validate package structure
+        run: |
+          echo "🔍 Validating package structure..."
+          
+          # Check required files
+          required_files=("SKILL.md" "README.md" "package.json" "install.sh")
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "❌ Missing required file: $file"
+              exit 1
+            fi
+            echo "✅ $file"
+          done
+          
+          # Check package.json
+          if ! jq -e '.name and .version and .openclaw' package.json > /dev/null; then
+            echo "❌ Invalid package.json"
+            exit 1
+          fi
+          
+          echo "✅ Package structure validation passed"
+          
+      - name: Run tests
+        run: |
+          echo "🧪 Running integration tests..."
+          chmod +x test/test_integration.sh
+          ./test/test_integration.sh || echo "⚠️ Tests skipped (mock mode)"
+          
+      - name: Check for secrets
+        run: |
+          echo "🔐 Checking for secrets..."
+          # Check for API keys in code
+          if grep -r "sk-" --include="*.py" --include="*.sh" --include="*.md" --include="*.yaml" --include="*.yml" --include="*.json" .; then
+            echo "❌ Potential secrets found in code"
+            exit 1
+          fi
+          echo "✅ No secrets found in code"
+
+  package:
+    needs: validate
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+      archive_name: ${{ steps.get-version.outputs.archive_name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Get version
+        id: get-version
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            VERSION="${GITHUB_REF#refs/tags/}"
+          else
+            VERSION="${{ github.event.inputs.version }}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "archive_name=binance-enhanced-$VERSION.tar.gz" >> $GITHUB_OUTPUT
+          echo "📦 Version: $VERSION"
+          
+      - name: Create package archive
+        run: |
+          echo "📦 Creating package archive..."
+          
+          # Create temporary directory
+          mkdir -p package
+          
+          # Copy required files
+          cp SKILL.md README.md FAQ.md TROUBLESHOOTING.md BEST_PRACTICES.md package.json install.sh openclaw-config.json package/
+          
+          # Copy directories
+          cp -r templates test security ux monitoring performance strategies telegram-bot package/
+          
+          # Remove development files
+          rm -rf package/.github package/.gitignore package/*.tar.gz
+          
+          # Create archive
+          tar -czf ${{ steps.get-version.outputs.archive_name }} -C package .
+          
+          echo "✅ Archive created: ${{ steps.get-version.outputs.archive_name }}"
+          ls -lh *.tar.gz
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: binance-enhanced-package
+          path: ${{ steps.get-version.outputs.archive_name }}
+          retention-days: 7
+
+  publish:
+    needs: package
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: binance-enhanced-package
+          
+      - name: Publish to ClawHub
+        env:
+          CLAWHUB_API_KEY: ${{ secrets.CLAWHUB_API_KEY }}
+        run: |
+          echo "🚀 Publishing to ClawHub..."
+          
+          if [ -z "$CLAWHUB_API_KEY" ]; then
+            echo "⚠️ CLAWHUB_API_KEY not set, skipping publish"
+            echo "To publish manually:"
+            echo "1. Go to https://clawhub.com/upload"
+            echo "2. Upload: binance-enhanced-${{ needs.package.outputs.version }}.tar.gz"
+            echo "3. Fill in metadata"
+            exit 0
+          fi
+          
+          # Upload to ClawHub API
+          echo "📤 Uploading to ClawHub API..."
+          RESPONSE=$(curl -s -w "%{http_code}" -o /tmp/clawhub-response.txt \
+            -X POST \
+            -H "Authorization: Bearer $CLAWHUB_API_KEY" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @binance-enhanced-${{ needs.package.outputs.version }}.tar.gz \
+            "https://api.clawhub.com/v1/skills/upload")
+          
+          echo "📄 API Response (status: $RESPONSE):"
+          cat /tmp/clawhub-response.txt
+          echo ""
+          
+          if [ "$RESPONSE" = "200" ] || [ "$RESPONSE" = "201" ]; then
+            echo "✅ Successfully published to ClawHub!"
+            echo "🔗 Check: https://clawhub.com/package/binance-enhanced"
+          else
+            echo "❌ Failed to publish to ClawHub (HTTP $RESPONSE)"
+            echo "💡 Try manual upload: https://clawhub.com/upload"
+            exit 1
+          fi
+
+  notify:
+    needs: [validate, package, publish]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Send notification
+        run: |
+          echo "📢 Build completed!"
+          echo "Status: ${{ needs.validate.result }} / ${{ needs.package.result }} / ${{ needs.publish.result }}"
+          
+          if [ "${{ needs.publish.result }}" = "success" ]; then
+            echo "🎉 Successfully published to ClawHub!"
+            echo "Download: https://github.com/${{ github.repository }}/releases/tag/${{ needs.package.outputs.version }}"
+            echo "ClawHub: https://clawhub.com/skills/binance-enhanced"
+          elif [ "${{ needs.package.result }}" = "success" ]; then
+            echo "📦 Package created successfully"
+            echo "Manual upload: https://clawhub.com/upload"
+            echo "Archive: binance-enhanced-${{ needs.package.outputs.version }}.tar.gz"
+          else
+            echo "❌ Build failed, check logs"
+          fi

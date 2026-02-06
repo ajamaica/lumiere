@@ -1,0 +1,60 @@
+# Strykr QA Bot Configuration
+# https://app.strykr.ai
+
+baseUrl: https://app.strykr.ai
+
+# Browser settings
+browser:
+  headless: false
+  timeout: 30000
+  screenshotDir: ./screenshots
+  consoleCapture: true
+
+# Test suites to run
+suites:
+  - test-suites/homepage.yaml
+  - test-suites/crypto-signals.yaml
+  - test-suites/stock-signals.yaml
+  - test-suites/news.yaml
+  - test-suites/events.yaml
+  - test-suites/ai-chat.yaml
+
+# Strykr-specific settings
+strykr:
+  # PRISM API endpoints to health check
+  prismEndpoints:
+    - endpoint: /api/signals/crypto
+      method: GET
+      expectedStatus: 200
+    - endpoint: /api/signals/stocks
+      method: GET
+      expectedStatus: 200
+    - endpoint: /api/news
+      method: GET
+      expectedStatus: 200
+    - endpoint: /api/events
+      method: GET
+      expectedStatus: 200
+
+  # Wait for these elements to confirm page loaded
+  loadIndicators:
+    homepage:
+      - '[data-testid="market-status"]'
+      - '.signals-preview'
+    cryptoSignals:
+      - '.signal-card'
+      - '[data-testid="filter-panel"]'
+    stockSignals:
+      - '.signal-card'
+      - '[data-testid="asset-filter"]'
+
+# Known issues - tests will still run but flag as known
+knownIssuesFile: ./config/known-issues.yaml
+
+# Report settings
+reporting:
+  format: markdown
+  outputDir: ./reports
+  includeScreenshots: true
+  includeConsoleErrors: true
+  includeTiming: true

@@ -1,0 +1,13 @@
+{
+  "name": "flock-setup-scripts",
+  "version": "1.0.0",
+  "description": "FLock wallet and credential management scripts",
+  "scripts": {
+    "generate": "node generate-wallet.js",
+    "balance": "node check-balance.js",
+    "creds": "node credentials.js"
+  },
+  "dependencies": {
+    "ethers": "^6.0.0"
+  }
+}

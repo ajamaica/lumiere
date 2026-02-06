@@ -1,0 +1,33 @@
+{
+  "name": "context-optimizer",
+  "version": "1.0.0",
+  "description": "Automatically summarizes conversation context and cleans up old messages to prevent context overflow and save tokens",
+  "author": "OpenClaw AI Assistant",
+  "triggers": [
+    "optimize context",
+    "clean context",
+    "summarize and clear",
+    "context maintenance",
+    "context cleanup"
+  ],
+  "schedule": {
+    "enabled": true,
+    "frequency": "daily",
+    "time": "02:00"
+  },
+  "settings": {
+    "maxBulletPoints": 20,
+    "keepDays": 30,
+    "enableAutoCleanup": true,
+    "minConversationLength": 50
+  },
+  "files": {
+    "summaryPattern": "context-summary-*.md",
+    "memoryFile": "MEMORY.md",
+    "historyFile": "memory/context-history.json"
+  },
+  "dependencies": [],
+  "scripts": {
+    "main": "optimize.js"
+  }
+}

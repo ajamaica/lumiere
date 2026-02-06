@@ -1,0 +1,11 @@
+{
+  "owner": "veeramanikandanr48",
+  "slug": "economic-calendar-fetcher",
+  "displayName": "Economic Calendar Fetcher",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769870220982,
+    "commit": "https://github.com/clawdbot/skills/commit/e30098e0a3e5c794208862984c419b53b3d425eb"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "thegovind",
+  "slug": "azure-keyvault-py",
+  "displayName": "Azure Keyvault Py",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769871092642,
+    "commit": "https://github.com/clawdbot/skills/commit/a2e844d34fd829749e45a665562fceaeddc5dc95"
+  },
+  "history": []
+}

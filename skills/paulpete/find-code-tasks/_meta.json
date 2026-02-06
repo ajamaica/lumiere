@@ -1,0 +1,11 @@
+{
+  "owner": "paulpete",
+  "slug": "find-code-tasks",
+  "displayName": "Find Code Tasks",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770081413483,
+    "commit": "https://github.com/clawdbot/skills/commit/9a54e95a16155a9c125d136b8b17b17648c8b67b"
+  },
+  "history": []
+}

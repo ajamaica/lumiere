@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "ping-monitor",
+  "displayName": "Ping Monitor",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135664725,
+    "commit": "https://github.com/clawdbot/skills/commit/bb5b9fd1331e8a511852e864422cf28b10e8f269"
+  },
+  "history": []
+}

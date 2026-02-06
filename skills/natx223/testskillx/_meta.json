@@ -1,0 +1,11 @@
+{
+  "owner": "natx223",
+  "slug": "testskillx",
+  "displayName": "testSkillX",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770119662171,
+    "commit": "https://github.com/clawdbot/skills/commit/b9eb08be3797825d4d66fffe508de798146cbf26"
+  },
+  "history": []
+}

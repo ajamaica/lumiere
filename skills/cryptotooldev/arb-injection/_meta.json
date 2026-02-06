@@ -1,0 +1,11 @@
+{
+  "owner": "cryptotooldev",
+  "slug": "arb-injection",
+  "displayName": "BYOCB ArbInjectionSkill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770288657699,
+    "commit": "https://github.com/clawdbot/skills/commit/c8d2e01360590016490d5e6aefaf7ad156ec8b1b"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "benhack20",
+  "slug": "volcengine-config",
+  "displayName": "火山方舟coding plan配置",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770025063923,
+    "commit": "https://github.com/clawdbot/skills/commit/95f01d3f05dcb0fbe63f816369528c634ff63f0a"
+  },
+  "history": []
+}

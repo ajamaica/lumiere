@@ -1,0 +1,11 @@
+{
+  "owner": "jdiazofficial",
+  "slug": "clawstack",
+  "displayName": "Claw Stack",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770045221325,
+    "commit": "https://github.com/clawdbot/skills/commit/42dc3861d89981e8e3e2030a95eb1cf13ad9a84f"
+  },
+  "history": []
+}

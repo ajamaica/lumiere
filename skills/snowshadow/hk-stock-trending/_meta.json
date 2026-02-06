@@ -1,0 +1,11 @@
+{
+  "owner": "snowshadow",
+  "slug": "hk-stock-trending",
+  "displayName": "Hk Stock Trending",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770265633139,
+    "commit": "https://github.com/clawdbot/skills/commit/a537a81f3f4e29b68801a595f462c4a927943064"
+  },
+  "history": []
+}

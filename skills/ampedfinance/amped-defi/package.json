@@ -1,0 +1,69 @@
+{
+  "name": "amped-defi",
+  "version": "1.0.0",
+  "description": "Amped DeFi plugin for cross-chain swaps, bridging, and money markets via SODAX SDK",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "index.js",
+    "README.md",
+    "openclaw.plugin.json"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amped-finance/amped-openclaw.git"
+  },
+  "homepage": "https://github.com/amped-finance/amped-openclaw#readme",
+  "bugs": {
+    "url": "https://github.com/amped-finance/amped-openclaw/issues"
+  },
+  "author": "Amped Finance",
+  "dependencies": {
+    "@sinclair/typebox": "^0.32.0",
+    "@sodax/sdk": "1.1.0-beta-rc2",
+    "@sodax/wallet-sdk-core": "1.1.0-beta-rc2",
+    "@sodax/types": "1.1.0-beta-rc2",
+    "viem": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0",
+    "eslint": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "openclaw",
+    "plugin",
+    "defi",
+    "sodax",
+    "bridge",
+    "swap",
+    "money-market",
+    "cross-chain",
+    "intent"
+  ],
+  "license": "MIT"
+}

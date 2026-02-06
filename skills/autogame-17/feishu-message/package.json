@@ -1,0 +1,14 @@
+{
+  "name": "feishu-message",
+  "version": "1.0.0",
+  "description": "General Feishu message operations (get, recursive read, etc)",
+  "main": "get.js",
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.58.0",
+    "axios": "^1.13.4",
+    "commander": "^9.0.0",
+    "dotenv": "^16.0.0",
+    "form-data": "^4.0.5",
+    "music-metadata": "^11.11.2"
+  }
+}

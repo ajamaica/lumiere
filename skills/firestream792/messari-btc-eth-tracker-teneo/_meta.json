@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "messari-btc-eth-tracker-teneo",
+  "displayName": "Messari BTC & ETH Tracker - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.10",
+    "publishedAt": 1770302200889,
+    "commit": "https://github.com/clawdbot/skills/commit/3d9ec95677e7c85d0191719ecde61c4bbbbab4c5"
+  },
+  "history": [
+    {
+      "version": "1.0.9",
+      "publishedAt": 1770216652695,
+      "commit": "https://github.com/clawdbot/skills/commit/04d3b6af45acb9d33f16972be4b0544f8192c2bf"
+    }
+  ]
+}

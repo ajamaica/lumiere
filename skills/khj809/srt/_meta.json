@@ -1,0 +1,17 @@
+{
+  "owner": "khj809",
+  "slug": "srt",
+  "displayName": "SRT",
+  "latest": {
+    "version": "0.1.3",
+    "publishedAt": 1770094955252,
+    "commit": "https://github.com/clawdbot/skills/commit/6dd4f87a8490bebcca5739f0317a26f7d714208f"
+  },
+  "history": [
+    {
+      "version": "0.1.2",
+      "publishedAt": 1770024302645,
+      "commit": "https://github.com/clawdbot/skills/commit/cb0bb346af881681a5044e5a0df14c2726363757"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><title>Longevity Bio-Dashboard v1.2</title><style>body{margin:0;background:#000;color:lime;font-family:monospace;}canvas{border:1px solid lime;}</style></head>
+<body>
+<h1>👻 200yr Lifespan Tracker</h1>
+<canvas id="bio" width="1200" height="800"></canvas>
+<script>
+const c = document.getElementById('bio').getContext('2d');
+c.fillStyle = '#000'; c.fillRect(0,0,1200,800);
+
+// Shadow for readability
+c.shadowColor = 'black'; c.shadowBlur = 3; c.shadowOffsetX = 1; c.shadowOffsetY = 1;
+
+// NMN Progress (87%)
+c.shadowBlur = 0; c.fillStyle = 'lime'; c.fillRect(50,50,400,30); // Bg bar
+c.fillStyle = '#0f0'; c.fillRect(50,50,350,30); // Fill
+c.shadowBlur = 3; c.fillStyle = 'white'; c.font='bold 18px monospace'; c.fillText('NMN: 350mg daily (NAD+ ↑)', 50,95);
+
+// Senolytics (70%)
+c.shadowBlur = 0; c.fillStyle = 'lime'; c.fillRect(50,130,400,30);
+c.fillStyle = '#0a0'; c.fillRect(50,130,280,30);
+c.shadowBlur = 3; c.fillStyle = 'white'; c.fillText('Senolytics D+Q: Weekly (Alzheimer safe)',50,175);
+
+// Yamanaka (Trial %)
+c.shadowBlur = 0; c.fillStyle = 'lime'; c.fillRect(50,210,400,30);
+c.fillStyle = '#aa0'; c.fillRect(50,210,150,30);
+c.shadowBlur = 3; c.fillStyle = 'white'; c.fillText('Yamanaka Brain: FDA trial (YB002)',50,255);
+
+// Fasting (80%)
+c.shadowBlur = 0; c.fillStyle = 'lime'; c.fillRect(50,290,400,30);
+c.fillStyle = '#0f0'; c.fillRect(50,290,320,30);
+c.shadowBlur = 3; c.fillStyle = 'white'; c.fillText('Fasting: 16:8 | Plasma Q3',50,335);
+
+// BTC Longevity Tie
+c.shadowBlur = 0; c.fillStyle = 'orange'; c.font='bold 24px monospace';
+c.shadowBlur = 3; c.fillText('🧬 Cron Reminders: NMN/Fasting/Senolytics Active', 50,520);
+c.fillText('Dashboard: Track 200yr Stacks | All Green?',50,560);
+</script></body></html>

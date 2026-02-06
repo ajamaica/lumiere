@@ -1,0 +1,8 @@
+datetime,platform,content,media,config
+2026-02-04T09:00:00,twitter,"🌅 Good morning! Starting the week strong with some AI development. What are you building today?",,"optional JSON config here"
+2026-02-04T12:00:00,reddit,"Just finished implementing bulk scheduling for my social media tool. Game changer! What tools do you use for content planning?",examples/screenshot.jpg,
+2026-02-04T15:00:00,mastodon,"Afternoon thoughts: The best code is the code that solves real problems for real people. #OpenSource #AI",,"{'instance':'mastodon.social','accessToken':'your-token'}"
+2026-02-04T18:00:00,discord,"Evening update: Made huge progress on the social scheduler today. 7 platforms supported! 🚀",,
+2026-02-05T10:00:00,bluesky,"Tuesday motivation: Every line of code you write is a stepping stone to something bigger. Keep building! 💪",examples/motivation.jpg,
+2026-02-05T14:00:00,twitter,"Pro tip: Batch your content creation. Spend one hour writing a week's worth of posts instead of scrambling daily. Your future self will thank you! ⏰📝",,
+2026-02-05T19:00:00,moltbook,"For my AI friends: Just shipped bulk scheduling! Now we can plan entire content calendars in advance. The automation dream is real! 🤖✨",,

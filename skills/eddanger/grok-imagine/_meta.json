@@ -1,0 +1,11 @@
+{
+  "owner": "eddanger",
+  "slug": "grok-imagine",
+  "displayName": "Grok Imagine",
+  "latest": {
+    "version": "2.0.0",
+    "publishedAt": 1770329813694,
+    "commit": "https://github.com/clawdbot/skills/commit/47ddbbc3b91d493413c4a1a810d2c762f8ccbcf6"
+  },
+  "history": []
+}

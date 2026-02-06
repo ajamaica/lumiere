@@ -1,0 +1,22 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "ai-music-prompts",
+  "displayName": "Ai Music Prompts",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1769957356872,
+    "commit": "https://github.com/clawdbot/skills/commit/dfcd43fab8ffd7fc788f68e33be5b05297a5ca48"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769910624027,
+      "commit": "https://github.com/clawdbot/skills/commit/8d83fc52f602aed75210eb968237aa02eabf8e72"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769759787776,
+      "commit": "https://github.com/clawdbot/skills/commit/a83e7a0a95115f5c584af2d0bce2eb46707524c7"
+    }
+  ]
+}

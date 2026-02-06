@@ -1,0 +1,11 @@
+{
+  "owner": "jlpjavawayup",
+  "slug": "ai-ppt-generate",
+  "displayName": "AI PPT generate",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770217225629,
+    "commit": "https://github.com/clawdbot/skills/commit/6f4d6fa819b49c3fb3c962fbf21c44fe61e26401"
+  },
+  "history": []
+}

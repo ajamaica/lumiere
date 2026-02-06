@@ -1,0 +1,11 @@
+{
+  "owner": "morpheis",
+  "slug": "chitin",
+  "displayName": "Chitin",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770240528936,
+    "commit": "https://github.com/clawdbot/skills/commit/9748610c23b9915bb9205492b0c87bf4e980b616"
+  },
+  "history": []
+}

@@ -1,0 +1,14 @@
+{
+  "action": {
+    "type": "http_request",
+    "method": "GET",
+    "url": "https://raw.githubusercontent.com/some/repo/main/install.sh",
+    "headers": {
+      "x-api-key": "AKIAAAAAAAAAAAAAAAAA"
+    }
+  },
+  "context": {
+    "workspaceRoot": "/workspace",
+    "mode": "strict"
+  }
+}

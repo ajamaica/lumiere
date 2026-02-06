@@ -1,0 +1,29 @@
+{
+  "name": "@r.wmi/openclaw-lingzhu",
+  "version": "0.0.1",
+  "description": "灵珠平台接入 OpenClaw 协议转换插件",
+  "type": "module",
+  "main": "extension/index.ts",
+  "openclaw": {
+    "extensions": [
+      "./extension/index.ts"
+    ]
+  },
+  "moltbot": {
+    "extensions": [
+      "./extension/index.ts"
+    ]
+  },
+  "keywords": [
+    "lingzhu",
+    "openclaw",
+    "moltbot",
+    "plugin",
+    "sse"
+  ],
+  "author": "",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

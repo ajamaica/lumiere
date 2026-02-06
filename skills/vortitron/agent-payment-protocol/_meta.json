@@ -1,0 +1,11 @@
+{
+  "owner": "vortitron",
+  "slug": "agent-payment-protocol",
+  "displayName": "Agent Payment Protocol",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770157071015,
+    "commit": "https://github.com/clawdbot/skills/commit/eeca32c4f1bc6ec60cff236dcc4d785f775c0cf6"
+  },
+  "history": []
+}

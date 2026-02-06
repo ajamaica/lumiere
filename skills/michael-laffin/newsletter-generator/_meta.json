@@ -1,0 +1,11 @@
+{
+  "owner": "michael-laffin",
+  "slug": "newsletter-generator",
+  "displayName": "Newsletter Generator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770218094064,
+    "commit": "https://github.com/clawdbot/skills/commit/d612956d4d108044d7185721fd24a2ae4ef9110c"
+  },
+  "history": []
+}

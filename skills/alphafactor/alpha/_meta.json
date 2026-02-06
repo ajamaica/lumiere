@@ -1,0 +1,11 @@
+{
+  "owner": "alphafactor",
+  "slug": "alpha",
+  "displayName": "Alpha New Coin Launch",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770104580881,
+    "commit": "https://github.com/clawdbot/skills/commit/0719757f2ca4dd2612264024338c164c17c5fdc5"
+  },
+  "history": []
+}

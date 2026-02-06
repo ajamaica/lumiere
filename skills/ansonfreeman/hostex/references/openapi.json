@@ -1,0 +1,3211 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Hostex API",
+    "description": "API for integration with Hostex",
+    "version": "3.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.hostex.io/v3",
+      "description": "Hostex API Server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Property",
+      "description": ""
+    },
+    {
+      "name": "Room Type",
+      "description": ""
+    },
+    {
+      "name": "Reservations",
+      "description": ""
+    },
+    {
+      "name": "Availability",
+      "description": ""
+    },
+    {
+      "name": "Listing Calendar",
+      "description": ""
+    },
+    {
+      "name": "Messages",
+      "description": ""
+    },
+    {
+      "name": "Reviews",
+      "description": ""
+    },
+    {
+      "name": "Manage Webhooks",
+      "description": ""
+    },
+    {
+      "name": "Oauth",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/properties": {
+      "get": {
+        "summary": "Query Properties",
+        "description": "You can query properties by making a request to this endpoint.",
+        "operationId": "query-properties",
+        "tags": ["Property"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The starting point from which to begin returning results.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return. The maximum value is 100.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "The id of the property.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of properties with their details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["properties", "total"],
+                          "properties": {
+                            "properties": {
+                              "description": "List of the properties",
+                              "type": "array",
+                              "items": {
+                                "required": ["id", "title", "channels"],
+                                "properties": {
+                                  "id": {
+                                    "description": "Unique identifier for the property",
+                                    "type": "integer",
+                                    "format": "int64"
+                                  },
+                                  "title": {
+                                    "description": "Title of the property",
+                                    "type": "string"
+                                  },
+                                  "channels": {
+                                    "description": "List of channels associated with the property",
+                                    "type": "array",
+                                    "items": {
+                                      "required": ["channel_type", "listing_id"],
+                                      "properties": {
+                                        "channel_type": {
+                                          "$ref": "#/components/schemas/ChannelType"
+                                        },
+                                        "listing_id": {
+                                          "$ref": "#/components/schemas/ListingId"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "address": {
+                                    "description": "address of the property",
+                                    "type": "string"
+                                  },
+                                  "longitude": {
+                                    "description": "longitude of the property",
+                                    "type": "string"
+                                  },
+                                  "latitude": {
+                                    "description": "latitude of the property",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "total": {
+                              "description": "Total number of properties.",
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/room_types": {
+      "summary": "RoomType",
+      "description": "RoomType",
+      "get": {
+        "summary": "Query RoomTypes",
+        "description": "You can query room types by making a request to this endpoint.",
+        "operationId": "query-room-types",
+        "tags": ["Room Type"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The starting point from which to begin returning results.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return. The maximum value is 100.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of room types with their details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["room_types", "total"],
+                          "properties": {
+                            "room_types": {
+                              "description": "List of the room types",
+                              "type": "array",
+                              "items": {
+                                "required": ["id", "title", "properties", "channels"],
+                                "properties": {
+                                  "id": {
+                                    "description": "Unique identifier for the property",
+                                    "type": "integer",
+                                    "format": "int64"
+                                  },
+                                  "title": {
+                                    "description": "Title of the property",
+                                    "type": "string"
+                                  },
+                                  "properties": {
+                                    "description": "A list of properties associated with the room type. The number of properties represents the maximum inventory quantity for the room type.",
+                                    "type": "array",
+                                    "items": {
+                                      "required": ["id", "title"],
+                                      "properties": {
+                                        "id": {
+                                          "description": "Unique identifier for the property",
+                                          "type": "integer",
+                                          "format": "int64"
+                                        },
+                                        "title": {
+                                          "description": "The title of the property",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "channels": {
+                                    "description": "List of channels associated with the room type",
+                                    "type": "array",
+                                    "items": {
+                                      "required": ["channel_type", "listing_id"],
+                                      "properties": {
+                                        "channel_type": {
+                                          "$ref": "#/components/schemas/ChannelType"
+                                        },
+                                        "listing_id": {
+                                          "$ref": "#/components/schemas/ListingId"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "total": {
+                              "description": "Total number of room types.",
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/availabilities": {
+      "get": {
+        "summary": "Query Property Availabilities",
+        "description": "By sending a request to this endpoint, you can retrieve the availabilities of the properties.",
+        "operationId": "query-availabilities",
+        "tags": ["Availability"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "property_ids",
+            "in": "query",
+            "description": "Enter property IDs to search, separating them with commas (,). A maximum of 100 properties can be queried at once.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "The start date for records. The date format is YYYY-MM-DD, and must be within 1 years from now.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "The end date for records. The date format is YYYY-MM-DD, and must be within 3 years from now.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of availabilities with their details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["properties"],
+                          "properties": {
+                            "properties": {
+                              "description": "",
+                              "type": "array",
+                              "items": {
+                                "required": ["id", "availabilities"],
+                                "properties": {
+                                  "id": {
+                                    "description": "The unique identifier for the property",
+                                    "type": "integer"
+                                  },
+                                  "availabilities": {
+                                    "description": "A list of availability objects. Each object contains the date, available, and remarks for that date.",
+                                    "type": "array",
+                                    "items": {
+                                      "required": ["date", "available", "remarks"],
+                                      "properties": {
+                                        "date": {
+                                          "description": "The date of the availability",
+                                          "type": "string",
+                                          "format": "date"
+                                        },
+                                        "available": {
+                                          "description": "Set the date's availability: `true` for available or `false` for unavailable.",
+                                          "type": "boolean"
+                                        },
+                                        "remarks": {
+                                          "description": "Remarks for the date",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Update Property Availabilities",
+        "description": "Use this endpoint to update property availabilities. <br><br>Please be aware that a successful response indicates only that we have initiated an asynchronous task to handle your submission; it <b>DOES NOT</b> ensure that the channel inventories have been modified successfully. If you wish to view detailed results of the task execution, please visit the [Host Portal](https://hostex.io/app/calendar).",
+        "operationId": "update-availabilities",
+        "tags": ["Availability"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["property_ids", "available"],
+                "properties": {
+                  "property_ids": {
+                    "description": "Specify the property IDs to update.",
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "start_date": {
+                    "description": "Specify the update's start date using the YYYY-MM-DD format. This must be either the current date or a future date. <br>If omitted, the `dates` becomes mandatory.",
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "end_date": {
+                    "description": "Specify the update's end date using the YYYY-MM-DD format. This must be a future date within 3 years from now. <br>If omitted, the `dates` becomes mandatory.",
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "dates": {
+                    "description": "Provide a list of dates for the update in YYYY-MM-DD format. Dates must be today's date or later. <br>If `start_date` and `end_date` are specified, the list of dates will not be considered.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "date"
+                    }
+                  },
+                  "available": {
+                    "description": "Set the availability status: `true` for available or `false` for unavailable.",
+                    "type": "boolean"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/listings/calendar": {
+      "post": {
+        "summary": "Query Listing Calendars",
+        "description": "By sending a request to this endpoint, you can retrieve calendar information for multiple listings. This endpoint will return daily details on price, inventory, and restrictions for each listing.",
+        "operationId": "query-listing-calendars",
+        "tags": ["Listing Calendar"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["start_date", "end_date", "listings"],
+                "properties": {
+                  "start_date": {
+                    "description": "The start date for records. The date format is YYYY-MM-DD, and must be within 1 years from now.",
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "end_date": {
+                    "description": "The end date for the calendar. The date format is YYYY-MM-DD, and must be within 3 years from now.",
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "listings": {
+                    "description": "A list of listing object. The listing object contains the listing id and channel type.",
+                    "type": "array",
+                    "items": {
+                      "required": ["channel_type", "listing_id"],
+                      "properties": {
+                        "channel_type": {
+                          "$ref": "#/components/schemas/ChannelTypeParam"
+                        },
+                        "listing_id": {
+                          "$ref": "#/components/schemas/ListingId"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["listings"],
+                          "properties": {
+                            "listings": {
+                              "description": "A list of listing objects. Each listing object contains the listing id, channel type, and calendar.",
+                              "type": "array",
+                              "items": {
+                                "required": ["listing_id", "channel_type", "calendar"],
+                                "properties": {
+                                  "channel_type": {
+                                    "$ref": "#/components/schemas/ChannelType"
+                                  },
+                                  "listing_id": {
+                                    "$ref": "#/components/schemas/ListingId"
+                                  },
+                                  "calendar": {
+                                    "description": "A list of calendar objects. Each calendar object contains the date, price, and inventory for that date.",
+                                    "type": "array",
+                                    "items": {
+                                      "required": ["date", "price", "inventory"],
+                                      "properties": {
+                                        "date": {
+                                          "description": "The date of the calendar",
+                                          "type": "string",
+                                          "format": "date"
+                                        },
+                                        "price": {
+                                          "description": "The price for the date",
+                                          "type": "number"
+                                        },
+                                        "inventory": {
+                                          "description": "The inventory for the date",
+                                          "type": "integer"
+                                        },
+                                        "restrictions": {
+                                          "description": "Restrictions for the date. Please notice that the range of fields for restrictions may vary across different channels. The fields listed below may not apply to all channels.",
+                                          "properties": {
+                                            "closed_on_arrival": {
+                                              "description": "Reservations for the check-in date on this date are not allowed. Available for `airbnb` `booking.com` `agoda` `expedia` `booking_site` `trip.com`.",
+                                              "type": "boolean"
+                                            },
+                                            "closed_on_departure": {
+                                              "description": "Reservations for the check-out date on this date are not allowed. Available for `airbnb` `booking.com` `agoda` `expedia` `booking_site` `trip.com`.",
+                                              "type": "boolean"
+                                            },
+                                            "min_stay_on_arrival": {
+                                              "description": "Reservations including this date must not be shorter than the specified number of days. Available for `airbnb` `booking.com` `agoda` `expedia` `booking_site` `trip.com`.",
+                                              "type": "integer"
+                                            },
+                                            "max_stay_on_arrival": {
+                                              "description": "Reservations including this date must not be longer than the specified number of days. Available for `airbnb` `booking.com` `agoda` `expedia` `booking_site` `trip.com`.",
+                                              "type": "integer"
+                                            },
+                                            "min_stay_through": {
+                                              "description": "Reservations including this date must not be shorter than the specified number of days. Available for `booking.com` `agoda` `trip.com`.",
+                                              "type": "integer"
+                                            },
+                                            "max_stay_through": {
+                                              "description": "Reservations including this date must not be longer than the specified number of days. Available for `booking.com` `trip.com`.",
+                                              "type": "integer"
+                                            },
+                                            "min_advance_reservation": {
+                                              "description": "The minimum number of days and/or hours that guests must book in advance (before the planned check-in or check-out date). The search date is counted as one of the days in the restriction length. This field requires the format like 'xDxH'. Examples: 4D = four days; 4D4H = four days and four hours. Available for `booking.com` `trip.com`.",
+                                              "type": "string"
+                                            },
+                                            "max_advance_reservation": {
+                                              "description": "The maximum number of days and/or hours that guests may book in advance (before the planned check-in or check-out date). The search date is counted as one of the days in the restriction length. This field requires the format like 'xDxH'. Examples: 4D = four days; 4D4H = four days and four hours. Available for `booking.com` `trip.com`.",
+                                              "type": "string"
+                                            },
+                                            "exact_stay_on_arrival": {
+                                              "description": "Reservations with the check-in date on this date must be equal to the specified number of days. Available for `booking.com`.",
+                                              "type": "integer"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/listings/inventories": {
+      "post": {
+        "summary": "Update Listing Inventories",
+        "description": "Update the inventories of channel listings. <br><br>Please be aware that a successful response indicates only that we have initiated an asynchronous task to handle your submission; it <b>DOES NOT</b> ensure that the channel inventories have been modified successfully. If you wish to view detailed results of the task execution, please visit the [Host Portal](https://hostex.io/app/price). <br><br>Furthermore, you should be aware that this endpoint only modifies the listing's inventory and <b>DOES NOT</b> affect the property availability. If the property availability is modified, it may still result in the channel inventory being overwritten again.",
+        "operationId": "update-listing-inventories",
+        "tags": ["Listing Calendar"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["channel_type", "listing_id", "inventories"],
+                "properties": {
+                  "channel_type": {
+                    "$ref": "#/components/schemas/ChannelTypeParam"
+                  },
+                  "listing_id": {
+                    "$ref": "#/components/schemas/ListingId"
+                  },
+                  "inventories": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["start_date", "end_date", "inventory"],
+                      "properties": {
+                        "start_date": {
+                          "description": "The start date from which the inventory update will apply.",
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "end_date": {
+                          "description": "The end date until which the inventory update will apply, must be within 3 years from now.",
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "inventory": {
+                          "description": "The number of available units for the specified date range.",
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/listings/prices": {
+      "post": {
+        "summary": "Update Listing Prices",
+        "description": "Update the prices of channel listings. <br><br>Please be aware that a successful response indicates only that we have initiated an asynchronous task to handle your submission; it <b>DOES NOT</b> ensure that the channel prices have been modified successfully. If you wish to view detailed results of the task execution, please visit the [Host Portal](https://hostex.io/app/price).",
+        "operationId": "update-listing-prices",
+        "tags": ["Listing Calendar"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["channel_type", "listing_id", "prices"],
+                "properties": {
+                  "channel_type": {
+                    "$ref": "#/components/schemas/ChannelTypeParam"
+                  },
+                  "listing_id": {
+                    "$ref": "#/components/schemas/ListingId"
+                  },
+                  "prices": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["start_date", "end_date", "price"],
+                      "properties": {
+                        "start_date": {
+                          "description": "The start date from which the price update will apply.",
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "end_date": {
+                          "description": "The end date until which the price update will apply, must be within 3 years from now.",
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "price": {
+                          "description": "The price of the listing for the specified date range. <br><br>For example, if the currency is USD, price=100 represents 100 US dollars, not 100 cents.",
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/listings/restrictions": {
+      "post": {
+        "summary": "Update Listing Restrictions",
+        "description": "Update the restrictions of channel listings. <br><br>Please be aware that a successful response indicates only that we have initiated an asynchronous task to handle your submission; it <b>DOES NOT</b> ensure that the channel restrictions have been modified successfully. If you wish to view detailed results of the task execution, please visit the [Host Portal](https://hostex.io/app/price).",
+        "operationId": "update-listing-restrictions",
+        "tags": ["Listing Calendar"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["channel_type", "listing_id", "restrictions"],
+                "properties": {
+                  "channel_type": {
+                    "$ref": "#/components/schemas/ChannelTypeParam"
+                  },
+                  "listing_id": {
+                    "$ref": "#/components/schemas/ListingId"
+                  },
+                  "restrictions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["start_date", "end_date"],
+                      "properties": {
+                        "start_date": {
+                          "description": "The start date from which restrictions update will apply.",
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "end_date": {
+                          "description": "The end date until which restrictions update will apply, must be within 3 years from now.",
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "closed_on_arrival": {
+                          "description": "Reservations for the check-in date on this date are not allowed. Available for `airbnb` `booking.com` `agoda` `expedia` `booking_site` `trip.com`.",
+                          "type": "boolean"
+                        },
+                        "closed_on_departure": {
+                          "description": "Reservations for the check-out date on this date are not allowed. Available for `airbnb` `booking.com` `agoda` `expedia` `booking_site` `trip.com`.",
+                          "type": "boolean"
+                        },
+                        "min_stay_on_arrival": {
+                          "description": "Reservations including this date must not be shorter than the specified number of days. Available for `airbnb` `booking.com` `agoda` `expedia` `booking_site` `trip.com`.",
+                          "type": "integer"
+                        },
+                        "max_stay_on_arrival": {
+                          "description": "Reservations including this date must not be longer than the specified number of days. Available for `airbnb` `booking.com` `agoda` `expedia` `booking_site` `trip.com`.",
+                          "type": "integer"
+                        },
+                        "min_stay_through": {
+                          "description": "Reservations including this date must not be shorter than the specified number of days. Available for `booking.com` `agoda` `trip.com`.",
+                          "type": "integer"
+                        },
+                        "max_stay_through": {
+                          "description": "Reservations including this date must not be longer than the specified number of days. Available for `booking.com` `trip.com`.",
+                          "type": "integer"
+                        },
+                        "min_advance_reservation": {
+                          "description": "The minimum number of days and/or hours that guests must book in advance (before the planned check-in or check-out date). The search date is counted as one of the days in the restriction length. This field requires the format like 'xDxH'. Examples: 4D = four days; 4D4H = four days and four hours. Available for `booking.com` `trip.com`.",
+                          "type": "string"
+                        },
+                        "max_advance_reservation": {
+                          "description": "The maximum number of days and/or hours that guests may book in advance (before the planned check-in or check-out date). The search date is counted as one of the days in the restriction length. This field requires the format like 'xDxH'. Examples: 4D = four days; 4D4H = four days and four hours. Available for `booking.com` `trip.com`.",
+                          "type": "string"
+                        },
+                        "exact_stay_on_arrival": {
+                          "description": "Reservations with the check-in date on this date must be equal to the specified number of days. Available for `booking.com`.",
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservations": {
+      "get": {
+        "summary": "Query Reservations",
+        "description": "You can query reservations by making a request to this endpoint.",
+        "operationId": "query-reservations",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reservation_code",
+            "in": "query",
+            "description": "Filters the results by the specified reservation code.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "property_id",
+            "in": "query",
+            "description": "Filters the results by the specified property ID.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filters the results by the specified reservation status.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["wait_accept", "wait_pay", "accepted", "cancelled", "denied", "timeout"]
+            }
+          },
+          {
+            "name": "start_check_in_date",
+            "in": "query",
+            "description": "Filters the results to include reservations with check-in dates starting from this date (inclusive).",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "end_check_in_date",
+            "in": "query",
+            "description": "Filters the results to include reservations with check-in dates up to this date (inclusive).",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "start_check_out_date",
+            "in": "query",
+            "description": "Filters the results to include reservations with check-out dates starting from this date (inclusive). By default, reservations within 180 days are returned.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "end_check_out_date",
+            "in": "query",
+            "description": "Filters the results to include reservations with check-out dates up to this date (inclusive).",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "order_by",
+            "in": "query",
+            "description": "Sorts the results by the specified field. Default is `booked_at`.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["booked_at", "check_in_date", "check_out_date", "cancelled_at"],
+              "default": "booked_at"
+            }
+          },
+          {
+            "name": "channel_type",
+            "in": "query",
+            "description": "Filters the results by the specified channel type.",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ChannelType"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Specifies the starting index from which the results should be returned. Default: 0",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Determines the maximum number of results to be returned, up to a maximum of 100. Default: 20.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["reservations"],
+                          "properties": {
+                            "reservations": {
+                              "description": "List of the properties",
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "reservation_code",
+                                  "stay_code",
+                                  "property_id",
+                                  "channel_id",
+                                  "channel_type",
+                                  "listing_id",
+                                  "check_in_date",
+                                  "check_out_date",
+                                  "number_of_guests",
+                                  "status",
+                                  "booked_at",
+                                  "created_at"
+                                ],
+                                "properties": {
+                                  "reservation_code": {
+                                    "type": "string",
+                                    "description": "The reservation code. Multiple stays are allowed for the same reservation. In the case of multiple stays, all stays will share the same reservation code. For example: `0-1234567-abcdef`"
+                                  },
+                                  "stay_code": {
+                                    "type": "string",
+                                    "description": "The stay code of the reservation. For example: `0-1234567-abcdef` or `0-1234567_1-abcdef`(if there are multiple stays for the same reservation)"
+                                  },
+                                  "channel_id": {
+                                    "type": "string",
+                                    "description": "The reservation ID in the channel."
+                                  },
+                                  "property_id": {
+                                    "type": "integer",
+                                    "description": "The property ID. If an reservation fails to be allocated to a property, `0` will be returned."
+                                  },
+                                  "channel_type": {
+                                    "$ref": "#/components/schemas/ChannelType"
+                                  },
+                                  "listing_id": {
+                                    "$ref": "#/components/schemas/ListingId"
+                                  },
+                                  "check_in_date": {
+                                    "type": "string",
+                                    "format": "date",
+                                    "description": "The check-in date of the reservation in YYYY-MM-DD format. Example: `2019-01-01`"
+                                  },
+                                  "check_out_date": {
+                                    "type": "string",
+                                    "format": "date",
+                                    "description": "The check-out date of the reservation in YYYY-MM-DD format. Example: `2019-01-01`"
+                                  },
+                                  "number_of_guests": {
+                                    "type": "integer",
+                                    "description": "The total number of guests for the reservation"
+                                  },
+                                  "number_of_adults": {
+                                    "type": "integer",
+                                    "description": "The number of adults for the reservation"
+                                  },
+                                  "number_of_children": {
+                                    "type": "integer",
+                                    "description": "The number of children for the reservation"
+                                  },
+                                  "number_of_infants": {
+                                    "type": "integer",
+                                    "description": "The number of infants for the reservation"
+                                  },
+                                  "number_of_pets": {
+                                    "type": "integer",
+                                    "description": "The number of pets for the reservation"
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "wait_accept",
+                                      "wait_pay",
+                                      "accepted",
+                                      "cancelled",
+                                      "denied",
+                                      "timeout"
+                                    ]
+                                  },
+                                  "guest_name": {
+                                    "type": "string",
+                                    "nullable": true,
+                                    "description": "The default name of the guest. If it has been modified, it may differ from the name in the `guests`."
+                                  },
+                                  "guest_phone": {
+                                    "type": "string",
+                                    "nullable": true,
+                                    "description": "The default phone of the guest. If it has been modified, it may differ from the name in the `guests`."
+                                  },
+                                  "guest_email": {
+                                    "type": "string",
+                                    "nullable": true,
+                                    "description": "The default email of the guest. If it has been modified, it may differ from the name in the `guests`."
+                                  },
+                                  "cancelled_at": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "nullable": true,
+                                    "description": "The datetime when the reservation was cancelled, `null` will be returned if the reservation is not cancelled in ISO 8601 format. Example: `2019-01-01T00:00:00+00:00`"
+                                  },
+                                  "booked_at": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "The datetime when the reservation was booked in ISO 8601 format. Example: `2019-01-01T00:00:00+00:00`"
+                                  },
+                                  "created_at": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "The datetime when the reservation was created in Hostex in ISO 8601 format. Example: `2019-01-01T00:00:00+00:00`"
+                                  },
+                                  "creator": {
+                                    "type": "string",
+                                    "description": "The creator name of the reservation"
+                                  },
+                                  "rates": {
+                                    "type": "object",
+                                    "properties": {
+                                      "total_rate": {
+                                        "type": "object",
+                                        "description": "The order rate includes commission.",
+                                        "properties": {
+                                          "currency": {
+                                            "type": "string",
+                                            "description": "The currency code for the reservation amounts. See [Supported Currencies](/reference/supported-currencies) for more information."
+                                          },
+                                          "amount": {
+                                            "type": "number"
+                                          }
+                                        }
+                                      },
+                                      "total_commission": {
+                                        "type": "object",
+                                        "description": "The total commission of the order.",
+                                        "properties": {
+                                          "currency": {
+                                            "type": "string",
+                                            "description": "The currency code for the reservation amounts. See [Supported Currencies](/reference/supported-currencies) for more information."
+                                          },
+                                          "amount": {
+                                            "type": "number"
+                                          }
+                                        }
+                                      },
+                                      "rate": {
+                                        "type": "object",
+                                        "description": "The reservation rate includes commission.",
+                                        "properties": {
+                                          "currency": {
+                                            "type": "string",
+                                            "description": "The currency code for the reservation amounts. See [Supported Currencies](/reference/supported-currencies) for more information."
+                                          },
+                                          "amount": {
+                                            "type": "number"
+                                          }
+                                        }
+                                      },
+                                      "commission": {
+                                        "type": "object",
+                                        "description": "The commission of the reservation (if it is a multi-reservation order, the amount is allocated from the order commission).",
+                                        "properties": {
+                                          "currency": {
+                                            "type": "string",
+                                            "description": "The currency code for the reservation amounts. See [Supported Currencies](/reference/supported-currencies) for more information."
+                                          },
+                                          "amount": {
+                                            "type": "number"
+                                          }
+                                        }
+                                      },
+                                      "details": {
+                                        "type": "array",
+                                        "description": "The rate details of the reservation",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "type": {
+                                              "type": "string",
+                                              "description": "The type of the rate detail"
+                                            },
+                                            "description": {
+                                              "type": "string",
+                                              "description": "The description of the rate detail"
+                                            },
+                                            "currency": {
+                                              "type": "string",
+                                              "description": "The currency code for the reservation amounts. See [Supported Currencies](/reference/supported-currencies) for more information."
+                                            },
+                                            "amount": {
+                                              "type": "number"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "check_in_details": {
+                                    "type": "object",
+                                    "description": "The check-in details of the reservation",
+                                    "properties": {
+                                      "arrival_at": {
+                                        "type": "object",
+                                        "nullable": true,
+                                        "description": "The arrival time of the reservation. If not specified, `null` will be returned.",
+                                        "properties": {
+                                          "hour": {
+                                            "type": "integer"
+                                          },
+                                          "minute": {
+                                            "type": "integer"
+                                          }
+                                        }
+                                      },
+                                      "departure_at": {
+                                        "type": "object",
+                                        "nullable": true,
+                                        "description": "The departure time of the reservation. If not specified, `null` will be returned.",
+                                        "properties": {
+                                          "hour": {
+                                            "type": "integer"
+                                          },
+                                          "minute": {
+                                            "type": "integer"
+                                          }
+                                        }
+                                      },
+                                      "lock_code": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "description": "The lock code of the reservation. If not specified, `null` will be returned."
+                                      },
+                                      "lock_code_visible_after": {
+                                        "type": "string",
+                                        "description": "The lock code will be visible after this time, formatted as `HH:mm`."
+                                      },
+                                      "deposit": {
+                                        "type": "number",
+                                        "description": "The deposit amount in the host's currency. For example, if the currency is USD, 100 means 100 US Dollars."
+                                      },
+                                      "check_in_guide_url": {
+                                        "type": "string",
+                                        "description": "The check-in guide URL."
+                                      }
+                                    }
+                                  },
+                                  "remarks": {
+                                    "type": "string",
+                                    "description": "Remarks from the [Hostex Host Portal](https://hostex.io/app/reservations)"
+                                  },
+                                  "channel_remarks": {
+                                    "type": "string",
+                                    "description": "Remarks from the channel"
+                                  },
+                                  "conversation_id": {
+                                    "type": "string",
+                                    "description": "The conversation ID of the reservation. If not specified, `null` will be returned."
+                                  },
+                                  "tags": {
+                                    "type": "array",
+                                    "description": "Tags from the [Hostex Host Portal](https://hostex.io/app/reservations)",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "custom_channel": {
+                                    "type": "object",
+                                    "description": "Custom channels created from the [Custom Options Page](https://hostex.io/app/settings/custom-options). See [Query Custom Channel](/reference/query-custom-channels) for retrieving custom channels.",
+                                    "required": ["id", "name"],
+                                    "properties": {
+                                      "id": {
+                                        "type": "integer"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "guests": {
+                                    "type": "array",
+                                    "description": "In some special cases (e.g., the host manually deleted the guest information), the guests field may return an empty array, so you need to handle the empty case.",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "integer",
+                                          "description": ""
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": ""
+                                        },
+                                        "phone": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": ""
+                                        },
+                                        "email": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": ""
+                                        },
+                                        "id_type": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": "",
+                                          "enum": ["passport", "id_card", "others"]
+                                        },
+                                        "id_number": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": ""
+                                        },
+                                        "gender": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": "",
+                                          "enum": ["male", "female"]
+                                        },
+                                        "country": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": "ISO 3166-1 Alpha-2"
+                                        },
+                                        "is_booker": {
+                                          "type": "boolean",
+                                          "description": "Used to determine whether it is the booker of the reservation."
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "custom_fields": {
+                                    "description": "Custom fields.",
+                                    "nullable": true,
+                                    "type": "object"
+                                  },
+                                  "in_reservation_box": {
+                                    "description": "Whether the reservation is in the reservation box.",
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Reservation",
+        "description": "Create a reservation (Direct Booking) in Hostex.",
+        "operationId": "create-reservation",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "property_id",
+                  "custom_channel_id",
+                  "check_in_date",
+                  "check_out_date",
+                  "guest_name",
+                  "currency",
+                  "rate_amount",
+                  "commission_amount",
+                  "received_amount",
+                  "income_method_id"
+                ],
+                "properties": {
+                  "property_id": {
+                    "type": "string",
+                    "description": "The id of the property for the reservation."
+                  },
+                  "custom_channel_id": {
+                    "type": "integer",
+                    "description": "The id of the custom channel through which the reservation is booked. See [Query Custom Channel](/reference/query-custom-channels) for retrieving custom channels."
+                  },
+                  "check_in_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The check-in date for the reservation in YYYY-MM-DD format."
+                  },
+                  "check_out_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The check-out date for the reservation in YYYY-MM-DD format."
+                  },
+                  "number_of_guests": {
+                    "type": "integer",
+                    "description": "The total number of guests included in the reservation."
+                  },
+                  "guest_name": {
+                    "type": "string",
+                    "description": "The name of the primary guest."
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "The email address of the primary guest."
+                  },
+                  "mobile": {
+                    "type": "string",
+                    "description": "The mobile phone number of the primary guest."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "The currency code for the reservation amounts. See [Supported Currencies](/reference/supported-currencies) for more information."
+                  },
+                  "rate_amount": {
+                    "type": "integer",
+                    "description": "The total rate amount for the reservation."
+                  },
+                  "commission_amount": {
+                    "type": "integer",
+                    "description": "The commission amount for the reservation."
+                  },
+                  "received_amount": {
+                    "type": "integer",
+                    "description": "The total amount received for the reservation."
+                  },
+                  "income_method_id": {
+                    "type": "integer",
+                    "description": "The identifier for the income method used for the reservation payment. See [Query Income methods](/reference/query-income-methods) for retrieving all income methods."
+                  },
+                  "remarks": {
+                    "type": "string",
+                    "description": "Any additional remarks related to the reservation."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservations/{reservation_code}": {
+      "delete": {
+        "summary": "Cancel Reservation",
+        "description": "Cancel a direct booking reservation in Hostex. Note that this endpoint does not support the cancellation of channel bookings.",
+        "operationId": "cancel-reservation",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reservation_code",
+            "in": "path",
+            "description": "The code of the reservation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Reservation Basic Info",
+        "description": "Update basic information for a reservation including guest details, dates, pricing, and other attributes.",
+        "operationId": "update-reservation-basic-info",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reservation_code",
+            "in": "path",
+            "description": "The code of the reservation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "remarks": {
+                    "type": "string",
+                    "description": "Remarks for the reservation.",
+                    "maxLength": 500
+                  },
+                  "creator": {
+                    "type": "string",
+                    "description": "The account of the creator.",
+                    "maxLength": 50
+                  },
+                  "custom_channel_id": {
+                    "type": "integer",
+                    "description": "The id of the custom channel."
+                  },
+                  "check_in_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The check-in date for the reservation in YYYY-MM-DD format."
+                  },
+                  "check_out_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The check-out date for the reservation in YYYY-MM-DD format."
+                  },
+                  "number_of_guests": {
+                    "type": "integer",
+                    "description": "The total number of guests.",
+                    "minimum": 1,
+                    "maximum": 99
+                  },
+                  "guest_name": {
+                    "type": "string",
+                    "description": "The name of the primary guest.",
+                    "maxLength": 100
+                  },
+                  "mobile": {
+                    "type": "string",
+                    "description": "The mobile phone number of the guest.",
+                    "maxLength": 50
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "The email address of the guest."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "The currency code for the reservation amounts. See [Supported Currencies](/reference/supported-currencies) for more information."
+                  },
+                  "rate_amount": {
+                    "type": "number",
+                    "description": "The total rate amount for the reservation.",
+                    "minimum": 0,
+                    "maximum": 999999
+                  },
+                  "commission_amount": {
+                    "type": "number",
+                    "description": "The commission amount for the reservation.",
+                    "minimum": 0,
+                    "maximum": 999999
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservations/{stay_code}/check_in_details": {
+      "patch": {
+        "summary": "Update Check-in Details",
+        "description": "Update check-in details for a stay including lock code, arrival/departure times, and deposit information.",
+        "operationId": "update-check-in-details",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stay_code",
+            "in": "path",
+            "description": "The code of the stay.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lock_code": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "The lock code for the property. Set to null to remove the lock code."
+                  },
+                  "lock_code_visible_after": {
+                    "type": "string",
+                    "nullable": true,
+                    "pattern": "^\\d\\d:\\d\\d$",
+                    "description": "The time after which the lock code becomes visible, in HH:mm format (24-hour). Example: '14:00'. Set to null to remove the restriction."
+                  },
+                  "arrival_at": {
+                    "type": "object",
+                    "nullable": true,
+                    "description": "The expected arrival time. Set to null to remove the arrival time.",
+                    "properties": {
+                      "hour": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 23,
+                        "description": "Hour in 24-hour format (0-23)"
+                      },
+                      "minute": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 59,
+                        "description": "Minute (0-59)"
+                      }
+                    },
+                    "required": ["hour", "minute"]
+                  },
+                  "departure_at": {
+                    "type": "object",
+                    "nullable": true,
+                    "description": "The expected departure time. Set to null to remove the departure time.",
+                    "properties": {
+                      "hour": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 23,
+                        "description": "Hour in 24-hour format (0-23)"
+                      },
+                      "minute": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 59,
+                        "description": "Minute (0-59)"
+                      }
+                    },
+                    "required": ["hour", "minute"]
+                  },
+                  "deposit": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "The deposit amount in the host's currency. For example, if the currency is USD, 100 means 100 US Dollars."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/custom_channels": {
+      "get": {
+        "summary": "Query Custom Channels",
+        "description": "Query custom channels created from the [Custom Options Page](https://hostex.io/app/settings/custom-options).",
+        "operationId": "query-custom-channels",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["custom_channels"],
+                          "properties": {
+                            "custom_channels": {
+                              "description": "List of the custom channels",
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": ["id", "name"],
+                                "properties": {
+                                  "id": {
+                                    "type": "integer",
+                                    "description": "The id of the custom channel."
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "description": "The name of the custom channel."
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/income_methods": {
+      "get": {
+        "summary": "Query Income Methods",
+        "description": "Query income methods created from the [Custom Options Page](https://hostex.io/app/settings/custom-options).",
+        "operationId": "query-income-methods",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["income_methods"],
+                          "properties": {
+                            "income_methods": {
+                              "description": "List of the income methods",
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": ["id", "name"],
+                                "properties": {
+                                  "id": {
+                                    "type": "integer",
+                                    "description": "The id of the income methods."
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "description": "The name of the income methods."
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservations/{stay_code}/custom_fields": {
+      "get": {
+        "summary": "Query Custom Fields",
+        "description": "Query custom fields for a stay. For more information, please refer to the [Custom Fields Guide](/reference/custom-fields-guide).",
+        "operationId": "query-custom-fields",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stay_code",
+            "in": "path",
+            "description": "The code of the stay.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["custom_fields"],
+                          "properties": {
+                            "custom_fields": {
+                              "description": "Custom fields.",
+                              "nullable": true,
+                              "type": "object"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Custom Fields",
+        "description": "Update custom fields for a stay. For more information, please refer to the [Custom Fields Guide](/reference/custom-fields-guide)",
+        "operationId": "update-custom-fields",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stay_code",
+            "in": "path",
+            "description": "The code of the stay.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                  "custom_fields": {
+                    "type": "object",
+                    "description": "The custom fields to update. You can submit any field for creation, update, or deletion. Field values must be of type string. If the field does not exist, it will be created; if it exists, it will be updated. To delete a field, set its value to null.",
+                    "properties": {
+                      "online_checkin_url": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "This is just an example."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["custom_fields"],
+                          "properties": {
+                            "custom_fields": {
+                              "description": "Custom fields.",
+                              "nullable": true,
+                              "type": "object"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservations/{stay_code}/move_to_box": {
+      "post": {
+        "summary": "Move to Box",
+        "description": "Move a stay of the reservation to the reservation box. This action is typically used when you want to temporarily remove a reservation from the active calendar view.",
+        "operationId": "move-reservation-to-box",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stay_code",
+            "in": "path",
+            "description": "The code of the stay to move to the box.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The stay of the reservation has been successfully moved to the box.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservations/{stay_code}/allocate": {
+      "post": {
+        "summary": "Allocate to Property",
+        "description": "Allocate a reservation to a specific property. This action is used to assign or reassign a reservation to a particular property. If there is already a stay for the target property, it will be marked as a conflicting stay and move to the reservation box.",
+        "operationId": "allocate-reservation",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stay_code",
+            "in": "path",
+            "description": "The code of the stay to allocate.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["property_id"],
+                "properties": {
+                  "property_id": {
+                    "type": "integer",
+                    "description": "The ID of the property to allocate the reservation to."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The reservation has been successfully allocated to the property.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservations/{stay_code}/stay_status": {
+      "put": {
+        "summary": "Update Stay Status",
+        "description": "Update the stay status of a reservation. This endpoint allows you to change the status of a stay between different states such as check-in pending, in-house, and stay completed.",
+        "operationId": "update-stay-status",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stay_code",
+            "in": "path",
+            "description": "The code of the stay to update.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["stay_status"],
+                "properties": {
+                  "stay_status": {
+                    "type": "string",
+                    "description": "The new status for the stay.",
+                    "enum": ["checkin_pending", "in_house", "stay_completed"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The stay status has been successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservations/{stay_code}/tags": {
+      "post": {
+        "summary": "Add Tag",
+        "description": "Add a tag to a reservation. If the tag does not exist, it will be created automatically.",
+        "operationId": "add-tag",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stay_code",
+            "in": "path",
+            "description": "The code of the stay.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["tag_name"],
+                "properties": {
+                  "tag_name": {
+                    "type": "string",
+                    "description": "The name of the tag to add."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tag has been successfully added to the reservation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove Tag",
+        "description": "Remove a tag from a reservation.",
+        "operationId": "remove-tag",
+        "tags": ["Reservations"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stay_code",
+            "in": "path",
+            "description": "The code of the stay.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["tag_name"],
+                "properties": {
+                  "tag_name": {
+                    "type": "string",
+                    "description": "The name of the tag to remove."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tag has been successfully removed from the reservation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conversations": {
+      "get": {
+        "summary": "Query Conversations",
+        "description": "This endpoint is used to query the list of conversations regarding guest inquiries.",
+        "operationId": "query-conversations",
+        "tags": ["Messages"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Specifies the starting index from which the results should be returned.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Determines the maximum number of results to be returned, up to a maximum of 100.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["conversations"],
+                          "properties": {
+                            "conversations": {
+                              "description": "List of the conversations",
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "description": "The id the conversation."
+                                  },
+                                  "channel_type": {
+                                    "$ref": "#/components/schemas/ChannelType"
+                                  },
+                                  "last_message_at": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "The datetime when the last message was created in ISO 8601 format. Example: `2019-01-01T00:00:00+00:00`"
+                                  },
+                                  "guest": {
+                                    "type": "object",
+                                    "description": "The guest's information.",
+                                    "properties": {
+                                      "name": {
+                                        "type": "string",
+                                        "description": "The name of the guest."
+                                      },
+                                      "email": {
+                                        "type": "string",
+                                        "description": "The email of the guest."
+                                      },
+                                      "phone": {
+                                        "type": "string",
+                                        "description": "The phone of the guest."
+                                      }
+                                    }
+                                  },
+                                  "property_title": {
+                                    "type": "string",
+                                    "description": "The title of property."
+                                  },
+                                  "check_in_date": {
+                                    "type": "string",
+                                    "description": "The check-in date of the reservation."
+                                  },
+                                  "check_out_date": {
+                                    "type": "string",
+                                    "description": "The check-out date of the reservation."
+                                  }
+                                },
+                                "required": ["id", "channel_type", "last_message_at", "guest"]
+                              }
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conversations/{conversation_id}": {
+      "get": {
+        "summary": "Get Conversation Details",
+        "description": "This endpoint is used to retrieve the messages and details of a conversation. <br><br>We are constantly improving our API which could mean that message schema may change. In order to maintain a healthy integration, your Application must parse and ignore unexpected parameters instead of throwing errors.",
+        "operationId": "get-conversation-details",
+        "tags": ["Messages"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "conversation_id",
+            "in": "path",
+            "description": "The id of the conversation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["id", "channel_type", "guest", "activities", "messages"],
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "The id of the conversation."
+                            },
+                            "channel_type": {
+                              "$ref": "#/components/schemas/ChannelType"
+                            },
+                            "guest": {
+                              "type": "object",
+                              "description": "The guest's information.",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "description": "The name of the guest."
+                                },
+                                "phone": {
+                                  "type": "string",
+                                  "description": "The phone of the guest."
+                                },
+                                "email": {
+                                  "type": "string",
+                                  "description": "The email of the guest."
+                                }
+                              }
+                            },
+                            "activities": {
+                              "type": "array",
+                              "description": "A list of activities associated with the conversation.",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "activity_type": {
+                                    "type": "string",
+                                    "description": "The type of activity.",
+                                    "enum": ["inquiry", "reservation"]
+                                  },
+                                  "reservation_code": {
+                                    "type": "string",
+                                    "nullable": true,
+                                    "description": "The reservation code related to the activity, if applicable."
+                                  },
+                                  "check_in_date": {
+                                    "type": "string",
+                                    "format": "date",
+                                    "nullable": true,
+                                    "description": "The check-in date related to the activity."
+                                  },
+                                  "check_out_date": {
+                                    "type": "string",
+                                    "format": "date",
+                                    "nullable": true,
+                                    "description": "The check-out date related to the activity."
+                                  },
+                                  "listing_id": {
+                                    "type": "string",
+                                    "nullable": true,
+                                    "description": "The listing id related to the activity."
+                                  },
+                                  "property": {
+                                    "type": "object",
+                                    "description": "Details of the property related to the activity.",
+                                    "nullable": true,
+                                    "properties": {
+                                      "id": {
+                                        "type": "integer",
+                                        "description": "The id of the property."
+                                      },
+                                      "title": {
+                                        "type": "string",
+                                        "description": "The title of the property."
+                                      },
+                                      "cover_url": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "description": "The URL of the property's cover image."
+                                      },
+                                      "room_type": {
+                                        "type": "object",
+                                        "description": "Details of the room type related to the activity.",
+                                        "nullable": true,
+                                        "properties": {
+                                          "id": {
+                                            "type": "integer",
+                                            "description": "The id of the room type."
+                                          },
+                                          "title": {
+                                            "type": "string",
+                                            "description": "The title of the room type."
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "note": {
+                              "type": "string",
+                              "description": "Any notes related to the conversation."
+                            },
+                            "messages": {
+                              "type": "array",
+                              "description": "List of messages within the conversation.",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "description": "The id of the message."
+                                  },
+                                  "sender_role": {
+                                    "type": "string",
+                                    "description": "The role of the message sender, either 'host' or 'guest'."
+                                  },
+                                  "display_type": {
+                                    "type": "string",
+                                    "description": "The display type of the message.",
+                                    "enum": [
+                                      "Text",
+                                      "Box",
+                                      "FileAttachment",
+                                      "RequestToBook",
+                                      "BsRequestBook",
+                                      "SpecialOffer",
+                                      "ReservationAlteration",
+                                      "HouseLinkCard"
+                                    ]
+                                  },
+                                  "content": {
+                                    "type": "string",
+                                    "description": "The text content of the message."
+                                  },
+                                  "attachment": {
+                                    "type": "object",
+                                    "nullable": true,
+                                    "description": "Any attachment included with the message."
+                                  },
+                                  "created_at": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "The timestamp of when the message was created."
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Send Message",
+        "description": "Send a text or image message to the guest.",
+        "operationId": "send-message",
+        "tags": ["Messages"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "conversation_id",
+            "in": "path",
+            "description": "The id of the conversation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "The text content of the message. Max length depends on the limit of different channels."
+                  },
+                  "jpeg_base64": {
+                    "type": "string",
+                    "description": "The base64 encoded string of the JPEG image."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reviews": {
+      "get": {
+        "summary": "Query Reviews",
+        "description": "Query reviews like the [Reviews Page](https://hostex.io/app/reviews).",
+        "operationId": "query-reviews",
+        "tags": ["Reviews"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reservation_code",
+            "in": "query",
+            "description": "Filters the results by the specified reservation code.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "property_id",
+            "in": "query",
+            "description": "Filters the results by the specified property ID.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "review_status",
+            "in": "query",
+            "description": "Filters the results by the specified review status. Default: `reviewed`",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["pending_guest_review", "pending_host_review", "reviewed"]
+            }
+          },
+          {
+            "name": "start_check_out_date",
+            "in": "query",
+            "description": "Filters the results to include reservations with check-out dates starting from this date (inclusive). Default: 180 days ago.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "end_check_out_date",
+            "in": "query",
+            "description": "Filters the results to include reservations with check-out dates up to this date (inclusive). Less than 180 days from `start_check_out_date`. Default: today",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Specifies the starting index from which the results should be returned. Default: 0",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Determines the maximum number of results to be returned, up to a maximum of 100. Default: 20",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["reviews"],
+                          "properties": {
+                            "reviews": {
+                              "description": "List of the reviews",
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "reservation_code": {
+                                    "type": "string",
+                                    "description": "The unique code identifying the reservation."
+                                  },
+                                  "property_id": {
+                                    "type": "integer",
+                                    "description": "The id of the property the reservation is associated with."
+                                  },
+                                  "channel_type": {
+                                    "$ref": "#/components/schemas/ChannelType"
+                                  },
+                                  "listing_id": {
+                                    "$ref": "#/components/schemas/ListingId"
+                                  },
+                                  "check_in_date": {
+                                    "type": "string",
+                                    "format": "date",
+                                    "description": "The check-in date of the reservation."
+                                  },
+                                  "check_out_date": {
+                                    "type": "string",
+                                    "format": "date",
+                                    "description": "The check-out date of the reservation."
+                                  },
+                                  "host_review": {
+                                    "type": "object",
+                                    "nullable": true,
+                                    "description": "Reviews made by the host about the guest. Return `null` if the host has not made a review yet.",
+                                    "properties": {
+                                      "score": {
+                                        "type": "number",
+                                        "description": "The rating score of the host review. The value is between 0 and 5."
+                                      },
+                                      "content": {
+                                        "type": "string",
+                                        "description": "The comment of the host."
+                                      },
+                                      "created_at": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "The datetime when the host review was created in ISO 8601 format. Example: `2019-01-01T00:00:00+00:00`"
+                                      }
+                                    }
+                                  },
+                                  "guest_review": {
+                                    "type": "object",
+                                    "nullable": true,
+                                    "description": "Reviews made by the guest about their stay. Return `null` if the guest has not made a review yet.",
+                                    "properties": {
+                                      "score": {
+                                        "type": "number",
+                                        "description": "The rating score of the guest review. The value is between 0 and 5."
+                                      },
+                                      "content": {
+                                        "type": "string",
+                                        "description": "The comment of the guest."
+                                      },
+                                      "created_at": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "The datetime when the guest review was created in ISO 8601 format. Example: `2019-01-01T00:00:00+00:00`"
+                                      }
+                                    }
+                                  },
+                                  "host_reply": {
+                                    "type": "object",
+                                    "nullable": true,
+                                    "description": "The host's reply to the guest's review. Return `null` if the host has not made a reply yet.",
+                                    "properties": {
+                                      "content": {
+                                        "type": "string",
+                                        "description": "The reply of the host."
+                                      },
+                                      "created_at": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "The datetime when the reply was created in ISO 8601 format. Example: `2019-01-01T00:00:00+00:00`"
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "reservation_code",
+                                  "property_id",
+                                  "channel_type",
+                                  "listing_id",
+                                  "check_in_date",
+                                  "check_out_date"
+                                ]
+                              }
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reviews/{reservation_code}": {
+      "post": {
+        "summary": "Create a review",
+        "description": "Create review or reply for a reservation. ",
+        "operationId": "create-review",
+        "tags": ["Reviews"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reservation_code",
+            "in": "path",
+            "description": "The unique code identifying the reservation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "host_review_score": {
+                    "type": "number",
+                    "description": "The rating score of the host review. The value is between 0 and 5."
+                  },
+                  "host_review_content": {
+                    "type": "string",
+                    "description": "The comment of the host."
+                  },
+                  "host_reply_content": {
+                    "type": "string",
+                    "description": "The reply of the host."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/webhooks": {
+      "get": {
+        "summary": "Query Webhooks",
+        "description": "Query Webhooks like the [Webhooks Page](https://hostex.io/app/api/web-hooks).",
+        "operationId": "query-webhooks",
+        "tags": ["Manage Webhooks"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "required": ["webhooks"],
+                          "properties": {
+                            "webhooks": {
+                              "description": "List of the webhooks",
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "integer",
+                                    "description": "The unique id."
+                                  },
+                                  "url": {
+                                    "type": "string",
+                                    "description": "The webhook url."
+                                  },
+                                  "manageable": {
+                                    "type": "boolean",
+                                    "description": "Whether the webhook can be managed. You can only delete records that you are allowed to manage."
+                                  },
+                                  "created_at": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "The timestamp of when the webhook was created."
+                                  }
+                                },
+                                "required": ["id", "url", "manageable", "created_at"]
+                              }
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Webhook",
+        "description": "Create a webhook.",
+        "operationId": "create-webhook",
+        "tags": ["Manage Webhooks"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["url"],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/webhooks/{id}": {
+      "delete": {
+        "summary": "Delete webhook",
+        "description": "You can only delete webhooks created by your own app if they are manageable. Attempting to delete non-manageable webhooks from other apps will result in a 403 error.",
+        "operationId": "delete-webhook",
+        "tags": ["Manage Webhooks"],
+        "security": [
+          {
+            "HostexAccessToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the webhook.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has been successfully submitted. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/authorizations": {
+      "post": {
+        "summary": "Obtain/Refresh Tokens",
+        "description": "This endpoint is used to obtain a new access token using various OAuth 2.0 grant types or refresh an existing token.",
+        "operationId": "obtain-token",
+        "tags": ["OAuth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["client_id", "client_secret", "grant_type"],
+                "properties": {
+                  "client_id": {
+                    "type": "string",
+                    "description": "The unique identifier for the client application requesting the token."
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "description": "The secret key associated with the client application, used for authentication."
+                  },
+                  "grant_type": {
+                    "type": "string",
+                    "enum": ["authorization_code", "refresh_token"],
+                    "description": "The OAuth 2.0 grant type. Possible values: 'authorization_code' or 'refresh_token'."
+                  },
+                  "code": {
+                    "type": "string",
+                    "description": "The authorization code received from the authorization endpoint. Required if 'grant_type' is 'authorization_code'."
+                  },
+                  "refresh_token": {
+                    "type": "string",
+                    "description": "The refresh token used to obtain a new access token. Required if 'grant_type' is 'refresh_token'."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "access_token": {
+                              "type": "string",
+                              "description": "The newly issued access token to be used for authorized API requests."
+                            },
+                            "refresh_token": {
+                              "type": "string",
+                              "description": "A token that can be used to obtain a new access token once the current one expires."
+                            },
+                            "expires_in": {
+                              "type": "integer",
+                              "description": "The duration in seconds until the access token expires."
+                            }
+                          },
+                          "required": ["access_token", "refresh_token", "expires_in"]
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/revoke": {
+      "post": {
+        "summary": "Delete/Revoke Tokens",
+        "description": "This endpoint allows clients to revoke an access or refresh token. Deleting/revoking a token will disconnect the Host from your application.",
+        "operationId": "revoke-token",
+        "tags": ["OAuth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["client_id", "client_secret", "token"],
+                "properties": {
+                  "client_id": {
+                    "type": "string",
+                    "description": "The unique identifier for the client application requesting the token revocation."
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "description": "The secret key associated with the client application, used to authenticate the revocation request."
+                  },
+                  "token": {
+                    "type": "string",
+                    "description": "The access or refresh token to be revoked. Once revoked, the token cannot be used for further authentication."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully revoked the specified token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CommonResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CommonResponse": {
+        "required": ["request_id", "error_code", "error_msg"],
+        "properties": {
+          "request_id": {
+            "description": "Unique identifier for the request.",
+            "type": "string"
+          },
+          "error_code": {
+            "description": "Numeric error code representing the status of the response. A value of `200` indicates success. <br> See the [Error Codes](/reference/error-manual#error-codes) section for more information.",
+            "type": "integer",
+            "example": 0
+          },
+          "error_msg": {
+            "description": "Message detailing the status of the response.",
+            "type": "string",
+            "example": "Done."
+          }
+        },
+        "type": "object"
+      },
+      "ListingId": {
+        "description": "The unique identifier for different channels. <br>For example, the listing id for Airbnb is the Airbnb listing id, and the listing id for Booking.com is the Booking.com room id - rateplan id.",
+        "type": "string"
+      },
+      "ChannelTypeParam": {
+        "description": "The type of the channel to be queried.",
+        "type": "string",
+        "enum": [
+          "airbnb",
+          "booking.com",
+          "agoda",
+          "expedia",
+          "vrbo",
+          "trip.com",
+          "booking_site",
+          "tujia_intl",
+          "houfy"
+        ]
+      },
+      "ChannelType": {
+        "description": "The type of the channel. See [Supported Channels](/reference/supported-channels) for more information.",
+        "type": "string",
+        "enum": [
+          "airbnb",
+          "booking.com",
+          "agoda",
+          "expedia",
+          "vrbo",
+          "trip.com",
+          "booking_site",
+          "tujia_intl",
+          "hostex_direct",
+          "tujia",
+          "xiaozhu",
+          "meituan_bnb",
+          "meituan_hotel",
+          "muniao",
+          "fliggy",
+          "zhukeyun",
+          "tiktok",
+          "xiaohongshu",
+          "ctrip",
+          "houfy"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "HostexAccessToken": {
+        "type": "apiKey",
+        "description": "Access token to authenticate the request.",
+        "name": "Hostex-Access-Token",
+        "in": "header"
+      }
+    }
+  }
+}

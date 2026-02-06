@@ -1,0 +1,11 @@
+{
+  "owner": "jamesalmeida",
+  "slug": "grab",
+  "displayName": "Grab",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770171967755,
+    "commit": "https://github.com/clawdbot/skills/commit/8a5e29228835768146380e7dd22a074036ae4b84"
+  },
+  "history": []
+}

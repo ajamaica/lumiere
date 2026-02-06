@@ -1,0 +1,11 @@
+{
+  "owner": "drkraft",
+  "slug": "basecamp-cli-mcp",
+  "displayName": "Basecamp CLI",
+  "latest": {
+    "version": "2.0.0",
+    "publishedAt": 1770126605252,
+    "commit": "https://github.com/clawdbot/skills/commit/84685087293e1665e2a6db2ad42dba7539876584"
+  },
+  "history": []
+}

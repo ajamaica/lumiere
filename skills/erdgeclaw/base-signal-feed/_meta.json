@@ -1,0 +1,11 @@
+{
+  "owner": "erdgeclaw",
+  "slug": "base-signal-feed",
+  "displayName": "Base Signal Feed",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769867112893,
+    "commit": "https://github.com/clawdbot/skills/commit/fee0cf805760514780e397e9bae3ce5f59b94e15"
+  },
+  "history": []
+}

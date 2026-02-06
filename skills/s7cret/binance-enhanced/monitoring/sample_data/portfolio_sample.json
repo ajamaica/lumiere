@@ -1,0 +1,22 @@
+{
+  "total_balance": 123.45,
+  "pnl_day": -1.23,
+  "holdings": [
+    {
+      "ticker": "BTCUSDT",
+      "amount": 0.001,
+      "value": 30.0,
+      "change": "-2%",
+      "entry_price": 50000,
+      "current_price": 45000
+    },
+    {
+      "ticker": "ETHUSDT",
+      "amount": 0.02,
+      "value": 20.0,
+      "change": "+1%",
+      "entry_price": 2000,
+      "current_price": 2020
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@openclaw/weeek-tasks",
+  "version": "1.0.0",
+  "description": "WEEEK задачи через Public API",
+  "keywords": [
+    "weeek",
+    "tasks",
+    "api",
+    "integration"
+  ],
+  "author": "alex-indi",
+  "license": "MIT",
+  "openclaw": {
+    "skill": {
+      "name": "weeek-tasks",
+      "type": "script",
+      "scripts": {
+        "weeek_api": "./scripts/weeek_api.py"
+      }
+    }
+  }
+}

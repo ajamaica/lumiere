@@ -1,0 +1,11 @@
+{
+  "owner": "asif2bd",
+  "slug": "wordpress-publishing-skill-for-claude",
+  "displayName": "WordPress Publisher Skill",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770058842477,
+    "commit": "https://github.com/clawdbot/skills/commit/d8972b17436bb4dca1c7c8ce8b43fbd60aa053e8"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "alphafactor",
+  "slug": "explorer",
+  "displayName": "GitHub Projects Explorer",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770099570515,
+    "commit": "https://github.com/clawdbot/skills/commit/550311f9f971d67b6b60af814adbcda34b2869fe"
+  },
+  "history": []
+}

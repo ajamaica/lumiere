@@ -1,0 +1,16 @@
+{
+  "people": {
+    "李四": {
+      "name": "李四",
+      "aliases": [],
+      "notes": "",
+      "updatedAt": "2026-02-05T06:30:14Z",
+      "facts": [],
+      "gender": "女",
+      "birthday": "06-20",
+      "birthYear": 1992,
+      "birthDate": "1992-06-20",
+      "address": "上海市浦东新区xx路"
+    }
+  }
+}

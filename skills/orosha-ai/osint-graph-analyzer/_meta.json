@@ -1,0 +1,11 @@
+{
+  "owner": "orosha-ai",
+  "slug": "osint-graph-analyzer",
+  "displayName": "Osint Graph Analyzer",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769873304973,
+    "commit": "https://github.com/clawdbot/skills/commit/69e0f37c870a89affec3707f8374eda5d0b7d3fd"
+  },
+  "history": []
+}

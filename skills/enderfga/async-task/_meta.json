@@ -1,0 +1,11 @@
+{
+  "owner": "enderfga",
+  "slug": "async-task",
+  "displayName": "Async Task",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769957539219,
+    "commit": "https://github.com/clawdbot/skills/commit/f6ae3dc138e493afe8c69ac05749fa098809d4dc"
+  },
+  "history": []
+}

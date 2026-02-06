@@ -1,0 +1,11 @@
+{
+  "owner": "alphafactor",
+  "slug": "mailgun",
+  "displayName": "Mailgun",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770088873877,
+    "commit": "https://github.com/clawdbot/skills/commit/3acf56ab76b827d6f222c6a8d81cbec9ac857716"
+  },
+  "history": []
+}

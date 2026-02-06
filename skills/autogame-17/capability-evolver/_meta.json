@@ -1,0 +1,57 @@
+{
+  "owner": "autogame-17",
+  "slug": "capability-evolver",
+  "displayName": "Capability Evolver",
+  "latest": {
+    "version": "1.4.4",
+    "publishedAt": 1770382896311,
+    "commit": "https://github.com/openclaw/skills/commit/5272ce7bc209f1d3e81bce153332096f35e7d9cb"
+  },
+  "history": [
+    {
+      "version": "1.4.2",
+      "publishedAt": 1770343676232,
+      "commit": "https://github.com/openclaw/skills/commit/0f685ad8825d32f69b35315473a494a7db974132"
+    },
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770160368640,
+      "commit": "https://github.com/clawdbot/skills/commit/21f98e384dbe71f1cc26549a4461a7371fb74765"
+    },
+    {
+      "version": "1.0.37",
+      "publishedAt": 1770094630976,
+      "commit": "https://github.com/clawdbot/skills/commit/af256e1a4523616227d9b0962f5d591270a7d4d8"
+    },
+    {
+      "version": "1.0.35",
+      "publishedAt": 1770024502952,
+      "commit": "https://github.com/clawdbot/skills/commit/5a6fe84d41adb1f6e10490a53e7f27fc51dde439"
+    },
+    {
+      "version": "1.0.31",
+      "publishedAt": 1769995909545,
+      "commit": "https://github.com/clawdbot/skills/commit/ee1dea8db2931d53a0550e296c34758789200036"
+    },
+    {
+      "version": "1.0.27",
+      "publishedAt": 1769967369522,
+      "commit": "https://github.com/clawdbot/skills/commit/4bb9f005be4df3d66c8e06d25a61371e6c8b0367"
+    },
+    {
+      "version": "1.0.21",
+      "publishedAt": 1769946987472,
+      "commit": "https://github.com/clawdbot/skills/commit/a945f6e1da2fc37bd0f24025e1fb20d37b4799aa"
+    },
+    {
+      "version": "1.0.14",
+      "publishedAt": 1769933782268,
+      "commit": "https://github.com/clawdbot/skills/commit/3cb29643aff4b6e60c12974bfc2d058c2d3de879"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769924247664,
+      "commit": "https://github.com/clawdbot/skills/commit/76ebc085a05ce815ce4b3e556b1142dd10a26cf2"
+    }
+  ]
+}

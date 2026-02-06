@@ -1,0 +1,11 @@
+{
+  "owner": "gchapim",
+  "slug": "oban-designer",
+  "displayName": "Oban Designer",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770239764624,
+    "commit": "https://github.com/clawdbot/skills/commit/a09d14490c0af607c93af58ddf7c70ed4b816921"
+  },
+  "history": []
+}

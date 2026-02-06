@@ -1,0 +1,6 @@
+{
+  "api": {
+    "endpoint": "https://graphql.klutchcard.com/graphql",
+    "timeout": 30
+  }
+}

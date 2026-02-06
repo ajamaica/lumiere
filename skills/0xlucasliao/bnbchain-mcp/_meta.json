@@ -1,0 +1,11 @@
+{
+  "owner": "0xlucasliao",
+  "slug": "bnbchain-mcp",
+  "displayName": "bnbchain-mcp",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770372105920,
+    "commit": "https://github.com/openclaw/skills/commit/5cc7204da7195d069c792175df0651b7afd27fec"
+  },
+  "history": []
+}

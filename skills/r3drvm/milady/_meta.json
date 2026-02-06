@@ -1,0 +1,11 @@
+{
+  "owner": "r3drvm",
+  "slug": "milady",
+  "displayName": "Milady",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770334284289,
+    "commit": "https://github.com/clawdbot/skills/commit/8301fb45474054fc6b0f994c1464130fbb14d542"
+  },
+  "history": []
+}

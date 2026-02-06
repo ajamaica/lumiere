@@ -1,0 +1,11 @@
+{
+  "owner": "roger0808",
+  "slug": "nas-movie-download",
+  "displayName": "nas-movie-download",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770372844050,
+    "commit": "https://github.com/openclaw/skills/commit/22ea78542b5e39d4c9d8d8460efa8bfa6dc7112f"
+  },
+  "history": []
+}

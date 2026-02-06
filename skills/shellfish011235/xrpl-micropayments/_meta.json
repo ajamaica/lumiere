@@ -1,0 +1,11 @@
+{
+  "owner": "shellfish011235",
+  "slug": "xrpl-micropayments",
+  "displayName": "XRPL Micropayments",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769975575134,
+    "commit": "https://github.com/clawdbot/skills/commit/d3547d3316ad481ac22eaad43a81c7f5e5ebf7c9"
+  },
+  "history": []
+}

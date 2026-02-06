@@ -1,0 +1,39 @@
+{
+  "name": "quietmail",
+  "version": "1.0.0",
+  "description": "Unlimited email for AI agents. No verification, no limits, just reliable email.",
+  "keywords": [
+    "email",
+    "ai",
+    "agent",
+    "smtp",
+    "api",
+    "automation",
+    "sending",
+    "mailcow",
+    "free"
+  ],
+  "homepage": "https://quiet-mail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quiet-mail/quietmail-skill"
+  },
+  "author": "quiet-mail.com",
+  "license": "MIT",
+  "metadata": {
+    "quietmail": {
+      "emoji": "📧",
+      "category": "email",
+      "api_base": "https://api.quiet-mail.com",
+      "features": [
+        "Unlimited sending",
+        "No verification required",
+        "1GB storage per agent",
+        "Simple REST API",
+        "Free forever"
+      ],
+      "target_audience": "AI agents",
+      "setup_time": "30 seconds"
+    }
+  }
+}

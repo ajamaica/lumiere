@@ -1,0 +1,130 @@
+{
+  "$schema": "./router_config.schema.json",
+  "version": "1.0.0",
+  "description": "Smart Router configuration for OpenClaw integration",
+
+  "routing": {
+    "enabled": true,
+    "mode": "live",
+    "log_decisions": true,
+    "show_routing_default": false
+  },
+
+  "providers": {
+    "available": ["anthropic", "openai", "google", "xai"],
+    "prefer_order": ["anthropic", "google", "openai", "xai"]
+  },
+
+  "models": {
+    "opus": {
+      "id": "anthropic/claude-opus-4-5",
+      "enabled": true,
+      "context_window": 200000,
+      "cost_tier": "$$$$"
+    },
+    "sonnet": {
+      "id": "anthropic/claude-sonnet-4-5",
+      "enabled": true,
+      "context_window": 200000,
+      "cost_tier": "$$$"
+    },
+    "haiku": {
+      "id": "anthropic/claude-haiku-3-5",
+      "enabled": true,
+      "context_window": 200000,
+      "cost_tier": "$"
+    },
+    "gpt5": {
+      "id": "openai/gpt-5",
+      "enabled": true,
+      "context_window": 128000,
+      "cost_tier": "$$"
+    },
+    "gemini-pro": {
+      "id": "google/gemini-2.5-pro",
+      "enabled": true,
+      "context_window": 1000000,
+      "cost_tier": "$$$"
+    },
+    "flash": {
+      "id": "google/gemini-2.5-flash",
+      "enabled": true,
+      "context_window": 1000000,
+      "cost_tier": "$"
+    },
+    "grok2": {
+      "id": "xai/grok-2-latest",
+      "enabled": true,
+      "context_window": 128000,
+      "cost_tier": "$$",
+      "capabilities": ["realtime"]
+    },
+    "grok3": {
+      "id": "xai/grok-3",
+      "enabled": true,
+      "context_window": 128000,
+      "cost_tier": "$$$",
+      "capabilities": ["realtime"]
+    }
+  },
+
+  "circuit_breaker": {
+    "enabled": true,
+    "failure_threshold": 3,
+    "reset_timeout_ms": 300000,
+    "half_open_max_calls": 1,
+    "state_file": "~/.openclaw/router-state/circuit-breaker.json"
+  },
+
+  "rate_limits": {
+    "enabled": true,
+    "requests_per_minute": 20,
+    "requests_per_hour": 200,
+    "premium_per_hour": 20,
+    "state_file": "~/.openclaw/router-state/rate-limits.json"
+  },
+
+  "logging": {
+    "level": "info",
+    "decision_log": "~/.openclaw/logs/router-decisions.log",
+    "max_log_size_mb": 10,
+    "retention_days": 7
+  },
+
+  "security": {
+    "sanitize_input": true,
+    "block_credentials": true,
+    "warn_pii": true,
+    "trust_tiers": {
+      "anthropic": 1,
+      "openai": 1,
+      "google": 1,
+      "xai": 2
+    }
+  },
+
+  "cost_optimization": {
+    "enabled": true,
+    "simple_max_tier": "$",
+    "medium_max_tier": "$$",
+    "complex_max_tier": "$$$$",
+    "daily_budget_usd": null,
+    "alert_threshold_percent": 80
+  },
+
+  "special_cases": {
+    "long_context_threshold": 128000,
+    "extreme_context_threshold": 200000,
+    "realtime_keywords": [
+      "now",
+      "today",
+      "current",
+      "latest",
+      "price",
+      "bitcoin",
+      "btc",
+      "weather"
+    ],
+    "vision_enabled": true
+  }
+}

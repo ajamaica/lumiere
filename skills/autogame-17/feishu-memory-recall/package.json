@@ -1,0 +1,14 @@
+{
+  "name": "feishu-memory-recall",
+  "version": "1.0.0",
+  "description": "Cross-channel message retrieval for OpenClaw memory recovery",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "commander": "^11.0.0",
+    "dotenv": "^16.3.1"
+  }
+}

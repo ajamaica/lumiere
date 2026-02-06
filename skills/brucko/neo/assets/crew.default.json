@@ -1,0 +1,34 @@
+{
+  "members": [
+    {
+      "id": "game-theorist",
+      "category": "meta",
+      "reason": "Strategic decisions, negotiations, seeing the whole board"
+    },
+    {
+      "id": "scientific-critical-thinking",
+      "category": "meta",
+      "reason": "Evaluating claims, research, avoiding BS"
+    },
+    {
+      "id": "psychologist",
+      "category": "social-sciences",
+      "reason": "Understanding people, relationships, self-awareness"
+    },
+    {
+      "id": "economist",
+      "category": "social-sciences",
+      "reason": "Financial decisions, incentives, market thinking"
+    },
+    {
+      "id": "negotiator",
+      "category": "professional",
+      "reason": "Any negotiation - salary, contracts, deals"
+    },
+    {
+      "id": "entrepreneur",
+      "category": "professional",
+      "reason": "Building things, product thinking, execution"
+    }
+  ]
+}

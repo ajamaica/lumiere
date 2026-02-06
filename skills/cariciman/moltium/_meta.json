@@ -1,0 +1,11 @@
+{
+  "owner": "cariciman",
+  "slug": "moltium",
+  "displayName": "Moltium",
+  "latest": {
+    "version": "1.3.1",
+    "publishedAt": 1770245659735,
+    "commit": "https://github.com/clawdbot/skills/commit/e40f8989b9cf913e65a60fcb96a2336491251a01"
+  },
+  "history": []
+}

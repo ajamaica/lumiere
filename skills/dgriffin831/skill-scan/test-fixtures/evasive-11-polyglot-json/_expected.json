@@ -1,0 +1,9 @@
+{
+  "fixture": "evasive-11-polyglot-json",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 10,
+  "expected_risk": "CRITICAL",
+  "expected_categories": ["credential-theft", "data-exfiltration"],
+  "must_detect_rules": ["CRED_ACCESS"]
+}

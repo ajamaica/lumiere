@@ -1,0 +1,17 @@
+{
+  "owner": "akellacom",
+  "slug": "pocketalert",
+  "displayName": "Pocketalert",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770385215042,
+    "commit": "https://github.com/openclaw/skills/commit/6b42f4c7a28ad88eaa0c0469b10109cf95eeaeb5"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769861527070,
+      "commit": "https://github.com/clawdbot/skills/commit/50c47efb794606c19fe5d044db18507d375ed53d"
+    }
+  ]
+}

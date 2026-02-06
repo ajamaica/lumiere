@@ -1,0 +1,11 @@
+{
+  "owner": "ronaldmannak",
+  "slug": "mlx-swift-lm",
+  "displayName": "MLX Swift LM Expert",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769978310409,
+    "commit": "https://github.com/clawdbot/skills/commit/013f7763b74ebbaa9652e26337bc956a118bf9ef"
+  },
+  "history": []
+}

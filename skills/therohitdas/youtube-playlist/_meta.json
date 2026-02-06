@@ -1,0 +1,11 @@
+{
+  "owner": "therohitdas",
+  "slug": "youtube-playlist",
+  "displayName": "Youtube Playlist",
+  "latest": {
+    "version": "1.3.2",
+    "publishedAt": 1769930229944,
+    "commit": "https://github.com/clawdbot/skills/commit/501f2aa9d56ce6ea56cff17db8ff22d549077486"
+  },
+  "history": []
+}

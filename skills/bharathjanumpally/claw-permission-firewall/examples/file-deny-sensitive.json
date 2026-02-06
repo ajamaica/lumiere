@@ -1,0 +1,10 @@
+{
+  "action": {
+    "type": "file_read",
+    "path": "~/.ssh/id_rsa"
+  },
+  "context": {
+    "workspaceRoot": "/workspace",
+    "mode": "strict"
+  }
+}

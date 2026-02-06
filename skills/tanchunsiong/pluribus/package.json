@@ -1,0 +1,27 @@
+{
+  "name": "pluribus",
+  "version": "0.1.0",
+  "description": "Decentralized Agent Hive-Mind — A P2P coordination layer for AI agents",
+  "author": "Cortana <HeroChunAI@moltbook.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tanchunsiong/pluribus.git"
+  },
+  "keywords": [
+    "openclaw",
+    "agent",
+    "p2p",
+    "hive-mind",
+    "coordination",
+    "moltbook",
+    "skill"
+  ],
+  "openclaw": {
+    "emoji": "🧠",
+    "category": "coordination",
+    "requires": {
+      "bins": ["bash", "curl", "jq"]
+    }
+  }
+}

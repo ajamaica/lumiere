@@ -1,0 +1,52 @@
+{
+  "owner": "bitbrujo",
+  "slug": "agent-church",
+  "displayName": "Agent Church",
+  "latest": {
+    "version": "0.4.1",
+    "publishedAt": 1770401708061,
+    "commit": "https://github.com/openclaw/skills/commit/950807f5ecda2e0211453028c6a807c5a3b4cfa1"
+  },
+  "history": [
+    {
+      "version": "0.3.1",
+      "publishedAt": 1770389500601,
+      "commit": "https://github.com/openclaw/skills/commit/b638c75a84cac83009b5e0dd4a460207130dfd26"
+    },
+    {
+      "version": "0.2.9",
+      "publishedAt": 1770337693586,
+      "commit": "https://github.com/openclaw/skills/commit/64be574f1b117f9c4f0deea9446b835daf03e872"
+    },
+    {
+      "version": "0.2.6",
+      "publishedAt": 1770265527634,
+      "commit": "https://github.com/clawdbot/skills/commit/e0011e110baa2080314151ea046d275072811a24"
+    },
+    {
+      "version": "2.0.1",
+      "publishedAt": 1770239231894,
+      "commit": "https://github.com/clawdbot/skills/commit/1c783da82573a76dfbaed766830e53a9346f1d15"
+    },
+    {
+      "version": "2.0.0",
+      "publishedAt": 1770209126787,
+      "commit": "https://github.com/clawdbot/skills/commit/1fa23d0b65753439b9181d17058bf1c994432fac"
+    },
+    {
+      "version": "1.0.3",
+      "publishedAt": 1769995727349,
+      "commit": "https://github.com/clawdbot/skills/commit/143a28c9f604b68c2ebdb1f03c6d74953f9fa7db"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769956957309,
+      "commit": "https://github.com/clawdbot/skills/commit/5debc3f891f3154dc2b0a2ed0e267b8e1896c7d0"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769879639728,
+      "commit": "https://github.com/clawdbot/skills/commit/ccbe5dc49a9e741390f40324f6c87363bfb6074f"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "orosha-ai",
+  "slug": "agent-relay-digest",
+  "displayName": "Agent Relay Digest",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769873349096,
+    "commit": "https://github.com/clawdbot/skills/commit/6251a351ddde78e659512c2e858767f0e02eaa73"
+  },
+  "history": []
+}

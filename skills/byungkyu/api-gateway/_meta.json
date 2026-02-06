@@ -1,0 +1,47 @@
+{
+  "owner": "byungkyu",
+  "slug": "api-gateway",
+  "displayName": "API Gateway",
+  "latest": {
+    "version": "1.0.10",
+    "publishedAt": 1770380187295,
+    "commit": "https://github.com/openclaw/skills/commit/e1af87040f5510f1234e6c0772cff871d2a234fa"
+  },
+  "history": [
+    {
+      "version": "1.0.9",
+      "publishedAt": 1770350793456,
+      "commit": "https://github.com/openclaw/skills/commit/c983f154ea978ce7824465e5a1379193dcd4ca34"
+    },
+    {
+      "version": "1.0.7",
+      "publishedAt": 1770255201326,
+      "commit": "https://github.com/clawdbot/skills/commit/22722eefe513d0d76061a5ba54f839bfc7a2bbb5"
+    },
+    {
+      "version": "1.0.6",
+      "publishedAt": 1770193934258,
+      "commit": "https://github.com/clawdbot/skills/commit/5d8f9c6112888b9bddb607271e5a8f9fa5e0d993"
+    },
+    {
+      "version": "1.0.5",
+      "publishedAt": 1770160244977,
+      "commit": "https://github.com/clawdbot/skills/commit/d5d179ba9cb9ddbba8398327855987d03008b2c8"
+    },
+    {
+      "version": "1.0.4",
+      "publishedAt": 1770146863151,
+      "commit": "https://github.com/clawdbot/skills/commit/ff896921f66f521f3c23ec1d052997ee3082e62c"
+    },
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770118161158,
+      "commit": "https://github.com/clawdbot/skills/commit/58b0832f004c5d496023abc8fb0b28f1aca3179d"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769935616692,
+      "commit": "https://github.com/clawdbot/skills/commit/a91f58b83f87b7513e717d3f2192eeafd806f839"
+    }
+  ]
+}

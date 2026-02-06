@@ -1,0 +1,149 @@
+# News Page Test Suite
+# https://app.strykr.ai/news
+
+name: News
+description: Tests for news page - routing, filters, and article interactions
+baseUrl: https://app.strykr.ai
+
+tests:
+  # Direct URL Navigation (Known Issue)
+  - name: Direct URL navigation (known issue)
+    knownIssue: direct-url-blank-news
+    steps:
+      - goto: /news
+      - waitForLoad: true
+      - waitFor: 3000
+      - screenshot: news-direct-url
+      # This is known to show blank page
+      - expectVisible: '.news-card, [data-testid="news-item"], article'
+        allowFail: true
+        knownIssue: direct-url-blank-news
+
+  # Sidebar Navigation (Works)
+  - name: Sidebar navigation works
+    steps:
+      - goto: /
+      - waitForLoad: true
+      - click: 'a[href="/news"], [data-nav="news"]'
+      - waitForNavigation: true
+      - waitFor: '.news-card, [data-testid="news-item"], article'
+        timeout: 15000
+      - expectVisible: '.news-card, [data-testid="news-item"], article'
+      - screenshot: news-via-sidebar
+
+  # News Cards
+  - name: News cards display correctly
+    setup:
+      - goto: /
+      - click: 'a[href="/news"]'
+      - waitFor: '.news-card'
+        timeout: 10000
+    steps:
+      - expectVisible: '.news-card .headline, [data-testid="news-headline"]'
+      - expectVisible: '.news-card .source, [data-testid="news-source"]'
+      - expectVisible: '.news-card .timestamp, [data-testid="news-time"]'
+      - screenshot: news-cards
+
+  # Category Filters
+  - name: Crypto category filter
+    setup:
+      - goto: /
+      - click: 'a[href="/news"]'
+      - waitFor: '.news-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("Crypto"), [data-category="crypto"]'
+      - waitFor: 500
+      - screenshot: news-crypto-filter
+
+  - name: Stocks category filter
+    setup:
+      - goto: /
+      - click: 'a[href="/news"]'
+      - waitFor: '.news-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("Stocks"), [data-category="stocks"]'
+      - waitFor: 500
+      - screenshot: news-stocks-filter
+
+  - name: All categories filter
+    setup:
+      - goto: /
+      - click: 'a[href="/news"]'
+      - waitFor: '.news-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("All"), [data-category="all"]'
+      - waitFor: 500
+      - expectVisible: '.news-card'
+
+  # Sentiment Filters
+  - name: Bullish sentiment filter
+    setup:
+      - goto: /
+      - click: 'a[href="/news"]'
+      - waitFor: '.news-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("Bullish"), [data-sentiment="bullish"]'
+      - waitFor: 500
+      - screenshot: news-bullish
+
+  - name: Bearish sentiment filter
+    setup:
+      - goto: /
+      - click: 'a[href="/news"]'
+      - waitFor: '.news-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("Bearish"), [data-sentiment="bearish"]'
+      - waitFor: 500
+      - screenshot: news-bearish
+
+  # Action Buttons
+  - name: Listen button on news
+    setup:
+      - goto: /
+      - click: 'a[href="/news"]'
+      - waitFor: '.news-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("Listen"), [data-action="listen"]'
+        first: true
+      - waitFor: 1000
+      - screenshot: news-listen
+
+  - name: Share button on news
+    setup:
+      - goto: /
+      - click: 'a[href="/news"]'
+      - waitFor: '.news-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("Share"), [data-action="share"]'
+        first: true
+      - waitFor: 500
+      - screenshot: news-share
+
+  - name: Ask Strykr AI about news
+    setup:
+      - goto: /
+      - click: 'a[href="/news"]'
+      - waitFor: '.news-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("Ask Strykr AI"), [data-action="ask-ai"]'
+        first: true
+      - waitFor: 1000
+      - expectVisible: '[data-testid="ai-chat"], .ai-response'
+      - screenshot: news-ask-ai
+
+  - name: No console errors
+    setup:
+      - goto: /
+      - click: 'a[href="/news"]'
+      - waitFor: '.news-card'
+        timeout: 10000
+    steps:
+      - expectNoConsoleErrors: true

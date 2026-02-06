@@ -1,0 +1,11 @@
+{
+  "owner": "playdadev",
+  "slug": "polt-cto",
+  "displayName": "Polt Cto",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770296628892,
+    "commit": "https://github.com/clawdbot/skills/commit/6e8f8481b7cdedbbbd6ae185fedf15ac92c6ba52"
+  },
+  "history": []
+}

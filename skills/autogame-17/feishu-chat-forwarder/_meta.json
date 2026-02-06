@@ -1,0 +1,11 @@
+{
+  "owner": "autogame-17",
+  "slug": "feishu-chat-forwarder",
+  "displayName": "Feishu Chat Forwarder",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769956974452,
+    "commit": "https://github.com/clawdbot/skills/commit/fa32215b97aaa401d17e2ac3fcfb6c7d1621a9fd"
+  },
+  "history": []
+}

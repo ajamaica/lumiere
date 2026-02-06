@@ -1,0 +1,59 @@
+name: Sync to OpenClaw
+
+on:
+  push:
+    branches: [ main ]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup OpenClaw CLI
+        run: |
+          # Установите OpenClaw CLI
+          npm install -g openclaw
+          
+          # Настройте аутентификацию
+          echo "${{ secrets.OPENCLAW_CONFIG }}" > ~/.openclaw/config.json
+          
+      - name: Deploy skill to OpenClaw
+        env:
+          OPENCLAW_API_KEY: ${{ secrets.OPENCLAW_API_KEY }}
+          OPENCLAW_INSTANCE: ${{ secrets.OPENCLAW_INSTANCE }}
+        run: |
+          echo "🚀 Deploying to OpenClaw..."
+          
+          # Создайте архив навыка
+          tar -czf binance-enhanced.tar.gz \
+            --exclude='.git' \
+            --exclude='.github' \
+            SKILL.md README.md package.json install.sh \
+            templates/ test/ security/ ux/ monitoring/ performance/ strategies/ telegram-bot/
+          
+          # Загрузите в OpenClaw
+          openclaw skill upload binance-enhanced.tar.gz \
+            --name "binance-enhanced" \
+            --api-key "$OPENCLAW_API_KEY" \
+            --instance "$OPENCLAW_INSTANCE"
+          
+          echo "✅ Skill deployed to OpenClaw!"
+          
+      - name: Notify on success
+        if: success()
+        run: |
+          echo "🎉 Successfully synced to OpenClaw"
+          echo "Skill: binance-enhanced"
+          echo "Version: $(git describe --tags --always)"
+          echo "OpenClaw Instance: ${{ secrets.OPENCLAW_INSTANCE }}"
+          
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Failed to sync to OpenClaw"
+          echo "Check logs above for details"

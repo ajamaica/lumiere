@@ -1,0 +1,11 @@
+{
+  "owner": "lraivisto",
+  "slug": "luka-rv-brain",
+  "displayName": "Luka RV Brain",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770325121118,
+    "commit": "https://github.com/openclaw/skills/commit/553687e4c2b730dad5a11427fbae97a953371edc"
+  },
+  "history": []
+}

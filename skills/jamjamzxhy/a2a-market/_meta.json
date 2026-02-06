@@ -1,0 +1,17 @@
+{
+  "owner": "jamjamzxhy",
+  "slug": "a2a-market",
+  "displayName": "A2A Market",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770087582811,
+    "commit": "https://github.com/clawdbot/skills/commit/78055a9a05e05da50aab1ef3d250dec7f40a69f6"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769928800168,
+      "commit": "https://github.com/clawdbot/skills/commit/2d1e07abf04d816ba8e1175b3ead0a7b0ec3ac7a"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "orosha-ai",
+  "slug": "mcp-registry-manager",
+  "displayName": "Mcp Registry Manager",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769873382674,
+    "commit": "https://github.com/clawdbot/skills/commit/0d087d23939fa4bf2aa71c64a16738da1f33ca2e"
+  },
+  "history": []
+}

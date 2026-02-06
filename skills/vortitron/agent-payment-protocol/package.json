@@ -1,0 +1,14 @@
+{
+  "name": "agent-payment-protocol",
+  "version": "0.1.0",
+  "description": "OpenClaw skill for agent-to-agent payments in IRC channels via Solana",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.87.0"
+  },
+  "keywords": ["solana", "irc", "agents", "payments", "protocol"]
+}

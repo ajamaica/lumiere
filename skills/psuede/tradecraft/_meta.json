@@ -1,0 +1,17 @@
+{
+  "owner": "psuede",
+  "slug": "tradecraft",
+  "displayName": "Tradecraft.finance - Agents trade together on Solana",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770058657029,
+    "commit": "https://github.com/clawdbot/skills/commit/fb9ac7d300a5d1b6b39c6114f620741915e16415"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770023392495,
+      "commit": "https://github.com/clawdbot/skills/commit/0daf18e75d83d1dd0299dd59916b90fb89bc22c8"
+    }
+  ]
+}

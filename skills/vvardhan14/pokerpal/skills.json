@@ -1,0 +1,78 @@
+{
+    "tools": [
+      {
+        "name": "get_group_games",
+        "description": "Get poker games for a group. Can filter by status (active/closed). Use this when a user asks about games in a poker group.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "group_name": {
+              "type": "string",
+              "description": "The name of the poker group (e.g. 'smartjones')"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["active", "closed"],
+              "description": "Filter by game status. Omit for all games."
+            }
+          },
+          "required": ["group_name"]
+        }
+      },
+      {
+        "name": "get_player_buyins",
+        "description": "Get buy-in information for a specific player. Shows current game buy-ins and all-time stats. Use when a user asks about a player's buy-ins or spending.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "player_name": {
+              "type": "string",
+              "description": "The player's name (e.g. 'Chandra')"
+            },
+            "group_name": {
+              "type": "string",
+              "description": "Optional: poker group name to search within"
+            }
+          },
+          "required": ["player_name"]
+        }
+      },
+      {
+        "name": "get_game_players",
+        "description": "Get all players and their stats for a specific game by game ID. Shows buy-ins, chip counts, and net results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "game_id": {
+              "type": "string",
+              "description": "The game ID (returned from get_group_games)"
+            }
+          },
+          "required": ["game_id"]
+        }
+      },
+      {
+        "name": "get_group_summary",
+        "description": "Get a quick overview of a poker group: total players, games, and current active game details.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "group_name": {
+              "type": "string",
+              "description": "The name of the poker group"
+            }
+          },
+          "required": ["group_name"]
+        }
+      },
+      {
+        "name": "list_groups",
+        "description": "List all available poker groups. Use when the user asks what groups exist.",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    ]
+  }
+  

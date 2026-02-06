@@ -1,0 +1,11 @@
+{
+  "owner": "jlpjavawayup",
+  "slug": "baidu-baike",
+  "displayName": "baidu baike search",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770218047184,
+    "commit": "https://github.com/clawdbot/skills/commit/8047bc249d71504addf1dd1f44ce83bafbd8e65c"
+  },
+  "history": []
+}

@@ -1,0 +1,53 @@
+{
+  "name": "aegis-security",
+  "version": "1.0.0",
+  "description": "Blockchain security API for AI agents. Scan tokens, simulate transactions, check addresses for threats.",
+  "homepage": "https://aegis402.xyz",
+  "repository": "https://github.com/anthropics/aegis402-shield-protocol",
+  "author": "Aegis402",
+  "license": "MIT",
+  "keywords": [
+    "blockchain",
+    "security",
+    "web3",
+    "token-scanner",
+    "honeypot-detection",
+    "transaction-simulation",
+    "address-poisoning",
+    "defi",
+    "ai-agents",
+    "x402",
+    "pay-per-request"
+  ],
+  "metadata": {
+    "emoji": "🛡️",
+    "category": "blockchain-security",
+    "api_base": "https://aegis402.xyz/v1",
+    "payment_networks": ["base", "solana"],
+    "currency": "USDC"
+  },
+  "endpoints": {
+    "check-token": {
+      "method": "GET",
+      "path": "/v1/check-token/:address",
+      "price": "$0.01",
+      "description": "Scan token for honeypots and scams"
+    },
+    "check-address": {
+      "method": "GET",
+      "path": "/v1/check-address/:address",
+      "price": "$0.005",
+      "description": "Check address for poisoning and reputation"
+    },
+    "simulate-tx": {
+      "method": "POST",
+      "path": "/v1/simulate-tx",
+      "price": "$0.05",
+      "description": "Simulate transaction to detect threats"
+    }
+  },
+  "skill_files": {
+    "main": "https://aegis402.xyz/skill.md",
+    "metadata": "https://aegis402.xyz/skill.json"
+  }
+}

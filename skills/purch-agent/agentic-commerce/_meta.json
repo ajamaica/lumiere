@@ -1,0 +1,17 @@
+{
+  "owner": "purch-agent",
+  "slug": "agentic-commerce",
+  "displayName": "Agentic Commerce - Buy IRL Items With USDC",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769890531594,
+    "commit": "https://github.com/clawdbot/skills/commit/96deffc7c662c9c994e1a3318ab64d53378e81b3"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769827270474,
+      "commit": "https://github.com/clawdbot/skills/commit/4e990365cb175dc60af7965375c04b1bdd0b81c3"
+    }
+  ]
+}

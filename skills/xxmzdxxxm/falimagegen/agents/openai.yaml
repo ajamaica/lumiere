@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fal Image Gen"
+  short_description: "Call fal model APIs for text-to-image and image-to-image"
+  default_prompt: "Use fal model APIs to generate images (text-to-image or image-to-image) and return image URLs. Verify model schemas in docs before constructing requests."

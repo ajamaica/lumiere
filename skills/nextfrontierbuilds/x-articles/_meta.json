@@ -1,0 +1,17 @@
+{
+  "owner": "nextfrontierbuilds",
+  "slug": "x-articles",
+  "displayName": "X Articles",
+  "latest": {
+    "version": "1.1.2",
+    "publishedAt": 1770220759945,
+    "commit": "https://github.com/clawdbot/skills/commit/d3dd1fbab6e6456dab1ca9c76469a4c2a5c24c6b"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769541995328,
+      "commit": "https://github.com/clawdbot/skills/commit/c41c23c8ce4ea540905d88b61d5f507c4cade5f2"
+    }
+  ]
+}

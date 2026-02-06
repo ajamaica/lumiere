@@ -1,0 +1,11 @@
+{
+  "owner": "riley-coyote",
+  "slug": "memory-continuity",
+  "displayName": "Real Memory Continuity",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770272363172,
+    "commit": "https://github.com/clawdbot/skills/commit/890b1da7ba9cdca9eb7dd8b80e715dd5917459b2"
+  },
+  "history": []
+}

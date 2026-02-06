@@ -1,0 +1,30 @@
+{
+  "name": "claw-voice-ui",
+  "version": "1.0.0",
+  "description": "Self-evolving AI voice assistant powered by OpenClaw",
+  "main": "server.cjs",
+  "scripts": {
+    "start": "./start.sh",
+    "dev": "node server.cjs",
+    "postinstall": "echo '✅ Run ./start.sh to launch'"
+  },
+  "keywords": [
+    "ai",
+    "voice",
+    "assistant",
+    "openclaw",
+    "self-evolving"
+  ],
+  "author": "yukihamada",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yukihamada/voice-ui.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.0.0"
+  }
+}

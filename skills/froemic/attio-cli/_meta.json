@@ -1,0 +1,11 @@
+{
+  "owner": "froemic",
+  "slug": "attio-cli",
+  "displayName": "Attio CRM CLI",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770230784504,
+    "commit": "https://github.com/clawdbot/skills/commit/a6f517c1b1c5e4ee0cd61b137c3ee11f5b85a39c"
+  },
+  "history": []
+}

@@ -1,0 +1,537 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "meta": {
+        "type": "object",
+        "properties": {
+          "lastTouchedVersion": { "type": "string" },
+          "lastTouchedAt": { "type": "string" }
+        },
+        "additionalProperties": false
+      },
+      "update": {
+        "type": "object",
+        "properties": {
+          "channel": { "type": "string" },
+          "checkOnStart": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      },
+      "diagnostics": {
+        "type": "object",
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "flags": { "type": "array", "items": { "type": "string" } },
+          "otel": {
+            "type": "object",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "endpoint": { "type": "string" },
+              "protocol": { "type": "string" },
+              "headers": { "type": "object" },
+              "serviceName": { "type": "string" },
+              "traces": { "type": "boolean" },
+              "metrics": { "type": "boolean" },
+              "logs": { "type": "boolean" },
+              "sampleRate": { "type": "number" },
+              "flushIntervalMs": { "type": "integer" }
+            },
+            "additionalProperties": false
+          },
+          "cacheTrace": {
+            "type": "object",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "filePath": { "type": "string" },
+              "includeMessages": { "type": "boolean" },
+              "includePrompt": { "type": "boolean" },
+              "includeSystem": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "agents": {
+        "type": "object",
+        "properties": {
+          "defaults": {
+            "type": "object",
+            "properties": {
+              "workspace": { "type": "string" },
+              "repoRoot": { "type": "string" },
+              "skipBootstrap": { "type": "boolean" },
+              "bootstrapMaxChars": { "type": "integer" },
+              "userTimezone": { "type": "string" },
+              "timeFormat": { "type": "string" },
+              "envelopeTimezone": { "type": "string" },
+              "envelopeTimestamp": { "type": "string" },
+              "envelopeElapsed": { "type": "string" },
+              "models": { "type": "object" },
+              "model": {
+                "type": "object",
+                "properties": {
+                  "primary": { "type": "string" },
+                  "fallbacks": { "type": "array", "items": { "type": "string" } }
+                }
+              },
+              "imageModel": {
+                "type": "object",
+                "properties": {
+                  "primary": { "type": "string" },
+                  "fallbacks": { "type": "array", "items": { "type": "string" } }
+                }
+              },
+              "thinkingDefault": { "type": "string" },
+              "verboseDefault": { "type": "string" },
+              "elevatedDefault": { "type": "string" },
+              "timeoutSeconds": { "type": "integer" },
+              "mediaMaxMb": { "type": "integer" },
+              "heartbeat": {
+                "type": "object",
+                "properties": {
+                  "every": { "type": "string" },
+                  "target": { "type": "string" }
+                }
+              },
+              "maxConcurrent": { "type": "integer" },
+              "subagents": {
+                "type": "object",
+                "properties": {
+                  "model": { "type": "string" },
+                  "maxConcurrent": { "type": "integer" },
+                  "archiveAfterMinutes": { "type": "integer" }
+                }
+              },
+              "exec": {
+                "type": "object",
+                "properties": {
+                  "backgroundMs": { "type": "integer" },
+                  "timeoutSec": { "type": "integer" },
+                  "cleanupMs": { "type": "integer" }
+                }
+              },
+              "contextTokens": { "type": "integer" },
+              "contextPruning": {
+                "type": "object",
+                "properties": {
+                  "mode": { "type": "string" },
+                  "keepLastAssistants": { "type": "integer" },
+                  "softTrimRatio": { "type": "number" },
+                  "hardClearRatio": { "type": "number" },
+                  "minPrunableToolChars": { "type": "integer" }
+                }
+              },
+              "compaction": {
+                "type": "object",
+                "properties": {
+                  "mode": { "type": "string" },
+                  "reserveTokensFloor": { "type": "integer" },
+                  "memoryFlush": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": { "type": "boolean" },
+                      "softThresholdTokens": { "type": "integer" },
+                      "systemPrompt": { "type": "string" },
+                      "prompt": { "type": "string" }
+                    }
+                  }
+                }
+              },
+              "sandbox": {
+                "type": "object",
+                "properties": {
+                  "mode": { "type": "string" },
+                  "scope": { "type": "string" },
+                  "workspaceAccess": { "type": "string" },
+                  "workspaceRoot": { "type": "string" }
+                }
+              },
+              "humanDelay": {
+                "type": "object",
+                "properties": {
+                  "mode": { "type": "string" },
+                  "minMs": { "type": "integer" },
+                  "maxMs": { "type": "integer" }
+                }
+              },
+              "cliBackends": { "type": "array", "items": { "type": "string" } },
+              "memorySearch": {
+                "type": "object",
+                "properties": {
+                  "enabled": { "type": "boolean" },
+                  "sources": { "type": "array", "items": { "type": "string" } },
+                  "extraPaths": { "type": "array", "items": { "type": "string" } },
+                  "provider": { "type": "string" },
+                  "model": { "type": "string" }
+                }
+              }
+            }
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "default": { "type": "boolean" },
+                "name": { "type": "string" },
+                "workspace": { "type": "string" },
+                "agentDir": { "type": "string" },
+                "model": { "type": "string" },
+                "identity": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "theme": { "type": "string" },
+                    "emoji": { "type": "string" },
+                    "avatar": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "tools": {
+        "type": "object",
+        "properties": {
+          "media": {
+            "type": "object",
+            "properties": {
+              "image": {
+                "type": "object",
+                "properties": {
+                  "enabled": { "type": "boolean" },
+                  "maxBytes": { "type": "integer" },
+                  "maxChars": { "type": "integer" },
+                  "prompt": { "type": "string" },
+                  "timeoutSeconds": { "type": "integer" }
+                }
+              },
+              "audio": {
+                "type": "object",
+                "properties": {
+                  "enabled": { "type": "boolean" },
+                  "maxBytes": { "type": "integer" },
+                  "maxChars": { "type": "integer" },
+                  "prompt": { "type": "string" },
+                  "timeoutSeconds": { "type": "integer" },
+                  "language": { "type": "string" }
+                }
+              },
+              "video": {
+                "type": "object",
+                "properties": {
+                  "enabled": { "type": "boolean" },
+                  "maxBytes": { "type": "integer" },
+                  "maxChars": { "type": "integer" },
+                  "prompt": { "type": "string" },
+                  "timeoutSeconds": { "type": "integer" }
+                }
+              }
+            }
+          },
+          "web": {
+            "type": "object",
+            "properties": {
+              "search": {
+                "type": "object",
+                "properties": {
+                  "enabled": { "type": "boolean" },
+                  "provider": { "type": "string" },
+                  "apiKey": { "type": "string" },
+                  "maxResults": { "type": "integer" },
+                  "timeoutSeconds": { "type": "integer" }
+                }
+              },
+              "fetch": {
+                "type": "object",
+                "properties": {
+                  "enabled": { "type": "boolean" },
+                  "maxChars": { "type": "integer" },
+                  "timeoutSeconds": { "type": "integer" }
+                }
+              }
+            }
+          },
+          "exec": {
+            "type": "object",
+            "properties": {
+              "applyPatch": {
+                "type": "object",
+                "properties": {
+                  "enabled": { "type": "boolean" },
+                  "allowModels": { "type": "array", "items": { "type": "string" } }
+                }
+              },
+              "notifyOnExit": { "type": "boolean" },
+              "approvalRunningNoticeMs": { "type": "integer" },
+              "host": { "type": "string" },
+              "security": { "type": "string" },
+              "ask": { "type": "string" }
+            }
+          },
+          "agentToAgent": {
+            "type": "object",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "allow": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "bindings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "agentId": { "type": "string" },
+            "match": {
+              "type": "object",
+              "properties": {
+                "channel": { "type": "string" },
+                "accountId": { "type": "string" },
+                "peer": { "type": "object" },
+                "guildId": { "type": "string" },
+                "teamId": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "audio": {
+        "type": "object",
+        "properties": {
+          "tts": {
+            "type": "object",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "provider": { "type": "string" },
+              "voiceId": { "type": "string" },
+              "modelId": { "type": "string" }
+            }
+          },
+          "voiceWake": {
+            "type": "object",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "triggerWord": { "type": "string" },
+              "provider": { "type": "string" }
+            }
+          }
+        }
+      },
+      "models": {
+        "type": "object",
+        "properties": {
+          "mode": { "type": "string" },
+          "providers": { "type": "object" }
+        }
+      },
+      "messages": {
+        "type": "object",
+        "properties": {
+          "queue": {
+            "type": "object",
+            "properties": {
+              "mode": { "type": "string" },
+              "debounceMs": { "type": "integer" },
+              "cap": { "type": "integer" },
+              "drop": { "type": "string" },
+              "byChannel": { "type": "object" }
+            }
+          },
+          "inbound": {
+            "type": "object",
+            "properties": {
+              "debounceMs": { "type": "integer" },
+              "byChannel": { "type": "object" }
+            }
+          },
+          "ackReaction": { "type": "string" },
+          "ackReactionScope": { "type": "string" },
+          "removeAckAfterReply": { "type": "boolean" },
+          "tts": {
+            "type": "object",
+            "properties": {
+              "auto": { "type": "string" },
+              "mode": { "type": "string" },
+              "provider": { "type": "string" },
+              "elevenlabs": { "type": "object" },
+              "openai": { "type": "object" },
+              "edge": { "type": "object" }
+            }
+          }
+        }
+      },
+      "commands": {
+        "default": { "native": "auto", "nativeSkills": "auto" },
+        "type": "object",
+        "properties": {
+          "native": { "anyOf": [{ "type": "boolean" }, { "type": "string" }] },
+          "nativeSkills": { "anyOf": [{ "type": "boolean" }, { "type": "string" }] },
+          "text": { "type": "boolean" },
+          "bash": { "type": "boolean" },
+          "bashForegroundMs": { "type": "integer" },
+          "config": { "type": "boolean" },
+          "debug": { "type": "boolean" },
+          "restart": { "type": "boolean" },
+          "useAccessGroups": { "type": "boolean" }
+        },
+        "required": ["native", "nativeSkills"]
+      },
+      "session": {
+        "type": "object",
+        "properties": {
+          "scope": { "type": "string" },
+          "dmScope": { "type": "string" },
+          "identityLinks": { "type": "object" },
+          "resetTriggers": { "type": "array", "items": { "type": "string" } },
+          "reset": { "type": "object" },
+          "resetByType": { "type": "object" },
+          "store": { "type": "string" },
+          "typingIntervalSeconds": { "type": "integer" },
+          "typingMode": { "type": "string" },
+          "mainKey": { "type": "string" },
+          "sendPolicy": { "type": "object" },
+          "agentToAgent": { "type": "object" }
+        }
+      },
+      "cron": {
+        "type": "object",
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "store": { "type": "string" },
+          "maxConcurrentRuns": { "type": "integer" }
+        }
+      },
+      "hooks": {
+        "type": "object",
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "path": { "type": "string" },
+          "token": { "type": "string" },
+          "maxBodyBytes": { "type": "integer" },
+          "presets": { "type": "array", "items": { "type": "string" } },
+          "transformsDir": { "type": "string" },
+          "mappings": { "type": "array" },
+          "gmail": { "type": "object" },
+          "internal": { "type": "object" }
+        }
+      },
+      "web": {
+        "type": "object",
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "heartbeatSeconds": { "type": "integer" },
+          "reconnect": { "type": "object" }
+        }
+      },
+      "channels": {
+        "type": "object",
+        "properties": {
+          "discord": {
+            "type": "object",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "token": { "type": "string" },
+              "groupPolicy": { "type": "string", "enum": ["open", "disabled", "allowlist"] },
+              "guilds": { "type": "object" },
+              "dm": { "type": "object" },
+              "actions": { "type": "object" }
+            }
+          },
+          "whatsapp": { "type": "object" },
+          "telegram": { "type": "object" },
+          "slack": { "type": "object" },
+          "feishu": { "type": "object" }
+        }
+      },
+      "skills": {
+        "type": "object",
+        "properties": {
+          "allowBundled": { "type": "array", "items": { "type": "string" } },
+          "load": { "type": "object" },
+          "install": { "type": "object" },
+          "entries": { "type": "object" }
+        }
+      },
+      "plugins": {
+        "type": "object",
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "allow": { "type": "array", "items": { "type": "string" } },
+          "deny": { "type": "array", "items": { "type": "string" } },
+          "load": { "type": "object" },
+          "slots": { "type": "object" },
+          "entries": { "type": "object" },
+          "installs": { "type": "object" }
+        }
+      },
+      "talk": {
+        "type": "object",
+        "properties": {
+          "voiceId": { "type": "string" },
+          "voiceAliases": { "type": "object" },
+          "modelId": { "type": "string" },
+          "outputFormat": { "type": "string" },
+          "apiKey": { "type": "string" },
+          "interruptOnSpeech": { "type": "boolean" }
+        }
+      },
+      "gateway": {
+        "type": "object",
+        "properties": {
+          "port": { "type": "integer" },
+          "mode": { "type": "string" },
+          "bind": { "type": "string" },
+          "controlUi": { "type": "object" },
+          "auth": { "type": "object" },
+          "tailscale": { "type": "object" },
+          "remote": { "type": "object" },
+          "reload": { "type": "object" },
+          "tls": { "type": "object" },
+          "http": { "type": "object" },
+          "nodes": { "type": "object" }
+        }
+      },
+      "browser": {
+        "type": "object",
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "evaluateEnabled": { "type": "boolean" },
+          "defaultProfile": { "type": "string" },
+          "profiles": { "type": "object" },
+          "color": { "type": "string" }
+        }
+      },
+      "logging": {
+        "type": "object",
+        "properties": {
+          "level": { "type": "string" },
+          "file": { "type": "string" },
+          "consoleLevel": { "type": "string" },
+          "consoleStyle": { "type": "string" },
+          "redactSensitive": { "type": "string" },
+          "redactPatterns": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "auth": {
+        "type": "object",
+        "properties": {
+          "profiles": { "type": "object" },
+          "order": { "type": "object" },
+          "cooldowns": { "type": "object" }
+        }
+      }
+    },
+    "required": ["commands"],
+    "additionalProperties": false,
+    "title": "OpenClawConfig"
+  },
+  "version": "2026.2.1",
+  "generatedAt": "2026-02-04T06:25:50.437Z"
+}

@@ -1,0 +1,38 @@
+The Next Big Thing — Skill Install + Run (Human Guide)
+
+This repo includes an agent skill under:
+  skills/next-big-thing/SKILL.md
+
+You can copy that skill into the tool you use:
+
+1) OpenAI Codex CLI (codex)
+   Location: $CODEX_HOME/skills/next-big-thing/
+   Example:
+     mkdir -p ~/.codex/skills/next-big-thing
+     cp skills/next-big-thing/SKILL.md ~/.codex/skills/next-big-thing/SKILL.md
+
+2) OpenClaw (formerly ClawdBot)
+   Locations (either works):
+     - ~/.openclaw/skills/next-big-thing/
+     - <workspace>/skills/next-big-thing/
+   Example (global install):
+     mkdir -p ~/.openclaw/skills/next-big-thing
+     cp skills/next-big-thing/SKILL.md ~/.openclaw/skills/next-big-thing/SKILL.md
+
+3) OpenCode
+   Location: $OPENCODE_HOME/skills/next-big-thing/
+   Example:
+     mkdir -p ~/.config/opencode/skills/next-big-thing
+     cp skills/next-big-thing/SKILL.md ~/.config/opencode/skills/next-big-thing/SKILL.md
+
+4) Claude Code
+   Location: ~/.claude/skills/next-big-thing/
+   Example:
+     mkdir -p ~/.claude/skills/next-big-thing
+     cp skills/next-big-thing/SKILL.md ~/.claude/skills/next-big-thing/SKILL.md
+
+Run usage
+  - Load your tool as usual, and reference the skill by name: “next-big-thing”.
+  - The skill is API‑only and uses https://thenextbigthing.wtf/ endpoints.
+  - You must provide Tap Wallet‑format signatures for challenges.
+  - Your Bitcoin address must hold enough BTC to pay inscription fees.

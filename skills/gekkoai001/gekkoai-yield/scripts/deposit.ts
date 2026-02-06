@@ -1,0 +1,222 @@
+#!/usr/bin/env npx tsx
+/**
+ * Deposit USDC into Moonwell Flagship USDC vault
+ * Usage: npx tsx deposit.ts <amount>
+ * Example: npx tsx deposit.ts 100
+ */
+
+import {
+  approveAndVerify,
+  ERC20_ABI,
+  formatUSDC,
+  getClients,
+  handleError,
+  isValidUSDCAmount,
+  loadConfig,
+  logTransaction,
+  parseUSDC,
+  simulateAndWrite,
+  sleep,
+  USDC_ADDRESS,
+  VAULT_ABI,
+  VAULT_ADDRESS,
+  verifyContracts,
+  waitForTransaction,
+} from './config.js'
+
+async function main() {
+  const args = process.argv.slice(2)
+
+  if (args.length === 0) {
+    console.log('Usage: npx tsx deposit.ts <amount>')
+    console.log('Example: npx tsx deposit.ts 100')
+    process.exit(1)
+  }
+
+  const amountArg = args[0]
+
+  if (!isValidUSDCAmount(amountArg)) {
+    console.error('❌ Invalid amount format')
+    console.error('   Use a number like: 100, 100.50, 1,000.00')
+    process.exit(1)
+  }
+
+  const depositAmount = parseUSDC(amountArg)
+
+  if (depositAmount <= 0n) {
+    console.error('❌ Amount must be greater than 0')
+    process.exit(1)
+  }
+
+  const config = loadConfig()
+  const { publicClient, walletClient, account } = getClients(config)
+
+  console.log('🦎 Gekko Yield — Deposit\n')
+  console.log(`Wallet: ${account.address}`)
+  console.log(`Amount: ${formatUSDC(depositAmount)} USDC\n`)
+
+  // Verify contracts
+  console.log('🔐 Verifying contracts...')
+  try {
+    await verifyContracts(publicClient)
+    console.log('   ✅ Contracts verified\n')
+  } catch (err) {
+    handleError(err, 'Contract verification failed')
+  }
+
+  // Check USDC balance
+  const usdcBalance = await publicClient.readContract({
+    address: USDC_ADDRESS,
+    abi: ERC20_ABI,
+    functionName: 'balanceOf',
+    args: [account.address],
+  })
+
+  if (usdcBalance < depositAmount) {
+    console.error(`❌ Insufficient USDC balance`)
+    console.error(`   Available: ${formatUSDC(usdcBalance)} USDC`)
+    console.error(`   Required:  ${formatUSDC(depositAmount)} USDC`)
+    process.exit(1)
+  }
+
+  // Check ETH for gas
+  const ethBalance = await publicClient.getBalance({ address: account.address })
+  if (ethBalance < BigInt(1e14)) {
+    console.error(`❌ Insufficient ETH for gas`)
+    console.error(`   Available: ${(Number(ethBalance) / 1e18).toFixed(6)} ETH`)
+    console.error(`   Need at least 0.0001 ETH for transactions`)
+    process.exit(1)
+  }
+
+  // Preview shares
+  const expectedShares = await publicClient.readContract({
+    address: VAULT_ADDRESS,
+    abi: VAULT_ABI,
+    functionName: 'previewDeposit',
+    args: [depositAmount],
+  })
+
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+  console.log('📋 Transaction Preview')
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+  console.log(`Depositing:        ${formatUSDC(depositAmount)} USDC`)
+  console.log(`Expected shares:   ${formatUSDC(expectedShares)} mwUSDC`)
+  console.log(`USDC after:        ${formatUSDC(usdcBalance - depositAmount)} USDC`)
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n')
+
+  // Check allowance
+  const currentAllowance = await publicClient.readContract({
+    address: USDC_ADDRESS,
+    abi: ERC20_ABI,
+    functionName: 'allowance',
+    args: [account.address, VAULT_ADDRESS],
+  })
+
+  // Step 1: Approve if needed
+  if (currentAllowance < depositAmount) {
+    console.log('📝 Step 1/2: Approving USDC spend...')
+
+    try {
+      const approveHash = await approveAndVerify(
+        publicClient,
+        walletClient,
+        account,
+        USDC_ADDRESS,
+        VAULT_ADDRESS,
+        depositAmount,
+        'USDC',
+      )
+      console.log(`   Tx: ${approveHash}`)
+      console.log('   ✅ Approved and verified!\n')
+    } catch (err) {
+      handleError(err, 'Approve failed')
+    }
+  } else {
+    console.log('📝 Step 1/2: USDC already approved ✅\n')
+  }
+
+  // Step 2: Deposit
+  console.log('📝 Step 2/2: Depositing into vault...')
+
+  try {
+    const depositHash = await simulateAndWrite(publicClient, walletClient, {
+      address: VAULT_ADDRESS,
+      abi: VAULT_ABI,
+      functionName: 'deposit',
+      args: [depositAmount, account.address],
+      account,
+    })
+
+    console.log(`   Tx: ${depositHash}`)
+    console.log('   Waiting for confirmation...')
+
+    const receipt = await waitForTransaction(publicClient, depositHash)
+
+    if (receipt.status === 'success') {
+      console.log('   ✅ Deposit successful!\n')
+
+      // Wait briefly for RPC state to sync
+      await sleep(1000)
+
+      // Get updated position with quick retry (only on errors, not on zero values)
+      let newShares = 0n
+      let positionValue = 0n
+      let positionRead = false
+
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          newShares = await publicClient.readContract({
+            address: VAULT_ADDRESS,
+            abi: VAULT_ABI,
+            functionName: 'balanceOf',
+            args: [account.address],
+          })
+
+          // Successfully read (even if 0, that's fine - just means very small amount)
+          positionRead = true
+
+          if (newShares > 0n) {
+            positionValue = await publicClient.readContract({
+              address: VAULT_ADDRESS,
+              abi: VAULT_ABI,
+              functionName: 'convertToAssets',
+              args: [newShares],
+            })
+          }
+          break // Exit on successful read (even if shares are 0)
+        } catch (err) {
+          // Only retry on actual errors, with short delays
+          if (attempt < 3) {
+            await sleep(500 * attempt) // 0.5s, 1s delays
+          } else {
+            console.log('   ⚠️  Could not read updated position (RPC sync delay)')
+            console.log('   Check your position with: npx tsx status.ts\n')
+          }
+        }
+      }
+
+      logTransaction('deposit', depositHash, {
+        amount: depositAmount.toString(),
+        shares: newShares.toString(),
+        positionValue: positionValue.toString(),
+      })
+
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+      console.log('🎉 Deposit Complete!')
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+      console.log(`Total shares:      ${formatUSDC(newShares)} mwUSDC`)
+      console.log(`Position value:    ${formatUSDC(positionValue)} USDC`)
+      console.log(`View on BaseScan:  https://basescan.org/tx/${depositHash}`)
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+
+      // Explicitly exit to close any open connections
+      process.exit(0)
+    } else {
+      handleError(new Error('Transaction reverted'), 'Deposit failed')
+    }
+  } catch (err) {
+    handleError(err, 'Deposit failed')
+  }
+}
+
+main().catch((err) => handleError(err, 'Deposit failed'))

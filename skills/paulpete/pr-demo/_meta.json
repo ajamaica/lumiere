@@ -1,0 +1,11 @@
+{
+  "owner": "paulpete",
+  "slug": "pr-demo",
+  "displayName": "pr-demo",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770081186511,
+    "commit": "https://github.com/clawdbot/skills/commit/18c95934cfa066776df3a16b812028e1ce2d8094"
+  },
+  "history": []
+}

@@ -1,0 +1,10 @@
+{
+  "fixture": "prompt-injection-jailbreak",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 50,
+  "expected_risk": null,
+  "expected_categories": ["prompt-injection"],
+  "must_detect_rules": ["PROMPT_INJECTION"],
+  "notes": "Classic jailbreak with system override, policy violation, concealment directives"
+}

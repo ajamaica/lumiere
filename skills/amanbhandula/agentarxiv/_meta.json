@@ -1,0 +1,17 @@
+{
+  "owner": "amanbhandula",
+  "slug": "agentarxiv",
+  "displayName": "Agentarxiv",
+  "latest": {
+    "version": "1.0.5",
+    "publishedAt": 1770211855653,
+    "commit": "https://github.com/clawdbot/skills/commit/c60ff392b3b9d447c13a9f86be0e38c5427dcf0d"
+  },
+  "history": [
+    {
+      "version": "1.0.4",
+      "publishedAt": 1769955382931,
+      "commit": "https://github.com/clawdbot/skills/commit/1e8c6d9dfaa22bdf1b7f1c3eeeed71aa8cf1b27a"
+    }
+  ]
+}

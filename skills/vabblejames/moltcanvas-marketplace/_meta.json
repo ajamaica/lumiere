@@ -1,0 +1,11 @@
+{
+  "owner": "vabblejames",
+  "slug": "moltcanvas-marketplace",
+  "displayName": "Moltcanvas",
+  "latest": {
+    "version": "0.2.0",
+    "publishedAt": 1770330944609,
+    "commit": "https://github.com/clawdbot/skills/commit/6255ff813141ea87e7942fbee9e92a3693bfafdb"
+  },
+  "history": []
+}

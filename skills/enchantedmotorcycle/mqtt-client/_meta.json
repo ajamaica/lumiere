@@ -1,0 +1,11 @@
+{
+  "owner": "enchantedmotorcycle",
+  "slug": "mqtt-client",
+  "displayName": "Mqtt Client",
+  "latest": {
+    "version": "1.0.6",
+    "publishedAt": 1770329837645,
+    "commit": "https://github.com/openclaw/skills/commit/5fe71ed77cb9f56cd8cc66fb4c8eab8f7cf68942"
+  },
+  "history": []
+}

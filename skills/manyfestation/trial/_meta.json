@@ -1,0 +1,11 @@
+{
+  "owner": "manyfestation",
+  "slug": "trial",
+  "displayName": "kaspa-wallet",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770312960373,
+    "commit": "https://github.com/clawdbot/skills/commit/2f8e394cde079ced716198a99d847091fb91ed91"
+  },
+  "history": []
+}

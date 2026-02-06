@@ -1,0 +1,11 @@
+{
+  "owner": "matrix-meta",
+  "slug": "pixiv-skill",
+  "displayName": "pixiv",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770080574312,
+    "commit": "https://github.com/clawdbot/skills/commit/bf83abba9cc29960823a2c13c7e08dc021ba1400"
+  },
+  "history": []
+}

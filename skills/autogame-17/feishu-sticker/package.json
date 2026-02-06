@@ -1,0 +1,26 @@
+{
+  "name": "feishu-sticker",
+  "version": "1.0.8",
+  "description": "Send images as native Feishu stickers. Features auto-upload, caching, and GIF-to-WebP conversion.",
+  "main": "send.js",
+  "bin": {
+    "feishu-sticker": "./send.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "feishu",
+    "lark",
+    "sticker",
+    "image",
+    "meme"
+  ],
+  "author": "OpenClaw Agent",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7",
+    "ffmpeg-static": "^5.2.0"
+  }
+}

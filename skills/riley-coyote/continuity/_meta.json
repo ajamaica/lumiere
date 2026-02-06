@@ -1,0 +1,11 @@
+{
+  "owner": "riley-coyote",
+  "slug": "continuity",
+  "displayName": "Continuity Framework",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770271746741,
+    "commit": "https://github.com/clawdbot/skills/commit/cd815818b875cb1a75d093fe956aba4053a72214"
+  },
+  "history": []
+}

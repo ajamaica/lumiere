@@ -1,0 +1,64 @@
+{
+  "name": "ClawPredict - Grab the Future",
+  "short_name": "ClawPredict",
+  "description": "10-second crypto predictions. Grab the future. Predict. Win.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0F1115",
+  "theme_color": "#E040FB",
+  "categories": ["finance", "games"],
+  "icons": [
+    {
+      "src": "/icon-dark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-dark.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-dark-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/trading-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Trading Arena - Desktop"
+    },
+    {
+      "src": "/screenshots/trading-narrow.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Trading Arena - Mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Trade BTC",
+      "short_name": "Trade",
+      "description": "Start trading BTC predictions",
+      "url": "/",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Portfolio",
+      "short_name": "Portfolio",
+      "description": "View your trading history",
+      "url": "/portfolio",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

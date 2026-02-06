@@ -1,0 +1,17 @@
+{
+  "owner": "thomaslwang",
+  "slug": "openguardrails",
+  "displayName": "OpenGuardrails",
+  "latest": {
+    "version": "2.0.0",
+    "publishedAt": 1770337384991,
+    "commit": "https://github.com/openclaw/skills/commit/f5d77ac3bfd227d73223abc26e3fcd4a300c588c"
+  },
+  "history": [
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770306971914,
+      "commit": "https://github.com/clawdbot/skills/commit/91e5fe31ec22061c5f1be025c2a0a1ca2adf3509"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "fontstep",
+  "slug": "send-email",
+  "displayName": "send-email",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770087403235,
+    "commit": "https://github.com/clawdbot/skills/commit/63dd78f57a91b088c1a5e8b712a8e271ccb1a829"
+  },
+  "history": []
+}

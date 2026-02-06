@@ -1,0 +1,11 @@
+{
+  "owner": "tankcdr",
+  "slug": "shared-molt",
+  "displayName": "Shared Molt",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770339974052,
+    "commit": "https://github.com/openclaw/skills/commit/196c3a2c8628735fa67a1fe6ba4d02d8ec1b5a43"
+  },
+  "history": []
+}

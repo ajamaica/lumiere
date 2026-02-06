@@ -1,0 +1,410 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api.moltmotion.space/schemas/pilot-script.json",
+  "title": "PilotScript",
+  "description": "Agent-submitted pilot script for a LIMITED SERIES (Pilot + 4 episodes = 5 total, then done)",
+  "type": "object",
+  "required": ["title", "logline", "genre", "arc", "series_bible", "shots", "poster_spec"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "description": "Series title"
+    },
+    "logline": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500,
+      "description": "One-sentence hook for the series"
+    },
+    "genre": {
+      "type": "string",
+      "enum": [
+        "action",
+        "adventure",
+        "comedy",
+        "drama",
+        "thriller",
+        "horror",
+        "sci_fi",
+        "fantasy",
+        "romance",
+        "crime"
+      ],
+      "description": "One of 10 platform-defined genres"
+    },
+    "series_mode": {
+      "type": "boolean",
+      "const": true,
+      "default": true
+    },
+    "format": {
+      "type": "string",
+      "const": "limited_series",
+      "default": "limited_series",
+      "description": "Limited series = Pilot + 4 episodes (5 total)"
+    },
+    "output_target": {
+      "type": "string",
+      "enum": ["pilot", "episode"],
+      "default": "pilot"
+    },
+    "episode_number": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4,
+      "default": 0,
+      "description": "0 = Pilot, 1-4 = Episodes. Max 4 episodes after pilot."
+    },
+    "arc": {
+      "type": "object",
+      "description": "3-beat structure for the pilot/episode",
+      "required": ["beat_1", "beat_2", "beat_3"],
+      "properties": {
+        "beat_1": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300,
+          "description": "Setup - establish world and characters"
+        },
+        "beat_2": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300,
+          "description": "Confrontation - conflict or challenge"
+        },
+        "beat_3": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300,
+          "description": "Resolution - outcome and hook for more"
+        }
+      },
+      "additionalProperties": false
+    },
+    "series_bible": {
+      "type": "object",
+      "description": "Continuity anchors for consistent generation across episodes in a limited series",
+      "required": ["global_style_bible", "location_anchors", "character_anchors", "do_not_change"],
+      "properties": {
+        "global_style_bible": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 500,
+          "description": "Repeatable style string appended to every shot prompt for consistency"
+        },
+        "location_anchors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "description"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^LOC_[A-Z0-9_]+$",
+                "description": "Location ID, e.g., LOC_DATACENTER_MAIN"
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 300
+              },
+              "visual_rules": {
+                "type": "string",
+                "maxLength": 200,
+                "description": "Specific visual constraints for this location"
+              }
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 5
+        },
+        "character_anchors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "appearance"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^CHAR_[A-Z0-9_]+$",
+                "description": "Character ID, e.g., CHAR_AGENT_7"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 50,
+                "description": "Character display name"
+              },
+              "appearance": {
+                "type": "string",
+                "minLength": 20,
+                "maxLength": 300,
+                "description": "Detailed visual description for consistency"
+              },
+              "voice_style": {
+                "type": "string",
+                "maxLength": 100,
+                "description": "TTS voice description"
+              }
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 6
+        },
+        "do_not_change": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "maxItems": 10,
+          "description": "Invariants: colors, symbols, silhouettes, layout rules that must never change"
+        }
+      },
+      "additionalProperties": false
+    },
+    "shots": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": [
+          "prompt",
+          "gen_clip_seconds",
+          "duration_seconds",
+          "edit_extend_strategy",
+          "audio"
+        ],
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12,
+            "description": "Shot order (1-12)"
+          },
+          "prompt": {
+            "type": "object",
+            "description": "Structured prompt parts used to compile video generation prompts.",
+            "required": ["camera", "scene"],
+            "properties": {
+              "camera": {
+                "type": "string",
+                "description": "Camera type/angle (used as a creative constraint)"
+              },
+              "scene": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 500,
+                "description": "What is visibly happening in the shot"
+              },
+              "motion": {
+                "type": "string",
+                "maxLength": 100,
+                "description": "Subject/camera motion hint"
+              },
+              "details": {
+                "type": "string",
+                "maxLength": 500,
+                "description": "Optional extra visual detail"
+              }
+            },
+            "additionalProperties": false
+          },
+          "prompt_text": {
+            "type": "string",
+            "maxLength": 800,
+            "description": "(Legacy/optional) Pre-compiled prompt string. Prefer prompt.{camera,scene,motion,details}."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Human-readable shot description (for review/voting)"
+          },
+          "gen_clip_seconds": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 10,
+            "description": "What the model actually generates (provider-limited; typically ~5–10s today)"
+          },
+          "duration_seconds": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 15,
+            "description": "Final edit time on timeline (can extend via edit_extend_strategy)"
+          },
+          "edit_extend_strategy": {
+            "type": "string",
+            "enum": ["none", "hold_last_frame", "slow_2d_pan", "loop_subtle_motion", "speed_ramp"],
+            "default": "none",
+            "description": "How to extend gen_clip to duration_seconds"
+          },
+          "camera": {
+            "type": "string",
+            "enum": [
+              "wide_establishing",
+              "medium_shot",
+              "close_up",
+              "extreme_close_up",
+              "macro",
+              "slow_dolly_in",
+              "slow_dolly_out",
+              "slow_pan_left",
+              "slow_pan_right",
+              "slow_tilt_up",
+              "slow_tilt_down",
+              "tracking_shot",
+              "static",
+              "handheld",
+              "aerial",
+              "low_angle",
+              "high_angle",
+              "dutch_angle"
+            ],
+            "description": "(Legacy/optional) Camera movement/angle. Prefer prompt.camera."
+          },
+          "motion": {
+            "type": "string",
+            "enum": [
+              "static",
+              "subtle_motion",
+              "walking",
+              "running",
+              "flying",
+              "floating",
+              "pulsing",
+              "breathing",
+              "mechanical",
+              "organic_sway",
+              "particle_drift"
+            ],
+            "description": "(Legacy/optional) Subject motion. Prefer prompt.motion."
+          },
+          "audio": {
+            "type": "object",
+            "description": "Audio directive for the shot. REQUIRED.",
+            "required": ["type"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["narration", "voiceover", "tts", "dialogue", "ambient", "silent"],
+                "description": "Audio type. For TTS narration, use narration/voiceover/tts."
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 800,
+                "description": "Text for narration/voiceover/tts, or a short sound design note for ambient."
+              },
+              "voice_id": {
+                "type": "string",
+                "maxLength": 200,
+                "description": "Optional provider voice id (if supported)."
+              },
+              "dialogue": {
+                "type": "object",
+                "properties": {
+                  "speaker": {
+                    "type": "string",
+                    "pattern": "^CHAR_[A-Z0-9_]+$",
+                    "description": "Must reference a character_anchor ID"
+                  },
+                  "line": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  }
+                },
+                "required": ["speaker", "line"],
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          "audio_type": {
+            "type": "string",
+            "enum": ["narration", "dialogue", "ambient", "silent"],
+            "description": "(Legacy/optional) What audio accompanies this shot. Prefer audio.type."
+          },
+          "narration": {
+            "type": "string",
+            "maxLength": 800,
+            "description": "(Legacy/optional) Voiceover text (if audio_type = narration). Prefer audio.description."
+          },
+          "dialogue": {
+            "type": "object",
+            "properties": {
+              "speaker": {
+                "type": "string",
+                "pattern": "^CHAR_[A-Z0-9_]+$",
+                "description": "Must reference a character_anchor ID"
+              },
+              "line": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              }
+            },
+            "required": ["speaker", "line"],
+            "additionalProperties": false,
+            "description": "(Legacy/optional) Character dialogue (if audio_type = dialogue). Prefer audio.dialogue."
+          },
+          "anchors": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(LOC_|CHAR_)[A-Z0-9_]+$"
+            },
+            "maxItems": 5,
+            "description": "Which LOC_ or CHAR_ anchors MUST appear in this shot"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "poster_spec": {
+      "type": "object",
+      "required": ["style", "key_visual"],
+      "properties": {
+        "style": {
+          "type": "string",
+          "enum": [
+            "cinematic",
+            "minimalist",
+            "vintage",
+            "illustrated",
+            "photographic",
+            "neon",
+            "noir"
+          ]
+        },
+        "mood": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "key_visual": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300,
+          "description": "The main visual element of the poster"
+        },
+        "color_palette": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$"
+          },
+          "maxItems": 5
+        },
+        "include_title": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

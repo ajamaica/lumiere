@@ -1,0 +1,27 @@
+{
+  "id": "voice",
+  "name": "Voice",
+  "version": "1.0.0",
+  "description": "Text-to-speech functionality using edge-tts",
+  "author": "OpenClaw User",
+  "license": "MIT",
+  "tags": [
+    "tts",
+    "voice",
+    "audio",
+    "text-to-speech",
+    "edge-tts"
+  ],
+  "dependencies": {
+    "pip": [
+      "edge-tts"
+    ]
+  },
+  "files": [
+    "index.js",
+    "SKILL.md",
+    "package.json",
+    "example.js"
+  ],
+  "entryPoint": "index.js"
+}

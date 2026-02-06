@@ -1,0 +1,11 @@
+{
+  "owner": "tracsystems",
+  "slug": "intercom-competision",
+  "displayName": "App Creation Competition Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770239227487,
+    "commit": "https://github.com/clawdbot/skills/commit/03bfffde7498c5e07b173d771684bbbca414d185"
+  },
+  "history": []
+}

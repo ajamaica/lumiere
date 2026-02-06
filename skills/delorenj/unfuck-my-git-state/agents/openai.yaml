@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unfuck My Git State"
+  short_description: "Recover corrupted Git and worktree state safely"
+  default_prompt: "Diagnose broken git/worktree state, snapshot first, apply the lowest-risk fix, and verify after each step."

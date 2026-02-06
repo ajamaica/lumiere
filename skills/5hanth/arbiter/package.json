@@ -1,0 +1,36 @@
+{
+  "name": "arbiter-skill",
+  "version": "0.1.0",
+  "description": "Clawdbot skill for Arbiter Zebu - async human-in-the-loop decisions",
+  "type": "module",
+  "bin": {
+    "arbiter-push": "./dist/push.js",
+    "arbiter-status": "./dist/status.js",
+    "arbiter-get": "./dist/get.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "push": "node dist/push.js",
+    "status": "node dist/status.js",
+    "get": "node dist/get.js"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "nanoid": "^5.0.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "clawdbot",
+    "skill",
+    "arbiter",
+    "decisions"
+  ],
+  "author": "Zebu Agency",
+  "license": "MIT"
+}

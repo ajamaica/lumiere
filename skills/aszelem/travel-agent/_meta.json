@@ -1,0 +1,17 @@
+{
+  "owner": "aszelem",
+  "slug": "travel-agent",
+  "displayName": "Bon Travel Agent",
+  "latest": {
+    "version": "1.0.8",
+    "publishedAt": 1769854657149,
+    "commit": "https://github.com/clawdbot/skills/commit/e6ff8d84731932e6daa74885789210c1e4b49000"
+  },
+  "history": [
+    {
+      "version": "1.8.0",
+      "publishedAt": 1769851826562,
+      "commit": "https://github.com/clawdbot/skills/commit/db14084e71667a56a9b315483ccd5212e08cf8d5"
+    }
+  ]
+}

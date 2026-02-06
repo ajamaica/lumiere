@@ -1,0 +1,17 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-triage",
+  "displayName": "Openclaw Triage",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770313162481,
+    "commit": "https://github.com/clawdbot/skills/commit/f679fb80a579839c1144fde95b7e5e78ffcb1593"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770290890784,
+      "commit": "https://github.com/clawdbot/skills/commit/89aca5f618620fe421b20a13b5f8aa49fed28697"
+    }
+  ]
+}

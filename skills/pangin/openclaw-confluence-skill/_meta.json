@@ -1,0 +1,11 @@
+{
+  "owner": "pangin",
+  "slug": "openclaw-confluence-skill",
+  "displayName": "OpenClaw confluence",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769959204474,
+    "commit": "https://github.com/clawdbot/skills/commit/3a00da24a60c0534bcb5a808020c596302dd5d27"
+  },
+  "history": []
+}

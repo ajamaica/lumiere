@@ -1,0 +1,17 @@
+{
+  "owner": "nitishgargiitd",
+  "slug": "sheet-cog",
+  "displayName": "sheet-cog",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770270537814,
+    "commit": "https://github.com/clawdbot/skills/commit/dabbd71ff004c14d47e70b4464e55397ff93222c"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770176443809,
+      "commit": "https://github.com/clawdbot/skills/commit/60d74f127e9d2170c692c2eaba83c31b7871b83c"
+    }
+  ]
+}

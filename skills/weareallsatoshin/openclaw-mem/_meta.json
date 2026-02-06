@@ -1,0 +1,27 @@
+{
+  "owner": "weareallsatoshin",
+  "slug": "openclaw-mem",
+  "displayName": "OpenClaw Memory",
+  "latest": {
+    "version": "2.1.0",
+    "publishedAt": 1770243101425,
+    "commit": "https://github.com/clawdbot/skills/commit/94ebd7300a84a737142ae6bb7f98277ce197c84e"
+  },
+  "history": [
+    {
+      "version": "1.2.1",
+      "publishedAt": 1770207930763,
+      "commit": "https://github.com/clawdbot/skills/commit/ef5f1f36012af71b2b2d2582ffaf9c9ec715f724"
+    },
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770112273718,
+      "commit": "https://github.com/clawdbot/skills/commit/ac96cb940dffba0881243204639b8fbd151c3f9c"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770079048769,
+      "commit": "https://github.com/clawdbot/skills/commit/877fd540485d2b78fe543b0fd356f6abc4534f77"
+    }
+  ]
+}

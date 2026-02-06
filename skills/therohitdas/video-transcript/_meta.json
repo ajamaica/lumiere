@@ -1,0 +1,11 @@
+{
+  "owner": "therohitdas",
+  "slug": "video-transcript",
+  "displayName": "Video Transcript",
+  "latest": {
+    "version": "1.3.2",
+    "publishedAt": 1769930218241,
+    "commit": "https://github.com/clawdbot/skills/commit/d3ba4446104906667011ff481bd4464717cb6d52"
+  },
+  "history": []
+}

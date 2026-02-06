@@ -1,0 +1,11 @@
+{
+  "owner": "pr1vateer",
+  "slug": "opensysinfo",
+  "displayName": "opensysinfo",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770322307571,
+    "commit": "https://github.com/openclaw/skills/commit/f2643a2615c5f46acc9d4a8b842dc827b8862ac3"
+  },
+  "history": []
+}

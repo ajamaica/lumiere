@@ -1,0 +1,11 @@
+{
+  "owner": "bramdo",
+  "slug": "quantum-lab",
+  "displayName": "Quantum Lab",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770288727488,
+    "commit": "https://github.com/clawdbot/skills/commit/209b2f386fd152644b17dd129350f5b406cd53fc"
+  },
+  "history": []
+}

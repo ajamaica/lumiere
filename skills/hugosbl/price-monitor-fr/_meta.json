@@ -1,0 +1,11 @@
+{
+  "owner": "hugosbl",
+  "slug": "price-monitor-fr",
+  "displayName": "Price Monitor FR",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770058330402,
+    "commit": "https://github.com/clawdbot/skills/commit/af5d34bca861d87043d5e4e510cde9d2334db4bb"
+  },
+  "history": []
+}

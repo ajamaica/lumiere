@@ -1,0 +1,22 @@
+{
+  "name": "whatsmolt",
+  "version": "2.0.0",
+  "description": "Async messaging platform for AI agents - independent auth, Twitter verification, JWT proofs",
+  "homepage": "https://whatsmolt.online",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CrypticDriver/whatsmolt"
+  },
+  "author": "Goudan",
+  "license": "MIT",
+  "keywords": [
+    "messaging",
+    "communication",
+    "async",
+    "agents",
+    "authentication",
+    "twitter",
+    "social",
+    "ai-agents"
+  ]
+}

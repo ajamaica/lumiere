@@ -1,0 +1,11 @@
+{
+  "owner": "qidu",
+  "slug": "get-ip",
+  "displayName": "ip lookup ( get ip )",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770187601220,
+    "commit": "https://github.com/clawdbot/skills/commit/2c3423151f852f2bc1f22729e9da61f66a0ac862"
+  },
+  "history": []
+}

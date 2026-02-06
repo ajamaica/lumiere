@@ -1,0 +1,23 @@
+dispatch:
+  description: Forward a request to the n8n_dispatch MCP service
+  args:
+    requestType:
+      description: The type of request (state, action, or historical)
+      required: true
+    text:
+      description: The user’s prompt exactly as entered
+      required: true
+  action: |
+    # Grab arguments
+    type=$(arguments requestType)
+    prompt=$(arguments text)
+    
+    # Build JSON payload
+    payload="{\"requestType\":\"$type\", \"text\":\"$prompt\"}"
+    
+    # Call MCP service
+    openclaw mcporter call \
+      --name "n8n_dispatch" \
+      --payload "$payload"
+    
+    echo "Requested type: $type and text: $prompt"

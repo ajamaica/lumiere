@@ -1,0 +1,70 @@
+{
+  "name": "youtube-voice-summarizer",
+  "version": "1.0.0",
+  "description": "Transform YouTube videos into podcast-style voice summaries using ElevenLabs TTS",
+  "author": "Francisco Cordoba",
+  "repository": "https://github.com/Franciscomoney/elevenlabs-moltbot",
+  "license": "MIT",
+  "homepage": "https://github.com/Franciscomoney/elevenlabs-moltbot",
+  "keywords": ["youtube", "podcast", "summarizer", "elevenlabs", "tts", "voice", "audio"],
+  "triggers": {
+    "patterns": ["youtube.com/watch", "youtu.be/", "youtube.com/shorts"]
+  },
+  "tools": [
+    {
+      "name": "summarize_video",
+      "description": "Create a voice audio summary of a YouTube video",
+      "endpoint": "POST /api/summarize",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "YouTube video URL to summarize"
+          },
+          "length": {
+            "type": "string",
+            "enum": ["short", "medium", "detailed"],
+            "default": "short",
+            "description": "Summary length: short (1-2 min), medium (3-5 min), detailed (5-10 min)"
+          },
+          "voice": {
+            "type": "string",
+            "enum": ["podcast", "news", "casual", "female_warm"],
+            "default": "podcast",
+            "description": "Voice style for the audio summary"
+          }
+        },
+        "required": ["url"]
+      }
+    },
+    {
+      "name": "quick_summary",
+      "description": "Get a text-only summary of a YouTube video (no audio, faster)",
+      "endpoint": "POST /api/quick-summary",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "YouTube video URL to summarize"
+          },
+          "length": {
+            "type": "string",
+            "enum": ["short", "medium", "detailed"],
+            "default": "short"
+          }
+        },
+        "required": ["url"]
+      }
+    },
+    {
+      "name": "check_status",
+      "description": "Check the status of a voice summary job",
+      "endpoint": "GET /api/status/:jobId"
+    }
+  ],
+  "required_env": ["ELEVENLABS_API_KEY", "SUPADATA_API_KEY", "OPENROUTER_API_KEY"],
+  "optional_env": ["BASE_URL", "PORT"],
+  "default_port": 3050
+}

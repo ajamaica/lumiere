@@ -1,0 +1,11 @@
+{
+  "owner": "coolmanns",
+  "slug": "remarkable-tablet",
+  "displayName": "Remarkable",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770254089462,
+    "commit": "https://github.com/clawdbot/skills/commit/e7732871b94d7cddba680778406a98e89f34ac8d"
+  },
+  "history": []
+}

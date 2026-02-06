@@ -1,0 +1,17 @@
+{
+  "owner": "red777777",
+  "slug": "inkedin-automation-that-really-works",
+  "displayName": "Linkedin - automation",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770196667094,
+    "commit": "https://github.com/clawdbot/skills/commit/3eff9db38bbb6373f2cec029ef7898ad752d890a"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769967543883,
+      "commit": "https://github.com/clawdbot/skills/commit/cb9541986c5b045f74662cecf11de75876ee84f0"
+    }
+  ]
+}

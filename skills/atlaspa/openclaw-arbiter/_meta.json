@@ -1,0 +1,11 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-arbiter",
+  "displayName": "Openclaw Arbiter",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770313124275,
+    "commit": "https://github.com/openclaw/skills/commit/ec9d3d467ef83ff90e374e95ed935bcb967cdbd8"
+  },
+  "history": []
+}

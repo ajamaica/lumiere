@@ -1,0 +1,167 @@
+{
+  "skill": {
+    "name": "binance-enhanced",
+    "version": "2.0.0",
+    "description": "Enhanced Binance trading skill with security, monitoring, and automation",
+    "author": "OpenClaw Parallel Agents",
+    "license": "MIT",
+    "repository": "https://github.com/openclaw-skills/binance-enhanced",
+    "keywords": ["binance", "trading", "crypto", "security", "monitoring", "automation"],
+    "compatibility": {
+      "openclaw": ">=1.0.0",
+      "python": ">=3.11"
+    }
+  },
+  "commands": {
+    "binance": {
+      "description": "Binance enhanced trading commands",
+      "subcommands": {
+        "buy": {
+          "description": "Buy cryptocurrency",
+          "usage": "binance buy <amount> <symbol> [market|limit <price>]",
+          "examples": ["binance buy 0.1 BTC market", "binance buy 0.5 ETH limit 1800"]
+        },
+        "sell": {
+          "description": "Sell cryptocurrency",
+          "usage": "binance sell <amount> <symbol> [market|limit <price>]",
+          "examples": ["binance sell 0.1 BTC market", "binance sell 0.5 ETH limit 2200"]
+        },
+        "portfolio": {
+          "description": "Show portfolio information",
+          "usage": "binance portfolio [--detailed]",
+          "examples": ["binance portfolio", "binance portfolio --detailed"]
+        },
+        "alerts": {
+          "description": "Manage trading alerts",
+          "subcommands": {
+            "setup": "Setup alert notifications",
+            "list": "List active alerts",
+            "add": "Add new alert",
+            "remove": "Remove alert"
+          }
+        },
+        "strategies": {
+          "description": "Trading strategies",
+          "subcommands": {
+            "dca": "Dollar-Cost Averaging strategy",
+            "grid": "Grid trading strategy",
+            "backtest": "Backtest strategy"
+          }
+        },
+        "security": {
+          "description": "Security management",
+          "subcommands": {
+            "limits": "View/update trading limits",
+            "encrypt": "Encrypt API keys",
+            "logs": "View transaction logs"
+          }
+        }
+      }
+    }
+  },
+  "configuration": {
+    "required": {
+      "BINANCE_API_KEY": {
+        "type": "string",
+        "description": "Binance API key",
+        "secure": true
+      },
+      "BINANCE_SECRET": {
+        "type": "string",
+        "description": "Binance API secret",
+        "secure": true
+      }
+    },
+    "optional": {
+      "TRADE_MODE": {
+        "type": "string",
+        "default": "paper",
+        "description": "Trading mode: paper, live, dry-run",
+        "options": ["paper", "live", "dry-run"]
+      },
+      "DEFAULT_PROFILE": {
+        "type": "string",
+        "default": "conservative",
+        "description": "Default risk profile",
+        "options": ["conservative", "balanced", "aggressive"]
+      },
+      "LOG_LEVEL": {
+        "type": "string",
+        "default": "INFO",
+        "description": "Logging level",
+        "options": ["DEBUG", "INFO", "WARN", "ERROR"]
+      },
+      "TELEGRAM_BOT_TOKEN": {
+        "type": "string",
+        "description": "Telegram bot token for notifications",
+        "secure": true
+      },
+      "ALERT_EMAIL": {
+        "type": "string",
+        "description": "Email for alerts and reports"
+      }
+    }
+  },
+  "hooks": {
+    "pre_command": {
+      "script": "security/security_checks.sh",
+      "description": "Security checks before command execution"
+    },
+    "post_command": {
+      "script": "security/logger.sh",
+      "description": "Logging after command execution"
+    },
+    "error": {
+      "script": "monitoring/telegram.py",
+      "description": "Send error notifications"
+    }
+  },
+  "files": {
+    "templates": ["templates/.env.example", "templates/config.yaml.example"],
+    "scripts": [
+      "test/testnet.sh",
+      "test/test_integration.sh",
+      "security/limits.sh",
+      "security/logger.sh",
+      "security/security_checks.sh"
+    ],
+    "modules": [
+      "ux/parser.py",
+      "ux/interactive.py",
+      "monitoring/telegram.py",
+      "monitoring/email.py",
+      "strategies/dca.py",
+      "strategies/grid.py",
+      "performance/async_api.py",
+      "performance/cache.py"
+    ]
+  },
+  "dependencies": {
+    "python": ["requests>=2.31.0", "python-dotenv>=1.0.0", "pyyaml>=6.0.0", "pycryptodome>=3.20.0"],
+    "system": ["curl", "jq", "bash"]
+  },
+  "installation": {
+    "steps": [
+      "Copy templates/.env.example to .env and configure",
+      "Copy templates/config.yaml.example to config.yaml",
+      "Run test/testnet.sh to verify connection",
+      "Source security/security_checks.sh for security setup"
+    ],
+    "verification": "test/test_integration.sh"
+  },
+  "examples": {
+    "basic_trading": [
+      "binance buy 0.1 BTC market",
+      "binance sell 0.5 ETH limit 2200",
+      "binance portfolio"
+    ],
+    "strategies": [
+      "binance strategies dca --symbol BTCUSDT --amount 100 --interval 7",
+      "binance strategies grid --symbol ETHUSDT --lower 1800 --upper 2200 --grids 10"
+    ],
+    "security": [
+      "binance security limits --daily 2000 --hourly 500",
+      "binance security encrypt --input keys.txt --output keys.enc"
+    ]
+  }
+}

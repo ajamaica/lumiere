@@ -1,0 +1,39 @@
+{
+  "name": "openclaw-advanced-calendar",
+  "version": "1.0.2",
+  "description": "Advanced calendar skill with natural language processing and multi-channel notifications for OpenClaw",
+  "main": "integration/openclaw_integration.py",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "openclaw",
+    "calendar",
+    "scheduling",
+    "productivity",
+    "natural-language",
+    "automation"
+  ],
+  "author": "小机与老板",
+  "license": "MIT",
+  "dependencies": {},
+  "openclaw": {
+    "skill": {
+      "name": "advanced-calendar",
+      "type": "calendar",
+      "integration": {
+        "handler": "./integration/openclaw_integration.py",
+        "intentHandler": "./integration/intent_handler.py"
+      },
+      "commands": [
+        "calendar"
+      ],
+      "permissions": [
+        "file:read",
+        "file:write",
+        "cron:add",
+        "message:send"
+      ]
+    }
+  }
+}

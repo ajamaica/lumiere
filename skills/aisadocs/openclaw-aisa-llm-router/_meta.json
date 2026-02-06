@@ -1,0 +1,11 @@
+{
+  "owner": "aisadocs",
+  "slug": "openclaw-aisa-llm-router",
+  "displayName": "Unified LLM Gateway - One API for 70+ AI models. Route to GPT, Claude, Gemini, Qwen, Deepseek, Grok and more",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770280046445,
+    "commit": "https://github.com/openclaw/skills/commit/2af68d0175ca764bec663836d364706d5bc61946"
+  },
+  "history": []
+}

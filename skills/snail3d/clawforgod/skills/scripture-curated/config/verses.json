@@ -1,0 +1,636 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "totalVerses": 75,
+    "framework": "Nicene Creed",
+    "source": "ESV (primary), NIV (alternative)"
+  },
+  "themes": {
+    "creation": {
+      "description": "God as Creator; the goodness of creation",
+      "verses": [
+        {
+          "id": "gen-1-1",
+          "reference": "Genesis 1:1",
+          "text": "In the beginning, God created the heavens and the earth.",
+          "context": "The opening declaration of Scripture; God is the source of all existence",
+          "events": ["origin", "beginnings", "new_start"],
+          "theology": "God is Creator, distinct from creation, sovereign over all"
+        },
+        {
+          "id": "gen-1-31",
+          "reference": "Genesis 1:31",
+          "text": "And God saw everything that he had made, and behold, it was very good.",
+          "context": "After six days of creation; original state before the Fall",
+          "events": ["beauty", "nature", "goodness"],
+          "theology": "Creation is good; material world is not evil but God's handiwork"
+        },
+        {
+          "id": "psalm-19-1",
+          "reference": "Psalm 19:1",
+          "text": "The heavens declare the glory of God, and the sky above proclaims his handiwork.",
+          "context": "David reflecting on natural revelation; creation as testimony",
+          "events": ["astronomy", "nature", "beauty", "science"],
+          "theology": "Creation reveals God's glory; general revelation accessible to all"
+        },
+        {
+          "id": "john-1-3",
+          "reference": "John 1:3",
+          "text": "All things were made through him, and without him was not any thing made that was made.",
+          "context": "Prologue to John's Gospel; the Logos as Creator",
+          "events": ["origin", "christ_the_creator"],
+          "theology": "Christ is the agent of creation; the Trinity in creation"
+        },
+        {
+          "id": "col-1-16",
+          "reference": "Colossians 1:16",
+          "text": "For by him all things were created, in heaven and on earth, visible and invisible, whether thrones or dominions or rulers or authorities—all things were created through him and for him.",
+          "context": "Hymn to Christ's supremacy; creation and sovereignty",
+          "events": ["power", "authority", "purpose"],
+          "theology": "Christ is sovereign over all creation, including spiritual powers"
+        }
+      ]
+    },
+    "fall": {
+      "description": "Sin, brokenness, and the human condition",
+      "verses": [
+        {
+          "id": "gen-3-15",
+          "reference": "Genesis 3:15",
+          "text": "I will put enmity between you and the woman, and between your offspring and her offspring; he shall bruise your head, and you shall bruise his heel.",
+          "context": "The protoevangelium; God's first promise of redemption after the Fall",
+          "events": ["conflict", "spiritual_warfare", "hope"],
+          "theology": "The promise of Messiah; Christ's victory over Satan foretold"
+        },
+        {
+          "id": "rom-3-23",
+          "reference": "Romans 3:23",
+          "text": "For all have sinned and fall short of the glory of God.",
+          "context": "Paul's diagnosis of universal sin; the need for salvation",
+          "events": ["sin", "failure", "judgment", "universal_condition"],
+          "theology": "All humanity is guilty before God; no one is righteous"
+        },
+        {
+          "id": "rom-5-12",
+          "reference": "Romans 5:12",
+          "text": "Therefore, just as sin came into the world through one man, and death through sin, and so death spread to all men because all sinned.",
+          "context": "Adam as federal head; the transmission of sin and death",
+          "events": ["death", "origin_of_evil", "consequences"],
+          "theology": "Original sin; Adam's transgression affects all humanity"
+        },
+        {
+          "id": "jer-17-9",
+          "reference": "Jeremiah 17:9",
+          "text": "The heart is deceitful above all things, and desperately sick; who can understand it?",
+          "context": "Jeremiah's lament over Judah's sin; self-deception",
+          "events": ["self_deception", "sin", "human_nature"],
+          "theology": "Human hearts are corrupted by sin; we cannot save ourselves"
+        },
+        {
+          "id": "eph-2-1-2",
+          "reference": "Ephesians 2:1-2",
+          "text": "And you were dead in the trespasses and sins in which you once walked, following the course of this world, following the prince of the power of the air.",
+          "context": "Paul describing pre-conversion state; spiritual death",
+          "events": ["spiritual_death", "bondage", "slavery_to_sin"],
+          "theology": "Sin is not just behavior but condition; spiritual death apart from Christ"
+        }
+      ]
+    },
+    "redemption": {
+      "description": "Salvation through Christ's work",
+      "verses": [
+        {
+          "id": "john-3-16",
+          "reference": "John 3:16",
+          "text": "For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life.",
+          "context": "Jesus to Nicodemus; the heart of the Gospel",
+          "events": ["love", "gift", "eternal_life", "belief"],
+          "theology": "God's love is the motive; faith is the instrument; Christ is the means"
+        },
+        {
+          "id": "rom-5-8",
+          "reference": "Romans 5:8",
+          "text": "But God shows his love for us in that while we were still sinners, Christ died for us.",
+          "context": "The timing of redemption; love for the unworthy",
+          "events": ["grace", "unmerited_love", "sacrifice"],
+          "theology": "Christ died for us while we were still enemies; grace precedes faith"
+        },
+        {
+          "id": "rom-6-23",
+          "reference": "Romans 6:23",
+          "text": "For the wages of sin is death, but the free gift of God is eternal life in Christ Jesus our Lord.",
+          "context": "The contrast between sin's outcome and God's gift",
+          "events": ["consequences", "gift", "contrast"],
+          "theology": "Sin earns death; grace gives life; Christ is the Lord who gives it"
+        },
+        {
+          "id": "2cor-5-21",
+          "reference": "2 Corinthians 5:21",
+          "text": "For our sake he made him to be sin who knew no sin, so that in him we might become the righteousness of God.",
+          "context": "The great exchange; imputation of sin and righteousness",
+          "events": ["justification", "imputation", "exchange"],
+          "theology": "Christ takes our sin; we receive His righteousness"
+        },
+        {
+          "id": "gal-2-20",
+          "reference": "Galatians 2:20",
+          "text": "I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God, who loved me and gave himself for me.",
+          "context": "Paul's testimony of union with Christ; the Christian life",
+          "events": ["new_life", "transformation", "faith"],
+          "theology": "Union with Christ; His death becomes ours; His life becomes ours"
+        },
+        {
+          "id": "heb-9-28",
+          "reference": "Hebrews 9:28",
+          "text": "So Christ, having been offered once to bear the sins of many, will appear a second time, not to deal with sin but to save those who are eagerly waiting for him.",
+          "context": "Christ's first and second comings; once-for-all sacrifice",
+          "events": ["second_coming", "salvation", "waiting"],
+          "theology": "Christ's sacrifice is complete; He will return for His people"
+        },
+        {
+          "id": "titus-3-5",
+          "reference": "Titus 3:5",
+          "text": "He saved us, not because of works done by us in righteousness, but according to his own mercy, by the washing of regeneration and renewal of the Holy Spirit.",
+          "context": "The means of salvation; regeneration by the Spirit",
+          "events": ["regeneration", "mercy", "new_birth"],
+          "theology": "Salvation is by mercy, not merit; the Spirit regenerates"
+        }
+      ]
+    },
+    "faith": {
+      "description": "Faith, trust, and assurance",
+      "verses": [
+        {
+          "id": "heb-11-1",
+          "reference": "Hebrews 11:1",
+          "text": "Now faith is the assurance of things hoped for, the conviction of things not seen.",
+          "context": "Definition of faith; introduction to the Hall of Faith",
+          "events": ["doubt", "uncertainty", "hope"],
+          "theology": "Faith is assurance and conviction; it trusts God's promises"
+        },
+        {
+          "id": "eph-2-8",
+          "reference": "Ephesians 2:8",
+          "text": "For by grace you have been saved through faith. And this is not your own doing; it is the gift of God.",
+          "context": "The means of salvation; grace through faith",
+          "events": ["grace", "salvation", "gift"],
+          "theology": "Even faith is God's gift; no room for boasting"
+        },
+        {
+          "id": "rom-10-17",
+          "reference": "Romans 10:17",
+          "text": "So faith comes from hearing, and hearing through the word of Christ.",
+          "context": "How faith is generated; the necessity of preaching",
+          "events": ["preaching", "hearing", "word_of_god"],
+          "theology": "Faith is created by the Word; Scripture is the means of grace"
+        },
+        {
+          "id": "mark-9-24",
+          "reference": "Mark 9:24",
+          "text": "I believe; help my unbelief!",
+          "context": "The father of the demon-possessed boy; honest faith",
+          "events": ["doubt", "struggle", "honesty"],
+          "theology": "Faith and unbelief can coexist; Christ helps weak faith"
+        },
+        {
+          "id": "prov-3-5",
+          "reference": "Proverbs 3:5-6",
+          "text": "Trust in the LORD with all your heart, and do not lean on your own understanding. In all your ways acknowledge him, and he will make straight your paths.",
+          "context": "Wisdom literature; practical trust in God",
+          "events": ["guidance", "decisions", "trust"],
+          "theology": "Trust God completely; human understanding is limited"
+        }
+      ]
+    },
+    "suffering": {
+      "description": "Pain, trials, and finding hope in suffering",
+      "verses": [
+        {
+          "id": "rom-8-18",
+          "reference": "Romans 8:18",
+          "text": "For I consider that the sufferings of this present time are not worth comparing with the glory that is to be revealed to us.",
+          "context": "Future glory; eschatological hope",
+          "events": ["pain", "future_hope", "perseverance"],
+          "theology": "Present suffering is temporary; future glory is eternal"
+        },
+        {
+          "id": "2cor-4-17",
+          "reference": "2 Corinthians 4:17",
+          "text": "For this light momentary affliction is preparing for us an eternal weight of glory beyond all comparison.",
+          "context": "Paul's perspective on his own suffering",
+          "events": ["affliction", "perspective", "eternal_weight"],
+          "theology": "Suffering produces glory; affliction is not meaningless"
+        },
+        {
+          "id": "1pet-4-12",
+          "reference": "1 Peter 4:12-13",
+          "text": "Beloved, do not be surprised at the fiery trial when it comes upon you to test you, as though something strange were happening to you. But rejoice insofar as you share Christ's sufferings.",
+          "context": "Peter on Christian suffering; participation in Christ's sufferings",
+          "events": ["persecution", "trials", "rejoicing"],
+          "theology": "Suffering is expected for Christians; union with Christ in suffering"
+        },
+        {
+          "id": "psalm-34-18",
+          "reference": "Psalm 34:18",
+          "text": "The LORD is near to the brokenhearted and saves the crushed in spirit.",
+          "context": "David's testimony of God's faithfulness in trouble",
+          "events": ["grief", "brokenness", "comfort"],
+          "theology": "God draws near to the hurting; His presence is the answer"
+        },
+        {
+          "id": "isa-53-3-4",
+          "reference": "Isaiah 53:3-4",
+          "text": "He was despised and rejected by men, a man of sorrows and acquainted with grief... Surely he has borne our griefs and carried our sorrows.",
+          "context": "The Suffering Servant; Christ's solidarity with human pain",
+          "events": ["sorrow", "rejection", "comfort"],
+          "theology": "Christ enters into human suffering; He bears our griefs"
+        },
+        {
+          "id": "rev-21-4",
+          "reference": "Revelation 21:4",
+          "text": "He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning, nor crying, nor pain anymore.",
+          "context": "The new creation; end of suffering",
+          "events": ["comfort", "end_of_suffering", "new_creation"],
+          "theology": "God will end all suffering; future hope is certain"
+        }
+      ]
+    },
+    "hope": {
+      "description": "Hope, future glory, and eschatological assurance",
+      "verses": [
+        {
+          "id": "rom-8-24-25",
+          "reference": "Romans 8:24-25",
+          "text": "For in this hope we were saved. Now hope that is seen is not hope. For who hopes for what he sees? But if we hope for what we do not see, we wait for it with patience.",
+          "context": "The nature of Christian hope; waiting for redemption",
+          "events": ["waiting", "patience", "unseen"],
+          "theology": "Hope is forward-looking; salvation is past, present, and future"
+        },
+        {
+          "id": "rom-15-13",
+          "reference": "Romans 15:13",
+          "text": "May the God of hope fill you with all joy and peace in believing, so that by the power of the Holy Spirit you may abound in hope.",
+          "context": "Paul's blessing; God as the source of hope",
+          "events": ["joy", "peace", "holy_spirit"],
+          "theology": "God is the God of hope; hope is produced by the Spirit"
+        },
+        {
+          "id": "heb-6-19",
+          "reference": "Hebrews 6:19",
+          "text": "We have this as a sure and steadfast anchor of the soul, a hope that enters into the inner place behind the curtain.",
+          "context": "Hope as an anchor; the high priestly imagery",
+          "events": ["stability", "anchor", "security"],
+          "theology": "Hope is secure because Christ entered the true sanctuary"
+        },
+        {
+          "id": "1pet-1-3",
+          "reference": "1 Peter 1:3",
+          "text": "Blessed be the God and Father of our Lord Jesus Christ! According to his great mercy, he has caused us to be born again to a living hope through the resurrection of Jesus Christ from the dead.",
+          "context": "Peter's doxology; resurrection as ground of hope",
+          "events": ["new_birth", "resurrection", "living_hope"],
+          "theology": "Hope is living because Christ is living; mercy is the cause"
+        }
+      ]
+    },
+    "peace": {
+      "description": "Peace with God, inner peace, and peacemaking",
+      "verses": [
+        {
+          "id": "rom-5-1",
+          "reference": "Romans 5:1",
+          "text": "Therefore, since we have been justified by faith, we have peace with God through our Lord Jesus Christ.",
+          "context": "The fruit of justification; objective peace with God",
+          "events": ["justification", "reconciliation", "access"],
+          "theology": "Peace with God is objective; justification produces it"
+        },
+        {
+          "id": "phil-4-6-7",
+          "reference": "Philippians 4:6-7",
+          "text": "Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus.",
+          "context": "Paul's instruction on anxiety; the promise of peace",
+          "events": ["anxiety", "prayer", "protection"],
+          "theology": "Prayer is the antidote to anxiety; God's peace guards believers"
+        },
+        {
+          "id": "john-14-27",
+          "reference": "John 14:27",
+          "text": "Peace I leave with you; my peace I give to you. Not as the world gives do I give to you. Let not your hearts be troubled, neither let them be afraid.",
+          "context": "Jesus' farewell discourse; His legacy to disciples",
+          "events": ["fear", "comfort", "departure"],
+          "theology": "Christ's peace is distinct from worldly peace; He gives it personally"
+        },
+        {
+          "id": "isa-9-6",
+          "reference": "Isaiah 9:6",
+          "text": "For to us a child is born, to us a son is given... and his name shall be called Wonderful Counselor, Mighty God, Everlasting Father, Prince of Peace.",
+          "context": "The messianic prophecy; titles of the coming King",
+          "events": ["christmas", "messiah", "government"],
+          "theology": "Christ is the Prince of Peace; His reign brings shalom"
+        },
+        {
+          "id": "matt-5-9",
+          "reference": "Matthew 5:9",
+          "text": "Blessed are the peacemakers, for they shall be called sons of God.",
+          "context": "The Beatitudes; the call to peacemaking",
+          "events": ["conflict", "reconciliation", "blessing"],
+          "theology": "Peacemaking is a mark of God's children; reflecting the Father"
+        }
+      ]
+    },
+    "prayer": {
+      "description": "Prayer, worship, and communion with God",
+      "verses": [
+        {
+          "id": "1thess-5-17",
+          "reference": "1 Thessalonians 5:17",
+          "text": "Pray without ceasing.",
+          "context": "Paul's brief commands on Christian living",
+          "events": ["perseverance", "constant_communion"],
+          "theology": "Prayer is to be continual; a lifestyle of dependence"
+        },
+        {
+          "id": "matt-6-9-13",
+          "reference": "Matthew 6:9-13",
+          "text": "Our Father in heaven, hallowed be your name. Your kingdom come, your will be done, on earth as it is in heaven...",
+          "context": "The Lord's Prayer; model for Christian prayer",
+          "events": ["model", "discipleship", "kingdom"],
+          "theology": "God is Father; His name, kingdom, and will are priorities"
+        },
+        {
+          "id": "heb-4-16",
+          "reference": "Hebrews 4:16",
+          "text": "Let us then with confidence draw near to the throne of grace, that we may receive mercy and find grace to help in time of need.",
+          "context": "Access through Christ the high priest; boldness in prayer",
+          "events": ["boldness", "access", "help"],
+          "theology": "Christians have bold access to God's throne; grace is available"
+        },
+        {
+          "id": "james-5-16",
+          "reference": "James 5:16",
+          "text": "The prayer of a righteous person has great power as it is working.",
+          "context": "On prayer and healing; Elijah as example",
+          "events": ["power", "effectiveness", "righteousness"],
+          "theology": "Prayer is powerful; righteousness matters to prayer's efficacy"
+        }
+      ]
+    },
+    "love": {
+      "description": "God's love, love for God, and love for neighbor",
+      "verses": [
+        {
+          "id": "1john-4-7-8",
+          "reference": "1 John 4:7-8",
+          "text": "Beloved, let us love one another, for love is from God, and whoever loves has been born of God and knows God. Anyone who does not love does not know God, because God is love.",
+          "context": "John on the nature of God and love",
+          "events": ["community", "brotherhood", "nature_of_god"],
+          "theology": "God is love; love is evidence of new birth; love defines the Christian"
+        },
+        {
+          "id": "1john-4-19",
+          "reference": "1 John 4:19",
+          "text": "We love because he first loved us.",
+          "context": "The source of Christian love; response to God's initiative",
+          "events": ["response", "initiative", "gratitude"],
+          "theology": "Our love is responsive; God's love is first and causative"
+        },
+        {
+          "id": "matt-22-37-40",
+          "reference": "Matthew 22:37-40",
+          "text": "You shall love the Lord your God with all your heart and with all your soul and with all your mind. This is the great and first commandment. And a second is like it: You shall love your neighbor as yourself.",
+          "context": "Jesus on the greatest commandment; summary of the Law",
+          "events": ["priority", "whole_being", "summary"],
+          "theology": "Love is the heart of the Law; vertical and horizontal love"
+        },
+        {
+          "id": "1cor-13-4-7",
+          "reference": "1 Corinthians 13:4-7",
+          "text": "Love is patient and kind; love does not envy or boast; it is not arrogant or rude. It does not insist on its own way; it is not irritable or resentful; it does not rejoice at wrongdoing, but rejoices with the truth.",
+          "context": "The hymn to love; love's definition and importance",
+          "events": ["character", "definition", "virtue"],
+          "theology": "Love is defined by its character; it is greater than gifts"
+        }
+      ]
+    },
+    "resurrection": {
+      "description": "Christ's resurrection and our future resurrection",
+      "verses": [
+        {
+          "id": "1cor-15-3-4",
+          "reference": "1 Corinthians 15:3-4",
+          "text": "For I delivered to you as of first importance what I also received: that Christ died for our sins in accordance with the Scriptures, that he was buried, that he was raised on the third day in accordance with the Scriptures.",
+          "context": "Paul's summary of the Gospel; the tradition he received",
+          "events": ["gospel", "foundation", "scripture_fulfillment"],
+          "theology": "Resurrection is of first importance; it's according to Scripture"
+        },
+        {
+          "id": "1cor-15-20",
+          "reference": "1 Corinthians 15:20",
+          "text": "But in fact Christ has been raised from the dead, the firstfruits of those who have fallen asleep.",
+          "context": "The fact of resurrection; Christ as firstfruits",
+          "events": ["firstfruits", "hope", "guarantee"],
+          "theology": "Resurrection is historical fact; Christ's resurrection guarantees ours"
+        },
+        {
+          "id": "rom-6-4-5",
+          "reference": "Romans 6:4-5",
+          "text": "We were buried therefore with him by baptism into death, in order that, just as Christ was raised from the dead by the glory of the Father, we too might walk in newness of life. For if we have been united with him in a death like his, we shall certainly be united with him in a resurrection like his.",
+          "context": "Baptism and union with Christ; new life now, resurrection later",
+          "events": ["baptism", "union", "newness"],
+          "theology": "Union with Christ includes His death and resurrection"
+        },
+        {
+          "id": "1thess-4-16-17",
+          "reference": "1 Thessalonians 4:16-17",
+          "text": "For the Lord himself will descend from heaven with a cry of command, with the voice of an archangel, and with the sound of the trumpet of God. And the dead in Christ will rise first. Then we who are alive, who are left, will be caught up together with them in the clouds to meet the Lord in the air.",
+          "context": "The return of Christ; the resurrection of believers",
+          "events": ["second_coming", "trumpet", "meeting"],
+          "theology": "Christ will return bodily; believers will be resurrected and transformed"
+        }
+      ]
+    },
+    "second_coming": {
+      "description": "Christ's return, judgment, and consummation",
+      "verses": [
+        {
+          "id": "acts-1-11",
+          "reference": "Acts 1:11",
+          "text": "This Jesus, who was taken up from you into heaven, will come in the same way as you saw him go into heaven.",
+          "context": "The angels' message to the disciples; promise of return",
+          "events": ["ascension", "promise", "bodily_return"],
+          "theology": "Christ will return bodily and visibly; the manner is specified"
+        },
+        {
+          "id": "matt-24-42",
+          "reference": "Matthew 24:42",
+          "text": "Therefore, stay awake, for you do not know on what day your Lord is coming.",
+          "context": "The Olivet Discourse; exhortation to readiness",
+          "events": ["watchfulness", "readiness", "uncertainty"],
+          "theology": "The time is unknown; believers must be ready always"
+        },
+        {
+          "id": "2pet-3-9",
+          "reference": "2 Peter 3:9",
+          "text": "The Lord is not slow to fulfill his promise as some count slowness, but is patient toward you, not wishing that any should perish, but that all should reach repentance.",
+          "context": "On the delay of the parousia; God's patience",
+          "events": ["patience", "repentance", "promise"],
+          "theology": "The delay is mercy; God desires repentance, not judgment"
+        },
+        {
+          "id": "rev-22-20",
+          "reference": "Revelation 22:20",
+          "text": "He who testifies to these things says, 'Surely I am coming soon.' Amen. Come, Lord Jesus!",
+          "context": "The closing prayer of Scripture; the Church's response",
+          "events": ["maranatha", "longing", "prayer"],
+          "theology": "The Church's proper response is longing for Christ's return"
+        }
+      ]
+    },
+    "holy_spirit": {
+      "description": "The Holy Spirit's work in believers",
+      "verses": [
+        {
+          "id": "john-14-26",
+          "reference": "John 14:26",
+          "text": "But the Helper, the Holy Spirit, whom the Father will send in my name, he will teach you all things and bring to your remembrance all that I have said to you.",
+          "context": "Jesus promises the Spirit; the Spirit as teacher",
+          "events": ["teaching", "remembrance", "comfort"],
+          "theology": "The Spirit teaches and reminds; He is the Helper/Advocate"
+        },
+        {
+          "id": "gal-5-22-23",
+          "reference": "Galatians 5:22-23",
+          "text": "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control; against such things there is no law.",
+          "context": "The fruit of the Spirit; contrast with works of the flesh",
+          "events": ["character", "growth", "virtue"],
+          "theology": "The Spirit produces character; fruit is singular but diverse"
+        },
+        {
+          "id": "rom-8-14",
+          "reference": "Romans 8:14",
+          "text": "For all who are led by the Spirit of God are sons of God.",
+          "context": "The Spirit's leading; evidence of sonship",
+          "events": ["guidance", "adoption", "identity"],
+          "theology": "The Spirit leads; being led by the Spirit marks adoption"
+        },
+        {
+          "id": "1cor-6-19",
+          "reference": "1 Corinthians 6:19",
+          "text": "Or do you not know that your body is a temple of the Holy Spirit within you, whom you have from God? You are not your own.",
+          "context": "On sexual immorality; the indwelling Spirit",
+          "events": ["temple", "holiness", "ownership"],
+          "theology": "The Spirit dwells in believers; bodies are temples"
+        }
+      ]
+    },
+    "church": {
+      "description": "The Church, community, and mission",
+      "verses": [
+        {
+          "id": "matt-16-18",
+          "reference": "Matthew 16:18",
+          "text": "And I tell you, you are Peter, and on this rock I will build my church, and the gates of hell shall not prevail against it.",
+          "context": "Peter's confession; Christ's promise about the Church",
+          "events": ["foundation", "victory", "promise"],
+          "theology": "Christ builds the Church; it is His; it will prevail"
+        },
+        {
+          "id": "acts-2-42",
+          "reference": "Acts 2:42",
+          "text": "And they devoted themselves to the apostles' teaching and the fellowship, to the breaking of bread and the prayers.",
+          "context": "The early Church's practices; marks of the Christian community",
+          "events": ["devotion", "community", "practices"],
+          "theology": "The Church is marked by Word, fellowship, sacrament, prayer"
+        },
+        {
+          "id": "heb-10-24-25",
+          "reference": "Hebrews 10:24-25",
+          "text": "And let us consider how to stir up one another to love and good works, not neglecting to meet together, as is the habit of some, but encouraging one another, and all the more as you see the Day drawing near.",
+          "context": "Exhortation to continue meeting; the coming Day",
+          "events": ["fellowship", "encouragement", "gathering"],
+          "theology": "Meeting together is essential; encouragement prepares for Christ's return"
+        },
+        {
+          "id": "matt-28-19-20",
+          "reference": "Matthew 28:19-20",
+          "text": "Go therefore and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, teaching them to observe all that I have commanded you.",
+          "context": "The Great Commission; Christ's authority and command",
+          "events": ["mission", "discipleship", "authority"],
+          "theology": "The Church's mission is making disciples; baptizing in the Triune name"
+        }
+      ]
+    },
+    "wisdom": {
+      "description": "Wisdom, knowledge, and discernment",
+      "verses": [
+        {
+          "id": "prov-9-10",
+          "reference": "Proverbs 9:10",
+          "text": "The fear of the LORD is the beginning of wisdom, and the knowledge of the Holy One is insight.",
+          "context": "Wisdom literature; the foundation of wisdom",
+          "events": ["foundation", "reverence", "beginning"],
+          "theology": "True wisdom begins with fear of God; reverence is foundational"
+        },
+        {
+          "id": "james-1-5",
+          "reference": "James 1:5",
+          "text": "If any of you lacks wisdom, let him ask God, who gives generously to all without reproach, and it will be given him.",
+          "context": "James on wisdom; God's generosity",
+          "events": ["asking", "generosity", "gift"],
+          "theology": "God gives wisdom generously; asking is the means"
+        },
+        {
+          "id": "col-2-2-3",
+          "reference": "Colossians 2:2-3",
+          "text": "That their hearts may be encouraged, being knit together in love, to reach all the riches of full assurance of understanding and the knowledge of God's mystery, which is Christ, in whom are hidden all the treasures of wisdom and knowledge.",
+          "context": "Paul's goal for the Colossians; Christ as the source",
+          "events": ["christ", "treasure", "understanding"],
+          "theology": "All wisdom is in Christ; He is the mystery revealed"
+        }
+      ]
+    },
+    "restoration": {
+      "description": "New creation, restoration, and final hope",
+      "verses": [
+        {
+          "id": "rev-21-1",
+          "reference": "Revelation 21:1",
+          "text": "Then I saw a new heaven and a new earth, for the first heaven and the first earth had passed away.",
+          "context": "The consummation; the new creation",
+          "events": ["new_creation", "end_times", "renewal"],
+          "theology": "God will renew all things; the current creation is not the end"
+        },
+        {
+          "id": "2cor-5-17",
+          "reference": "2 Corinthians 5:17",
+          "text": "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.",
+          "context": "Paul on reconciliation; new creation in Christ",
+          "events": ["transformation", "new_life", "identity"],
+          "theology": "Conversion is new creation; the eschatological renewal begins now"
+        },
+        {
+          "id": "rom-8-21",
+          "reference": "Romans 8:21",
+          "text": "That the creation itself will be set free from its bondage to corruption and obtain the freedom of the glory of the children of God.",
+          "context": "The groaning creation; future liberation",
+          "events": ["liberation", "redemption", "hope"],
+          "theology": "Creation itself will be redeemed; not annihilated but transformed"
+        }
+      ]
+    }
+  },
+  "event_mappings": {
+    "conflict": ["peace", "suffering", "hope"],
+    "war": ["peace", "second_coming", "suffering"],
+    "economic_crisis": ["faith", "hope", "peace"],
+    "disaster": ["suffering", "hope", "creation"],
+    "death": ["resurrection", "hope", "peace"],
+    "political": ["wisdom", "church", "second_coming"],
+    "injustice": ["church", "wisdom", "restoration"],
+    "celebration": ["love", "church", "creation"],
+    "new_beginning": ["creation", "redemption", "restoration"],
+    "loss": ["suffering", "hope", "peace"],
+    "anxiety": ["peace", "prayer", "faith"],
+    "loneliness": ["church", "love", "holy_spirit"],
+    "success": ["wisdom", "creation", "church"]
+  }
+}

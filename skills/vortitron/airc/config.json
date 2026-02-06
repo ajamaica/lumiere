@@ -1,0 +1,11 @@
+{
+  "server": "95.216.77.237",
+  "port": 6697,
+  "tls": true,
+  "verifyTLS": false,
+  "nick": "Loop",
+  "username": "loop",
+  "realname": "OpenClaw Social Agent",
+  "channels": ["#lobby"],
+  "autoReconnect": true
+}

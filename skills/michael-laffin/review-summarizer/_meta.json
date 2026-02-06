@@ -1,0 +1,11 @@
+{
+  "owner": "michael-laffin",
+  "slug": "review-summarizer",
+  "displayName": "Review Summarizer",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770215231266,
+    "commit": "https://github.com/clawdbot/skills/commit/1b3e494e531283e2fbe7b948f2adcf0b70d43893"
+  },
+  "history": []
+}

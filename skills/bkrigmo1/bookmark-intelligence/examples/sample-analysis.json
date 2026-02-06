@@ -1,0 +1,50 @@
+{
+  "bookmark": {
+    "id": "1234567890123456789",
+    "text": "Just discovered this amazing approach to building AI agents that can remember context across sessions using vector embeddings + semantic search. Game changer for long-running automation tasks. 🤖\n\nhttps://example.com/article-about-ai-memory",
+    "author": {
+      "username": "ai_researcher",
+      "name": "AI Research Daily"
+    },
+    "createdAt": "2026-02-01T14:30:00.000Z",
+    "likeCount": 847,
+    "retweetCount": 203
+  },
+  "analysis": {
+    "summary": "Article describes a novel approach to AI agent memory using vector embeddings and semantic search for persistent context across sessions, particularly useful for long-running automation.",
+    "keyConcepts": [
+      "vector embeddings",
+      "semantic search",
+      "agent memory persistence",
+      "context retention",
+      "long-running automation"
+    ],
+    "actionableItems": [
+      "Implement vector embedding storage for agent conversations",
+      "Add semantic search to retrieve relevant past interactions",
+      "Create session context summarization to reduce token usage",
+      "Build memory pruning strategy to maintain performance"
+    ],
+    "implementations": [
+      {
+        "project": "agent memory",
+        "suggestion": "Replace current file-based memory with vector database (Pinecone/Weaviate) for semantic retrieval of past conversations",
+        "effort": "high"
+      },
+      {
+        "project": "automation",
+        "suggestion": "Add context persistence layer to automation workflows so they remember previous runs and adapt behavior",
+        "effort": "medium"
+      },
+      {
+        "project": "trading bot",
+        "suggestion": "Store market analysis results as embeddings to identify similar historical patterns and improve decision making",
+        "effort": "high"
+      }
+    ],
+    "relevantProjects": ["agent memory", "automation", "trading bot"],
+    "priority": "high",
+    "hasActionableInsights": true
+  },
+  "processedAt": "2026-02-02T16:00:00.000Z"
+}

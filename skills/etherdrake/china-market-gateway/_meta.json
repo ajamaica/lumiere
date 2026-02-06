@@ -1,0 +1,17 @@
+{
+  "owner": "etherdrake",
+  "slug": "china-market-gateway",
+  "displayName": "China Market Gateway",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770139521133,
+    "commit": "https://github.com/clawdbot/skills/commit/86f8e52ca18e88af2434c104407e945661c6ecfb"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770137509555,
+      "commit": "https://github.com/clawdbot/skills/commit/31407cbc25d8178de602e924d5e58fdd99238f95"
+    }
+  ]
+}

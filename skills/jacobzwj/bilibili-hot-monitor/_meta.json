@@ -1,0 +1,32 @@
+{
+  "owner": "jacobzwj",
+  "slug": "bilibili-hot-monitor",
+  "displayName": "B站热门视频监控",
+  "latest": {
+    "version": "1.0.15",
+    "publishedAt": 1770397321358,
+    "commit": "https://github.com/openclaw/skills/commit/9bd9e08464495433360cf132c33595e342dc426e"
+  },
+  "history": [
+    {
+      "version": "1.0.12",
+      "publishedAt": 1770261055757,
+      "commit": "https://github.com/clawdbot/skills/commit/8682a4ff119a0968b836263672263135d9baf41a"
+    },
+    {
+      "version": "1.0.11",
+      "publishedAt": 1770145640580,
+      "commit": "https://github.com/clawdbot/skills/commit/f2f331cd164736b885433377682ebbb5108f4c74"
+    },
+    {
+      "version": "1.0.9",
+      "publishedAt": 1770120697141,
+      "commit": "https://github.com/clawdbot/skills/commit/14d2e503f45a13aee30c7e51cbf8787b30cf6f15"
+    },
+    {
+      "version": "1.0.8",
+      "publishedAt": 1770104882830,
+      "commit": "https://github.com/clawdbot/skills/commit/0ed5cad65a1e367160dc7514555b3e1c0d838567"
+    }
+  ]
+}

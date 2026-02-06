@@ -1,0 +1,17 @@
+{
+  "name": "@clawdbot/serper-search",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Clawdbot plugin for Serper.dev Google Search",
+  "clawdbot": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.32.0"
+  },
+  "peerDependencies": {
+    "clawdbot": ">=2026.1.24"
+  }
+}

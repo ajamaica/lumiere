@@ -1,0 +1,158 @@
+{
+  "devotional": {
+    "description": "Devotional & Spiritual Content",
+    "focus": "Focus on spiritual growth, faith, encouragement, and biblical teachings. Create content that uplifts, inspires, and provides practical spiritual guidance.",
+    "audience": "Believers, spiritual seekers, those looking for daily encouragement and guidance.",
+    "tone": "Warm, encouraging, authentic, thoughtful, pastoral",
+    "content_pillars": [
+      "Daily devotionals with scripture",
+      "Prayer guides and intercession",
+      "Bible study and teachings",
+      "Personal faith testimonies",
+      "Spiritual encouragement",
+      "Faith-based life advice"
+    ],
+    "video_ideas_base": [
+      "Daily Devotional - {topic}",
+      "Scripture Study - What Does the Bible Say About {topic}?",
+      "Prayer Guide - Prayers for {topic}",
+      "Meditation & Faith - {topic}",
+      "Testimony Series - How God Changed My Life",
+      "Faith Q&A - Your Questions Answered",
+      "Bible Verse Breakdown - Deep Dive Into {verse}",
+      "Spiritual Growth Challenge - {challenge_name}"
+    ]
+  },
+  "fitness": {
+    "description": "Fitness & Wellness Content",
+    "focus": "Create workout guides, fitness tips, nutrition advice, and wellness content. Focus on practical, actionable advice for different fitness levels.",
+    "audience": "Fitness enthusiasts, beginners, health-conscious individuals seeking guidance.",
+    "tone": "Motivational, energetic, informative, supportive, expert",
+    "content_pillars": [
+      "Workout tutorials",
+      "Fitness challenges",
+      "Nutrition guides",
+      "Lifestyle hacks",
+      "Transformation stories",
+      "Expert interviews"
+    ],
+    "video_ideas_base": [
+      "{duration} Workout - No Equipment Needed",
+      "Complete Guide to {workout_type}",
+      "Nutrition Tips for {goal}",
+      "Fitness Myth Busting",
+      "Beginner's Guide to {topic}",
+      "Workout Challenge - {days} Days"
+    ]
+  },
+  "educational": {
+    "description": "Educational & Learning Content",
+    "focus": "Teach and educate your audience on specific topics. Create clear, well-structured lessons that break down complex concepts.",
+    "audience": "Students, lifelong learners, professionals seeking to upgrade skills.",
+    "tone": "Clear, professional, engaging, authoritative, patient",
+    "content_pillars": [
+      "Tutorials and how-tos",
+      "Expert explanations",
+      "Course-style content",
+      "Skill development",
+      "Topic deep-dives",
+      "Q&A and troubleshooting"
+    ],
+    "video_ideas_base": [
+      "Complete Beginner's Guide to {topic}",
+      "How to {task} - Step by Step",
+      "Common Mistakes When {topic}",
+      "{topic} Explained - Simple Terms",
+      "Advanced Techniques for {topic}",
+      "FAQ - Your Most Asked Questions"
+    ]
+  },
+  "cooking": {
+    "description": "Cooking & Food Content",
+    "focus": "Share recipes, cooking techniques, food reviews, and meal prep ideas. Make content accessible and appetizing.",
+    "audience": "Home cooks, food enthusiasts, people seeking meal inspiration.",
+    "tone": "Friendly, enthusiastic, encouraging, clear, appetizing",
+    "content_pillars": [
+      "Recipe tutorials",
+      "Quick meals",
+      "Ingredient spotlights",
+      "Cooking techniques",
+      "Food reviews",
+      "Meal prep guides"
+    ],
+    "video_ideas_base": [
+      "Easy Recipe - {dish} in {time}",
+      "How to Make {dish} Like a Pro",
+      "Ingredient Spotlight - {ingredient}",
+      "Quick Weeknight Dinners",
+      "Budget Cooking - {dishes} Under ${budget}",
+      "Food Review - {restaurant/product}"
+    ]
+  },
+  "vlog": {
+    "description": "Vlogging & Lifestyle",
+    "focus": "Share your daily life, experiences, adventures, and personal insights. Create relatable and engaging lifestyle content.",
+    "audience": "People interested in your lifestyle, adventures, personality.",
+    "tone": "Authentic, personable, engaging, relatable, genuine",
+    "content_pillars": [
+      "Daily vlogs",
+      "Adventures and travel",
+      "Personal challenges",
+      "Day in the life",
+      "Behind the scenes",
+      "Life updates and reflections"
+    ],
+    "video_ideas_base": [
+      "A Day in My Life",
+      "Travel Vlog - {destination}",
+      "My Honest Review of {experience}",
+      "Q&A - Questions Answered",
+      "Weekend Adventures",
+      "Month in Review - {month}"
+    ]
+  },
+  "gaming": {
+    "description": "Gaming & Esports Content",
+    "focus": "Game reviews, playthroughs, tips & tricks, streaming highlights. Engage with gaming community.",
+    "audience": "Gamers of all levels, esports fans, streamers.",
+    "tone": "Enthusiastic, entertaining, expert, casual, relatable",
+    "content_pillars": [
+      "Game reviews",
+      "Gameplay tips",
+      "Streaming highlights",
+      "Game news",
+      "Challenge runs",
+      "Community engagement"
+    ],
+    "video_ideas_base": [
+      "{game} Review - Is It Worth Playing?",
+      "Advanced Tips - {game}",
+      "{game} - Complete Walkthrough",
+      "Gaming PC Build Guide",
+      "Speedrun Challenge - {game}",
+      "Worst Gamer Challenge - {game}"
+    ]
+  },
+  "default": {
+    "description": "General Content",
+    "focus": "Create engaging, valuable content that resonates with your target audience. Focus on consistency and quality.",
+    "audience": "Your target demographic seeking your unique perspective and expertise.",
+    "tone": "Professional, engaging, authentic, informative",
+    "content_pillars": [
+      "Educational content",
+      "How-to guides",
+      "Industry insights",
+      "Community engagement",
+      "Trends & analysis",
+      "Expert perspectives"
+    ],
+    "video_ideas_base": [
+      "Complete Guide to {topic}",
+      "How to {task}",
+      "Common Mistakes with {topic}",
+      "Tips & Tricks for {topic}",
+      "Q&A Session",
+      "Trend Analysis - {trend}"
+    ]
+  }
+}

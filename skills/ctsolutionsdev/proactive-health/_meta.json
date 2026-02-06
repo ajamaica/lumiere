@@ -1,0 +1,11 @@
+{
+  "owner": "ctsolutionsdev",
+  "slug": "proactive-health",
+  "displayName": "Health Guardian",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770301968414,
+    "commit": "https://github.com/clawdbot/skills/commit/e0ae431b130a745dc07e049e143612aa747ae73c"
+  },
+  "history": []
+}

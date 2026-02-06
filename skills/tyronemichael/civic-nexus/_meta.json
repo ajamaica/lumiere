@@ -1,0 +1,22 @@
+{
+  "owner": "tyronemichael",
+  "slug": "civic-nexus",
+  "displayName": "Civic Nexus",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1770349066795,
+    "commit": "https://github.com/openclaw/skills/commit/077eba491e34a151648794bfce9d11727db24e9c"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1770225483293,
+      "commit": "https://github.com/clawdbot/skills/commit/1ede815b57ddd7cde879e892e5b1b8c0966418eb"
+    },
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770172653011,
+      "commit": "https://github.com/clawdbot/skills/commit/a5ca4043db9caca101bb31d6402e719c71bd9ae9"
+    }
+  ]
+}

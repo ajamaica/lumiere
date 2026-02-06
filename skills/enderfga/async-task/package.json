@@ -1,0 +1,30 @@
+{
+  "name": "openclaw-async-task",
+  "version": "1.0.0",
+  "description": "Execute long-running tasks without HTTP timeouts for OpenClaw/Clawdbot",
+  "main": "async-task.js",
+  "bin": {
+    "async-task": "./async-task.js"
+  },
+  "scripts": {
+    "test": "node async-task.js --help"
+  },
+  "keywords": [
+    "openclaw",
+    "clawdbot",
+    "async",
+    "timeout",
+    "ai-agent",
+    "skill"
+  ],
+  "author": "Enderfga",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Enderfga/openclaw-async-task.git"
+  },
+  "homepage": "https://github.com/Enderfga/openclaw-async-task",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

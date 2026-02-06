@@ -1,0 +1,39 @@
+{
+  "name": "daily-devotional-auto",
+  "version": "1.0.0",
+  "description": "Automated daily devotional generator for OpenClaw. Fetches news, generates contextual devotionals, creates videos with your voice, and uploads to YouTube.",
+  "main": "scripts/daily-devotional.js",
+  "scripts": {
+    "start": "node scripts/daily-devotional.js",
+    "generate": "node scripts/devotional-generator.js",
+    "test": "node scripts/test.js"
+  },
+  "keywords": [
+    "devotional",
+    "youtube",
+    "automation",
+    "daily",
+    "faith",
+    "news-based",
+    "tts",
+    "video-generation",
+    "openclaw",
+    "skill"
+  ],
+  "author": "OpenClaw",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Snail3D/daily-devotional-auto.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Snail3D/daily-devotional-auto/issues"
+  },
+  "homepage": "https://github.com/Snail3D/daily-devotional-auto#readme"
+}

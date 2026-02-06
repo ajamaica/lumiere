@@ -1,0 +1,22 @@
+{
+  "owner": "byungkyu",
+  "slug": "salesforce-api",
+  "displayName": "Salesforce",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770343683285,
+    "commit": "https://github.com/openclaw/skills/commit/deea058c14d36eed8c6537d67038e1cb679b46ed"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770117477448,
+      "commit": "https://github.com/clawdbot/skills/commit/e44c0866d5b0b6e6081ef22d8f7aa69f0adc6687"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770023814266,
+      "commit": "https://github.com/clawdbot/skills/commit/b3aa759d26390c6b2f1521a35aadf8c9909dd350"
+    }
+  ]
+}

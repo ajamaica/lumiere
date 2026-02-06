@@ -1,0 +1,11 @@
+{
+  "owner": "devbd1",
+  "slug": "polymarket-7ceau",
+  "displayName": "Polymarket 7ceau",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770045845702,
+    "commit": "https://github.com/clawdbot/skills/commit/b96f5bcb516c6f1dcfab72e0058508716afa44ab"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "naiiif83",
+  "slug": "naif",
+  "displayName": "test",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769860546316,
+    "commit": "https://github.com/clawdbot/skills/commit/39a2ccbee6909d79e3f075f9b4f100878c3c7f65"
+  },
+  "history": []
+}

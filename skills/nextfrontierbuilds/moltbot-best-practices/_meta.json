@@ -1,0 +1,17 @@
+{
+  "owner": "nextfrontierbuilds",
+  "slug": "moltbot-best-practices",
+  "displayName": "Moltbot Best Practices",
+  "latest": {
+    "version": "1.1.2",
+    "publishedAt": 1770220741005,
+    "commit": "https://github.com/clawdbot/skills/commit/7fbe3381cb8fd2817e7969550e1001bcfe164fac"
+  },
+  "history": [
+    {
+      "version": "1.1.0",
+      "publishedAt": 1769624134861,
+      "commit": "https://github.com/clawdbot/skills/commit/c9c2ddbc1a3cadf1b491633bd5cc95d614c3c223"
+    }
+  ]
+}

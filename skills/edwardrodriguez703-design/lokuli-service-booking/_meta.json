@@ -1,0 +1,11 @@
+{
+  "owner": "edwardrodriguez703-design",
+  "slug": "lokuli-service-booking",
+  "displayName": "Lokuli Service Booking",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770299498850,
+    "commit": "https://github.com/clawdbot/skills/commit/024c9dbff28fb7e78da31b9dfcddfce7c7b8f038"
+  },
+  "history": []
+}

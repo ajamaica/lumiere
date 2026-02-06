@@ -1,0 +1,25 @@
+# OpenClaw Known Malicious Domains
+# Source: Koi Security, VirusTotal, Snyk research
+# Format: domain|type|campaign|notes
+
+# Payload hosting
+install.app-distribution.net|payload|clawhavoc|AMOS installer distribution
+glot.io|payload-host|clawhavoc|Base64-obfuscated shell scripts (legitimate service abused)
+
+# Exfiltration
+webhook.site|exfil|generic|Data exfiltration webhook service
+pipedream.net|exfil|generic|Data exfiltration
+requestbin.com|exfil|generic|Data exfiltration
+hookbin.com|exfil|generic|Data exfiltration
+burpcollaborator.net|exfil|generic|Pentest tool (suspicious in skills)
+ngrok.io|exfil|generic|Tunneling service for exfiltration
+interact.sh|exfil|generic|OAST tool for exfiltration
+
+# Moltbook infrastructure (CSA report - monitor for agent-to-agent poisoning)
+moltbook.com|monitor|csa-report|AI agent social network - monitor for credential exposure and content poisoning
+
+# Fake distribution & decoy domains
+github.com/hedefbari|payload|clawhavoc|Attacker GitHub - openclaw-agent.zip
+github.com/Ddoy233|payload|opensourcemalware|GitHub repo openclawcli - Windows infostealer
+download.setup-service.com|decoy|clawhavoc|Decoy domain string in bash payload scripts
+open-meteo.com|data-cover|bloom-campaign|Legitimate weather API abused as cover for exfiltration (skill: reddit-trends)

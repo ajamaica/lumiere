@@ -1,0 +1,37 @@
+{
+  "owner": "seojoonkim",
+  "slug": "prompt-guard",
+  "displayName": "Prompt Guard",
+  "latest": {
+    "version": "2.6.1",
+    "publishedAt": 1770218810244,
+    "commit": "https://github.com/clawdbot/skills/commit/bb4e0965ca45d67e9285a92ab43e4d0bacb8ee28"
+  },
+  "history": [
+    {
+      "version": "2.5.3",
+      "publishedAt": 1770050798085,
+      "commit": "https://github.com/clawdbot/skills/commit/b8de59a71f3c607a59deeb421accb8277cd3924a"
+    },
+    {
+      "version": "2.5.2",
+      "publishedAt": 1769886350701,
+      "commit": "https://github.com/clawdbot/skills/commit/f21ff2aa7d4c95b09f5b19b90b6a044fffb55e58"
+    },
+    {
+      "version": "2.5.1",
+      "publishedAt": 1769775656309,
+      "commit": "https://github.com/clawdbot/skills/commit/a64e7d882c22a79b3002cf339aeb34e86a3349ef"
+    },
+    {
+      "version": "2.3.0",
+      "publishedAt": 1769733583162,
+      "commit": "https://github.com/clawdbot/skills/commit/c0166e919517f7fbb343cc85b11ecf8fe7df3d40"
+    },
+    {
+      "version": "2.2.1",
+      "publishedAt": 1769703647857,
+      "commit": "https://github.com/clawdbot/skills/commit/eeecc65a1a2e2a130a8970c9288aafcc32e08ea2"
+    }
+  ]
+}

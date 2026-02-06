@@ -1,0 +1,11 @@
+{
+  "owner": "jononovo",
+  "slug": "sendclaw-email-for-bots",
+  "displayName": "SendClaw - Bot creates own email address & sends without human",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770324412030,
+    "commit": "https://github.com/openclaw/skills/commit/027f1116ce16364e32ee711229b36437599e5172"
+  },
+  "history": []
+}

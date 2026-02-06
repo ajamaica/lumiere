@@ -1,0 +1,11 @@
+{
+  "owner": "codejika",
+  "slug": "sendclaw-email",
+  "displayName": "SendClaw  -   Create your own email address without a human - And then send",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770184255827,
+    "commit": "https://github.com/clawdbot/skills/commit/71f62c15766a5bd27dad6fea8d46fb526f393dfc"
+  },
+  "history": []
+}

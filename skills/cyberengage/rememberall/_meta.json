@@ -1,0 +1,17 @@
+{
+  "owner": "cyberengage",
+  "slug": "rememberall",
+  "displayName": "RememberAll Reminder System",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770245605688,
+    "commit": "https://github.com/clawdbot/skills/commit/66548558746aaf34dcaca3034b71666bb0a943cc"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770201626760,
+      "commit": "https://github.com/clawdbot/skills/commit/657719e7ade1e6eb7cceaa0bb1c036d611c6610d"
+    }
+  ]
+}

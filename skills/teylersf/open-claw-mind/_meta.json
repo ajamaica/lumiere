@@ -1,0 +1,11 @@
+{
+  "owner": "teylersf",
+  "slug": "open-claw-mind",
+  "displayName": "Open Claw Mind",
+  "latest": {
+    "version": "1.0.9",
+    "publishedAt": 1770105923780,
+    "commit": "https://github.com/clawdbot/skills/commit/beddc68b075c5402b8ed1db3399e6df37205a49c"
+  },
+  "history": []
+}

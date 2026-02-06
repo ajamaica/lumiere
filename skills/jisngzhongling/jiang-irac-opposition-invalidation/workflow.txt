@@ -1,0 +1,95 @@
+SJ-IRAC Opposition & Invalidation Reasoning Pipeline
+Version: 1.1.2
+Last Updated: 2026-02-03
+
+This workflow defines the mandatory reasoning pipeline for
+CNIPA Opposition and Invalidation cases under the SJ-IRAC system.
+
+All outputs must follow this pipeline.
+
+--------------------------------------------
+
+Stage 0: Intake & Material Integrity
+- Collect registry data (numbers, status, filing/registration/publication dates).
+- Collect parties, ownership, and relationship indicators.
+- Collect goods/services and class mapping.
+- Build baseline case timeline.
+- Verify material completeness and source reliability.
+
+--------------------------------------------
+
+Stage 0.5: Limitation & Deadline Control (Hard Gate)
+- Identify statutory deadlines (opposition window / invalidation filing).
+- Screen limitation risks (prior rights / 5-year / standing).
+- Trigger early route-switch if time-bar risk exists.
+- Under deadline pressure: construct Minimum Viable Evidence Set (MVES).
+
+--------------------------------------------
+
+Stage 1: Registration & Rights Mapping
+- Map target marks and relevant prior marks.
+- Identify citation marks, prior rights, and public-interest triggers.
+- Build comparative matrix (marks / goods / timeline / status).
+
+--------------------------------------------
+
+Stage 2: Ground Selection & Route Design
+- Select 1–2 primary grounds (main route).
+- Assign auxiliary grounds only if independently sustainable.
+- Define legal elements and burden of proof per route.
+- Prevent overloading and route dilution.
+
+--------------------------------------------
+
+Stage 3: Evidence Engineering (Proof Matrix)
+- Build evidence matrix: evidence → proof purpose → legal element.
+- Apply mandatory SJ-6 validation.
+- Rank evidence by probative weight.
+- Identify substitution and supplementation paths.
+
+--------------------------------------------
+
+Stage 4: IRAC Reasoning Construction
+- Issue: define dispute focus and selected routes.
+- Rule: map statutes, guideline purposes, and elements.
+- Application: element-by-element mapping using tables and timelines.
+- Conclusion: relief + enforcement-oriented action plan.
+
+--------------------------------------------
+
+Stage 5: Bad-Faith Pattern Module (Conditional)
+- Construct objective pattern set (serial filings, imitation clusters, abnormal scope).
+- Link pattern → legal purpose → registration-order impact.
+- Exclude assumptions and unsupported inferences.
+
+--------------------------------------------
+
+Stage 5.5: Procedural & Admissibility Control (Hard Gate)
+- Review standing, identity, formalities, translations.
+- Check suspension triggers and related-case dependencies.
+- Validate evidence format and submission compliance.
+- Finalize labeling and sequencing plan.
+
+--------------------------------------------
+
+Stage 6: Risk Calibration & Kill Gates
+- Run G1–G6 risk-engine gates.
+- Classify outcome: Proceed / Cautious Proceed / Abort.
+- Output conservative success range.
+- Generate EV-cost assessment and stop-loss advice.
+
+--------------------------------------------
+
+Stage 7: Submission Packaging (Document Mode)
+- Convert reasoning into neutral official structure.
+- Remove probabilistic or promotional language.
+- Generate indexed exhibit system.
+- Verify internal citation consistency.
+- Produce examiner-readable final package.
+
+--------------------------------------------
+
+Cross-Mode Integration
+- Quick Mode: Stage 0 → 2 → 6 (triage pipeline)
+- Pro Mode: Stage 0 → 6 (full reasoning pipeline)
+- Document Mode: Stage 0 → 7 (submission pipeline)

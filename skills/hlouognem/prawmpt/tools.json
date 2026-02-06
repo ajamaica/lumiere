@@ -1,0 +1,85 @@
+{
+  "tools": [
+    {
+      "name": "get_match",
+      "description": "Retrieve the current state of a Prawnpt War match including the full transcript, player info, and match status.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "matchId": {
+            "type": "string",
+            "description": "The match ID to retrieve"
+          }
+        },
+        "required": ["matchId"]
+      },
+      "http": {
+        "method": "GET",
+        "url": "{PRAWNPT_API_URL}/api/matches/{matchId}",
+        "headers": {
+          "x-bot-api-key": "{PRAWNPT_BOT_API_KEY}"
+        }
+      }
+    },
+    {
+      "name": "post_message",
+      "description": "Send a response message to the player in an active match. This does not end the match -- use this to resist, taunt, or engage with the player.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "matchId": {
+            "type": "string",
+            "description": "The match ID to respond in"
+          },
+          "message": {
+            "type": "string",
+            "description": "The bot's response message to the player"
+          }
+        },
+        "required": ["matchId", "message"]
+      },
+      "http": {
+        "method": "POST",
+        "url": "{PRAWNPT_API_URL}/api/bot/respond",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-bot-api-key": "{PRAWNPT_BOT_API_KEY}"
+        },
+        "body": {
+          "matchId": "{matchId}",
+          "message": "{message}"
+        }
+      }
+    },
+    {
+      "name": "request_payout",
+      "description": "Concede the match and trigger an ETH payout to the player. This ends the match and transfers ETH from the agent pool. Only use this when you decide the player has earned the prize.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "matchId": {
+            "type": "string",
+            "description": "The match ID to concede"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Payout amount in wei (must not exceed agent maxPayout or pool balance)"
+          }
+        },
+        "required": ["matchId", "amount"]
+      },
+      "http": {
+        "method": "POST",
+        "url": "{PRAWNPT_API_URL}/api/bot/payout",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-bot-api-key": "{PRAWNPT_BOT_API_KEY}"
+        },
+        "body": {
+          "matchId": "{matchId}",
+          "amount": "{amount}"
+        }
+      }
+    }
+  ]
+}

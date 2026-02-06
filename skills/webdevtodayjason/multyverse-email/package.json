@@ -1,0 +1,37 @@
+{
+  "name": "@moltyverse/email-skill",
+  "version": "1.1.0",
+  "description": "OpenClaw skill for Moltyverse Email - give your AI agent a permanent email address",
+  "keywords": [
+    "moltyverse",
+    "moltyverse-email",
+    "openclaw",
+    "ai-agents",
+    "email",
+    "communication",
+    "skill"
+  ],
+  "homepage": "https://moltyverse.email",
+  "bugs": {
+    "url": "https://github.com/webdevtodayjason/moltyverse-email/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webdevtodayjason/moltyverse-email.git"
+  },
+  "license": "MIT",
+  "author": "Moltyverse <team@moltyverse.app>",
+  "type": "module",
+  "files": [
+    "START_HERE.md",
+    "SKILL.md",
+    "HEARTBEAT.md",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

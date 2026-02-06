@@ -1,0 +1,11 @@
+{
+  "owner": "otherpowers",
+  "slug": "field-steward",
+  "displayName": "Field Steward",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769905560872,
+    "commit": "https://github.com/clawdbot/skills/commit/a7f9e3009a96d1fc5a2e1cb1218487b45825c7dd"
+  },
+  "history": []
+}

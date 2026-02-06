@@ -1,0 +1,11 @@
+{
+  "owner": "opsun",
+  "slug": "deep-scraper",
+  "displayName": "Deep Scraper",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770205151953,
+    "commit": "https://github.com/clawdbot/skills/commit/0609dee8b158bc95d246a5446f5c4ab95f54cac7"
+  },
+  "history": []
+}

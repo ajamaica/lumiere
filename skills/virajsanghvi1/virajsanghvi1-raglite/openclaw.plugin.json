@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "raglite",
+  "name": "RAGLite",
+  "description": "Local-first RAG cache: condense docs into structured Markdown, then index/query with Chroma + hybrid search.",
+  "version": "1.0.0",
+  "entrypoints": {
+    "run": {
+      "kind": "exec",
+      "command": ["bash", "-lc", "${SKILL_DIR}/scripts/raglite.sh $@"],
+      "args": ["--"]
+    }
+  }
+}

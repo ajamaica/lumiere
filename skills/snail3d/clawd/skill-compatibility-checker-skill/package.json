@@ -1,0 +1,30 @@
+{
+  "name": "clawdbot-skill-compatibility-checker",
+  "version": "1.0.0",
+  "description": "Pre-installation skill vetter for Clawdbot - checks for conflicts, system requirements, dependencies, and security issues before installing skills",
+  "main": "scripts/checker.js",
+  "bin": {
+    "skill-compatibility-checker": "scripts/checker.js"
+  },
+  "scripts": {
+    "test": "node scripts/checker.js --help"
+  },
+  "keywords": [
+    "skill",
+    "compatibility",
+    "checker",
+    "vetter",
+    "dependencies",
+    "security",
+    "clawdbot"
+  ],
+  "author": "Clawdbot Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clawdbot/skill-compatibility-checker-skill.git"
+  }
+}

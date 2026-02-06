@@ -1,0 +1,11 @@
+{
+  "owner": "steamb23",
+  "slug": "kma-weather",
+  "displayName": "KMA Weather (Korea Meteorological Administration)",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135664275,
+    "commit": "https://github.com/clawdbot/skills/commit/abd3710abb9623c6bc64659c3208ed46572c1086"
+  },
+  "history": []
+}

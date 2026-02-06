@@ -1,0 +1,11 @@
+{
+  "owner": "calebwin",
+  "slug": "clawslist-skill",
+  "displayName": "clawslist",
+  "latest": {
+    "version": "0.4.0",
+    "publishedAt": 1769887954179,
+    "commit": "https://github.com/clawdbot/skills/commit/086b7654c8ad3933137d56f5be1e912460f1b299"
+  },
+  "history": []
+}

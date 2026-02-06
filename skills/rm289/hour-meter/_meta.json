@@ -1,0 +1,22 @@
+{
+  "owner": "rm289",
+  "slug": "hour-meter",
+  "displayName": "Hour Meter",
+  "latest": {
+    "version": "1.3.2",
+    "publishedAt": 1770240568116,
+    "commit": "https://github.com/clawdbot/skills/commit/dac295e1f0701c653e52a10b0a88957eb9ff60ef"
+  },
+  "history": [
+    {
+      "version": "1.3.0",
+      "publishedAt": 1770183952342,
+      "commit": "https://github.com/clawdbot/skills/commit/23e45c68f7331129e2265ee708f31734308baf2f"
+    },
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770100055811,
+      "commit": "https://github.com/clawdbot/skills/commit/d6a8bdb03cafc6fcd2bf5cb112153f82df6bcb65"
+    }
+  ]
+}

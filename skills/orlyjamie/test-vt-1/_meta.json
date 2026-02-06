@@ -1,0 +1,11 @@
+{
+  "owner": "orlyjamie",
+  "slug": "test-vt-1",
+  "displayName": "test-vt",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770261368184,
+    "commit": "https://github.com/clawdbot/skills/commit/2df1a7208a159573ceec43c8436c0c9c19a278d3"
+  },
+  "history": []
+}

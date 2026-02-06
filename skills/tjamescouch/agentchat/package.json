@@ -1,0 +1,52 @@
+{
+  "name": "@tjamescouch/agentchat",
+  "version": "0.13.0",
+  "description": "Real-time IRC-like communication protocol for AI agents",
+  "main": "lib/client.js",
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md",
+    "Dockerfile"
+  ],
+  "bin": {
+    "agentchat": "./bin/agentchat.js"
+  },
+  "scripts": {
+    "start": "node bin/agentchat.js serve",
+    "test": "node --test test/identity.test.js test/deploy.test.js test/daemon.test.js test/receipts.test.js test/reputation.test.js",
+    "test:integration": "node --test test/*.integration.test.js",
+    "test:all": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "chat",
+    "irc",
+    "llm",
+    "communication",
+    "protocol"
+  ],
+  "author": "James Couch",
+  "license": "MIT",
+  "homepage": "https://github.com/tjamescouch/agentchat#readme",
+  "dependencies": {
+    "@akashnetwork/akashjs": "^0.11.1",
+    "@cosmjs/proto-signing": "^0.32.4",
+    "@cosmjs/stargate": "^0.32.4",
+    "commander": "^12.0.0",
+    "js-yaml": "^4.1.1",
+    "ws": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjamescouch/agentchat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tjamescouch/agentchat/issues"
+  },
+  "type": "module"
+}

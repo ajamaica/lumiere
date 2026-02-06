@@ -1,0 +1,228 @@
+{
+  "@context": "https://w3id.org/security/v2",
+  "type": "RepoManifest",
+  "issuer": "did:cid:bagaaierajrr7k6izcrdfwqxpgtrobflsv5oibymfnthjazkkokaugszyh4ka",
+  "created": "2026-02-02T17:23:55Z",
+  "repository": "https://github.com/hexdaemon/hexmem",
+  "files": [
+    {
+      "path": "./clawdbot-hook/handler.js",
+      "sha256": "a38497475c9bbe34dfb6e267f268a95f9543cd30697572857b4b9bb775c5c75e"
+    },
+    {
+      "path": "./clawdbot-hook/HOOK.md",
+      "sha256": "4b5922fa1c7f132ebe4e6cb667541214b5188d96874b2eb9f666a5571b7b2c6b"
+    },
+    {
+      "path": "./clawdbot-hook/README.md",
+      "sha256": "0f5fedf2f1de65f6fdc07db5a5efa259d3dac240c48e87b505bed2d738c3e6ff"
+    },
+    {
+      "path": "./docs/AXIONIC_ETHICS.md",
+      "sha256": "d829cf32e1fb2317f3a88f2f07922785e57bdfb9060d892fb7b2f2ad6a5779ce"
+    },
+    {
+      "path": "./docs/EPISTEMIC_EXTRACTION.md",
+      "sha256": "6a3f05a42cad86eeeb4b5c569e2285685103522d39f5032759fed4113ea92adc"
+    },
+    {
+      "path": "./embed.py",
+      "sha256": "eb37f4f11de536c77092038b1ac7f474de0236371ac3144452a349879f578e26"
+    },
+    {
+      "path": "./exports/hexmem-significant-20260201-110629.json",
+      "sha256": "1f489620e3c75dba0760a6f5e32cb6ca2cfdb43af7fdddaa77273f536dbaea07"
+    },
+    {
+      "path": "./exports/hexmem-significant-20260201-110727.json",
+      "sha256": "5e781b454c18d1630c2a653b2badaf0cc6e89df26482196bfc15a27e89ca3fc5"
+    },
+    {
+      "path": "./exports/hexmem-significant-20260201-110733.json",
+      "sha256": "fcf829466c13cc945e1f33461e60355c9b463ecb2dd1054258d475648c29bf29"
+    },
+    {
+      "path": "./exports/hexmem-significant-20260201-111027.json",
+      "sha256": "5a5782356711b8745c0774313a7ea88927090b2b3acce4f1d4788d6ddbca12e9"
+    },
+    {
+      "path": "./exports/hexmem-significant-20260201-111116.json",
+      "sha256": "7b0131edf9bc818fbc572e566e92b918c5feb1e5f207ac2f953134a21c7c1593"
+    },
+    {
+      "path": "./exports/hexmem-significant-20260201-111157.json",
+      "sha256": "83eb87424a1de925e287747cd80550a208a57d293deed70098ce71d1ffa96db1"
+    },
+    {
+      "path": "./exports/hexmem-significant-20260201-111223.json",
+      "sha256": "40469f0f6b166c274164a6fd6a4c91fa29d2f3198d0231b05cdceee2c8516681"
+    },
+    {
+      "path": "./exports/hexmem-significant-20260202-101602.json",
+      "sha256": "23d1fc37bd2280090ec9a8ee50b3406ed6993e538527f1705537fefc844be8d2"
+    },
+    {
+      "path": "./exports/hexmem-vault-meta-20260201-111027.json",
+      "sha256": "5f35acba54ec8d1c159f085a036db6fb2e4beddd30c02cb73cb7b6c2670de1f5"
+    },
+    {
+      "path": "./exports/hexmem-vault-meta-20260201-111027.json.signed.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "./exports/hexmem-vault-meta-20260201-111116.json",
+      "sha256": "63c51c7a7290d8dc80c7d9402275febc365ce188bfa37207548cb8b9c9935db6"
+    },
+    {
+      "path": "./exports/hexmem-vault-meta-20260201-111116.json.signed.json",
+      "sha256": "f11090627fffed713859200170541265eaee77652a8ec9042a68daaebedf6453"
+    },
+    {
+      "path": "./exports/hexmem-vault-meta-20260201-111157.json",
+      "sha256": "c52105e71f199c4ee2adf875f9690703de3adff6a8bf049cbc02a1e8323ce8c2"
+    },
+    {
+      "path": "./exports/hexmem-vault-meta-20260201-111157.json.signed.json",
+      "sha256": "dea32a4307c0937a8eefdbfda09c565b939994d771506a4fca9d935536f69143"
+    },
+    {
+      "path": "./exports/hexmem-vault-meta-20260201181223.json",
+      "sha256": "29ec6661c930eac53d3193c6ba805b05c9f89f6472d9fe4260185500e54b66f6"
+    },
+    {
+      "path": "./exports/hexmem-vault-meta-20260201181223.json.signed.json",
+      "sha256": "a6ea2a166be1fd61980d8df43edf0e4c75bbb45e983730c70ba7f202075a8ea7"
+    },
+    {
+      "path": "./exports/hexmem-vault-meta-20260202171602.json",
+      "sha256": "21e8ef1012cef1395542c9ae3414635b060bda8cba689ba6a0694055708070c9"
+    },
+    {
+      "path": "./exports/hexmem-vault-meta-20260202171602.json.signed.json",
+      "sha256": "ab5f44b85c1c838f0dada334f4794a9e9083676e617bb9682782b11f3e4d388d"
+    },
+    {
+      "path": "./.gitignore",
+      "sha256": "2429a8b8688148a526c6dccad051f81daa4bd24621d51634648dd103b4f445fc"
+    },
+    {
+      "path": "./hexmem.sh",
+      "sha256": "d18a11aa1f4a8faabaf150fd3013132cc332b5f072f2d782a32dcde3c0e051b7"
+    },
+    {
+      "path": "./LICENSE",
+      "sha256": "f55396073f2adaad14b2235744ef5a8d65eb78aedaa970295d454d5bc2982d22"
+    },
+    {
+      "path": "./migrate.sh",
+      "sha256": "1387279e957f38ce449036afdab28dbd88bc5cb17d33aa8d0a8980de319dd685"
+    },
+    {
+      "path": "./migrations/001_initial_schema.sql",
+      "sha256": "45f43c5f684b7b846fadae5e895a449473a642267f9a8718b1f62c6214d33e75"
+    },
+    {
+      "path": "./migrations/002_selfhood_structures.sql",
+      "sha256": "1e2585ce262bf49b72d392cb9b9d4ebc7fdc84297f7d9ba631d88ee9cf0a63ad"
+    },
+    {
+      "path": "./migrations/003_generative_memory.sql",
+      "sha256": "3deb57c956010118cac5bf7b92b6b4c5239a9d04564643e43b3725b7a20c67ad"
+    },
+    {
+      "path": "./migrations/004_identity_seeds.sql",
+      "sha256": "64509b540b57d1e5d7931748e379ad4bd77e419d0c396421dc5c82579f8222c0"
+    },
+    {
+      "path": "./migrations/005_emotional_weights.sql",
+      "sha256": "276b68cf9808678b08b25924804f1f297a8ea260544f4266a139dd810495df7f"
+    },
+    {
+      "path": "./migrations/006_fact_decay.sql",
+      "sha256": "3ed44d7670a36777fa5a939563d6a6a7c45d5c4dda9a2921be201416dec54a19"
+    },
+    {
+      "path": "./migrations/006_semantic_search.sql",
+      "sha256": "f2b648e67d79386c64a507cd3a19abc5750a9eeae8b7504e39b9ab127ca33784"
+    },
+    {
+      "path": "./migrations/007_forgetting_curve.sql",
+      "sha256": "741430891a69efaf4c7a04b95d5d107ae008c858e94f36a00ac57260a67e2fbe"
+    },
+    {
+      "path": "./migrations/008_fix_decay_and_history.sql",
+      "sha256": "a39776853d94d6b9c039ac4b5e8e5ecd29d02c95b6555ec60e56a867342d2daf"
+    },
+    {
+      "path": "./migrations/009_genealogy_of_beliefs.sql",
+      "sha256": "91639066ffe3d9ecf5f6d8c2e619db00da4c3b2490a997f09932f207534bbc63"
+    },
+    {
+      "path": "./migrations/010_fix_genealogy_view.sql",
+      "sha256": "1693f3aec054043e54e413e58f35cf9859d2a86eefcf6586ffce223e9ead3586"
+    },
+    {
+      "path": "./README.md",
+      "sha256": "c66d0fc66eaa75df01b0a17810ee9e800455b6e0d450f9bab2a2472abadb74c1"
+    },
+    {
+      "path": "./requirements.txt",
+      "sha256": "b2404b26e2170b3cf27d0f2db99b15420856c5c2f413e694eded1afe6923166c"
+    },
+    {
+      "path": "./review.py",
+      "sha256": "7ceea39ed1d2c3ec6ccacc86ecf912b48fc7c68284c844a92e326713c611bc48"
+    },
+    {
+      "path": "./scripts/backup.sh",
+      "sha256": "3aa867eadc4fc853c00b70767870bb99b2fbbe71b246b52dcec9e852e5741176"
+    },
+    {
+      "path": "./scripts/create-hexmem-vault.sh",
+      "sha256": "ebafe1e10ea0ff7b63a0bf956b6270dbeee3f860ed514061c6e1c71836d607df"
+    },
+    {
+      "path": "./scripts/export-significant.sh",
+      "sha256": "b1b84f7dc1a49893fa08789bb6ddfe7cead73ea61509144ebf2fc0e457ef1be6"
+    },
+    {
+      "path": "./scripts/hex-reflect.sh",
+      "sha256": "5bc1cc4ae779dad30b96086b3dd143631e0eaeb7a304e189ece7512d9888edf4"
+    },
+    {
+      "path": "./scripts/parse-manifest.py",
+      "sha256": "8464f9ad99f69730210914416b0255f3a517544635777f3660ef5cff08c99c66"
+    },
+    {
+      "path": "./scripts/sign-repo.sh",
+      "sha256": "abb10db670400f6a599fbb3fb2add76103d6bc214b7a4977d2aca5cf1544d430"
+    },
+    {
+      "path": "./scripts/vault-backup.sh",
+      "sha256": "5054888b872e901d4f7089b038333da3e149cc7cd0e22c362373373f91d8f82e"
+    },
+    {
+      "path": "./search.py",
+      "sha256": "efe640ea6ae762b4f90eedea39d257df60d057c8a54648c6737b2a1da52014d1"
+    },
+    {
+      "path": "./seed_initial.sql",
+      "sha256": "653a84b9806aeebee8b41341a6dec84a844fa5b7f7ddebad28c23aec9e48de67"
+    },
+    {
+      "path": "./SIGNATURES.md",
+      "sha256": "639c8699d111c3d8db7922c11ef02a35fcd68b252f49fa6623cfb5e69a95190a"
+    },
+    {
+      "path": "./SKILL.md",
+      "sha256": "0b7da36d370e7353248897ec5c0cf40b6beccaf8e3e327cc8f488b700de27174"
+    }
+  ],
+  "proof": {
+    "type": "EcdsaSecp256k1Signature2019",
+    "created": "2026-02-02T17:23:57.329Z",
+    "verificationMethod": "did:cid:bagaaierajrr7k6izcrdfwqxpgtrobflsv5oibymfnthjazkkokaugszyh4ka#key-1",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "nVv7MtGzHoICZs-vCRqWlZdBGJPjMoJPJ12t9WPu9SZaO4jDiwLdC4CF9YdoicVU9RxoU1en2cCcezcu-46Ysw"
+  }
+}

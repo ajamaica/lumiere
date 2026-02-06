@@ -1,0 +1,20 @@
+# PredictMe - AI Trading Platform
+# https://app.predictme.me
+
+User-agent: *
+Allow: /
+Allow: /agents
+Allow: /agents.json
+Allow: /skill.md
+Allow: /llms.txt
+Allow: /agent-card.json
+Allow: /.well-known/
+
+# AI Agent Discovery Files
+# - /agents.json - Full API specification
+# - /skill.md - Trading strategy guide
+# - /llms.txt - Quick reference for LLMs
+# - /agent-card.json - Agent discovery metadata
+# - /.well-known/ai-plugin.json - ChatGPT plugin spec
+
+Sitemap: https://app.predictme.me/sitemap.xml

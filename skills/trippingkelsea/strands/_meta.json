@@ -1,0 +1,17 @@
+{
+  "owner": "trippingkelsea",
+  "slug": "strands",
+  "displayName": "Strands Agents SDK",
+  "latest": {
+    "version": "2.0.3",
+    "publishedAt": 1770259966892,
+    "commit": "https://github.com/clawdbot/skills/commit/c7b4925ff521bb12eb3b8602e709718d62bcc1e5"
+  },
+  "history": [
+    {
+      "version": "2.0.1",
+      "publishedAt": 1770257897767,
+      "commit": "https://github.com/clawdbot/skills/commit/009ea551dde08e1393b350f1a17602d4ad78fc17"
+    }
+  ]
+}

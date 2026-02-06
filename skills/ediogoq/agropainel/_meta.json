@@ -1,0 +1,11 @@
+{
+  "owner": "ediogoq",
+  "slug": "agropainel",
+  "displayName": "agropainel",
+  "latest": {
+    "version": "1.1.1",
+    "publishedAt": 1770306009600,
+    "commit": "https://github.com/clawdbot/skills/commit/9de8f83d021f3664a25c927c70f354f9adc79461"
+  },
+  "history": []
+}

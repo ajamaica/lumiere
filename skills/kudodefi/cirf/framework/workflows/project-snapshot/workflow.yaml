@@ -1,0 +1,39 @@
+# ═══════════════════════════════════════════════════════════════
+# CIRF - CRYPTO INTERACTIVE RESEARCH FRAMEWORK - WORKFLOW DEFINITION
+# ═══════════════════════════════════════════════════════════════
+
+# --- IDENTITY ---
+id: project-snapshot
+type: outlook
+name: Project Snapshot
+description: Quick project snapshot answering What (problem & solution), How (mechanics), Differentiation (advantages)
+
+# --- DEPENDENCIES ---
+dependencies:
+  objectives: "./framework/workflows/project-snapshot/objectives.md"
+  template: "./framework/workflows/project-snapshot/template.md"
+  guides:
+    scope-clarification: "./framework/guides/scope-clarification.md"
+    research-methodology: "./framework/guides/research-methodology.md"
+    collaborative-research: "./framework/guides/collaborative-research.md"
+    output-standards: "./framework/guides/output-standards.md"
+
+# --- CONFIGURATION ---
+configuration:
+  research_depth: standard
+  output_type: brief
+  output_format: markdown
+  output_path: "./workspaces/{workspace_id}/outputs/project-snapshot/project-snapshot-{date}.md"
+
+# --- DIRECTIVE ---
+# ═══════════════════════════════════════════════════════════════
+# ⚠️ MANDATORY EXECUTION - DO NOT SKIP
+# ═══════════════════════════════════════════════════════════════
+# You MUST execute BOTH steps below in order:
+#   1. initialization → READ and EXECUTE workflow-init.md
+#   2. execution → READ and EXECUTE workflow-execution.md
+# STOP immediately and report error if any step fails.
+# ═══════════════════════════════════════════════════════════════
+directive:
+  initialization: "./framework/components/workflow-init.md"
+  execution: "./framework/components/workflow-execution.md"

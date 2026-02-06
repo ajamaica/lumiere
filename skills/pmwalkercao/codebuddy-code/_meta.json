@@ -1,0 +1,11 @@
+{
+  "owner": "pmwalkercao",
+  "slug": "codebuddy-code",
+  "displayName": "CodeBuddy Code for OpenClaw",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770191133198,
+    "commit": "https://github.com/clawdbot/skills/commit/8c9a35d98c3ff101a9e581bdbe5adb1945db3795"
+  },
+  "history": []
+}

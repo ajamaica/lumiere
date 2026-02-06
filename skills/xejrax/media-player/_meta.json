@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "media-player",
+  "displayName": "Media Player",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135681140,
+    "commit": "https://github.com/clawdbot/skills/commit/4a982e5a41cc993fa9c4a4945fa51eb4e039b137"
+  },
+  "history": []
+}

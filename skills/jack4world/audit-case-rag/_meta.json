@@ -1,0 +1,11 @@
+{
+  "owner": "jack4world",
+  "slug": "audit-case-rag",
+  "displayName": "Audit Case Rag",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770373680311,
+    "commit": "https://github.com/openclaw/skills/commit/911805ee3dda7c95af1d36f03803381f5f706a09"
+  },
+  "history": []
+}

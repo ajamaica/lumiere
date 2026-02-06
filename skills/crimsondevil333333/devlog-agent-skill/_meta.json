@@ -1,0 +1,11 @@
+{
+  "owner": "crimsondevil333333",
+  "slug": "devlog-agent-skill",
+  "displayName": "DevLog Agent Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770279983047,
+    "commit": "https://github.com/openclaw/skills/commit/e94f69f29c9c3ec1025d5218d615e32ee995f5c9"
+  },
+  "history": []
+}

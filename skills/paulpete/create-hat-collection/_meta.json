@@ -1,0 +1,11 @@
+{
+  "owner": "paulpete",
+  "slug": "create-hat-collection",
+  "displayName": "Create Hat Collection",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770081335926,
+    "commit": "https://github.com/clawdbot/skills/commit/f73cc6ac4c1d20ac4475d20b402d8871e0ce482b"
+  },
+  "history": []
+}

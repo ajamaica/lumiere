@@ -1,0 +1,11 @@
+{
+  "owner": "alphafactor",
+  "slug": "factor",
+  "displayName": "To Do Factor",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770202688705,
+    "commit": "https://github.com/clawdbot/skills/commit/620b12d1018e361a1f50fa9e46e09bddbcf6b6fa"
+  },
+  "history": []
+}

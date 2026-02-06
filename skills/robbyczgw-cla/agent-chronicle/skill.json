@@ -1,0 +1,30 @@
+{
+  "name": "agent-chronicle",
+  "version": "0.6.0",
+  "description": "AI-powered diary generation for agents - creates rich, reflective journal entries with Quote Hall of Fame, Curiosity Backlog, Decision Archaeology, and Relationship Evolution. Works best with Claude models.",
+  "author": "robbyczgw-cla",
+  "tags": [
+    "chronicle",
+    "journal",
+    "memory",
+    "self-reflection",
+    "ai-perspective",
+    "quotes",
+    "decisions",
+    "curiosity",
+    "ai-generation"
+  ],
+  "emoji": "📜",
+  "triggers": [
+    "chronicle",
+    "diary",
+    "journal",
+    "daily log",
+    "write entry",
+    "quotes",
+    "curious",
+    "decisions"
+  ],
+  "license": "MIT",
+  "repository": "https://github.com/robbyczgw-cla/agent-chronicle"
+}

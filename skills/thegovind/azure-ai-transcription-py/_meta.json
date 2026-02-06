@@ -1,0 +1,11 @@
+{
+  "owner": "thegovind",
+  "slug": "azure-ai-transcription-py",
+  "displayName": "Azure Ai Transcription Py",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769870950826,
+    "commit": "https://github.com/clawdbot/skills/commit/24a44d82ced0a377a01df3b6ec581c246becb70b"
+  },
+  "history": []
+}

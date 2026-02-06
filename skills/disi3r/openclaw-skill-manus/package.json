@@ -1,0 +1,31 @@
+{
+  "name": "clawdbot-skill-manus",
+  "version": "1.0.0",
+  "description": "Manus AI autonomous agent skill for Clawdbot - Research, development, automation, and media generation",
+  "main": "scripts/run_task.py",
+  "scripts": {
+    "test": "python3 scripts/run_task.py 'Test task' --timeout 30"
+  },
+  "keywords": [
+    "clawdbot",
+    "skill",
+    "manus",
+    "ai-agent",
+    "autonomous",
+    "research",
+    "automation"
+  ],
+  "author": "DisierTECH",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/disier/clawdbot-skill-manus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/disier/clawdbot-skill-manus/issues"
+  },
+  "homepage": "https://github.com/disier/clawdbot-skill-manus#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

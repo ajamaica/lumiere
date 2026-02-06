@@ -1,0 +1,22 @@
+{
+  "owner": "santyr",
+  "slug": "archon-skill",
+  "displayName": "Archon Skill",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770134232330,
+    "commit": "https://github.com/clawdbot/skills/commit/b211b8c5f0b7506b0a61381debbd2f2e8e8b08de"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770131667750,
+      "commit": "https://github.com/clawdbot/skills/commit/79a2daa57ac09ec3572906c00f99340140dd16e1"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770049769153,
+      "commit": "https://github.com/clawdbot/skills/commit/88cfb5a361f84935340c888e6ce41422c6933cae"
+    }
+  ]
+}

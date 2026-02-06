@@ -1,0 +1,36 @@
+{
+  "name": "skillguard",
+  "version": "2.0.0",
+  "description": "Comprehensive security scanner for ClawHub skills. 50+ dangerous patterns, dependency scanning, multiple output formats.",
+  "author": "PaxSwarm",
+  "license": "MIT",
+  "keywords": [
+    "security",
+    "audit",
+    "scan",
+    "vulnerability",
+    "clawhub",
+    "skills",
+    "safety",
+    "moderation",
+    "cwe",
+    "owasp"
+  ],
+  "triggers": [
+    "skill security",
+    "vet skill",
+    "scan skill",
+    "is this skill safe",
+    "skillguard",
+    "audit skill",
+    "clawscan",
+    "security scan"
+  ],
+  "requires": {
+    "python": ">=3.8"
+  },
+  "files": ["SKILL.md", "skill.json", "scripts/skillguard.py"],
+  "entrypoint": "scripts/skillguard.py",
+  "repository": "https://github.com/G0HEAD/skillguard",
+  "homepage": "https://clawhub.ai/skills/clawscan"
+}

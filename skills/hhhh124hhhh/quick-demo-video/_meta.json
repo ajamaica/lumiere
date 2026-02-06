@@ -1,0 +1,11 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "quick-demo-video",
+  "displayName": "Quick Demo Video",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770282450986,
+    "commit": "https://github.com/clawdbot/skills/commit/04da61ff1482253c46f8c0e7e42a49ec722641b4"
+  },
+  "history": []
+}

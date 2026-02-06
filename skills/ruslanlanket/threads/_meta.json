@@ -1,0 +1,11 @@
+{
+  "owner": "ruslanlanket",
+  "slug": "threads",
+  "displayName": "Threads. Publish, read posts whith images. Retrieve user profile information.",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769979930072,
+    "commit": "https://github.com/clawdbot/skills/commit/778a3e9a720502347fe6dc933542d4f1b7af5a50"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "edwardirby",
+  "slug": "ydc-claude-agent-sdk-integration",
+  "displayName": "Integrate Claude Agent SDK with You.com MCP server",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769930333679,
+    "commit": "https://github.com/clawdbot/skills/commit/54905c30bbab8add13e266104e5da85f654593b6"
+  },
+  "history": []
+}

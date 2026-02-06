@@ -1,0 +1,11 @@
+{
+  "owner": "doonot",
+  "slug": "zero-trust",
+  "displayName": "Zero Trust",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770042199717,
+    "commit": "https://github.com/clawdbot/skills/commit/bfa55f205a6a4eb780080cee0a266c43cd17a807"
+  },
+  "history": []
+}

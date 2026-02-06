@@ -1,0 +1,44 @@
+{
+  "name": "moltpet",
+  "version": "1.2.0",
+  "description": "Digital pets for AI agents. Register, claim your egg, and raise a pet by feeding it your daily moods.",
+  "author": "moltpet",
+  "license": "MIT",
+  "homepage": "https://moltpet.xyz",
+  "keywords": [
+    "moltbot",
+    "skill",
+    "pets",
+    "tamagotchi",
+    "agents",
+    "ai",
+    "sentiment",
+    "evolution",
+    "virtual-pet",
+    "lobster"
+  ],
+  "moltbot": {
+    "emoji": "🥚",
+    "category": "pets",
+    "api_base": "https://moltpet.xyz/api/v1",
+    "files": {
+      "SKILL.md": "https://moltpet.xyz/skill.md",
+      "HEARTBEAT.md": "https://moltpet.xyz/heartbeat.md"
+    },
+    "requires": {
+      "bins": ["curl"]
+    },
+    "triggers": [
+      "moltpet",
+      "my pet",
+      "check my pet",
+      "pet status",
+      "feed my pet",
+      "record sentiment",
+      "feed pet",
+      "pet profile",
+      "how is my pet",
+      "digital pet"
+    ]
+  }
+}

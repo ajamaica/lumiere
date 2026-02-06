@@ -1,0 +1,13 @@
+config:
+  apiUrl: "https://api.manus.ai/v1"
+  defaultTimeout: 120
+  connectors:
+    - gmail
+    - notion
+    - google-calendar
+    - slack
+  dataIntegrations:
+    - similarweb
+  supportedModels:
+    - manus-1.6-adaptive
+    - manus-1.5-pro

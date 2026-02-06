@@ -1,0 +1,8 @@
+{
+  "credentialsFile": ".env",
+  "bookmarkCount": 50,
+  "checkIntervalMinutes": 60,
+  "storageDir": "../../life/resources/bookmarks",
+  "notifyTelegram": true,
+  "contextProjects": ["your project 1 (be specific!)", "your project 2", "your interests and goals"]
+}

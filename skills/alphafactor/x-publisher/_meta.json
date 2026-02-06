@@ -1,0 +1,17 @@
+{
+  "owner": "alphafactor",
+  "slug": "x-publisher",
+  "displayName": "X Publisher",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770137221611,
+    "commit": "https://github.com/clawdbot/skills/commit/3461df299544abd45362a687f255ef7bafd5c477"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770105795729,
+      "commit": "https://github.com/clawdbot/skills/commit/d037064bc8a45361c4482edf4d5ff004edec044e"
+    }
+  ]
+}

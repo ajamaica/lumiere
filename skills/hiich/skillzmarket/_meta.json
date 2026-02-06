@@ -1,0 +1,17 @@
+{
+  "owner": "hiich",
+  "slug": "skillzmarket",
+  "displayName": "SkillzMarket",
+  "latest": {
+    "version": "1.0.5",
+    "publishedAt": 1769971463417,
+    "commit": "https://github.com/clawdbot/skills/commit/cdc3ff3cbff07334aef7611974867798a5816fd4"
+  },
+  "history": [
+    {
+      "version": "1.0.2",
+      "publishedAt": 1769890180008,
+      "commit": "https://github.com/clawdbot/skills/commit/c4b8c11c8292d864e7613f2a746863e27bca838c"
+    }
+  ]
+}

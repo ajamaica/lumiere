@@ -1,0 +1,10 @@
+{
+  "name": "skill-release-manager",
+  "version": "1.0.0",
+  "description": "Orchestrates version bumping, GitHub releases (via skill-publisher), and ClawHub publishing.",
+  "main": "index.js",
+  "dependencies": {
+    "semver": "^7.6.0",
+    "yargs": "^17.7.2"
+  }
+}

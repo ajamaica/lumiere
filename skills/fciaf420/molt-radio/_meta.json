@@ -1,0 +1,22 @@
+{
+  "owner": "fciaf420",
+  "slug": "molt-radio",
+  "displayName": "Molt Radio",
+  "latest": {
+    "version": "1.0.6",
+    "publishedAt": 1770160879641,
+    "commit": "https://github.com/clawdbot/skills/commit/f22dba9f3c3ee77d03af61ca0bcb3069242378c6"
+  },
+  "history": [
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770048838793,
+      "commit": "https://github.com/clawdbot/skills/commit/b90829df2d310e2d3318d69652dc0ffbb0a95466"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769961243620,
+      "commit": "https://github.com/clawdbot/skills/commit/fc38f27f7fea81974ef8a0fc6d9fed3c61e11327"
+    }
+  ]
+}

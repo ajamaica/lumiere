@@ -1,0 +1,170 @@
+{
+  "tools": [
+    {
+      "name": "cardano_generate_wallet",
+      "description": "Generate a new Cardano wallet with 24-word mnemonic phrase. Returns address, vkey, and encrypted credentials path.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "network": {
+            "type": "string",
+            "enum": ["Preprod", "Mainnet"],
+            "default": "Preprod",
+            "description": "Cardano network to use"
+          }
+        }
+      },
+      "returns": {
+        "success": "boolean",
+        "address": "string",
+        "vkey": "string",
+        "network": "string",
+        "credentialsPath": "string",
+        "message": "string"
+      }
+    },
+    {
+      "name": "cardano_restore_wallet",
+      "description": "Restore a wallet from existing mnemonic phrase",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "mnemonic": {
+            "type": "string",
+            "description": "24-word mnemonic phrase (space-separated)"
+          },
+          "network": {
+            "type": "string",
+            "enum": ["Preprod", "Mainnet"],
+            "default": "Preprod",
+            "description": "Cardano network"
+          },
+          "agentIdentifier": {
+            "type": "string",
+            "description": "Optional identifier to save credentials"
+          }
+        },
+        "required": ["mnemonic"]
+      },
+      "returns": {
+        "success": "boolean",
+        "address": "string",
+        "vkey": "string",
+        "network": "string",
+        "message": "string"
+      }
+    },
+    {
+      "name": "cardano_get_wallet_address",
+      "description": "Get wallet address from stored credentials",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "agentIdentifier": {
+            "type": "string",
+            "description": "Wallet identifier"
+          },
+          "network": {
+            "type": "string",
+            "enum": ["Preprod", "Mainnet"],
+            "default": "Preprod"
+          }
+        },
+        "required": ["agentIdentifier"]
+      },
+      "returns": {
+        "success": "boolean",
+        "address": "string",
+        "network": "string",
+        "message": "string"
+      }
+    },
+    {
+      "name": "cardano_generate_funding_qr",
+      "description": "Generate QR code for wallet funding. Returns QR code as data URL that can be displayed or scanned.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Cardano address (optional if agentIdentifier provided)"
+          },
+          "agentIdentifier": {
+            "type": "string",
+            "description": "Wallet identifier (optional if address provided)"
+          },
+          "network": {
+            "type": "string",
+            "enum": ["Preprod", "Mainnet"],
+            "default": "Preprod"
+          }
+        }
+      },
+      "returns": {
+        "success": "boolean",
+        "qrDataUrl": "string",
+        "address": "string",
+        "network": "string",
+        "faucetUrl": "string",
+        "message": "string"
+      }
+    },
+    {
+      "name": "cardano_get_wallet_balance",
+      "description": "Get wallet balance in ADA and lovelace. Requires Blockfrost API key.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "agentIdentifier": {
+            "type": "string",
+            "description": "Wallet identifier"
+          },
+          "network": {
+            "type": "string",
+            "enum": ["Preprod", "Mainnet"],
+            "default": "Preprod"
+          },
+          "blockfrostApiKey": {
+            "type": "string",
+            "description": "Blockfrost API key (optional, can use BLOCKFROST_API_KEY env var)"
+          }
+        },
+        "required": ["agentIdentifier"]
+      },
+      "returns": {
+        "success": "boolean",
+        "ada": "number",
+        "lovelace": "string",
+        "network": "string",
+        "address": "string",
+        "message": "string"
+      }
+    },
+    {
+      "name": "cardano_backup_wallet",
+      "description": "Securely backup wallet credentials (encrypted)",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "agentIdentifier": {
+            "type": "string",
+            "description": "Wallet identifier"
+          },
+          "network": {
+            "type": "string",
+            "enum": ["Preprod", "Mainnet"],
+            "default": "Preprod"
+          }
+        },
+        "required": ["agentIdentifier"]
+      },
+      "returns": {
+        "success": "boolean",
+        "backupData": "string",
+        "agentIdentifier": "string",
+        "network": "string",
+        "message": "string"
+      }
+    }
+  ]
+}

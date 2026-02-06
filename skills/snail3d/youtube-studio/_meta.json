@@ -1,0 +1,11 @@
+{
+  "owner": "snail3d",
+  "slug": "youtube-studio",
+  "displayName": "Youtube Studio",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770270644133,
+    "commit": "https://github.com/clawdbot/skills/commit/dd74613d6d20fee531ae356f7663a3d339399694"
+  },
+  "history": []
+}

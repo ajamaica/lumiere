@@ -1,0 +1,11 @@
+{
+  "owner": "aatmaan1",
+  "slug": "agent-orchestrator",
+  "displayName": "Agent Orchestrator",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769868742777,
+    "commit": "https://github.com/clawdbot/skills/commit/966cd600243fe782d1ae2845ebc5a01e2a0f4b85"
+  },
+  "history": []
+}

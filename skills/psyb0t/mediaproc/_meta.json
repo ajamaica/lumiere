@@ -1,0 +1,17 @@
+{
+  "owner": "psyb0t",
+  "slug": "mediaproc",
+  "displayName": "mediaproc",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770318439415,
+    "commit": "https://github.com/openclaw/skills/commit/2509672eb6d8400b49195ac5684355bb604c5915"
+  },
+  "history": [
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770284138549,
+      "commit": "https://github.com/clawdbot/skills/commit/69b1eb2d70d638d4c4a41266f15c10dd1e693a45"
+    }
+  ]
+}

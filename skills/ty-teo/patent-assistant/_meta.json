@@ -1,0 +1,17 @@
+{
+  "owner": "ty-teo",
+  "slug": "patent-assistant",
+  "displayName": "Patent Assistant",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770111500723,
+    "commit": "https://github.com/clawdbot/skills/commit/400e2278b15470389b2e5aa01efbcd0dc6651413"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770111206925,
+      "commit": "https://github.com/clawdbot/skills/commit/e3db1b4d3a32879723183ac825d5ebec0d556661"
+    }
+  ]
+}

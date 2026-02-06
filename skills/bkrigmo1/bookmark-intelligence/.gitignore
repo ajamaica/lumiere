@@ -1,0 +1,24 @@
+# State and temp files
+bookmarks.json
+.bookmark-*.json
+logs/
+
+# Credentials (user must provide their own)
+.env
+config.json
+
+# License and payment data (sensitive)
+license.json
+usage.json
+payments.json
+licenses-admin.json
+
+# User data - results from analysis
+../../life/resources/bookmarks/
+
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db

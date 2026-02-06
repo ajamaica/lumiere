@@ -1,0 +1,11 @@
+{
+  "owner": "techlaai",
+  "slug": "gdocs-markdown",
+  "displayName": "Google Docs from Markdown",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770193622392,
+    "commit": "https://github.com/clawdbot/skills/commit/e09501c4bb4d1b5d6997d3edaf0d163f8f74b753"
+  },
+  "history": []
+}

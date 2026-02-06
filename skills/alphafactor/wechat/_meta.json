@@ -1,0 +1,11 @@
+{
+  "owner": "alphafactor",
+  "slug": "wechat",
+  "displayName": "wechat",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770094918954,
+    "commit": "https://github.com/clawdbot/skills/commit/77c4132a37f8533923f348afb89c19c93b53ee05"
+  },
+  "history": []
+}

@@ -1,0 +1,177 @@
+{
+  "name": "3D Print CRM",
+  "description": "Customer and order management for 3D printing business",
+  "icon": "🖨️",
+  "properties": {
+    "Customer Name": {
+      "type": "title",
+      "description": "Customer or company name"
+    },
+    "Status": {
+      "type": "status",
+      "options": [
+        "Lead",
+        "Quote Requested",
+        "Quote Sent",
+        "Quote Approved",
+        "Payment Pending",
+        "Ordered",
+        "Slicing",
+        "Printing",
+        "Post-Processing",
+        "Packaging",
+        "Shipped",
+        "Delivered",
+        "Issue/Refund"
+      ],
+      "groups": {
+        "Pre-Sale": ["Lead", "Quote Requested", "Quote Sent", "Quote Approved"],
+        "Paid": ["Payment Pending", "Ordered"],
+        "Production": ["Slicing", "Printing", "Post-Processing", "Packaging"],
+        "Fulfilled": ["Shipped", "Delivered"],
+        "Issues": ["Issue/Refund"]
+      }
+    },
+    "Email": {
+      "type": "email",
+      "description": "Customer email"
+    },
+    "Phone": {
+      "type": "phone_number",
+      "description": "Customer phone"
+    },
+    "Order Value": {
+      "type": "number",
+      "number_format": "dollar"
+    },
+    "Quote ID": {
+      "type": "rich_text",
+      "description": "Reference from Quotify app"
+    },
+    "Shopify Order": {
+      "type": "rich_text",
+      "description": "Shopify order ID"
+    },
+    "Filament Type": {
+      "type": "multi_select",
+      "options": [
+        "PLA Basic",
+        "PLA Matte",
+        "PLA Silk",
+        "PETG",
+        "ABS",
+        "TPU (Flexible)",
+        "ASA",
+        "Carbon Fiber",
+        "Wood",
+        "Metal Fill"
+      ]
+    },
+    "Print Color": {
+      "type": "select",
+      "options": [
+        "Black",
+        "White",
+        "Grey",
+        "Red",
+        "Blue",
+        "Green",
+        "Yellow",
+        "Orange",
+        "Purple",
+        "Pink",
+        "Brown",
+        "Silver",
+        "Gold",
+        "Clear/Transparent"
+      ]
+    },
+    "Layer Height": {
+      "type": "select",
+      "options": [
+        "0.08mm (Ultra Fine)",
+        "0.12mm (Fine)",
+        "0.16mm (Standard)",
+        "0.20mm (Draft)",
+        "0.24mm (Fast)"
+      ],
+      "default": "0.16mm (Standard)"
+    },
+    "Print Time Est.": {
+      "type": "number",
+      "number_format": "number",
+      "unit": "hours"
+    },
+    "Quantity": {
+      "type": "number",
+      "number_format": "number",
+      "default": 1
+    },
+    "Model Files": {
+      "type": "files",
+      "description": "STL, 3MF, or other model files"
+    },
+    "Due Date": {
+      "type": "date",
+      "description": "Customer requested deadline"
+    },
+    "Ship By": {
+      "type": "date",
+      "description": "Ship to arrive on time"
+    },
+    "Shipping Method": {
+      "type": "select",
+      "options": ["Local Pickup", "Standard Shipping", "Expedited", "International"]
+    },
+    "Tracking Number": {
+      "type": "rich_text",
+      "description": "Shipping tracking"
+    },
+    "Address": {
+      "type": "rich_text",
+      "description": "Full shipping address"
+    },
+    "Special Requests": {
+      "type": "rich_text",
+      "description": "Customer notes and customizations"
+    },
+    "Print Notes": {
+      "type": "rich_text",
+      "description": "Internal notes about the print"
+    },
+    "Photos": {
+      "type": "files",
+      "description": "Photos of finished print"
+    },
+    "Order Created": {
+      "type": "created_time"
+    }
+  },
+  "views": [
+    {
+      "name": "Production Board",
+      "type": "board",
+      "group_by": "Status"
+    },
+    {
+      "name": "This Week Due",
+      "type": "table",
+      "filter": {
+        "property": "Due Date",
+        "date": {
+          "next_week": {}
+        }
+      }
+    },
+    {
+      "name": "By Filament",
+      "type": "table",
+      "group_by": "Filament Type"
+    },
+    {
+      "name": "Calendar",
+      "type": "calendar",
+      "date_property": "Ship By"
+    }
+  ]
+}

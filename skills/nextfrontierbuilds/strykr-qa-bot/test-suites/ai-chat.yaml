@@ -1,0 +1,184 @@
+# AI Chat Test Suite
+# https://app.strykr.ai - AI Chat functionality
+
+name: AI Chat
+description: Tests for Strykr AI chat - input, responses, and quality
+baseUrl: https://app.strykr.ai
+
+setup:
+  - goto: /
+  - waitForLoad: true
+  - waitFor: '[data-testid="ai-chat"], .ai-chat-widget, input[placeholder*="Ask"]'
+    timeout: 10000
+
+tests:
+  - name: AI chat widget visible on homepage
+    steps:
+      - expectVisible: '[data-testid="ai-chat"], .ai-chat-widget'
+      - expectVisible: 'input[placeholder*="Ask"], textarea[placeholder*="Ask"]'
+      - screenshot: ai-chat-widget
+
+  - name: Can focus chat input
+    steps:
+      - click: 'input[placeholder*="Ask"], textarea[placeholder*="Ask"]'
+      - expectFocused: 'input[placeholder*="Ask"], textarea[placeholder*="Ask"]'
+
+  # Direct Input Tests
+  - name: Direct input - simple query
+    steps:
+      - type: 
+          selector: 'input[placeholder*="Ask"], textarea[placeholder*="Ask"]'
+          text: 'What is Bitcoin?'
+      - press: Enter
+      - waitFor: '.ai-response, [data-testid="ai-response"]'
+        timeout: 30000
+      - expectVisible: '.ai-response, [data-testid="ai-response"]'
+      - screenshot: ai-response-simple
+
+  - name: Direct input - price query
+    steps:
+      - goto: /
+      - waitFor: 'input[placeholder*="Ask"]'
+        timeout: 5000
+      - type:
+          selector: 'input[placeholder*="Ask"], textarea[placeholder*="Ask"]'
+          text: 'What is the price of ETH?'
+      - press: Enter
+      - waitFor: '.ai-response, [data-testid="ai-response"]'
+        timeout: 30000
+      - call: expectAIResponse
+        args:
+          hasPrice: true
+          minLength: 50
+      - screenshot: ai-response-price
+
+  - name: Direct input - technical analysis query
+    steps:
+      - goto: /
+      - waitFor: 'input[placeholder*="Ask"]'
+        timeout: 5000
+      - type:
+          selector: 'input[placeholder*="Ask"], textarea[placeholder*="Ask"]'
+          text: 'What are the technicals for SOL?'
+      - press: Enter
+      - waitFor: '.ai-response, [data-testid="ai-response"]'
+        timeout: 30000
+      - call: expectAIResponse
+        args:
+          hasTechnicals: true
+          minLength: 100
+      - screenshot: ai-response-technicals
+
+  # Pre-filled Queries (from signal cards)
+  - name: Pre-filled query from crypto signal
+    steps:
+      - goto: /
+      - click: 'a[href="/crypto-signals"]'
+      - waitFor: '.signal-card'
+        timeout: 10000
+      - click: 'button:has-text("Ask Strykr AI"), [data-action="ask-ai"]'
+        first: true
+      - waitFor: 1000
+      # Input should be pre-filled with context
+      - expectValue:
+          selector: 'input[placeholder*="Ask"], textarea[placeholder*="Ask"]'
+          notEmpty: true
+      - press: Enter
+      - waitFor: '.ai-response, [data-testid="ai-response"]'
+        timeout: 30000
+      - expectVisible: '.ai-response'
+      - screenshot: ai-prefilled-crypto
+
+  - name: Pre-filled query from stock signal
+    steps:
+      - goto: /
+      - click: 'a[href="/stock-signals"]'
+      - waitFor: '.signal-card'
+        timeout: 10000
+      - click: 'button:has-text("Ask Strykr AI"), [data-action="ask-ai"]'
+        first: true
+      - waitFor: 1000
+      - press: Enter
+      - waitFor: '.ai-response, [data-testid="ai-response"]'
+        timeout: 30000
+      - screenshot: ai-prefilled-stock
+
+  # Response Quality Tests
+  - name: AI response has minimum length
+    steps:
+      - goto: /
+      - type:
+          selector: 'input[placeholder*="Ask"]'
+          text: 'Explain the current market conditions'
+      - press: Enter
+      - waitFor: '.ai-response'
+        timeout: 30000
+      - call: expectAIResponse
+        args:
+          minLength: 200
+      - screenshot: ai-quality-length
+
+  - name: AI response contains relevant content
+    steps:
+      - goto: /
+      - type:
+          selector: 'input[placeholder*="Ask"]'
+          text: 'What are the best crypto signals today?'
+      - press: Enter
+      - waitFor: '.ai-response'
+        timeout: 30000
+      - expectText:
+          selector: '.ai-response'
+          containsAny:
+            - 'signal'
+            - 'crypto'
+            - 'Bitcoin'
+            - 'Ethereum'
+            - 'bullish'
+            - 'bearish'
+      - screenshot: ai-relevant-content
+
+  # Loading States
+  - name: Loading indicator shows during query
+    steps:
+      - goto: /
+      - type:
+          selector: 'input[placeholder*="Ask"]'
+          text: 'Quick test'
+      - press: Enter
+      # Capture loading state
+      - expectVisible: '.loading, .typing-indicator, [data-loading="true"]'
+        timeout: 2000
+        allowFail: true  # May be too fast
+      - screenshot: ai-loading
+
+  # Error Handling
+  - name: Handles empty submission gracefully
+    steps:
+      - goto: /
+      - click: 'input[placeholder*="Ask"]'
+      - press: Enter
+      # Should not crash, may show validation message
+      - expectNoConsoleErrors: true
+      - screenshot: ai-empty-submit
+
+  # Multi-turn Conversation
+  - name: Can ask follow-up questions
+    steps:
+      - goto: /
+      - type:
+          selector: 'input[placeholder*="Ask"]'
+          text: 'What is the price of BTC?'
+      - press: Enter
+      - waitFor: '.ai-response'
+        timeout: 30000
+      - type:
+          selector: 'input[placeholder*="Ask"]'
+          text: 'What about ETH?'
+      - press: Enter
+      - waitFor: 2000
+      - screenshot: ai-followup
+
+  - name: No console errors during AI interactions
+    steps:
+      - expectNoConsoleErrors: true

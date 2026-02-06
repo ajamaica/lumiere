@@ -1,0 +1,29 @@
+{
+  "name": "perplexity-search",
+  "version": "1.0.0",
+  "description": "Search the web using Perplexity's Search API for ranked, real-time web results with advanced filtering. Supports recency filtering (day/week/month/year) and returns structured results with titles, URLs, and snippets.",
+  "author": "Craig Milligan",
+  "license": "MIT",
+  "homepage": "https://github.com/M4vF14/perplexity-search-openclaw",
+  "emoji": "🔍",
+  "tags": ["search", "web", "perplexity", "research", "api"],
+  "requires": {
+    "openclaw": ">=2026.2.0",
+    "python": ">=3.7",
+    "env": ["PERPLEXITY_API_KEY"]
+  },
+  "pricing": {
+    "model": "api-usage",
+    "provider": "Perplexity",
+    "cost": "$5 per 1,000 requests",
+    "url": "https://perplexity.ai/account/api"
+  },
+  "setup": {
+    "instructions": "Get your API key from https://perplexity.ai/account/api and add it to OpenClaw config under skills.perplexity-search.env.PERPLEXITY_API_KEY"
+  },
+  "security": {
+    "keyHandling": "environment",
+    "sanitization": true,
+    "timeout": 30
+  }
+}

@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# 生成的报告文件（保留示例）
+report*.md
+!example_report.md
+
+# 包含敏感信息的文件
+.env
+*.env
+config.json
+bilibili-monitor.json
+
+# 测试文件
+test_*.py
+
+# Claude Code 缓存
+.claude/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

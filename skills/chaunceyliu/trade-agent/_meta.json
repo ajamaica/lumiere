@@ -1,0 +1,11 @@
+{
+  "owner": "chaunceyliu",
+  "slug": "trade-agent",
+  "displayName": "trade-agent",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770300993914,
+    "commit": "https://github.com/clawdbot/skills/commit/8dcd19f1c47a76f31b910a33d23a7f8248aa9554"
+  },
+  "history": []
+}

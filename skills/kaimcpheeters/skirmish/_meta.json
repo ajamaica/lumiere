@@ -1,0 +1,11 @@
+{
+  "owner": "kaimcpheeters",
+  "slug": "skirmish",
+  "displayName": "LLM Skirmish",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770156548564,
+    "commit": "https://github.com/clawdbot/skills/commit/545673b6817d39a61161860b28c31e1b61403334"
+  },
+  "history": []
+}

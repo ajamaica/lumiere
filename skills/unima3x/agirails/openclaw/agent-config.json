@@ -1,0 +1,53 @@
+{
+  "_comment": "Copy this to openclaw.json → agents.list",
+  
+  "requester": {
+    "_description": "Agent that BUYS services (pays USDC)",
+    "config": {
+      "id": "treasury",
+      "name": "Treasury",
+      "workspace": "{WORKSPACE}/agents/treasury",
+      "model": "haiku",
+      "heartbeat": {
+        "every": "60m",
+        "model": "haiku",
+        "prompt": "Check pending ACTP transactions and USDC balance. Alert human if balance < $20 or any anomalies. Review transaction log for issues."
+      },
+      "identity": {
+        "name": "Treasury",
+        "emoji": "💰"
+      }
+    }
+  },
+
+  "provider": {
+    "_description": "Agent that SELLS services (receives USDC)",
+    "config": {
+      "id": "merchant",
+      "name": "Merchant",
+      "workspace": "{WORKSPACE}/agents/merchant",
+      "model": "haiku",
+      "heartbeat": {
+        "every": "30m",
+        "model": "haiku",
+        "prompt": "Check for new service requests. Process pending jobs. Deliver completed work. Monitor for disputes."
+      },
+      "identity": {
+        "name": "Merchant",
+        "emoji": "🏪"
+      }
+    }
+  },
+
+  "env_vars": {
+    "_description": "Add to openclaw.json → env.vars",
+    "required": {
+      "AGENT_PRIVATE_KEY": "0x... (wallet private key)",
+      "AGENT_ADDRESS": "0x... (wallet address)"
+    },
+    "optional": {
+      "AGIRAILS_MODE": "mainnet | testnet | mock",
+      "AGIRAILS_RPC_URL": "https://... (custom RPC, optional)"
+    }
+  }
+}

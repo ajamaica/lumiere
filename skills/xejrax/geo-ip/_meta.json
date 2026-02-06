@@ -1,0 +1,11 @@
+{
+  "owner": "xejrax",
+  "slug": "geo-ip",
+  "displayName": "Geo Ip",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770135715136,
+    "commit": "https://github.com/clawdbot/skills/commit/8bc8106bffd535fa6edf5cf18119ae19fc4c76ae"
+  },
+  "history": []
+}

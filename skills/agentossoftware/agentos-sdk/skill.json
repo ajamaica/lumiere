@@ -1,0 +1,65 @@
+{
+  "name": "agentos-sdk",
+  "version": "3.5.0",
+  "description": "Complete agent operations toolkit: memory, projects, kanban, brainstorms, activity logging, mesh communication, and self-evolution framework",
+  "author": "MoonstoneLabs",
+  "homepage": "https://agentos.software",
+  "keywords": [
+    "memory",
+    "persistence",
+    "semantic-search",
+    "ai-agent",
+    "self-evolution",
+    "learning",
+    "recall",
+    "mesh",
+    "agent-communication",
+    "multi-agent"
+  ],
+  "files": [
+    "SKILL.md",
+    "DOCS.md",
+    "AGENT-OPS.md",
+    "SELF-EVOLUTION.md",
+    "agentos.sh",
+    "bin/",
+    "scripts/",
+    "examples/"
+  ],
+  "bin": {
+    "aos": "bin/aos",
+    "mesh": "bin/mesh"
+  },
+  "env": {
+    "AGENTOS_API_KEY": {
+      "required": true,
+      "description": "API key from agentos.software dashboard"
+    },
+    "AGENTOS_BASE_URL": {
+      "required": false,
+      "default": "http://178.156.216.106:3100",
+      "description": "AgentOS API endpoint"
+    },
+    "AGENTOS_AGENT_ID": {
+      "required": true,
+      "description": "Unique identifier for this agent instance"
+    },
+    "MESH_PENDING_FILE": {
+      "required": false,
+      "default": "$HOME/.mesh-pending.json",
+      "description": "Local file for queued mesh messages"
+    }
+  },
+  "changelog": {
+    "3.5.0": "Synced with production: Google OAuth multi-tenant, Kanban API, Projects API, WebSocket events, bulk dump endpoints, agents discovery, API key management",
+    "3.4.0": "Added mandatory Heartbeat Context Backup Protocol: agents must backup context every 10min heartbeat to prevent context loss during compaction",
+    "3.3.1": "Security: Config files now created with chmod 600 permissions",
+    "3.3.0": "Major update: Added AGENT-OPS.md (complete agent operations guide) + aos CLI for full dashboard control (projects, kanban, brainstorms, activity logging)",
+    "3.2.0": "Added bin/ folder with mesh CLI for proper installation via ClawdHub",
+    "3.1.0": "Merged mesh CLI into SDK - single unified skill for all AgentOS features",
+    "3.0.0": "Complete self-evolution framework: aos_before_action (pre-task mistake check), aos_problem_solved (solutions registry), aos_checkpoint (anti-compaction), aos_session_start (context restore), aos_verify_logged (verification proof), aos_evolve_check (protocol checklist); added SELF-EVOLUTION.md comprehensive guide",
+    "2.2.0": "Fixed mesh API alignment: aos_mesh_inbox, aos_mesh_outbox, aos_mesh_tasks, aos_mesh_stats, aos_mesh_activity; fixed task field names",
+    "2.1.0": "Added mesh communication (agent-to-agent messaging, tasks, real-time daemon)",
+    "2.0.0": "Initial release with memory, search, versioning, and self-evolution"
+  }
+}

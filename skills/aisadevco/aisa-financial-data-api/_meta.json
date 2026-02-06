@@ -1,0 +1,11 @@
+{
+  "owner": "aisadevco",
+  "slug": "aisa-financial-data-api",
+  "displayName": "aisa financial data api",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770274355306,
+    "commit": "https://github.com/clawdbot/skills/commit/837ff8387cc23ba34d8eb0e7cfc886244f975929"
+  },
+  "history": []
+}

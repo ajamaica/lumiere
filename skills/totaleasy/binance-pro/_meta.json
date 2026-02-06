@@ -1,0 +1,11 @@
+{
+  "owner": "totaleasy",
+  "slug": "binance-pro",
+  "displayName": "Binance Pro",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770049185832,
+    "commit": "https://github.com/clawdbot/skills/commit/37e2e39be0cd07b8af22ce89c55bff193096d4d5"
+  },
+  "history": []
+}

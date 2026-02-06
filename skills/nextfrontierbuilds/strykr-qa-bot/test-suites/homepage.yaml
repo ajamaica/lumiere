@@ -1,0 +1,93 @@
+# Homepage Test Suite
+# https://app.strykr.ai/
+
+name: Homepage
+description: Tests for Strykr homepage components and navigation
+baseUrl: https://app.strykr.ai
+
+setup:
+  - goto: /
+  - waitForLoad: true
+  - waitFor: '[data-testid="market-status"], .market-status'
+    timeout: 10000
+
+tests:
+  - name: Page loads successfully
+    steps:
+      - expectVisible: 'main'
+      - expectNoErrors: true
+      - screenshot: homepage-loaded
+
+  - name: Market status indicator displays
+    steps:
+      - expectVisible: '[data-testid="market-status"], .market-status'
+      - expectText: 
+          selector: '[data-testid="market-status"]'
+          matches: '(Open|Closed|Pre-Market|After-Hours)'
+
+  - name: Navigation sidebar present
+    steps:
+      - expectVisible: 'nav, [role="navigation"]'
+      - expectVisible: 'a[href="/crypto-signals"], [data-nav="crypto"]'
+      - expectVisible: 'a[href="/stock-signals"], [data-nav="stocks"]'
+      - expectVisible: 'a[href="/news"], [data-nav="news"]'
+      - expectVisible: 'a[href="/economic-events"], [data-nav="events"]'
+
+  - name: AI Chat widget present
+    steps:
+      - expectVisible: '[data-testid="ai-chat"], .ai-chat-widget, [aria-label*="chat"]'
+      - expectVisible: 'input[placeholder*="Ask"], textarea[placeholder*="Ask"]'
+
+  - name: Signals preview section loads
+    steps:
+      - waitFor: '.signals-preview, [data-testid="signals-preview"]'
+        timeout: 15000
+      - expectVisible: '.signal-card, [data-testid="signal-card"]'
+      - expectCount:
+          selector: '.signal-card'
+          min: 1
+
+  - name: News carousel displays
+    steps:
+      - waitFor: '.news-carousel, [data-testid="news-section"]'
+        timeout: 10000
+      - expectVisible: '.news-item, [data-testid="news-card"]'
+
+  - name: Events widget loads (known intermittent issue)
+    knownIssue: events-widget-race-condition
+    steps:
+      - waitFor: '.events-widget, [data-testid="events-widget"]'
+        timeout: 15000
+      - expectVisible: '.event-card, [data-testid="event-card"]'
+
+  - name: Navigate to Crypto Signals via sidebar
+    steps:
+      - click: 'a[href="/crypto-signals"], [data-nav="crypto"]'
+      - waitForNavigation: true
+      - expectUrl: '/crypto-signals'
+      - expectVisible: '.signal-card'
+
+  - name: Navigate to Stock Signals via sidebar
+    steps:
+      - goto: /
+      - waitForLoad: true
+      - click: 'a[href="/stock-signals"], [data-nav="stocks"]'
+      - waitForNavigation: true
+      - expectUrl: '/stock-signals'
+
+  - name: Navigate to News via sidebar
+    steps:
+      - goto: /
+      - waitForLoad: true
+      - click: 'a[href="/news"], [data-nav="news"]'
+      - waitForNavigation: true
+      - expectUrl: '/news'
+      - expectVisible: 'main'
+
+  - name: Navigate to Events via sidebar
+    steps:
+      - goto: /
+      - waitForLoad: true
+      - click: 'a[href="/economic-events"], [data-nav="events"]'
+      - waitForNavigation: true
+      - expectUrl: '/economic-events'

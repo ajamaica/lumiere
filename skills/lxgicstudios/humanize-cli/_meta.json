@@ -1,0 +1,17 @@
+{
+  "owner": "lxgicstudios",
+  "slug": "humanize-cli",
+  "displayName": "Humanize CLI AI Text Detection & Rewriting",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1769967341055,
+    "commit": "https://github.com/clawdbot/skills/commit/3be87701a8922b37efc65d90ec5f0b6875004936"
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1769966902528,
+      "commit": "https://github.com/clawdbot/skills/commit/430b81e9beb8280e4da1b26e43087d87c343e729"
+    }
+  ]
+}

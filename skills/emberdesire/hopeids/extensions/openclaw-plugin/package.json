@@ -1,0 +1,19 @@
+{
+  "name": "@openclaw/hopeids",
+  "version": "0.1.0",
+  "description": "hopeIDS security scanner plugin for OpenClaw",
+  "main": "index.ts",
+  "openclaw": {
+    "extensions": [
+      "."
+    ]
+  },
+  "dependencies": {
+    "hopeid": "^0.1.0"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2025.0.0"
+  },
+  "author": "E.x.O. Entertainment Studios",
+  "license": "AGPL-3.0"
+}

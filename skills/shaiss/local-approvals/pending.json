@@ -1,0 +1,41 @@
+{
+  "requests": {
+    "29df8ecb": {
+      "id": "29df8ecb",
+      "agent": "assistant",
+      "category": "file_write",
+      "operation": "Create test file",
+      "reasoning": "Testing the CLI workflow",
+      "status": "decided",
+      "submitted_at": "2026-02-05T08:41:32.415450",
+      "updated_at": "2026-02-05T08:41:40.245946",
+      "decision": "approved",
+      "reviewer": "user"
+    },
+    "8cf93479": {
+      "id": "8cf93479",
+      "agent": "planner",
+      "category": "network",
+      "operation": "Make API request",
+      "reasoning": "Testing denial workflow",
+      "status": "decided",
+      "submitted_at": "2026-02-05T08:42:03.291670",
+      "updated_at": "2026-02-05T08:42:06.783389",
+      "decision": "denied",
+      "reviewer": "user"
+    },
+    "23fc6207": {
+      "id": "23fc6207",
+      "agent": "planner",
+      "category": "task",
+      "operation": "Create task",
+      "reasoning": "Testing agent filter",
+      "status": "decided",
+      "submitted_at": "2026-02-05T08:42:37.653265",
+      "updated_at": "2026-02-05T08:42:45.262222",
+      "decision": "approved",
+      "reviewer": "user"
+    }
+  },
+  "last_updated": "2026-02-05T08:42:45.263235"
+}

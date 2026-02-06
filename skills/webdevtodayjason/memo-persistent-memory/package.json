@@ -1,0 +1,41 @@
+{
+  "name": "@openclaw/persistent-memory-skill",
+  "version": "0.1.0",
+  "description": "OpenClaw skill for persistent memory - automatic context capture, semantic search, auto-recall",
+  "keywords": [
+    "openclaw",
+    "memory",
+    "ai-agents",
+    "persistent-memory",
+    "fts5",
+    "sqlite",
+    "auto-recall",
+    "skill"
+  ],
+  "homepage": "https://github.com/webdevtodayjason/openclaw_memory#readme",
+  "bugs": {
+    "url": "https://github.com/webdevtodayjason/openclaw_memory/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webdevtodayjason/openclaw_memory.git"
+  },
+  "license": "AGPL-3.0",
+  "author": "Jason Brashear / Titanium Computing",
+  "type": "module",
+  "files": [
+    "SKILL.md",
+    "INSTALL.md",
+    "README.md",
+    "scripts/"
+  ],
+  "bin": {
+    "openclaw-mem-skill": "./scripts/mem-search.sh"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "lraivisto",
+  "slug": "research-vault",
+  "displayName": "ResearchVault",
+  "latest": {
+    "version": "2.0.0",
+    "publishedAt": 1770323899279,
+    "commit": "https://github.com/openclaw/skills/commit/891ae6709d85b1c429abd92ca4084e3a9cc61649"
+  },
+  "history": []
+}

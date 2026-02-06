@@ -1,0 +1,11 @@
+{
+  "owner": "tristanmanchester",
+  "slug": "auditing-appstore-readiness",
+  "displayName": "Audit App Store Readiness",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770112715841,
+    "commit": "https://github.com/clawdbot/skills/commit/56c597d461b05b5d149d6f97cbecd3ab86892c20"
+  },
+  "history": []
+}

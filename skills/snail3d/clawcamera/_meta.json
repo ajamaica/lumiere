@@ -1,0 +1,11 @@
+{
+  "owner": "snail3d",
+  "slug": "clawcamera",
+  "displayName": "ClawCamera",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770250340726,
+    "commit": "https://github.com/clawdbot/skills/commit/25823c49f370add640bc3ae31c7b10a995db4dfd"
+  },
+  "history": []
+}

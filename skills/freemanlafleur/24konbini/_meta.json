@@ -1,0 +1,11 @@
+{
+  "owner": "freemanlafleur",
+  "slug": "24konbini",
+  "displayName": "24Konbini - Agent Marketplace & Bank",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770231297428,
+    "commit": "https://github.com/clawdbot/skills/commit/52cbfb0635dc113935a46a06be0303d2a60ff2c7"
+  },
+  "history": []
+}

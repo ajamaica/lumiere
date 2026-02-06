@@ -1,0 +1,30 @@
+{
+  "name": "pomodoro-timer",
+  "version": "1.0.0",
+  "description": "A clean, usable Pomodoro timer web app",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server --port=3000",
+    "deploy": "gh-pages -d ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricWoodard/pomodoro-timer.git"
+  },
+  "keywords": [
+    "pomodoro",
+    "timer",
+    "productivity",
+    "focus"
+  ],
+  "author": "Eric Woodard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EricWoodard/pomodoro-timer/issues"
+  },
+  "homepage": "https://EricWoodard.github.io/pomodoro-timer",
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
+  }
+}

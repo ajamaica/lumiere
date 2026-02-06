@@ -1,0 +1,11 @@
+{
+  "owner": "poloio",
+  "slug": "quests",
+  "displayName": "Quests — Guided Process Framework",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770293167882,
+    "commit": "https://github.com/clawdbot/skills/commit/670c7859eb42d0f7e7e8d39d022c82a96d6b7db6"
+  },
+  "history": []
+}

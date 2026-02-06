@@ -1,0 +1,22 @@
+{
+  "owner": "dustinjamest",
+  "slug": "skill-search",
+  "displayName": "Skill Search",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770393997145,
+    "commit": "https://github.com/openclaw/skills/commit/97057bd0a3163961f6db484d6af3682feff45af1"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770333474587,
+      "commit": "https://github.com/openclaw/skills/commit/12325e4ef87f0697b465774a7d4a1f8b88744019"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770230213214,
+      "commit": "https://github.com/clawdbot/skills/commit/5e6f69597ec4c185a85c01157b3ad3f153a82fb0"
+    }
+  ]
+}

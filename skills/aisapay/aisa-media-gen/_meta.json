@@ -1,0 +1,11 @@
+{
+  "owner": "aisapay",
+  "slug": "aisa-media-gen",
+  "displayName": "AIsa Media Gen",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770273878956,
+    "commit": "https://github.com/clawdbot/skills/commit/1a4346592042e20388614f8cb071cbf2867aff70"
+  },
+  "history": []
+}

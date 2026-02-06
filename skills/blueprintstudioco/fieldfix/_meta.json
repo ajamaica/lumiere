@@ -1,0 +1,11 @@
+{
+  "owner": "blueprintstudioco",
+  "slug": "fieldfix",
+  "displayName": "FieldFix",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769893668609,
+    "commit": "https://github.com/clawdbot/skills/commit/88b20cbda29217e7ca761f8ecca76dfb1b5d7bdb"
+  },
+  "history": []
+}

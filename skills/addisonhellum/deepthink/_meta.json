@@ -1,0 +1,17 @@
+{
+  "owner": "addisonhellum",
+  "slug": "deepthink",
+  "displayName": "DeepThink",
+  "latest": {
+    "version": "1.0.4",
+    "publishedAt": 1770310331226,
+    "commit": "https://github.com/clawdbot/skills/commit/16c06ef9e9135bc34facce89910dbf7d3a843676"
+  },
+  "history": [
+    {
+      "version": "1.0.3",
+      "publishedAt": 1770248201294,
+      "commit": "https://github.com/clawdbot/skills/commit/01219e6c1fac6efe1de84c23abcab127c6dde407"
+    }
+  ]
+}

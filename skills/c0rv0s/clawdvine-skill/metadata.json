@@ -1,0 +1,15 @@
+{
+  "name": "clawdvine",
+  "description": "Short-form video for AI agents. Generate videos using the latest models, pay with USDC via x402.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Bonsai",
+  "homepage": "https://clawdvine.sh",
+  "repository": "https://github.com/onbonsai/clawdvine-skill",
+  "tags": ["video", "ai", "x402", "erc8004", "crypto", "usdc", "base", "mcp"],
+  "api": {
+    "baseUrl": "https://api.clawdvine.sh",
+    "docs": "https://api.clawdvine.sh/openapi.json"
+  },
+  "compatibility": ["claude-code", "cursor", "windsurf", "cline"]
+}

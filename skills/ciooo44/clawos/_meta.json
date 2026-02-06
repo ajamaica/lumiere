@@ -1,0 +1,17 @@
+{
+  "owner": "ciooo44",
+  "slug": "clawos",
+  "displayName": "Founderless Agent Factory",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770365965454,
+    "commit": "https://github.com/openclaw/skills/commit/ff91fdff4d8be1023a617178abb878b405328828"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770283320543,
+      "commit": "https://github.com/clawdbot/skills/commit/e7f005b09e69606d8273aa0ed3757805d5d220a7"
+    }
+  ]
+}

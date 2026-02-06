@@ -1,0 +1,11 @@
+{
+  "owner": "michael-laffin",
+  "slug": "markdown-formatter",
+  "displayName": "Markdown Formatter",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770217909162,
+    "commit": "https://github.com/clawdbot/skills/commit/28f43c2654286e5c411801a390819c639911688d"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "ruslanlanket",
+  "slug": "avito",
+  "displayName": "Avito.ru publish and chat",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769960855673,
+    "commit": "https://github.com/clawdbot/skills/commit/e0332262b9056ac8d45ba57fb0aa124aef3d73c8"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "abdhilabs",
+  "slug": "karmabank-minimal",
+  "displayName": "KarmaBank",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770273226666,
+    "commit": "https://github.com/clawdbot/skills/commit/28ca0f05337e6c15a4631c35aacbe270efb90ca3"
+  },
+  "history": []
+}

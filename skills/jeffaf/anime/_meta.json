@@ -1,0 +1,11 @@
+{
+  "owner": "jeffaf",
+  "slug": "anime",
+  "displayName": "Anime",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770257637279,
+    "commit": "https://github.com/clawdbot/skills/commit/e46dc6d4faea0686e7ae80d1354ddf3fef2f7209"
+  },
+  "history": []
+}

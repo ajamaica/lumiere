@@ -1,0 +1,27 @@
+{
+  "name": "conversation-summary",
+  "version": "1.0.0",
+  "description": "会话小结 - 输入对话内容，返回会话摘要",
+  "author": "openclaw",
+  "license": "MIT",
+  "keywords": [
+    "conversation",
+    "summary",
+    "ai",
+    "chat"
+  ],
+  "scripts": {
+    "postinstall": "chmod +x scripts/conversation_summary.py"
+  },
+  "dependencies": {
+    "requests": "^2.31.0"
+  },
+  "skill": {
+    "entry": "SKILL.md",
+    "platform": [
+      "linux",
+      "darwin",
+      "win32"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "shawnminh",
+  "slug": "tencentcloud-cos",
+  "displayName": "Tencent Cloud COS",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770346762052,
+    "commit": "https://github.com/openclaw/skills/commit/3cc3dced133da4f20367b30ab547a8fabb672971"
+  },
+  "history": []
+}

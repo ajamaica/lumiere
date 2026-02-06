@@ -1,0 +1,17 @@
+{
+  "owner": "ferreirapablo",
+  "slug": "nonopost",
+  "displayName": "Nonopost",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770205908050,
+    "commit": "https://github.com/clawdbot/skills/commit/64c67c287f07dfdcc7e8c1995458ed141702123f"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769861649943,
+      "commit": "https://github.com/clawdbot/skills/commit/eac84f10f2c55d1a6a3081de35e745e86b2fd5ea"
+    }
+  ]
+}

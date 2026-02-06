@@ -1,0 +1,39 @@
+# ═══════════════════════════════════════════════════════════════
+# CIRF - CRYPTO INTERACTIVE RESEARCH FRAMEWORK - WORKFLOW DEFINITION
+# ═══════════════════════════════════════════════════════════════
+
+# --- IDENTITY ---
+id: tokenomics-analysis
+type: implication
+name: Tokenomics & Economic Sustainability Analysis
+description: Comprehensive tokenomics evaluation covering utility, distribution, emissions, value accrual, and death spiral risk
+
+# --- DEPENDENCIES ---
+dependencies:
+  objectives: "./framework/workflows/tokenomics-analysis/objectives.md"
+  template: "./framework/workflows/tokenomics-analysis/template.md"
+  guides:
+    scope-clarification: "./framework/guides/scope-clarification.md"
+    research-methodology: "./framework/guides/research-methodology.md"
+    collaborative-research: "./framework/guides/collaborative-research.md"
+    output-standards: "./framework/guides/output-standards.md"
+
+# --- CONFIGURATION ---
+configuration:
+  research_depth: standard
+  output_type: standard
+  output_format: markdown
+  output_path: "./workspaces/{workspace_id}/outputs/tokenomics-analysis/tokenomics-analysis-{date}.md"
+
+# --- DIRECTIVE ---
+# ═══════════════════════════════════════════════════════════════
+# ⚠️ MANDATORY EXECUTION - DO NOT SKIP
+# ═══════════════════════════════════════════════════════════════
+# You MUST execute BOTH steps below in order:
+#   1. initialization → READ and EXECUTE workflow-init.md
+#   2. execution → READ and EXECUTE workflow-execution.md
+# STOP immediately and report error if any step fails.
+# ═══════════════════════════════════════════════════════════════
+directive:
+  initialization: "./framework/components/workflow-init.md"
+  execution: "./framework/components/workflow-execution.md"

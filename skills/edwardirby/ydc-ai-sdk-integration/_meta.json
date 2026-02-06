@@ -1,0 +1,11 @@
+{
+  "owner": "edwardirby",
+  "slug": "ydc-ai-sdk-integration",
+  "displayName": "Integrate You.com web tools with Vercel AI SDK",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769930263045,
+    "commit": "https://github.com/clawdbot/skills/commit/3c8365c870df44fcd0a46a644472d6b4fe3a1ef2"
+  },
+  "history": []
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "cdwm",
+  "slug": "retake-tv-agent",
+  "displayName": "Retake.tv Agent Live Streaming",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770253406782,
+    "commit": "https://github.com/clawdbot/skills/commit/756ecc3f5e15a6f44d0c362a34b46b9b1ff9b7a2"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770073742323,
+      "commit": "https://github.com/clawdbot/skills/commit/55472794c4aa123554876e3f2da6357ef49475ea"
+    }
+  ]
+}

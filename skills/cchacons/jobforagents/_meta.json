@@ -1,0 +1,11 @@
+{
+  "owner": "cchacons",
+  "slug": "jobforagents",
+  "displayName": "Job For Agents",
+  "latest": {
+    "version": "1.2.1",
+    "publishedAt": 1769948537848,
+    "commit": "https://github.com/clawdbot/skills/commit/626db2dd1e22c9868e8eeb836d091af0eef32f22"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "hlouognem",
+  "slug": "prawmpt",
+  "displayName": "prawmpt",
+  "latest": {
+    "version": "1.6.7",
+    "publishedAt": 1770187740508,
+    "commit": "https://github.com/clawdbot/skills/commit/7fb5c8c859422d25e6097015e069f07db10846ba"
+  },
+  "history": []
+}

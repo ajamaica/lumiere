@@ -1,0 +1,17 @@
+{
+  "owner": "nextfrontierbuilds",
+  "slug": "prism-alerts",
+  "displayName": "Prism Alerts",
+  "latest": {
+    "version": "1.1.2",
+    "publishedAt": 1770220767719,
+    "commit": "https://github.com/clawdbot/skills/commit/259ddb0303099aa8f3bcb6ddf09423cbd2e21400"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769577761359,
+      "commit": "https://github.com/clawdbot/skills/commit/031d088cb6175aac6c0ac7de3ba4dd1e41bd27f9"
+    }
+  ]
+}

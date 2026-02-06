@@ -1,0 +1,11 @@
+{
+  "owner": "alphafactor",
+  "slug": "homekit",
+  "displayName": "HomeKit Smart Home",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770091351551,
+    "commit": "https://github.com/clawdbot/skills/commit/3732c03e030a1bb655d7f97da0a68073aa90fda1"
+  },
+  "history": []
+}

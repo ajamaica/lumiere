@@ -1,0 +1,11 @@
+{
+  "owner": "lraivisto",
+  "slug": "luka-hello",
+  "displayName": "Hello Test",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770324855035,
+    "commit": "https://github.com/openclaw/skills/commit/d15d9304fab1a2ebf4065952f522e2c56d5e21b8"
+  },
+  "history": []
+}

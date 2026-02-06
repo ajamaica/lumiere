@@ -1,0 +1,22 @@
+{
+  "owner": "highxshell",
+  "slug": "next-browser",
+  "displayName": "Nextbrowser",
+  "latest": {
+    "version": "1.0.5",
+    "publishedAt": 1770215675724,
+    "commit": "https://github.com/clawdbot/skills/commit/f2bc2b9479b517b142f6f036b952bbeb43043203"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770192959439,
+      "commit": "https://github.com/clawdbot/skills/commit/f2bdfb1c699a7bab3b8895448d62a2e22ffbe3ca"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770136884729,
+      "commit": "https://github.com/clawdbot/skills/commit/ee4b6cb0b44723e7f82051273841c468bc52ce52"
+    }
+  ]
+}

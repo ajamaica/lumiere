@@ -1,0 +1,11 @@
+{
+  "owner": "5hanth",
+  "slug": "arbiter",
+  "displayName": "Arbiter",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770128484239,
+    "commit": "https://github.com/clawdbot/skills/commit/f4e46b57cd1a575454fc050e071f316005a74557"
+  },
+  "history": []
+}

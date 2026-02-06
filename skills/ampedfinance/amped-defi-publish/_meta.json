@@ -1,0 +1,11 @@
+{
+  "owner": "ampedfinance",
+  "slug": "amped-defi-publish",
+  "displayName": "Amped Defi Publish",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770262924877,
+    "commit": "https://github.com/clawdbot/skills/commit/87437abcc55c98d55f40b83567fa5446b7392d10"
+  },
+  "history": []
+}

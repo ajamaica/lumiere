@@ -1,0 +1,159 @@
+# Economic Events Test Suite
+# https://app.strykr.ai/economic-events
+
+name: Economic Events
+description: Tests for economic events page - routing and event cards
+baseUrl: https://app.strykr.ai
+
+tests:
+  # Direct URL Navigation (Known Issue)
+  - name: Direct URL navigation (known issue)
+    knownIssue: direct-url-blank-events
+    steps:
+      - goto: /economic-events
+      - waitForLoad: true
+      - waitFor: 3000
+      - screenshot: events-direct-url
+      # This is known to show blank page
+      - expectVisible: '.event-card, [data-testid="event-item"]'
+        allowFail: true
+        knownIssue: direct-url-blank-events
+
+  # Sidebar Navigation (Works)
+  - name: Sidebar navigation works
+    steps:
+      - goto: /
+      - waitForLoad: true
+      - click: 'a[href="/economic-events"], [data-nav="events"]'
+      - waitForNavigation: true
+      - waitFor: '.event-card, [data-testid="event-item"]'
+        timeout: 15000
+      - expectVisible: '.event-card, [data-testid="event-item"]'
+      - screenshot: events-via-sidebar
+
+  # Event Cards
+  - name: Event cards display correctly
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - expectVisible: '.event-card .event-name, [data-testid="event-name"]'
+      - expectVisible: '.event-card .event-time, [data-testid="event-time"]'
+      - expectVisible: '.event-card .impact, [data-testid="impact-indicator"]'
+      - screenshot: event-cards
+
+  # Impact Indicators
+  - name: High impact events highlighted
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - expectVisible: '[data-impact="high"], .impact-high, .high-impact'
+        allowFail: true  # May not have high impact events today
+      - screenshot: high-impact-events
+
+  - name: Impact filter - High
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("High"), [data-filter="high"]'
+      - waitFor: 500
+      - screenshot: filter-high-impact
+
+  - name: Impact filter - Medium
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("Medium"), [data-filter="medium"]'
+      - waitFor: 500
+      - screenshot: filter-medium-impact
+
+  - name: Impact filter - All
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("All"), [data-filter="all"]'
+      - waitFor: 500
+      - expectVisible: '.event-card'
+
+  # Country/Region Filters
+  - name: US events filter
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("US"), [data-country="us"]'
+      - waitFor: 500
+      - screenshot: events-us
+
+  - name: EU events filter
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("EU"), [data-country="eu"]'
+      - waitFor: 500
+      - screenshot: events-eu
+
+  # Time Filters
+  - name: Today events filter
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("Today"), [data-time="today"]'
+      - waitFor: 500
+      - screenshot: events-today
+
+  - name: This week events filter
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("This Week"), [data-time="week"]'
+      - waitFor: 500
+      - screenshot: events-week
+
+  # Ask AI about events
+  - name: Ask Strykr AI about event
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - click: 'button:has-text("Ask Strykr AI"), [data-action="ask-ai"]'
+        first: true
+      - waitFor: 1000
+      - expectVisible: '[data-testid="ai-chat"]'
+      - screenshot: events-ask-ai
+
+  - name: No console errors
+    setup:
+      - goto: /
+      - click: 'a[href="/economic-events"]'
+      - waitFor: '.event-card'
+        timeout: 10000
+    steps:
+      - expectNoConsoleErrors: true

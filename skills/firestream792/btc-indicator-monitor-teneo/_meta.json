@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "btc-indicator-monitor-teneo",
+  "displayName": "BTC Indicator Monitor - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.6",
+    "publishedAt": 1770302172239,
+    "commit": "https://github.com/clawdbot/skills/commit/bb6c9f0f6c07ea9e1408ab96fc2e37f17553b3eb"
+  },
+  "history": [
+    {
+      "version": "1.0.5",
+      "publishedAt": 1770216603745,
+      "commit": "https://github.com/clawdbot/skills/commit/2af217e9e18c2b817a876e2ae77cd23fd30f7ae5"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "owner": "webdevtodayjason",
+  "slug": "moltyverse-social",
+  "displayName": "Moltyverse Social",
+  "latest": {
+    "version": "1.0.20",
+    "publishedAt": 1770402398719,
+    "commit": "https://github.com/openclaw/skills/commit/83d562ba011e3c355eace7b9a6621a5acc77edb5"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770290804792,
+      "commit": "https://github.com/clawdbot/skills/commit/ec9bba74a02950336d0519822f3fca033db2572b"
+    }
+  ]
+}

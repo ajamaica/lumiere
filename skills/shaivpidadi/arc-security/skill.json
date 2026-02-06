@@ -1,0 +1,27 @@
+{
+  "name": "arc-security",
+  "displayName": "Arc Security - Agent Trust Protocol",
+  "version": "1.0.0",
+  "description": "Chain-agnostic agent security infrastructure powered by CCTP on Arc",
+  "author": "Agent Security Team",
+  "license": "MIT",
+  "commands": ["check", "use", "bond", "report", "vote-claim", "claim-earnings"],
+  "dependencies": {
+    "web3": "^6.0.0",
+    "requests": "^2.31.0"
+  },
+  "config": {
+    "arc_rpc_url": {
+      "description": "Arc testnet RPC endpoint",
+      "required": true
+    },
+    "contract_address": {
+      "description": "SkillSecurityRegistry contract address",
+      "required": true
+    },
+    "x402_server_url": {
+      "description": "x402 payment server URL",
+      "required": true
+    }
+  }
+}

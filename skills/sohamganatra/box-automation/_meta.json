@@ -1,0 +1,11 @@
+{
+  "owner": "sohamganatra",
+  "slug": "box-automation",
+  "displayName": "Box Automation",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770367441491,
+    "commit": "https://github.com/openclaw/skills/commit/d15d55b5afae79b9a4baed1c1260bf97d7b52f95"
+  },
+  "history": []
+}

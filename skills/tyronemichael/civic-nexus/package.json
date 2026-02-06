@@ -1,0 +1,31 @@
+{
+  "name": "civic-nexus",
+  "version": "1.0.0",
+  "description": "Connect any LLM to Civic Nexus MCP tools",
+  "type": "module",
+  "main": "nexus-tool-runner.ts",
+  "scripts": {
+    "start": "tsx nexus-tool-runner.ts",
+    "list": "tsx nexus-tool-runner.ts --list",
+    "search": "tsx nexus-tool-runner.ts --search",
+    "call": "tsx nexus-tool-runner.ts --call"
+  },
+  "keywords": [
+    "mcp",
+    "nexus",
+    "civic",
+    "claude",
+    "llm",
+    "tools",
+    "api"
+  ],
+  "author": "Civic",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.2",
+    "tsx": "^4.19.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

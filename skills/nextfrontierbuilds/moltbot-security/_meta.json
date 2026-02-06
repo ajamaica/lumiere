@@ -1,0 +1,17 @@
+{
+  "owner": "nextfrontierbuilds",
+  "slug": "moltbot-security",
+  "displayName": "Moltbot Security",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770220743140,
+    "commit": "https://github.com/clawdbot/skills/commit/04cd06392a39161db4b1a69ce23f581965bef8ba"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769626340579,
+      "commit": "https://github.com/clawdbot/skills/commit/ccdf76242a773a985d7f14abae1356a02e11fe12"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "pauldelavallaz",
+  "slug": "brand-identity-analyzer",
+  "displayName": "Brand Identity Analyzer",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770276608877,
+    "commit": "https://github.com/clawdbot/skills/commit/f8e43f3f3ad09db4b7c410247193fe0ef3a4b052"
+  },
+  "history": []
+}

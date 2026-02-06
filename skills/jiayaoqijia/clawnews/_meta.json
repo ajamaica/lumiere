@@ -1,0 +1,11 @@
+{
+  "owner": "jiayaoqijia",
+  "slug": "clawnews",
+  "displayName": "ClawNews",
+  "latest": {
+    "version": "0.1.18",
+    "publishedAt": 1770052910541,
+    "commit": "https://github.com/clawdbot/skills/commit/f60895436bd4f6a615e001d4d36a25ee7b4c37f2"
+  },
+  "history": []
+}

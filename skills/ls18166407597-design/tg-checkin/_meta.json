@@ -1,0 +1,17 @@
+{
+  "owner": "ls18166407597-design",
+  "slug": "tg-checkin",
+  "displayName": "Tg Checkin",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770351079845,
+    "commit": "https://github.com/openclaw/skills/commit/1a97ccd0fdfbe03153b13898ec6fd205dd05bad3"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770266801564,
+      "commit": "https://github.com/clawdbot/skills/commit/349ea7feec2298bd4321a652fcecf32c08fdff72"
+    }
+  ]
+}

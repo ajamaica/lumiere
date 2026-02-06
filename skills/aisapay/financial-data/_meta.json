@@ -1,0 +1,11 @@
+{
+  "owner": "aisapay",
+  "slug": "financial-data",
+  "displayName": "Financial Data",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770272131977,
+    "commit": "https://github.com/clawdbot/skills/commit/ec37cd75d5e90510b353b1476e41e7da9759faed"
+  },
+  "history": []
+}

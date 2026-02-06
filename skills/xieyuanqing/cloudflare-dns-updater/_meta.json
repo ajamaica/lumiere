@@ -1,0 +1,11 @@
+{
+  "owner": "xieyuanqing",
+  "slug": "cloudflare-dns-updater",
+  "displayName": "Cloudflare Dns Updater",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1770369366099,
+    "commit": "https://github.com/openclaw/skills/commit/c40423ca5846d0f2e6c2c73f19234e3f5e120a79"
+  },
+  "history": []
+}

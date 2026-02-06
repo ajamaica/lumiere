@@ -1,0 +1,11 @@
+{
+  "owner": "aaronwander",
+  "slug": "scheduler-for-discord",
+  "displayName": "scheduler for discord",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770013509668,
+    "commit": "https://github.com/clawdbot/skills/commit/4893a573ddd5e753e75100f826d842c6429fbc9a"
+  },
+  "history": []
+}

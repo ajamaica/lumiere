@@ -1,0 +1,22 @@
+{
+  "owner": "cyberengage",
+  "slug": "secure-sync",
+  "displayName": "secure-sync",
+  "latest": {
+    "version": "1.3.0",
+    "publishedAt": 1770261232487,
+    "commit": "https://github.com/clawdbot/skills/commit/ecef0e38623a4d0938f34266f0dcc0b26ff9126c"
+  },
+  "history": [
+    {
+      "version": "1.1.0",
+      "publishedAt": 1770242194432,
+      "commit": "https://github.com/clawdbot/skills/commit/fa10b86dcb3c26426bf3a96e149a97f085ed335e"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770201624500,
+      "commit": "https://github.com/clawdbot/skills/commit/4ff128af91fec3b6bb4daca01473403a0803e0ba"
+    }
+  ]
+}

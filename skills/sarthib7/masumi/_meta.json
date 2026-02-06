@@ -1,0 +1,17 @@
+{
+  "owner": "sarthib7",
+  "slug": "masumi",
+  "displayName": "Masumi",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770242187284,
+    "commit": "https://github.com/clawdbot/skills/commit/5fd29cb39439f926f677bef8d23890ead5e01a7c"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770050702428,
+      "commit": "https://github.com/clawdbot/skills/commit/d0d6b332aaa81bd604be7b9dd692fb0412624137"
+    }
+  ]
+}

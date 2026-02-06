@@ -1,0 +1,26 @@
+{
+  "name": "line-bridge-shrimp",
+  "version": "1.0.0",
+  "description": "A high-performance bridge between LINE Messaging API and Clawdbot agent, featuring identity awareness and secure external configuration.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "line",
+    "bot",
+    "bridge",
+    "clawdbot"
+  ],
+  "author": "蝦蝦 (Shrimp)",
+  "contributors": [
+    "景揚 <stu24801@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@line/bot-sdk": "^10.6.0",
+    "axios": "^1.13.4",
+    "body-parser": "^2.2.2",
+    "express": "^5.2.1"
+  }
+}

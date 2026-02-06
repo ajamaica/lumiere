@@ -1,0 +1,11 @@
+{
+  "owner": "ultimatebos",
+  "slug": "agent-shield",
+  "displayName": "Chitin Protocol",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769982530821,
+    "commit": "https://github.com/clawdbot/skills/commit/38b09d99387445e2682c597d8162cd20d10cf0bd"
+  },
+  "history": []
+}

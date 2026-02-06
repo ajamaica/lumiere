@@ -1,0 +1,11 @@
+{
+  "owner": "tvdofficial",
+  "slug": "google-home-control",
+  "displayName": "Google Home Control",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1769889754611,
+    "commit": "https://github.com/clawdbot/skills/commit/19005ebd77dbdd3386eb9d5d37daa71200309bac"
+  },
+  "history": []
+}

@@ -1,0 +1,62 @@
+# OpenClaw Skill Configuration for Self-Evolving Skill
+
+name: self-evolving-skill
+displayName: Self-Evolving Skill
+description: Meta-cognitive self-learning system - Automated skill evolution based on predictive coding and value-driven mechanisms
+version: 1.0.2
+category: learning
+
+# Skill入口
+main: src/index.ts
+
+# 依赖
+dependencies:
+  typescript: ^5.0.0
+
+# 配置
+config:
+  defaults:
+    max_layers: 5
+    energy_threshold: 0.1
+    min_energy_ratio: 0.10
+    value_gain_threshold: 0.20
+    target_trigger_rate: 0.15
+    similarity_threshold: 0.85
+    cache_capacity: 1000
+  storage:
+    type: filesystem
+    path: ~/.openclaw/self-evolving-skill
+
+# MCP工具定义
+mcp:
+  enabled: true
+  tools:
+    - name: skill_create
+      description: 创建新的自演化Skill
+    - name: skill_execute  
+      description: 执行Skill并触发学习
+    - name: skill_analyze
+      description: 分析嵌入向量
+    - name: skill_list
+      description: 列出所有Skill
+    - name: skill_stats
+      description: 获取系统统计
+    - name: skill_save
+      description: 持久化保存
+    - name: skill_load
+      description: 加载已保存的Skill
+
+# 脚本
+scripts:
+  build: tsc
+  test: jest
+
+keywords:
+  - self-evolution
+  - meta-cognition
+  - predictive-coding
+  - skill-learning
+  - adaptive
+
+author: OpenClaw
+license: MIT

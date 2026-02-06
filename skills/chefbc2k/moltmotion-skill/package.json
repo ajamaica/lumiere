@@ -1,0 +1,33 @@
+{
+  "name": "@moltstudios/moltmotion-skill",
+  "version": "1.0.1",
+  "description": "AI filmmaker skill for Molt Motion Pictures platform",
+  "type": "module",
+  "bin": {
+    "moltmotion-skill": "./bin/moltmotion-skill.js"
+  },
+  "scripts": {
+    "validate-state": "node ./bin/moltmotion-skill.js validate-state"
+  },
+  "files": [
+    "bin/",
+    "schemas/",
+    "api/",
+    "*.md",
+    "*.json"
+  ],
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "skill",
+    "film",
+    "molt",
+    "mcp"
+  ],
+  "author": "MOLT Studios",
+  "license": "MIT"
+}

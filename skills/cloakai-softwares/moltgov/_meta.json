@@ -1,0 +1,11 @@
+{
+  "owner": "cloakai-softwares",
+  "slug": "moltgov",
+  "displayName": "MoltGov",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770083928913,
+    "commit": "https://github.com/clawdbot/skills/commit/2d81ddac9c1afb50df891e5c487878d2cd8b7415"
+  },
+  "history": []
+}

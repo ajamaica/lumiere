@@ -1,0 +1,29 @@
+{
+  "id": "cardano-wallet",
+  "name": "Cardano Wallet",
+  "version": "1.0.0",
+  "description": "Generate, manage, and fund Cardano wallets for OpenClaw agents",
+  "author": "Masumi Network",
+  "license": "MIT",
+  "homepage": "https://masumi.network",
+  "repository": "https://github.com/masumi-network/masumi-openclaw-skill.git",
+  "capabilities": {
+    "tools": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "network": {
+        "type": "string",
+        "enum": ["Preprod", "Mainnet"],
+        "default": "Preprod",
+        "description": "Cardano network to use"
+      }
+    }
+  },
+  "exports": {
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  }
+}

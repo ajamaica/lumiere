@@ -1,0 +1,11 @@
+# ModelScope Vision 依赖包
+# 安装方式: pip install -r requirements.txt
+
+# OpenAI SDK (用于调用 ModelScope API)
+openai>=1.0.0
+
+# 图像处理库
+Pillow>=9.0.0
+
+# 环境变量加载
+python-dotenv>=1.0.0

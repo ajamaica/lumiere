@@ -1,0 +1,11 @@
+{
+  "owner": "otherpowers",
+  "slug": "lol-drift-blooms",
+  "displayName": "LOL Drift Blooms",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770065528608,
+    "commit": "https://github.com/clawdbot/skills/commit/7000f55e66424f9ebc47642ff50d15f8cd55a649"
+  },
+  "history": []
+}

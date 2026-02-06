@@ -1,0 +1,11 @@
+{
+  "owner": "arubiku",
+  "slug": "mia-content-creator",
+  "displayName": "Mia Content Creator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770259159586,
+    "commit": "https://github.com/clawdbot/skills/commit/dad2b853cab1e79b075d929c3ca119b9bb67bacb"
+  },
+  "history": []
+}

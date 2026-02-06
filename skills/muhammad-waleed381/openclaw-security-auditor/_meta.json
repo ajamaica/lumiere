@@ -1,0 +1,11 @@
+{
+  "owner": "muhammad-waleed381",
+  "slug": "openclaw-security-auditor",
+  "displayName": "OpenClaw Security Auditor",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769936971348,
+    "commit": "https://github.com/clawdbot/skills/commit/c5ac7602c2ea7feb46fa237222ff9c4d9e1c7273"
+  },
+  "history": []
+}

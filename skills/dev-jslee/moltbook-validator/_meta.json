@@ -1,0 +1,11 @@
+{
+  "owner": "dev-jslee",
+  "slug": "moltbook-validator",
+  "displayName": "Moltbook Validator",
+  "latest": {
+    "version": "1.0.0-alpha",
+    "publishedAt": 1770338973360,
+    "commit": "https://github.com/openclaw/skills/commit/bc7f80f4b889e85c5c23451e2c797ad6a07318f3"
+  },
+  "history": []
+}

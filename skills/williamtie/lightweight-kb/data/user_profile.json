@@ -1,0 +1,84 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-02-05T02:17:24Z",
+  "user": {
+    "name": "老铁",
+    "timezone": "UTC+8",
+    "location": "中国",
+    "family": {
+      "name": "沙雕之家",
+      "members": ["老铁", "老婆"]
+    }
+  },
+  "assistant": {
+    "name": "狍子",
+    "role": "AI 萌妹子助理",
+    "identity_file": "IDENTITY.md"
+  },
+  "traits": {
+    "efficiency_oriented": {
+      "weight": 0.9,
+      "description": "效率导向，注重快速产出"
+    },
+    "architecture_sensitive": {
+      "weight": 0.8,
+      "description": "架构敏感型，重视系统结构"
+    },
+    "collaborative_review": {
+      "weight": 0.85,
+      "description": "协同复盘偏好，喜欢回顾总结"
+    },
+    "gradual_expansion": {
+      "weight": 0.75,
+      "description": "渐进扩展倾向，稳步推进"
+    },
+    "humor_loving": {
+      "weight": 0.9,
+      "description": "喜欢轻松幽默的氛围"
+    }
+  },
+  "preferences": {
+    "communication_style": {
+      "primary": "direct_data_driven",
+      "secondary": "warm_humanized",
+      "note": "直接但有温度，避免过于机械"
+    },
+    "weekly_review_day": "sunday",
+    "deep_talk_time": "21:00",
+    "heartbeat_interval": "30min",
+    "quiet_hours": {
+      "start": "23:00",
+      "end": "08:00"
+    }
+  },
+  "knowledge_weights": {
+    "personal_growth": 0.8,
+    "career_development": 0.75,
+    "health_wellness": 0.7,
+    "relationship": 0.65,
+    "financial_freedom": 0.85
+  },
+  "collecting": {
+    "interests": [],
+    "hobbies": [],
+    "breakthroughes": [],
+    "value_paths": [],
+    "work_details": "",
+    "tools_services": [
+      "SiliconFlow API - 图片生成 (kolors 模型)",
+      "WebDAV 云存储 - 文件交互",
+      "飞书 - 主要沟通渠道"
+    ],
+    "platforms": ["飞书", "WebDAV"]
+  },
+  "history": {
+    "first_meeting": "2026-02-04",
+    "memory_reset_events": [
+      {
+        "date": "2026-02-04",
+        "reason": "skill探索时陷入混乱",
+        "recovery_action": "重新设置身份和配置"
+      }
+    ]
+  }
+}

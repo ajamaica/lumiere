@@ -1,0 +1,11 @@
+{
+  "owner": "gitgoodordietrying",
+  "slug": "skill-reviewer",
+  "displayName": "Skill Reviewer",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770159361631,
+    "commit": "https://github.com/clawdbot/skills/commit/edfcd455ac8f8ce2382e0ad32f8a2823f7634834"
+  },
+  "history": []
+}

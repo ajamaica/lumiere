@@ -1,0 +1,442 @@
+{
+  "version": "1.1.0",
+  "updated": "2026-02-03",
+  "benchmarks": "Feb 2026 Industry Data (MLOC Analysis)",
+
+  "models": {
+    "opus": {
+      "display_name": "Claude Opus 4.5",
+      "provider": "anthropic",
+      "model_id": "anthropic/claude-opus-4-5",
+      "agent_id": null,
+      "cost_tier": 4,
+      "latency_tier": 3,
+
+      "expert_domains": {
+        "SOFTWARE_ARCH": 95,
+        "SECURITY_VERIFICATION": 94,
+        "CODE_REVIEW": 92,
+        "MULTI_FILE_REFACTOR": 90,
+        "DEBUGGING": 88,
+        "DOCUMENTATION": 85,
+        "LOGICAL_PRECISION": 82,
+        "CONCURRENCY": 70,
+        "CREATIVE": 78,
+        "REALTIME_SIGNAL": 0,
+        "SYSTEM_ROUTINE": 40
+      },
+
+      "benchmarks": {
+        "SWE_bench": 80.9,
+        "control_flow_errors_per_MLOC": 45,
+        "concurrency_issues_per_MLOC": 120,
+        "security_constraint_verification": 96.2,
+        "prompt_injection_robustness": 95.3
+      },
+
+      "blind_spots": ["high_cost", "resource_leaks_large_generation", "concurrency_weakness"],
+
+      "mandatory_for": [
+        "terminal_shell",
+        "security_guardrail",
+        "security_verification",
+        "multi_file_refactor"
+      ],
+
+      "specialist_note": "#1 for security constraints and verification. Avoid for high-concurrency designs."
+    },
+
+    "gpt5": {
+      "display_name": "GPT-5.2 (High)",
+      "provider": "openai",
+      "model_id": "openai/gpt-5",
+      "agent_id": "gpt",
+      "cost_tier": 4,
+      "latency_tier": 3,
+
+      "expert_domains": {
+        "LOGICAL_PRECISION": 98,
+        "MATH": 100,
+        "CONTROL_FLOW": 96,
+        "RISKY_REFACTOR": 94,
+        "FORMAL_PROOFS": 92,
+        "SCIENTIFIC": 90,
+        "MEDICAL": 94,
+        "FINANCIAL_MATH": 96,
+        "SOFTWARE_ARCH": 78,
+        "CONCURRENCY": 65,
+        "CREATIVE": 82,
+        "REALTIME_SIGNAL": 0,
+        "SYSTEM_ROUTINE": 45
+      },
+
+      "benchmarks": {
+        "control_flow_errors_per_MLOC": 22,
+        "AIME_math": 100.0,
+        "concurrency_issues_per_MLOC": 414,
+        "HealthBench_error_rate": 1.6,
+        "formal_logic_accuracy": 98.7
+      },
+
+      "blind_spots": ["slower_latency", "high_concurrency_issues", "thinking_mode_delay"],
+
+      "mandatory_for": [
+        "logic_precision",
+        "math_critical",
+        "risky_refactor",
+        "medical_health",
+        "financial_math",
+        "formal_proofs"
+      ],
+
+      "specialist_note": "#1 for logical precision (22 errors/MLOC). 6x more concurrency issues than Gemini."
+    },
+
+    "gemini-pro": {
+      "display_name": "Gemini 3 Pro",
+      "provider": "google",
+      "model_id": "google/gemini-2.5-pro",
+      "agent_id": "gemini",
+      "cost_tier": 3,
+      "latency_tier": 2,
+
+      "expert_domains": {
+        "MASSIVE_SYNTHESIS": 98,
+        "CONCURRENCY": 95,
+        "DOCUMENT_SYNTHESIS": 95,
+        "RESEARCH": 90,
+        "SUMMARIZATION": 92,
+        "DATA_ANALYSIS": 88,
+        "PARALLEL_SYSTEMS": 92,
+        "SOFTWARE_ARCH": 75,
+        "LOGICAL_PRECISION": 70,
+        "CONTROL_FLOW": 60,
+        "REALTIME_SIGNAL": 0,
+        "SYSTEM_ROUTINE": 50
+      },
+
+      "benchmarks": {
+        "context_window": 1000000,
+        "concurrency_issues_per_MLOC": 69,
+        "control_flow_errors_per_MLOC": 200,
+        "long_context_coherence": 92.0,
+        "synthesis_accuracy_500k": 94.0
+      },
+
+      "blind_spots": [
+        "control_flow_mistakes",
+        "logical_precision_weakness",
+        "hallucination_extreme_context"
+      ],
+
+      "mandatory_for": [
+        "context_over_150k",
+        "high_concurrency",
+        "document_heavy",
+        "parallel_systems"
+      ],
+
+      "context_override_threshold": 150000,
+      "specialist_note": "#1 for concurrency (69 issues/MLOC) and massive context. Highest control flow errors (200/MLOC)."
+    },
+
+    "grok3": {
+      "display_name": "Grok-3",
+      "provider": "xai",
+      "model_id": "xai/grok-3",
+      "agent_id": "grok",
+      "cost_tier": 2,
+      "latency_tier": 2,
+
+      "expert_domains": {
+        "REALTIME_SIGNAL": 98,
+        "CURRENT_EVENTS": 95,
+        "SOCIAL_TRENDS": 94,
+        "CULTURE_ANALYSIS": 92,
+        "NEWS": 90,
+        "MARKET_DATA": 88,
+        "SOFTWARE_ARCH": 65,
+        "LOGICAL_PRECISION": 60,
+        "SCIENTIFIC": 55,
+        "CONCURRENCY": 60,
+        "SYSTEM_ROUTINE": 55
+      },
+
+      "benchmarks": {
+        "realtime_accuracy": 94.0,
+        "twitter_integration": "native",
+        "news_freshness_minutes": 5,
+        "trend_detection_accuracy": 91.0
+      },
+
+      "blind_spots": ["formal_academic", "rigorous_proofs", "complex_architecture"],
+
+      "mandatory_for": [
+        "realtime_required",
+        "current_events",
+        "social_media_analysis",
+        "trend_analysis"
+      ],
+
+      "specialist_note": "#1 for real-time signals and cultural trends. Less rigorous for formal logic."
+    },
+
+    "flash": {
+      "display_name": "Flash 2.5",
+      "provider": "google",
+      "model_id": "google/gemini-2.5-flash",
+      "agent_id": "flash",
+      "cost_tier": 1,
+      "latency_tier": 1,
+
+      "expert_domains": {
+        "SYSTEM_ROUTINE": 95,
+        "SIMPLE_QA": 92,
+        "FORMATTING": 90,
+        "TRANSLATION": 88,
+        "SUMMARIZATION": 82,
+        "SOFTWARE_ARCH": 50,
+        "LOGICAL_PRECISION": 45,
+        "CONCURRENCY": 40,
+        "REALTIME_SIGNAL": 0
+      },
+
+      "benchmarks": {
+        "latency_ms": 200,
+        "throughput_tokens_sec": 1500,
+        "cost_per_million_input": 0.075,
+        "performance_cost_ratio": 98.0
+      },
+
+      "blind_spots": [
+        "multi_step_reasoning",
+        "complex_architecture",
+        "nuanced_analysis",
+        "control_flow_complexity"
+      ],
+
+      "mandatory_for": [],
+
+      "ideal_for": ["high_volume", "simple_tasks", "cost_optimization", "latency_critical"],
+
+      "specialist_note": "Best performance/cost ratio. Avoid for multi-step complex architecture."
+    }
+  },
+
+  "domain_keywords": {
+    "SOFTWARE_ARCH": [
+      "architecture",
+      "design",
+      "system",
+      "refactor",
+      "structure",
+      "module",
+      "component",
+      "api design",
+      "backend",
+      "frontend",
+      "microservice"
+    ],
+    "SECURITY_VERIFICATION": [
+      "security",
+      "vulnerability",
+      "audit",
+      "penetration",
+      "exploit",
+      "cve",
+      "authentication",
+      "authorization",
+      "encryption"
+    ],
+    "LOGICAL_PRECISION": [
+      "logic",
+      "prove",
+      "verify",
+      "correct",
+      "precise",
+      "exact",
+      "theorem",
+      "deduce",
+      "risky refactor",
+      "critical fix"
+    ],
+    "CONTROL_FLOW": [
+      "if",
+      "else",
+      "switch",
+      "loop",
+      "branch",
+      "condition",
+      "state machine",
+      "flow"
+    ],
+    "CONCURRENCY": [
+      "concurrent",
+      "parallel",
+      "async",
+      "thread",
+      "mutex",
+      "lock",
+      "race condition",
+      "deadlock",
+      "goroutine",
+      "channel",
+      "actor"
+    ],
+    "MASSIVE_SYNTHESIS": [
+      "document",
+      "file",
+      "log",
+      "transcript",
+      "book",
+      "paper",
+      "analyze this",
+      "review this",
+      "300k",
+      "large"
+    ],
+    "MATH": [
+      "calculate",
+      "equation",
+      "integral",
+      "derivative",
+      "statistics",
+      "probability",
+      "algebra",
+      "aime",
+      "olympiad"
+    ],
+    "MEDICAL": [
+      "medical",
+      "health",
+      "diagnosis",
+      "symptom",
+      "treatment",
+      "drug",
+      "disease",
+      "clinical",
+      "patient"
+    ],
+    "FINANCIAL_MATH": [
+      "compound interest",
+      "amortization",
+      "npv",
+      "irr",
+      "portfolio",
+      "risk calculation",
+      "derivatives pricing"
+    ],
+    "REALTIME_SIGNAL": [
+      "current",
+      "today",
+      "now",
+      "latest",
+      "price",
+      "news",
+      "trending",
+      "live",
+      "real-time",
+      "twitter",
+      "x.com"
+    ],
+    "SYSTEM_ROUTINE": ["format", "convert", "translate", "list", "simple", "quick", "brief"],
+    "RISKY_REFACTOR": [
+      "risky",
+      "dangerous",
+      "breaking change",
+      "migration",
+      "critical",
+      "production fix"
+    ],
+    "PARALLEL_SYSTEMS": [
+      "distributed",
+      "kubernetes",
+      "docker",
+      "cluster",
+      "load balancer",
+      "scaling",
+      "horizontal"
+    ]
+  },
+
+  "risk_domains": {
+    "medical_health": {
+      "keywords": ["medical", "health", "diagnosis", "treatment", "drug", "symptom", "clinical"],
+      "mandatory_model": "gpt5",
+      "fallback": "opus",
+      "reason": "GPT-5.2 has 1.6% HealthBench error rate (lowest)"
+    },
+    "financial_math": {
+      "keywords": [
+        "compound interest",
+        "amortization",
+        "portfolio math",
+        "risk calculation",
+        "derivatives"
+      ],
+      "mandatory_model": "gpt5",
+      "fallback": "opus",
+      "reason": "GPT-5.2 100% AIME math accuracy"
+    },
+    "logic_precision": {
+      "keywords": [
+        "prove",
+        "verify correctness",
+        "formal proof",
+        "theorem",
+        "logical deduction",
+        "risky refactor"
+      ],
+      "mandatory_model": "gpt5",
+      "fallback": "opus",
+      "reason": "GPT-5.2 has lowest control flow errors (22/MLOC)"
+    },
+    "terminal_shell": {
+      "keywords": ["terminal", "shell", "bash", "sudo", "rm ", "chmod", "execute", "run command"],
+      "mandatory_model": "opus",
+      "fallback": "gpt5",
+      "reason": "Opus 95.3% prompt-injection robustness"
+    },
+    "security_guardrail": {
+      "keywords": [
+        "vulnerability",
+        "exploit",
+        "security audit",
+        "penetration test",
+        "cve",
+        "guardrail"
+      ],
+      "mandatory_model": "opus",
+      "fallback": "gpt5",
+      "reason": "Opus 96.2% security constraint verification"
+    },
+    "high_concurrency": {
+      "keywords": [
+        "concurrent",
+        "parallel",
+        "async",
+        "thread",
+        "mutex",
+        "race condition",
+        "goroutine",
+        "high-concurrency"
+      ],
+      "mandatory_model": "gemini-pro",
+      "fallback": "opus",
+      "reason": "Gemini has 69 concurrency issues/MLOC (GPT-5.2 has 414)"
+    }
+  },
+
+  "routing_rules": {
+    "context_override_threshold": 150000,
+    "confidence_threshold": 75,
+    "hitl_required_below": 75,
+    "max_domain_scores": 3,
+    "control_flow_warning_threshold": 100
+  },
+
+  "hitl_templates": {
+    "ambiguous_intent": "Sir, intent is ambiguous (confidence: {confidence}%). High risk of control flow errors. Recommend {model_a} but {model_b} is stronger in {domain}. Proceed?",
+    "concurrency_conflict": "Sir, this involves both concurrency ({gemini_score}%) and logical precision ({gpt_score}%). Gemini has 6x fewer concurrency bugs, but GPT-5 has 9x better control flow. Recommend: {recommendation}. Proceed?"
+  }
+}

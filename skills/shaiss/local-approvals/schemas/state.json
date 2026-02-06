@@ -1,0 +1,17 @@
+{
+  // Categories organized by agent ID
+  // Each agent can have its own set of approval categories
+  // Format: { "agent-id": ["category1", "category2", ...] }
+  "categories": {},
+
+  // Complete history of all approval decisions
+  // Each entry should include: timestamp, agent, action, decision (approved/denied), reason, and context
+  // This provides an audit trail for all approval requests
+  // Format: [{ "timestamp": "ISO-8601", "agent": "agent-id", "action": "...", "decision": "approved|denied", "reason": "...", "context": {...} }]
+  "history": [],
+
+  // Timestamp of the last cleanup operation
+  // Used to track when old history entries were pruned or when maintenance was performed
+  // Format: ISO-8601 timestamp string (e.g., "2026-02-05T08:34:00.000Z")
+  "lastCleanup": null
+}

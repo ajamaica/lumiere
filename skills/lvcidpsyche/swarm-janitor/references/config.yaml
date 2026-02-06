@@ -1,0 +1,66 @@
+# Swarm Janitor Configuration
+# Copy this file to ~/.swarm-janitor.yaml to customize
+
+# Session directory path
+sessions_dir: ~/.openclaw/agents/main/sessions
+
+# Retention policy
+retention:
+  # Delete sessions older than N days
+  days: 3
+  
+  # Or delete if larger than N MB (0 = disabled)
+  max_size_mb: 100
+  
+  # Keep minimum N sessions (newest)
+  min_keep: 10
+
+# Archival settings
+archive:
+  # Enable SuperMemory archival
+  enabled: true
+  
+  # Archive destination
+  # Options: supermemory, local, s3
+  destination: local
+  
+  # Local archive path (if destination = local)
+  local_path: ~/.openclaw/archives/swarm-janitor
+  
+  # SuperMemory API key (if destination = supermemory)
+  # Set via SUPERMEMORY_API_KEY environment variable
+
+# Safety settings
+safety:
+  # Always do dry-run first
+  dry_run_default: true
+  
+  # Require confirmation for deletes > N sessions
+  confirm_threshold: 5
+  
+  # Never delete active sessions (process check)
+  check_processes: true
+  
+  # Skip files matching these patterns
+  exclude_patterns:
+    - "*.lock"
+    - "sessions.json"
+    - "*.deleted.*"
+
+# Logging
+logging:
+  level: INFO
+  file: ~/.openclaw/logs/swarm-janitor.log
+  max_size_mb: 10
+  max_files: 5
+
+# Reporting
+report:
+  # Output format: text, json, csv
+  format: text
+  
+  # Include detailed session info
+  verbose: false
+  
+  # Send metrics to monitoring (optional)
+  webhook_url: null

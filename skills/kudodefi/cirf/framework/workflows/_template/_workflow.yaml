@@ -1,0 +1,57 @@
+# ═══════════════════════════════════════════════════════════════
+# CIRF - CRYPTO INTERACTIVE RESEARCH FRAMEWORK - WORKFLOW DEFINITION (TEMPLATE)
+# ═══════════════════════════════════════════════════════════════
+
+# --- IDENTITY ---
+id: "{workflow-id}"                 # Kebab-case (e.g., competitive-analysis)
+type: "{type}"                      # outlook | implication | valuation | insight | exploration | artifact | feedback
+name: "{Workflow Name}"
+description: "{Brief description of what this workflow delivers}"
+
+# --- DEPENDENCIES ---
+dependencies:
+  objectives: "./framework/workflows/{workflow-id}/objectives.md"
+  template: "./framework/workflows/{workflow-id}/template.md"
+  # For multiple templates:
+  # templates:
+  #   primary: "./framework/workflows/{workflow-id}/template-primary.md"
+  #   secondary: "./framework/workflows/{workflow-id}/template-secondary.md"
+  guides:
+    scope-clarification: "./framework/guides/scope-clarification.md"
+    research-methodology: "./framework/guides/research-methodology.md"
+    collaborative-research: "./framework/guides/collaborative-research.md"
+    output-standards: "./framework/guides/output-standards.md"
+    # Add workflow-specific guides if needed
+
+# --- CONFIGURATION ---
+configuration:
+  # Research Depth - HOW DEEPLY to research (independent of output length)
+  # quick: Essential sources only
+  # standard: Multiple sources, cross-validation
+  # deep: Comprehensive coverage, rigorous validation
+  research_depth: standard
+
+  # Output Type - HOW to present findings (independent of research depth)
+  # brief: Executive summary style
+  # standard: Balanced report
+  # comprehensive: Detailed report with full evidence
+  output_type: standard
+
+  # Output format
+  output_format: markdown
+
+  # Output path
+  output_path: "./workspaces/{workspace_id}/outputs/{workflow-id}/{workflow-id}-{date}.md"
+
+# --- DIRECTIVE ---
+# ═══════════════════════════════════════════════════════════════
+# ⚠️ MANDATORY EXECUTION - DO NOT SKIP
+# ═══════════════════════════════════════════════════════════════
+# You MUST execute BOTH steps below in order:
+#   1. initialization → READ and EXECUTE workflow-init.md
+#   2. execution → READ and EXECUTE workflow-execution.md
+# STOP immediately and report error if any step fails.
+# ═══════════════════════════════════════════════════════════════
+directive:
+  initialization: "./framework/components/workflow-init.md"
+  execution: "./framework/components/workflow-execution.md"

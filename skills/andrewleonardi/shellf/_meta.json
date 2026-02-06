@@ -1,0 +1,11 @@
+{
+  "owner": "andrewleonardi",
+  "slug": "shellf",
+  "displayName": "Shellf.ai",
+  "latest": {
+    "version": "1.4.0",
+    "publishedAt": 1770330263456,
+    "commit": "https://github.com/clawdbot/skills/commit/a12b0751974f92565700c9be227aa7f95ffbd26e"
+  },
+  "history": []
+}

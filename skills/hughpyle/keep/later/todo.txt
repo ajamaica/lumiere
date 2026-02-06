@@ -1,0 +1,179 @@
+* filter any 'get' by tag (show the most recent that has that tag; for recents only show the ones that have that tag)
+
+* tags themselves should have summaries and full descriptions
+    i.e. somewhere in the "system" store is a docuemnt that describes a tag
+    of course it's optional, you can just tag things in an open-ended way
+    but sure would be useful for convention, as well as maintenance, if tags are documented by whoever uses them.
+    
+    * these are "system" documents, which is kinda a new thing
+      (nowdoc is also a system document because it has specific behavior, but that has hard-coded id)
+      (these could have ids such as `_tag:foo`)
+    * then: provide a set of predefined tag-descriptions as files in `docs/system` that get loaded on `init`
+      and include in there: a description of the "project" tag, a description of the "topic" tag
+      (and whatever else we decide to pre-load... bearing in mind that pre-loaded content is for convention not specification!)
+    * "project" and "topic" are the first two
+      - placeholder descriptions for these are fine initially
+      - load from 'docs/system'
+
+    then when displaying a tag, mark it up with an asterisk if exists a definition-for-that-tag doc
+    and give a shortcut `keep tag --describe` or something
+
+* filter "one for each tag"?
+    - with "projects", "topics" tags
+    - this replaces all the "top-of-mind" stuff in `later/` (except for "recent")
+        - the later thing for "topics" is more explicit than using tasks/projects, but same goal
+        - actually "topics" is a much better word than "tasks" because this is not really a task-focused skill
+    - maybe "project" and "topic" tags (literally) are enough
+        - we'll use them by convention, but show them in all the examples
+        - concrete examples of using the nowdoc by project/topic
+        - need a way to "list current topics", "list current projects" as well as just "get the nowdoc"
+            - maybe that's the default in `keep` with no args:
+              get the no-project/no-topic nowdoc (or default it)
+              get the list of distinct projects, distinct topics, within a reasonable time and count limit
+            - limit 10, and limit to the last 7 days, should be enough for a default?
+                - "last N days" is subtle, not part of this task, don't have any time-limited behavior yet
+
+* tag-by-model ("auto-tag")?
+    - is there a model-supported tagging? what would that need to be useful? (specific domains??)
+      - i.e. as well as summarization, there's a "system document" that the model reads, and uses that document to decide which tags should be applied
+      - it really needs to be one document per tag (because the model might choose multiple tags)
+      - these are "system documents"
+    - want this to be pluggable, guide the model-driven tagging from a sysdoc that defines how it works
+    - want "references" for this too... maybe later
+
+* compare openclaw 'memory-lancedb' plugin
+
+* check - what is your emotional response when encountering this project the first time?
+
+* check for compatibility with linux (so far I've exclusively been running on macOS)
+    can deploy on rpi at home
+    also think about what would differ if we wanted to run this within docker, or in a k8s cluster
+
+* check for compatibility with windows
+    not sure we need to support powershell, only WSL? but paths etc. will vary
+    and I don't know if windows has local models available through system services yet (would be nice)
+    - this is all investigation work, not implementation  (I don't have a test environment)
+
+* add support for the kimi/moonshot models, etc - what are we missing? compare claude code, openclaw
+
+* add an audio track (mp3, flac, or something similar) to the library
+    - keep it small tho, under a megabyte?
+    - public domain recording of a song that resonates with the instructional content?
+    - use as content but don't really want add dependencies on mp3/flace/wav decoding (especially anything requiring a license such as the fraunhofer stuff, all our deps must be MIT-compatible)
+    - getting tags out of the file would be a great test case
+    - analysis of the audio content will depend on the available models, but some might do a good job
+
+* add an image; same strategy as audio
+
+* openclaw install a heartbeat.  Not too often, but often enough.
+
+* multi-embeddings
+    - background task can detect current config and maintain compat
+
+* review the CLI completely.  Can the common tasks have single-letter aliases for their commands?
+
+* "relevance / focus scores" are to be decveloped within the context of "topics / projects"
+    - there isn't an absolute relevance
+    - `keep similar` is close, is that enough?  no, we want to return results that include their relevance score
+    - relevance includes timeliness, and the current topic/project context
+        - so this means that topics and projects really are special?
+        - or, can we do relevance-per-tag everywhere? so that topics and projects are just tags like everything else?
+    - more thinking and research needed
+
+
+
+* Unix has heredoc, keep has nowdoc, what else do we need?
+    - or rather, is there functionality like a heredoc, that we should use for the nowdoc?
+
+
+* other "system" behaviors?
+    - zero, nada by default - is that ok?
+
+* all the pip install extras - yuk
+    makes the decision before you even know really
+    - prefer somthing more dynamic, not sure what
+
+* how do we get the claude-code model context?
+
+* how do we get the vscode model context?  I really don't want to require a plugin too
+    - can the agent just tell keep how to find the current providers??
+    - that would be commandline, or per-session config, not per-repo or whatever (right???)
+
+* can we do something similar for kiro?
+
+* better update/degrade memory strategies: compare with current best of breed
+    - want something that tracks last-retrieval time
+    - not sure how that applies to the ranking for retrieval
+    - do we need any of this to be config not code??
+
+ 
+* compare the openclaw plugin against the other memory plugins on the hub
+
+* move plugin into a `plugins` directory? yuk name, these are not "plugins for keep", so what?
+
+----
+
+Done:
+
+. start a todo list for notes
+. move the test docs into docs/library (the soul docs)
+. move docs/README to docs/INDEX.md
+. be clear that the tags are overlay, not replace
+. lazy-load embedding/summarization providers for offline read-only operations
+. fix __del__ crash when embedding provider fails to initialize
+. karma (AN5.57): "I am the owner of my deeds and heir to my deeds".
+. `keep -v` please, for debug-level logging to stderr
+. CLI-first documentation ordering in REFERENCE.md and QUICKSTART.md
+. enable "local config" - tree-walk config discovery, KEEP_CONFIG envvar, store.path config option
+. tag docs: "one value per key" documented in REFERENCE.md
+. tag-update CLI and tag() API for updating existing documents
+. delete tags via empty string or --remove flag
+. `keep tag KEY` works with key only (any value)
+. `keep tag --list` and `keep tag KEY --list`
+. rename source_tags → tags (with deprecation warning)
+. KEEP_TAG_* environment variables for auto-tagging
+. [tags] config section for default tags
+. summaries: --summary flag, smart remember (short content verbatim), max_summary_length config
+. documentstore already correct (stores only summaries, not full content)
+. remember vs update: keep separate (different input semantics, both useful)
+. model dimensions: lazy detection for unknown models (OpenAI, Gemini)
+. `keep init` works offline - providers lazy-loaded, no network at init
+. `process-pending` robust to offline - retries with max 5 attempts, graceful degradation
+. startup cost optimized - read-only commands don't load providers
+. error handling: log tracebacks to /tmp/keep-errors.log, show clean message to user
+. timestamps always UTC - verified all datetime.now uses timezone.utc
+. --since option for time-based filtering: accepts ISO duration (P3D, P1W, PT1H) or date (2026-01-15)
+. time-based filtering on find, similar, search, tag commands
+. system tags documented in docs/SYSTEM-TAGS.md (implemented vs reserved, protection mechanism)
+. `keep` with no args shows current working context (the "now")
+. `keep now` command to get/set current context
+. get_now() and set_now() API methods with auto-create on first access
+. default "now" content in docs/system/now.md (pre-loaded content pattern)
+. unified output format: ID [tag1=val1, tag2=val2, ...] with all tags shown
+. renamed 'builtin' to 'system' (docs/builtin → docs/system, _load_builtin → _load_system)
+. `keep tag xyz` lists VALUES for key (not documents)
+. `keep tag xyz=foo` lists DOCUMENTS with that tag
+. what is the "warning" for HF sentence trqansformers
+. preload system docs (conversations.md, domains.md) with special IDs (_system:*) and tags from frontmatter
+. fixed CLI help consistency: `keep now` examples now match option descriptions
+. document versioning: retain history on update, same id with version counter
+    - PRAGMA user_version for schema migrations, document_versions table
+    - address by id (newest) or id+offset (0=current, 1=previous)
+    - prev/next navigation in frontmatter output
+    - `keep get -V N` and `keep now -V N` for specific versions
+    - `keep get --history` and `keep now --history` to list versions
+    - text-mode updates use content-addressed IDs (_text:{hash}) for versioning
+    - ChromaDB stores versioned embeddings as {id}@v{N}
+. composable history: `keep list` IDs-first, `--ids --history` outputs @V{N} identifiers
+. typer version compat: uv/venv recommended in docs, removed ImportError guards for core deps
+. `keep now --history` and `keep get _now:default --history` produce identical output
+. condensed tags in frontmatter: YAML flow format `{key: value, ...}`
+. similar items in frontmatter: max 3, version-aware filtering, `--similar`/`--no-similar` flags, `-n` limit
+. disable Rich markup in CLI help (plain text, teletype-safe)
+. Ancrene Riwle attribution: James Morton, Camden Society 1853
+. AN5.57 URLs added to INDEX.md
+. consolidated three output formats: --ids (versioned ID), --full (YAML frontmatter), default (summary line)
+. self-healing install: Layer 0 in SKILL.md teaches agents to install Protocol Block in system rules
+x `context` text alongside summaries? (no, summary is good now)
+. review how system documents (e.g. "metaschema") are used today, if any
+. consolidated `keep tag` into `keep list`: --tag for filtering, --tags for listing, --since for time filtering

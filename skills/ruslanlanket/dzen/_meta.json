@@ -1,0 +1,11 @@
+{
+  "owner": "ruslanlanket",
+  "slug": "dzen",
+  "displayName": "Яндекс Дзен. Публикация постов с фото и видео",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770100741455,
+    "commit": "https://github.com/clawdbot/skills/commit/9cb484fbae159508683e8b3dff5d215f5c7e70bd"
+  },
+  "history": []
+}

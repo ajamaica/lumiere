@@ -1,0 +1,11 @@
+{
+  "owner": "galbria",
+  "slug": "vgl",
+  "displayName": "Visual Gen Ai Language",
+  "latest": {
+    "version": "0.0.1",
+    "publishedAt": 1770314216419,
+    "commit": "https://github.com/openclaw/skills/commit/84f72281b5ed8134f50e1c7f587204d292d97083"
+  },
+  "history": []
+}

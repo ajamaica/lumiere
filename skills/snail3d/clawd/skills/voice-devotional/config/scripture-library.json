@@ -1,0 +1,178 @@
+{
+  "John 3:16": {
+    "reference": "John 3:16",
+    "text": "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",
+    "version": "NIV",
+    "context": "Jesus explains the nature of God's love and the means of salvation to Nicodemus",
+    "themes": ["love", "faith", "salvation", "eternity"],
+    "notes": "This verse encapsulates the Gospel message: God's love, Christ's sacrifice, and salvation through faith."
+  },
+  "John 14:27": {
+    "reference": "John 14:27",
+    "text": "Peace I leave with you; my peace I give to you. Not as the world gives do I give to you. Let not your hearts be troubled, neither let them be afraid.",
+    "version": "ESV",
+    "context": "Jesus comforts His disciples before His crucifixion, promising them His peace",
+    "themes": ["peace", "comfort", "trust"],
+    "notes": "The peace Jesus offers is supernatural—it surpasses understanding and guards the heart."
+  },
+  "Romans 3:23": {
+    "reference": "Romans 3:23",
+    "text": "For all have sinned and fall short of the glory of God.",
+    "version": "ESV",
+    "context": "Paul establishes that all humanity is sinful and in need of God's grace",
+    "themes": ["sin", "redemption", "grace"],
+    "notes": "This foundational truth acknowledges that no one is righteous apart from God."
+  },
+  "Romans 6:23": {
+    "reference": "Romans 6:23",
+    "text": "For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord.",
+    "version": "ESV",
+    "context": "Paul contrasts the consequence of sin with the free gift of salvation through Christ",
+    "themes": ["sin", "grace", "eternal-life", "salvation"],
+    "notes": "The stark contrast shows that death is earned but eternal life is freely given."
+  },
+  "Romans 10:9": {
+    "reference": "Romans 10:9",
+    "text": "If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised him from the dead, you will be saved.",
+    "version": "NIV",
+    "context": "Paul explains the simplicity of the path to salvation: belief and confession",
+    "themes": ["faith", "salvation", "resurrection"],
+    "notes": "This verse shows that salvation is available to all—it requires belief and confession."
+  },
+  "Romans 15:13": {
+    "reference": "Romans 15:13",
+    "text": "May the God of hope fill you with all joy and peace as you trust in him, so that you may overflow with hope by the power of the Holy Spirit.",
+    "version": "NIV",
+    "context": "Paul's benediction emphasizing the source and fruits of hope in God",
+    "themes": ["hope", "joy", "peace", "trust"],
+    "notes": "Hope comes from God, produces joy and peace, and overflows through the Holy Spirit."
+  },
+  "Psalm 4:8": {
+    "reference": "Psalm 4:8",
+    "text": "In peace I will lie down and sleep, for you alone, Lord, make me dwell in safety.",
+    "version": "NIV",
+    "context": "David expresses confidence in God's protection and provision for peace and rest",
+    "themes": ["peace", "trust", "safety", "rest"],
+    "notes": "True peace and safety come not from circumstances but from trust in the Lord."
+  },
+  "Psalm 23:1": {
+    "reference": "Psalm 23:1",
+    "text": "The Lord is my shepherd, I lack nothing.",
+    "version": "NIV",
+    "context": "David begins the most beloved psalm with a declaration of complete trust and provision",
+    "themes": ["trust", "provision", "care"],
+    "notes": "The metaphor of God as shepherd emphasizes His guidance, protection, and provision."
+  },
+  "Philippians 4:4": {
+    "reference": "Philippians 4:4",
+    "text": "Rejoice in the Lord always. I will say it again: Rejoice!",
+    "version": "NIV",
+    "context": "Paul encourages the Philippians to find joy in their relationship with the Lord",
+    "themes": ["joy", "faith", "contentment"],
+    "notes": "Joy is a choice to rejoice in the Lord, regardless of external circumstances."
+  },
+  "Philippians 4:6-7": {
+    "reference": "Philippians 4:6-7",
+    "text": "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
+    "version": "NIV",
+    "context": "Paul's prescription for dealing with anxiety through prayer, thanksgiving, and trust",
+    "themes": ["peace", "prayer", "anxiety", "thanksgiving"],
+    "notes": "God's peace protects our hearts and minds when we bring our anxieties to Him in prayer."
+  },
+  "Philippians 4:13": {
+    "reference": "Philippians 4:13",
+    "text": "I can do all this through him who gives me strength.",
+    "version": "NIV",
+    "context": "Paul expresses confidence in Christ's strength to sustain him in all circumstances",
+    "themes": ["strength", "faith", "empowerment"],
+    "notes": "True strength comes from Christ, not from our own abilities or efforts."
+  },
+  "Hebrews 11:1": {
+    "reference": "Hebrews 11:1",
+    "text": "Now faith is confidence in what we hope for and assurance about what we do not see.",
+    "version": "NIV",
+    "context": "The definition of faith opens the chapter on biblical examples of faith",
+    "themes": ["faith", "hope", "trust"],
+    "notes": "Faith is both present assurance and future confidence in God's promises."
+  },
+  "Hebrews 6:19": {
+    "reference": "Hebrews 6:19",
+    "text": "We have this hope as an anchor for the soul, firm and secure.",
+    "version": "NIV",
+    "context": "The writer describes hope in Christ as a steadfast anchor for the soul",
+    "themes": ["hope", "stability", "faith"],
+    "notes": "Like an anchor, hope in Christ keeps us stable in life's storms."
+  },
+  "1 Peter 1:3": {
+    "reference": "1 Peter 1:3",
+    "text": "Praise be to the God and Father of our Lord Jesus Christ! In his great mercy he has given us new birth into a living hope through the resurrection of Jesus Christ from the dead.",
+    "version": "NIV",
+    "context": "Peter opens his letter by celebrating salvation and its foundation in the resurrection",
+    "themes": ["hope", "resurrection", "salvation", "grace"],
+    "notes": "Our hope is 'living' because it is rooted in the living, resurrected Christ."
+  },
+  "1 Peter 1:6-7": {
+    "reference": "1 Peter 1:6-7",
+    "text": "In all this you greatly rejoice, though now for a little while you may have had to suffer grief in all kinds of trials. These have come so that the proven genuineness of your faith—of greater worth than gold, which perishes even though refined by fire—may result in praise, glory and honor when Jesus Christ is revealed.",
+    "version": "NIV",
+    "context": "Peter encourages believers facing trials, showing that suffering refines faith",
+    "themes": ["faith", "trials", "joy", "perseverance"],
+    "notes": "Trials refine faith and make it more valuable than precious metals."
+  },
+  "1 Peter 3:15": {
+    "reference": "1 Peter 3:15",
+    "text": "But in your hearts revere Christ as Lord. Always be prepared to give an answer to everyone who asks you to give the reason for the hope that you have. But do this with gentleness and respect.",
+    "version": "NIV",
+    "context": "Peter calls believers to be ready to share their faith with gentleness",
+    "themes": ["hope", "witness", "faith", "gentleness"],
+    "notes": "Our hope in Christ should be visible and ready to be shared with others."
+  },
+  "1 John 4:7-8": {
+    "reference": "1 John 4:7-8",
+    "text": "Dear friends, let us love one another, for love comes from God. Everyone who loves has been born of God and knows God. Whoever does not love does not know God, because God is love.",
+    "version": "NIV",
+    "context": "John emphasizes that God's love is the foundation of authentic Christian faith",
+    "themes": ["love", "faith", "God's-nature"],
+    "notes": "Love is not just a command but the essential nature of God."
+  },
+  "Ephesians 2:8-9": {
+    "reference": "Ephesians 2:8-9",
+    "text": "For it is by grace you have been saved, through faith—and this is not from yourselves, it is the gift of God—not by works, so that no one can boast.",
+    "version": "NIV",
+    "context": "Paul emphasizes that salvation is entirely God's gift, not earned by works",
+    "themes": ["grace", "faith", "salvation"],
+    "notes": "Grace and faith are gifts from God, ensuring salvation is accessible to all."
+  },
+  "Colossians 3:13": {
+    "reference": "Colossians 3:13",
+    "text": "Bear with each other and forgive one another if any of you has a grievance against someone. Forgive as the Lord forgave you.",
+    "version": "NIV",
+    "context": "Paul instructs believers to forgive each other as Christ forgave them",
+    "themes": ["forgiveness", "grace", "love"],
+    "notes": "Forgiveness is not optional but a reflection of Christ's forgiveness toward us."
+  },
+  "Colossians 3:15": {
+    "reference": "Colossians 3:15",
+    "text": "Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful.",
+    "version": "NIV",
+    "context": "Paul exhorts believers to let Christ's peace guide their decisions and attitudes",
+    "themes": ["peace", "unity", "thankfulness"],
+    "notes": "Christ's peace should be the ruling principle in our hearts and relationships."
+  },
+  "Proverbs 3:5-6": {
+    "reference": "Proverbs 3:5-6",
+    "text": "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
+    "version": "NIV",
+    "context": "Wisdom literature calls believers to trust God's guidance above their own reasoning",
+    "themes": ["trust", "guidance", "wisdom"],
+    "notes": "True wisdom comes from trusting God rather than relying solely on our understanding."
+  },
+  "Revelation 21:4": {
+    "reference": "Revelation 21:4",
+    "text": "He will wipe every tear from their eyes. There will be no more death or mourning or crying or pain, for the old order of things has passed away.",
+    "version": "NIV",
+    "context": "John's vision of the new heaven and earth reveals God's ultimate comfort and restoration",
+    "themes": ["hope", "eternity", "comfort", "redemption"],
+    "notes": "Ultimate hope culminates in God's presence and the absence of all suffering."
+  }
+}

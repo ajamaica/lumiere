@@ -1,0 +1,11 @@
+{
+  "owner": "d1gl3",
+  "slug": "gitlab-api",
+  "displayName": "GitLab API",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770222350977,
+    "commit": "https://github.com/clawdbot/skills/commit/ac6875ba361a14545407f7406435f4779987270d"
+  },
+  "history": []
+}

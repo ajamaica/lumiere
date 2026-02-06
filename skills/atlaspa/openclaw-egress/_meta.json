@@ -1,0 +1,11 @@
+{
+  "owner": "atlaspa",
+  "slug": "openclaw-egress",
+  "displayName": "Openclaw Egress",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770313128103,
+    "commit": "https://github.com/openclaw/skills/commit/cd024ba27367ece79db1173c9f3f6d2053613317"
+  },
+  "history": []
+}

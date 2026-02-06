@@ -1,0 +1,11 @@
+{
+  "owner": "lucaspdude",
+  "slug": "persistent-private-agent-memory",
+  "displayName": "Persistent agent memory",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1769892003340,
+    "commit": "https://github.com/clawdbot/skills/commit/c55cca4ba838b8dc4770d3d91049041d4c9f0730"
+  },
+  "history": []
+}

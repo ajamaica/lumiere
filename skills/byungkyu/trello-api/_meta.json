@@ -1,0 +1,17 @@
+{
+  "owner": "byungkyu",
+  "slug": "trello-api",
+  "displayName": "Trello",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770343130445,
+    "commit": "https://github.com/openclaw/skills/commit/edac1d64aad6e2a92cf185aca57ed89dcd66ae77"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770193435962,
+      "commit": "https://github.com/clawdbot/skills/commit/28f941f5bdcf65137c6fca04c3b99689324eab16"
+    }
+  ]
+}

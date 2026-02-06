@@ -1,0 +1,7 @@
+{
+  "name": "feishu-pcec",
+  "version": "1.0.2",
+  "description": "Internal extension for Capability Evolver with Feishu rich text reporting.",
+  "main": "index.js",
+  "dependencies": {}
+}

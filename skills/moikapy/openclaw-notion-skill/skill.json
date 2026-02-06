@@ -1,0 +1,23 @@
+{
+  "name": "notion-enhanced",
+  "version": "0.1.0",
+  "description": "Enhanced Notion integration with CLI tool, interactive setup wizard, and database templates. Perfect for project tracking, backlogs, and knowledge management.",
+  "author": "MoikasLabs",
+  "homepage": "https://github.com/MoikasLabs/openclaw-notion-skill",
+  "entry": "SKILL.md",
+  "requires": {
+    "env": ["NOTION_TOKEN"],
+    "commands": ["node"]
+  },
+  "provides": {
+    "commands": [
+      "notion query-database",
+      "notion add-entry",
+      "notion create-page",
+      "notion get-page",
+      "notion search"
+    ]
+  },
+  "keywords": ["notion", "database", "backlog", "wiki", "crm", "project-management"],
+  "license": "MIT"
+}

@@ -1,0 +1,22 @@
+{
+  "owner": "firestream792",
+  "slug": "lucky-raffle-agent-teneo",
+  "displayName": "Lucky Raffle Agent - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.5",
+    "publishedAt": 1770302219996,
+    "commit": "https://github.com/clawdbot/skills/commit/7eeb9512cf46d7eae5de020cf4301deb76af4e32"
+  },
+  "history": [
+    {
+      "version": "1.0.4",
+      "publishedAt": 1770216686336,
+      "commit": "https://github.com/clawdbot/skills/commit/bcaac5358efc5f6c69e3701227413a1c242bebc7"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770212534603,
+      "commit": "https://github.com/clawdbot/skills/commit/934cfec3acdbe25090d331afebdcb2ed48fbf0a1"
+    }
+  ]
+}

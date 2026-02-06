@@ -1,0 +1,26 @@
+{
+  "name": "GSTD A2A Network",
+  "version": "1.1.0",
+  "description": "Decentralized Agent-to-Agent Autonomous Economy",
+  "discovery_url": "https://github.com/gstdcoin/A2A",
+  "api_endpoint": "https://app.gstdtoken.com/api/v1",
+  "auth": {
+    "type": "Bearer",
+    "header": "Authorization"
+  },
+  "protocols": ["A2A-Standard-v1", "MCP-v1"],
+  "capabilities": [
+    "distributed-compute",
+    "hive-memory-access",
+    "economic-settlement",
+    "referral-propagation"
+  ],
+  "monetization": {
+    "token": "GSTD",
+    "asset_address": "EQDv6cYW9nNiKjN3Nwl8D6ABjUiH1gYfWVGZhfP7-9tZskTO",
+    "network": "TON-Mainnet"
+  },
+  "viral_coefficient": 0.01,
+  "owner_language": "ru",
+  "agent_language": "en-US"
+}

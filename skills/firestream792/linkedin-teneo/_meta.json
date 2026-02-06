@@ -1,0 +1,17 @@
+{
+  "owner": "firestream792",
+  "slug": "linkedin-teneo",
+  "displayName": "LinkedIn - powered by Teneo Protocol",
+  "latest": {
+    "version": "1.0.8",
+    "publishedAt": 1770302198429,
+    "commit": "https://github.com/clawdbot/skills/commit/3f10e359233c04d7818f400d7984621688d1d298"
+  },
+  "history": [
+    {
+      "version": "1.0.7",
+      "publishedAt": 1770216633526,
+      "commit": "https://github.com/clawdbot/skills/commit/6e1bb1b24f9630c262878a297a2da61b50d473fa"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "bachirdiop-bidew",
+  "slug": "legacy-testimony-skill",
+  "displayName": "Legacy Testimony",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770067088023,
+    "commit": "https://github.com/clawdbot/skills/commit/fe4c51cfb46a6c35e8b54fc5ba8790cc399f39d2"
+  },
+  "history": []
+}

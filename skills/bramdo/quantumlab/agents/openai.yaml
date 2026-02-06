@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantum Lab Runner"
+  short_description: "Run quantum_lab scripts and demos in the qiskit venv."
+  default_prompt: "Run a quantum_lab command in the qiskit venv. Ask for the exact subcommand if unclear."

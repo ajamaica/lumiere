@@ -1,0 +1,115 @@
+# Stock Signals Test Suite
+# https://app.strykr.ai/stock-signals
+
+name: Stock Signals
+description: Tests for stock signals page - asset filters and signal cards
+baseUrl: https://app.strykr.ai
+
+setup:
+  # Navigate via sidebar for reliability
+  - goto: /
+  - waitForLoad: true
+  - click: 'a[href="/stock-signals"], [data-nav="stocks"]'
+  - waitForNavigation: true
+  - waitFor: '.signal-card, [data-testid="signal-card"]'
+    timeout: 15000
+
+tests:
+  - name: Page loads with stock signal cards
+    steps:
+      - expectVisible: '.signal-card, [data-testid="signal-card"]'
+      - expectCount:
+          selector: '.signal-card'
+          min: 1
+      - screenshot: stock-signals-loaded
+
+  - name: Signal cards display stock data
+    steps:
+      - call: expectSignalCard
+        args:
+          hasSymbol: true
+          hasPrice: true
+          hasChart: true
+          hasActions: true
+          type: stock
+
+  # Asset Type Filters
+  - name: Stocks filter works
+    steps:
+      - click: 'button:has-text("Stocks"), [data-filter="stocks"]'
+      - waitFor: 500
+      - expectVisible: '.signal-card'
+      - screenshot: filter-stocks
+
+  - name: ETFs filter works
+    steps:
+      - click: 'button:has-text("ETFs"), [data-filter="etfs"]'
+      - waitFor: 500
+      # May or may not have ETF signals
+      - screenshot: filter-etfs
+
+  - name: Forex filter works
+    steps:
+      - click: 'button:has-text("Forex"), [data-filter="forex"]'
+      - waitFor: 500
+      - screenshot: filter-forex
+
+  - name: All assets filter resets
+    steps:
+      - click: 'button:has-text("All"), [data-filter="all"]'
+      - waitFor: 500
+      - expectVisible: '.signal-card'
+      - screenshot: filter-all
+
+  # Direction Filters
+  - name: Long filter works
+    steps:
+      - click: 'button:has-text("Long"), [data-filter="long"]'
+      - waitFor: 500
+      - screenshot: stock-filter-long
+
+  - name: Short filter works
+    steps:
+      - click: 'button:has-text("Short"), [data-filter="short"]'
+      - waitFor: 500
+      - screenshot: stock-filter-short
+
+  # Action Buttons
+  - name: Listen button functional
+    steps:
+      - click: 'button:has-text("All"), [data-filter="all"]'
+      - waitFor: 500
+      - click: 'button:has-text("Listen"), [data-action="listen"]'
+        first: true
+      - waitFor: 1000
+      - screenshot: stock-listen
+
+  - name: Ask Strykr AI with stock context
+    steps:
+      - click: 'button:has-text("Ask Strykr AI"), [data-action="ask-ai"]'
+        first: true
+      - waitFor: 1000
+      - expectVisible: '[data-testid="ai-chat"], .ai-response'
+      - screenshot: stock-ask-ai
+
+  - name: Details modal for stock (known issue)
+    knownIssue: details-modal-empty
+    steps:
+      - goto: /
+      - click: 'a[href="/stock-signals"]'
+      - waitFor: '.signal-card'
+        timeout: 10000
+      - click: 'button:has-text("Details"), [data-action="details"]'
+        first: true
+      - waitFor: 1000
+      - expectVisible: '[role="dialog"], .modal'
+      - screenshot: stock-details-modal
+
+  # Market Hours Awareness
+  - name: Market status indicator present
+    steps:
+      - expectVisible: '[data-testid="market-status"], .market-status'
+
+  - name: No console errors
+    steps:
+      - expectNoConsoleErrors: true

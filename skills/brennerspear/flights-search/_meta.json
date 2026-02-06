@@ -1,0 +1,11 @@
+{
+  "owner": "brennerspear",
+  "slug": "flights-search",
+  "displayName": "Flights",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770180510885,
+    "commit": "https://github.com/clawdbot/skills/commit/3e61f011e4bc726058ce9471dc885abb531b741d"
+  },
+  "history": []
+}

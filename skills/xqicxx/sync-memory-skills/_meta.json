@@ -1,0 +1,11 @@
+{
+  "owner": "xqicxx",
+  "slug": "sync-memory-skills",
+  "displayName": "sync_memory_skills",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770123263381,
+    "commit": "https://github.com/clawdbot/skills/commit/a0651f942debb39029cf409606b864715b428512"
+  },
+  "history": []
+}

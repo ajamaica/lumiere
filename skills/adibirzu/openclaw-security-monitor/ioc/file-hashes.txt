@@ -1,0 +1,13 @@
+# OpenClaw Known Malicious File Hashes (SHA-256)
+# Source: Koi Security, VirusTotal
+# Format: hash|filename|platform|family|notes
+
+# Windows AMOS loader
+17703b3d5e8e1fe69d6a6c78a240d8c84b32465fe62bed5610fb29335fe42283|openclaw-agent.exe|windows|amos-loader|Packed trojan, ClawHavoc
+
+# macOS AMOS stealer variants
+1e6d4b0538558429422b71d1f4d724c8ce31be92d299df33a8339e32316e2298|x5ki60w1ih838sp7|macos|amos|Mach-O universal binary, 16 VT detections
+0e52566ccff4830e30ef45d2ad804eefba4ffe42062919398bf1334aab74dd65|unknown|macos|amos|AMOS variant
+
+# Malicious skill archive
+79e8f3f7a6113773cdbced2c7329e6dbb2d0b8b3bf5a18c6c97cb096652bc1f2|skill-archive|any|clawhavoc|Malicious skill package

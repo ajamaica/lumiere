@@ -1,0 +1,3 @@
+-----BEGIN PRIVATE KEY-----
+openssl genpkey -algorithm ED25519 -out ed25519-private.pem && openssl pkey -pubout -in ed25519-private.pem > ed25519-public.pem
+-----END PRIVATE KEY-----

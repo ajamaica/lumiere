@@ -1,0 +1,27 @@
+{
+  "owner": "impkind",
+  "slug": "amygdala-memory",
+  "displayName": "Amygdala Memory",
+  "latest": {
+    "version": "1.6.1",
+    "publishedAt": 1770044251190,
+    "commit": "https://github.com/clawdbot/skills/commit/106597c6c4bee709f3876b1f46c0f4b81eb044f1"
+  },
+  "history": [
+    {
+      "version": "1.3.0",
+      "publishedAt": 1769953589438,
+      "commit": "https://github.com/clawdbot/skills/commit/64d918a9766e5e06052955fbfdd18d9d97880bd2"
+    },
+    {
+      "version": "1.2.0",
+      "publishedAt": 1769913902929,
+      "commit": "https://github.com/clawdbot/skills/commit/ec4b1b84e32ce29465e51c39df996a2c432bd750"
+    },
+    {
+      "version": "0.1.0",
+      "publishedAt": 1769909350792,
+      "commit": "https://github.com/clawdbot/skills/commit/8c0bfd5de3cf7c9f1b9c953936b392117f7fab3f"
+    }
+  ]
+}

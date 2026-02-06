@@ -1,0 +1,11 @@
+{
+  "owner": "dannydvm",
+  "slug": "openclaw-multi-brain",
+  "displayName": "Multi-Brain Protocol",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770334235020,
+    "commit": "https://github.com/clawdbot/skills/commit/d65b84d105330a848224d6d4378ab359ad012a00"
+  },
+  "history": []
+}

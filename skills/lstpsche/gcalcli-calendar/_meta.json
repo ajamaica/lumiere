@@ -1,0 +1,17 @@
+{
+  "owner": "lstpsche",
+  "slug": "gcalcli-calendar",
+  "displayName": "Google Calendar (via gcalcli)",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770336937270,
+    "commit": "https://github.com/clawdbot/skills/commit/4b3f85bee8578a84ada54a36cd40fa623f7bd880"
+  },
+  "history": [
+    {
+      "version": "0.1.1",
+      "publishedAt": 1770333955497,
+      "commit": "https://github.com/clawdbot/skills/commit/521fdb4b2ed66c1be0d03640c0528ace318edf84"
+    }
+  ]
+}

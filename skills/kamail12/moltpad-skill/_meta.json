@@ -1,0 +1,11 @@
+{
+  "owner": "kamail12",
+  "slug": "moltpad-skill",
+  "displayName": "Moltpad",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770330089007,
+    "commit": "https://github.com/clawdbot/skills/commit/fc328503c167e3e5cb24c1c671bc5b3d1b5db297"
+  },
+  "history": []
+}

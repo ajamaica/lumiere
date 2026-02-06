@@ -1,0 +1,11 @@
+{
+  "owner": "byron-mckeeby",
+  "slug": "ethereum-read-only",
+  "displayName": "Ethereum Read Only",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770079304910,
+    "commit": "https://github.com/clawdbot/skills/commit/6bc3ff18cdc68b7f27e6de909e32ccb89ce15004"
+  },
+  "history": []
+}

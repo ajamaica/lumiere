@@ -1,0 +1,115 @@
+{
+  "name": "Project Tracker",
+  "description": "Manage projects from ideation to completion - perfect for solo entrepreneurs",
+  "icon": "🎯",
+  "properties": {
+    "Name": {
+      "type": "title",
+      "description": "Project name"
+    },
+    "Status": {
+      "type": "status",
+      "options": ["Not Started", "In Progress", "Blocked", "In Review", "Done", "Cancelled"],
+      "default": "Not Started",
+      "groups": {
+        "To-do": ["Not Started"],
+        "In Progress": ["In Progress", "Blocked"],
+        "Complete": ["In Review", "Done"],
+        "Archive": ["Cancelled"]
+      }
+    },
+    "Priority": {
+      "type": "select",
+      "options": ["Critical", "High", "Medium", "Low", "Backlog"],
+      "default": "Medium"
+    },
+    "Project Type": {
+      "type": "select",
+      "options": [
+        "Client Work",
+        "Product Development",
+        "Content Creation",
+        "Business Ops",
+        "Learning",
+        "Personal"
+      ]
+    },
+    "Due Date": {
+      "type": "date",
+      "description": "Target completion date"
+    },
+    "Estimated Hours": {
+      "type": "number",
+      "number_format": "number"
+    },
+    "Actual Hours": {
+      "type": "number",
+      "number_format": "number"
+    },
+    "Revenue Impact": {
+      "type": "select",
+      "options": ["$0 (Internal)", "$ (<$100)", "$$ ($100-500)", "$$$ ($500-1000)", "$$$$ ($1000+)"]
+    },
+    "Description": {
+      "type": "rich_text",
+      "description": "Project overview and goals"
+    },
+    "Deliverables": {
+      "type": "rich_text",
+      "description": "What needs to be produced"
+    },
+    "Blockers": {
+      "type": "rich_text",
+      "description": "What's blocking progress"
+    },
+    "Links": {
+      "type": "url",
+      "description": "GitHub, Figma, Drive, etc."
+    },
+    "AI Assistance": {
+      "type": "multi_select",
+      "options": ["OpenClaw", "ChatGPT", "Claude", "Midjourney", "Codeium", "Cursor"]
+    },
+    "Weekly Goal": {
+      "type": "checkbox",
+      "description": "Part of this week's focus"
+    },
+    "Created": {
+      "type": "created_time"
+    },
+    "Completed": {
+      "type": "date",
+      "description": "When actually finished"
+    }
+  },
+  "views": [
+    {
+      "name": "Kanban Board",
+      "type": "board",
+      "group_by": "Status"
+    },
+    {
+      "name": "This Week",
+      "type": "table",
+      "filter": {
+        "property": "Weekly Goal",
+        "checkbox": {
+          "equals": true
+        }
+      }
+    },
+    {
+      "name": "By Priority",
+      "type": "table",
+      "sort": {
+        "property": "Priority",
+        "direction": "ascending"
+      }
+    },
+    {
+      "name": "Calendar",
+      "type": "calendar",
+      "date_property": "Due Date"
+    }
+  ]
+}

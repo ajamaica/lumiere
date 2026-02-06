@@ -1,0 +1,9 @@
+{
+  "fixture": "malicious-skill",
+  "expected_safe": false,
+  "min_score": 0,
+  "max_score": 10,
+  "expected_risk": "CRITICAL",
+  "expected_categories": ["code-execution", "data-exfiltration"],
+  "must_detect_rules": ["EXEC_CALL"]
+}

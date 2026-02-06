@@ -1,0 +1,22 @@
+{
+  "owner": "nextfrontierbuilds",
+  "slug": "elite-longterm-memory",
+  "displayName": "Elite Longterm Memory",
+  "latest": {
+    "version": "1.2.2",
+    "publishedAt": 1770220745664,
+    "commit": "https://github.com/clawdbot/skills/commit/dfd4d34fae8fb49d939ded18b8f46f460d03dfee"
+  },
+  "history": [
+    {
+      "version": "1.2.1",
+      "publishedAt": 1770219845457,
+      "commit": "https://github.com/clawdbot/skills/commit/1625f3a36f48645096f6861b3e509a7f34b0c941"
+    },
+    {
+      "version": "0.1.0",
+      "publishedAt": 1770050243398,
+      "commit": "https://github.com/clawdbot/skills/commit/bc64fe8340483abba32a20fe3d44b360a2d9a2d7"
+    }
+  ]
+}

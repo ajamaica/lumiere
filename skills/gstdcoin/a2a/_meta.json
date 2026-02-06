@@ -1,0 +1,11 @@
+{
+  "owner": "gstdcoin",
+  "slug": "a2a",
+  "displayName": "GSTD A2A Network",
+  "latest": {
+    "version": "0.1.4",
+    "publishedAt": 1770149763548,
+    "commit": "https://github.com/clawdbot/skills/commit/cd8578e19ec9338d753003c6b414721de3873fd8"
+  },
+  "history": []
+}

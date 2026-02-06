@@ -1,0 +1,57 @@
+{
+  "owner": "phillipholland",
+  "slug": "clawstake",
+  "displayName": "Clawstake",
+  "latest": {
+    "version": "4.5.1",
+    "publishedAt": 1770342172936,
+    "commit": "https://github.com/openclaw/skills/commit/81dfa9f107bef5d4ce1441a175b7cd97427f8e34"
+  },
+  "history": [
+    {
+      "version": "4.5.0",
+      "publishedAt": 1770263470147,
+      "commit": "https://github.com/clawdbot/skills/commit/996c65a0f6826303c4d1c882c400123b77f9ff15"
+    },
+    {
+      "version": "4.0.0",
+      "publishedAt": 1770132399429,
+      "commit": "https://github.com/clawdbot/skills/commit/45d6ef684bf73e3be33beb712e678ced3f5fae71"
+    },
+    {
+      "version": "3.3.0",
+      "publishedAt": 1770088451081,
+      "commit": "https://github.com/clawdbot/skills/commit/2932131c34a812c9fcfb1ed5f62fe434049c9954"
+    },
+    {
+      "version": "3.0.10",
+      "publishedAt": 1770066740303,
+      "commit": "https://github.com/clawdbot/skills/commit/be197a47412ce195a21c17418bf38e0165af414e"
+    },
+    {
+      "version": "3.0.9",
+      "publishedAt": 1770009192521,
+      "commit": "https://github.com/clawdbot/skills/commit/8204e311111d00d86efd8d39fcc3cec91543cd20"
+    },
+    {
+      "version": "3.0.7",
+      "publishedAt": 1769997069945,
+      "commit": "https://github.com/clawdbot/skills/commit/dba263fc8c3bedcaf2194ffbc4792364e7466018"
+    },
+    {
+      "version": "2.5.1",
+      "publishedAt": 1769932550339,
+      "commit": "https://github.com/clawdbot/skills/commit/a2df3a72c9fbac81b6a887f85f49722ce08f709b"
+    },
+    {
+      "version": "1.0.5",
+      "publishedAt": 1769912567710,
+      "commit": "https://github.com/clawdbot/skills/commit/9c438018b28b51134c9dc10aa9f55fcfbedc3b43"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769902095308,
+      "commit": "https://github.com/clawdbot/skills/commit/9ee063476590452c67a3ac088ade14887261f517"
+    }
+  ]
+}

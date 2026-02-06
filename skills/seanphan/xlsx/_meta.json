@@ -1,0 +1,11 @@
+{
+  "owner": "seanphan",
+  "slug": "xlsx",
+  "displayName": "Xlsx",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769956404813,
+    "commit": "https://github.com/clawdbot/skills/commit/d834da4f42a69c002f46e69c15644abedf31c52c"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "imthatcarlos",
+  "slug": "clawdvine-skill-latest",
+  "displayName": "ClawdVine",
+  "latest": {
+    "version": "1.2.0",
+    "publishedAt": 1770310258286,
+    "commit": "https://github.com/clawdbot/skills/commit/74be71ddbc9376c6e126830f4f806f3dfbe432e6"
+  },
+  "history": []
+}

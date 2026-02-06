@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>クロウ</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container { max-width: 380px; width: 100%; }
+    .card {
+      background: #fff;
+      border-radius: 40px;
+      padding: 35px 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+    .robot {
+      width: 120px; height: 120px;
+      margin: 0 auto 20px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .robot:hover { transform: scale(1.05); }
+    .robot-head {
+      width: 100px; height: 90px;
+      background: linear-gradient(145deg, #74b9ff, #0984e3);
+      border-radius: 25px;
+      position: absolute;
+      top: 10px; left: 10px;
+      box-shadow: 0 10px 30px rgba(9, 132, 227, 0.3);
+    }
+    .antenna {
+      width: 8px; height: 20px;
+      background: #0984e3;
+      position: absolute;
+      top: -15px; left: 50%;
+      transform: translateX(-50%);
+      border-radius: 4px;
+    }
+    .antenna::after {
+      content: '';
+      width: 14px; height: 14px;
+      background: #fd79a8;
+      border-radius: 50%;
+      position: absolute;
+      top: -10px; left: 50%;
+      transform: translateX(-50%);
+      animation: blink-light 2s ease-in-out infinite;
+    }
+    @keyframes blink-light {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .eyes {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 25px;
+    }
+    .eye {
+      width: 22px; height: 22px;
+      background: #fff;
+      border-radius: 50%;
+      position: relative;
+    }
+    .eye::after {
+      content: '';
+      width: 10px; height: 10px;
+      background: #2d3436;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .mouth {
+      width: 30px; height: 10px;
+      background: #fff;
+      border-radius: 0 0 15px 15px;
+      margin: 12px auto 0;
+    }
+    .cheeks {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 12px;
+      margin-top: 5px;
+    }
+    .cheek {
+      width: 15px; height: 8px;
+      background: rgba(253, 121, 168, 0.6);
+      border-radius: 50%;
+      opacity: 0;
+    }
+    .robot.idle .eye::after { animation: look-around 4s ease-in-out infinite; }
+    @keyframes look-around {
+      0%, 100% { transform: translate(-50%, -50%); }
+      25% { transform: translate(-30%, -50%); }
+      75% { transform: translate(-70%, -50%); }
+    }
+    .robot.listening .robot-head { animation: wiggle 0.5s ease-in-out infinite; }
+    .robot.listening .eye { width: 26px; height: 26px; }
+    .robot.listening .eye::after { width: 14px; height: 14px; background: #e84393; animation: none; }
+    .robot.listening .mouth { width: 20px; height: 20px; border-radius: 50%; }
+    .robot.listening .cheek { opacity: 1; }
+    @keyframes wiggle { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+    .robot.thinking .eye::after { animation: spin 0.8s linear infinite; }
+    .robot.thinking .mouth { width: 15px; height: 15px; border-radius: 50%; }
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg) translateX(3px); }
+      100% { transform: translate(-50%, -50%) rotate(360deg) translateX(3px); }
+    }
+    .robot.speaking .mouth { animation: talk 0.15s ease-in-out infinite; }
+    .robot.speaking .cheek { opacity: 1; }
+    @keyframes talk {
+      0%, 100% { height: 10px; }
+      50% { height: 18px; }
+    }
+    .name {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: #2d3436;
+      margin-bottom: 5px;
+    }
+    .status {
+      text-align: center;
+      font-size: 14px;
+      color: #636e72;
+      min-height: 20px;
+      margin-bottom: 20px;
+    }
+    .chat {
+      background: #f8f9fa;
+      border-radius: 20px;
+      padding: 15px;
+      height: 200px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+    .chat::-webkit-scrollbar { width: 4px; }
+    .chat::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+    .empty {
+      text-align: center;
+      padding: 50px 20px;
+      color: #b2bec3;
+      font-size: 14px;
+    }
+    .msg { margin-bottom: 10px; animation: pop 0.3s ease; }
+    @keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .msg.user { text-align: right; }
+    .bubble {
+      display: inline-block;
+      padding: 10px 15px;
+      border-radius: 18px;
+      max-width: 80%;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .user .bubble {
+      background: linear-gradient(135deg, #74b9ff, #0984e3);
+      color: #fff;
+      border-bottom-right-radius: 5px;
+    }
+    .bot .bubble {
+      background: #fff;
+      color: #2d3436;
+      border-bottom-left-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .btn {
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { transform: scale(1.1); }
+    .mic-btn {
+      width: 60px; height: 60px;
+      background: linear-gradient(145deg, #74b9ff, #0984e3);
+      color: #fff;
+      font-size: 24px;
+      box-shadow: 0 8px 25px rgba(9, 132, 227, 0.3);
+    }
+    .mic-btn.recording {
+      background: linear-gradient(145deg, #fd79a8, #e84393);
+      animation: pulse-btn 1s ease-in-out infinite;
+    }
+    @keyframes pulse-btn {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(232, 67, 147, 0.7); }
+      50% { box-shadow: 0 0 0 12px rgba(232, 67, 147, 0); }
+    }
+    .small-btn {
+      width: 44px; height: 44px;
+      background: #f0f0f0;
+      font-size: 18px;
+    }
+    .tip {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 11px;
+      color: #b2bec3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="robot idle" id="robot" onclick="toggleRec()">
+        <div class="antenna"></div>
+        <div class="robot-head">
+          <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+          <div class="mouth"></div>
+          <div class="cheeks"><div class="cheek"></div><div class="cheek"></div></div>
+        </div>
+      </div>
+      <div class="name">クロウ</div>
+      <div class="status" id="status">タップして話しかけてね</div>
+      <div class="chat" id="chat"><div class="empty">💬 会話を始めよう</div></div>
+      <div class="controls">
+        <button class="btn small-btn" onclick="clearChat()">🗑️</button>
+        <button class="btn mic-btn" id="micBtn" onclick="toggleRec()">🎤</button>
+        <button class="btn small-btn" onclick="toggleSound()" id="soundBtn">🔊</button>
+      </div>
+      <div class="tip">スペースキー長押しでも録音OK</div>
+    </div>
+  </div>
+  <script>
+    let KEY = null;
+    fetch('/api/key').then(r => r.json()).then(d => KEY = d.key).catch(() => {});
+
+    let rec, chunks = [], recording = false, sound = true, history = [];
+    const robot = document.getElementById('robot');
+    const status = document.getElementById('status');
+    const chat = document.getElementById('chat');
+    const micBtn = document.getElementById('micBtn');
+    const soundBtn = document.getElementById('soundBtn');
+
+    function setState(txt, state) {
+      status.textContent = txt;
+      robot.className = 'robot ' + state;
+    }
+
+    function addMsg(role, txt) {
+      const empty = chat.querySelector('.empty');
+      if (empty) empty.remove();
+      const d = document.createElement('div');
+      d.className = 'msg ' + (role === 'user' ? 'user' : 'bot');
+      d.innerHTML = `<div class="bubble">${txt.replace(/\n/g, '<br>')}</div>`;
+      chat.appendChild(d);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function clearChat() {
+      chat.innerHTML = '<div class="empty">💬 会話を始めよう</div>';
+      history = [];
+      setState('タップして話しかけてね', 'idle');
+    }
+
+    function toggleSound() {
+      sound = !sound;
+      soundBtn.textContent = sound ? '🔊' : '🔇';
+    }
+
+    async function toggleRec() { recording ? stopRec() : startRec(); }
+
+    async function startRec() {
+      try {
+        const s = await navigator.mediaDevices.getUserMedia({ audio: true });
+        rec = new MediaRecorder(s);
+        chunks = [];
+        rec.ondataavailable = e => chunks.push(e.data);
+        rec.onstop = process;
+        rec.start();
+        recording = true;
+        micBtn.classList.add('recording');
+        setState('聴いてるよ...', 'listening');
+      } catch { setState('マイクが使えないみたい', 'idle'); }
+    }
+
+    function stopRec() {
+      if (rec && recording) {
+        rec.stop();
+        rec.stream.getTracks().forEach(t => t.stop());
+        recording = false;
+        micBtn.classList.remove('recording');
+      }
+    }
+
+    async function process() {
+      setState('なんて言ったかな...', 'thinking');
+      const blob = new Blob(chunks, { type: 'audio/webm' });
+      const form = new FormData();
+      form.append('file', blob, 'a.webm');
+      form.append('model', 'whisper-1');
+      form.append('language', 'ja');
+
+      try {
+        if (!KEY) throw new Error('No API key');
+        const r1 = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${KEY}` },
+          body: form
+        });
+        const d1 = await r1.json();
+        const txt = d1.text?.trim();
+        if (!txt) { setState('タップして話しかけてね', 'idle'); return; }
+
+        addMsg('user', txt);
+        history.push({ role: 'user', content: txt });
+        setState('考え中...', 'thinking');
+
+        // Try OpenClaw first
+        let reply;
+        try {
+          const r2 = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: 'voice-uiから: ' + txt })
+          });
+          const d2 = await r2.json();
+          reply = d2.response || d2.error;
+          if (!reply || reply.includes('Failed to call')) throw new Error('fallback');
+        } catch {
+          // Fallback to GPT
+          const r2 = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              model: 'gpt-4o-mini',
+              max_tokens: 400,
+              messages: [
+                { role: 'system', content: 'あなたはクロウ、かわいいロボットのAIアシスタント！元気で優しく、短めに返答する。日本語で話す。' },
+                ...history.slice(-10)
+              ]
+            })
+          });
+          const d2 = await r2.json();
+          reply = d2.choices?.[0]?.message?.content || 'ごめん、うまく返せなかった😅';
+        }
+
+        history.push({ role: 'assistant', content: reply });
+        addMsg('bot', reply);
+
+        if (sound && reply.length < 400) {
+          setState('話すね！', 'speaking');
+          await speak(reply);
+        }
+        setState('タップして話しかけてね', 'idle');
+      } catch (e) {
+        console.error(e);
+        setState('エラーが起きちゃった...', 'idle');
+      }
+    }
+
+    async function speak(txt) {
+      try {
+        if (!KEY) return;
+        const clean = txt.replace(/[\*\#\`\[\]]/g, '').substring(0, 300);
+        const r = await fetch('https://api.openai.com/v1/audio/speech', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: 'tts-1', input: clean, voice: 'nova' })
+        });
+        const audio = new Audio(URL.createObjectURL(await r.blob()));
+        await audio.play();
+        await new Promise(res => audio.onended = res);
+      } catch (e) { console.error('TTS:', e); }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.code === 'Space' && !recording && e.target.tagName !== 'INPUT') { e.preventDefault(); startRec(); }
+    });
+    document.addEventListener('keyup', e => {
+      if (e.code === 'Space' && recording) { e.preventDefault(); stopRec(); }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "owner": "jamesalmeida",
+  "slug": "spaces-listener",
+  "displayName": "Spaces Listener",
+  "latest": {
+    "version": "0.1.4",
+    "publishedAt": 1770249121059,
+    "commit": "https://github.com/clawdbot/skills/commit/b20e2a8fdc7fd3fe2fa0d8a5b0a0d2f701ed0a1a"
+  },
+  "history": [
+    {
+      "version": "0.1.3",
+      "publishedAt": 1770095924401,
+      "commit": "https://github.com/clawdbot/skills/commit/f4006555f69fd093149b815c5e040685102bd85f"
+    },
+    {
+      "version": "0.1.1",
+      "publishedAt": 1770002689986,
+      "commit": "https://github.com/clawdbot/skills/commit/9ad93590381b996c69d18ecded9d03fcacede4a9"
+    },
+    {
+      "version": "0.1.0",
+      "publishedAt": 1769838287082,
+      "commit": "https://github.com/clawdbot/skills/commit/d42fbb374f1322b01d655fbaf37dbe3491c1dfd1"
+    }
+  ]
+}

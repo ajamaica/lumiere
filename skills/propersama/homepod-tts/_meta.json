@@ -1,0 +1,11 @@
+{
+  "owner": "propersama",
+  "slug": "homepod-tts",
+  "displayName": "HomePod TTS",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770179404445,
+    "commit": "https://github.com/clawdbot/skills/commit/d58f775aa3a6d25286f53b75de9fc58f94bf5543"
+  },
+  "history": []
+}

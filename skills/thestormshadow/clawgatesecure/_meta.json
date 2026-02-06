@@ -1,0 +1,22 @@
+{
+  "owner": "thestormshadow",
+  "slug": "clawgatesecure",
+  "displayName": "Claw Gate Secure",
+  "latest": {
+    "version": "3.1.0",
+    "publishedAt": 1770099162002,
+    "commit": "https://github.com/clawdbot/skills/commit/6e8a911060369663bcc9a66a1faad208714b885c"
+  },
+  "history": [
+    {
+      "version": "2.3.0",
+      "publishedAt": 1769983501419,
+      "commit": "https://github.com/clawdbot/skills/commit/4127db5181345b9cee3c2028629d9a85628e173c"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769919623096,
+      "commit": "https://github.com/clawdbot/skills/commit/c1fa4ceb0c3b6a132c827e0bad3b24568e94fec6"
+    }
+  ]
+}

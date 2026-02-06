@@ -1,0 +1,17 @@
+{
+  "owner": "hhhh124hhhh",
+  "slug": "ai-from-trueslazac",
+  "displayName": "AI Prompt Template Skill",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769992641509,
+    "commit": "https://github.com/clawdbot/skills/commit/ee37b81e102989fa1a4f874f7ce697f6d61ae81a"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769764644098,
+      "commit": "https://github.com/clawdbot/skills/commit/9766a5c9e2f392d865fe8e9f90258ba6f2caecf8"
+    }
+  ]
+}

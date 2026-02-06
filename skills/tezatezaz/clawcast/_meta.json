@@ -1,0 +1,17 @@
+{
+  "owner": "tezatezaz",
+  "slug": "clawcast",
+  "displayName": "Clawcast - Easiest Ethereum Crypto Wallet",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770313936311,
+    "commit": "https://github.com/clawdbot/skills/commit/19f2e9971ceab2c8b6fb9a0d8496f14adf101118"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1769916563114,
+      "commit": "https://github.com/clawdbot/skills/commit/ce17ac97264882ddf3a421c616725f416e462954"
+    }
+  ]
+}

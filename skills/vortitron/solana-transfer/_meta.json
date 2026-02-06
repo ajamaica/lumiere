@@ -1,0 +1,11 @@
+{
+  "owner": "vortitron",
+  "slug": "solana-transfer",
+  "displayName": "Solana Transfer",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770157061659,
+    "commit": "https://github.com/clawdbot/skills/commit/c9adced32b7694b982e5afec4b9575576b162659"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "byron-mckeeby",
+  "slug": "ephemeral-media-hosting",
+  "displayName": "Ephemeral Media Hosting",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770079310468,
+    "commit": "https://github.com/clawdbot/skills/commit/7fc3d2d148249e83592be060d34135e25f27634a"
+  },
+  "history": []
+}

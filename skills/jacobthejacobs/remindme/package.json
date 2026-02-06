@@ -1,0 +1,28 @@
+{
+  "name": "remindme",
+  "version": "1.1.17",
+  "description": "🚀 Global Reminders Pro: Ultra-robust multilingual scheduling with 12+ locale support and 100% logic accuracy.",
+  "keywords": [
+    "telegram",
+    "reminders",
+    "cron",
+    "openclaw",
+    "nlp",
+    "multilingual",
+    "global",
+    "pro",
+    "automation",
+    "productivity",
+    "ai-parsing",
+    "universal",
+    "schedule"
+  ],
+  "type": "module",
+  "scripts": {
+    "start": "node --import tsx index.ts"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "chrono-node": "^2.7.5"
+  }
+}

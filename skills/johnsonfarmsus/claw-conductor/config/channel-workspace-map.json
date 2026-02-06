@@ -1,0 +1,26 @@
+{
+  "1466999659749965916": {
+    "channel_name": "dispatch-suite",
+    "project_name": "dispatch-suite",
+    "workspace": "/root/projects/dispatch-suite",
+    "github_repo": "jfasteroid/dispatch-suite"
+  },
+  "1467014088606810134": {
+    "channel_name": "scientific-calculator",
+    "project_name": "scientific-calculator",
+    "workspace": "/root/projects/scientific-calculator",
+    "github_repo": "jfasteroid/scientific-calculator"
+  },
+  "1467191652626165811": {
+    "channel_name": "openclaw-commands",
+    "project_name": "openclaw-commands",
+    "workspace": "/root/projects/openclaw-commands",
+    "github_repo": "jfasteroid/openclaw-commands"
+  },
+  "1467198876883009536": {
+    "channel_name": "satire-news",
+    "project_name": "satire-news",
+    "workspace": "/root/projects/satire-news",
+    "github_repo": "jfasteroid/satire-news"
+  }
+}

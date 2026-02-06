@@ -1,0 +1,11 @@
+{
+  "owner": "shawnminh",
+  "slug": "tencent-cloud-cos-skill",
+  "displayName": "Tencent Cloud COS",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770272673830,
+    "commit": "https://github.com/clawdbot/skills/commit/4e0d1c3c4600bd8c1bf466317321c7e32b54d82a"
+  },
+  "history": []
+}

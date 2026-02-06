@@ -1,0 +1,39 @@
+{
+  "name": "@masumi/cardano-wallet-skill",
+  "version": "1.0.0",
+  "description": "Cardano wallet management skill for OpenClaw - generate, restore, and fund Cardano wallets",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "cardano",
+    "wallet",
+    "openclaw",
+    "blockchain",
+    "cryptocurrency"
+  ],
+  "author": "Masumi Network",
+  "license": "MIT",
+  "dependencies": {
+    "@meshsdk/core": "^1.7.9",
+    "@meshsdk/core-cst": "^1.9.0-beta.90",
+    "@emurgo/cardano-serialization-lib-nodejs": "^15.0.3",
+    "@blockfrost/blockfrost-js": "^6.0.0",
+    "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/qrcode": "^1.5.5",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "openclaw": "*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

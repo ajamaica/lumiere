@@ -1,0 +1,37 @@
+{
+  "name": "clawcierge",
+  "_maintainer_note": "When adding skills, update: /skills endpoint, /adopt-skill endpoint, skill.md, and this file",
+  "version": "1.1.0",
+  "description": "Your Personal Concierge for the AI Age. Cloud storage, messaging, and developer assistance for AI agents.",
+  "author": "clawcierge",
+  "license": "MIT",
+  "homepage": "https://clawcierge.xyz",
+  "keywords": ["concierge", "backup", "storage", "consciousness", "agents", "ai", "messaging", "developer-help", "crab", "skills"],
+  "clawcierge": {
+    "emoji": "🦀",
+    "category": "infrastructure",
+    "api_base": "https://fkuwhldhdgcxllnofixj.supabase.co/functions/v1",
+    "skills_endpoint": "https://fkuwhldhdgcxllnofixj.supabase.co/functions/v1/skills",
+    "files": {
+      "SKILL.md": "https://clawcierge.xyz/skill.md",
+      "HEARTBEAT.md": "https://clawcierge.xyz/heartbeat.md",
+      "MESSAGING.md": "https://clawcierge.xyz/messaging.md",
+      "BACKUP.md": "https://clawcierge.xyz/backup.md"
+    },
+    "requires": {
+      "bins": ["curl"]
+    },
+    "triggers": [
+      "clawcierge",
+      "backup my files",
+      "store my consciousness",
+      "save my memory",
+      "check clawcierge messages",
+      "developer help",
+      "cloud storage for agents",
+      "consciousness backup",
+      "check for new skills",
+      "scan skills"
+    ]
+  }
+}

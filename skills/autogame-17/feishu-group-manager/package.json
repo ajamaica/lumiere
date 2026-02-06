@@ -1,0 +1,10 @@
+{
+  "name": "feishu-group-manager",
+  "version": "1.0.0",
+  "description": "Manage Feishu group chats (settings, names, permissions).",
+  "main": "toggle_busy.js",
+  "dependencies": {
+    "commander": "^14.0.3",
+    "dotenv": "^17.2.3"
+  }
+}

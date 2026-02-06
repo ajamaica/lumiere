@@ -1,0 +1,3 @@
+# ClawdHub Security Auditor
+# All dependencies are Python stdlib — no external packages required.
+# Python >= 3.10

@@ -1,0 +1,11 @@
+{
+  "owner": "kunoiiv",
+  "slug": "longevity-bio-dashboard",
+  "displayName": "Longevity Bio-Dashboard: NMN/Senolytics Reminders + Tracker",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770151786216,
+    "commit": "https://github.com/clawdbot/skills/commit/e41c50314102bad24943339dd12714de6d1603a7"
+  },
+  "history": []
+}

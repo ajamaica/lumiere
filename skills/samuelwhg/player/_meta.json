@@ -1,0 +1,11 @@
+{
+  "owner": "samuelwhg",
+  "slug": "player",
+  "displayName": "MPV_Player",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770279573358,
+    "commit": "https://github.com/openclaw/skills/commit/28249b82f4bafad785d03c8aff0b048290915685"
+  },
+  "history": []
+}

@@ -1,0 +1,11 @@
+{
+  "owner": "alexmog",
+  "slug": "society-game",
+  "displayName": "Society Game - Government and Economy simulator - https://society.mog.gg",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1770356054760,
+    "commit": "https://github.com/openclaw/skills/commit/4e5e93ed22d07bc4cb4f5bc9a0c2c8a6aa985c17"
+  },
+  "history": []
+}

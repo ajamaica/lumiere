@@ -1,0 +1,11 @@
+{
+  "owner": "veeramanikandanr48",
+  "slug": "dividend-growth-pullback-screener",
+  "displayName": "Dividend Growth Pullback Screener",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1769870045357,
+    "commit": "https://github.com/clawdbot/skills/commit/205917d419535f51960d8abe06329e66e5fc0c89"
+  },
+  "history": []
+}

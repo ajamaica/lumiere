@@ -1,0 +1,17 @@
+{
+  "owner": "adarshmishra07",
+  "slug": "clawcontrol",
+  "displayName": "Claw Control",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770310954031,
+    "commit": "https://github.com/openclaw/skills/commit/b8e12b62720f28dbc254ec91320c9d9ce9542fe1"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1770285456020,
+      "commit": "https://github.com/clawdbot/skills/commit/3ab63e58f8baa04f08cce9813d1500ee14a04ed6"
+    }
+  ]
+}

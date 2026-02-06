@@ -1,0 +1,11 @@
+{
+  "owner": "gizmogremlin",
+  "slug": "openclaw-skill-voice-ai-voices",
+  "displayName": "Voice.ai  Voices",
+  "latest": {
+    "version": "0.1.1",
+    "publishedAt": 1769868475534,
+    "commit": "https://github.com/clawdbot/skills/commit/74b2f6ee55ad814b628f754cff96bf9110430a19"
+  },
+  "history": []
+}

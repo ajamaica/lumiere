@@ -1,0 +1,11 @@
+{
+  "owner": "romovow",
+  "slug": "poseidon-otc",
+  "displayName": "Poseidon OTC",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769981420939,
+    "commit": "https://github.com/clawdbot/skills/commit/496ac17adb0b440a93db8454a6a224f8d029a366"
+  },
+  "history": []
+}

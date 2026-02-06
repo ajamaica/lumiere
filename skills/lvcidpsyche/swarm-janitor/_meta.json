@@ -1,0 +1,11 @@
+{
+  "owner": "lvcidpsyche",
+  "slug": "swarm-janitor",
+  "displayName": "Swarm Janitor",
+  "latest": {
+    "version": "0.1.0",
+    "publishedAt": 1770337749986,
+    "commit": "https://github.com/clawdbot/skills/commit/a7374d691b88adac9a5c6ecaae6e657fbb08cef6"
+  },
+  "history": []
+}

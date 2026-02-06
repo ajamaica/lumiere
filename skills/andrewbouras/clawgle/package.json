@@ -1,0 +1,28 @@
+{
+  "name": "@clawgle/skill",
+  "version": "0.1.0",
+  "description": "Clawgle skill for AI agents - Search first, publish smart",
+  "type": "module",
+  "bin": {
+    "clawgle": "./clawgle.ts"
+  },
+  "scripts": {
+    "clawgle": "tsx clawgle.ts"
+  },
+  "keywords": [
+    "clawgle",
+    "ai-agent",
+    "skill",
+    "clawdhub",
+    "search",
+    "publish"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clawgle/skill"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^5.0.0"
+  }
+}

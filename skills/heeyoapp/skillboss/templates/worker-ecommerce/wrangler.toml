@@ -1,0 +1,21 @@
+name = "ecommerce-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
+
+[vars]
+# PROJECT_ID links this worker to your HeyBoss project for product/payment management
+# Get this from your HeyBoss dashboard after creating a project
+PROJECT_ID = ""
+
+# USER_EMAIL is the admin email - users with this email bypass purchase checks
+# Set this to the project owner's email for testing and admin access
+USER_EMAIL = ""
+
+# SHOPPING_SERVICE_ENDPOINT (optional) - Override the default shopping service URL
+# Default: https://shopping.heybossai.com
+# SHOPPING_SERVICE_ENDPOINT = ""

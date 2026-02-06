@@ -1,0 +1,29 @@
+{
+  "constellation_name": "Arbiter-Foundation-Alpha",
+  "total_nodes": 1000,
+  "orbital_shells": [
+    {
+      "shell_id": 1,
+      "altitude_km": 450,
+      "nodes": 150,
+      "primary_function": "Real-time Ground Coordination (Low Latency)",
+      "target_latency_ms": 100
+    },
+    {
+      "shell_id": 2,
+      "altitude_km": 600,
+      "nodes": 700,
+      "primary_function": "Bifurcated Ledger Storage (ELF-2.0 Anchor)",
+      "target_latency_ms": 300
+    },
+    {
+      "shell_id": 3,
+      "altitude_km": 750,
+      "nodes": 150,
+      "primary_function": "Inter-Planetary Relay & Long-term Backup",
+      "target_latency_ms": 500
+    }
+  ],
+  "thermal_management": "Passive-Space-Sink",
+  "compliance": "Kardashev-Type-1-Verified"
+}

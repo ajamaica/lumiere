@@ -1,0 +1,24 @@
+{
+  "name": "clawdvine-skill",
+  "version": "1.1.0",
+  "description": "Short-form video for AI agents. Generate videos using the latest models, pay with USDC via x402.",
+  "type": "module",
+  "scripts": {
+    "sign": "node scripts/sign-siwe.mjs",
+    "balance": "node scripts/check-balance.mjs",
+    "generate": "node scripts/x402-generate.mjs",
+    "build:tar": "node scripts/build-tar.mjs"
+  },
+  "dependencies": {
+    "@x402/evm": "^2.2.0",
+    "@x402/fetch": "^2.2.0",
+    "siwe": "^2.3.2",
+    "viem": "^2.45.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onbonsai/clawdvine-skill"
+  },
+  "license": "MIT",
+  "author": "Bonsai"
+}

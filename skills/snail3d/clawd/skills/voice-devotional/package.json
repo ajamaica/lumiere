@@ -1,0 +1,49 @@
+{
+  "name": "voice-devotional",
+  "version": "1.0.0",
+  "description": "Generate scripture readings and lessons in audio using ElevenLabs TTS",
+  "main": "scripts/voice-devotional.js",
+  "bin": {
+    "voice-devotional": "scripts/cli.js"
+  },
+  "scripts": {
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:unit": "jest tests/",
+    "dev": "node scripts/cli.js",
+    "lint": "eslint scripts/ config/",
+    "example": "node examples/basic.js",
+    "example:batch": "node examples/batch.js"
+  },
+  "keywords": [
+    "scripture",
+    "devotional",
+    "tts",
+    "audio",
+    "elevenlabs",
+    "prayer",
+    "spiritual",
+    "bible",
+    "voice"
+  ],
+  "author": "Clawdbot Community",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-airbnb": "^19.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clawd-ai/voice-devotional"
+  },
+  "bugs": {
+    "url": "https://github.com/clawd-ai/voice-devotional/issues"
+  }
+}

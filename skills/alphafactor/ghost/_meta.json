@@ -1,0 +1,11 @@
+{
+  "owner": "alphafactor",
+  "slug": "ghost",
+  "displayName": "Ghost CMS Admin",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1770115253023,
+    "commit": "https://github.com/clawdbot/skills/commit/57da3ea6899c999de56efb11c58e97befadb9d6e"
+  },
+  "history": []
+}

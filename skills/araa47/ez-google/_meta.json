@@ -1,0 +1,17 @@
+{
+  "owner": "araa47",
+  "slug": "ez-google",
+  "displayName": "ez-google",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770125177138,
+    "commit": "https://github.com/clawdbot/skills/commit/7e37245e8c08cb9f33211d1d2f5ad9d083990aa0"
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1769963814722,
+      "commit": "https://github.com/clawdbot/skills/commit/9b4e62bf4757c022efcf334e48cb1f35206aa8bb"
+    }
+  ]
+}

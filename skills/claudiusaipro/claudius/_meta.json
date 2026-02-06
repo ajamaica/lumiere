@@ -1,0 +1,17 @@
+{
+  "owner": "claudiusaipro",
+  "slug": "claudius",
+  "displayName": "Claudius",
+  "latest": {
+    "version": "1.0.4",
+    "publishedAt": 1769867779249,
+    "commit": "https://github.com/clawdbot/skills/commit/a1649ea5971fcd67f1722f07df68e9a113ae3e03"
+  },
+  "history": [
+    {
+      "version": "1.0.3",
+      "publishedAt": 1769838880424,
+      "commit": "https://github.com/clawdbot/skills/commit/c0950977bfbe498abbd599d27153f0a10bd7715d"
+    }
+  ]
+}

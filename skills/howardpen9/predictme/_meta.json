@@ -1,0 +1,11 @@
+{
+  "owner": "howardpen9",
+  "slug": "predictme",
+  "displayName": "PredictMe - AI Trading Agent",
+  "latest": {
+    "version": "1.2.0",
+    "publishedAt": 1770355830935,
+    "commit": "https://github.com/openclaw/skills/commit/b9c9cb33d8517310707910833bb6854d9f1d895a"
+  },
+  "history": []
+}

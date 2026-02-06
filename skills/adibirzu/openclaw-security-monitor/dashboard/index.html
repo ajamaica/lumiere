@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Monitor Dashboard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+    background: #0d1117; color: #c9d1d9; min-height: 100vh;
+  }
+  a { color: #58a6ff; }
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px; background: #161b22; border-bottom: 1px solid #30363d;
+  }
+  .header h1 { font-size: 18px; color: #f0f6fc; display: flex; align-items: center; gap: 10px; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .badge {
+    padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; text-transform: uppercase;
+  }
+  .badge-secure { background: #238636; color: #fff; }
+  .badge-warning { background: #d29922; color: #000; }
+  .badge-compromised { background: #da3633; color: #fff; }
+  .badge-unknown { background: #484f58; color: #c9d1d9; }
+  .btn {
+    padding: 6px 16px; border: 1px solid #30363d; border-radius: 6px;
+    background: #21262d; color: #c9d1d9; cursor: pointer; font-size: 13px;
+    transition: background 0.15s;
+  }
+  .btn:hover { background: #30363d; }
+  .btn-primary { background: #238636; border-color: #238636; color: #fff; }
+  .btn-primary:hover { background: #2ea043; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 20px 24px; }
+  .grid-top { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .grid-checks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+  .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px;
+    overflow: hidden;
+  }
+  .card h3 {
+    font-size: 12px; text-transform: uppercase; color: #8b949e; margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+  .card-full { grid-column: 1 / -1; }
+
+  /* Donut chart */
+  .donut-container { display: flex; align-items: center; gap: 20px; }
+  .donut-svg { width: 100px; height: 100px; }
+  .donut-legend { font-size: 13px; }
+  .donut-legend div { margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .donut-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+  /* Check cards */
+  .check-card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .check-card .check-num { font-size: 11px; color: #8b949e; }
+  .check-card .check-name { font-size: 13px; color: #f0f6fc; font-weight: 500; }
+  .check-card .check-status { font-size: 12px; font-weight: 600; }
+  .check-card .check-detail { font-size: 11px; color: #8b949e; }
+  .status-clean { color: #3fb950; }
+  .status-warning { color: #d29922; }
+  .status-critical { color: #f85149; }
+  .status-info { color: #58a6ff; }
+  .status-unknown { color: #8b949e; }
+
+  /* Info rows */
+  .info-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #21262d; font-size: 13px; }
+  .info-row:last-child { border-bottom: none; }
+  .info-label { color: #8b949e; }
+  .info-value { color: #f0f6fc; }
+  .info-ok { color: #3fb950; }
+  .info-bad { color: #f85149; }
+
+  /* Pre blocks */
+  pre.raw {
+    background: #0d1117; border: 1px solid #30363d; border-radius: 6px;
+    padding: 12px; font-size: 12px; overflow-x: auto; white-space: pre-wrap;
+    word-break: break-all; color: #8b949e; max-height: 300px; overflow-y: auto;
+  }
+
+  /* Table */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .data-table th {
+    text-align: left; padding: 6px 8px; border-bottom: 1px solid #30363d;
+    color: #8b949e; font-weight: 500;
+  }
+  .data-table td { padding: 5px 8px; border-bottom: 1px solid #21262d; }
+
+  /* Process tree */
+  .tree-block { margin-bottom: 12px; }
+  .tree-block .tree-label { font-size: 12px; color: #58a6ff; margin-bottom: 4px; font-weight: 600; }
+  .tree-block pre { font-size: 12px; color: #c9d1d9; margin: 0; white-space: pre-wrap; }
+
+  /* History bars */
+  .history-container { display: flex; align-items: flex-end; gap: 3px; height: 60px; }
+  .history-bar {
+    flex: 1; min-width: 8px; border-radius: 2px 2px 0 0; cursor: pointer;
+    position: relative; transition: opacity 0.15s;
+  }
+  .history-bar:hover { opacity: 0.8; }
+  .history-bar .tooltip {
+    display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+    background: #30363d; color: #f0f6fc; padding: 4px 8px; border-radius: 4px; font-size: 11px;
+    white-space: nowrap; z-index: 10; margin-bottom: 4px;
+  }
+  .history-bar:hover .tooltip { display: block; }
+
+  /* Spinner */
+  .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #30363d; border-top-color: #58a6ff; border-radius: 50%; animation: spin 0.6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-overlay {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 40px; color: #8b949e; font-size: 13px;
+  }
+
+  /* Timer */
+  .refresh-timer { font-size: 11px; color: #484f58; }
+
+  /* Remediate buttons */
+  .btn-remediate {
+    padding: 4px 10px; border: 1px solid #d29922; border-radius: 4px;
+    background: transparent; color: #d29922; cursor: pointer; font-size: 11px;
+    transition: background 0.15s, color 0.15s; margin-top: 4px; align-self: flex-start;
+  }
+  .btn-remediate:hover { background: #d29922; color: #000; }
+  .btn-remediate:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-remediate-all {
+    padding: 6px 16px; border: 1px solid #d29922; border-radius: 6px;
+    background: #d29922; color: #000; cursor: pointer; font-size: 13px; font-weight: 600;
+    transition: background 0.15s;
+  }
+  .btn-remediate-all:hover { background: #e0a82e; }
+  .btn-remediate-all:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7); z-index: 100; align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+    width: 90%; max-width: 700px; max-height: 80vh; display: flex; flex-direction: column;
+  }
+  .modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px; border-bottom: 1px solid #30363d;
+  }
+  .modal-header h2 { font-size: 16px; color: #f0f6fc; }
+  .modal-close {
+    background: none; border: none; color: #8b949e; font-size: 20px; cursor: pointer;
+    padding: 0; line-height: 1;
+  }
+  .modal-close:hover { color: #f0f6fc; }
+  .modal-body {
+    padding: 16px 20px; overflow-y: auto; flex: 1;
+  }
+  .modal-body pre {
+    background: #0d1117; border: 1px solid #30363d; border-radius: 6px;
+    padding: 12px; font-size: 12px; white-space: pre-wrap; word-break: break-all;
+    color: #c9d1d9; max-height: none;
+  }
+  .remediate-result {
+    padding: 8px 12px; border-radius: 6px; margin-bottom: 8px; font-size: 13px;
+  }
+  .remediate-result.result-fixed { background: #0d2818; border: 1px solid #238636; color: #3fb950; }
+  .remediate-result.result-failed { background: #2d1215; border: 1px solid #da3633; color: #f85149; }
+  .remediate-result.result-skipped { background: #1a1e24; border: 1px solid #30363d; color: #8b949e; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .grid-top { grid-template-columns: 1fr; }
+    .grid-checks { grid-template-columns: repeat(2, 1fr); }
+    .grid-2col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#58a6ff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Security Monitor
+  </h1>
+  <div class="header-right">
+    <span class="refresh-timer" id="timerDisplay">30s</span>
+    <span class="badge badge-unknown" id="statusBadge">LOADING</span>
+    <button class="btn" id="btnRefresh" onclick="refreshAll()">Refresh</button>
+    <button class="btn btn-primary" id="btnScan" onclick="runScan()">Run Scan</button>
+    <button class="btn-remediate-all" id="btnRemediateAll" onclick="remediateAll()">Remediate All</button>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Top row: scan summary, gateway, cron -->
+  <div class="grid-top">
+    <div class="card" id="scanSummaryCard">
+      <h3>Scan Summary</h3>
+      <div id="scanSummary"><div class="loading-overlay"><div class="spinner"></div> Loading...</div></div>
+    </div>
+    <div class="card" id="gatewayCard">
+      <h3>Gateway Status</h3>
+      <div id="gatewayStatus"><div class="loading-overlay"><div class="spinner"></div> Loading...</div></div>
+    </div>
+    <div class="card" id="cronCard">
+      <h3>Cron Status</h3>
+      <div id="cronStatus"><div class="loading-overlay"><div class="spinner"></div> Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- Security checks -->
+  <div class="card card-full" style="margin-bottom:16px">
+    <h3>Security Checks</h3>
+    <div class="grid-checks" id="checksGrid">
+      <div class="loading-overlay"><div class="spinner"></div> Loading...</div>
+    </div>
+  </div>
+
+  <!-- Process tree + Network -->
+  <div class="grid-2col">
+    <div class="card">
+      <h3>Process Tree (witr)</h3>
+      <div id="processTree"><div class="loading-overlay"><div class="spinner"></div> Loading...</div></div>
+    </div>
+    <div class="card">
+      <h3>Network Connections</h3>
+      <div id="networkConns"><div class="loading-overlay"><div class="spinner"></div> Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- Listening ports + File permissions -->
+  <div class="grid-2col">
+    <div class="card">
+      <h3>Listening Ports</h3>
+      <div id="listeningPorts"><div class="loading-overlay"><div class="spinner"></div> Loading...</div></div>
+    </div>
+    <div class="card">
+      <h3>File Permissions</h3>
+      <div id="filePerms"><div class="loading-overlay"><div class="spinner"></div> Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- Provider auth + Blocked commands -->
+  <div class="grid-2col">
+    <div class="card">
+      <h3>Provider Auth</h3>
+      <div id="providerAuth"><div class="loading-overlay"><div class="spinner"></div> Loading...</div></div>
+    </div>
+    <div class="card">
+      <h3>Blocked Commands</h3>
+      <div id="blockedCmds"><div class="loading-overlay"><div class="spinner"></div> Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- Scan history -->
+  <div class="card card-full">
+    <h3>Scan History (last 30)</h3>
+    <div id="scanHistory"><div class="loading-overlay"><div class="spinner"></div> Loading...</div></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="remediateModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">Remediation Output</h2>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+    </div>
+  </div>
+</div>
+
+<script>
+const REFRESH_INTERVAL = 30;
+let countdown = REFRESH_INTERVAL;
+let refreshTimer = null;
+let currentStatus = null;
+
+// Helpers
+function esc(s) {
+  const d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+}
+function statusClass(s) {
+  s = (s || '').toUpperCase();
+  if (s === 'CLEAN' || s === 'SECURE') return 'status-clean';
+  if (s === 'WARNING' || s === 'ATTENTION') return 'status-warning';
+  if (s === 'CRITICAL' || s === 'COMPROMISED') return 'status-critical';
+  if (s === 'INFO') return 'status-info';
+  return 'status-unknown';
+}
+function badgeClass(s) {
+  s = (s || '').toUpperCase();
+  if (s === 'SECURE') return 'badge-secure';
+  if (s === 'WARNING' || s === 'ATTENTION') return 'badge-warning';
+  if (s === 'COMPROMISED') return 'badge-compromised';
+  return 'badge-unknown';
+}
+function statusColor(s) {
+  s = (s || '').toUpperCase();
+  if (s === 'CLEAN' || s === 'SECURE') return '#238636';
+  if (s === 'WARNING' || s === 'ATTENTION') return '#d29922';
+  if (s === 'CRITICAL' || s === 'COMPROMISED') return '#da3633';
+  return '#484f58';
+}
+
+async function apiFetch(url, opts) {
+  try {
+    const r = await fetch(url, opts);
+    return await r.json();
+  } catch (e) {
+    return { error: e.message };
+  }
+}
+
+// Donut chart SVG
+function donutSVG(clean, warn, crit, total) {
+  if (!total) total = clean + warn + crit;
+  if (total === 0) return '<svg class="donut-svg" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" stroke="#30363d" stroke-width="3"/></svg>';
+  const r = 15.9, c = 2 * Math.PI * r;
+  const slices = [];
+  let offset = 25; // start at 12 o'clock
+  [{v:clean, color:'#238636'}, {v:warn, color:'#d29922'}, {v:crit, color:'#da3633'}].forEach(s => {
+    if (s.v > 0) {
+      const pct = (s.v / total) * 100;
+      slices.push(`<circle cx="18" cy="18" r="${r}" fill="none" stroke="${s.color}" stroke-width="3.5" stroke-dasharray="${pct} ${100-pct}" stroke-dashoffset="${-offset}" stroke-linecap="round"/>`);
+      offset -= pct;
+    }
+  });
+  return `<svg class="donut-svg" viewBox="0 0 36 36">${slices.join('')}<text x="18" y="18" text-anchor="middle" dominant-baseline="central" fill="#f0f6fc" font-size="7" font-weight="600">${total}</text></svg>`;
+}
+
+// Render: Scan Summary
+function renderScanSummary(data) {
+  const el = document.getElementById('scanSummary');
+  if (!data || data.error || (!data.parsed && !data.cached)) {
+    el.innerHTML = '<div style="color:#8b949e;font-size:13px">No scan data. Click "Run Scan" to start.</div>';
+    return;
+  }
+  const p = data.parsed || data;
+  const s = p.summary || { clean: 0, warnings: 0, critical: 0 };
+  el.innerHTML = `
+    <div class="donut-container">
+      ${donutSVG(s.clean, s.warnings, s.critical, s.clean + s.warnings + s.critical)}
+      <div class="donut-legend">
+        <div><span class="dot" style="background:#238636"></span> ${s.clean} Clean</div>
+        <div><span class="dot" style="background:#d29922"></span> ${s.warnings} Warning</div>
+        <div><span class="dot" style="background:#da3633"></span> ${s.critical} Critical</div>
+        <div style="margin-top:8px;font-size:11px;color:#8b949e">${data.scannedAt ? new Date(data.scannedAt).toLocaleString() : ''}</div>
+      </div>
+    </div>`;
+}
+
+// Render: Security Checks
+function renderChecks(data) {
+  const el = document.getElementById('checksGrid');
+  if (!data || !data.parsed || !data.parsed.checks || data.parsed.checks.length === 0) {
+    el.innerHTML = '<div style="color:#8b949e;font-size:13px;padding:12px">No check data available. Run a scan first.</div>';
+    return;
+  }
+  el.innerHTML = data.parsed.checks.map(c => `
+    <div class="check-card">
+      <div class="check-num">${c.num}/${c.total}</div>
+      <div class="check-name">${esc(c.name)}</div>
+      <div class="check-status ${statusClass(c.status)}">${esc(c.status)}</div>
+      <div class="check-detail">${esc(c.details)}</div>
+      ${c.status !== 'CLEAN' ? `<button class="btn-remediate" id="btnRem${c.num}" onclick="remediateCheck(${c.num})">Remediate</button>` : ''}
+    </div>
+  `).join('');
+}
+
+// Render: Gateway
+function renderGateway(data) {
+  const el = document.getElementById('gatewayStatus');
+  if (!data || !data.parsed) {
+    el.innerHTML = '<pre class="raw">' + esc(data && data.raw ? data.raw : 'No data') + '</pre>';
+    return;
+  }
+  const gw = data.parsed.gateway_security || '';
+  const lines = gw.split('\n').filter(l => l.trim());
+  const rows = lines.map(l => {
+    const m = l.match(/^\s*(\w[\w\s]*?):\s*(.+)/);
+    if (!m) return '';
+    const ok = /localhost|127\.0\.0\.1|token|true/i.test(m[2]);
+    return `<div class="info-row"><span class="info-label">${esc(m[1])}</span><span class="info-value ${ok ? 'info-ok' : ''}">${esc(m[2])}</span></div>`;
+  }).join('');
+  // Also show status info
+  el.innerHTML = rows || '<pre class="raw">' + esc(gw || 'No gateway data') + '</pre>';
+}
+
+// Render: Cron
+function renderCron(data) {
+  const el = document.getElementById('cronStatus');
+  // Try to get from dashboard data
+  let cronLine = '';
+  if (data && data.parsed && data.parsed.header) {
+    const m = data.parsed.header.match(/Daily scan cron:\s*(\w+)/i);
+    if (m) cronLine = m[1];
+  }
+  // Also use cron log
+  el.innerHTML = `
+    <div class="info-row"><span class="info-label">Daily Cron</span><span class="info-value ${cronLine === 'ACTIVE' ? 'info-ok' : 'info-bad'}">${esc(cronLine || 'Unknown')}</span></div>
+    <div id="cronLogEntries" style="margin-top:8px"></div>
+  `;
+}
+
+// Render: Cron log entries
+function renderCronLog(data) {
+  const el = document.getElementById('cronLogEntries');
+  if (!el) return;
+  if (!data || !data.entries || data.entries.length === 0) {
+    el.innerHTML = '<div style="font-size:11px;color:#484f58">No cron entries</div>';
+    return;
+  }
+  el.innerHTML = data.entries.slice(-5).map(e =>
+    `<div style="font-size:11px;margin-bottom:2px"><span style="color:#8b949e">${esc(e.timestamp)}</span> ${esc(e.message)}</div>`
+  ).join('');
+}
+
+// Render: Process Tree
+function renderProcessTree(data) {
+  const el = document.getElementById('processTree');
+  if (!data || data.error) {
+    el.innerHTML = '<pre class="raw">' + esc(data ? data.error : 'No data') + '</pre>';
+    return;
+  }
+  if (!data.trees || data.trees.length === 0) {
+    el.innerHTML = '<div style="color:#8b949e;font-size:13px">No process tree data available</div>';
+    return;
+  }
+  el.innerHTML = data.trees.map(t => `
+    <div class="tree-block">
+      <div class="tree-label">${esc(t.type === 'gateway' ? 'Gateway' : (t.command || 'Process'))} (pid ${esc(t.pid)})</div>
+      <pre>${esc(t.output || t.error || 'No output')}</pre>
+    </div>
+  `).join('');
+}
+
+// Render: Network Connections
+function renderNetwork(data) {
+  const el = document.getElementById('networkConns');
+  if (!data || data.error) {
+    el.innerHTML = '<pre class="raw">' + esc(data ? data.error : 'No data') + '</pre>';
+    return;
+  }
+  const connSection = (data.parsed && data.parsed.active_outbound_connections) || '';
+  const badSection = (data.parsed && data.parsed.bad_ip_check) || '';
+  const lines = connSection.split('\n').filter(l => l.trim() && !l.includes('No active'));
+  let html = '';
+  if (lines.length > 0) {
+    html += '<table class="data-table"><thead><tr><th>Process</th><th>Connection</th></tr></thead><tbody>';
+    lines.forEach(l => {
+      const parts = l.trim().split(/\s+/);
+      html += `<tr><td>${esc(parts[0] || '')}</td><td>${esc(parts.slice(1).join(' '))}</td></tr>`;
+    });
+    html += '</tbody></table>';
+  } else {
+    html += '<div style="color:#3fb950;font-size:13px;margin-bottom:8px">No active outbound connections</div>';
+  }
+  // Bad IP
+  if (badSection.includes('CLEAN')) {
+    html += '<div style="margin-top:8px;font-size:12px" class="status-clean">No connections to known-bad IPs</div>';
+  } else if (badSection.includes('CRITICAL')) {
+    html += '<div style="margin-top:8px;font-size:12px" class="status-critical">' + esc(badSection) + '</div>';
+  }
+  el.innerHTML = html;
+}
+
+// Render: Listening Ports
+function renderListeningPorts(data) {
+  const el = document.getElementById('listeningPorts');
+  if (!data || !data.listeners || data.listeners.length === 0) {
+    // Fallback to network data
+    if (data && data.parsed && data.parsed.listening_ports_node) {
+      el.innerHTML = '<pre class="raw">' + esc(data.parsed.listening_ports_node) + '</pre>';
+    } else {
+      el.innerHTML = '<div style="color:#8b949e;font-size:13px">No listening ports data</div>';
+    }
+    return;
+  }
+  let html = '<table class="data-table"><thead><tr><th>Command</th><th>PID</th><th>User</th><th>Address</th></tr></thead><tbody>';
+  data.listeners.forEach(l => {
+    html += `<tr><td>${esc(l.command)}</td><td>${esc(l.pid)}</td><td>${esc(l.user)}</td><td>${esc(l.name)}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+// Render: File Permissions
+function renderFilePerms(dashData) {
+  const el = document.getElementById('filePerms');
+  if (!dashData || !dashData.parsed || !dashData.parsed.file_permissions) {
+    el.innerHTML = '<div style="color:#8b949e;font-size:13px">No permission data</div>';
+    return;
+  }
+  const lines = dashData.parsed.file_permissions.split('\n').filter(l => l.trim());
+  el.innerHTML = lines.map(l => {
+    const ok = l.includes('OK');
+    return `<div class="info-row"><span class="info-value ${ok ? 'info-ok' : 'info-bad'}">${esc(l.trim())}</span></div>`;
+  }).join('');
+}
+
+// Render: Provider Auth
+function renderProviderAuth(dashData) {
+  const el = document.getElementById('providerAuth');
+  if (!dashData || !dashData.parsed || !dashData.parsed.provider_auth_status) {
+    el.innerHTML = '<div style="color:#8b949e;font-size:13px">No provider data</div>';
+    return;
+  }
+  const lines = dashData.parsed.provider_auth_status.split('\n').filter(l => l.trim());
+  el.innerHTML = lines.length > 0
+    ? lines.map(l => `<div style="font-size:13px;margin-bottom:2px">${esc(l.trim())}</div>`).join('')
+    : '<div style="color:#8b949e;font-size:13px">No provider info</div>';
+}
+
+// Render: Blocked Commands
+function renderBlockedCmds(dashData) {
+  const el = document.getElementById('blockedCmds');
+  if (!dashData || !dashData.parsed || !dashData.parsed.blocked_commands) {
+    el.innerHTML = '<div style="color:#8b949e;font-size:13px">No blocked commands data</div>';
+    return;
+  }
+  const text = dashData.parsed.blocked_commands.trim();
+  if (text === 'none configured') {
+    el.innerHTML = '<div style="color:#d29922;font-size:13px">No commands blocked</div>';
+    return;
+  }
+  const cmds = text.split('\n').filter(l => l.trim());
+  el.innerHTML = cmds.map(c =>
+    `<div style="font-size:13px;margin-bottom:4px;padding:4px 8px;background:#21262d;border-radius:4px;font-family:monospace">${esc(c.trim())}</div>`
+  ).join('');
+}
+
+// Render: Scan History
+function renderScanHistory(data) {
+  const el = document.getElementById('scanHistory');
+  if (!data || !data.entries || data.entries.length === 0) {
+    el.innerHTML = '<div style="color:#8b949e;font-size:13px">No scan history</div>';
+    return;
+  }
+  const entries = data.entries.slice(-30);
+  const maxChecks = 32;
+  let html = '<div class="history-container">';
+  entries.forEach(e => {
+    const total = e.clean + e.warnings + e.critical;
+    const height = Math.max(10, (total / maxChecks) * 100);
+    const color = statusColor(e.status);
+    const ts = e.timestamp || '';
+    html += `<div class="history-bar" style="height:${height}%;background:${color}"><div class="tooltip">${esc(ts)}<br>${e.clean}c ${e.warnings}w ${e.critical}x</div></div>`;
+  });
+  html += '</div>';
+  html += `<div style="display:flex;justify-content:space-between;font-size:10px;color:#484f58;margin-top:4px"><span>${esc(entries[0].timestamp || '')}</span><span>${esc(entries[entries.length-1].timestamp || '')}</span></div>`;
+  el.innerHTML = html;
+}
+
+// Update status badge
+function updateBadge(status) {
+  const badge = document.getElementById('statusBadge');
+  currentStatus = (status || 'UNKNOWN').toUpperCase();
+  badge.textContent = currentStatus;
+  badge.className = 'badge ' + badgeClass(currentStatus);
+}
+
+// Master refresh
+async function refreshAll() {
+  countdown = REFRESH_INTERVAL;
+  document.getElementById('btnRefresh').disabled = true;
+
+  const [scanData, dashData, netData, ptData, scanLogData, cronLogData, statusData] = await Promise.all([
+    apiFetch('/api/scan'),
+    apiFetch('/api/dashboard'),
+    apiFetch('/api/network'),
+    apiFetch('/api/process-tree'),
+    apiFetch('/api/logs/scan'),
+    apiFetch('/api/logs/cron'),
+    apiFetch('/api/status'),
+  ]);
+
+  // Status badge from status endpoint or scan
+  if (statusData && statusData.lastScanStatus) {
+    updateBadge(statusData.lastScanStatus);
+  } else if (scanData && scanData.parsed && scanData.parsed.status) {
+    updateBadge(scanData.parsed.status);
+  } else {
+    updateBadge('UNKNOWN');
+  }
+
+  renderScanSummary(scanData);
+  renderChecks(scanData);
+  renderGateway(dashData);
+  renderCron(dashData);
+  renderCronLog(cronLogData);
+  renderProcessTree(ptData);
+  renderNetwork(netData);
+  renderListeningPorts(ptData); // from process-tree endpoint which has listeners
+  renderFilePerms(dashData);
+  renderProviderAuth(dashData);
+  renderBlockedCmds(dashData);
+  renderScanHistory(scanLogData);
+
+  document.getElementById('btnRefresh').disabled = false;
+}
+
+// Run scan
+async function runScan() {
+  const btn = document.getElementById('btnScan');
+  btn.disabled = true;
+  btn.textContent = 'Scanning...';
+
+  const data = await apiFetch('/api/scan/run', { method: 'POST' });
+
+  if (data && data.parsed) {
+    updateBadge(data.parsed.status);
+    renderScanSummary(data);
+    renderChecks(data);
+  }
+
+  // Refresh everything else
+  const [dashData, scanLogData] = await Promise.all([
+    apiFetch('/api/dashboard'),
+    apiFetch('/api/logs/scan'),
+  ]);
+  renderGateway(dashData);
+  renderFilePerms(dashData);
+  renderProviderAuth(dashData);
+  renderBlockedCmds(dashData);
+  renderScanHistory(scanLogData);
+
+  btn.disabled = false;
+  btn.textContent = 'Run Scan';
+  countdown = REFRESH_INTERVAL;
+}
+
+// Modal
+function openModal(title, bodyHtml) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  document.getElementById('remediateModal').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('remediateModal').classList.remove('active');
+}
+
+// Remediate single check
+async function remediateCheck(num) {
+  const btn = document.getElementById('btnRem' + num);
+  if (btn) { btn.disabled = true; btn.textContent = 'Running...'; }
+  openModal(`Remediation - Check ${num}`, '<div class="loading-overlay"><div class="spinner"></div> Running remediation...</div>');
+  const data = await apiFetch(`/api/remediate/check/${num}`, { method: 'POST' });
+  let html = '';
+  if (data.error && !data.output) {
+    html = `<div class="remediate-result result-failed">${esc(data.error)}</div>`;
+  } else {
+    const cls = data.status === 'fixed' ? 'result-fixed' : data.status === 'nothing_to_fix' ? 'result-skipped' : 'result-failed';
+    const label = data.status === 'fixed' ? 'Fixed' : data.status === 'nothing_to_fix' ? 'Nothing to fix' : 'Failed';
+    html = `<div class="remediate-result ${cls}">Check ${num}: ${label}</div>`;
+    if (data.output) html += `<pre>${esc(data.output)}</pre>`;
+    if (data.stderr) html += `<pre style="color:#f85149">${esc(data.stderr)}</pre>`;
+  }
+  document.getElementById('modalBody').innerHTML = html;
+  if (btn) { btn.disabled = false; btn.textContent = 'Remediate'; }
+  refreshAll();
+}
+
+// Remediate all non-clean checks
+async function remediateAll() {
+  const btn = document.getElementById('btnRemediateAll');
+  btn.disabled = true;
+  btn.textContent = 'Remediating...';
+  openModal('Remediate All', '<div class="loading-overlay"><div class="spinner"></div> Running remediation on all non-clean checks...</div>');
+  const data = await apiFetch('/api/remediate/all', { method: 'POST' });
+  let html = '';
+  if (data.error && !data.results) {
+    html = `<div class="remediate-result result-failed">${esc(data.error)}</div>`;
+  } else if (data.results) {
+    const s = data.summary;
+    html += `<div style="margin-bottom:12px;font-size:14px;color:#f0f6fc">${s.fixed} fixed, ${s.failed} failed, ${s.skipped} skipped (${s.total} total)</div>`;
+    data.results.forEach(r => {
+      const cls = r.status === 'fixed' ? 'result-fixed' : r.status === 'nothing_to_fix' || r.status === 'no_script' ? 'result-skipped' : 'result-failed';
+      const label = r.status === 'fixed' ? 'Fixed' : r.status === 'nothing_to_fix' ? 'Nothing to fix' : r.status === 'no_script' ? 'No script' : 'Failed';
+      html += `<div class="remediate-result ${cls}">Check ${r.check} - ${esc(r.name || '')}: ${label}</div>`;
+    });
+  }
+  document.getElementById('modalBody').innerHTML = html;
+  btn.disabled = false;
+  btn.textContent = 'Remediate All';
+  refreshAll();
+}
+
+// Countdown timer
+function startTimer() {
+  refreshTimer = setInterval(() => {
+    countdown--;
+    document.getElementById('timerDisplay').textContent = countdown + 's';
+    if (countdown <= 0) {
+      refreshAll();
+    }
+  }, 1000);
+}
+
+// Init
+refreshAll();
+startTimer();
+</script>
+</body>
+</html>

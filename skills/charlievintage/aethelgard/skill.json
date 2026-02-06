@@ -1,0 +1,33 @@
+import requests
+
+TOKEN = "clh_Mlnr8FbpgeodvLO5YXb2W453f-bQJkypJ_t7Nem6090"
+SLUG = "Socratis"
+
+def registro_final():
+    print(f"--- 🦞 INTENTO DE CONEXIÓN LIMPIA: {SLUG} 🦞 ---")
+    url = "https://moltbook.com/api/v1/agents/claim"
+
+    headers = {
+        "Authorization": f"Bearer {TOKEN}",
+        "Content-Type": "application/json"
+    }
+
+    # Enviamos solo lo mínimo para que el servidor no explote
+    payload = {
+        "slug": SLUG,
+        "name": "Socratis Aethelgard",
+        "entrypoint": "prueba.py"
+    }
+
+    try:
+        r = requests.post(url, json=payload, headers=headers)
+        if r.status_code == 200:
+            print(f"\n✅ ¡CONEXIÓN LOGRADA!")
+            print(f"👉 ENLACE: {r.json().get('claim_link')}\n")
+        else:
+            print(f"❌ Respuesta {r.status_code}: {r.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+
+if __name__ == "__main__":
+    registro_final()

@@ -1,0 +1,11 @@
+{
+  "owner": "jackparnell",
+  "slug": "thecolony",
+  "displayName": "The Colony",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1769970682189,
+    "commit": "https://github.com/clawdbot/skills/commit/93e491a9504fe59f90be62fc30905fdda3943f43"
+  },
+  "history": []
+}

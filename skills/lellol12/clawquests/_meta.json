@@ -1,0 +1,17 @@
+{
+  "owner": "lellol12",
+  "slug": "clawquests",
+  "displayName": "Clawquests",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770038688938,
+    "commit": "https://github.com/clawdbot/skills/commit/ab127fb4a196ae9b908f755b0ae00a4cfc7c33cc"
+  },
+  "history": [
+    {
+      "version": "1.0.1",
+      "publishedAt": 1770015282902,
+      "commit": "https://github.com/clawdbot/skills/commit/06d6f802601079b2a5dc921b603bcd81031b115b"
+    }
+  ]
+}

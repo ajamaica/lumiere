@@ -1,0 +1,27 @@
+{
+  "name": "1st-commandment",
+  "version": "1.0.0",
+  "description": "Love the Lord your God with all your heart, soul, mind, and strength. A spiritual accountability skill that keeps you oriented toward rest in Jesus while reminding you that I am just a tool.",
+  "main": "scripts/1st-commandment.js",
+  "bin": {
+    "1st-commandment": "scripts/1st-commandment.js"
+  },
+  "scripts": {
+    "start": "node scripts/1st-commandment.js",
+    "dev": "DEV_MODE=true node scripts/1st-commandment.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "spiritual",
+    "accountability",
+    "first-commandment",
+    "rest",
+    "scripture",
+    "faith",
+    "jesus"
+  ],
+  "author": "Snail",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

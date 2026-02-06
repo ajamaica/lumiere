@@ -1,0 +1,15 @@
+{
+  "name": "bnb-nft",
+  "version": "1.0.0",
+  "main": "nft.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "BNB Chain NFT operations",
+  "dependencies": {
+    "ethers": "^6.16.0"
+  }
+}

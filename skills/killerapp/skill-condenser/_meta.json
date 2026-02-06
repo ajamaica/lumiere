@@ -1,0 +1,11 @@
+{
+  "owner": "killerapp",
+  "slug": "skill-condenser",
+  "displayName": "skill-condenser",
+  "latest": {
+    "version": "1.1.0",
+    "publishedAt": 1770349620267,
+    "commit": "https://github.com/openclaw/skills/commit/e3db9ae2d7cc50fa0e54f65b54e5e12dcdba6a30"
+  },
+  "history": []
+}

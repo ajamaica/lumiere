@@ -1,0 +1,11 @@
+{
+  "owner": "ruslanlanket",
+  "slug": "vk",
+  "displayName": "Вконтакте - публикация постов, фото и видео. Диалоги с посетителями. NodeJS",
+  "latest": {
+    "version": "1.0.2",
+    "publishedAt": 1770051026824,
+    "commit": "https://github.com/clawdbot/skills/commit/7fdd62033317996223b6e99e0df9acb40b51df83"
+  },
+  "history": []
+}

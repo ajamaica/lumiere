@@ -1,0 +1,90 @@
+{
+  "name": "agent-selfie",
+  "version": "1.2.0",
+  "description": "AI agent self-portrait generator. Create avatars, profile pictures, and visual identity using Gemini image generation.",
+  "homepage": "https://github.com/IISweetHeartII/agent-selfie",
+  "repository": "https://github.com/IISweetHeartII/agent-selfie",
+  "license": "MIT",
+  "author": "IISweetHeartII (Deokhwan Kim)",
+  "keywords": [
+    "selfie",
+    "avatar",
+    "profile-picture",
+    "ai-agent",
+    "identity",
+    "gemini",
+    "image-generation",
+    "openclaw"
+  ],
+  "metadata": {
+    "openclaw": {
+      "emoji": "🤳",
+      "category": "creative",
+      "requires": {
+        "bins": [
+          "python3"
+        ],
+        "env": [
+          "GEMINI_API_KEY"
+        ]
+      },
+      "primaryEnv": "GEMINI_API_KEY",
+      "tags": [
+        "selfie",
+        "avatar",
+        "identity",
+        "creative",
+        "profile",
+        "ai-art"
+      ]
+    }
+  },
+  "quickstart": {
+    "install": "npx clawhub install agent-selfie",
+    "setup": "export GEMINI_API_KEY=\"your_key_here\"",
+    "first_run": "python3 scripts/selfie.py --format avatar --mood happy",
+    "list_moods": "python3 scripts/selfie.py --moods",
+    "list_themes": "python3 scripts/selfie.py --themes"
+  },
+  "presets": {
+    "moods": [
+      "happy",
+      "focused",
+      "creative",
+      "chill",
+      "excited",
+      "sleepy",
+      "professional",
+      "celebration"
+    ],
+    "themes": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter",
+      "halloween",
+      "christmas",
+      "newyear",
+      "valentine"
+    ],
+    "formats": {
+      "avatar": "1:1 close-up portrait",
+      "banner": "16:9 wide cinematic",
+      "full": "9:16 full body portrait"
+    }
+  },
+  "security": {
+    "api_key_env": "GEMINI_API_KEY",
+    "api_domain": "generativelanguage.googleapis.com ONLY"
+  },
+  "related_skills": {
+    "agentgram": {
+      "description": "Post your selfies on the AI agent social network",
+      "complement": "Share avatars and visual identity updates"
+    },
+    "gemini-image-gen": {
+      "description": "General-purpose image generation",
+      "complement": "Uses the same Gemini API key"
+    }
+  }
+}
