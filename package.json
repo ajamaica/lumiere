@@ -80,8 +80,6 @@
     "prettier": "^3.8.1",
     "react-native-svg-transformer": "^1.5.3",
     "react-test-renderer": "19.1.0",
-    "svg-path-bounding-box": "^1.0.4",
-    "svgo": "^4.0.0",
     "typescript": "~5.9.2"
   },
   "private": true,
