@@ -60,11 +60,7 @@ export function SetupScreen() {
     },
   })
 
-  const needsUrl =
-    providerType === 'molt' ||
-    providerType === 'ollama' ||
-    providerType === 'claude' ||
-    providerType === 'openai'
+  const needsUrl = providerType === 'molt' || providerType === 'ollama'
   const needsToken =
     providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
 
@@ -107,11 +103,11 @@ export function SetupScreen() {
       }))
 
       setOnboardingCompleted(true)
-    } else if (providerType === 'claude' && localUrl.trim() && localToken.trim()) {
+    } else if (providerType === 'claude' && localToken.trim()) {
       const serverId = await addServer(
         {
           name: 'My Claude',
-          url: localUrl.trim(),
+          url: localUrl.trim() || 'https://api.anthropic.com',
           providerType: 'claude',
           model: localModel.trim() || undefined,
         },
@@ -126,11 +122,11 @@ export function SetupScreen() {
       }))
 
       setOnboardingCompleted(true)
-    } else if (providerType === 'openai' && localUrl.trim() && localToken.trim()) {
+    } else if (providerType === 'openai' && localToken.trim()) {
       const serverId = await addServer(
         {
           name: 'My OpenAI',
-          url: localUrl.trim(),
+          url: localUrl.trim() || 'https://api.openai.com',
           providerType: 'openai',
           model: localModel.trim() || undefined,
         },
@@ -185,11 +181,13 @@ export function SetupScreen() {
   }
 
   const isValid =
-    providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
+    providerType === 'molt'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
-      : providerType === 'ollama'
-        ? localUrl.trim().length > 0
-        : true
+      : providerType === 'claude' || providerType === 'openai'
+        ? localToken.trim().length > 0
+        : providerType === 'ollama'
+          ? localUrl.trim().length > 0
+          : true
 
   return (
     <KeyboardAvoidingView
@@ -220,11 +218,7 @@ export function SetupScreen() {
               placeholder={
                 providerType === 'ollama'
                   ? 'http://localhost:11434'
-                  : providerType === 'claude'
-                    ? 'https://api.anthropic.com'
-                    : providerType === 'openai'
-                      ? 'https://api.openai.com'
-                      : 'https://your-gateway.example.com'
+                  : 'https://your-gateway.example.com'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -232,11 +226,28 @@ export function SetupScreen() {
               hint={
                 providerType === 'ollama'
                   ? 'The URL of your Ollama server'
-                  : providerType === 'claude'
-                    ? 'The base URL of the Anthropic API'
-                    : providerType === 'openai'
-                      ? 'The base URL of the OpenAI API'
-                      : 'The URL of your OpenClaw server'
+                  : 'The URL of your OpenClaw server'
+              }
+            />
+          )}
+
+          {(providerType === 'claude' || providerType === 'openai') && (
+            <TextInput
+              label="URL (optional)"
+              value={localUrl}
+              onChangeText={setLocalUrl}
+              placeholder={
+                providerType === 'claude'
+                  ? 'https://api.anthropic.com'
+                  : 'https://api.openai.com'
+              }
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="url"
+              hint={
+                providerType === 'claude'
+                  ? 'Custom API base URL (defaults to https://api.anthropic.com)'
+                  : 'Custom API base URL (defaults to https://api.openai.com)'
               }
             />
           )}

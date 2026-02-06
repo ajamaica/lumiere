@@ -28,16 +28,32 @@ export default function EditServerScreen() {
   const handleSave = async () => {
     if (!id) return
 
-    if (providerType !== 'echo' && !url.trim()) {
+    const needsUrlRequired =
+      providerType !== 'echo' &&
+      providerType !== 'apple' &&
+      providerType !== 'claude' &&
+      providerType !== 'openai'
+    if (needsUrlRequired && !url.trim()) {
       Alert.alert('Error', 'URL is required')
       return
+    }
+
+    let effectiveUrl = url.trim()
+    if (providerType === 'echo') {
+      effectiveUrl = 'echo://local'
+    } else if (providerType === 'apple') {
+      effectiveUrl = 'apple://on-device'
+    } else if (providerType === 'claude' && !effectiveUrl) {
+      effectiveUrl = 'https://api.anthropic.com'
+    } else if (providerType === 'openai' && !effectiveUrl) {
+      effectiveUrl = 'https://api.openai.com'
     }
 
     await updateServer(
       id,
       {
         name: name.trim(),
-        url: providerType === 'echo' ? 'echo://local' : url.trim(),
+        url: effectiveUrl,
         clientId: clientId.trim(),
         providerType,
         model: model.trim() || undefined,
@@ -140,10 +156,14 @@ export default function EditServerScreen() {
             />
           </View>
 
-          {providerType !== 'echo' && (
+          {providerType !== 'echo' && providerType !== 'apple' && (
             <View style={styles.formRow}>
               <TextInput
-                label="URL"
+                label={
+                  providerType === 'claude' || providerType === 'openai'
+                    ? 'URL (optional)'
+                    : 'URL'
+                }
                 value={url}
                 onChangeText={setUrl}
                 placeholder={

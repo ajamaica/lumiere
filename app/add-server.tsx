@@ -22,7 +22,11 @@ export default function AddServerScreen() {
   const [providerType, setProviderType] = useState<ProviderType>('molt')
   const [model, setModel] = useState('')
 
-  const needsUrl = providerType !== 'echo' && providerType !== 'apple'
+  const needsUrl =
+    providerType !== 'echo' &&
+    providerType !== 'apple' &&
+    providerType !== 'claude' &&
+    providerType !== 'openai'
   const needsToken =
     providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
 
@@ -51,7 +55,13 @@ export default function AddServerScreen() {
     } else if (providerType === 'apple') {
       effectiveUrl = 'apple://on-device'
       effectiveToken = 'apple-no-token'
-    } else if (!effectiveToken) {
+    } else if (providerType === 'claude' && !effectiveUrl) {
+      effectiveUrl = 'https://api.anthropic.com'
+    } else if (providerType === 'openai' && !effectiveUrl) {
+      effectiveUrl = 'https://api.openai.com'
+    }
+
+    if (!effectiveToken) {
       effectiveToken = 'ollama-no-token'
     }
 
@@ -161,11 +171,25 @@ export default function AddServerScreen() {
                 placeholder={
                   providerType === 'ollama'
                     ? 'http://localhost:11434'
-                    : providerType === 'claude'
-                      ? 'https://api.anthropic.com'
-                      : providerType === 'openai'
-                        ? 'https://api.openai.com'
-                        : 'wss://gateway.example.com'
+                    : 'wss://gateway.example.com'
+                }
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="url"
+              />
+            </View>
+          )}
+
+          {(providerType === 'claude' || providerType === 'openai') && (
+            <View style={styles.formRow}>
+              <TextInput
+                label="URL (optional)"
+                value={url}
+                onChangeText={setUrl}
+                placeholder={
+                  providerType === 'claude'
+                    ? 'https://api.anthropic.com'
+                    : 'https://api.openai.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
