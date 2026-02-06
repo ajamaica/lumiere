@@ -57,9 +57,9 @@ jest.mock('../../src/utils/device', () => ({
   useIsFoldable: () => false,
   useFoldState: () => 'folded',
   useOrientation: () => 'portrait',
-  useResponsiveValue: <T>(phone: T) => phone,
-  useResponsiveValueWithFoldable: <T>(phone: T) => phone,
-  useFoldResponsiveValue: <T>(folded: T) => folded,
+  useResponsiveValue: (phone: unknown) => phone,
+  useResponsiveValueWithFoldable: (phone: unknown) => phone,
+  useFoldResponsiveValue: (folded: unknown) => folded,
   useContentContainerStyle: () => ({}),
   useScreenDimensions: () => ({ width: 375, height: 667 }),
 }))

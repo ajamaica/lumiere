@@ -11,8 +11,8 @@ import {
   serversAtom,
   serverSessionsAtom,
 } from '../../store'
-import { getServerToken } from '../secureTokenStorage'
 import { logger } from '../../utils/logger'
+import { getServerToken } from '../secureTokenStorage'
 
 const notificationLogger = logger.create('BackgroundCheck')
 

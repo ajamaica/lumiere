@@ -1,11 +1,11 @@
 import { Ionicons } from '@expo/vector-icons'
-import type { ComponentProps } from 'react'
 import * as Calendar from 'expo-calendar'
 import * as Clipboard from 'expo-clipboard'
 import * as Contacts from 'expo-contacts'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import { useAtom, useSetAtom } from 'jotai'
+import type { ComponentProps } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import {
   Image,
@@ -466,7 +466,11 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 accessibilityLabel={showCheck ? 'Copied' : intent.label}
               >
                 <Ionicons
-                  name={(showCheck ? 'checkmark' : intentIcon(intent.action)) as ComponentProps<typeof Ionicons>['name']}
+                  name={
+                    (showCheck ? 'checkmark' : intentIcon(intent.action)) as ComponentProps<
+                      typeof Ionicons
+                    >['name']
+                  }
                   size={16}
                   color={theme.colors.primary}
                   style={styles.intentButtonIcon}
