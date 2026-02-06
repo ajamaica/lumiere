@@ -162,41 +162,43 @@ export function ChatInput({
         onRequestClose={() => setShowAttachmentMenu(false)}
       >
         <Pressable style={styles.modalOverlay} onPress={() => setShowAttachmentMenu(false)}>
-          <View style={styles.attachmentMenu}>
-            <TouchableOpacity
-              style={styles.attachmentOption}
-              onPress={handlePickImage}
-              accessibilityRole="button"
-              accessibilityLabel="Attach picture"
-            >
-              <View style={styles.attachmentIconContainer}>
-                <Ionicons name="image" size={24} color={theme.colors.primary} />
-              </View>
-              <Text style={styles.attachmentOptionText}>Picture</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.attachmentOption}
-              onPress={handlePickVideo}
-              accessibilityRole="button"
-              accessibilityLabel="Attach video"
-            >
-              <View style={styles.attachmentIconContainer}>
-                <Ionicons name="videocam" size={24} color={theme.colors.primary} />
-              </View>
-              <Text style={styles.attachmentOptionText}>Video</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.attachmentOption}
-              onPress={handlePickFile}
-              accessibilityRole="button"
-              accessibilityLabel="Attach file"
-            >
-              <View style={styles.attachmentIconContainer}>
-                <Ionicons name="document" size={24} color={theme.colors.primary} />
-              </View>
-              <Text style={styles.attachmentOptionText}>File</Text>
-            </TouchableOpacity>
-          </View>
+          <Pressable>
+            <View style={styles.attachmentMenu}>
+              <TouchableOpacity
+                style={styles.attachmentOption}
+                onPress={handlePickImage}
+                accessibilityRole="button"
+                accessibilityLabel="Attach picture"
+              >
+                <View style={styles.attachmentIconContainer}>
+                  <Ionicons name="image" size={24} color={theme.colors.primary} />
+                </View>
+                <Text style={styles.attachmentOptionText}>Picture</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.attachmentOption}
+                onPress={handlePickVideo}
+                accessibilityRole="button"
+                accessibilityLabel="Attach video"
+              >
+                <View style={styles.attachmentIconContainer}>
+                  <Ionicons name="videocam" size={24} color={theme.colors.primary} />
+                </View>
+                <Text style={styles.attachmentOptionText}>Video</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.attachmentOption}
+                onPress={handlePickFile}
+                accessibilityRole="button"
+                accessibilityLabel="Attach file"
+              >
+                <View style={styles.attachmentIconContainer}>
+                  <Ionicons name="document" size={24} color={theme.colors.primary} />
+                </View>
+                <Text style={styles.attachmentOptionText}>File</Text>
+              </TouchableOpacity>
+            </View>
+          </Pressable>
         </Pressable>
       </Modal>
       {hasInput && suggestions.length > 0 && (
