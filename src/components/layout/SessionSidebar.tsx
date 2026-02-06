@@ -376,6 +376,9 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
             {servers && servers.length > 0 ? (
               // Multi-server display for tablet/foldable
               <>
+                <Text style={styles.emptyText}>
+                  DEBUG: Found {servers.length} servers to display
+                </Text>
                 {servers.map((serverData) => {
                   const isActiveServer = serverData.server.id === currentServerId
                   const isExpanded = expandedServers.has(serverData.server.id)

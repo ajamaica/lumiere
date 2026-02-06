@@ -143,16 +143,27 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   }
 
   // Prepare multi-server data for tablet/foldable
-  const serversWithSessions = isTabletOrFoldable
-    ? serversList.map((server) => {
-        const serverSessionData = serverSessions.get(server.id)
-        return {
-          server,
-          sessions: serverSessionData?.sessions || [],
-          connected: serverSessionData?.connected || false,
-        }
-      })
-    : undefined
+  const serversWithSessions = React.useMemo(() => {
+    if (!isTabletOrFoldable) {
+      console.log('Not tablet/foldable, returning undefined')
+      return undefined
+    }
+
+    console.log('Preparing serversWithSessions, serversList length:', serversList.length)
+    const result = serversList.map((server) => {
+      const serverSessionData = serverSessions.get(server.id)
+      console.log(
+        `Server ${server.name}: sessions=${serverSessionData?.sessions?.length ?? 0}, connected=${serverSessionData?.connected ?? false}`,
+      )
+      return {
+        server,
+        sessions: serverSessionData?.sessions || [],
+        connected: serverSessionData?.connected || false,
+      }
+    })
+    console.log('serversWithSessions result length:', result.length)
+    return result
+  }, [isTabletOrFoldable, serversList, serverSessions])
 
   return (
     <SidebarLayout
