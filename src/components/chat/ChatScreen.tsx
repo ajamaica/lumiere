@@ -636,6 +636,9 @@ const createStyles = (
   // Adjust status bar position for foldable devices in half-folded state
   const statusBarTop = deviceType === 'foldable' && foldState === 'half-folded' ? 40 : 50
 
+  // Adjust left position on tablets/foldables to appear next to toggle button
+  const statusBarLeft = deviceType !== 'phone' ? 70 : 0
+
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -644,7 +647,7 @@ const createStyles = (
     statusBarContainer: {
       position: 'absolute',
       top: statusBarTop,
-      left: 0,
+      left: statusBarLeft,
       right: 0,
       flexDirection: 'row',
       alignItems: 'center',
