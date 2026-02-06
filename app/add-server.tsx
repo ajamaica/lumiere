@@ -3,7 +3,14 @@ import React, { useState } from 'react'
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Button, Dropdown, ScreenHeader, Text, TextInput } from '../src/components/ui'
+import {
+  Button,
+  Dropdown,
+  OllamaModelPicker,
+  ScreenHeader,
+  Text,
+  TextInput,
+} from '../src/components/ui'
 import { getAllProviderOptions } from '../src/config/providerOptions'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
@@ -274,13 +281,12 @@ export default function AddServerScreen() {
 
           {providerType === 'ollama' && (
             <View style={styles.formRow}>
-              <TextInput
+              <OllamaModelPicker
                 label="Model"
                 value={model}
-                onChangeText={setModel}
+                onValueChange={setModel}
+                ollamaUrl={url}
                 placeholder="llama3.2"
-                autoCapitalize="none"
-                autoCorrect={false}
               />
             </View>
           )}
