@@ -51,15 +51,18 @@ export function TextInput({ label, hint, error, style, ...props }: TextInputProp
   })
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} accessible={false}>
       {label && <Text style={styles.label}>{label}</Text>}
       <RNTextInput
         style={[styles.input, style]}
         placeholderTextColor={theme.colors.text.tertiary}
+        accessibilityLabel={label}
+        accessibilityHint={error || hint}
+        accessibilityState={error ? { disabled: props.editable === false } : undefined}
         {...props}
       />
       {error ? (
-        <Text style={styles.error}>{error}</Text>
+        <Text style={styles.error} accessibilityRole="alert">{error}</Text>
       ) : hint ? (
         <Text style={styles.hint}>{hint}</Text>
       ) : null}

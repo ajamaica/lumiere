@@ -123,6 +123,10 @@ export function Dropdown<T extends string = string>({
         onPress={() => setOpen(true)}
         activeOpacity={0.7}
         disabled={disabled}
+        accessibilityRole="button"
+        accessibilityLabel={label ? `${label}: ${selectedOption?.label ?? ''}` : selectedOption?.label}
+        accessibilityHint={hint || 'Double tap to open dropdown'}
+        accessibilityState={{ disabled: !!disabled, expanded: open }}
       >
         <View style={styles.triggerContent}>
           {selectedOption?.icon && <View style={styles.optionIcon}>{selectedOption.icon}</View>}
@@ -144,6 +148,9 @@ export function Dropdown<T extends string = string>({
                     onValueChange(option.value)
                     setOpen(false)
                   }}
+                  accessibilityRole="menuitem"
+                  accessibilityLabel={option.label}
+                  accessibilityState={{ selected: option.value === value }}
                 >
                   <View style={styles.triggerContent}>
                     {option.icon && <View style={styles.optionIcon}>{option.icon}</View>}

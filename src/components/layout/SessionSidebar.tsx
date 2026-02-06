@@ -193,14 +193,19 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
       <View style={styles.contentContainer}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Sessions</Text>
+          <Text style={styles.headerTitle} accessibilityRole="header">Sessions</Text>
         </View>
 
         {/* Actions Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Actions</Text>
 
-          <TouchableOpacity style={styles.actionButton} onPress={onNewSession}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={onNewSession}
+            accessibilityRole="button"
+            accessibilityLabel="New Session"
+          >
             <Ionicons
               name="add-circle"
               size={22}
@@ -210,7 +215,12 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
             <Text style={styles.actionText}>New Session</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.actionButton} onPress={onResetSession}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={onResetSession}
+            accessibilityRole="button"
+            accessibilityLabel="Reset Current"
+          >
             <Ionicons
               name="refresh"
               size={22}
@@ -220,7 +230,12 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
             <Text style={styles.actionText}>Reset Current</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.actionButton} onPress={handleEditSession}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={handleEditSession}
+            accessibilityRole="button"
+            accessibilityLabel="Edit Current"
+          >
             <Ionicons
               name="create"
               size={22}
@@ -243,6 +258,9 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
                     key={session.key}
                     style={[styles.sessionItem, isActive && styles.activeSession]}
                     onPress={() => onSelectSession(session.key)}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${formatSessionKey(session.key)}${session.messageCount !== undefined ? `, ${session.messageCount} message${session.messageCount !== 1 ? 's' : ''}` : ''}`}
+                    accessibilityState={{ selected: isActive }}
                   >
                     <View style={styles.sessionTextContainer}>
                       <Text style={styles.sessionText} numberOfLines={1}>
@@ -271,7 +289,12 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
 
       {/* Footer with Settings */}
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.footerButton} onPress={handleOpenSettings}>
+        <TouchableOpacity
+          style={styles.footerButton}
+          onPress={handleOpenSettings}
+          accessibilityRole="button"
+          accessibilityLabel="Settings"
+        >
           <Ionicons
             name="settings-outline"
             size={22}

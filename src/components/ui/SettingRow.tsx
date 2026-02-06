@@ -101,6 +101,8 @@ export function SettingRow({
             onValueChange={onSwitchChange}
             trackColor={{ false: theme.colors.surfaceVariant, true: theme.colors.primary }}
             thumbColor="#FFFFFF"
+            accessibilityLabel={label}
+            accessibilityRole="switch"
           />
         )}
       </View>
@@ -109,7 +111,13 @@ export function SettingRow({
 
   if (onPress) {
     return (
-      <TouchableOpacity onPress={onPress} activeOpacity={0.6}>
+      <TouchableOpacity
+        onPress={onPress}
+        activeOpacity={0.6}
+        accessibilityRole="button"
+        accessibilityLabel={subtitle ? `${label}, ${subtitle}` : label}
+        accessibilityValue={value ? { text: value } : undefined}
+      >
         {content}
       </TouchableOpacity>
     )

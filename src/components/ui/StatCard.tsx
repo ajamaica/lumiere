@@ -50,7 +50,12 @@ export function StatCard({
   })
 
   return (
-    <View style={[styles.card, style]} {...props}>
+    <View
+      style={[styles.card, style]}
+      accessible={true}
+      accessibilityLabel={`${label}: ${value}${description ? `, ${description}` : ''}`}
+      {...props}
+    >
       <Text style={styles.label}>{label}</Text>
       <Text style={styles.value}>{value}</Text>
       {description && <Text style={styles.description}>{description}</Text>}

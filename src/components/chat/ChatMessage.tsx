@@ -406,7 +406,12 @@ export function ChatMessage({ message }: ChatMessageProps) {
   }, [message.text, intents])
 
   return (
-    <View style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}>
+    <View
+      style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}
+      accessible={true}
+      accessibilityLabel={`${isUser ? 'You' : 'Assistant'}: ${message.text.substring(0, 200)}${message.text.length > 200 ? '...' : ''}`}
+      accessibilityRole="text"
+    >
       <View style={[styles.bubble, isUser ? styles.userBubble : styles.agentBubble]}>
         {message.attachments && message.attachments.length > 0 && (
           <View style={styles.attachmentContainer}>
@@ -416,6 +421,8 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 source={{ uri: attachment.uri }}
                 style={styles.attachmentImage}
                 resizeMode="cover"
+                accessibilityLabel={`Attachment ${index + 1}`}
+                accessibilityRole="image"
               />
             ))}
           </View>
@@ -448,6 +455,8 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 style={styles.intentButton}
                 onPress={() => handleIntentPress(intent)}
                 activeOpacity={0.7}
+                accessibilityRole="button"
+                accessibilityLabel={showCheck ? 'Copied' : intent.label}
               >
                 <Ionicons
                   name={(showCheck ? 'checkmark' : intentIcon(intent.action)) as any}
@@ -464,7 +473,12 @@ export function ChatMessage({ message }: ChatMessageProps) {
       {!message.streaming && (
         <View style={styles.actionButtons}>
           {!isUser && (
-            <TouchableOpacity style={styles.actionButton} onPress={handleCopy}>
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={handleCopy}
+              accessibilityRole="button"
+              accessibilityLabel={copied ? 'Copied' : 'Copy message'}
+            >
               <Ionicons
                 name={copied ? 'checkmark' : 'copy-outline'}
                 size={18}
@@ -472,7 +486,13 @@ export function ChatMessage({ message }: ChatMessageProps) {
               />
             </TouchableOpacity>
           )}
-          <TouchableOpacity style={styles.actionButton} onPress={handleToggleFavorite}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={handleToggleFavorite}
+            accessibilityRole="button"
+            accessibilityLabel={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
+            accessibilityState={{ selected: isFavorited }}
+          >
             <Ionicons
               name={isFavorited ? 'heart' : 'heart-outline'}
               size={18}

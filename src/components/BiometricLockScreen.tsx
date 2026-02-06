@@ -97,14 +97,25 @@ export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
   })
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
+    <View style={styles.container} accessible={false}>
+      <Text style={styles.title} accessibilityRole="header">
         {error ? t('biometricLock.failed') : t('biometricLock.locked')}
       </Text>
       <Text style={styles.subtitle}>
         {error ? t('biometricLock.failedMessage') : t('biometricLock.authenticateToUnlock')}
       </Text>
-      <TouchableOpacity style={styles.retryButton} onPress={authenticate} activeOpacity={0.7}>
+      {error && (
+        <Text accessibilityRole="alert" style={{ position: 'absolute', opacity: 0 }}>
+          {t('biometricLock.authFailed')}
+        </Text>
+      )}
+      <TouchableOpacity
+        style={styles.retryButton}
+        onPress={authenticate}
+        activeOpacity={0.7}
+        accessibilityRole="button"
+        accessibilityLabel={error ? t('biometricLock.tryAgain') : t('biometricLock.unlock')}
+      >
         <Text style={styles.retryText}>
           {error ? t('biometricLock.tryAgain') : t('biometricLock.unlock')}
         </Text>
