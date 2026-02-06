@@ -180,24 +180,6 @@ export default function AddServerScreen() {
             </View>
           )}
 
-          {(providerType === 'claude' || providerType === 'openai') && (
-            <View style={styles.formRow}>
-              <TextInput
-                label="URL (optional)"
-                value={url}
-                onChangeText={setUrl}
-                placeholder={
-                  providerType === 'claude'
-                    ? 'https://api.anthropic.com'
-                    : 'https://api.openai.com'
-                }
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="url"
-              />
-            </View>
-          )}
-
           {providerType === 'molt' && (
             <>
               <View style={styles.formRow}>

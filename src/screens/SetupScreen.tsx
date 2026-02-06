@@ -231,27 +231,6 @@ export function SetupScreen() {
             />
           )}
 
-          {(providerType === 'claude' || providerType === 'openai') && (
-            <TextInput
-              label="URL (optional)"
-              value={localUrl}
-              onChangeText={setLocalUrl}
-              placeholder={
-                providerType === 'claude'
-                  ? 'https://api.anthropic.com'
-                  : 'https://api.openai.com'
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="url"
-              hint={
-                providerType === 'claude'
-                  ? 'Custom API base URL (defaults to https://api.anthropic.com)'
-                  : 'Custom API base URL (defaults to https://api.openai.com)'
-              }
-            />
-          )}
-
           {needsToken && (
             <TextInput
               label={providerType === 'claude' || providerType === 'openai' ? 'API Key' : 'Token'}
