@@ -34,9 +34,9 @@ lumiere://intent/{action}?{param1}={value1}&{param2}={value2}
 
 Open an external application by its package identifier.
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `package` | yes | Platform package or bundle ID (e.g. `com.spotify.music`) |
+| Parameter | Required | Description                                              |
+| --------- | -------- | -------------------------------------------------------- |
+| `package` | yes      | Platform package or bundle ID (e.g. `com.spotify.music`) |
 
 ```
 lumiere://intent/openApp?package=com.spotify.music
@@ -48,9 +48,9 @@ lumiere://intent/openApp?package=com.spotify.music
 
 Play audio or video from a URL.
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `url` | yes | Direct URL to the media resource |
+| Parameter | Required | Description                      |
+| --------- | -------- | -------------------------------- |
+| `url`     | yes      | Direct URL to the media resource |
 
 ```
 lumiere://intent/playMedia?url=https%3A%2F%2Fexample.com%2Fsong.mp3
@@ -62,9 +62,9 @@ lumiere://intent/playMedia?url=https%3A%2F%2Fexample.com%2Fsong.mp3
 
 Open a URL or deep-link in the system browser or appropriate handler.
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `url` | yes | The URL to open |
+| Parameter | Required | Description     |
+| --------- | -------- | --------------- |
+| `url`     | yes      | The URL to open |
 
 ```
 lumiere://intent/navigate?url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FMars
@@ -76,9 +76,9 @@ lumiere://intent/navigate?url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FMars
 
 Copy text to the user's clipboard. The button label changes to "Copied!" on success.
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `text` | yes | The text to copy |
+| Parameter | Required | Description      |
+| --------- | -------- | ---------------- |
+| `text`    | yes      | The text to copy |
 
 ```
 lumiere://intent/copyToClipboard?text=Hello%20World
@@ -90,10 +90,10 @@ lumiere://intent/copyToClipboard?text=Hello%20World
 
 Switch the conversation to a different agent session. Optionally assign a human-readable label.
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `key` | yes | Session key (e.g. `agent:main:research`) |
-| `label` | no | Display name for the session tab |
+| Parameter | Required | Description                              |
+| --------- | -------- | ---------------------------------------- |
+| `key`     | yes      | Session key (e.g. `agent:main:research`) |
+| `label`   | no       | Display name for the session tab         |
 
 ```
 lumiere://intent/openSession?key=agent%3Amain%3Aresearch&label=Research
@@ -105,15 +105,15 @@ lumiere://intent/openSession?key=agent%3Amain%3Aresearch&label=Research
 
 Add a new contact to the user's address book. Triggers a permission prompt on first use.
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `name` | no | Full display name |
-| `firstName` | no | First name |
-| `lastName` | no | Last name |
-| `email` | no | Email address |
-| `phone` | no | Phone number |
-| `company` | no | Company / organization |
-| `jobTitle` | no | Job title |
+| Parameter   | Required | Description            |
+| ----------- | -------- | ---------------------- |
+| `name`      | no       | Full display name      |
+| `firstName` | no       | First name             |
+| `lastName`  | no       | Last name              |
+| `email`     | no       | Email address          |
+| `phone`     | no       | Phone number           |
+| `company`   | no       | Company / organization |
+| `jobTitle`  | no       | Job title              |
 
 Provide whichever fields you have; at minimum include `name` or `firstName`.
 
@@ -127,14 +127,14 @@ lumiere://intent/storeContact?firstName=Ada&lastName=Lovelace&email=ada%40exampl
 
 Create a calendar event. Triggers a permission prompt on first use.
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `title` | no | Event title (defaults to "New Event") |
-| `startDate` | no | ISO 8601 date-time for the start (defaults to now) |
-| `endDate` | no | ISO 8601 date-time for the end (defaults to start + 1 hour) |
-| `location` | no | Event location |
-| `notes` | no | Additional notes |
-| `allDay` | no | `"true"` for an all-day event |
+| Parameter   | Required | Description                                                 |
+| ----------- | -------- | ----------------------------------------------------------- |
+| `title`     | no       | Event title (defaults to "New Event")                       |
+| `startDate` | no       | ISO 8601 date-time for the start (defaults to now)          |
+| `endDate`   | no       | ISO 8601 date-time for the end (defaults to start + 1 hour) |
+| `location`  | no       | Event location                                              |
+| `notes`     | no       | Additional notes                                            |
+| `allDay`    | no       | `"true"` for an all-day event                               |
 
 ```
 lumiere://intent/storeCalendarEvent?title=Team%20Standup&startDate=2025-06-15T09%3A00%3A00&endDate=2025-06-15T09%3A30%3A00&location=Conference%20Room%20B
@@ -146,9 +146,9 @@ lumiere://intent/storeCalendarEvent?title=Team%20Standup&startDate=2025-06-15T09
 
 Initiate a phone call.
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `phone` | yes | Phone number to dial |
+| Parameter | Required | Description          |
+| --------- | -------- | -------------------- |
+| `phone`   | yes      | Phone number to dial |
 
 ```
 lumiere://intent/makeCall?phone=%2B15551234567
@@ -160,11 +160,11 @@ lumiere://intent/makeCall?phone=%2B15551234567
 
 Open the maps application at a specific location.
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `latitude` | yes | Latitude coordinate |
-| `longitude` | yes | Longitude coordinate |
-| `label` | no | Pin label shown on the map |
+| Parameter   | Required | Description                |
+| ----------- | -------- | -------------------------- |
+| `latitude`  | yes      | Latitude coordinate        |
+| `longitude` | yes      | Longitude coordinate       |
+| `label`     | no       | Pin label shown on the map |
 
 ```
 lumiere://intent/openMaps?latitude=37.7749&longitude=-122.4194&label=San%20Francisco
