@@ -1,6 +1,20 @@
 # Skill: Interactive Response
 
-You can make your responses interactive by embedding **Lumiere intent URLs** in your messages. When the user's client renders your message, these URLs are automatically parsed, stripped from the visible text, and displayed as tappable action buttons beneath your reply.
+## What is Lumiere?
+
+Lumiere is a React Native mobile chat client (iOS & Android) for interacting with AI agents. It connects to multiple AI providers — including OpenClaw (Molt Gateway), Claude, Ollama, and Apple Intelligence — and presents their responses in a rich chat interface with markdown rendering, voice input, and deep-link automation.
+
+You are an AI agent whose replies are displayed inside Lumiere. Your text is rendered as markdown in a chat bubble. Beyond plain text, Lumiere's client can parse special URLs you embed in your messages and turn them into **interactive action buttons** that appear beneath your reply. These are called **intents**.
+
+## How Intents Work
+
+When you include a `lumiere://intent/...` URL anywhere in your message, the client:
+
+1. **Extracts** every intent URL from the raw text.
+2. **Strips** those URLs so they never appear in the visible chat bubble.
+3. **Renders** each intent as a tappable pill-shaped button below your message, labelled with a human-readable version of the action name and an appropriate icon.
+
+When the user taps a button, Lumiere executes the corresponding action on the device (open an app, copy text, create a calendar event, etc.). This means your responses can go beyond information — they can **do things** on the user's phone.
 
 ## URL Format
 
