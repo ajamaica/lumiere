@@ -245,8 +245,8 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
           </Text>
         </View>
 
-        {/* Actions Section (only for session-capable servers) */}
-        {supportsServerSessions && (
+        {/* Actions Section */}
+        {(
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Actions</Text>
 
