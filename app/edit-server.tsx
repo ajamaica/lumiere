@@ -221,7 +221,9 @@ export default function EditServerScreen() {
             </View>
           )}
 
-          {(providerType === 'claude' || providerType === 'openai' || providerType === 'emergent') && (
+          {(providerType === 'claude' ||
+            providerType === 'openai' ||
+            providerType === 'emergent') && (
             <>
               <View style={styles.formRow}>
                 <TextInput
