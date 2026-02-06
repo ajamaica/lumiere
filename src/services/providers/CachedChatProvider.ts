@@ -1,5 +1,6 @@
 import { CACHE_CONFIG } from '../../constants'
 import { jotaiStorage } from '../../store'
+import { logger } from '../../utils/logger'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -9,6 +10,8 @@ import {
   ProviderCapabilities,
   SendMessageParams,
 } from './types'
+
+const cacheLogger = logger.create('CachedChatProvider')
 
 /**
  * Build the AsyncStorage key for a given server + session pair.
@@ -41,7 +44,7 @@ export async function readCachedHistory(
     return limit ? messages.slice(-limit) : messages
   } catch (error) {
     if (__DEV__) {
-      console.warn(`[readCachedHistory] Failed to read cache for session "${sessionKey}":`, error)
+      cacheLogger.warn(`Failed to read cache for session "${sessionKey}"`, error)
     }
     return []
   }
@@ -193,7 +196,7 @@ export class CachedChatProvider implements ChatProvider {
       return messages ?? []
     } catch (error) {
       if (__DEV__) {
-        console.warn(`[CachedChatProvider] Failed to read cache for key "${key}":`, error)
+        cacheLogger.warn(`Failed to read cache for key "${key}"`, error)
       }
       return []
     }
@@ -206,7 +209,7 @@ export class CachedChatProvider implements ChatProvider {
     } catch (error) {
       // Log in development to help debug storage issues
       if (__DEV__) {
-        console.warn(`[CachedChatProvider] Failed to write cache for key "${key}":`, error)
+        cacheLogger.warn(`Failed to write cache for key "${key}"`, error)
       }
       // Silently ignore in production (storage full, etc.)
     }

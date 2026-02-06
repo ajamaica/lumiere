@@ -27,6 +27,9 @@ import {
 } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
+import { logger } from '../../utils/logger'
+
+const chatLogger = logger.create('ChatMessage')
 
 export interface MessageAttachment {
   type: 'image' | 'video' | 'file'
@@ -112,14 +115,14 @@ export function ChatMessage({ message }: ChatMessageProps) {
 
   const handleLinkPress = React.useCallback(
     async (url: string) => {
-      console.log('Link pressed:', url)
+      chatLogger.debug('Link pressed', url)
       try {
         await WebBrowser.openBrowserAsync(url, {
           presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
           controlsColor: theme.colors.primary,
         })
       } catch (err) {
-        console.error('Failed to open URL:', err)
+        chatLogger.logError('Failed to open URL', err)
       }
     },
     [theme.colors.primary],
@@ -315,7 +318,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           case 'storeContact': {
             const { status } = await Contacts.requestPermissionsAsync()
             if (status !== 'granted') {
-              console.warn('Contacts permission not granted')
+              chatLogger.warn('Contacts permission not granted')
               break
             }
             const contact: Contacts.Contact = {
@@ -340,7 +343,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           case 'storeCalendarEvent': {
             const { status } = await Calendar.requestCalendarPermissionsAsync()
             if (status !== 'granted') {
-              console.warn('Calendar permission not granted')
+              chatLogger.warn('Calendar permission not granted')
               break
             }
             const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT)
@@ -349,7 +352,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
               calendars.find((cal) => cal.allowsModifications) ??
               calendars[0]
             if (!defaultCalendar) {
-              console.warn('No calendar available')
+              chatLogger.warn('No calendar available')
               break
             }
             const startDate = intent.params.startDate
@@ -373,7 +376,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           case 'makeCall': {
             const phone = intent.params.phone
             if (!phone) {
-              console.warn('No phone number provided for makeCall intent')
+              chatLogger.warn('No phone number provided for makeCall intent')
               break
             }
             await Linking.openURL(`tel:${encodeURIComponent(phone)}`)
@@ -382,7 +385,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           case 'openMaps': {
             const { latitude, longitude, label } = intent.params
             if (!latitude || !longitude) {
-              console.warn('Missing latitude or longitude for openMaps intent')
+              chatLogger.warn('Missing latitude or longitude for openMaps intent')
               break
             }
             // Use geo: URI scheme which works on both iOS and Android
@@ -396,7 +399,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
             await Linking.openURL(intent.raw)
         }
       } catch (err) {
-        console.error('Failed to execute intent:', err)
+        chatLogger.logError('Failed to execute intent', err)
       }
     },
     [setCurrentSessionKey, setSessionAliases, setClearMessages],

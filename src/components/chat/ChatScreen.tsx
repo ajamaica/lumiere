@@ -36,8 +36,11 @@ import {
   useFoldResponsiveValue,
   useFoldState,
 } from '../../utils/device'
+import { logger } from '../../utils/logger'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
+
+const chatScreenLogger = logger.create('ChatScreen')
 
 interface ChatScreenProps {
   providerConfig: ProviderConfig
@@ -230,15 +233,15 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
 
     try {
       const historyResponse = await getChatHistory(currentSessionKey, 100)
-      console.log('Chat history:', historyResponse)
+      chatScreenLogger.info('Chat history loaded', historyResponse)
 
       if (historyResponse?.messages && Array.isArray(historyResponse.messages)) {
         const historyMessages = historyToMessages(historyResponse.messages)
         setMessages(historyMessages)
-        console.log(`Loaded ${historyMessages.length} messages from history`)
+        chatScreenLogger.info(`Loaded ${historyMessages.length} messages from history`)
       }
     } catch (err) {
-      console.error('Failed to load chat history:', err)
+      chatScreenLogger.logError('Failed to load chat history', err)
     } finally {
       setIsLoadingHistory(false)
     }

@@ -7,6 +7,9 @@ import { Badge, Button, Card, ScreenHeader, Section, StatCard, Text } from '../s
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { useTheme } from '../src/theme'
+import { logger } from '../src/utils/logger'
+
+const schedulerLogger = logger.create('Scheduler')
 
 interface SchedulerStatus {
   enabled: boolean
@@ -96,7 +99,7 @@ export default function SchedulerScreen() {
         setCronJobs(jobsResponse.jobs)
       }
     } catch (err) {
-      console.error('Failed to fetch scheduler data:', err)
+      schedulerLogger.logError('Failed to fetch scheduler data', err)
     }
   }
 
@@ -113,7 +116,7 @@ export default function SchedulerScreen() {
       }
       await fetchSchedulerData()
     } catch (err) {
-      console.error('Failed to toggle job:', err)
+      schedulerLogger.logError('Failed to toggle job', err)
       Alert.alert('Error', 'Failed to toggle job')
     }
   }
@@ -123,7 +126,7 @@ export default function SchedulerScreen() {
       await runCronJob(job.name)
       Alert.alert('Success', `Job "${job.name}" has been triggered`)
     } catch (err) {
-      console.error('Failed to run job:', err)
+      schedulerLogger.logError('Failed to run job', err)
       Alert.alert('Error', 'Failed to run job')
     }
   }
@@ -139,7 +142,7 @@ export default function SchedulerScreen() {
             await removeCronJob(job.name)
             await fetchSchedulerData()
           } catch (err) {
-            console.error('Failed to remove job:', err)
+            schedulerLogger.logError('Failed to remove job', err)
             Alert.alert('Error', 'Failed to remove job')
           }
         },

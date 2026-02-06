@@ -9,6 +9,9 @@ import {
 } from '../services/providers'
 import { messageQueueAtom } from '../store'
 import { generateId } from '../utils/generateId'
+import { logger } from '../utils/logger'
+
+const queueLogger = logger.create('MessageQueue')
 
 interface Message {
   id: string
@@ -98,7 +101,7 @@ export function useMessageQueue({
           },
         )
       } catch (err) {
-        console.error('Failed to send message:', err)
+        queueLogger.logError('Failed to send message', err)
         setIsAgentResponding(false)
         onAgentMessageUpdate('')
       }

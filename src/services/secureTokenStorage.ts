@@ -1,6 +1,9 @@
 import * as SecureStore from 'expo-secure-store'
 
+import { logger } from '../utils/logger'
+
 const TOKEN_PREFIX = 'server_token_'
+const tokenLogger = logger.create('SecureToken')
 
 /**
  * Store a server token securely in the keychain
@@ -26,7 +29,7 @@ export async function getServerToken(serverId: string): Promise<string | null> {
   } catch (error) {
     // If keychain access fails (e.g., "User interaction is not allowed"),
     // return null instead of throwing an error
-    console.warn(`Failed to retrieve token for server ${serverId}:`, error)
+    tokenLogger.warn(`Failed to retrieve token for server ${serverId}`, error)
     return null
   }
 }
@@ -42,6 +45,6 @@ export async function deleteServerToken(serverId: string): Promise<void> {
     })
   } catch (error) {
     // If keychain deletion fails, log but don't throw
-    console.warn(`Failed to delete token for server ${serverId}:`, error)
+    tokenLogger.warn(`Failed to delete token for server ${serverId}`, error)
   }
 }
