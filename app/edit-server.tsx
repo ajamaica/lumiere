@@ -156,31 +156,26 @@ export default function EditServerScreen() {
             />
           </View>
 
-          {providerType !== 'echo' && providerType !== 'apple' && (
-            <View style={styles.formRow}>
-              <TextInput
-                label={
-                  providerType === 'claude' || providerType === 'openai'
-                    ? 'URL (optional)'
-                    : 'URL'
-                }
-                value={url}
-                onChangeText={setUrl}
-                placeholder={
-                  providerType === 'ollama'
-                    ? 'http://localhost:11434'
-                    : providerType === 'claude'
-                      ? 'https://api.anthropic.com'
-                      : providerType === 'openai'
-                        ? 'https://api.openai.com'
-                        : 'wss://gateway.example.com'
-                }
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="url"
-              />
-            </View>
-          )}
+          {providerType !== 'echo' &&
+            providerType !== 'apple' &&
+            providerType !== 'claude' &&
+            providerType !== 'openai' && (
+              <View style={styles.formRow}>
+                <TextInput
+                  label="URL"
+                  value={url}
+                  onChangeText={setUrl}
+                  placeholder={
+                    providerType === 'ollama'
+                      ? 'http://localhost:11434'
+                      : 'wss://gateway.example.com'
+                  }
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  keyboardType="url"
+                />
+              </View>
+            )}
 
           {providerType === 'molt' && (
             <>
