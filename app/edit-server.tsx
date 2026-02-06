@@ -28,27 +28,31 @@ export default function EditServerScreen() {
   const handleSave = async () => {
     if (!id) return
 
-    const needsUrlRequired =
-      providerType !== 'echo' &&
-      providerType !== 'apple' &&
-      providerType !== 'claude' &&
-      providerType !== 'openai'
-    if (needsUrlRequired && !url.trim()) {
+    if (providerType === 'molt' && !url.trim()) {
+      Alert.alert('Error', 'URL is required')
+      return
+    }
+
+    if (providerType === 'ollama' && !url.trim()) {
       Alert.alert('Error', 'URL is required')
       return
     }
 
     let effectiveUrl = url.trim()
     if (providerType === 'echo') {
-      effectiveUrl = 'echo://local'
+      effectiveUrl = ''
     } else if (providerType === 'apple') {
-      effectiveUrl = 'apple://on-device'
-    } else if (providerType === 'claude' && !effectiveUrl) {
-      effectiveUrl = 'https://api.anthropic.com'
-    } else if (providerType === 'openai' && !effectiveUrl) {
-      effectiveUrl = 'https://api.openai.com'
-    } else if (providerType === 'emergent' && !effectiveUrl) {
-      effectiveUrl = 'https://api.emergent.sh'
+      effectiveUrl = ''
+    } else if (providerType === 'gemini-nano') {
+      effectiveUrl = ''
+    } else if (providerType === 'claude') {
+      effectiveUrl = effectiveUrl || 'https://api.anthropic.com'
+    } else if (providerType === 'openai') {
+      effectiveUrl = effectiveUrl || 'https://api.openai.com'
+    } else if (providerType === 'openrouter') {
+      effectiveUrl = effectiveUrl || 'https://openrouter.ai'
+    } else if (providerType === 'emergent') {
+      effectiveUrl = effectiveUrl || 'https://api.emergent.sh'
     }
 
     await updateServer(
@@ -146,42 +150,41 @@ export default function EditServerScreen() {
                 providerType === 'ollama'
                   ? 'My Ollama'
                   : providerType === 'echo'
-                    ? 'My Echo Server'
-                    : providerType === 'claude'
-                      ? 'My Claude'
-                      : providerType === 'openai'
-                        ? 'My OpenAI'
-                        : providerType === 'emergent'
-                          ? 'My Emergent'
-                          : 'My Server'
+                    ? 'Echo Agent'
+                    : providerType === 'apple'
+                      ? 'Local AI'
+                      : providerType === 'gemini-nano'
+                        ? 'Gemini Nano'
+                        : providerType === 'claude'
+                          ? 'My Claude'
+                          : providerType === 'openai'
+                            ? 'My OpenAI'
+                            : providerType === 'openrouter'
+                              ? 'My OpenRouter'
+                              : providerType === 'emergent'
+                                ? 'My Emergent'
+                                : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
             />
           </View>
 
-          {providerType !== 'echo' &&
-            providerType !== 'apple' &&
-            providerType !== 'claude' &&
-            providerType !== 'openai' && (
-              <View style={styles.formRow}>
-                <TextInput
-                  label="URL"
-                  value={url}
-                  onChangeText={setUrl}
-                  placeholder={
-                    providerType === 'ollama'
-                      ? 'http://localhost:11434'
-                      : providerType === 'emergent'
-                        ? 'https://api.emergent.sh'
-                        : 'wss://gateway.example.com'
-                  }
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="url"
-                />
-              </View>
-            )}
+          {(providerType === 'molt' || providerType === 'ollama') && (
+            <View style={styles.formRow}>
+              <TextInput
+                label="URL"
+                value={url}
+                onChangeText={setUrl}
+                placeholder={
+                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                }
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="url"
+              />
+            </View>
+          )}
 
           {providerType === 'molt' && (
             <>
@@ -223,11 +226,16 @@ export default function EditServerScreen() {
 
           {(providerType === 'claude' ||
             providerType === 'openai' ||
+            providerType === 'openrouter' ||
             providerType === 'emergent') && (
             <>
               <View style={styles.formRow}>
                 <TextInput
-                  label="API Key (leave blank to keep current)"
+                  label={
+                    providerType === 'emergent'
+                      ? 'Universal Key (leave blank to keep current)'
+                      : 'API Key (leave blank to keep current)'
+                  }
                   value={token}
                   onChangeText={setToken}
                   secureTextEntry
@@ -243,9 +251,11 @@ export default function EditServerScreen() {
                   placeholder={
                     providerType === 'openai'
                       ? 'gpt-4o'
-                      : providerType === 'emergent'
-                        ? 'claude-3-5-sonnet-20241022'
-                        : 'claude-3-5-sonnet-20241022'
+                      : providerType === 'openrouter'
+                        ? 'openai/gpt-4o'
+                        : providerType === 'emergent'
+                          ? 'claude-3-5-sonnet-20241022'
+                          : 'claude-3-5-sonnet-20241022'
                   }
                   autoCapitalize="none"
                   autoCorrect={false}
