@@ -31,6 +31,8 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   const [sessions, setSessions] = useState<Session[]>([])
   const [loadingSessions, setLoadingSessions] = useState(false)
   const sessionLoadIdRef = useRef(0)
+  // Track last session per server
+  const serverSessionsRef = useRef<Record<string, string>>({})
 
   // Only molt provider supports server-side sessions
   const supportsServerSessions = providerConfig?.type === 'molt'
@@ -76,6 +78,11 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       if (loadId !== sessionLoadIdRef.current) return // stale response
       if (sessionData?.sessions && Array.isArray(sessionData.sessions)) {
         setSessions(sessionData.sessions)
+
+        // If no session is set for this server and sessions are available, use the first one
+        if (!serverSessionsRef.current[currentServerId] && sessionData.sessions.length > 0) {
+          setCurrentSessionKey(sessionData.sessions[0].key)
+        }
       }
     } catch (err) {
       chatSidebarLogger.logError('Failed to fetch sessions', err)
@@ -86,11 +93,25 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
         setLoadingSessions(false)
       }
     }
-  }, [connected, listSessions, supportsServerSessions, currentSessionKey])
+  }, [connected, listSessions, supportsServerSessions, currentSessionKey, currentServerId, setCurrentSessionKey])
 
   useEffect(() => {
     loadSessions()
   }, [loadSessions])
+
+  // Track current session for current server
+  useEffect(() => {
+    if (currentServerId && currentSessionKey) {
+      serverSessionsRef.current[currentServerId] = currentSessionKey
+    }
+  }, [currentServerId, currentSessionKey])
+
+  // Initialize session for non-molt servers
+  useEffect(() => {
+    if (!supportsServerSessions && currentSessionKey !== 'agent:main') {
+      setCurrentSessionKey('agent:main')
+    }
+  }, [supportsServerSessions, currentSessionKey, setCurrentSessionKey])
 
   const handleNewSession = () => {
     const newSessionKey = `agent:main:${Date.now()}`
@@ -136,9 +157,19 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   const handleSwitchServer = (serverId: string) => {
     if (serverId !== currentServerId) {
       switchToServer(serverId)
-      // Create a new session key when switching servers
-      const newSessionKey = `agent:main:${Date.now()}`
-      setCurrentSessionKey(newSessionKey)
+
+      // Restore last session for this server, or use default
+      const server = serversList.find((s) => s.id === serverId)
+      const lastSession = serverSessionsRef.current[serverId]
+
+      if (lastSession) {
+        // Restore previous session for this server
+        setCurrentSessionKey(lastSession)
+      } else if (server?.providerType !== 'molt') {
+        // For non-molt servers, use consistent "main" session
+        setCurrentSessionKey('agent:main')
+      }
+      // For molt servers without a saved session, let loadSessions handle it
     }
   }
 
