@@ -233,10 +233,17 @@ export class ClaudeChatProvider implements ChatProvider {
         throw new Error(`API error: ${response.status} - ${errorText}`)
       }
 
-      const reader = response.body?.getReader()
-      if (!reader) {
-        throw new Error('No response body')
+      // Check if response body exists and supports streaming
+      if (!response.body) {
+        throw new Error(
+          `No response body received from API. Status: ${response.status}. ` +
+            `This may indicate CORS issues, network problems, or the endpoint doesn't support streaming. ` +
+            `Endpoint: ${this.baseUrl}/v1/messages. ` +
+            `Verify the API endpoint is correct and accessible.`,
+        )
       }
+
+      const reader = response.body.getReader()
 
       const decoder = new TextDecoder()
       let fullResponse = ''
