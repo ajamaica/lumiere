@@ -8,7 +8,9 @@ const TOKEN_PREFIX = 'server_token_'
  * @param token - The authentication token
  */
 export async function setServerToken(serverId: string, token: string): Promise<void> {
-  await SecureStore.setItemAsync(`${TOKEN_PREFIX}${serverId}`, token)
+  await SecureStore.setItemAsync(`${TOKEN_PREFIX}${serverId}`, token, {
+    requireAuthentication: false,
+  })
 }
 
 /**
@@ -17,7 +19,16 @@ export async function setServerToken(serverId: string, token: string): Promise<v
  * @returns The token or null if not found
  */
 export async function getServerToken(serverId: string): Promise<string | null> {
-  return await SecureStore.getItemAsync(`${TOKEN_PREFIX}${serverId}`)
+  try {
+    return await SecureStore.getItemAsync(`${TOKEN_PREFIX}${serverId}`, {
+      requireAuthentication: false,
+    })
+  } catch (error) {
+    // If keychain access fails (e.g., "User interaction is not allowed"),
+    // return null instead of throwing an error
+    console.warn(`Failed to retrieve token for server ${serverId}:`, error)
+    return null
+  }
 }
 
 /**
@@ -25,5 +36,12 @@ export async function getServerToken(serverId: string): Promise<string | null> {
  * @param serverId - The server's UUID
  */
 export async function deleteServerToken(serverId: string): Promise<void> {
-  await SecureStore.deleteItemAsync(`${TOKEN_PREFIX}${serverId}`)
+  try {
+    await SecureStore.deleteItemAsync(`${TOKEN_PREFIX}${serverId}`, {
+      requireAuthentication: false,
+    })
+  } catch (error) {
+    // If keychain deletion fails, log but don't throw
+    console.warn(`Failed to delete token for server ${serverId}:`, error)
+  }
 }
