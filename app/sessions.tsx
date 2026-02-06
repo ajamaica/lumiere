@@ -1,7 +1,8 @@
+import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert, ScrollView, StyleSheet, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
@@ -138,6 +139,25 @@ export default function SessionsScreen() {
     spacer: {
       height: theme.spacing.lg,
     },
+    actionButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: theme.spacing.md,
+      backgroundColor: theme.colors.background,
+      borderRadius: theme.borderRadius.md,
+      marginBottom: theme.spacing.sm,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    actionIcon: {
+      marginRight: theme.spacing.sm,
+    },
+    actionText: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.primary,
+      flex: 1,
+      fontWeight: theme.typography.fontWeight.medium,
+    },
   })
 
   if (!config) {
@@ -182,19 +202,39 @@ export default function SessionsScreen() {
         <View style={styles.spacer} />
 
         {/* Actions group */}
-        <Section showDivider>
-          <SettingRow icon="add-circle-outline" label="New Session" onPress={handleNewSession} />
-          <SettingRow
-            icon="pencil-outline"
-            label="Edit Session"
+        <Section title="Actions">
+          <TouchableOpacity style={styles.actionButton} onPress={handleNewSession}>
+            <Ionicons
+              name="add-circle"
+              size={22}
+              color={theme.colors.primary}
+              style={styles.actionIcon}
+            />
+            <Text style={styles.actionText}>New Session</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.actionButton}
             onPress={() => handleEditSession(currentSessionKey)}
-          />
-          <SettingRow
-            icon="refresh-outline"
-            label="Reset Current Session"
-            onPress={handleResetSession}
-            showDivider={false}
-          />
+          >
+            <Ionicons
+              name="create"
+              size={22}
+              color={theme.colors.primary}
+              style={styles.actionIcon}
+            />
+            <Text style={styles.actionText}>Edit Session</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.actionButton} onPress={handleResetSession}>
+            <Ionicons
+              name="refresh"
+              size={22}
+              color={theme.colors.primary}
+              style={styles.actionIcon}
+            />
+            <Text style={styles.actionText}>Reset Current Session</Text>
+          </TouchableOpacity>
         </Section>
 
         {/* Available sessions group - only shown for providers with server sessions */}
