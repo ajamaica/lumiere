@@ -209,7 +209,12 @@ describe('useMessageQueue', () => {
       mocks.sendMessage.mockResolvedValue(undefined)
 
       const { result } = setupHook(mocks)
-      const attachment = { uri: 'file://img.png', base64: 'abc123', mimeType: 'image/png' }
+      const attachment = {
+        type: 'image' as const,
+        uri: 'file://img.png',
+        base64: 'abc123',
+        mimeType: 'image/png',
+      }
       await result.handleSend('with image', [attachment])
 
       expect(mocks.sendMessage).toHaveBeenCalledWith(
