@@ -14,6 +14,42 @@ import {
 const cacheLogger = logger.create('CachedChatProvider')
 
 /**
+ * Session metadata stored in the session index.
+ */
+export interface SessionIndexEntry {
+  key: string
+  messageCount: number
+  lastActivity: number
+}
+
+/**
+ * Build the AsyncStorage key for a server's session index.
+ */
+export function buildSessionIndexKey(serverId: string | undefined): string {
+  const server = serverId || '_local'
+  return `${CACHE_CONFIG.SESSION_INDEX_PREFIX}${server}`
+}
+
+/**
+ * Read the session index for a server directly from AsyncStorage.
+ *
+ * This allows the UI to list known sessions without needing a connected
+ * provider (e.g. for the Sessions screen).
+ */
+export async function readSessionIndex(serverId: string | undefined): Promise<SessionIndexEntry[]> {
+  try {
+    const key = buildSessionIndexKey(serverId)
+    const entries = await jotaiStorage.getItem(key, [] as SessionIndexEntry[])
+    return entries ?? []
+  } catch (error) {
+    if (__DEV__) {
+      cacheLogger.warn(`Failed to read session index for server "${serverId}"`, error)
+    }
+    return []
+  }
+}
+
+/**
  * Build the AsyncStorage key for a given server + session pair.
  *
  * Format: `chat_cache:<serverId>:<sessionKey>`
@@ -113,6 +149,9 @@ export class CachedChatProvider implements ChatProvider {
     }
     await this.appendToCache(cacheKey, userMsg)
 
+    // Register this session in the index
+    await this.addToSessionIndex(params.sessionKey)
+
     // Accumulate assistant deltas so we can cache the full response
     let assistantText = ''
 
@@ -133,6 +172,9 @@ export class CachedChatProvider implements ChatProvider {
       }
       await this.appendToCache(cacheKey, assistantMsg)
     }
+
+    // Update session index with latest message count
+    await this.updateSessionIndexCount(params.sessionKey)
   }
 
   async getChatHistory(sessionKey: string, limit?: number): Promise<ChatHistoryResponse> {
@@ -177,11 +219,21 @@ export class CachedChatProvider implements ChatProvider {
       await this.inner.resetSession(sessionKey)
     } finally {
       await jotaiStorage.removeItem(cacheKey)
+      await this.removeFromSessionIndex(sessionKey)
     }
   }
 
   async listSessions(): Promise<unknown> {
-    return this.inner.listSessions()
+    // For providers with server-side sessions, delegate to the inner provider
+    if (this.inner.capabilities.serverSessions) {
+      return this.inner.listSessions()
+    }
+
+    // For all other providers, return the locally tracked session index
+    const entries = await readSessionIndex(this.serverId)
+    return {
+      sessions: entries.sort((a, b) => b.lastActivity - a.lastActivity),
+    }
   }
 
   async getHealth(): Promise<HealthStatus> {
@@ -219,5 +271,53 @@ export class CachedChatProvider implements ChatProvider {
     const existing = await this.readCache(key)
     existing.push(message)
     await this.writeCache(key, existing)
+  }
+
+  // ── Session index helpers ───────────────────────────────────────────
+
+  private async readIndex(): Promise<SessionIndexEntry[]> {
+    return readSessionIndex(this.serverId)
+  }
+
+  private async writeIndex(entries: SessionIndexEntry[]): Promise<void> {
+    try {
+      const key = buildSessionIndexKey(this.serverId)
+      await jotaiStorage.setItem(key, entries)
+    } catch (error) {
+      if (__DEV__) {
+        cacheLogger.warn('Failed to write session index', error)
+      }
+    }
+  }
+
+  private async addToSessionIndex(sessionKey: string): Promise<void> {
+    const entries = await this.readIndex()
+    const exists = entries.some((e) => e.key === sessionKey)
+    if (!exists) {
+      entries.push({
+        key: sessionKey,
+        messageCount: 0,
+        lastActivity: Date.now(),
+      })
+      await this.writeIndex(entries)
+    }
+  }
+
+  private async removeFromSessionIndex(sessionKey: string): Promise<void> {
+    const entries = await this.readIndex()
+    const filtered = entries.filter((e) => e.key !== sessionKey)
+    await this.writeIndex(filtered)
+  }
+
+  private async updateSessionIndexCount(sessionKey: string): Promise<void> {
+    const entries = await this.readIndex()
+    const entry = entries.find((e) => e.key === sessionKey)
+    if (entry) {
+      const cacheKey = buildCacheKey(this.serverId, sessionKey)
+      const messages = await this.readCache(cacheKey)
+      entry.messageCount = messages.length
+      entry.lastActivity = Date.now()
+      await this.writeIndex(entries)
+    }
   }
 }
