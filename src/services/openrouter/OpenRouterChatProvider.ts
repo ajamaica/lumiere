@@ -1,6 +1,3 @@
-import { OpenRouter } from '@openrouter/sdk'
-import type { AssistantMessage, Message, UserMessage } from '@openrouter/sdk/models'
-
 import { API_CONFIG, DEFAULT_MODELS } from '../../constants'
 import {
   ChatHistoryMessage,
@@ -32,11 +29,26 @@ interface OpenRouterImagePart {
   }
 }
 
+interface OpenRouterStreamChunk {
+  id: string
+  choices: Array<{
+    delta: {
+      content?: string
+      role?: string
+    }
+    finish_reason: string | null
+  }>
+  error?: {
+    message: string
+  }
+}
+
 /**
  * Chat provider for the OpenRouter API.
  *
  * OpenRouter provides a unified API for accessing many AI models
- * (OpenAI, Anthropic, Google, Meta, etc.) through the OpenRouter SDK.
+ * (OpenAI, Anthropic, Google, Meta, etc.) through a standard
+ * OpenAI-compatible chat completions endpoint.
  */
 export class OpenRouterChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
@@ -48,32 +60,35 @@ export class OpenRouterChatProvider implements ChatProvider {
     gatewaySnapshot: false,
   }
 
-  private client: OpenRouter
+  private baseUrl: string
+  private apiKey: string
   private model: string
   private connected = false
   private connectionListeners: Array<(connected: boolean, reconnecting: boolean) => void> = []
-  private abortController: AbortController | null = null
+  private activeXhr: XMLHttpRequest | null = null
 
   // In-memory conversation history keyed by session
   private sessions: Map<string, OpenRouterMessage[]> = new Map()
 
   constructor(config: ProviderConfig) {
     // Extract base URL without trailing slashes and without /api/v1 path
-    const baseUrl = config.url.replace(/\/+$/, '').replace(/\/api\/v1$/, '')
-
-    this.client = new OpenRouter({
-      apiKey: config.token,
-      serverURL: `${baseUrl}/api/v1`,
-      httpReferer: 'https://github.com/lumiere-app',
-      xTitle: 'Lumiere',
-    })
+    this.baseUrl = config.url.replace(/\/+$/, '').replace(/\/api\/v1$/, '')
+    this.apiKey = config.token
     this.model = config.model || DEFAULT_MODELS.OPENROUTER
   }
 
   async connect(): Promise<void> {
     try {
-      // Test connection by fetching models list
-      await this.client.models.list()
+      const response = await fetch(`${this.baseUrl}/api/v1/models`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${this.apiKey}`,
+        },
+      })
+
+      if (!response.ok && response.status !== 401) {
+        throw new Error(`API returned status ${response.status}`)
+      }
 
       this.connected = true
       this.notifyConnectionState(true, false)
@@ -85,9 +100,9 @@ export class OpenRouterChatProvider implements ChatProvider {
   }
 
   disconnect(): void {
-    if (this.abortController) {
-      this.abortController.abort()
-      this.abortController = null
+    if (this.activeXhr) {
+      this.activeXhr.abort()
+      this.activeXhr = null
     }
     this.connected = false
     this.notifyConnectionState(false, false)
@@ -157,87 +172,94 @@ export class OpenRouterChatProvider implements ChatProvider {
 
     onEvent({ type: 'lifecycle', phase: 'start' })
 
-    this.abortController = new AbortController()
-
-    try {
-      // Convert our messages to SDK format
-      const sdkMessages: Message[] = messages.map(this.convertToSDKMessage)
-
-      // Use SDK to send chat completion request
-      const stream = await this.client.chat.send(
-        {
-          chatGenerationParams: {
-            model: this.model,
-            maxTokens: API_CONFIG.OPENROUTER_MAX_TOKENS,
-            messages: sdkMessages,
-            stream: true,
-          },
-        },
-        {
-          signal: this.abortController.signal,
-        },
-      )
+    // Use XMLHttpRequest for streaming — React Native's fetch does not
+    // support response.body ReadableStream, so XHR with onprogress is
+    // the reliable way to receive incremental SSE data.
+    return new Promise<void>((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      this.activeXhr = xhr
 
       let fullResponse = ''
+      let lastIndex = 0
 
-      // Process the stream
-      for await (const chunk of stream) {
-        const delta = chunk.choices?.[0]?.delta?.content
+      xhr.open('POST', `${this.baseUrl}/api/v1/chat/completions`)
+      xhr.setRequestHeader('Content-Type', 'application/json')
+      xhr.setRequestHeader('Authorization', `Bearer ${this.apiKey}`)
+      xhr.setRequestHeader('HTTP-Referer', 'https://github.com/lumiere-app')
+      xhr.setRequestHeader('X-Title', 'Lumiere')
 
-        if (delta) {
-          fullResponse += delta
-          onEvent({ type: 'delta', delta })
-        }
+      xhr.onprogress = () => {
+        const newData = xhr.responseText.substring(lastIndex)
+        lastIndex = xhr.responseText.length
 
-        // Check for errors in the chunk
-        if (chunk.error) {
-          throw new Error(chunk.error.message || 'Stream error')
+        const lines = newData.split('\n')
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6).trim()
+            if (data === '[DONE]') continue
+
+            try {
+              const chunk: OpenRouterStreamChunk = JSON.parse(data)
+
+              if (chunk.error) {
+                reject(new Error(chunk.error.message || 'Stream error'))
+                xhr.abort()
+                return
+              }
+
+              const delta = chunk.choices?.[0]?.delta?.content
+              if (delta) {
+                fullResponse += delta
+                onEvent({ type: 'delta', delta })
+              }
+            } catch {
+              // Ignore JSON parse errors from partial chunks
+            }
+          }
         }
       }
 
-      if (fullResponse) {
-        messages.push({ role: 'assistant', content: fullResponse })
+      xhr.onload = () => {
+        this.activeXhr = null
+        if (xhr.status >= 200 && xhr.status < 300) {
+          if (fullResponse) {
+            messages.push({ role: 'assistant', content: fullResponse })
+          }
+          onEvent({ type: 'lifecycle', phase: 'end' })
+          resolve()
+        } else {
+          onEvent({ type: 'lifecycle', phase: 'end' })
+          reject(new Error(`API error: ${xhr.status} - ${xhr.responseText}`))
+        }
       }
 
-      onEvent({ type: 'lifecycle', phase: 'end' })
-    } catch (error) {
-      onEvent({ type: 'lifecycle', phase: 'end' })
-      throw error
-    } finally {
-      this.abortController = null
-    }
+      xhr.onerror = () => {
+        this.activeXhr = null
+        onEvent({ type: 'lifecycle', phase: 'end' })
+        reject(new Error('Network error'))
+      }
+
+      xhr.onabort = () => {
+        this.activeXhr = null
+        onEvent({ type: 'lifecycle', phase: 'end' })
+        resolve()
+      }
+
+      xhr.send(
+        JSON.stringify({
+          model: this.model,
+          max_tokens: API_CONFIG.OPENROUTER_MAX_TOKENS,
+          messages: messages.map(this.formatMessageForApi),
+          stream: true,
+        }),
+      )
+    })
   }
 
-  private convertToSDKMessage(msg: OpenRouterMessage): Message {
-    if (msg.role === 'user') {
-      const userMessage: UserMessage = {
-        role: 'user',
-        content:
-          typeof msg.content === 'string'
-            ? msg.content
-            : msg.content.map((part) => {
-                if (part.type === 'text') {
-                  return {
-                    type: 'text',
-                    text: part.text,
-                  }
-                } else {
-                  return {
-                    type: 'image_url',
-                    imageUrl: {
-                      url: part.image_url.url,
-                    },
-                  }
-                }
-              }),
-      }
-      return userMessage
-    } else {
-      const assistantMessage: AssistantMessage = {
-        role: 'assistant',
-        content: typeof msg.content === 'string' ? msg.content : null,
-      }
-      return assistantMessage
+  private formatMessageForApi(msg: OpenRouterMessage): { role: string; content: unknown } {
+    return {
+      role: msg.role,
+      content: msg.content,
     }
   }
 
@@ -282,8 +304,17 @@ export class OpenRouterChatProvider implements ChatProvider {
 
   async getHealth(): Promise<HealthStatus> {
     try {
-      await this.client.models.list()
-      return { status: 'healthy' }
+      const response = await fetch(`${this.baseUrl}/api/v1/models`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${this.apiKey}`,
+        },
+      })
+
+      if (response.ok) {
+        return { status: 'healthy' }
+      }
+      return { status: 'degraded' }
     } catch {
       return { status: 'unhealthy' }
     }
