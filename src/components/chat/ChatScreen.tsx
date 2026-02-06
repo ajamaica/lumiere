@@ -376,6 +376,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   }
 
   const renderConnectionStatus = () => {
+    // Hide settings button on tablets/foldables since it's in the sidebar
+    const showSettingsButton = deviceType === 'phone'
+
     const StatusBubbleContainer = glassAvailable ? GlassView : View
     const statusBubbleProps = glassAvailable
       ? { style: styles.statusBubble, glassEffectStyle: 'regular' as const }
@@ -393,11 +396,13 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             <ActivityIndicator size="small" color={theme.colors.primary} />
             <Text style={styles.statusText}>Connecting...</Text>
           </StatusBubbleContainer>
-          <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
-            <SettingsButtonContainer {...settingsButtonProps}>
-              <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
-            </SettingsButtonContainer>
-          </TouchableOpacity>
+          {showSettingsButton && (
+            <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
+              <SettingsButtonContainer {...settingsButtonProps}>
+                <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+              </SettingsButtonContainer>
+            </TouchableOpacity>
+          )}
         </View>
       )
     }
@@ -416,11 +421,13 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
               <Text style={styles.retryText}>Retry</Text>
             </TouchableOpacity>
           </StatusBubbleContainer>
-          <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
-            <SettingsButtonContainer {...settingsButtonProps}>
-              <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
-            </SettingsButtonContainer>
-          </TouchableOpacity>
+          {showSettingsButton && (
+            <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
+              <SettingsButtonContainer {...settingsButtonProps}>
+                <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+              </SettingsButtonContainer>
+            </TouchableOpacity>
+          )}
         </View>
       )
     }
@@ -449,11 +456,13 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
                   <Ionicons name="search" size={22} color={theme.colors.text.secondary} />
                 </SettingsButtonContainer>
               </TouchableOpacity>
-              <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
-                <SettingsButtonContainer {...settingsButtonProps}>
-                  <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
-                </SettingsButtonContainer>
-              </TouchableOpacity>
+              {showSettingsButton && (
+                <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
+                  <SettingsButtonContainer {...settingsButtonProps}>
+                    <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+                  </SettingsButtonContainer>
+                </TouchableOpacity>
+              )}
             </View>
           </Animated.View>
 

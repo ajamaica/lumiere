@@ -56,11 +56,18 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
     })
   }
 
+  const handleOpenSettings = () => {
+    router.push('/settings')
+  }
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme.colors.surface,
       padding: containerPadding,
+    },
+    contentContainer: {
+      flex: 1,
     },
     header: {
       flexDirection: 'row',
@@ -78,6 +85,29 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
     },
     section: {
       marginBottom: theme.spacing.lg,
+    },
+    footer: {
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.border,
+      paddingTop: theme.spacing.md,
+      marginTop: theme.spacing.md,
+    },
+    footerButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: theme.spacing.md,
+      backgroundColor: theme.colors.background,
+      borderRadius: theme.borderRadius.md,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    footerIcon: {
+      marginRight: theme.spacing.sm,
+    },
+    footerText: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.primary,
+      fontWeight: theme.typography.fontWeight.medium,
     },
     sectionTitle: {
       fontSize: theme.typography.fontSize.xs,
@@ -153,81 +183,97 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Sessions</Text>
-      </View>
+      {/* Content Area */}
+      <View style={styles.contentContainer}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Sessions</Text>
+        </View>
 
-      {/* Actions Section */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Actions</Text>
+        {/* Actions Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Actions</Text>
 
-        <TouchableOpacity style={styles.actionButton} onPress={onNewSession}>
-          <Ionicons
-            name="add-circle"
-            size={22}
-            color={theme.colors.primary}
-            style={styles.actionIcon}
-          />
-          <Text style={styles.actionText}>New Session</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton} onPress={onNewSession}>
+            <Ionicons
+              name="add-circle"
+              size={22}
+              color={theme.colors.primary}
+              style={styles.actionIcon}
+            />
+            <Text style={styles.actionText}>New Session</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionButton} onPress={onResetSession}>
-          <Ionicons
-            name="refresh"
-            size={22}
-            color={theme.colors.primary}
-            style={styles.actionIcon}
-          />
-          <Text style={styles.actionText}>Reset Current</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton} onPress={onResetSession}>
+            <Ionicons
+              name="refresh"
+              size={22}
+              color={theme.colors.primary}
+              style={styles.actionIcon}
+            />
+            <Text style={styles.actionText}>Reset Current</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionButton} onPress={handleEditSession}>
-          <Ionicons
-            name="create"
-            size={22}
-            color={theme.colors.primary}
-            style={styles.actionIcon}
-          />
-          <Text style={styles.actionText}>Edit Current</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={styles.actionButton} onPress={handleEditSession}>
+            <Ionicons
+              name="create"
+              size={22}
+              color={theme.colors.primary}
+              style={styles.actionIcon}
+            />
+            <Text style={styles.actionText}>Edit Current</Text>
+          </TouchableOpacity>
+        </View>
 
-      {/* Sessions List */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>All Sessions</Text>
-        <ScrollView style={styles.sessionListContainer} showsVerticalScrollIndicator={false}>
-          {sessions.length > 0 ? (
-            sessions.map((session) => {
-              const isActive = session.key === currentSessionKey
-              return (
-                <Pressable
-                  key={session.key}
-                  style={[styles.sessionItem, isActive && styles.activeSession]}
-                  onPress={() => onSelectSession(session.key)}
-                >
-                  <View style={styles.sessionTextContainer}>
-                    <Text style={styles.sessionText} numberOfLines={1}>
-                      {formatSessionKey(session.key)}
-                    </Text>
-                    {session.messageCount !== undefined && (
-                      <Text style={styles.sessionMeta}>
-                        {session.messageCount} message{session.messageCount !== 1 ? 's' : ''}
+        {/* Sessions List */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>All Sessions</Text>
+          <ScrollView style={styles.sessionListContainer} showsVerticalScrollIndicator={false}>
+            {sessions.length > 0 ? (
+              sessions.map((session) => {
+                const isActive = session.key === currentSessionKey
+                return (
+                  <Pressable
+                    key={session.key}
+                    style={[styles.sessionItem, isActive && styles.activeSession]}
+                    onPress={() => onSelectSession(session.key)}
+                  >
+                    <View style={styles.sessionTextContainer}>
+                      <Text style={styles.sessionText} numberOfLines={1}>
+                        {formatSessionKey(session.key)}
                       </Text>
-                    )}
-                  </View>
-                  <Ionicons
-                    name={isActive ? 'checkmark-circle' : 'chevron-forward'}
-                    size={20}
-                    color={isActive ? theme.colors.primary : theme.colors.text.tertiary}
-                  />
-                </Pressable>
-              )
-            })
-          ) : (
-            <Text style={styles.emptyText}>No sessions available</Text>
-          )}
-        </ScrollView>
+                      {session.messageCount !== undefined && (
+                        <Text style={styles.sessionMeta}>
+                          {session.messageCount} message{session.messageCount !== 1 ? 's' : ''}
+                        </Text>
+                      )}
+                    </View>
+                    <Ionicons
+                      name={isActive ? 'checkmark-circle' : 'chevron-forward'}
+                      size={20}
+                      color={isActive ? theme.colors.primary : theme.colors.text.tertiary}
+                    />
+                  </Pressable>
+                )
+              })
+            ) : (
+              <Text style={styles.emptyText}>No sessions available</Text>
+            )}
+          </ScrollView>
+        </View>
+      </View>
+
+      {/* Footer with Settings */}
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.footerButton} onPress={handleOpenSettings}>
+          <Ionicons
+            name="settings-outline"
+            size={22}
+            color={theme.colors.text.secondary}
+            style={styles.footerIcon}
+          />
+          <Text style={styles.footerText}>Settings</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
