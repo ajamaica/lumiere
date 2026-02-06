@@ -254,8 +254,8 @@ export default function EditServerScreen() {
                       : providerType === 'openrouter'
                         ? 'openai/gpt-4o'
                         : providerType === 'emergent'
-                          ? 'claude-3-5-sonnet-20241022'
-                          : 'claude-3-5-sonnet-20241022'
+                          ? 'claude-sonnet-4-5'
+                          : 'claude-sonnet-4-5'
                   }
                   autoCapitalize="none"
                   autoCorrect={false}

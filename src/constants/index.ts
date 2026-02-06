@@ -10,7 +10,7 @@ export const DEFAULT_SESSION_KEY = 'agent:main:main'
  */
 export const DEFAULT_MODELS = {
   /** Default Claude model for Claudie API provider */
-  CLAUDE: 'claude-3-5-sonnet-20241022',
+  CLAUDE: 'claude-sonnet-4-5',
   /** Default Ollama model for local inference */
   OLLAMA: 'llama3.2',
   /** Default OpenAI model */
@@ -18,7 +18,7 @@ export const DEFAULT_MODELS = {
   /** Default OpenRouter model */
   OPENROUTER: 'openai/gpt-4o',
   /** Default Emergent model */
-  EMERGENT: 'claude-3-5-sonnet-20241022',
+  EMERGENT: 'claude-sonnet-4-5',
 } as const
 
 /**
