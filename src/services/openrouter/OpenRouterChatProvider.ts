@@ -50,6 +50,8 @@ export class OpenRouterChatProvider implements ChatProvider {
 
   private client: OpenRouter
   private model: string
+  private serverURL: string
+  private apiKey: string
   private connected = false
   private connectionListeners: Array<(connected: boolean, reconnecting: boolean) => void> = []
   private abortController: AbortController | null = null
@@ -61,9 +63,12 @@ export class OpenRouterChatProvider implements ChatProvider {
     // Extract base URL without trailing slashes and without /api/v1 path
     const baseUrl = config.url.replace(/\/+$/, '').replace(/\/api\/v1$/, '')
 
+    this.serverURL = `${baseUrl}/api/v1`
+    this.apiKey = config.token
+
     this.client = new OpenRouter({
-      apiKey: config.token,
-      serverURL: `${baseUrl}/api/v1`,
+      apiKey: this.apiKey,
+      serverURL: this.serverURL,
       httpReferer: 'https://github.com/lumiere-app',
       xTitle: 'Lumiere',
     })
@@ -163,35 +168,70 @@ export class OpenRouterChatProvider implements ChatProvider {
       // Convert our messages to SDK format
       const sdkMessages: Message[] = messages.map(this.convertToSDKMessage)
 
-      // Use SDK to send chat completion request
-      const stream = await this.client.chat.send(
-        {
-          chatGenerationParams: {
-            model: this.model,
-            maxTokens: API_CONFIG.OPENROUTER_MAX_TOKENS,
-            messages: sdkMessages,
-            stream: true,
-          },
+      // Use fetch directly instead of SDK to avoid validation issues with streaming responses
+      const response = await fetch(`${this.serverURL}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.apiKey}`,
+          'HTTP-Referer': 'https://github.com/lumiere-app',
+          'X-Title': 'Lumiere',
         },
-        {
-          signal: this.abortController.signal,
-        },
-      )
+        body: JSON.stringify({
+          model: this.model,
+          max_tokens: API_CONFIG.OPENROUTER_MAX_TOKENS,
+          messages: sdkMessages,
+          stream: true,
+        }),
+        signal: this.abortController.signal,
+      })
 
+      if (!response.ok) {
+        const errorText = await response.text()
+        throw new Error(`API error: ${response.status} - ${errorText}`)
+      }
+
+      const reader = response.body?.getReader()
+      if (!reader) {
+        throw new Error('No response body')
+      }
+
+      const decoder = new TextDecoder()
       let fullResponse = ''
+      let buffer = ''
 
-      // Process the stream
-      for await (const chunk of stream) {
-        const delta = chunk.choices?.[0]?.delta?.content
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
 
-        if (delta) {
-          fullResponse += delta
-          onEvent({ type: 'delta', delta })
-        }
+        buffer += decoder.decode(value, { stream: true })
 
-        // Check for errors in the chunk
-        if (chunk.error) {
-          throw new Error(chunk.error.message || 'Stream error')
+        // Process SSE events
+        const lines = buffer.split('\n')
+        buffer = lines.pop() || ''
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6).trim()
+            if (data === '[DONE]') continue
+
+            try {
+              const chunk = JSON.parse(data)
+
+              if (chunk.error) {
+                throw new Error(chunk.error.message || 'Stream error')
+              }
+
+              const delta = chunk.choices?.[0]?.delta?.content
+              if (delta) {
+                fullResponse += delta
+                onEvent({ type: 'delta', delta })
+              }
+            } catch (e) {
+              if (e instanceof SyntaxError) continue
+              throw e
+            }
+          }
         }
       }
 
