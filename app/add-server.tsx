@@ -270,7 +270,7 @@ export default function AddServerScreen() {
                   label="Model"
                   value={model}
                   onChangeText={setModel}
-                  placeholder="claude-sonnet-4-5-20250514"
+                  placeholder="claude-3-5-sonnet-20241022"
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
@@ -320,7 +320,7 @@ export default function AddServerScreen() {
                   label="Model"
                   value={model}
                   onChangeText={setModel}
-                  placeholder="claude-sonnet-4-5-20250514"
+                  placeholder="claude-3-5-sonnet-20241022"
                   autoCapitalize="none"
                   autoCorrect={false}
                 />

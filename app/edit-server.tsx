@@ -244,8 +244,8 @@ export default function EditServerScreen() {
                     providerType === 'openai'
                       ? 'gpt-4o'
                       : providerType === 'emergent'
-                        ? 'claude-sonnet-4-5-20250514'
-                        : 'claude-sonnet-4-5-20250514'
+                        ? 'claude-3-5-sonnet-20241022'
+                        : 'claude-3-5-sonnet-20241022'
                   }
                   autoCapitalize="none"
                   autoCorrect={false}
