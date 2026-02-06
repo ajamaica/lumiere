@@ -600,7 +600,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
         <Animated.View style={inputContainerStyle} onLayout={handleInputLayout}>
           <ChatInput
             onSend={handleSend}
-            onOpenSessionMenu={handleOpenSessionMenu}
+            onOpenSessionMenu={deviceType === 'phone' ? handleOpenSessionMenu : undefined}
             disabled={!connected}
             queueCount={queueCount}
             supportsImageAttachments={capabilities.imageAttachments}
