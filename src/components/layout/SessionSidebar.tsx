@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { Pressable,ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../theme'
 import { useFoldResponsiveValue } from '../../utils/device'
@@ -34,9 +34,9 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
 
   // Responsive padding based on fold state
   const containerPadding = useFoldResponsiveValue(
-    theme.spacing.sm,  // folded
-    theme.spacing.md,  // unfolded
-    theme.spacing.sm   // half-folded
+    theme.spacing.sm, // folded
+    theme.spacing.md, // unfolded
+    theme.spacing.sm, // half-folded
   )
 
   const formatSessionKey = (key: string) => {
