@@ -15,6 +15,8 @@ export const DEFAULT_MODELS = {
   OLLAMA: 'llama3.2',
   /** Default OpenAI model */
   OPENAI: 'gpt-4o',
+  /** Default OpenRouter model */
+  OPENROUTER: 'openai/gpt-4o',
 } as const
 
 /**
@@ -27,6 +29,8 @@ export const API_CONFIG = {
   CLAUDE_MAX_TOKENS: 8192,
   /** Default max tokens for OpenAI API responses */
   OPENAI_MAX_TOKENS: 4096,
+  /** Default max tokens for OpenRouter API responses */
+  OPENROUTER_MAX_TOKENS: 4096,
 } as const
 
 /**

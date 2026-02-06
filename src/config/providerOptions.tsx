@@ -8,6 +8,7 @@ import EchoIcon from '../../assets/provider-echo.svg'
 import OllamaIcon from '../../assets/provider-ollama.svg'
 import OpenAIIcon from '../../assets/provider-openai.svg'
 import OpenClawIcon from '../../assets/provider-openclaw.svg'
+import OpenRouterIcon from '../../assets/provider-openrouter.svg'
 import { ProviderType } from '../services/providers'
 
 const ICON_SIZE = 20
@@ -22,6 +23,7 @@ export function getProviderIcon(type: ProviderType, color: string): React.ReactN
     ollama: OllamaIcon,
     claude: ClaudeIcon,
     openai: OpenAIIcon,
+    openrouter: OpenRouterIcon,
     apple: AppleIcon,
     echo: EchoIcon,
     'gemini-nano': null, // TODO: Add Gemini icon
@@ -38,6 +40,7 @@ export function getAllProviderOptions(color: string) {
     { value: 'ollama', label: 'Ollama', icon: getProviderIcon('ollama', color) },
     { value: 'claude', label: 'Claude', icon: getProviderIcon('claude', color) },
     { value: 'openai', label: 'OpenAI', icon: getProviderIcon('openai', color) },
+    { value: 'openrouter', label: 'OpenRouter', icon: getProviderIcon('openrouter', color) },
     ...(Platform.OS === 'ios'
       ? [
           {
@@ -78,6 +81,11 @@ export function getBasicProviderOptions(color: string) {
       value: 'openai' as ProviderType,
       label: 'OpenAI',
       icon: getProviderIcon('openai', color),
+    },
+    {
+      value: 'openrouter' as ProviderType,
+      label: 'OpenRouter',
+      icon: getProviderIcon('openrouter', color),
     },
     ...(Platform.OS === 'ios'
       ? [

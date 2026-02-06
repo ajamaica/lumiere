@@ -4,6 +4,7 @@ import { EchoChatProvider } from '../echo/EchoChatProvider'
 import { GeminiNanoChatProvider } from '../gemini-nano/GeminiNanoChatProvider'
 import { OllamaChatProvider } from '../ollama/OllamaChatProvider'
 import { OpenAIChatProvider } from '../openai/OpenAIChatProvider'
+import { OpenRouterChatProvider } from '../openrouter/OpenRouterChatProvider'
 import { CachedChatProvider } from './CachedChatProvider'
 import { MoltChatProvider } from './MoltChatProvider'
 import { ChatProvider, ProviderConfig } from './types'
@@ -37,6 +38,9 @@ export function createChatProvider(config: ProviderConfig): ChatProvider {
       break
     case 'openai':
       inner = new OpenAIChatProvider(config)
+      break
+    case 'openrouter':
+      inner = new OpenRouterChatProvider(config)
       break
     case 'gemini-nano':
       inner = new GeminiNanoChatProvider(config)
