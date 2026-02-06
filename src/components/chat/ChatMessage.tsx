@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
+import type { ComponentProps } from 'react'
 import * as Calendar from 'expo-calendar'
 import * as Clipboard from 'expo-clipboard'
 import * as Contacts from 'expo-contacts'
@@ -465,7 +466,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 accessibilityLabel={showCheck ? 'Copied' : intent.label}
               >
                 <Ionicons
-                  name={(showCheck ? 'checkmark' : intentIcon(intent.action)) as any}
+                  name={(showCheck ? 'checkmark' : intentIcon(intent.action)) as ComponentProps<typeof Ionicons>['name']}
                   size={16}
                   color={theme.colors.primary}
                   style={styles.intentButtonIcon}
