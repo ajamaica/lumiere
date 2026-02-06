@@ -116,9 +116,15 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   // Search bar expand/collapse animation
   const searchProgress = useSharedValue(0)
 
-  const searchBarAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: searchProgress.value,
+  // Keep transform on the outer wrapper so the GlassView is never inside an
+  // animated-opacity ancestor (iOS rasterises the subtree and breaks the blur).
+  const searchBarTransformStyle = useAnimatedStyle(() => ({
     transform: [{ scaleX: interpolate(searchProgress.value, [0, 1], [0.7, 1]) }],
+  }))
+
+  // Fade the *content* inside the GlassView instead.
+  const searchBarContentStyle = useAnimatedStyle(() => ({
+    opacity: searchProgress.value,
   }))
 
   const statusBubbleAnimatedStyle = useAnimatedStyle(() => ({
@@ -432,31 +438,33 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
 
           {/* Search bar layer - expands in when search opens */}
           {isSearchOpen && (
-            <Animated.View style={[styles.searchBarWrapper, searchBarAnimatedStyle]}>
+            <Animated.View style={[styles.searchBarWrapper, searchBarTransformStyle]}>
               <SearchBarContainer {...searchBarProps}>
-                <Ionicons name="search" size={18} color={theme.colors.text.secondary} />
-                <TextInput
-                  ref={searchInputRef}
-                  style={styles.searchInput}
-                  placeholder="Search messages..."
-                  placeholderTextColor={theme.colors.text.tertiary}
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                  autoCorrect={false}
-                  returnKeyType="search"
-                />
-                {searchQuery.length > 0 && (
-                  <Text style={styles.searchCount}>
-                    {
-                      allMessages.filter((m) =>
-                        m.text.toLowerCase().includes(searchQuery.toLowerCase()),
-                      ).length
-                    }
-                  </Text>
-                )}
-                <TouchableOpacity onPress={handleCloseSearch} hitSlop={8}>
-                  <Ionicons name="close-circle" size={20} color={theme.colors.text.secondary} />
-                </TouchableOpacity>
+                <Animated.View style={[styles.searchBarContent, searchBarContentStyle]}>
+                  <Ionicons name="search" size={18} color={theme.colors.text.secondary} />
+                  <TextInput
+                    ref={searchInputRef}
+                    style={styles.searchInput}
+                    placeholder="Search messages..."
+                    placeholderTextColor={theme.colors.text.tertiary}
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                    autoCorrect={false}
+                    returnKeyType="search"
+                  />
+                  {searchQuery.length > 0 && (
+                    <Text style={styles.searchCount}>
+                      {
+                        allMessages.filter((m) =>
+                          m.text.toLowerCase().includes(searchQuery.toLowerCase()),
+                        ).length
+                      }
+                    </Text>
+                  )}
+                  <TouchableOpacity onPress={handleCloseSearch} hitSlop={8}>
+                    <Ionicons name="close-circle" size={20} color={theme.colors.text.secondary} />
+                  </TouchableOpacity>
+                </Animated.View>
               </SearchBarContainer>
             </Animated.View>
           )}
@@ -658,6 +666,11 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
       paddingVertical: theme.spacing.sm,
       borderRadius: theme.borderRadius.xxl,
       overflow: 'hidden',
+    },
+    searchBarContent: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     searchBarFallback: {
       backgroundColor: theme.colors.surface,
