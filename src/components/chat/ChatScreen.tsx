@@ -459,7 +459,11 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
               {showSettingsButton && (
                 <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
                   <SettingsButtonContainer {...settingsButtonProps}>
-                    <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+                    <Ionicons
+                      name="settings-outline"
+                      size={24}
+                      color={theme.colors.text.secondary}
+                    />
                   </SettingsButtonContainer>
                 </TouchableOpacity>
               )}
