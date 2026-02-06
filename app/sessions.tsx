@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { ProviderConfig } from '../src/services/providers'
+import { ProviderConfig, readSessionIndex, SessionIndexEntry } from '../src/services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
@@ -33,8 +33,8 @@ export default function SessionsScreen() {
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
 
-  // Only molt provider supports server-side sessions
-  const supportsServerSessions = config?.type === 'molt'
+  // Molt provider uses server-side sessions via WebSocket gateway
+  const isMoltProvider = config?.type === 'molt'
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -50,22 +50,21 @@ export default function SessionsScreen() {
   })
 
   useEffect(() => {
-    // Only connect to gateway if provider supports server sessions
-    if (config && supportsServerSessions) {
+    if (config && isMoltProvider) {
       connect()
     } else if (config) {
-      // For providers without server sessions, mark loading as done immediately
+      // For non-Molt providers, load sessions from the local index
       setLoading(false)
     }
     return () => {
       disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config, supportsServerSessions])
+  }, [config, isMoltProvider])
 
-  const loadSessions = useCallback(async () => {
-    // Only load sessions for providers that support server-side sessions
-    if (!connected || !supportsServerSessions) return
+  // Load sessions from Molt gateway (server-side sessions)
+  const loadMoltSessions = useCallback(async () => {
+    if (!connected || !isMoltProvider) return
 
     try {
       const sessionData = (await listSessions()) as { sessions?: Session[] }
@@ -77,11 +76,34 @@ export default function SessionsScreen() {
     } finally {
       setLoading(false)
     }
-  }, [connected, listSessions, supportsServerSessions])
+  }, [connected, listSessions, isMoltProvider])
+
+  // Load sessions from local session index (for non-Molt providers)
+  const loadLocalSessions = useCallback(async () => {
+    if (!config || isMoltProvider) return
+
+    try {
+      const entries: SessionIndexEntry[] = await readSessionIndex(config.serverId)
+      const localSessions: Session[] = entries.map((entry) => ({
+        key: entry.key,
+        messageCount: entry.messageCount,
+        lastActivity: entry.lastActivity,
+      }))
+      setSessions(localSessions)
+    } catch (err) {
+      sessionsLogger.logError('Failed to load local sessions', err)
+    } finally {
+      setLoading(false)
+    }
+  }, [config, isMoltProvider])
 
   useEffect(() => {
-    loadSessions()
-  }, [loadSessions])
+    if (isMoltProvider) {
+      loadMoltSessions()
+    } else {
+      loadLocalSessions()
+    }
+  }, [loadMoltSessions, loadLocalSessions, isMoltProvider])
 
   const handleNewSession = () => {
     const newSessionKey = `agent:main:${Date.now()}`
@@ -100,8 +122,8 @@ export default function SessionsScreen() {
           style: 'destructive',
           onPress: async () => {
             try {
-              // Only call server reset for providers that support server sessions
-              if (supportsServerSessions) {
+              // Only call server reset for Molt provider
+              if (isMoltProvider) {
                 await resetSession(currentSessionKey)
               }
               setClearMessagesTrigger((prev) => prev + 1)
@@ -240,40 +262,39 @@ export default function SessionsScreen() {
           </TouchableOpacity>
         </Section>
 
-        {/* Available sessions group - only shown for providers with server sessions */}
-        {supportsServerSessions && (
-          <Section showDivider>
-            {loading ? (
-              <SettingRow
-                icon="hourglass-outline"
-                label="Loading sessions..."
-                showDivider={false}
-              />
-            ) : sessions.length > 0 ? (
-              sessions.map((session, index) => {
-                const isActive = session.key === currentSessionKey
-                return (
-                  <SettingRow
-                    key={session.key}
-                    icon={isActive ? 'checkmark-circle' : 'radio-button-off-outline'}
-                    iconColor={isActive ? theme.colors.primary : undefined}
-                    label={formatSessionKey(session.key)}
-                    subtitle={
-                      session.messageCount !== undefined
-                        ? `${session.messageCount} messages`
-                        : undefined
-                    }
-                    value={isActive ? 'Active' : undefined}
-                    onPress={() => handleSelectSession(session.key)}
-                    showDivider={index < sessions.length - 1}
-                  />
-                )
-              })
-            ) : (
-              <SettingRow icon="albums-outline" label="No sessions available" showDivider={false} />
-            )}
-          </Section>
-        )}
+        {/* Available sessions - shown for all providers */}
+        <Section showDivider>
+          {loading ? (
+            <SettingRow icon="hourglass-outline" label="Loading sessions..." showDivider={false} />
+          ) : sessions.length > 0 ? (
+            sessions.map((session, index) => {
+              const isActive = session.key === currentSessionKey
+              return (
+                <SettingRow
+                  key={session.key}
+                  icon={isActive ? 'checkmark-circle' : 'radio-button-off-outline'}
+                  iconColor={isActive ? theme.colors.primary : undefined}
+                  label={formatSessionKey(session.key)}
+                  subtitle={
+                    session.messageCount !== undefined
+                      ? `${session.messageCount} messages`
+                      : undefined
+                  }
+                  value={isActive ? 'Active' : undefined}
+                  onPress={() => handleSelectSession(session.key)}
+                  showDivider={index < sessions.length - 1}
+                />
+              )
+            })
+          ) : (
+            <SettingRow
+              icon="albums-outline"
+              label="No sessions yet"
+              subtitle="Send a message to start your first session"
+              showDivider={false}
+            />
+          )}
+        </Section>
       </ScrollView>
     </SafeAreaView>
   )
