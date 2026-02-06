@@ -127,9 +127,11 @@ export default function AddServerScreen() {
       if (needsToken && !token.trim()) {
         Alert.alert(
           'Error',
-          providerType === 'claude' || providerType === 'openai' || providerType === 'emergent'
+          providerType === 'claude' || providerType === 'openai'
             ? 'API Key is required'
-            : 'Token is required',
+            : providerType === 'emergent'
+              ? 'Universal Key is required'
+              : 'Token is required',
         )
         return
       }
@@ -341,7 +343,7 @@ export default function AddServerScreen() {
             <>
               <View style={styles.formRow}>
                 <TextInput
-                  label="API Key"
+                  label="Universal Key"
                   value={token}
                   onChangeText={setToken}
                   secureTextEntry
