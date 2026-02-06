@@ -11,6 +11,18 @@ jest.mock('../../ollama/OllamaChatProvider', () => ({
 jest.mock('../../apple-intelligence/AppleChatProvider', () => ({
   AppleChatProvider: jest.fn().mockImplementation(() => ({ type: 'apple-mock' })),
 }))
+jest.mock('../../claude/ClaudeChatProvider', () => ({
+  ClaudeChatProvider: jest.fn().mockImplementation(() => ({ type: 'claude-mock' })),
+}))
+jest.mock('../../openai/OpenAIChatProvider', () => ({
+  OpenAIChatProvider: jest.fn().mockImplementation(() => ({ type: 'openai-mock' })),
+}))
+jest.mock('../../openrouter/OpenRouterChatProvider', () => ({
+  OpenRouterChatProvider: jest.fn().mockImplementation(() => ({ type: 'openrouter-mock' })),
+}))
+jest.mock('../../emergent/EmergentChatProvider', () => ({
+  EmergentChatProvider: jest.fn().mockImplementation(() => ({ type: 'emergent-mock' })),
+}))
 
 describe('createChatProvider', () => {
   it('wraps every provider with CachedChatProvider', () => {
@@ -56,6 +68,24 @@ describe('createChatProvider', () => {
       type: 'apple',
       url: 'apple://on-device',
       token: '',
+    })
+    expect(provider).toBeInstanceOf(CachedChatProvider)
+  })
+
+  it('creates a CachedChatProvider wrapping claude for claude type', () => {
+    const provider = createChatProvider({
+      type: 'claude',
+      url: 'https://api.anthropic.com',
+      token: 'test-key',
+    })
+    expect(provider).toBeInstanceOf(CachedChatProvider)
+  })
+
+  it('creates a CachedChatProvider wrapping openai for openai type', () => {
+    const provider = createChatProvider({
+      type: 'openai',
+      url: 'https://api.openai.com',
+      token: 'test-key',
     })
     expect(provider).toBeInstanceOf(CachedChatProvider)
   })

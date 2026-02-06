@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai'
 import { useCallback, useMemo } from 'react'
 
-import { ProviderConfig } from '../services/providers'
+import { ProviderConfig, ProviderType } from '../services/providers'
 import { deleteServerToken, getServerToken, setServerToken } from '../services/secureTokenStorage'
 import { currentServerIdAtom, ServerConfig, serversAtom, ServersDict } from '../store'
 
@@ -124,17 +124,17 @@ export function useServers(): UseServersResult {
   const getProviderConfig = useCallback(async (): Promise<ProviderConfig | null> => {
     if (!currentServer) return null
     const token = await getServerToken(currentServer.id)
-    // Ollama, Echo, and Apple don't require a token, Molt does
-    if (
-      !token &&
-      currentServer.providerType !== 'ollama' &&
-      currentServer.providerType !== 'echo' &&
-      currentServer.providerType !== 'apple'
-    )
-      return null
+    const providerType = currentServer.providerType || 'molt'
+    // Only Molt, Claude, OpenAI, and Emergent require a token
+    const tokenRequired =
+      providerType === 'molt' ||
+      providerType === 'claude' ||
+      providerType === 'openai' ||
+      providerType === 'emergent'
+    if (!token && tokenRequired) return null
     return {
-      type: currentServer.providerType || 'molt',
-      url: currentServer.url,
+      type: providerType,
+      url: currentServer.url || getDefaultUrl(providerType),
       token: token || '',
       clientId: currentServer.clientId,
       model: currentServer.model,
@@ -148,16 +148,16 @@ export function useServers(): UseServersResult {
       const server = servers[id]
       if (!server) return null
       const token = await getServerToken(id)
-      if (
-        !token &&
-        server.providerType !== 'ollama' &&
-        server.providerType !== 'echo' &&
-        server.providerType !== 'apple'
-      )
-        return null
+      const providerType = server.providerType || 'molt'
+      const tokenRequired =
+        providerType === 'molt' ||
+        providerType === 'claude' ||
+        providerType === 'openai' ||
+        providerType === 'emergent'
+      if (!token && tokenRequired) return null
       return {
-        type: server.providerType || 'molt',
-        url: server.url,
+        type: providerType,
+        url: server.url || getDefaultUrl(providerType),
         token: token || '',
         clientId: server.clientId,
         model: server.model,
@@ -178,6 +178,24 @@ export function useServers(): UseServersResult {
     switchToServer,
     getProviderConfig,
     getProviderConfigForServer,
+  }
+}
+
+// Default API URLs for providers that have well-known endpoints
+function getDefaultUrl(providerType: ProviderType): string {
+  switch (providerType) {
+    case 'claude':
+      return 'https://api.anthropic.com'
+    case 'openai':
+      return 'https://api.openai.com'
+    case 'echo':
+      return 'echo://local'
+    case 'apple':
+      return 'apple://on-device'
+    case 'emergent':
+      return 'https://api.emergent.sh'
+    default:
+      return ''
   }
 }
 

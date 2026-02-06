@@ -79,25 +79,21 @@ export class ClaudeChatProvider implements ChatProvider {
 
   async connect(): Promise<void> {
     try {
-      // Verify connection by making a simple request
-      const response = await fetch(`${this.baseUrl}/v1/messages`, {
-        method: 'POST',
+      // Verify connection using the lightweight models endpoint (no API credits consumed)
+      const response = await fetch(`${this.baseUrl}/v1/models`, {
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
           'x-api-key': this.apiKey,
           'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
         },
-        body: JSON.stringify({
-          model: this.model,
-          max_tokens: 1,
-          messages: [{ role: 'user', content: 'hi' }],
-        }),
       })
 
-      if (!response.ok && response.status !== 400) {
+      if (!response.ok && response.status !== 401) {
         throw new Error(`API returned status ${response.status}`)
       }
 
+      // 401 means the endpoint is reachable but the key is invalid;
+      // auth errors will surface on first message send.
       this.connected = true
       this.notifyConnectionState(true, false)
     } catch {
@@ -304,21 +300,15 @@ export class ClaudeChatProvider implements ChatProvider {
 
   async getHealth(): Promise<HealthStatus> {
     try {
-      const response = await fetch(`${this.baseUrl}/v1/messages`, {
-        method: 'POST',
+      const response = await fetch(`${this.baseUrl}/v1/models`, {
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
           'x-api-key': this.apiKey,
           'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
         },
-        body: JSON.stringify({
-          model: this.model,
-          max_tokens: 1,
-          messages: [{ role: 'user', content: 'ping' }],
-        }),
       })
 
-      if (response.ok || response.status === 400) {
+      if (response.ok) {
         return { status: 'healthy' }
       }
       return { status: 'degraded' }
