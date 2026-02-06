@@ -30,12 +30,12 @@ export function isFoldable(): boolean {
   const { width, height } = Dimensions.get('window')
   const aspectRatio = Math.max(width, height) / Math.min(width, height)
 
-  // Foldables in unfolded state typically have aspect ratios between 1.1 and 1.4
+  // Foldables in unfolded state typically have aspect ratios between 1.1 and 1.6
   // (closer to square than typical phones which are 2:1 or wider)
   // Also check if the device meets minimum tablet width when unfolded
   const minDimension = Math.min(width, height)
   const isUnfoldedSize = minDimension >= TABLET_MIN_WIDTH
-  const isFoldableAspectRatio = aspectRatio >= 1.1 && aspectRatio <= 1.4
+  const isFoldableAspectRatio = aspectRatio >= 1.1 && aspectRatio <= 1.6
 
   return isUnfoldedSize && isFoldableAspectRatio
 }
@@ -102,7 +102,7 @@ export function useDeviceType(): DeviceType {
         // Check for foldable first
         if (Platform.OS === 'android') {
           const isUnfoldedSize = minDimension >= TABLET_MIN_WIDTH
-          const isFoldableAspectRatio = aspectRatio >= 1.1 && aspectRatio <= 1.4
+          const isFoldableAspectRatio = aspectRatio >= 1.1 && aspectRatio <= 1.6
           if (isUnfoldedSize && isFoldableAspectRatio) {
             setDeviceType('foldable')
             return
@@ -252,10 +252,12 @@ export const breakpoints = {
 export const foldableDimensions = {
   // Samsung Galaxy Z Fold series (unfolded)
   galaxyZFoldUnfolded: { width: 884, height: 2208 },
+  // Samsung Galaxy Z Fold 5 (unfolded)
+  galaxyZFold5Unfolded: { width: 1812, height: 2176 },
   // Samsung Galaxy Z Flip series (unfolded)
   galaxyZFlipUnfolded: { width: 1080, height: 2640 },
   // Generic foldable aspect ratios
-  foldableAspectRatio: { min: 1.1, max: 1.4 },
+  foldableAspectRatio: { min: 1.1, max: 1.6 },
 } as const
 
 /**
