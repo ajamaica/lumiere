@@ -13,7 +13,14 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Button, Dropdown, ScreenHeader, Text, TextInput } from '../src/components/ui'
+import {
+  Button,
+  Dropdown,
+  OllamaModelPicker,
+  ScreenHeader,
+  Text,
+  TextInput,
+} from '../src/components/ui'
 import { getBasicProviderOptions } from '../src/config/providerOptions'
 import { useClaudeModels } from '../src/hooks/useClaudeModels'
 import { useServers } from '../src/hooks/useServers'
@@ -267,13 +274,12 @@ export default function EditServerScreen() {
 
           {providerType === 'ollama' && (
             <View style={styles.formRow}>
-              <TextInput
+              <OllamaModelPicker
                 label="Model"
                 value={model}
-                onChangeText={setModel}
+                onValueChange={setModel}
+                ollamaUrl={url}
                 placeholder="llama3.2"
-                autoCapitalize="none"
-                autoCorrect={false}
               />
             </View>
           )}
