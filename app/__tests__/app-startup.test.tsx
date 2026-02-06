@@ -57,9 +57,9 @@ jest.mock('../../src/utils/device', () => ({
   useIsFoldable: () => false,
   useFoldState: () => 'folded',
   useOrientation: () => 'portrait',
-  useResponsiveValue: (phone: any) => phone,
-  useResponsiveValueWithFoldable: (phone: any) => phone,
-  useFoldResponsiveValue: (folded: any) => folded,
+  useResponsiveValue: <T>(phone: T) => phone,
+  useResponsiveValueWithFoldable: <T>(phone: T) => phone,
+  useFoldResponsiveValue: <T>(folded: T) => folded,
   useContentContainerStyle: () => ({}),
   useScreenDimensions: () => ({ width: 375, height: 667 }),
 }))
@@ -118,7 +118,7 @@ jest.mock('../../src/theme', () => {
 // Mock jotai
 jest.mock('jotai', () => ({
   ...jest.requireActual('jotai'),
-  useAtom: (atom: any) => {
+  useAtom: (atom: { init?: unknown }) => {
     const [value, setValue] = jest
       .requireActual('react')
       .useState(atom.init !== undefined ? atom.init : null)
