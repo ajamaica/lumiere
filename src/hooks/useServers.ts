@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react'
 import { ProviderConfig } from '../services/providers'
 import { deleteServerToken, getServerToken, setServerToken } from '../services/secureTokenStorage'
 import { currentServerIdAtom, ServerConfig, serversAtom, ServersDict } from '../store'
+import { generateId } from '../utils/generateId'
 
 export interface UseServersResult {
   // State
@@ -42,7 +43,7 @@ export function useServers(): UseServersResult {
   // Add server with auto-generated UUID and name
   const addServer = useCallback(
     async (config: Omit<ServerConfig, 'id' | 'createdAt'>, token: string) => {
-      const id = generateUUID()
+      const id = generateId('server')
       const serverCount = Object.keys(servers).length
       const newServer: ServerConfig = {
         ...config,
@@ -179,19 +180,4 @@ export function useServers(): UseServersResult {
     getProviderConfig,
     getProviderConfigForServer,
   }
-}
-
-// UUID generation helper
-function generateUUID(): string {
-  // Use crypto.randomUUID() if available, fallback to polyfill
-  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-    return crypto.randomUUID()
-  }
-
-  // Fallback implementation
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0
-    const v = c === 'x' ? r : (r & 0x3) | 0x8
-    return v.toString(16)
-  })
 }
