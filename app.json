@@ -16,7 +16,6 @@
       "supportsTablet": true,
       "bundleIdentifier": "bot.lumiere.app",
       "buildNumber": "1",
-      "requiresFullScreen": false,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSMicrophoneUsageDescription": "Lumiere needs access to your microphone to transcribe voice messages.",
@@ -36,6 +35,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "versionCode": 1,
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "intentFilters": [
