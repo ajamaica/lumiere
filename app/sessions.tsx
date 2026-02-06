@@ -6,6 +6,7 @@ import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-nat
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
+import { DEFAULT_SESSION_KEY } from '../src/constants'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { ProviderConfig } from '../src/services/providers'
@@ -71,13 +72,21 @@ export default function SessionsScreen() {
       const sessionData = (await listSessions()) as { sessions?: Session[] }
       if (sessionData?.sessions && Array.isArray(sessionData.sessions)) {
         setSessions(sessionData.sessions)
+
+        // If current session is the default and sessions exist, use the most recent one
+        if (currentSessionKey === DEFAULT_SESSION_KEY && sessionData.sessions.length > 0) {
+          const sortedSessions = [...sessionData.sessions].sort(
+            (a, b) => (b.lastActivity || 0) - (a.lastActivity || 0),
+          )
+          setCurrentSessionKey(sortedSessions[0].key)
+        }
       }
     } catch (err) {
       sessionsLogger.logError('Failed to fetch sessions', err)
     } finally {
       setLoading(false)
     }
-  }, [connected, listSessions, supportsServerSessions])
+  }, [connected, listSessions, supportsServerSessions, currentSessionKey, setCurrentSessionKey])
 
   useEffect(() => {
     loadSessions()
