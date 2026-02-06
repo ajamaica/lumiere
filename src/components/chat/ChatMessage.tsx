@@ -28,9 +28,11 @@ import { useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 
 export interface MessageAttachment {
+  type: 'image' | 'video' | 'file'
   uri: string
   base64?: string
   mimeType?: string
+  name?: string
 }
 
 export interface Message {
