@@ -12,6 +12,9 @@ import {
   serverSessionsAtom,
 } from '../../store'
 import { getServerToken } from '../secureTokenStorage'
+import { logger } from '../../utils/logger'
+
+const notificationLogger = logger.create('BackgroundCheck')
 
 export const BACKGROUND_FETCH_TASK = 'background-server-check'
 
@@ -151,7 +154,7 @@ export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTa
 
     return BackgroundTask.BackgroundTaskResult.Success
   } catch (error) {
-    console.error('[BackgroundCheck] Error:', error)
+    notificationLogger.logError('Background check failed', error)
     return BackgroundTask.BackgroundTaskResult.Failed
   }
 }
