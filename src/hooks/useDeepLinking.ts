@@ -61,9 +61,8 @@ function parseDeepLink(url: string): DeepLinkResult | TriggerResult | null {
         params: (parsed.queryParams as Record<string, string>) ?? {},
       }
     }
-
     // Match trigger deep links: lumiere://trigger/autotrigger/{slug}
-    const triggerMatch = path.match(/^trigger\/autotrigger\/([a-zA-Z0-9]{8})$/)
+    const triggerMatch = path.match(/^autotrigger\/([a-zA-Z0-9]{8})$/)
     if (triggerMatch) {
       return { type: 'trigger', slug: triggerMatch[1] }
     }
