@@ -349,8 +349,8 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
                       />
                     </Pressable>
 
-                    {/* Sessions (only for active server with session support) */}
-                    {isActiveServer && supportsServerSessions && (
+                    {/* Sessions (only for active server) */}
+                    {isActiveServer && (
                       <View style={styles.sessionListIndent}>
                         {loadingSessions ? (
                           <ActivityIndicator
