@@ -44,6 +44,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
   sessions,
   currentSessionKey,
   sessionAliases,
+  supportsServerSessions = false,
   servers,
   currentServerId,
   onSwitchServer,
@@ -240,59 +241,61 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle} accessibilityRole="header">
-            Sessions
+            {supportsServerSessions ? 'Sessions' : 'Servers'}
           </Text>
         </View>
 
-        {/* Actions Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Actions</Text>
+        {/* Actions Section (only for session-capable servers) */}
+        {supportsServerSessions && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Actions</Text>
 
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={onNewSession}
-            accessibilityRole="button"
-            accessibilityLabel="New Session"
-          >
-            <Ionicons
-              name="add-circle"
-              size={22}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>New Session</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={onNewSession}
+              accessibilityRole="button"
+              accessibilityLabel="New Session"
+            >
+              <Ionicons
+                name="add-circle"
+                size={22}
+                color={theme.colors.primary}
+                style={styles.actionIcon}
+              />
+              <Text style={styles.actionText}>New Session</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={onResetSession}
-            accessibilityRole="button"
-            accessibilityLabel="Reset Current"
-          >
-            <Ionicons
-              name="refresh"
-              size={22}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>Reset Current</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={onResetSession}
+              accessibilityRole="button"
+              accessibilityLabel="Reset Current"
+            >
+              <Ionicons
+                name="refresh"
+                size={22}
+                color={theme.colors.primary}
+                style={styles.actionIcon}
+              />
+              <Text style={styles.actionText}>Reset Current</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={handleEditSession}
-            accessibilityRole="button"
-            accessibilityLabel="Edit Current"
-          >
-            <Ionicons
-              name="create"
-              size={22}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>Edit Current</Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={handleEditSession}
+              accessibilityRole="button"
+              accessibilityLabel="Edit Current"
+            >
+              <Ionicons
+                name="create"
+                size={22}
+                color={theme.colors.primary}
+                style={styles.actionIcon}
+              />
+              <Text style={styles.actionText}>Edit Current</Text>
+            </TouchableOpacity>
+          </View>
+        )}
 
         {/* Servers & Sessions List */}
         <View style={styles.serversSection}>
@@ -346,8 +349,8 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
                       />
                     </Pressable>
 
-                    {/* Sessions (only for active server) */}
-                    {isActiveServer && (
+                    {/* Sessions (only for active server with session support) */}
+                    {isActiveServer && supportsServerSessions && (
                       <View style={styles.sessionListIndent}>
                         {loadingSessions ? (
                           <ActivityIndicator
