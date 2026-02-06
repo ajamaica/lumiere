@@ -102,7 +102,7 @@ export function SessionModal({
       padding: theme.spacing.md,
       backgroundColor: theme.colors.background,
       borderRadius: theme.borderRadius.md,
-      marginBottom: theme.spacing.sm,
+      marginBottom: theme.spacing.xs,
       borderWidth: 1,
       borderColor: 'transparent',
     },
