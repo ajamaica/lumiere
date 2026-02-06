@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Lumiere</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        h3 {
+            color: #495057;
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #495057;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        .highlight {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .highlight strong {
+            color: #667eea;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #5568d3;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: #6c757d;
+        }
+
+        .date {
+            color: #6c757d;
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 2rem 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1a1a1a;
+                color: #e9ecef;
+            }
+
+            .content {
+                background: #2d2d2d;
+                color: #e9ecef;
+            }
+
+            h2 {
+                color: #8b9cef;
+                border-bottom-color: #495057;
+            }
+
+            h3 {
+                color: #ced4da;
+            }
+
+            p, li {
+                color: #ced4da;
+            }
+
+            .highlight {
+                background: #212529;
+                border-left-color: #8b9cef;
+            }
+
+            .highlight strong {
+                color: #8b9cef;
+            }
+
+            .date {
+                color: #adb5bd;
+            }
+
+            footer {
+                color: #adb5bd;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Privacy Policy</h1>
+            <p>Lumiere - AI Chat Client</p>
+        </header>
+
+        <div class="content">
+            <p class="date"><strong>Last Updated:</strong> February 6, 2026</p>
+
+            <div class="highlight">
+                <strong>TL;DR:</strong> Lumiere is designed with privacy first. We don't collect, track, or store any of your personal data on our servers. All your data stays on your device. When you chat with AI services, your messages are sent directly to the AI provider you've configured (like Anthropic Claude, Ollama, etc.), subject to their privacy policies.
+            </div>
+
+            <h2>1. Introduction</h2>
+            <p>
+                Welcome to Lumiere. This privacy policy explains how we handle your data when you use our mobile application. Lumiere is an open-source AI chat client available for iOS and Android devices.
+            </p>
+            <p>
+                Lumiere is developed and maintained as an open-source project under the MIT License. The source code is publicly available on GitHub at <a href="https://github.com/ajamaica/lumiere" target="_blank">https://github.com/ajamaica/lumiere</a>.
+            </p>
+
+            <h2>2. Information We Collect</h2>
+
+            <h3>2.1 No Analytics or Tracking</h3>
+            <p>
+                <strong>We do not collect any analytics, telemetry, or tracking data.</strong> Lumiere does not use:
+            </p>
+            <ul>
+                <li>Google Analytics or similar analytics services</li>
+                <li>Crash reporting services</li>
+                <li>Usage tracking or event logging</li>
+                <li>Advertising networks or third-party tracking pixels</li>
+                <li>Device fingerprinting or user profiling</li>
+            </ul>
+
+            <h3>2.2 Data Stored Locally on Your Device</h3>
+            <p>
+                All application data is stored locally on your device using React Native AsyncStorage and Expo SecureStore. This includes:
+            </p>
+            <ul>
+                <li><strong>Server Configurations:</strong> Server names, URLs, and provider types you've configured</li>
+                <li><strong>Authentication Tokens:</strong> API keys and tokens (stored securely in your device's keychain/secure enclave)</li>
+                <li><strong>Chat History:</strong> Your message history (cached locally, up to 200 messages per session)</li>
+                <li><strong>Favorite Messages:</strong> Messages you've marked as favorites</li>
+                <li><strong>User Preferences:</strong> Theme settings, language preference, notification settings</li>
+                <li><strong>Security Settings:</strong> Biometric lock preferences (Face ID/Touch ID)</li>
+                <li><strong>Automation Data:</strong> Custom triggers and slash command configurations</li>
+            </ul>
+            <p>
+                <strong>This data never leaves your device unless you explicitly delete the app or transfer data to a new device.</strong>
+            </p>
+
+            <h2>3. How We Use Your Information</h2>
+            <p>
+                Since we don't collect any data on our servers, we don't "use" your information in the traditional sense. Your data remains on your device and is used solely to:
+            </p>
+            <ul>
+                <li>Provide the core functionality of the app (chat with AI services)</li>
+                <li>Store your preferences and settings</li>
+                <li>Cache message history for offline viewing</li>
+                <li>Enable features like favorites, themes, and biometric security</li>
+            </ul>
+
+            <h2>4. Third-Party Services and AI Providers</h2>
+            <p>
+                Lumiere is a client that connects to AI services that you configure. When you send messages through Lumiere, those messages are transmitted directly to the AI provider you've selected. Each provider has its own privacy policy:
+            </p>
+
+            <h3>4.1 Supported AI Providers</h3>
+            <ul>
+                <li><strong>Anthropic Claude:</strong> When you use Claude, your messages are sent to Anthropic's API. See <a href="https://www.anthropic.com/privacy" target="_blank">Anthropic's Privacy Policy</a></li>
+                <li><strong>OpenClaw (Molt Gateway):</strong> A WebSocket-based gateway for AI interactions. Data handling depends on your server configuration</li>
+                <li><strong>Ollama:</strong> Local AI inference. Messages stay on your local network/device</li>
+                <li><strong>Apple Intelligence:</strong> On-device AI using Apple Foundation Models (iOS 18+). No external connectivity required</li>
+            </ul>
+
+            <h3>4.2 What Data is Shared with AI Providers</h3>
+            <p>When you chat with an AI service through Lumiere, the following data is sent:</p>
+            <ul>
+                <li>Your message text</li>
+                <li>Conversation history (for context)</li>
+                <li>Any images or files you attach</li>
+                <li>Your authentication credentials (API keys or tokens)</li>
+            </ul>
+            <p>
+                <strong>Important:</strong> Lumiere acts as a messenger. We do not intercept, store, or process this data on our servers. The data goes directly from your device to the AI provider's servers.
+            </p>
+
+            <h3>4.3 Expo Services</h3>
+            <p>Lumiere is built using Expo and uses the following Expo services:</p>
+            <ul>
+                <li><strong>Expo Updates:</strong> For delivering app updates over-the-air</li>
+                <li><strong>Expo Notifications:</strong> For local push notifications (no data sent to Expo servers)</li>
+                <li><strong>Expo SecureStore:</strong> Native keychain integration (all data stays on your device)</li>
+                <li><strong>Expo Local Authentication:</strong> Biometric authentication (on-device only)</li>
+            </ul>
+            <p>
+                See <a href="https://expo.dev/privacy" target="_blank">Expo's Privacy Policy</a> for more information.
+            </p>
+
+            <h2>5. Data Security</h2>
+            <p>We take data security seriously:</p>
+            <ul>
+                <li><strong>Secure Token Storage:</strong> Authentication tokens are stored using Expo SecureStore, which uses the native iOS Keychain and Android Secure Enclave</li>
+                <li><strong>Biometric Security:</strong> Optional Face ID/Touch ID protection for app access</li>
+                <li><strong>HTTPS/WSS:</strong> All network communications with AI providers use encrypted connections</li>
+                <li><strong>No Server-Side Storage:</strong> We don't have servers that store your data, so there's nothing to breach</li>
+            </ul>
+
+            <h2>6. Background Notifications</h2>
+            <p>
+                Lumiere offers an optional background notification feature (for OpenClaw/Molt Gateway servers only). When enabled:
+            </p>
+            <ul>
+                <li>The app periodically checks for new messages in the background</li>
+                <li>Checks are performed at configurable intervals (default: 15 minutes)</li>
+                <li>Local push notifications are triggered when new messages are detected</li>
+                <li>All checks are performed directly between your device and your configured server</li>
+                <li>No data is sent to our servers or third-party services</li>
+            </ul>
+            <p>This feature is disabled by default and can be controlled in the app settings.</p>
+
+            <h2>7. Children's Privacy</h2>
+            <p>
+                Lumiere is not directed at children under the age of 13. We do not knowingly collect personal information from children. Since we don't collect any data at all, this is not a concern for our app specifically, but please be aware that the AI services you connect to may have their own age restrictions and policies.
+            </p>
+
+            <h2>8. Data Retention and Deletion</h2>
+            <p>
+                Since all data is stored locally on your device:
+            </p>
+            <ul>
+                <li><strong>You are in full control:</strong> You can delete your data at any time by clearing the app's cache or uninstalling the app</li>
+                <li><strong>No server-side retention:</strong> We don't retain any data because we don't collect any</li>
+                <li><strong>Message history:</strong> Cached locally up to 200 messages per session. Clear cache to remove</li>
+            </ul>
+
+            <h2>9. Your Rights</h2>
+            <p>
+                Under various privacy laws (GDPR, CCPA, etc.), you have rights regarding your personal data. Since Lumiere doesn't collect or store your data on our servers, most traditional rights (access, deletion, portability) are already inherently satisfied:
+            </p>
+            <ul>
+                <li><strong>Right to Access:</strong> All your data is on your device - you have full access</li>
+                <li><strong>Right to Deletion:</strong> Delete the app or clear its cache</li>
+                <li><strong>Right to Portability:</strong> Your data is already on your device in standard formats</li>
+                <li><strong>Right to Opt-Out:</strong> We don't track you, so there's nothing to opt out of</li>
+            </ul>
+            <p>
+                For data shared with AI providers, please refer to their respective privacy policies and exercise your rights directly with them.
+            </p>
+
+            <h2>10. International Data Transfers</h2>
+            <p>
+                Since we don't collect data on our servers, there are no international data transfers from us. However, when you use third-party AI services, your data may be transferred to servers in different countries depending on the provider you've configured.
+            </p>
+
+            <h2>11. Changes to This Privacy Policy</h2>
+            <p>
+                We may update this privacy policy from time to time. When we do, we will:
+            </p>
+            <ul>
+                <li>Update the "Last Updated" date at the top of this policy</li>
+                <li>Post the updated policy on our website and GitHub repository</li>
+                <li>Notify users through the app if there are material changes</li>
+            </ul>
+
+            <h2>12. Open Source Transparency</h2>
+            <p>
+                Lumiere is open source under the MIT License. You can review the entire codebase to verify our privacy claims:
+            </p>
+            <ul>
+                <li><strong>GitHub Repository:</strong> <a href="https://github.com/ajamaica/lumiere" target="_blank">https://github.com/ajamaica/lumiere</a></li>
+                <li><strong>License:</strong> MIT License</li>
+                <li><strong>Audit:</strong> Anyone can audit the code to confirm no tracking or data collection occurs</li>
+            </ul>
+
+            <h2>13. Contact Us</h2>
+            <p>
+                If you have questions about this privacy policy or how Lumiere handles data, please:
+            </p>
+            <ul>
+                <li>Open an issue on GitHub: <a href="https://github.com/ajamaica/lumiere/issues" target="_blank">https://github.com/ajamaica/lumiere/issues</a></li>
+                <li>Review the source code to verify our privacy practices</li>
+            </ul>
+
+            <h2>14. Summary</h2>
+            <div class="highlight">
+                <p><strong>Lumiere's Privacy Commitment:</strong></p>
+                <ul>
+                    <li>✅ No analytics, tracking, or telemetry</li>
+                    <li>✅ All data stored locally on your device</li>
+                    <li>✅ No servers collecting your data</li>
+                    <li>✅ Open source and auditable</li>
+                    <li>✅ Secure token storage using native encryption</li>
+                    <li>✅ Direct communication with AI providers you configure</li>
+                    <li>✅ You are in full control of your data</li>
+                </ul>
+            </div>
+
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+
+        <footer>
+            <p>Lumiere - Open Source AI Chat Client</p>
+            <p>
+                <a href="https://github.com/ajamaica/lumiere" target="_blank">GitHub</a> |
+                <a href="https://github.com/ajamaica/lumiere/blob/main/LICENSE" target="_blank">MIT License</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
