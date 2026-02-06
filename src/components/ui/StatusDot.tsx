@@ -59,5 +59,11 @@ export function StatusDot({ variant = 'success', pulse = false, size = 10 }: Sta
     },
   })
 
-  return <Animated.View style={[styles.dot, { opacity: pulseAnim }]} />
+  return (
+    <Animated.View
+      style={[styles.dot, { opacity: pulseAnim }]}
+      accessibilityRole="image"
+      accessibilityLabel={`${variant} status${pulse ? ', active' : ''}`}
+    />
+  )
 }

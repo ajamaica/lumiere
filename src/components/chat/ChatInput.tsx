@@ -120,6 +120,8 @@ export function ChatInput({
             <TouchableOpacity
               style={styles.autocompleteItem}
               onPress={() => handleSelectCommand(item.command)}
+              accessibilityRole="button"
+              accessibilityLabel={`${item.command}: ${item.description}`}
             >
               <Text style={styles.commandText}>{item.command}</Text>
               <Text style={styles.commandDescription} numberOfLines={1}>
@@ -132,20 +134,30 @@ export function ChatInput({
       <View style={styles.background}>
         <Container {...containerProps}>
           {isRecording && (
-            <View style={styles.recordingOverlay}>
+            <View style={styles.recordingOverlay} accessibilityLiveRegion="polite">
               <View style={styles.recordingIndicator}>
                 <View style={styles.recordingDot} />
                 <Text style={styles.recordingLabel}>{t('chat.listening')}</Text>
               </View>
-              <Text style={styles.transcribedText} numberOfLines={3}>
+              <Text style={styles.transcribedText} numberOfLines={3} accessibilityLiveRegion="polite">
                 {voice.transcribedText || t('chat.startSpeaking')}
               </Text>
               <View style={styles.recordingActions}>
-                <TouchableOpacity style={styles.cancelButton} onPress={handleCancelRecording}>
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={handleCancelRecording}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('common.cancel')}
+                >
                   <Ionicons name="close" size={20} color={theme.colors.text.secondary} />
                   <Text style={styles.cancelButtonText}>{t('common.cancel')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.stopButton} onPress={handleStopRecording}>
+                <TouchableOpacity
+                  style={styles.stopButton}
+                  onPress={handleStopRecording}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('common.done')}
+                >
                   <Ionicons name="checkmark" size={20} color={theme.colors.text.inverse} />
                   <Text style={styles.stopButtonText}>{t('common.done')}</Text>
                 </TouchableOpacity>
@@ -165,6 +177,8 @@ export function ChatInput({
                       <TouchableOpacity
                         style={styles.removeAttachmentButton}
                         onPress={() => handleRemoveAttachment(index)}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Remove attachment ${index + 1}`}
                       >
                         <Ionicons name="close-circle" size={20} color={theme.colors.text.inverse} />
                       </TouchableOpacity>
@@ -183,6 +197,8 @@ export function ChatInput({
                 editable={!disabled}
                 onSubmitEditing={handleSend}
                 blurOnSubmit={false}
+                accessibilityLabel={t('chat.placeholder')}
+                accessibilityHint="Type your message here"
               />
               <View style={styles.buttonRow}>
                 {onOpenSessionMenu && (
@@ -190,6 +206,9 @@ export function ChatInput({
                     style={[styles.menuButton, disabled && styles.buttonDisabled]}
                     onPress={onOpenSessionMenu}
                     disabled={disabled}
+                    accessibilityRole="button"
+                    accessibilityLabel="Session menu"
+                    accessibilityState={{ disabled }}
                   >
                     <Ionicons name="ellipsis-vertical" size={24} color={menuButtonColor} />
                   </TouchableOpacity>
@@ -199,6 +218,9 @@ export function ChatInput({
                     style={[styles.menuButton, disabled && styles.buttonDisabled]}
                     onPress={handlePickImage}
                     disabled={disabled}
+                    accessibilityRole="button"
+                    accessibilityLabel="Attach image"
+                    accessibilityState={{ disabled }}
                   >
                     <Ionicons
                       name="add"
@@ -210,7 +232,10 @@ export function ChatInput({
                 <View style={styles.spacer} />
                 <View style={styles.sendButtonContainer}>
                   {queueCount > 0 && (
-                    <View style={styles.queueBadge}>
+                    <View
+                      style={styles.queueBadge}
+                      accessibilityLabel={`${queueCount} message${queueCount !== 1 ? 's' : ''} queued`}
+                    >
                       <Text style={styles.queueText}>{queueCount}</Text>
                     </View>
                   )}
@@ -219,6 +244,9 @@ export function ChatInput({
                       style={[styles.sendButton, styles.sendButtonInactive]}
                       onPress={handleMicPress}
                       disabled={disabled}
+                      accessibilityRole="button"
+                      accessibilityLabel="Start voice input"
+                      accessibilityState={{ disabled }}
                     >
                       <Ionicons
                         name="mic"
@@ -236,6 +264,9 @@ export function ChatInput({
                       ]}
                       onPress={handleSend}
                       disabled={!hasContent || disabled}
+                      accessibilityRole="button"
+                      accessibilityLabel="Send message"
+                      accessibilityState={{ disabled: !hasContent || disabled }}
                     >
                       <Ionicons
                         name="arrow-up"

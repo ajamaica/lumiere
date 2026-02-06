@@ -33,7 +33,13 @@ export function ActionRow({ icon, label, iconColor, style, ...props }: ActionRow
   })
 
   return (
-    <TouchableOpacity style={[styles.row, style]} activeOpacity={0.7} {...props}>
+    <TouchableOpacity
+      style={[styles.row, style]}
+      activeOpacity={0.7}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      {...props}
+    >
       <Ionicons
         name={icon}
         size={24}

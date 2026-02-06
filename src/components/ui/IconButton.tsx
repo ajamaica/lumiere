@@ -12,6 +12,8 @@ export interface IconButtonProps extends TouchableOpacityProps {
   variant?: IconButtonVariant
   size?: IconButtonSize
   color?: string
+  /** Accessibility label describing the button's action */
+  accessibilityLabel?: string
 }
 
 export function IconButton({
@@ -53,6 +55,8 @@ export function IconButton({
       style={[styles.button, disabled && { opacity: 0.5 }, style]}
       disabled={disabled}
       activeOpacity={0.7}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: !!disabled }}
       {...props}
     >
       <Ionicons name={icon} size={s.icon} color={iconColor} />

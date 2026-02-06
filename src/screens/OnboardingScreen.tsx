@@ -114,6 +114,8 @@ export function OnboardingScreen() {
               source={require('../../assets/logo.png')}
               style={styles.logo}
               resizeMode="contain"
+              accessibilityLabel="Lumiere logo"
+              accessibilityRole="image"
             />
           </View>
 
@@ -143,6 +145,9 @@ export function OnboardingScreen() {
             <TouchableOpacity
               style={styles.advancedToggle}
               onPress={() => setShowAdvanced(!showAdvanced)}
+              accessibilityRole="button"
+              accessibilityLabel="Advanced options"
+              accessibilityState={{ expanded: showAdvanced }}
             >
               <Text variant="label" color="secondary">
                 Advanced

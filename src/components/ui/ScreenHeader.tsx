@@ -79,19 +79,29 @@ export function ScreenHeader({
   return (
     <View style={[styles.header, style]} {...props}>
       {showClose && (
-        <TouchableOpacity onPress={handleBack} activeOpacity={0.7}>
+        <TouchableOpacity
+          onPress={handleBack}
+          activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel="Close"
+        >
           <CloseButtonContainer {...closeButtonContainerProps}>
             <Ionicons name="close" size={20} color={theme.colors.text.secondary} />
           </CloseButtonContainer>
         </TouchableOpacity>
       )}
       {showBack && !showClose && (
-        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+        <TouchableOpacity
+          onPress={handleBack}
+          style={styles.backButton}
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
+        >
           <Ionicons name="arrow-back" size={24} color={theme.colors.text.primary} />
         </TouchableOpacity>
       )}
       <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title} accessibilityRole="header">{title}</Text>
         {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
       </View>
       {right}

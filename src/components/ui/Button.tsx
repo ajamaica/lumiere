@@ -97,6 +97,9 @@ export function Button({
       ]}
       disabled={disabled || loading}
       activeOpacity={0.7}
+      accessibilityRole="button"
+      accessibilityLabel={title}
+      accessibilityState={{ disabled: disabled || loading, busy: loading }}
       {...props}
     >
       {loading ? (
