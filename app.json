@@ -50,7 +50,8 @@
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
-      "package": "bot.lumiere.app"
+      "package": "bot.lumiere.app",
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "platforms": ["ios", "android"],
     "scheme": "lumiere",
