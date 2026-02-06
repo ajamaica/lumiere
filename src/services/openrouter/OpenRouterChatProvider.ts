@@ -182,7 +182,7 @@ export class OpenRouterChatProvider implements ChatProvider {
 
       // Process the stream
       for await (const chunk of stream) {
-        const delta = chunk.data?.choices?.[0]?.delta?.content
+        const delta = chunk.choices?.[0]?.delta?.content
 
         if (delta) {
           fullResponse += delta
@@ -190,8 +190,8 @@ export class OpenRouterChatProvider implements ChatProvider {
         }
 
         // Check for errors in the chunk
-        if (chunk.data?.error) {
-          throw new Error(chunk.data.error.message || 'Stream error')
+        if (chunk.error) {
+          throw new Error(chunk.error.message || 'Stream error')
         }
       }
 
