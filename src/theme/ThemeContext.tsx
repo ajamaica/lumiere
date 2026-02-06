@@ -39,6 +39,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // Update system UI colors
   useEffect(() => {
     SystemUI.setBackgroundColorAsync(theme.colors.background)
+    // Set status bar style based on theme: dark icons for light theme, light icons for dark theme
+    SystemUI.setStatusBarStyleAsync(theme.isDark ? 'light' : 'dark')
   }, [theme])
 
   const toggleTheme = () => {
