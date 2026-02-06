@@ -4,6 +4,8 @@ import React from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { getProviderIcon } from '../../config/providerOptions'
+import type { ServerConfig } from '../../store'
 import { useTheme } from '../../theme'
 import { useFoldResponsiveValue } from '../../utils/device'
 
@@ -21,6 +23,9 @@ interface SessionSidebarProps {
   currentSessionKey: string
   sessionAliases: Record<string, string>
   supportsServerSessions?: boolean
+  servers: ServerConfig[]
+  currentServerId: string
+  onSwitchServer: (serverId: string) => void
 }
 
 export const SessionSidebar: React.FC<SessionSidebarProps> = ({
@@ -30,7 +35,9 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
   sessions,
   currentSessionKey,
   sessionAliases,
-  supportsServerSessions = true,
+  servers,
+  currentServerId,
+  onSwitchServer,
 }) => {
   const { theme } = useTheme()
   const router = useRouter()
@@ -91,6 +98,9 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
     section: {
       marginBottom: theme.spacing.lg,
     },
+    serversSection: {
+      flex: 1,
+    },
     footer: {
       borderTopWidth: 1,
       borderTopColor: theme.colors.border,
@@ -145,6 +155,36 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
     sessionListContainer: {
       flex: 1,
     },
+    serverSection: {
+      marginBottom: theme.spacing.md,
+    },
+    serverHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: theme.spacing.md,
+      marginBottom: theme.spacing.sm,
+      borderRadius: theme.borderRadius.md,
+    },
+    activeServerHeader: {
+      backgroundColor: theme.colors.primary + '10',
+      borderLeftWidth: 3,
+      borderLeftColor: theme.colors.primary,
+    },
+    inactiveServerHeader: {
+      backgroundColor: theme.colors.background,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    serverName: {
+      fontSize: theme.typography.fontSize.sm,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.text.primary,
+      flex: 1,
+      marginLeft: theme.spacing.sm,
+    },
+    sessionListIndent: {
+      marginTop: theme.spacing.xs,
+    },
     sessionItem: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -180,10 +220,6 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
       textAlign: 'center',
       padding: theme.spacing.lg,
       fontStyle: 'italic',
-    },
-    editButton: {
-      padding: theme.spacing.xs,
-      marginLeft: theme.spacing.xs,
     },
   })
 
@@ -248,42 +284,104 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
           </TouchableOpacity>
         </View>
 
-        {/* Sessions List */}
-        <View style={styles.section}>
-          {supportsServerSessions && <Text style={styles.sectionTitle}>All Sessions</Text>}
+        {/* Servers & Sessions List */}
+        <View style={styles.serversSection}>
+          <Text style={styles.sectionTitle}>Servers</Text>
           <ScrollView style={styles.sessionListContainer} showsVerticalScrollIndicator={false}>
-            {sessions.length > 0 ? (
-              sessions.map((session) => {
-                const isActive = session.key === currentSessionKey
+            {servers.length > 0 ? (
+              servers.map((server) => {
+                const isActiveServer = server.id === currentServerId
                 return (
-                  <Pressable
-                    key={session.key}
-                    style={[styles.sessionItem, isActive && styles.activeSession]}
-                    onPress={() => onSelectSession(session.key)}
-                    accessibilityRole="button"
-                    accessibilityLabel={`${formatSessionKey(session.key)}${session.messageCount !== undefined ? `, ${session.messageCount} message${session.messageCount !== 1 ? 's' : ''}` : ''}`}
-                    accessibilityState={{ selected: isActive }}
-                  >
-                    <View style={styles.sessionTextContainer}>
-                      <Text style={styles.sessionText} numberOfLines={1}>
-                        {formatSessionKey(session.key)}
-                      </Text>
-                      {session.messageCount !== undefined && (
-                        <Text style={styles.sessionMeta}>
-                          {session.messageCount} message{session.messageCount !== 1 ? 's' : ''}
-                        </Text>
+                  <View key={server.id} style={styles.serverSection}>
+                    {/* Server Header */}
+                    <Pressable
+                      style={[
+                        styles.serverHeader,
+                        isActiveServer ? styles.activeServerHeader : styles.inactiveServerHeader,
+                      ]}
+                      onPress={() => {
+                        if (!isActiveServer) {
+                          onSwitchServer(server.id)
+                        }
+                      }}
+                      accessibilityRole="button"
+                      accessibilityLabel={`${server.name}${isActiveServer ? ' (Active)' : ''}`}
+                      accessibilityState={{ expanded: isActiveServer }}
+                    >
+                      {getProviderIcon(
+                        server.providerType,
+                        isActiveServer ? theme.colors.primary : theme.colors.text.secondary,
+                      ) || (
+                        <Ionicons
+                          name={isActiveServer ? 'cloud' : 'cloud-outline'}
+                          size={18}
+                          color={
+                            isActiveServer ? theme.colors.primary : theme.colors.text.secondary
+                          }
+                        />
                       )}
-                    </View>
-                    <Ionicons
-                      name={isActive ? 'checkmark-circle' : 'chevron-forward'}
-                      size={20}
-                      color={isActive ? theme.colors.primary : theme.colors.text.tertiary}
-                    />
-                  </Pressable>
+                      <Text
+                        style={[
+                          styles.serverName,
+                          isActiveServer && { color: theme.colors.primary },
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {server.name}
+                      </Text>
+                      <Ionicons
+                        name={isActiveServer ? 'chevron-down' : 'chevron-forward'}
+                        size={16}
+                        color={isActiveServer ? theme.colors.primary : theme.colors.text.tertiary}
+                      />
+                    </Pressable>
+
+                    {/* Sessions (only for active server) */}
+                    {isActiveServer && (
+                      <View style={styles.sessionListIndent}>
+                        {sessions.length > 0 ? (
+                          sessions.map((session) => {
+                            const isActive = session.key === currentSessionKey
+                            return (
+                              <Pressable
+                                key={session.key}
+                                style={[styles.sessionItem, isActive && styles.activeSession]}
+                                onPress={() => onSelectSession(session.key)}
+                                accessibilityRole="button"
+                                accessibilityLabel={`${formatSessionKey(session.key)}${session.messageCount !== undefined ? `, ${session.messageCount} message${session.messageCount !== 1 ? 's' : ''}` : ''}`}
+                                accessibilityState={{ selected: isActive }}
+                              >
+                                <View style={styles.sessionTextContainer}>
+                                  <Text style={styles.sessionText} numberOfLines={1}>
+                                    {formatSessionKey(session.key)}
+                                  </Text>
+                                  {session.messageCount !== undefined && (
+                                    <Text style={styles.sessionMeta}>
+                                      {session.messageCount} message
+                                      {session.messageCount !== 1 ? 's' : ''}
+                                    </Text>
+                                  )}
+                                </View>
+                                <Ionicons
+                                  name={isActive ? 'checkmark-circle' : 'chevron-forward'}
+                                  size={20}
+                                  color={
+                                    isActive ? theme.colors.primary : theme.colors.text.tertiary
+                                  }
+                                />
+                              </Pressable>
+                            )
+                          })
+                        ) : (
+                          <Text style={styles.emptyText}>No sessions available</Text>
+                        )}
+                      </View>
+                    )}
+                  </View>
                 )
               })
             ) : (
-              <Text style={styles.emptyText}>No sessions available</Text>
+              <Text style={styles.emptyText}>No servers configured</Text>
             )}
           </ScrollView>
         </View>

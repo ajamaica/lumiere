@@ -20,7 +20,10 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const loadConfig = async () => {
-      setIsLoading(true)
+      // Only show loading on initial load, not when switching servers
+      if (!config) {
+        setIsLoading(true)
+      }
       setError(null)
       try {
         const providerConfig = await getProviderConfig()
@@ -34,6 +37,7 @@ export default function HomeScreen() {
       }
     }
     loadConfig()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getProviderConfig, currentServerId])
 
   // Show loading state briefly to prevent flash
@@ -96,5 +100,5 @@ export default function HomeScreen() {
     )
   }
 
-  return <ChatWithSidebar key={currentServerId} providerConfig={config} />
+  return <ChatWithSidebar providerConfig={config} />
 }
