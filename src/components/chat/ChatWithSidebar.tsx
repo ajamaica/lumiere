@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-native'
 
 import { useServers } from '../../hooks/useServers'
@@ -29,6 +29,8 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [sessionAliases] = useAtom(sessionAliasesAtom)
   const [sessions, setSessions] = useState<Session[]>([])
+  const [loadingSessions, setLoadingSessions] = useState(false)
+  const sessionLoadIdRef = useRef(0)
 
   // Only molt provider supports server-side sessions
   const supportsServerSessions = providerConfig?.type === 'molt'
@@ -50,15 +52,28 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   }, [providerConfig, supportsServerSessions, currentServerId])
 
   const loadSessions = useCallback(async () => {
-    // Only load sessions for providers that support server-side sessions
-    if (!connected || !supportsServerSessions) {
-      // For non-molt providers, just show current session
+    // Increment load ID so any in-flight request from a previous server
+    // is discarded when it resolves.
+    const loadId = ++sessionLoadIdRef.current
+
+    // For non-molt providers, just show current session
+    if (!supportsServerSessions) {
       setSessions([{ key: currentSessionKey }])
+      setLoadingSessions(false)
       return
     }
 
+    // When disconnected (e.g. during a server switch), show a loader
+    // instead of resetting to a fallback.
+    if (!connected) {
+      setLoadingSessions(true)
+      return
+    }
+
+    setLoadingSessions(true)
     try {
       const sessionData = (await listSessions()) as { sessions?: Session[] }
+      if (loadId !== sessionLoadIdRef.current) return // stale response
       if (sessionData?.sessions && Array.isArray(sessionData.sessions)) {
         setSessions(sessionData.sessions)
       }
@@ -66,6 +81,10 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       chatSidebarLogger.logError('Failed to fetch sessions', err)
       // Fallback to showing current session
       setSessions([{ key: currentSessionKey }])
+    } finally {
+      if (loadId === sessionLoadIdRef.current) {
+        setLoadingSessions(false)
+      }
     }
   }, [connected, listSessions, supportsServerSessions, currentSessionKey])
 
@@ -134,10 +153,11 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
           servers={serversList}
           currentServerId={currentServerId}
           onSwitchServer={handleSwitchServer}
+          loadingSessions={loadingSessions}
         />
       }
     >
-      <ChatScreen key={providerConfig.serverId} providerConfig={providerConfig} />
+      <ChatScreen providerConfig={providerConfig} />
     </SidebarLayout>
   )
 }

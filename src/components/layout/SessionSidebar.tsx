@@ -1,7 +1,15 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { getProviderIcon } from '../../config/providerOptions'
@@ -26,6 +34,7 @@ interface SessionSidebarProps {
   servers: ServerConfig[]
   currentServerId: string
   onSwitchServer: (serverId: string) => void
+  loadingSessions?: boolean
 }
 
 export const SessionSidebar: React.FC<SessionSidebarProps> = ({
@@ -35,9 +44,11 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
   sessions,
   currentSessionKey,
   sessionAliases,
+  supportsServerSessions = false,
   servers,
   currentServerId,
   onSwitchServer,
+  loadingSessions = false,
 }) => {
   const { theme } = useTheme()
   const router = useRouter()
@@ -230,59 +241,61 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle} accessibilityRole="header">
-            Sessions
+            {supportsServerSessions ? 'Sessions' : 'Servers'}
           </Text>
         </View>
 
         {/* Actions Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Actions</Text>
+        {
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Actions</Text>
 
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={onNewSession}
-            accessibilityRole="button"
-            accessibilityLabel="New Session"
-          >
-            <Ionicons
-              name="add-circle"
-              size={22}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>New Session</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={onNewSession}
+              accessibilityRole="button"
+              accessibilityLabel="New Session"
+            >
+              <Ionicons
+                name="add-circle"
+                size={22}
+                color={theme.colors.primary}
+                style={styles.actionIcon}
+              />
+              <Text style={styles.actionText}>New Session</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={onResetSession}
-            accessibilityRole="button"
-            accessibilityLabel="Reset Current"
-          >
-            <Ionicons
-              name="refresh"
-              size={22}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>Reset Current</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={onResetSession}
+              accessibilityRole="button"
+              accessibilityLabel="Reset Current"
+            >
+              <Ionicons
+                name="refresh"
+                size={22}
+                color={theme.colors.primary}
+                style={styles.actionIcon}
+              />
+              <Text style={styles.actionText}>Reset Current</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={handleEditSession}
-            accessibilityRole="button"
-            accessibilityLabel="Edit Current"
-          >
-            <Ionicons
-              name="create"
-              size={22}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>Edit Current</Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={handleEditSession}
+              accessibilityRole="button"
+              accessibilityLabel="Edit Current"
+            >
+              <Ionicons
+                name="create"
+                size={22}
+                color={theme.colors.primary}
+                style={styles.actionIcon}
+              />
+              <Text style={styles.actionText}>Edit Current</Text>
+            </TouchableOpacity>
+          </View>
+        }
 
         {/* Servers & Sessions List */}
         <View style={styles.serversSection}>
@@ -339,7 +352,13 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
                     {/* Sessions (only for active server) */}
                     {isActiveServer && (
                       <View style={styles.sessionListIndent}>
-                        {sessions.length > 0 ? (
+                        {loadingSessions ? (
+                          <ActivityIndicator
+                            size="small"
+                            color={theme.colors.primary}
+                            style={{ paddingVertical: theme.spacing.lg }}
+                          />
+                        ) : sessions.length > 0 ? (
                           sessions.map((session) => {
                             const isActive = session.key === currentSessionKey
                             return (

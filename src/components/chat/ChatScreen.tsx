@@ -159,6 +159,19 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   // Track whether we pre-populated from local cache so we can skip the loader
   const hasCacheRef = useRef(false)
 
+  // Detect server switches and reset refs without touching visual state,
+  // so old messages stay visible until new data arrives.
+  const prevServerIdRef = useRef(providerConfig.serverId)
+  useEffect(() => {
+    if (prevServerIdRef.current !== providerConfig.serverId) {
+      prevServerIdRef.current = providerConfig.serverId
+      hasCacheRef.current = false
+      hasScrolledOnLoadRef.current = false
+      shouldAutoScrollRef.current = true
+      setCurrentAgentMessage('')
+    }
+  }, [providerConfig.serverId])
+
   const { connected, connecting, error, capabilities, retry, sendMessage, getChatHistory } =
     useChatProvider(providerConfig)
 
@@ -217,17 +230,13 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     }
   }, [providerConfig.serverId, currentSessionKey, historyToMessages])
 
-  // Load chat history on mount
+  // Load chat history on mount or server switch.
+  // Keep old messages visible during the fetch so the screen never flashes blank.
   const loadChatHistory = useCallback(async () => {
     const hadCache = hasCacheRef.current
 
-    // When we already have cached messages on screen, skip the loader and
-    // refresh silently in the background. Otherwise show the loading state.
     if (!hadCache) {
-      setMessages([])
-      setCurrentAgentMessage('')
       hasScrolledOnLoadRef.current = false
-      setHistoryReady(false)
       setIsLoadingHistory(true)
     }
 
@@ -239,6 +248,8 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
         const historyMessages = historyToMessages(historyResponse.messages)
         setMessages(historyMessages)
         chatScreenLogger.info(`Loaded ${historyMessages.length} messages from history`)
+      } else {
+        setMessages([])
       }
     } catch (err) {
       chatScreenLogger.logError('Failed to load chat history', err)
