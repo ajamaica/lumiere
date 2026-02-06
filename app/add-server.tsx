@@ -22,12 +22,7 @@ export default function AddServerScreen() {
   const [providerType, setProviderType] = useState<ProviderType>('molt')
   const [model, setModel] = useState('')
 
-  const needsUrl =
-    providerType !== 'echo' &&
-    providerType !== 'apple' &&
-    providerType !== 'gemini-nano' &&
-    providerType !== 'claude' &&
-    providerType !== 'openai'
+  const needsUrl = providerType === 'molt' || providerType === 'ollama'
   const needsToken =
     providerType === 'molt' ||
     providerType === 'claude' ||
@@ -36,71 +31,110 @@ export default function AddServerScreen() {
     providerType === 'emergent'
 
   const handleAdd = async () => {
-    if (needsUrl && !url.trim()) {
-      Alert.alert('Error', 'URL is required')
-      return
-    }
-
-    if (needsToken && !token.trim()) {
-      Alert.alert(
-        'Error',
-        providerType === 'claude' || providerType === 'openai' || providerType === 'emergent'
-          ? 'API Key is required'
-          : 'Token is required',
+    if (providerType === 'molt' && url.trim() && token.trim()) {
+      await addServer(
+        {
+          name: name.trim() || 'My Server',
+          url: url.trim(),
+          clientId: clientId.trim() || 'lumiere-mobile',
+          providerType: 'molt',
+        },
+        token.trim(),
       )
+    } else if (providerType === 'ollama' && url.trim()) {
+      await addServer(
+        {
+          name: name.trim() || 'My Ollama',
+          url: url.trim(),
+          providerType: 'ollama',
+          model: model.trim() || undefined,
+        },
+        'ollama-no-token',
+      )
+    } else if (providerType === 'claude' && token.trim()) {
+      await addServer(
+        {
+          name: name.trim() || 'My Claude',
+          url: url.trim() || 'https://api.anthropic.com',
+          providerType: 'claude',
+          model: model.trim() || undefined,
+        },
+        token.trim(),
+      )
+    } else if (providerType === 'openai' && token.trim()) {
+      await addServer(
+        {
+          name: name.trim() || 'My OpenAI',
+          url: url.trim() || 'https://api.openai.com',
+          providerType: 'openai',
+          model: model.trim() || undefined,
+        },
+        token.trim(),
+      )
+    } else if (providerType === 'openrouter' && token.trim()) {
+      await addServer(
+        {
+          name: name.trim() || 'My OpenRouter',
+          url: url.trim() || 'https://openrouter.ai',
+          providerType: 'openrouter',
+          model: model.trim() || undefined,
+        },
+        token.trim(),
+      )
+    } else if (providerType === 'emergent' && token.trim()) {
+      await addServer(
+        {
+          name: name.trim() || 'My Emergent',
+          url: url.trim() || 'https://api.emergent.sh',
+          providerType: 'emergent',
+          model: model.trim() || undefined,
+        },
+        token.trim(),
+      )
+    } else if (providerType === 'echo') {
+      await addServer(
+        {
+          name: name.trim() || 'Echo Agent',
+          url: '',
+          providerType: 'echo',
+        },
+        '',
+      )
+    } else if (providerType === 'apple') {
+      await addServer(
+        {
+          name: name.trim() || 'Local AI',
+          url: '',
+          providerType: 'apple',
+        },
+        '',
+      )
+    } else if (providerType === 'gemini-nano') {
+      await addServer(
+        {
+          name: name.trim() || 'Gemini Nano',
+          url: '',
+          providerType: 'gemini-nano',
+        },
+        '',
+      )
+    } else {
+      // Validation failed
+      if (needsUrl && !url.trim()) {
+        Alert.alert('Error', 'URL is required')
+        return
+      }
+      if (needsToken && !token.trim()) {
+        Alert.alert(
+          'Error',
+          providerType === 'claude' || providerType === 'openai' || providerType === 'emergent'
+            ? 'API Key is required'
+            : 'Token is required',
+        )
+        return
+      }
       return
     }
-
-    let effectiveUrl = url.trim()
-    let effectiveToken = token.trim()
-
-    if (providerType === 'echo') {
-      effectiveUrl = 'echo://local'
-      effectiveToken = 'echo-no-token'
-    } else if (providerType === 'apple') {
-      effectiveUrl = 'apple://on-device'
-      effectiveToken = 'apple-no-token'
-    } else if (providerType === 'gemini-nano') {
-      effectiveUrl = 'gemini-nano://on-device'
-      effectiveToken = 'gemini-nano-no-token'
-    } else if (providerType === 'claude' && !effectiveUrl) {
-      effectiveUrl = 'https://api.anthropic.com'
-    } else if (providerType === 'openai' && !effectiveUrl) {
-      effectiveUrl = 'https://api.openai.com'
-    } else if (providerType === 'openrouter' && !effectiveUrl) {
-      effectiveUrl = 'https://openrouter.ai'
-    } else if (providerType === 'emergent' && !effectiveUrl) {
-      effectiveUrl = 'https://api.emergent.sh'
-    }
-
-    if (!effectiveToken) {
-      effectiveToken = 'ollama-no-token'
-    }
-
-    await addServer(
-      {
-        name:
-          name.trim() ||
-          (providerType === 'apple'
-            ? 'Apple Intelligence'
-            : providerType === 'gemini-nano'
-              ? 'Gemini Nano'
-              : providerType === 'claude'
-                ? 'Claude'
-                : providerType === 'openai'
-                  ? 'OpenAI'
-                  : providerType === 'openrouter'
-                    ? 'OpenRouter'
-                    : providerType === 'emergent'
-                      ? 'Emergent'
-                      : 'New Server'),
-        url: effectiveUrl,
-        clientId: clientId.trim() || 'lumiere-mobile',
-        providerType,
-        model: model.trim() || undefined,
-      },
-      effectiveToken,
-    )
 
     router.back()
   }
