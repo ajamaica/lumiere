@@ -32,7 +32,8 @@ export default function EditServerScreen() {
       providerType !== 'echo' &&
       providerType !== 'apple' &&
       providerType !== 'claude' &&
-      providerType !== 'openai'
+      providerType !== 'openai' &&
+      providerType !== 'emergent'
     if (needsUrlRequired && !url.trim()) {
       Alert.alert('Error', 'URL is required')
       return
@@ -47,6 +48,8 @@ export default function EditServerScreen() {
       effectiveUrl = 'https://api.anthropic.com'
     } else if (providerType === 'openai' && !effectiveUrl) {
       effectiveUrl = 'https://api.openai.com'
+    } else if (providerType === 'emergent' && !effectiveUrl) {
+      effectiveUrl = 'https://api.emergent.sh'
     }
 
     await updateServer(
@@ -149,7 +152,9 @@ export default function EditServerScreen() {
                       ? 'My Claude'
                       : providerType === 'openai'
                         ? 'My OpenAI'
-                        : 'My Server'
+                        : providerType === 'emergent'
+                          ? 'My Emergent'
+                          : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -159,7 +164,8 @@ export default function EditServerScreen() {
           {providerType !== 'echo' &&
             providerType !== 'apple' &&
             providerType !== 'claude' &&
-            providerType !== 'openai' && (
+            providerType !== 'openai' &&
+            providerType !== 'emergent' && (
               <View style={styles.formRow}>
                 <TextInput
                   label="URL"
@@ -215,7 +221,7 @@ export default function EditServerScreen() {
             </View>
           )}
 
-          {(providerType === 'claude' || providerType === 'openai') && (
+          {(providerType === 'claude' || providerType === 'openai' || providerType === 'emergent') && (
             <>
               <View style={styles.formRow}>
                 <TextInput
@@ -232,7 +238,13 @@ export default function EditServerScreen() {
                   label="Model"
                   value={model}
                   onChangeText={setModel}
-                  placeholder={providerType === 'openai' ? 'gpt-4o' : 'claude-sonnet-4-5-20250514'}
+                  placeholder={
+                    providerType === 'openai'
+                      ? 'gpt-4o'
+                      : providerType === 'emergent'
+                        ? 'claude-sonnet-4-5-20250514'
+                        : 'claude-sonnet-4-5-20250514'
+                  }
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
