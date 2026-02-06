@@ -1,3 +1,6 @@
+import { OpenRouter } from '@openrouter/sdk'
+import type { AssistantMessage, Message, UserMessage } from '@openrouter/sdk/models'
+
 import { API_CONFIG, DEFAULT_MODELS } from '../../constants'
 import {
   ChatHistoryMessage,
@@ -29,26 +32,11 @@ interface OpenRouterImagePart {
   }
 }
 
-interface OpenRouterStreamChunk {
-  id: string
-  choices: Array<{
-    delta: {
-      content?: string
-      role?: string
-    }
-    finish_reason: string | null
-  }>
-  error?: {
-    message: string
-  }
-}
-
 /**
  * Chat provider for the OpenRouter API.
  *
  * OpenRouter provides a unified API for accessing many AI models
- * (OpenAI, Anthropic, Google, Meta, etc.) through an OpenAI-compatible
- * chat completions endpoint at https://openrouter.ai/api/v1/chat/completions.
+ * (OpenAI, Anthropic, Google, Meta, etc.) through the OpenRouter SDK.
  */
 export class OpenRouterChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
@@ -60,8 +48,7 @@ export class OpenRouterChatProvider implements ChatProvider {
     gatewaySnapshot: false,
   }
 
-  private baseUrl: string
-  private apiKey: string
+  private client: OpenRouter
   private model: string
   private connected = false
   private connectionListeners: Array<(connected: boolean, reconnecting: boolean) => void> = []
@@ -71,23 +58,22 @@ export class OpenRouterChatProvider implements ChatProvider {
   private sessions: Map<string, OpenRouterMessage[]> = new Map()
 
   constructor(config: ProviderConfig) {
-    this.baseUrl = config.url.replace(/\/+$/, '')
-    this.apiKey = config.token
+    // Extract base URL without trailing slashes and without /api/v1 path
+    const baseUrl = config.url.replace(/\/+$/, '').replace(/\/api\/v1$/, '')
+
+    this.client = new OpenRouter({
+      apiKey: config.token,
+      serverURL: `${baseUrl}/api/v1`,
+      httpReferer: 'https://github.com/lumiere-app',
+      xTitle: 'Lumiere',
+    })
     this.model = config.model || DEFAULT_MODELS.OPENROUTER
   }
 
   async connect(): Promise<void> {
     try {
-      const response = await fetch(`${this.baseUrl}/v1/models`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${this.apiKey}`,
-        },
-      })
-
-      if (!response.ok && response.status !== 401) {
-        throw new Error(`API returned status ${response.status}`)
-      }
+      // Test connection by fetching models list
+      await this.client.models.list()
 
       this.connected = true
       this.notifyConnectionState(true, false)
@@ -174,69 +160,38 @@ export class OpenRouterChatProvider implements ChatProvider {
     this.abortController = new AbortController()
 
     try {
-      const response = await fetch(`${this.baseUrl}/v1/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.apiKey}`,
-          'HTTP-Referer': 'https://github.com/lumiere-app',
-          'X-Title': 'Lumiere',
+      // Convert our messages to SDK format
+      const sdkMessages: Message[] = messages.map(this.convertToSDKMessage)
+
+      // Use SDK to send chat completion request
+      const stream = await this.client.chat.send(
+        {
+          chatGenerationParams: {
+            model: this.model,
+            maxTokens: API_CONFIG.OPENROUTER_MAX_TOKENS,
+            messages: sdkMessages,
+            stream: true,
+          },
         },
-        body: JSON.stringify({
-          model: this.model,
-          max_tokens: API_CONFIG.OPENROUTER_MAX_TOKENS,
-          messages: messages.map(this.formatMessageForApi),
-          stream: true,
-        }),
-        signal: this.abortController.signal,
-      })
+        {
+          signal: this.abortController.signal,
+        },
+      )
 
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(`API error: ${response.status} - ${errorText}`)
-      }
-
-      const reader = response.body?.getReader()
-      if (!reader) {
-        throw new Error('No response body')
-      }
-
-      const decoder = new TextDecoder()
       let fullResponse = ''
-      let buffer = ''
 
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
+      // Process the stream
+      for await (const chunk of stream) {
+        const delta = chunk.data?.choices?.[0]?.delta?.content
 
-        buffer += decoder.decode(value, { stream: true })
+        if (delta) {
+          fullResponse += delta
+          onEvent({ type: 'delta', delta })
+        }
 
-        // Process SSE events
-        const lines = buffer.split('\n')
-        buffer = lines.pop() || ''
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6).trim()
-            if (data === '[DONE]') continue
-
-            try {
-              const chunk: OpenRouterStreamChunk = JSON.parse(data)
-
-              if (chunk.error) {
-                throw new Error(chunk.error.message || 'Stream error')
-              }
-
-              const delta = chunk.choices?.[0]?.delta?.content
-              if (delta) {
-                fullResponse += delta
-                onEvent({ type: 'delta', delta })
-              }
-            } catch (e) {
-              if (e instanceof SyntaxError) continue
-              throw e
-            }
-          }
+        // Check for errors in the chunk
+        if (chunk.data?.error) {
+          throw new Error(chunk.data.error.message || 'Stream error')
         }
       }
 
@@ -253,10 +208,36 @@ export class OpenRouterChatProvider implements ChatProvider {
     }
   }
 
-  private formatMessageForApi(msg: OpenRouterMessage): { role: string; content: unknown } {
-    return {
-      role: msg.role,
-      content: msg.content,
+  private convertToSDKMessage(msg: OpenRouterMessage): Message {
+    if (msg.role === 'user') {
+      const userMessage: UserMessage = {
+        role: 'user',
+        content:
+          typeof msg.content === 'string'
+            ? msg.content
+            : msg.content.map((part) => {
+                if (part.type === 'text') {
+                  return {
+                    type: 'text',
+                    text: part.text,
+                  }
+                } else {
+                  return {
+                    type: 'image_url',
+                    imageUrl: {
+                      url: part.image_url.url,
+                    },
+                  }
+                }
+              }),
+      }
+      return userMessage
+    } else {
+      const assistantMessage: AssistantMessage = {
+        role: 'assistant',
+        content: typeof msg.content === 'string' ? msg.content : null,
+      }
+      return assistantMessage
     }
   }
 
@@ -301,17 +282,8 @@ export class OpenRouterChatProvider implements ChatProvider {
 
   async getHealth(): Promise<HealthStatus> {
     try {
-      const response = await fetch(`${this.baseUrl}/v1/models`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${this.apiKey}`,
-        },
-      })
-
-      if (response.ok) {
-        return { status: 'healthy' }
-      }
-      return { status: 'degraded' }
+      await this.client.models.list()
+      return { status: 'healthy' }
     } catch {
       return { status: 'unhealthy' }
     }
