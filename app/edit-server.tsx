@@ -32,7 +32,9 @@ export default function EditServerScreen() {
       providerType !== 'echo' &&
       providerType !== 'apple' &&
       providerType !== 'claude' &&
-      providerType !== 'openai'
+      providerType !== 'openai' &&
+      providerType !== 'openrouter' &&
+      providerType !== 'emergent'
     if (needsUrlRequired && !url.trim()) {
       Alert.alert('Error', 'URL is required')
       return
@@ -47,6 +49,8 @@ export default function EditServerScreen() {
       effectiveUrl = 'https://api.anthropic.com'
     } else if (providerType === 'openai' && !effectiveUrl) {
       effectiveUrl = 'https://api.openai.com'
+    } else if (providerType === 'openrouter' && !effectiveUrl) {
+      effectiveUrl = 'https://openrouter.ai'
     } else if (providerType === 'emergent' && !effectiveUrl) {
       effectiveUrl = 'https://api.emergent.sh'
     }
@@ -151,9 +155,11 @@ export default function EditServerScreen() {
                       ? 'My Claude'
                       : providerType === 'openai'
                         ? 'My OpenAI'
-                        : providerType === 'emergent'
-                          ? 'My Emergent'
-                          : 'My Server'
+                        : providerType === 'openrouter'
+                          ? 'My OpenRouter'
+                          : providerType === 'emergent'
+                            ? 'My Emergent'
+                            : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -163,7 +169,9 @@ export default function EditServerScreen() {
           {providerType !== 'echo' &&
             providerType !== 'apple' &&
             providerType !== 'claude' &&
-            providerType !== 'openai' && (
+            providerType !== 'openai' &&
+            providerType !== 'openrouter' &&
+            providerType !== 'emergent' && (
               <View style={styles.formRow}>
                 <TextInput
                   label="URL"
@@ -223,6 +231,7 @@ export default function EditServerScreen() {
 
           {(providerType === 'claude' ||
             providerType === 'openai' ||
+            providerType === 'openrouter' ||
             providerType === 'emergent') && (
             <>
               <View style={styles.formRow}>
@@ -243,9 +252,11 @@ export default function EditServerScreen() {
                   placeholder={
                     providerType === 'openai'
                       ? 'gpt-4o'
-                      : providerType === 'emergent'
-                        ? 'claude-sonnet-4-5-20250514'
-                        : 'claude-sonnet-4-5-20250514'
+                      : providerType === 'openrouter'
+                        ? 'openai/gpt-4o'
+                        : providerType === 'emergent'
+                          ? 'claude-sonnet-4-5-20250514'
+                          : 'claude-sonnet-4-5-20250514'
                   }
                   autoCapitalize="none"
                   autoCorrect={false}
