@@ -2,10 +2,13 @@ import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 
+import { useAllServerSessions } from '../../hooks/useAllServerSessions'
 import { useServers } from '../../hooks/useServers'
 import { useMoltGateway } from '../../services/molt'
 import { ProviderConfig } from '../../services/providers'
+import { getServerToken } from '../../services/secureTokenStorage'
 import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../../store'
+import { isFoldable, isTablet } from '../../utils/device'
 import { SessionSidebar } from '../layout/SessionSidebar'
 import { SidebarLayout } from '../layout/SidebarLayout'
 import { ChatScreen } from './ChatScreen'
@@ -21,14 +24,23 @@ interface ChatWithSidebarProps {
 }
 
 export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
-  const { currentServerId } = useServers()
+  const { currentServerId, serversList, switchToServer } = useServers()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [sessionAliases] = useAtom(sessionAliasesAtom)
   const [sessions, setSessions] = useState<Session[]>([])
 
+  // Check if we're on a tablet or foldable device
+  const isTabletOrFoldable = isTablet() || isFoldable()
+
   // Only molt provider supports server-side sessions
   const supportsServerSessions = providerConfig?.type === 'molt'
+
+  // Load sessions for all servers (only on tablet/foldable)
+  const { serverSessions, reloadServerSessions } = useAllServerSessions(
+    isTabletOrFoldable ? serversList : [],
+    getServerToken,
+  )
 
   const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
     url: providerConfig?.url || '',
@@ -75,6 +87,10 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     setCurrentSessionKey(newSessionKey)
     // Reload sessions list
     loadSessions()
+    // Also reload for multi-server view
+    if (isTabletOrFoldable) {
+      reloadServerSessions(currentServerId)
+    }
   }
 
   const handleResetSession = () => {
@@ -97,6 +113,10 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
               Alert.alert('Success', 'Session has been reset')
               // Reload sessions to update message counts
               loadSessions()
+              // Also reload for multi-server view
+              if (isTabletOrFoldable) {
+                reloadServerSessions(currentServerId)
+              }
             } catch (err) {
               console.error('Failed to reset session:', err)
               Alert.alert('Error', 'Failed to reset session')
@@ -111,6 +131,22 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     setCurrentSessionKey(sessionKey)
   }
 
+  const handleSwitchServer = (serverId: string) => {
+    switchToServer(serverId)
+  }
+
+  // Prepare multi-server data for tablet/foldable
+  const serversWithSessions = isTabletOrFoldable
+    ? serversList.map((server) => {
+        const serverSessionData = serverSessions.get(server.id)
+        return {
+          server,
+          sessions: serverSessionData?.sessions || [],
+          connected: serverSessionData?.connected || false,
+        }
+      })
+    : undefined
+
   return (
     <SidebarLayout
       sidebar={
@@ -118,10 +154,13 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
           onNewSession={handleNewSession}
           onResetSession={handleResetSession}
           onSelectSession={handleSelectSession}
+          onSwitchServer={handleSwitchServer}
           sessions={sessions}
           currentSessionKey={currentSessionKey}
           sessionAliases={sessionAliases}
           supportsServerSessions={supportsServerSessions}
+          servers={serversWithSessions}
+          currentServerId={currentServerId}
         />
       }
     >
