@@ -167,7 +167,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
 
   const listSessions = useCallback(async () => {
     if (!client) {
-      throw new Error('Client not connected')
+      return null
     }
     return await client.listSessions()
   }, [client])
