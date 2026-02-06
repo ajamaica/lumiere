@@ -89,11 +89,9 @@ export function OnboardingFlow() {
           keyExtractor={(_, index) => index.toString()}
           onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={viewabilityConfig}
-          renderItem={({ item, index }) => (
+          renderItem={({ item }) => (
             <View style={styles.slideContainer}>
               <OnboardingIntroScreen
-                step={index}
-                totalSteps={totalSteps}
                 title={item.title}
                 description={item.description}
                 Illustration={item.illustration}

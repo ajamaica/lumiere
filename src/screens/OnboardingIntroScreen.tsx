@@ -1,12 +1,10 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import { Button, StepIndicator, Text } from '../components/ui'
+import { Button, Text } from '../components/ui'
 import { useTheme } from '../theme'
 
 interface OnboardingIntroScreenProps {
-  step: number
-  totalSteps: number
   title: string
   description: string
   Illustration: React.ComponentType
@@ -15,8 +13,6 @@ interface OnboardingIntroScreenProps {
 }
 
 export function OnboardingIntroScreen({
-  step,
-  totalSteps,
   title,
   description,
   Illustration,
@@ -58,8 +54,6 @@ export function OnboardingIntroScreen({
 
   return (
     <View style={styles.container}>
-      <StepIndicator currentStep={step} totalSteps={totalSteps} />
-
       <View style={styles.content}>
         <View style={styles.illustrationContainer}>
           <Illustration />
