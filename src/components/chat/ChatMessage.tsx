@@ -8,6 +8,7 @@ import { useAtom, useSetAtom } from 'jotai'
 import React, { useCallback, useMemo, useState } from 'react'
 import {
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -557,12 +558,14 @@ const createStyles = (theme: Theme) =>
       maxWidth: '80%',
       backgroundColor: theme.colors.message.user,
       borderBottomRightRadius: theme.borderRadius.sm,
+      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
     },
     agentBubble: {
       width: '100%',
       backgroundColor: 'transparent',
       borderRadius: 0,
       paddingHorizontal: 0,
+      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
     },
     intentActions: {
       flexDirection: 'row',
@@ -630,6 +633,7 @@ const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
       color: textColor,
       fontSize: theme.typography.fontSize.base,
       lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
+      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
     },
     text: {
       color: textColor,
