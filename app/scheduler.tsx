@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Badge, Button, Card, ScreenHeader, Section, StatCard, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'

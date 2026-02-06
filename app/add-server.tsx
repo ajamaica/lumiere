@@ -4,11 +4,11 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, Dropdown, ScreenHeader, Text, TextInput } from '../src/components/ui'
 import { getAllProviderOptions } from '../src/config/providerOptions'

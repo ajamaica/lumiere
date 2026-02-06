@@ -1,5 +1,6 @@
 import React from 'react'
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ScreenHeader, Section, Text } from '../src/components/ui'
 import { useTheme } from '../src/theme'

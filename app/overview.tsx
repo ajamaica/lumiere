@@ -2,13 +2,13 @@ import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import {
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   TextInput as RNTextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, Card, ScreenHeader, Section, StatCard, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'

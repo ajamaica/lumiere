@@ -3,13 +3,13 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import {
   Alert,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ScreenHeader } from '../src/components/ui'
 import { FavoriteItem, favoritesAtom } from '../src/store'

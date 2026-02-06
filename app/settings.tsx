@@ -8,13 +8,13 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Alert,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { getProviderIcon } from '../src/config/providerOptions'

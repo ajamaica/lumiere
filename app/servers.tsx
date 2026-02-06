@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
 import { getBasicProviderOptions, getProviderIcon } from '../src/config/providerOptions'
