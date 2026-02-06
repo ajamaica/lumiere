@@ -107,7 +107,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
     },
     toggleButton: {
       position: 'absolute',
-      top: insets.top + 10,
+      top: insets.top + 60,
       zIndex: 1000,
       backgroundColor: theme.colors.surface,
       borderRadius: 20,
