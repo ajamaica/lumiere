@@ -26,8 +26,7 @@ export default function AddServerScreen() {
     providerType !== 'echo' &&
     providerType !== 'apple' &&
     providerType !== 'claude' &&
-    providerType !== 'openai' &&
-    providerType !== 'emergent'
+    providerType !== 'openai'
   const needsToken =
     providerType === 'molt' ||
     providerType === 'claude' ||
@@ -179,7 +178,11 @@ export default function AddServerScreen() {
                 value={url}
                 onChangeText={setUrl}
                 placeholder={
-                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                  providerType === 'ollama'
+                    ? 'http://localhost:11434'
+                    : providerType === 'emergent'
+                      ? 'https://api.emergent.sh'
+                      : 'wss://gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}

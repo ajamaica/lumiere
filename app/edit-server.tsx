@@ -32,8 +32,7 @@ export default function EditServerScreen() {
       providerType !== 'echo' &&
       providerType !== 'apple' &&
       providerType !== 'claude' &&
-      providerType !== 'openai' &&
-      providerType !== 'emergent'
+      providerType !== 'openai'
     if (needsUrlRequired && !url.trim()) {
       Alert.alert('Error', 'URL is required')
       return
@@ -164,8 +163,7 @@ export default function EditServerScreen() {
           {providerType !== 'echo' &&
             providerType !== 'apple' &&
             providerType !== 'claude' &&
-            providerType !== 'openai' &&
-            providerType !== 'emergent' && (
+            providerType !== 'openai' && (
               <View style={styles.formRow}>
                 <TextInput
                   label="URL"
@@ -174,7 +172,9 @@ export default function EditServerScreen() {
                   placeholder={
                     providerType === 'ollama'
                       ? 'http://localhost:11434'
-                      : 'wss://gateway.example.com'
+                      : providerType === 'emergent'
+                        ? 'https://api.emergent.sh'
+                        : 'wss://gateway.example.com'
                   }
                   autoCapitalize="none"
                   autoCorrect={false}
