@@ -308,6 +308,8 @@ export default function TriggersScreen() {
               value={newMessage}
               onChangeText={setNewMessage}
               multiline
+              numberOfLines={8}
+              style={{ minHeight: 160, textAlignVertical: 'top' }}
             />
 
             <View style={styles.createMeta}>
