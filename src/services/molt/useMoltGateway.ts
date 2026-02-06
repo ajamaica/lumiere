@@ -86,7 +86,9 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
 
       // Set up connection state listener
       newClient.onConnectionStateChange((isConnected, reconnecting) => {
-        gatewayLogger.info(`Connection state: connected=${isConnected}, reconnecting=${reconnecting}`)
+        gatewayLogger.info(
+          `Connection state: connected=${isConnected}, reconnecting=${reconnecting}`,
+        )
         setConnected(isConnected)
         setConnecting(reconnecting)
         if (reconnecting) {
