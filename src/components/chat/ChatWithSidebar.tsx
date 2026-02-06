@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-native'
 
 import { useServers } from '../../hooks/useServers'
@@ -30,6 +30,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   const [sessionAliases] = useAtom(sessionAliasesAtom)
   const [sessions, setSessions] = useState<Session[]>([])
   const [loadingSessions, setLoadingSessions] = useState(false)
+  const sessionLoadIdRef = useRef(0)
 
   // Only molt provider supports server-side sessions
   const supportsServerSessions = providerConfig?.type === 'molt'
@@ -51,6 +52,10 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   }, [providerConfig, supportsServerSessions, currentServerId])
 
   const loadSessions = useCallback(async () => {
+    // Increment load ID so any in-flight request from a previous server
+    // is discarded when it resolves.
+    const loadId = ++sessionLoadIdRef.current
+
     // For non-molt providers, just show current session
     if (!supportsServerSessions) {
       setSessions([{ key: currentSessionKey }])
@@ -68,6 +73,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     setLoadingSessions(true)
     try {
       const sessionData = (await listSessions()) as { sessions?: Session[] }
+      if (loadId !== sessionLoadIdRef.current) return // stale response
       if (sessionData?.sessions && Array.isArray(sessionData.sessions)) {
         setSessions(sessionData.sessions)
       }
@@ -76,7 +82,9 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       // Fallback to showing current session
       setSessions([{ key: currentSessionKey }])
     } finally {
-      setLoadingSessions(false)
+      if (loadId === sessionLoadIdRef.current) {
+        setLoadingSessions(false)
+      }
     }
   }, [connected, listSessions, supportsServerSessions, currentSessionKey])
 
