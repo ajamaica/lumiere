@@ -122,8 +122,6 @@ export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTa
     const sessions = await resolveAtom(store.get(serverSessionsAtom))
     const defaultSession = await resolveAtom(store.get(currentSessionKeyAtom))
 
-    let notifiedCount = 0
-
     for (const serverId of Object.keys(servers)) {
       const server = servers[serverId]
 
@@ -148,7 +146,6 @@ export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTa
           },
           trigger: null, // fire immediately
         })
-        notifiedCount++
       }
     }
 
