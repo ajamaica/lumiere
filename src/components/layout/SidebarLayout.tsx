@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { useTheme } from '../../theme'
 import { useDeviceType, useOrientation } from '../../utils/device'
@@ -25,6 +26,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
   const { theme } = useTheme()
   const deviceType = useDeviceType()
   const orientation = useOrientation()
+  const insets = useSafeAreaInsets()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const isInitialMount = useRef(true)
 
@@ -105,7 +107,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
     },
     toggleButton: {
       position: 'absolute',
-      top: 10,
+      top: insets.top + 10,
       zIndex: 1000,
       backgroundColor: theme.colors.surface,
       borderRadius: 20,

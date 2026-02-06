@@ -17,7 +17,6 @@ import { useQuickActions } from '../src/hooks/useQuickActions'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
-import { useIsTablet } from '../src/utils/device'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -28,7 +27,6 @@ function AppContent() {
   const [isUnlocked, setIsUnlocked] = useState(false)
   const appState = useRef(AppState.currentState)
   const isLocked = biometricLockEnabled && !isUnlocked
-  const isTablet = useIsTablet()
   useDeepLinking(isLocked)
   useNotifications()
   useQuickActions()
