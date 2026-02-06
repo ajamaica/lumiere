@@ -6,14 +6,7 @@ import { useAtom, useSetAtom } from 'jotai'
 import { RESET } from 'jotai/utils'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ScreenHeader, Section, SettingRow } from '../src/components/ui'

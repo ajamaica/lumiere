@@ -1,14 +1,7 @@
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native'
+import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
