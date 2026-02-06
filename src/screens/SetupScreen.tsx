@@ -62,7 +62,10 @@ export function SetupScreen() {
 
   const needsUrl = providerType === 'molt' || providerType === 'ollama'
   const needsToken =
-    providerType === 'molt' || providerType === 'claude' || providerType === 'openai'
+    providerType === 'molt' ||
+    providerType === 'claude' ||
+    providerType === 'openai' ||
+    providerType === 'openrouter'
 
   const handleComplete = async () => {
     if (providerType === 'molt' && localUrl.trim() && localToken.trim()) {
@@ -141,6 +144,25 @@ export function SetupScreen() {
       }))
 
       setOnboardingCompleted(true)
+    } else if (providerType === 'openrouter' && localToken.trim()) {
+      const serverId = await addServer(
+        {
+          name: 'My OpenRouter',
+          url: localUrl.trim() || 'https://openrouter.ai',
+          providerType: 'openrouter',
+          model: localModel.trim() || undefined,
+        },
+        localToken.trim(),
+      )
+
+      const sessionKey = DEFAULT_SESSION_KEY
+      setCurrentSessionKey(sessionKey)
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
+
+      setOnboardingCompleted(true)
     } else if (providerType === 'echo') {
       const serverId = await addServer(
         {
@@ -177,13 +199,31 @@ export function SetupScreen() {
       }))
 
       setOnboardingCompleted(true)
+    } else if (providerType === 'gemini-nano') {
+      const serverId = await addServer(
+        {
+          name: 'Gemini Nano',
+          url: '',
+          providerType: 'gemini-nano',
+        },
+        '',
+      )
+
+      const sessionKey = DEFAULT_SESSION_KEY
+      setCurrentSessionKey(sessionKey)
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
+
+      setOnboardingCompleted(true)
     }
   }
 
   const isValid =
     providerType === 'molt'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
-      : providerType === 'claude' || providerType === 'openai'
+      : providerType === 'claude' || providerType === 'openai' || providerType === 'openrouter'
         ? localToken.trim().length > 0
         : providerType === 'ollama'
           ? localUrl.trim().length > 0
@@ -233,11 +273,19 @@ export function SetupScreen() {
 
           {needsToken && (
             <TextInput
-              label={providerType === 'claude' || providerType === 'openai' ? 'API Key' : 'Token'}
+              label={
+                providerType === 'claude' ||
+                providerType === 'openai' ||
+                providerType === 'openrouter'
+                  ? 'API Key'
+                  : 'Token'
+              }
               value={localToken}
               onChangeText={setLocalToken}
               placeholder={
-                providerType === 'claude' || providerType === 'openai'
+                providerType === 'claude' ||
+                providerType === 'openai' ||
+                providerType === 'openrouter'
                   ? 'Your API key'
                   : 'Your authentication token'
               }
@@ -249,14 +297,17 @@ export function SetupScreen() {
                   ? 'Your Anthropic API key'
                   : providerType === 'openai'
                     ? 'Your OpenAI API key'
-                    : 'Your authentication token for the gateway'
+                    : providerType === 'openrouter'
+                      ? 'Your OpenRouter API key'
+                      : 'Your authentication token for the gateway'
               }
             />
           )}
 
           {(providerType === 'ollama' ||
             providerType === 'claude' ||
-            providerType === 'openai') && (
+            providerType === 'openai' ||
+            providerType === 'openrouter') && (
             <TextInput
               label="Model"
               value={localModel}
@@ -266,7 +317,9 @@ export function SetupScreen() {
                   ? 'llama3.2'
                   : providerType === 'claude'
                     ? 'claude-sonnet-4-5-20250514'
-                    : 'gpt-4o'
+                    : providerType === 'openai'
+                      ? 'gpt-4o'
+                      : 'openai/gpt-4o'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -275,7 +328,9 @@ export function SetupScreen() {
                   ? 'Ollama model to use (default: llama3.2)'
                   : providerType === 'claude'
                     ? 'Claude model to use (default: claude-sonnet-4-5)'
-                    : 'OpenAI model to use (default: gpt-4o)'
+                    : providerType === 'openai'
+                      ? 'OpenAI model to use (default: gpt-4o)'
+                      : 'OpenRouter model to use (default: openai/gpt-4o)'
               }
             />
           )}

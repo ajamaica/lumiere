@@ -25,12 +25,14 @@ export default function AddServerScreen() {
   const needsUrl =
     providerType !== 'echo' &&
     providerType !== 'apple' &&
+    providerType !== 'gemini-nano' &&
     providerType !== 'claude' &&
     providerType !== 'openai'
   const needsToken =
     providerType === 'molt' ||
     providerType === 'claude' ||
     providerType === 'openai' ||
+    providerType === 'openrouter' ||
     providerType === 'emergent'
 
   const handleAdd = async () => {
@@ -58,10 +60,15 @@ export default function AddServerScreen() {
     } else if (providerType === 'apple') {
       effectiveUrl = 'apple://on-device'
       effectiveToken = 'apple-no-token'
+    } else if (providerType === 'gemini-nano') {
+      effectiveUrl = 'gemini-nano://on-device'
+      effectiveToken = 'gemini-nano-no-token'
     } else if (providerType === 'claude' && !effectiveUrl) {
       effectiveUrl = 'https://api.anthropic.com'
     } else if (providerType === 'openai' && !effectiveUrl) {
       effectiveUrl = 'https://api.openai.com'
+    } else if (providerType === 'openrouter' && !effectiveUrl) {
+      effectiveUrl = 'https://openrouter.ai'
     } else if (providerType === 'emergent' && !effectiveUrl) {
       effectiveUrl = 'https://api.emergent.sh'
     }
@@ -76,13 +83,17 @@ export default function AddServerScreen() {
           name.trim() ||
           (providerType === 'apple'
             ? 'Apple Intelligence'
-            : providerType === 'claude'
-              ? 'Claude'
-              : providerType === 'openai'
-                ? 'OpenAI'
-                : providerType === 'emergent'
-                  ? 'Emergent'
-                  : 'New Server'),
+            : providerType === 'gemini-nano'
+              ? 'Gemini Nano'
+              : providerType === 'claude'
+                ? 'Claude'
+                : providerType === 'openai'
+                  ? 'OpenAI'
+                  : providerType === 'openrouter'
+                    ? 'OpenRouter'
+                    : providerType === 'emergent'
+                      ? 'Emergent'
+                      : 'New Server'),
         url: effectiveUrl,
         clientId: clientId.trim() || 'lumiere-mobile',
         providerType,
@@ -149,13 +160,17 @@ export default function AddServerScreen() {
                     ? 'My Echo Server'
                     : providerType === 'apple'
                       ? 'Apple Intelligence'
-                      : providerType === 'claude'
-                        ? 'My Claude'
-                        : providerType === 'openai'
-                          ? 'My OpenAI'
-                          : providerType === 'emergent'
-                            ? 'My Emergent'
-                            : 'My Server'
+                      : providerType === 'gemini-nano'
+                        ? 'Gemini Nano'
+                        : providerType === 'claude'
+                          ? 'My Claude'
+                          : providerType === 'openai'
+                            ? 'My OpenAI'
+                            : providerType === 'openrouter'
+                              ? 'My OpenRouter'
+                              : providerType === 'emergent'
+                                ? 'My Emergent'
+                                : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -167,6 +182,15 @@ export default function AddServerScreen() {
               <Text variant="caption" color="secondary">
                 Uses Apple Foundation Models to run AI entirely on-device via CoreML. Requires iOS
                 26+ with Apple Intelligence support.
+              </Text>
+            </View>
+          )}
+
+          {providerType === 'gemini-nano' && (
+            <View style={styles.formRow}>
+              <Text variant="caption" color="secondary">
+                Uses Google Gemini Nano to run AI entirely on-device. Requires Android 14+ with
+                Gemini Nano support.
               </Text>
             </View>
           )}
@@ -297,6 +321,31 @@ export default function AddServerScreen() {
                   value={model}
                   onChangeText={setModel}
                   placeholder="claude-sonnet-4-5-20250514"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+            </>
+          )}
+
+          {providerType === 'openrouter' && (
+            <>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="API Key"
+                  value={token}
+                  onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="Model"
+                  value={model}
+                  onChangeText={setModel}
+                  placeholder="openai/gpt-4o"
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
