@@ -16,13 +16,14 @@ interface ClaudeMessage {
 }
 
 interface ClaudeContentBlock {
-  type: 'text' | 'image'
+  type: 'text' | 'image' | 'document'
   text?: string
   source?: {
     type: 'base64'
     media_type: string
     data: string
   }
+  title?: string
 }
 
 interface ClaudeStreamEvent {
@@ -55,6 +56,7 @@ export class ClaudeChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: true,
+    fileAttachments: true,
     serverSessions: false,
     persistentHistory: false,
     scheduler: false,
@@ -181,7 +183,7 @@ export class ClaudeChatProvider implements ChatProvider {
       contentBlocks.push({ type: 'text', text: params.message })
     }
 
-    // Add image attachments if present
+    // Add image and document attachments if present
     if (params.attachments?.length) {
       for (const attachment of params.attachments) {
         if (attachment.type === 'image' && attachment.data) {
@@ -192,6 +194,16 @@ export class ClaudeChatProvider implements ChatProvider {
               media_type: attachment.mimeType || 'image/png',
               data: attachment.data,
             },
+          })
+        } else if (attachment.type === 'document' && attachment.data) {
+          contentBlocks.push({
+            type: 'document',
+            source: {
+              type: 'base64',
+              media_type: attachment.mimeType || 'application/pdf',
+              data: attachment.data,
+            },
+            title: attachment.name,
           })
         }
       }

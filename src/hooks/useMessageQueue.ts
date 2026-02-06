@@ -1,3 +1,4 @@
+import * as FileSystem from 'expo-file-system'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -67,14 +68,37 @@ export function useMessageQueue({
       let accumulatedText = ''
 
       // Convert MessageAttachments to provider attachments
-      // Only include image attachments that have base64 data
-      const providerAttachments: ProviderAttachment[] | undefined = attachments
-        ?.filter((a) => a.type === 'image' && a.base64)
-        .map((a) => ({
-          type: 'image' as const,
-          data: a.base64,
-          mimeType: a.mimeType,
-        }))
+      // Include image attachments (base64) and file/document attachments (read from URI)
+      let providerAttachments: ProviderAttachment[] | undefined
+      if (attachments?.length) {
+        const converted: ProviderAttachment[] = []
+        for (const a of attachments) {
+          if (a.type === 'image' && a.base64) {
+            converted.push({
+              type: 'image' as const,
+              data: a.base64,
+              mimeType: a.mimeType,
+            })
+          } else if (a.type === 'file' && a.uri) {
+            try {
+              const base64 = await FileSystem.readAsStringAsync(a.uri, {
+                encoding: FileSystem.EncodingType.Base64,
+              })
+              converted.push({
+                type: 'document' as const,
+                data: base64,
+                mimeType: a.mimeType || 'application/octet-stream',
+                name: a.name,
+              })
+            } catch (err) {
+              queueLogger.logError('Failed to read file as base64', err)
+            }
+          }
+        }
+        if (converted.length > 0) {
+          providerAttachments = converted
+        }
+      }
 
       try {
         await providerSendMessage(

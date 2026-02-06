@@ -20,6 +20,7 @@ export class MoltChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: true,
+    fileAttachments: false,
     serverSessions: true,
     persistentHistory: true,
     scheduler: true,

@@ -19,6 +19,7 @@ export class EchoChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: false,
+    fileAttachments: false,
     serverSessions: false,
     persistentHistory: false,
     scheduler: false,

@@ -24,6 +24,7 @@ function createMockProvider(overrides: Partial<ChatProvider> = {}): ChatProvider
   const capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: false,
+    fileAttachments: false,
     serverSessions: false,
     persistentHistory: false,
     scheduler: false,

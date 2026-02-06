@@ -29,6 +29,7 @@
     "expo-constants": "^18.0.13",
     "expo-contacts": "^15.0.11",
     "expo-document-picker": "^14.0.8",
+    "expo-file-system": "^19.0.21",
     "expo-font": "~14.0.11",
     "expo-glass-effect": "^0.1.8",
     "expo-image-picker": "^17.0.10",

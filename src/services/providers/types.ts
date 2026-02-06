@@ -36,9 +36,10 @@ export interface SendMessageParams {
 }
 
 export interface ProviderAttachment {
-  type: 'image'
+  type: 'image' | 'document'
   data?: string // base64
   mimeType?: string
+  name?: string
 }
 
 export interface ChatHistoryMessage {
@@ -67,6 +68,8 @@ export interface ProviderCapabilities {
   chat: boolean
   /** Sending image attachments alongside messages */
   imageAttachments: boolean
+  /** Sending file/document attachments alongside messages */
+  fileAttachments: boolean
   /** Server-side session persistence (list / switch / reset) */
   serverSessions: boolean
   /** Persistent chat history that survives app restarts */
