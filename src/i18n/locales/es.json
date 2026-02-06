@@ -26,6 +26,7 @@
     "favorites": "Favoritos",
     "triggers": "Disparadores",
     "overview": "Resumen",
+    "serverConfig": "Configuración del Servidor",
     "cronJobs": "Tareas Programadas",
     "componentGallery": "Galería de Componentes",
     "logout": "Cerrar Sesión",

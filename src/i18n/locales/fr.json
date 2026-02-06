@@ -26,6 +26,7 @@
     "favorites": "Favoris",
     "triggers": "Déclencheurs",
     "overview": "Aperçu",
+    "serverConfig": "Configuration Serveur",
     "cronJobs": "Tâches planifiées",
     "componentGallery": "Galerie de composants",
     "logout": "Déconnexion",

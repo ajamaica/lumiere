@@ -26,6 +26,7 @@
     "favorites": "Favorites",
     "triggers": "Triggers",
     "overview": "Overview",
+    "serverConfig": "Server Config",
     "cronJobs": "Cron Jobs",
     "componentGallery": "Component Gallery",
     "logout": "Logout",

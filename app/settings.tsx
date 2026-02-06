@@ -259,9 +259,9 @@ export default function SettingsScreen() {
           />
         </Section>
 
-        {/* Control group - only available for OpenClaw (Molt) servers */}
+        {/* Server Config - only available for OpenClaw (Molt) servers */}
         {currentServer?.providerType === 'molt' && (
-          <Section showDivider>
+          <Section title={t('settings.serverConfig')} showDivider>
             <SettingRow
               icon="grid-outline"
               label={t('settings.overview')}
