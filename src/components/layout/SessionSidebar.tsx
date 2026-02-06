@@ -193,7 +193,9 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
       <View style={styles.contentContainer}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.headerTitle} accessibilityRole="header">Sessions</Text>
+          <Text style={styles.headerTitle} accessibilityRole="header">
+            Sessions
+          </Text>
         </View>
 
         {/* Actions Section */}

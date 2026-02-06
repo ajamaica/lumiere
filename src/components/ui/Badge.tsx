@@ -61,7 +61,12 @@ export function Badge({ label, variant = 'default', style, ...props }: BadgeProp
   })
 
   return (
-    <View style={[styles.badge, style]} accessibilityRole="text" accessibilityLabel={label} {...props}>
+    <View
+      style={[styles.badge, style]}
+      accessibilityRole="text"
+      accessibilityLabel={label}
+      {...props}
+    >
       <Text style={styles.text}>{label}</Text>
     </View>
   )

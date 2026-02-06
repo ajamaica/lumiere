@@ -101,7 +101,9 @@ export function ScreenHeader({
         </TouchableOpacity>
       )}
       <View style={styles.content}>
-        <Text style={styles.title} accessibilityRole="header">{title}</Text>
+        <Text style={styles.title} accessibilityRole="header">
+          {title}
+        </Text>
         {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
       </View>
       {right}
