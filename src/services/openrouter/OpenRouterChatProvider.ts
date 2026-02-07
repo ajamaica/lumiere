@@ -44,6 +44,13 @@ interface OpenRouterStreamChunk {
 }
 
 /**
+ * Truncate a session key to fit within OpenRouter's 128-character session_id limit.
+ */
+function toSessionId(sessionKey: string): string {
+  return sessionKey.slice(0, 128)
+}
+
+/**
  * Chat provider for the OpenRouter API.
  *
  * OpenRouter provides a unified API for accessing many AI models
@@ -183,11 +190,14 @@ export class OpenRouterChatProvider implements ChatProvider {
       let fullResponse = ''
       let lastIndex = 0
 
+      const sessionId = toSessionId(params.sessionKey)
+
       xhr.open('POST', `${this.baseUrl}/api/v1/chat/completions`)
       xhr.setRequestHeader('Content-Type', 'application/json')
       xhr.setRequestHeader('Authorization', `Bearer ${this.apiKey}`)
       xhr.setRequestHeader('HTTP-Referer', 'https://github.com/lumiere-app')
       xhr.setRequestHeader('X-Title', 'Lumiere')
+      xhr.setRequestHeader('x-session-id', sessionId)
 
       xhr.onprogress = () => {
         const newData = xhr.responseText.substring(lastIndex)
@@ -252,6 +262,7 @@ export class OpenRouterChatProvider implements ChatProvider {
           max_tokens: API_CONFIG.OPENROUTER_MAX_TOKENS,
           messages: messages.map(this.formatMessageForApi),
           stream: true,
+          session_id: sessionId,
         }),
       )
     })
