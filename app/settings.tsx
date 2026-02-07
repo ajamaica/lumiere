@@ -13,7 +13,7 @@ import { ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { getProviderIcon } from '../src/config/providerOptions'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
-import { backgroundCheckTask } from '../src/services/notifications/notificationService'
+import { backgroundCheckTask } from '../src/services/notifications'
 import {
   backgroundNotificationsEnabledAtom,
   biometricLockEnabledAtom,
@@ -94,8 +94,7 @@ export default function SettingsScreen() {
   const handleTestNotifications = async () => {
     try {
       const result = await backgroundCheckTask()
-      const resultText =
-        result === 1 ? 'NewData (notification sent)' : result === 2 ? 'NoData' : 'Failed'
+      const resultText = result === 1 ? 'Success' : result === 2 ? 'Failed' : 'Unknown'
       Alert.alert('Background Check Result', `Result: ${resultText}`)
     } catch (error) {
       Alert.alert('Error', String(error))
