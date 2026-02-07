@@ -69,6 +69,15 @@ describe('createChatProvider', () => {
     expect(provider).toBeInstanceOf(CachedChatProvider)
   })
 
+  it('creates a CachedChatProvider wrapping gemini for gemini type', () => {
+    const provider = createChatProvider({
+      type: 'gemini',
+      url: 'https://generativelanguage.googleapis.com',
+      token: 'test-key',
+    })
+    expect(provider).toBeInstanceOf(CachedChatProvider)
+  })
+
   it('throws for unknown provider type', () => {
     expect(() =>
       createChatProvider({

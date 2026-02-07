@@ -5,6 +5,7 @@ import { SvgProps } from 'react-native-svg'
 import AppleIcon from '../../assets/provider-apple.svg'
 import ClaudeIcon from '../../assets/provider-claude.svg'
 import EchoIcon from '../../assets/provider-echo.svg'
+import GeminiIcon from '../../assets/provider-gemini.svg'
 import OllamaIcon from '../../assets/provider-ollama.svg'
 import OpenAIIcon from '../../assets/provider-openai.svg'
 import OpenClawIcon from '../../assets/provider-openclaw.svg'
@@ -26,6 +27,7 @@ export function getProviderIcon(type: ProviderType, color: string): React.ReactN
     openrouter: OpenRouterIcon,
     apple: AppleIcon,
     echo: EchoIcon,
+    gemini: GeminiIcon,
     'gemini-nano': null, // TODO: Add Gemini icon
     emergent: null, // TODO: Add Emergent icon
   }
@@ -42,6 +44,7 @@ export function getAllProviderOptions(color: string) {
     { value: 'claude', label: 'Claude', icon: getProviderIcon('claude', color) },
     { value: 'openai', label: 'OpenAI', icon: getProviderIcon('openai', color) },
     { value: 'openrouter', label: 'OpenRouter', icon: getProviderIcon('openrouter', color) },
+    { value: 'gemini', label: 'Gemini', icon: getProviderIcon('gemini', color) },
     ...(Platform.OS === 'ios'
       ? [
           {
@@ -88,6 +91,11 @@ export function getBasicProviderOptions(color: string) {
       value: 'openrouter' as ProviderType,
       label: 'OpenRouter',
       icon: getProviderIcon('openrouter', color),
+    },
+    {
+      value: 'gemini' as ProviderType,
+      label: 'Gemini',
+      icon: getProviderIcon('gemini', color),
     },
     ...(Platform.OS === 'ios'
       ? [
