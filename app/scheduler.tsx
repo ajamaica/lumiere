@@ -107,6 +107,14 @@ export default function SchedulerScreen() {
     await fetchSchedulerData()
   }
 
+  const getErrorMessage = (err: unknown): string => {
+    if (err instanceof Error) return err.message
+    if (typeof err === 'object' && err !== null && 'message' in err) {
+      return String((err as { message: unknown }).message)
+    }
+    return String(err)
+  }
+
   const handleToggleJob = async (job: CronJob) => {
     try {
       if (job.enabled) {
@@ -116,8 +124,9 @@ export default function SchedulerScreen() {
       }
       await fetchSchedulerData()
     } catch (err) {
+      const message = getErrorMessage(err)
       schedulerLogger.logError('Failed to toggle job', err)
-      Alert.alert('Error', 'Failed to toggle job')
+      Alert.alert('Error', `Failed to ${job.enabled ? 'disable' : 'enable'} job: ${message}`)
     }
   }
 
@@ -126,8 +135,9 @@ export default function SchedulerScreen() {
       await runCronJob(job.name)
       Alert.alert('Success', `Job "${job.name}" has been triggered`)
     } catch (err) {
+      const message = getErrorMessage(err)
       schedulerLogger.logError('Failed to run job', err)
-      Alert.alert('Error', 'Failed to run job')
+      Alert.alert('Error', `Failed to run job: ${message}`)
     }
   }
 
@@ -142,8 +152,9 @@ export default function SchedulerScreen() {
             await removeCronJob(job.name)
             await fetchSchedulerData()
           } catch (err) {
+            const message = getErrorMessage(err)
             schedulerLogger.logError('Failed to remove job', err)
-            Alert.alert('Error', 'Failed to remove job')
+            Alert.alert('Error', `Failed to remove job: ${message}`)
           }
         },
       },

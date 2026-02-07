@@ -75,6 +75,7 @@ export class MoltGatewayClient {
         this.ws.onclose = () => {
           wsLogger.info('WebSocket closed')
           this.connected = false
+          this.rejectPendingRequests('WebSocket connection closed')
           this.notifyConnectionState()
           this.handleReconnect()
         }
@@ -160,6 +161,19 @@ export class MoltGatewayClient {
     return this.reconnectExhausted
   }
 
+  private rejectPendingRequests(reason: string) {
+    const handlers = Array.from(this.responseHandlers.entries())
+    this.responseHandlers.clear()
+    for (const [, handler] of handlers) {
+      handler({
+        type: 'res',
+        id: '',
+        ok: false,
+        error: { code: 'CONNECTION_LOST', message: reason },
+      })
+    }
+  }
+
   private notifyConnectionState() {
     this.connectionStateListeners.forEach((listener) => listener(this.connected, this.reconnecting))
   }
@@ -170,6 +184,8 @@ export class MoltGatewayClient {
       this.connectionStateListeners = this.connectionStateListeners.filter((l) => l !== listener)
     }
   }
+
+  private static REQUEST_TIMEOUT_MS = 30_000
 
   request(method: string, params?: unknown): Promise<unknown> {
     return new Promise((resolve, reject) => {
@@ -186,11 +202,22 @@ export class MoltGatewayClient {
         params,
       }
 
+      const timer = setTimeout(() => {
+        this.responseHandlers.delete(id)
+        reject(
+          new Error(
+            `Request "${method}" timed out after ${MoltGatewayClient.REQUEST_TIMEOUT_MS}ms`,
+          ),
+        )
+      }, MoltGatewayClient.REQUEST_TIMEOUT_MS)
+
       this.responseHandlers.set(id, (response) => {
+        clearTimeout(timer)
         if (response.ok) {
           resolve(response.payload)
         } else {
-          reject(response.error)
+          const err = response.error
+          reject(new Error(err?.message || `Request "${method}" failed`))
         }
       })
 
@@ -294,6 +321,8 @@ export class MoltGatewayClient {
       clearTimeout(this.reconnectTimer)
       this.reconnectTimer = null
     }
+
+    this.rejectPendingRequests('Client disconnected')
 
     if (this.ws) {
       this.ws.close()
