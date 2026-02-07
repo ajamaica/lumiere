@@ -45,6 +45,9 @@
       "enablePrompt": "Autentícate para habilitar el bloqueo con Face ID"
     },
     "language": "Idioma",
+    "backupRestore": "Respaldo y Restauración",
+    "backupServers": "Respaldar Servidores",
+    "restoreServers": "Restaurar Servidores",
     "contribute": "Contribuir"
   },
   "home": {
@@ -151,5 +154,29 @@
   },
   "overview": {
     "title": "Resumen"
+  },
+  "backupServers": {
+    "title": "Respaldar Servidores",
+    "description": "Exporta tus configuraciones de servidor como archivo JSON. Los tokens no se incluyen por seguridad.",
+    "serverCount": "{{count}} servidor(es) serán exportados",
+    "noServers": "No hay servidores para respaldar",
+    "exportButton": "Exportar Respaldo",
+    "exportSuccess": "Respaldo exportado exitosamente",
+    "exportError": "Error al exportar el respaldo"
+  },
+  "restoreServers": {
+    "title": "Restaurar Servidores",
+    "description": "Importa configuraciones de servidor desde un archivo de respaldo JSON. Necesitarás reingresar los tokens después de la importación.",
+    "selectFile": "Seleccionar Archivo de Respaldo",
+    "importButton": "Importar Servidores",
+    "preview": "Vista Previa",
+    "serversFound": "{{count}} servidor(es) encontrados en el respaldo",
+    "noFile": "Ningún archivo seleccionado",
+    "importSuccess": "Servidores importados exitosamente",
+    "importError": "Error al importar servidores",
+    "invalidFile": "Formato de archivo de respaldo inválido",
+    "duplicateSkipped": "Los servidores duplicados fueron omitidos",
+    "replaceExisting": "Reemplazar servidores existentes",
+    "mergeWithExisting": "Combinar con servidores existentes"
   }
 }

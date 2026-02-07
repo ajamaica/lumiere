@@ -258,6 +258,21 @@ export default function SettingsScreen() {
           />
         </Section>
 
+        {/* Backup & Restore */}
+        <Section title={t('settings.backupRestore')} showDivider>
+          <SettingRow
+            icon="cloud-download-outline"
+            label={t('settings.backupServers')}
+            onPress={() => router.push('/backup-servers')}
+          />
+          <SettingRow
+            icon="cloud-upload-outline"
+            label={t('settings.restoreServers')}
+            onPress={() => router.push('/restore-servers')}
+            showDivider={false}
+          />
+        </Section>
+
         {/* Server Config - only available for OpenClaw (Molt) servers */}
         {currentServer?.providerType === 'molt' && (
           <Section title={t('settings.serverConfig')} showDivider>

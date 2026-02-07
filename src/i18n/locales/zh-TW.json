@@ -44,7 +44,10 @@
       "notEnrolledMessage": "此裝置未註冊生物辨識憑證。",
       "enablePrompt": "請驗證以啟用 Face ID 鎖定"
     },
-    "language": "語言"
+    "language": "語言",
+    "backupRestore": "備份與還原",
+    "backupServers": "備份伺服器",
+    "restoreServers": "還原伺服器"
   },
   "home": {
     "connectionError": "連線錯誤",
@@ -150,5 +153,29 @@
   },
   "overview": {
     "title": "總覽"
+  },
+  "backupServers": {
+    "title": "備份伺服器",
+    "description": "將伺服器設定匯出為 JSON 檔案。基於安全考量，權杖不會被包含在內。",
+    "serverCount": "將匯出 {{count}} 個伺服器",
+    "noServers": "沒有可備份的伺服器",
+    "exportButton": "匯出備份",
+    "exportSuccess": "備份匯出成功",
+    "exportError": "備份匯出失敗"
+  },
+  "restoreServers": {
+    "title": "還原伺服器",
+    "description": "從 JSON 備份檔案匯入伺服器設定。匯入後需要重新輸入權杖。",
+    "selectFile": "選擇備份檔案",
+    "importButton": "匯入伺服器",
+    "preview": "預覽",
+    "serversFound": "在備份中發現 {{count}} 個伺服器",
+    "noFile": "未選擇檔案",
+    "importSuccess": "伺服器匯入成功",
+    "importError": "伺服器匯入失敗",
+    "invalidFile": "無效的備份檔案格式",
+    "duplicateSkipped": "重複的伺服器已略過",
+    "replaceExisting": "取代現有伺服器",
+    "mergeWithExisting": "與現有伺服器合併"
   }
 }
