@@ -324,14 +324,6 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
                       {getProviderIcon(
                         server.providerType,
                         isActiveServer ? theme.colors.primary : theme.colors.text.secondary,
-                      ) || (
-                        <Ionicons
-                          name={isActiveServer ? 'cloud' : 'cloud-outline'}
-                          size={18}
-                          color={
-                            isActiveServer ? theme.colors.primary : theme.colors.text.secondary
-                          }
-                        />
                       )}
                       <Text
                         style={[

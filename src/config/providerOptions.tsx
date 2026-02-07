@@ -4,8 +4,12 @@ import { SvgProps } from 'react-native-svg'
 
 import AppleIcon from '../../assets/provider-apple.svg'
 import ClaudeIcon from '../../assets/provider-claude.svg'
+import DefaultIcon from '../../assets/provider-default.svg'
 import EchoIcon from '../../assets/provider-echo.svg'
+import EmergentIcon from '../../assets/provider-emergent.svg'
 import GeminiIcon from '../../assets/provider-gemini.svg'
+import GeminiNanoIcon from '../../assets/provider-gemini-nano.svg'
+import KimiIcon from '../../assets/provider-kimi.svg'
 import OllamaIcon from '../../assets/provider-ollama.svg'
 import OpenAIIcon from '../../assets/provider-openai.svg'
 import OpenClawIcon from '../../assets/provider-openclaw.svg'
@@ -19,7 +23,7 @@ function ProviderIcon({ Icon, color }: { Icon: React.FC<SvgProps>; color: string
 }
 
 export function getProviderIcon(type: ProviderType, color: string): React.ReactNode {
-  const icons: Record<ProviderType, React.FC<SvgProps> | null> = {
+  const icons: Partial<Record<ProviderType, React.FC<SvgProps>>> = {
     molt: OpenClawIcon,
     ollama: OllamaIcon,
     claude: ClaudeIcon,
@@ -28,13 +32,12 @@ export function getProviderIcon(type: ProviderType, color: string): React.ReactN
     apple: AppleIcon,
     echo: EchoIcon,
     gemini: GeminiIcon,
-    'gemini-nano': null, // TODO: Add Gemini icon
-    emergent: null, // TODO: Add Emergent icon
-    kimi: null, // TODO: Add Kimi icon
+    'gemini-nano': GeminiNanoIcon,
+    emergent: EmergentIcon,
+    kimi: KimiIcon,
   }
 
-  const Icon = icons[type]
-  if (!Icon) return null
+  const Icon = icons[type] ?? DefaultIcon
   return <ProviderIcon Icon={Icon} color={color} />
 }
 
