@@ -44,7 +44,8 @@
       "notEnrolledMessage": "Aucune donnée biométrique n'est enregistrée sur cet appareil.",
       "enablePrompt": "Authentifiez-vous pour activer le verrouillage Face ID"
     },
-    "language": "Langue"
+    "language": "Langue",
+    "contribute": "Contribuer"
   },
   "home": {
     "connectionError": "Erreur de connexion",

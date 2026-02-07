@@ -44,7 +44,8 @@
       "notEnrolledMessage": "No biometric credentials are enrolled on this device.",
       "enablePrompt": "Authenticate to enable Face ID lock"
     },
-    "language": "Language"
+    "language": "Language",
+    "contribute": "Contribute"
   },
   "home": {
     "connectionError": "Connection Error",
