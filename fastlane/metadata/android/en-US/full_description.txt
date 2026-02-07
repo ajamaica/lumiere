@@ -1,0 +1,33 @@
+Lumiere is a unified AI chat client that brings all your favorite AI models together in one app. Connect to Claude, ChatGPT, Gemini, Ollama, and more — all from a single, beautifully designed interface.
+
+<b>Connect to Any AI</b>
+• Chat with Claude, ChatGPT, Google Gemini, OpenRouter, Ollama, and other providers
+• Use on-device AI with Gemini Nano for complete privacy
+• Switch between models and servers instantly
+• Manage multiple AI backends with easy server configuration
+
+<b>Powerful Chat Experience</b>
+• Real-time streaming responses with rich markdown rendering
+• Voice input with speech recognition
+• Image attachments for multimodal conversations
+• 38+ slash commands for power users
+• Message favoriting to save important responses
+• Multi-session support with custom aliases
+
+<b>Automate Your Workflow</b>
+• Create triggers with deep links for one-tap prompts
+• Home screen quick actions for fast access
+• Schedule recurring tasks with cron jobs
+
+<b>Personalize Your Experience</b>
+• 8 stunning color themes: Default, Pink, Green, Red, Blue, Purple, Orange, and Glass
+• Light and dark mode with automatic system detection
+• Available in English, Spanish, French, Japanese, and Chinese
+
+<b>Security First</b>
+• Biometric authentication with fingerprint
+• Encrypted API key storage using Android KeyStore
+• On-device AI options for complete privacy
+• No telemetry or remote data collection
+
+Whether you're a developer managing AI agents, a professional using AI daily, or anyone who wants unified access to the best AI models — Lumiere puts it all in your pocket.
