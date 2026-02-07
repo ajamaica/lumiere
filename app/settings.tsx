@@ -30,7 +30,7 @@ export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode, colorTheme } = useTheme()
   const router = useRouter()
   const { t } = useTranslation()
-  const { currentLanguage, currentLanguageName, setLanguage, supportedLanguages } = useLanguage()
+  const { currentLanguageName } = useLanguage()
   const { currentServer, currentServerId, serversList, switchToServer } = useServers()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
   const setServers = useSetAtom(serversAtom)
@@ -83,12 +83,6 @@ export default function SettingsScreen() {
     const currentIndex = modes.indexOf(themeMode)
     const nextIndex = (currentIndex + 1) % modes.length
     setThemeMode(modes[nextIndex])
-  }
-
-  const handleLanguageToggle = () => {
-    const currentIndex = supportedLanguages.indexOf(currentLanguage)
-    const nextIndex = (currentIndex + 1) % supportedLanguages.length
-    setLanguage(supportedLanguages[nextIndex])
   }
 
   const handleTestNotifications = async () => {
@@ -238,7 +232,7 @@ export default function SettingsScreen() {
             icon="language-outline"
             label={t('settings.language')}
             value={currentLanguageName}
-            onPress={handleLanguageToggle}
+            onPress={() => router.push('/language')}
             showDivider={false}
           />
         </Section>

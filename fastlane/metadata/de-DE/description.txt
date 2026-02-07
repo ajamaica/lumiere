@@ -1,0 +1,39 @@
+Lumiere ist ein einheitlicher KI-Chat-Client, der alle Ihre bevorzugten KI-Modelle in einer App vereint. Verbinden Sie sich mit Claude, ChatGPT, Gemini, Ollama und mehr — alles über eine einzige, wunderschön gestaltete Oberfläche.
+
+VERBINDEN SIE SICH MIT JEDER KI
+- Chatten Sie mit Claude, ChatGPT, Google Gemini, OpenRouter, Ollama und anderen Anbietern
+- Nutzen Sie On-Device-KI mit Apple Intelligence (iOS 18+) oder Gemini Nano (Android)
+- Wechseln Sie sofort zwischen Modellen und Servern
+- Verwalten Sie mehrere KI-Backends mit einfacher Serverkonfiguration
+
+LEISTUNGSSTARKES CHAT-ERLEBNIS
+- Echtzeit-Streaming-Antworten mit reichhaltiger Markdown-Darstellung
+- Spracheingabe mit nativer Spracherkennung
+- Bildanhänge für multimodale Gespräche
+- Über 38 Slash-Befehle für Power-User
+- Wichtige Antworten als Favoriten speichern
+- Multi-Session-Unterstützung mit benutzerdefinierten Aliasen
+
+AUTOMATISIEREN SIE IHREN WORKFLOW
+- Erstellen Sie Trigger mit Deep Links für Ein-Tipp-Prompts
+- Schnellaktionen auf dem Startbildschirm für schnellen Zugriff
+- Apple Shortcuts-Integration für nahtlose Automatisierung
+- Planen Sie wiederkehrende Aufgaben mit Cron-Jobs
+
+PERSONALISIEREN SIE IHR ERLEBNIS
+- 8 atemberaubende Farbthemen: Standard, Pink, Grün, Rot, Blau, Lila, Orange und Glas
+- Hell- und Dunkelmodus mit automatischer Systemerkennung
+- Verfügbar in 11 Sprachen
+
+SICHERHEIT ZUERST
+- Face ID und Touch ID biometrische Authentifizierung
+- Verschlüsselte API-Schlüsselspeicherung über iOS Keychain
+- On-Device-KI-Optionen für vollständige Privatsphäre
+- Keine Telemetrie oder Remote-Datenerfassung
+
+FÜR IPAD ENTWICKELT
+- Responsive Layouts optimiert für größere Bildschirme
+- Formular-Modale für natürliches Multitasking
+- Volle Unterstützung für Quer- und Hochformat
+
+Ob Sie ein Entwickler sind, der KI-Agenten verwaltet, ein Profi, der täglich KI nutzt, oder jemand, der einheitlichen Zugang zu den besten KI-Modellen möchte — Lumiere bringt alles in Ihre Tasche.

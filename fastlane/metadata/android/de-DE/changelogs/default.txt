@@ -1,0 +1,8 @@
+• Erstveröffentlichung
+• Verbinden Sie sich mit Claude, ChatGPT, Gemini, Ollama und mehr
+• 8 Farbthemen mit Hell- und Dunkelmodus
+• Spracheingabe und Spracherkennung
+• Biometrische Authentifizierung
+• Deep-Link-Trigger und Automatisierung
+• Multi-Session-Unterstützung
+• Verfügbar in 11 Sprachen
