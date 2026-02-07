@@ -24,6 +24,7 @@ export class EchoChatProvider implements ChatProvider {
     persistentHistory: false,
     scheduler: false,
     gatewaySnapshot: false,
+    thinking: false,
   }
 
   private connected = false

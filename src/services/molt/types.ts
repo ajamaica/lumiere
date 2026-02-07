@@ -159,7 +159,7 @@ export type AgentEvent = {
   runId: string
   seq: number
   sessionKey: string
-  stream: 'assistant' | 'lifecycle' | 'tool'
+  stream: 'assistant' | 'lifecycle' | 'tool' | 'thinking'
   ts: number
 }
 

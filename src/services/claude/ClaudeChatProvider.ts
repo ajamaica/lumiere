@@ -61,6 +61,7 @@ export class ClaudeChatProvider implements ChatProvider {
     persistentHistory: false,
     scheduler: false,
     gatewaySnapshot: false,
+    thinking: false,
   }
 
   private baseUrl: string

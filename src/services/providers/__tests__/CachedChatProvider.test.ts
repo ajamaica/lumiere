@@ -29,6 +29,7 @@ function createMockProvider(overrides: Partial<ChatProvider> = {}): ChatProvider
     persistentHistory: false,
     scheduler: false,
     gatewaySnapshot: false,
+    thinking: false,
   }
 
   return {

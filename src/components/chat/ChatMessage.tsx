@@ -48,6 +48,7 @@ export interface Message {
   timestamp: Date
   streaming?: boolean
   attachments?: MessageAttachment[]
+  thinking?: string
 }
 
 interface ChatMessageProps {
@@ -86,6 +87,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.sender === 'user'
   const [copied, setCopied] = useState(false)
   const [intentCopied, setIntentCopied] = useState(false)
+  const [thinkingExpanded, setThinkingExpanded] = useState(false)
   const [favorites, setFavorites] = useAtom(favoritesAtom)
   const setCurrentSessionKey = useSetAtom(currentSessionKeyAtom)
   const setSessionAliases = useSetAtom(sessionAliasesAtom)
@@ -424,6 +426,31 @@ export function ChatMessage({ message }: ChatMessageProps) {
       accessibilityRole="text"
     >
       <View style={[styles.bubble, isUser ? styles.userBubble : styles.agentBubble]}>
+        {message.thinking && (
+          <View style={styles.thinkingContainer}>
+            <TouchableOpacity
+              onPress={() => setThinkingExpanded((prev) => !prev)}
+              style={styles.thinkingHeader}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel={thinkingExpanded ? 'Collapse thinking' : 'Expand thinking'}
+            >
+              <Ionicons
+                name={thinkingExpanded ? 'chevron-down' : 'chevron-forward'}
+                size={16}
+                color={theme.colors.text.secondary}
+              />
+              <Text style={styles.thinkingLabel}>
+                {message.streaming ? 'Thinking...' : 'Thinking'}
+              </Text>
+            </TouchableOpacity>
+            {thinkingExpanded && (
+              <Text style={styles.thinkingText} selectable={true}>
+                {message.thinking}
+              </Text>
+            )}
+          </View>
+        )}
         {message.attachments && message.attachments.length > 0 && (
           <View style={styles.attachmentContainer}>
             {message.attachments.map((attachment, index) => (
@@ -581,6 +608,31 @@ const createStyles = (theme: Theme) =>
       borderRadius: 0,
       paddingHorizontal: 0,
       ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
+    },
+    thinkingContainer: {
+      marginBottom: theme.spacing.sm,
+      borderRadius: theme.borderRadius.md,
+      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)',
+      overflow: 'hidden',
+    },
+    thinkingHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
+    },
+    thinkingLabel: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.secondary,
+      fontWeight: theme.typography.fontWeight.medium,
+      marginLeft: theme.spacing.xs,
+    },
+    thinkingText: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.secondary,
+      lineHeight: theme.typography.fontSize.sm * 1.5,
+      paddingHorizontal: theme.spacing.md,
+      paddingBottom: theme.spacing.sm,
     },
     intentActions: {
       flexDirection: 'row',

@@ -20,6 +20,7 @@ interface Message {
   sender: 'user' | 'agent'
   timestamp: Date
   attachments?: MessageAttachment[]
+  thinking?: string
 }
 
 interface QueuedMessage {
@@ -35,6 +36,7 @@ interface UseMessageQueueProps {
   currentSessionKey: string
   onMessageAdd: (message: Message) => void
   onAgentMessageUpdate: (text: string) => void
+  onThinkingUpdate: (text: string) => void
   onAgentMessageComplete: (message: Message) => void
   onSendStart?: () => void
 }
@@ -44,6 +46,7 @@ export function useMessageQueue({
   currentSessionKey,
   onMessageAdd,
   onAgentMessageUpdate,
+  onThinkingUpdate,
   onAgentMessageComplete,
   onSendStart,
 }: UseMessageQueueProps) {
@@ -63,9 +66,11 @@ export function useMessageQueue({
       onMessageAdd(userMessage)
       setIsAgentResponding(true)
       onAgentMessageUpdate('')
+      onThinkingUpdate('')
       onSendStart?.()
 
       let accumulatedText = ''
+      let accumulatedThinking = ''
 
       // Convert MessageAttachments to provider attachments
       // Include image attachments (base64) and file/document attachments (read from URI)
@@ -115,7 +120,10 @@ export function useMessageQueue({
             attachments: providerAttachments,
           },
           (event: ChatProviderEvent) => {
-            if (event.type === 'delta' && event.delta) {
+            if (event.type === 'thinking' && event.delta) {
+              accumulatedThinking += event.delta
+              onThinkingUpdate(accumulatedThinking)
+            } else if (event.type === 'delta' && event.delta) {
               accumulatedText += event.delta
               onAgentMessageUpdate(accumulatedText)
             } else if (event.type === 'lifecycle' && event.phase === 'end') {
@@ -124,10 +132,12 @@ export function useMessageQueue({
                 text: accumulatedText,
                 sender: 'agent',
                 timestamp: new Date(),
+                thinking: accumulatedThinking || undefined,
               }
               onAgentMessageComplete(agentMessage)
               setIsAgentResponding(false)
               accumulatedText = ''
+              accumulatedThinking = ''
             }
           },
         )
@@ -142,6 +152,7 @@ export function useMessageQueue({
       currentSessionKey,
       onMessageAdd,
       onAgentMessageUpdate,
+      onThinkingUpdate,
       onAgentMessageComplete,
       onSendStart,
     ],

@@ -23,6 +23,7 @@ const DEFAULT_CAPABILITIES: ProviderCapabilities = {
   persistentHistory: false,
   scheduler: false,
   gatewaySnapshot: false,
+  thinking: false,
 }
 
 export interface UseChatProviderResult {

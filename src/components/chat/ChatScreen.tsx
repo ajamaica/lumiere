@@ -63,6 +63,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const glassAvailable = isLiquidGlassAvailable()
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
+  const [currentThinkingMessage, setCurrentThinkingMessage] = useState<string>('')
   const [currentSessionKey] = useAtom(currentSessionKeyAtom)
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [pendingTriggerMessage, setPendingTriggerMessage] = useAtom(pendingTriggerMessageAtom)
@@ -170,6 +171,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       hasScrolledOnLoadRef.current = false
       shouldAutoScrollRef.current = true
       setCurrentAgentMessage('')
+      setCurrentThinkingMessage('')
     }
   }, [providerConfig.serverId])
 
@@ -181,9 +183,11 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     currentSessionKey,
     onMessageAdd: (message) => setMessages((prev) => [...prev, message]),
     onAgentMessageUpdate: (text) => setCurrentAgentMessage(text),
+    onThinkingUpdate: (text) => setCurrentThinkingMessage(text),
     onAgentMessageComplete: (message) => {
       setMessages((prev) => [...prev, message])
       setCurrentAgentMessage('')
+      setCurrentThinkingMessage('')
     },
     onSendStart: () => {
       shouldAutoScrollRef.current = true
@@ -271,6 +275,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       hasCacheRef.current = false
       setMessages([])
       setCurrentAgentMessage('')
+      setCurrentThinkingMessage('')
       hasScrolledOnLoadRef.current = false
       loadChatHistory()
     }
@@ -517,7 +522,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
 
   const allMessages = [
     ...messages,
-    ...(currentAgentMessage
+    ...(currentAgentMessage || currentThinkingMessage
       ? [
           {
             id: 'streaming',
@@ -525,6 +530,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             sender: 'agent' as const,
             timestamp: new Date(),
             streaming: true,
+            thinking: currentThinkingMessage || undefined,
           },
         ]
       : []),

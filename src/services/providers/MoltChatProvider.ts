@@ -25,6 +25,7 @@ export class MoltChatProvider implements ChatProvider {
     persistentHistory: true,
     scheduler: true,
     gatewaySnapshot: true,
+    thinking: true,
   }
 
   private client: MoltGatewayClient
@@ -78,6 +79,8 @@ export class MoltChatProvider implements ChatProvider {
     await this.client.sendAgentRequest(agentParams, (event: AgentEvent) => {
       if (event.stream === 'assistant' && event.data.delta) {
         onEvent({ type: 'delta', delta: event.data.delta })
+      } else if (event.stream === 'thinking' && event.data.delta) {
+        onEvent({ type: 'thinking', delta: event.data.delta })
       } else if (event.stream === 'lifecycle') {
         onEvent({ type: 'lifecycle', phase: event.data.phase })
       }

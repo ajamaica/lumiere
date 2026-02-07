@@ -24,8 +24,8 @@ export interface ProviderConfig {
 }
 
 export interface ChatProviderEvent {
-  type: 'delta' | 'lifecycle'
-  /** Incremental text chunk (for type === 'delta') */
+  type: 'delta' | 'lifecycle' | 'thinking'
+  /** Incremental text chunk (for type === 'delta' or 'thinking') */
   delta?: string
   /** Lifecycle phase (for type === 'lifecycle') */
   phase?: 'start' | 'end'
@@ -80,6 +80,8 @@ export interface ProviderCapabilities {
   scheduler: boolean
   /** Gateway snapshot with presence & instance info */
   gatewaySnapshot: boolean
+  /** Extended thinking / reasoning traces from the model */
+  thinking: boolean
 }
 
 /**

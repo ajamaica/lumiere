@@ -66,6 +66,7 @@ export class OpenRouterChatProvider implements ChatProvider {
     persistentHistory: false,
     scheduler: false,
     gatewaySnapshot: false,
+    thinking: false,
   }
 
   private baseUrl: string
