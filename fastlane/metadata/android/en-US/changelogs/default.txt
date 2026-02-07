@@ -1,0 +1,8 @@
+• Initial release
+• Connect to Claude, ChatGPT, Gemini, Ollama, and more
+• 8 color themes with light and dark mode
+• Voice input and speech recognition
+• Biometric authentication
+• Deep link triggers and automation
+• Multi-session support
+• Available in 6 languages

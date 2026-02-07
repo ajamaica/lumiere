@@ -1,0 +1,8 @@
+- Lanzamiento inicial
+- Conectate a Claude, ChatGPT, Gemini, Ollama y mas
+- 8 temas de color con modo claro y oscuro
+- Entrada por voz y reconocimiento de habla
+- Autenticacion biometrica con Face ID y Touch ID
+- Triggers con deep links y automatizacion
+- Soporte multisesion
+- Disponible en 6 idiomas

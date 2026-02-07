@@ -1,0 +1,39 @@
+Lumiere es un cliente de chat de IA unificado que reune todos tus modelos de inteligencia artificial favoritos en una sola aplicacion. Conectate a Claude, ChatGPT, Gemini, Ollama y mas, todo desde una interfaz elegante y cuidadosamente disenada.
+
+CONECTATE A CUALQUIER IA
+- Chatea con Claude, ChatGPT, Google Gemini, OpenRouter, Ollama y otros proveedores
+- Usa IA en el dispositivo con Apple Intelligence (iOS 18+) o Gemini Nano (Android)
+- Cambia entre modelos y servidores al instante
+- Gestiona multiples backends de IA con una configuracion de servidores sencilla
+
+EXPERIENCIA DE CHAT POTENTE
+- Respuestas en tiempo real con streaming y renderizado de markdown enriquecido
+- Entrada por voz con reconocimiento de habla nativo
+- Adjuntos de imagen para conversaciones multimodales
+- Mas de 38 comandos rapidos para usuarios avanzados
+- Guarda mensajes importantes en favoritos
+- Soporte multisesion con alias personalizados
+
+AUTOMATIZA TU FLUJO DE TRABAJO
+- Crea triggers con deep links para prompts de un solo toque
+- Acciones rapidas en la pantalla de inicio
+- Integracion con Atajos de Apple para automatizacion completa
+- Programa tareas recurrentes con cron jobs
+
+PERSONALIZA TU EXPERIENCIA
+- 8 temas de color: Predeterminado, Rosa, Verde, Rojo, Azul, Morado, Naranja y Cristal
+- Modo claro y oscuro con deteccion automatica del sistema
+- Disponible en ingles, espanol, frances, japones y chino
+
+SEGURIDAD ANTE TODO
+- Autenticacion biometrica con Face ID y Touch ID
+- Almacenamiento cifrado de claves API mediante el llavero de iOS
+- Opciones de IA en el dispositivo para privacidad total
+- Sin telemetria ni recopilacion remota de datos
+
+DISENADO PARA IPAD
+- Disenos responsivos optimizados para pantallas grandes
+- Modales de tipo formulario para multitarea natural
+- Compatibilidad total con orientacion horizontal y vertical
+
+Ya seas desarrollador gestionando agentes de IA, un profesional que usa la inteligencia artificial a diario, o simplemente quieras acceso unificado a los mejores modelos, Lumiere lo pone todo en tu bolsillo.

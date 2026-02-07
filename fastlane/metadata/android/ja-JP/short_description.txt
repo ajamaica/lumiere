@@ -1,0 +1,1 @@
+Claude、ChatGPT、Geminiなど複数のAIモデルにひとつのアプリで接続。

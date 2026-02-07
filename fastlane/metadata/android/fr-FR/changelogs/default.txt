@@ -1,0 +1,8 @@
+• Version initiale
+• Connexion à Claude, ChatGPT, Gemini, Ollama et bien d'autres
+• 8 thèmes de couleurs avec modes clair et sombre
+• Saisie vocale et reconnaissance de la parole
+• Authentification biométrique
+• Déclencheurs par liens profonds et automatisation
+• Prise en charge de sessions multiples
+• Disponible en 6 langues
