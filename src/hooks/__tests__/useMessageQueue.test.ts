@@ -219,7 +219,7 @@ describe('useMessageQueue', () => {
 
       expect(mocks.sendMessage).toHaveBeenCalledWith(
         expect.objectContaining({
-          attachments: [{ type: 'image', data: 'abc123', mimeType: 'image/png' }],
+          attachments: [{ type: 'document', data: 'abc123', mimeType: 'image/png' }],
         }),
         expect.any(Function),
       )

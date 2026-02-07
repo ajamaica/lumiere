@@ -68,7 +68,7 @@ export class MoltChatProvider implements ChatProvider {
       agentId: agentConfig.defaultAgentId,
       sessionKey: params.sessionKey,
       attachments: params.attachments?.map((a) => ({
-        type: a.type,
+        type: 'document' as const,
         content: a.data,
         mimeType: a.mimeType,
         fileName: a.name,

@@ -68,19 +68,21 @@ export function useMessageQueue({
       let accumulatedText = ''
 
       // Convert MessageAttachments to provider attachments
-      // Include image attachments (base64) and file/document attachments (read from URI)
+      // All attachment types (images, videos, files) are treated as documents
       let providerAttachments: ProviderAttachment[] | undefined
       if (attachments?.length) {
         const converted: ProviderAttachment[] = []
         for (const a of attachments) {
           if (a.type === 'image' && a.base64) {
+            // Image already has base64 data from the picker
             converted.push({
-              type: 'image' as const,
+              type: 'document' as const,
               data: a.base64,
-              mimeType: a.mimeType,
+              mimeType: a.mimeType || 'image/jpeg',
               name: a.name,
             })
-          } else if ((a.type === 'file' || a.type === 'video') && a.uri) {
+          } else if (a.uri) {
+            // Read file/video/image from URI and convert to base64
             try {
               const file = new ExpoFile(a.uri)
               const buffer = await file.arrayBuffer()
@@ -90,9 +92,8 @@ export function useMessageQueue({
                 binary += String.fromCharCode(bytes[i])
               }
               const base64 = btoa(binary)
-              const providerType = a.type === 'video' ? ('video' as const) : ('document' as const)
               converted.push({
-                type: providerType,
+                type: 'document' as const,
                 data: base64,
                 mimeType: a.mimeType || 'application/octet-stream',
                 name: a.name,
