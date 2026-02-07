@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import * as FileSystem from 'expo-file-system'
+import { File, Paths } from 'expo-file-system'
 import * as Sharing from 'expo-sharing'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
@@ -40,11 +40,11 @@ export default function BackupServersScreen() {
       }
 
       const fileName = `lumiere-servers-backup-${new Date().toISOString().slice(0, 10)}.json`
-      const filePath = `${FileSystem.cacheDirectory}${fileName}`
+      const file = new File(Paths.cache, fileName)
+      file.create({ overwrite: true })
+      file.write(JSON.stringify(backup, null, 2))
 
-      await FileSystem.writeAsStringAsync(filePath, JSON.stringify(backup, null, 2))
-
-      await Sharing.shareAsync(filePath, {
+      await Sharing.shareAsync(file.uri, {
         mimeType: 'application/json',
         dialogTitle: t('backupServers.exportButton'),
         UTI: 'public.json',
