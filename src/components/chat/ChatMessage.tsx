@@ -28,7 +28,6 @@ import {
 import { useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 import { logger } from '../../utils/logger'
-import { ThinkingIndicator } from './ThinkingIndicator'
 
 const chatLogger = logger.create('ChatMessage')
 
@@ -46,7 +45,6 @@ export interface Message {
   sender: 'user' | 'agent'
   timestamp: Date
   streaming?: boolean
-  thinking?: boolean
   attachments?: MessageAttachment[]
 }
 
@@ -421,44 +419,38 @@ export function ChatMessage({ message }: ChatMessageProps) {
       accessibilityRole="text"
     >
       <View style={[styles.bubble, isUser ? styles.userBubble : styles.agentBubble]}>
-        {message.thinking ? (
-          <ThinkingIndicator />
-        ) : (
-          <>
-            {message.attachments && message.attachments.length > 0 && (
-              <View style={styles.attachmentContainer}>
-                {message.attachments.map((attachment, index) => (
-                  <Image
-                    key={index}
-                    source={{ uri: attachment.uri }}
-                    style={styles.attachmentImage}
-                    resizeMode="cover"
-                    accessibilityLabel={`Attachment ${index + 1}`}
-                    accessibilityRole="image"
-                  />
-                ))}
-              </View>
-            )}
-            <Markdown
-              style={markdownStyles}
-              onLinkPress={(url: string) => {
-                handleLinkPress(url)
-                return false
-              }}
-              mergeStyle={true}
-              rules={markdownRules}
-            >
-              {processedText}
-            </Markdown>
-            {message.streaming && (
-              <Text style={styles.streamingIndicator} selectable={true}>
-                ...
-              </Text>
-            )}
-          </>
+        {message.attachments && message.attachments.length > 0 && (
+          <View style={styles.attachmentContainer}>
+            {message.attachments.map((attachment, index) => (
+              <Image
+                key={index}
+                source={{ uri: attachment.uri }}
+                style={styles.attachmentImage}
+                resizeMode="cover"
+                accessibilityLabel={`Attachment ${index + 1}`}
+                accessibilityRole="image"
+              />
+            ))}
+          </View>
+        )}
+        <Markdown
+          style={markdownStyles}
+          onLinkPress={(url: string) => {
+            handleLinkPress(url)
+            return false
+          }}
+          mergeStyle={true}
+          rules={markdownRules}
+        >
+          {processedText}
+        </Markdown>
+        {message.streaming && (
+          <Text style={styles.streamingIndicator} selectable={true}>
+            ...
+          </Text>
         )}
       </View>
-      {!message.streaming && !message.thinking && intents.length > 0 && (
+      {!message.streaming && intents.length > 0 && (
         <View style={styles.intentActions}>
           {intents.map((intent, index) => {
             const isCopyIntent = intent.action === 'copyToClipboard'
@@ -484,7 +476,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           })}
         </View>
       )}
-      {!message.streaming && !message.thinking && (
+      {!message.streaming && (
         <View style={styles.actionButtons}>
           {!isUser && (
             <TouchableOpacity
@@ -515,11 +507,9 @@ export function ChatMessage({ message }: ChatMessageProps) {
           </TouchableOpacity>
         </View>
       )}
-      {!message.thinking && (
-        <Text style={styles.timestamp} selectable={true}>
-          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-        </Text>
-      )}
+      <Text style={styles.timestamp} selectable={true}>
+        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      </Text>
     </View>
   )
 }
