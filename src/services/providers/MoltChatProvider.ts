@@ -20,7 +20,7 @@ export class MoltChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: true,
-    fileAttachments: false,
+    fileAttachments: true,
     serverSessions: true,
     persistentHistory: true,
     scheduler: true,
@@ -69,8 +69,9 @@ export class MoltChatProvider implements ChatProvider {
       sessionKey: params.sessionKey,
       attachments: params.attachments?.map((a) => ({
         type: a.type,
-        data: a.data,
+        content: a.data,
         mimeType: a.mimeType,
+        fileName: a.name,
       })),
     }
 

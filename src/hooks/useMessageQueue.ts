@@ -78,8 +78,9 @@ export function useMessageQueue({
               type: 'image' as const,
               data: a.base64,
               mimeType: a.mimeType,
+              name: a.name,
             })
-          } else if (a.type === 'file' && a.uri) {
+          } else if ((a.type === 'file' || a.type === 'video') && a.uri) {
             try {
               const file = new ExpoFile(a.uri)
               const buffer = await file.arrayBuffer()
@@ -89,8 +90,9 @@ export function useMessageQueue({
                 binary += String.fromCharCode(bytes[i])
               }
               const base64 = btoa(binary)
+              const providerType = a.type === 'video' ? ('video' as const) : ('document' as const)
               converted.push({
-                type: 'document' as const,
+                type: providerType,
                 data: base64,
                 mimeType: a.mimeType || 'application/octet-stream',
                 name: a.name,
