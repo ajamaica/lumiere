@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import {
   ActivityIndicator,
   Modal,
@@ -47,42 +47,68 @@ export function OllamaModelPicker({
   const [error, setError] = useState<string | null>(null)
   const [open, setOpen] = useState(false)
   const [customInput, setCustomInput] = useState(false)
+  const abortControllerRef = useRef<AbortController | null>(null)
 
-  const fetchModels = useCallback(async () => {
+  const fetchModels = useCallback(
+    async (signal?: AbortSignal) => {
+      if (!ollamaUrl.trim()) {
+        setModels([])
+        setError(null)
+        return
+      }
+
+      setLoading(true)
+      setError(null)
+
+      try {
+        const host = ollamaUrl.trim().replace(/\/+$/, '')
+        const response = await fetch(`${host}/api/tags`, { signal })
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`)
+        }
+
+        const data = await response.json()
+        if (data.models && Array.isArray(data.models)) {
+          setModels(data.models)
+          setCustomInput(false)
+        }
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === 'AbortError') return
+        setModels([])
+        setError('Could not fetch models')
+        setCustomInput(true)
+      } finally {
+        if (!signal?.aborted) {
+          setLoading(false)
+        }
+      }
+    },
+    [ollamaUrl],
+  )
+
+  useEffect(() => {
     if (!ollamaUrl.trim()) {
       setModels([])
       setError(null)
       return
     }
 
-    setLoading(true)
-    setError(null)
+    // Abort any in-flight request
+    abortControllerRef.current?.abort()
 
-    try {
-      const host = ollamaUrl.trim().replace(/\/+$/, '')
-      const response = await fetch(`${host}/api/tags`)
+    // Debounce: wait 300ms before fetching to avoid requests on every keystroke
+    const timeout = setTimeout(() => {
+      const controller = new AbortController()
+      abortControllerRef.current = controller
+      fetchModels(controller.signal)
+    }, 300)
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`)
-      }
-
-      const data = await response.json()
-      if (data.models && Array.isArray(data.models)) {
-        setModels(data.models)
-        setCustomInput(false)
-      }
-    } catch {
-      setModels([])
-      setError('Could not fetch models')
-      setCustomInput(true)
-    } finally {
-      setLoading(false)
+    return () => {
+      clearTimeout(timeout)
+      abortControllerRef.current?.abort()
     }
-  }, [ollamaUrl])
-
-  useEffect(() => {
-    fetchModels()
-  }, [fetchModels])
+  }, [fetchModels, ollamaUrl])
 
   const selectedLabel = value || placeholder
 
@@ -214,7 +240,15 @@ export function OllamaModelPicker({
           style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
         >
           <Text style={styles.hint}>{error || 'Enter model name manually'}</Text>
-          <TouchableOpacity onPress={fetchModels} hitSlop={8}>
+          <TouchableOpacity
+            onPress={() => {
+              abortControllerRef.current?.abort()
+              const controller = new AbortController()
+              abortControllerRef.current = controller
+              fetchModels(controller.signal)
+            }}
+            hitSlop={8}
+          >
             <Text style={[styles.hint, { color: theme.colors.primary }]}>Retry</Text>
           </TouchableOpacity>
         </View>
@@ -251,7 +285,15 @@ export function OllamaModelPicker({
               <Text variant="body" style={{ fontWeight: '600' }}>
                 Select Model
               </Text>
-              <TouchableOpacity onPress={fetchModels} hitSlop={8}>
+              <TouchableOpacity
+                onPress={() => {
+                  abortControllerRef.current?.abort()
+                  const controller = new AbortController()
+                  abortControllerRef.current = controller
+                  fetchModels(controller.signal)
+                }}
+                hitSlop={8}
+              >
                 <Ionicons name="refresh" size={20} color={theme.colors.primary} />
               </TouchableOpacity>
             </View>
