@@ -1,0 +1,33 @@
+Lumiere ist ein einheitlicher KI-Chat-Client, der alle Ihre bevorzugten KI-Modelle in einer App vereint. Verbinden Sie sich mit Claude, ChatGPT, Gemini, Ollama und mehr — alles über eine einzige, wunderschön gestaltete Oberfläche.
+
+<b>Verbinden Sie sich mit jeder KI</b>
+• Chatten Sie mit Claude, ChatGPT, Google Gemini, OpenRouter, Ollama und anderen Anbietern
+• Nutzen Sie On-Device-KI mit Gemini Nano für vollständige Privatsphäre
+• Wechseln Sie sofort zwischen Modellen und Servern
+• Verwalten Sie mehrere KI-Backends mit einfacher Serverkonfiguration
+
+<b>Leistungsstarkes Chat-Erlebnis</b>
+• Echtzeit-Streaming-Antworten mit reichhaltiger Markdown-Darstellung
+• Spracheingabe mit Spracherkennung
+• Bildanhänge für multimodale Gespräche
+• Über 38 Slash-Befehle für Power-User
+• Wichtige Antworten als Favoriten speichern
+• Multi-Session-Unterstützung mit benutzerdefinierten Aliasen
+
+<b>Automatisieren Sie Ihren Workflow</b>
+• Erstellen Sie Trigger mit Deep Links für Ein-Tipp-Prompts
+• Schnellaktionen auf dem Startbildschirm für schnellen Zugriff
+• Planen Sie wiederkehrende Aufgaben mit Cron-Jobs
+
+<b>Personalisieren Sie Ihr Erlebnis</b>
+• 8 atemberaubende Farbthemen: Standard, Pink, Grün, Rot, Blau, Lila, Orange und Glas
+• Hell- und Dunkelmodus mit automatischer Systemerkennung
+• Verfügbar in 11 Sprachen
+
+<b>Sicherheit zuerst</b>
+• Biometrische Authentifizierung mit Fingerabdruck
+• Verschlüsselte API-Schlüsselspeicherung über Android KeyStore
+• On-Device-KI-Optionen für vollständige Privatsphäre
+• Keine Telemetrie oder Remote-Datenerfassung
+
+Ob Sie ein Entwickler sind, der KI-Agenten verwaltet, ein Profi, der täglich KI nutzt, oder jemand, der einheitlichen Zugang zu den besten KI-Modellen möchte — Lumiere bringt alles in Ihre Tasche.

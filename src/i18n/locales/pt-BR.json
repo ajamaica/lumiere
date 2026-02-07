@@ -1,0 +1,182 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "done": "Concluído",
+    "error": "Erro",
+    "success": "Sucesso",
+    "loading": "Carregando...",
+    "retry": "Tentar novamente",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "skip": "Pular",
+    "confirm": "Confirmar",
+    "active": "Ativo"
+  },
+  "settings": {
+    "title": "Configurações",
+    "servers": "Servidores",
+    "noServersConfigured": "Nenhum servidor configurado",
+    "general": "Geral",
+    "colors": "Cores",
+    "faceId": "Face ID",
+    "notifications": "Notificações",
+    "favorites": "Favoritos",
+    "triggers": "Gatilhos",
+    "overview": "Visão geral",
+    "serverConfig": "Config. do Servidor",
+    "cronJobs": "Cron Jobs",
+    "componentGallery": "Galeria de Componentes",
+    "logout": "Sair",
+    "logoutConfirmTitle": "Sair",
+    "logoutConfirmMessage": "Tem certeza de que deseja sair? Todos os servidores e configurações serão apagados.",
+    "theme": {
+      "light": "Claro",
+      "dark": "Escuro",
+      "system": "Sistema"
+    },
+    "biometric": {
+      "unavailable": "Indisponível",
+      "unavailableMessage": "A autenticação biométrica não está disponível neste dispositivo.",
+      "notEnrolled": "Não cadastrado",
+      "notEnrolledMessage": "Nenhuma credencial biométrica cadastrada neste dispositivo.",
+      "enablePrompt": "Autentique-se para ativar o bloqueio por Face ID"
+    },
+    "language": "Idioma",
+    "backupRestore": "Backup e Restauração",
+    "backupServers": "Backup de Servidores",
+    "restoreServers": "Restaurar Servidores",
+    "contribute": "Contribuir"
+  },
+  "home": {
+    "connectionError": "Erro de Conexão",
+    "goToSettings": "Ir para Configurações",
+    "noServerConfigured": "Nenhum Servidor Configurado",
+    "noServerMessage": "Adicione um servidor nas Configurações para começar."
+  },
+  "chat": {
+    "placeholder": "Digite uma mensagem...",
+    "listening": "Ouvindo...",
+    "startSpeaking": "Comece a falar...",
+    "send": "Enviar"
+  },
+  "addServer": {
+    "title": "Adicionar Servidor",
+    "providerType": "Tipo de Provedor",
+    "name": "Nome",
+    "url": "URL",
+    "token": "Token",
+    "apiKey": "Chave de API",
+    "clientId": "ID do Cliente",
+    "model": "Modelo",
+    "addButton": "Adicionar Servidor",
+    "placeholders": {
+      "myServer": "Meu Servidor",
+      "myOllama": "Meu Ollama",
+      "myEchoServer": "Meu Servidor Echo",
+      "myClaude": "Meu Claude"
+    },
+    "providers": {
+      "openClaw": "OpenClaw",
+      "ollama": "Ollama",
+      "claude": "Claude",
+      "appleIntelligence": "Apple Intelligence",
+      "echoServer": "Servidor Echo"
+    },
+    "appleDescription": "Usa Apple Foundation Models para executar IA totalmente no dispositivo via CoreML. Requer iOS 26+ com suporte a Apple Intelligence.",
+    "errors": {
+      "urlRequired": "URL é obrigatória",
+      "tokenRequired": "Token é obrigatório",
+      "apiKeyRequired": "Chave de API é obrigatória"
+    }
+  },
+  "editServer": {
+    "title": "Editar Servidor",
+    "saveChanges": "Salvar Alterações",
+    "deleteServer": "Excluir Servidor",
+    "deleteConfirmTitle": "Excluir Servidor",
+    "deleteConfirmMessage": "Tem certeza de que deseja excluir este servidor? Esta ação não pode ser desfeita."
+  },
+  "biometricLock": {
+    "locked": "Bloqueado",
+    "unlock": "Desbloquear",
+    "unlockPrompt": "Desbloquear Lumiere",
+    "authenticateToUnlock": "Autentique-se para desbloquear o Lumiere",
+    "failed": "Falha na autenticação",
+    "failedMessage": "Houve um problema com sua tentativa de autenticação.\nPor favor, tente novamente.",
+    "authFailed": "Autenticação falhou. Toque para tentar novamente.",
+    "tryAgain": "Tentar Novamente"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Gerenciar seus Agentes é mais fácil do que nunca",
+      "description": "O Lumiere oferece uma interface móvel bonita para interagir com seus agentes de IA em qualquer lugar. Monitore conversas, envie mensagens e mantenha-se conectado de qualquer lugar."
+    },
+    "step2": {
+      "title": "Controle total com recursos poderosos",
+      "description": "Gerencie múltiplos servidores, alterne entre sessões, agende tarefas com cron jobs e receba notificações em tempo real. Tudo que você precisa para manter o controle."
+    },
+    "step3": {
+      "title": "Altamente configurável para necessidades personalizadas",
+      "description": "Conecte-se a provedores OpenClaw, Ollama ou Echo. Personalize temas, configure gatilhos de deep link e adapte a experiência ao seu fluxo de trabalho."
+    },
+    "getStarted": "Começar"
+  },
+  "sessions": {
+    "title": "Sessões",
+    "newSession": "Nova Sessão",
+    "editSession": "Editar Sessão",
+    "deleteSession": "Excluir Sessão",
+    "sessionName": "Nome da Sessão",
+    "defaultSession": "Sessão Padrão"
+  },
+  "favorites": {
+    "title": "Favoritos",
+    "noFavorites": "Nenhum favorito ainda",
+    "addFavorite": "Adicionar aos Favoritos",
+    "removeFavorite": "Remover dos Favoritos"
+  },
+  "triggers": {
+    "title": "Gatilhos",
+    "newTrigger": "Novo Gatilho",
+    "editTrigger": "Editar Gatilho",
+    "deleteTrigger": "Excluir Gatilho",
+    "noTriggers": "Nenhum gatilho configurado"
+  },
+  "scheduler": {
+    "title": "Agendador",
+    "cronJobs": "Cron Jobs"
+  },
+  "gallery": {
+    "title": "Galeria"
+  },
+  "overview": {
+    "title": "Visão Geral"
+  },
+  "backupServers": {
+    "title": "Backup de Servidores",
+    "description": "Exporte suas configurações de servidor como um arquivo JSON. Tokens não são incluídos por segurança.",
+    "serverCount": "{{count}} servidor(es) serão exportados",
+    "noServers": "Nenhum servidor para backup",
+    "exportButton": "Exportar Backup",
+    "exportSuccess": "Backup exportado com sucesso",
+    "exportError": "Falha ao exportar backup"
+  },
+  "restoreServers": {
+    "title": "Restaurar Servidores",
+    "description": "Importe configurações de servidor de um arquivo de backup JSON. Você precisará reinserir os tokens após a importação.",
+    "selectFile": "Selecionar Arquivo de Backup",
+    "importButton": "Importar Servidores",
+    "preview": "Pré-visualizar",
+    "serversFound": "{{count}} servidor(es) encontrados no backup",
+    "noFile": "Nenhum arquivo selecionado",
+    "importSuccess": "Servidores importados com sucesso",
+    "importError": "Falha ao importar servidores",
+    "invalidFile": "Formato de arquivo de backup inválido",
+    "duplicateSkipped": "Servidores duplicados foram ignorados",
+    "replaceExisting": "Substituir servidores existentes",
+    "mergeWithExisting": "Mesclar com servidores existentes"
+  }
+}

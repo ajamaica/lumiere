@@ -1,0 +1,182 @@
+{
+  "common": {
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "done": "Fertig",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "loading": "Laden...",
+    "retry": "Erneut versuchen",
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "skip": "Überspringen",
+    "confirm": "Bestätigen",
+    "active": "Aktiv"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "servers": "Server",
+    "noServersConfigured": "Keine Server konfiguriert",
+    "general": "Allgemein",
+    "colors": "Farben",
+    "faceId": "Face ID",
+    "notifications": "Benachrichtigungen",
+    "favorites": "Favoriten",
+    "triggers": "Auslöser",
+    "overview": "Übersicht",
+    "serverConfig": "Server-Konfiguration",
+    "cronJobs": "Cron-Jobs",
+    "componentGallery": "Komponentengalerie",
+    "logout": "Abmelden",
+    "logoutConfirmTitle": "Abmelden",
+    "logoutConfirmMessage": "Möchten Sie sich wirklich abmelden? Alle Server und Einstellungen werden gelöscht.",
+    "theme": {
+      "light": "Hell",
+      "dark": "Dunkel",
+      "system": "System"
+    },
+    "biometric": {
+      "unavailable": "Nicht verfügbar",
+      "unavailableMessage": "Biometrische Authentifizierung ist auf diesem Gerät nicht verfügbar.",
+      "notEnrolled": "Nicht registriert",
+      "notEnrolledMessage": "Auf diesem Gerät sind keine biometrischen Daten registriert.",
+      "enablePrompt": "Authentifizieren Sie sich, um die Face ID-Sperre zu aktivieren"
+    },
+    "language": "Sprache",
+    "backupRestore": "Sicherung & Wiederherstellung",
+    "backupServers": "Server sichern",
+    "restoreServers": "Server wiederherstellen",
+    "contribute": "Mitwirken"
+  },
+  "home": {
+    "connectionError": "Verbindungsfehler",
+    "goToSettings": "Zu Einstellungen",
+    "noServerConfigured": "Kein Server konfiguriert",
+    "noServerMessage": "Bitte fügen Sie in den Einstellungen einen Server hinzu, um zu beginnen."
+  },
+  "chat": {
+    "placeholder": "Nachricht eingeben...",
+    "listening": "Hört zu...",
+    "startSpeaking": "Sprechen Sie...",
+    "send": "Senden"
+  },
+  "addServer": {
+    "title": "Server hinzufügen",
+    "providerType": "Anbietertyp",
+    "name": "Name",
+    "url": "URL",
+    "token": "Token",
+    "apiKey": "API-Schlüssel",
+    "clientId": "Client-ID",
+    "model": "Modell",
+    "addButton": "Server hinzufügen",
+    "placeholders": {
+      "myServer": "Mein Server",
+      "myOllama": "Mein Ollama",
+      "myEchoServer": "Mein Echo-Server",
+      "myClaude": "Mein Claude"
+    },
+    "providers": {
+      "openClaw": "OpenClaw",
+      "ollama": "Ollama",
+      "claude": "Claude",
+      "appleIntelligence": "Apple Intelligence",
+      "echoServer": "Echo-Server"
+    },
+    "appleDescription": "Verwendet Apple Foundation Models, um KI vollständig auf dem Gerät über CoreML auszuführen. Erfordert iOS 26+ mit Apple Intelligence-Unterstützung.",
+    "errors": {
+      "urlRequired": "URL ist erforderlich",
+      "tokenRequired": "Token ist erforderlich",
+      "apiKeyRequired": "API-Schlüssel ist erforderlich"
+    }
+  },
+  "editServer": {
+    "title": "Server bearbeiten",
+    "saveChanges": "Änderungen speichern",
+    "deleteServer": "Server löschen",
+    "deleteConfirmTitle": "Server löschen",
+    "deleteConfirmMessage": "Möchten Sie diesen Server wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+  },
+  "biometricLock": {
+    "locked": "Gesperrt",
+    "unlock": "Entsperren",
+    "unlockPrompt": "Lumiere entsperren",
+    "authenticateToUnlock": "Authentifizieren Sie sich, um Lumiere zu entsperren",
+    "failed": "Authentifizierung fehlgeschlagen",
+    "failedMessage": "Bei Ihrem Authentifizierungsversuch ist ein Problem aufgetreten.\nBitte versuchen Sie es erneut.",
+    "authFailed": "Authentifizierung fehlgeschlagen. Tippen Sie, um es erneut zu versuchen.",
+    "tryAgain": "Erneut versuchen"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Die Verwaltung Ihrer Agenten ist einfacher denn je",
+      "description": "Lumiere bietet Ihnen eine schöne mobile Oberfläche, um unterwegs mit Ihren KI-Agenten zu interagieren. Überwachen Sie Gespräche, senden Sie Nachrichten und bleiben Sie von überall verbunden."
+    },
+    "step2": {
+      "title": "Volle Kontrolle mit leistungsstarken Funktionen",
+      "description": "Verwalten Sie mehrere Server, wechseln Sie zwischen Sitzungen, planen Sie Aufgaben mit Cron-Jobs und erhalten Sie Echtzeit-Benachrichtigungen. Alles, was Sie brauchen, um die Kontrolle zu behalten."
+    },
+    "step3": {
+      "title": "Hochgradig konfigurierbar für individuelle Bedürfnisse",
+      "description": "Verbinden Sie sich mit OpenClaw-, Ollama- oder Echo-Anbietern. Passen Sie Themes an, richten Sie Deep-Link-Auslöser ein und gestalten Sie das Erlebnis nach Ihrem Workflow."
+    },
+    "getStarted": "Loslegen"
+  },
+  "sessions": {
+    "title": "Sitzungen",
+    "newSession": "Neue Sitzung",
+    "editSession": "Sitzung bearbeiten",
+    "deleteSession": "Sitzung löschen",
+    "sessionName": "Sitzungsname",
+    "defaultSession": "Standardsitzung"
+  },
+  "favorites": {
+    "title": "Favoriten",
+    "noFavorites": "Noch keine Favoriten",
+    "addFavorite": "Zu Favoriten hinzufügen",
+    "removeFavorite": "Aus Favoriten entfernen"
+  },
+  "triggers": {
+    "title": "Auslöser",
+    "newTrigger": "Neuer Auslöser",
+    "editTrigger": "Auslöser bearbeiten",
+    "deleteTrigger": "Auslöser löschen",
+    "noTriggers": "Keine Auslöser konfiguriert"
+  },
+  "scheduler": {
+    "title": "Planer",
+    "cronJobs": "Cron-Jobs"
+  },
+  "gallery": {
+    "title": "Galerie"
+  },
+  "overview": {
+    "title": "Übersicht"
+  },
+  "backupServers": {
+    "title": "Server sichern",
+    "description": "Exportieren Sie Ihre Serverkonfigurationen als JSON-Datei. Tokens werden aus Sicherheitsgründen nicht einbezogen.",
+    "serverCount": "{{count}} Server werden exportiert",
+    "noServers": "Keine Server zum Sichern",
+    "exportButton": "Backup exportieren",
+    "exportSuccess": "Backup erfolgreich exportiert",
+    "exportError": "Backup-Export fehlgeschlagen"
+  },
+  "restoreServers": {
+    "title": "Server wiederherstellen",
+    "description": "Importieren Sie Serverkonfigurationen aus einer JSON-Backupdatei. Sie müssen die Tokens nach dem Import erneut eingeben.",
+    "selectFile": "Backupdatei auswählen",
+    "importButton": "Server importieren",
+    "preview": "Vorschau",
+    "serversFound": "{{count}} Server im Backup gefunden",
+    "noFile": "Keine Datei ausgewählt",
+    "importSuccess": "Server erfolgreich importiert",
+    "importError": "Server-Import fehlgeschlagen",
+    "invalidFile": "Ungültiges Backupdateiformat",
+    "duplicateSkipped": "Doppelte Server wurden übersprungen",
+    "replaceExisting": "Vorhandene Server ersetzen",
+    "mergeWithExisting": "Mit vorhandenen Servern zusammenführen"
+  }
+}

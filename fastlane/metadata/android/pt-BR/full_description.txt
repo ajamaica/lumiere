@@ -1,0 +1,33 @@
+Lumiere é um cliente de chat de IA unificado que reúne todos os seus modelos de IA favoritos em um único app. Conecte-se ao Claude, ChatGPT, Gemini, Ollama e muito mais — tudo a partir de uma interface única e lindamente projetada.
+
+<b>Conecte-se a qualquer IA</b>
+• Converse com Claude, ChatGPT, Google Gemini, OpenRouter, Ollama e outros provedores
+• Use IA no dispositivo com Gemini Nano para privacidade total
+• Alterne entre modelos e servidores instantaneamente
+• Gerencie múltiplos backends de IA com configuração fácil de servidores
+
+<b>Experiência de chat poderosa</b>
+• Respostas em tempo real com streaming e renderização rica de markdown
+• Entrada por voz com reconhecimento de fala
+• Anexos de imagem para conversas multimodais
+• Mais de 38 comandos slash para usuários avançados
+• Salve respostas importantes nos favoritos
+• Suporte a múltiplas sessões com aliases personalizados
+
+<b>Automatize seu fluxo de trabalho</b>
+• Crie gatilhos com deep links para prompts com um toque
+• Ações rápidas na tela inicial para acesso imediato
+• Agende tarefas recorrentes com cron jobs
+
+<b>Personalize sua experiência</b>
+• 8 temas de cores incríveis: Padrão, Rosa, Verde, Vermelho, Azul, Roxo, Laranja e Vidro
+• Modo claro e escuro com detecção automática do sistema
+• Disponível em 11 idiomas
+
+<b>Segurança em primeiro lugar</b>
+• Autenticação biométrica com impressão digital
+• Armazenamento criptografado de chaves API usando Android KeyStore
+• Opções de IA no dispositivo para privacidade total
+• Sem telemetria ou coleta remota de dados
+
+Seja você um desenvolvedor gerenciando agentes de IA, um profissional que usa IA diariamente, ou qualquer pessoa que queira acesso unificado aos melhores modelos de IA — o Lumiere coloca tudo no seu bolso.

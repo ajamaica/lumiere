@@ -1,0 +1,182 @@
+{
+  "common": {
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "delete": "हटाएं",
+    "done": "पूर्ण",
+    "error": "त्रुटि",
+    "success": "सफल",
+    "loading": "लोड हो रहा है...",
+    "retry": "पुनः प्रयास करें",
+    "close": "बंद करें",
+    "back": "वापस",
+    "next": "अगला",
+    "skip": "छोड़ें",
+    "confirm": "पुष्टि करें",
+    "active": "सक्रिय"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "servers": "सर्वर",
+    "noServersConfigured": "कोई सर्वर कॉन्फ़िगर नहीं किया गया",
+    "general": "सामान्य",
+    "colors": "रंग",
+    "faceId": "Face ID",
+    "notifications": "सूचनाएं",
+    "favorites": "पसंदीदा",
+    "triggers": "ट्रिगर",
+    "overview": "अवलोकन",
+    "serverConfig": "सर्वर कॉन्फ़िग",
+    "cronJobs": "क्रॉन जॉब्स",
+    "componentGallery": "कंपोनेंट गैलरी",
+    "logout": "लॉगआउट",
+    "logoutConfirmTitle": "लॉगआउट",
+    "logoutConfirmMessage": "क्या आप वाकई लॉगआउट करना चाहते हैं? सभी सर्वर और सेटिंग्स साफ़ हो जाएंगी।",
+    "theme": {
+      "light": "लाइट",
+      "dark": "डार्क",
+      "system": "सिस्टम"
+    },
+    "biometric": {
+      "unavailable": "अनुपलब्ध",
+      "unavailableMessage": "इस डिवाइस पर बायोमेट्रिक प्रमाणीकरण उपलब्ध नहीं है।",
+      "notEnrolled": "नामांकित नहीं",
+      "notEnrolledMessage": "इस डिवाइस पर कोई बायोमेट्रिक क्रेडेंशियल नामांकित नहीं है।",
+      "enablePrompt": "Face ID लॉक सक्षम करने के लिए प्रमाणित करें"
+    },
+    "language": "भाषा",
+    "backupRestore": "बैकअप और रिस्टोर",
+    "backupServers": "सर्वर बैकअप",
+    "restoreServers": "सर्वर रिस्टोर",
+    "contribute": "योगदान करें"
+  },
+  "home": {
+    "connectionError": "कनेक्शन त्रुटि",
+    "goToSettings": "सेटिंग्स पर जाएं",
+    "noServerConfigured": "कोई सर्वर कॉन्फ़िगर नहीं है",
+    "noServerMessage": "शुरू करने के लिए कृपया सेटिंग्स में एक सर्वर जोड़ें।"
+  },
+  "chat": {
+    "placeholder": "संदेश लिखें...",
+    "listening": "सुन रहा है...",
+    "startSpeaking": "बोलना शुरू करें...",
+    "send": "भेजें"
+  },
+  "addServer": {
+    "title": "सर्वर जोड़ें",
+    "providerType": "प्रोवाइडर प्रकार",
+    "name": "नाम",
+    "url": "URL",
+    "token": "टोकन",
+    "apiKey": "API कुंजी",
+    "clientId": "क्लाइंट ID",
+    "model": "मॉडल",
+    "addButton": "सर्वर जोड़ें",
+    "placeholders": {
+      "myServer": "मेरा सर्वर",
+      "myOllama": "मेरा Ollama",
+      "myEchoServer": "मेरा Echo सर्वर",
+      "myClaude": "मेरा Claude"
+    },
+    "providers": {
+      "openClaw": "OpenClaw",
+      "ollama": "Ollama",
+      "claude": "Claude",
+      "appleIntelligence": "Apple Intelligence",
+      "echoServer": "Echo सर्वर"
+    },
+    "appleDescription": "CoreML के माध्यम से पूरी तरह से डिवाइस पर AI चलाने के लिए Apple Foundation Models का उपयोग करता है। iOS 26+ और Apple Intelligence सपोर्ट आवश्यक है।",
+    "errors": {
+      "urlRequired": "URL आवश्यक है",
+      "tokenRequired": "टोकन आवश्यक है",
+      "apiKeyRequired": "API कुंजी आवश्यक है"
+    }
+  },
+  "editServer": {
+    "title": "सर्वर संपादित करें",
+    "saveChanges": "परिवर्तन सहेजें",
+    "deleteServer": "सर्वर हटाएं",
+    "deleteConfirmTitle": "सर्वर हटाएं",
+    "deleteConfirmMessage": "क्या आप वाकई इस सर्वर को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।"
+  },
+  "biometricLock": {
+    "locked": "लॉक है",
+    "unlock": "अनलॉक करें",
+    "unlockPrompt": "Lumiere अनलॉक करें",
+    "authenticateToUnlock": "Lumiere अनलॉक करने के लिए प्रमाणित करें",
+    "failed": "प्रमाणीकरण विफल",
+    "failedMessage": "आपके प्रमाणीकरण प्रयास में कोई समस्या हुई।\nकृपया पुनः प्रयास करें।",
+    "authFailed": "प्रमाणीकरण विफल। पुनः प्रयास करने के लिए टैप करें।",
+    "tryAgain": "पुनः प्रयास करें"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "अपने एजेंट्स को प्रबंधित करना पहले से कहीं अधिक आसान है",
+      "description": "Lumiere आपको चलते-फिरते अपने AI एजेंट्स के साथ इंटरैक्ट करने के लिए एक सुंदर मोबाइल इंटरफ़ेस देता है। बातचीत मॉनिटर करें, संदेश भेजें, और कहीं से भी जुड़े रहें।"
+    },
+    "step2": {
+      "title": "शक्तिशाली सुविधाओं के साथ पूर्ण नियंत्रण",
+      "description": "कई सर्वर प्रबंधित करें, सत्रों के बीच स्विच करें, क्रॉन जॉब्स के साथ कार्य शेड्यूल करें, और रियल-टाइम सूचनाएं प्राप्त करें। कमांड में बने रहने के लिए आपको जो कुछ भी चाहिए।"
+    },
+    "step3": {
+      "title": "कस्टम ज़रूरतों के लिए अत्यधिक कॉन्फ़िगर करने योग्य",
+      "description": "OpenClaw, Ollama, या Echo प्रोवाइडर से कनेक्ट करें। थीम कस्टमाइज़ करें, डीप लिंक ट्रिगर सेट करें, और अपने वर्कफ़्लो के अनुसार अनुभव को अनुकूलित करें।"
+    },
+    "getStarted": "शुरू करें"
+  },
+  "sessions": {
+    "title": "सत्र",
+    "newSession": "नया सत्र",
+    "editSession": "सत्र संपादित करें",
+    "deleteSession": "सत्र हटाएं",
+    "sessionName": "सत्र का नाम",
+    "defaultSession": "डिफ़ॉल्ट सत्र"
+  },
+  "favorites": {
+    "title": "पसंदीदा",
+    "noFavorites": "अभी तक कोई पसंदीदा नहीं",
+    "addFavorite": "पसंदीदा में जोड़ें",
+    "removeFavorite": "पसंदीदा से हटाएं"
+  },
+  "triggers": {
+    "title": "ट्रिगर",
+    "newTrigger": "नया ट्रिगर",
+    "editTrigger": "ट्रिगर संपादित करें",
+    "deleteTrigger": "ट्रिगर हटाएं",
+    "noTriggers": "कोई ट्रिगर कॉन्फ़िगर नहीं किया गया"
+  },
+  "scheduler": {
+    "title": "शेड्यूलर",
+    "cronJobs": "क्रॉन जॉब्स"
+  },
+  "gallery": {
+    "title": "गैलरी"
+  },
+  "overview": {
+    "title": "अवलोकन"
+  },
+  "backupServers": {
+    "title": "सर्वर बैकअप",
+    "description": "अपने सर्वर कॉन्फ़िगरेशन को JSON फ़ाइल के रूप में निर्यात करें। सुरक्षा के लिए टोकन शामिल नहीं हैं।",
+    "serverCount": "{{count}} सर्वर निर्यात किए जाएंगे",
+    "noServers": "बैकअप के लिए कोई सर्वर नहीं",
+    "exportButton": "बैकअप निर्यात करें",
+    "exportSuccess": "बैकअप सफलतापूर्वक निर्यात किया गया",
+    "exportError": "बैकअप निर्यात करने में विफल"
+  },
+  "restoreServers": {
+    "title": "सर्वर रिस्टोर",
+    "description": "JSON बैकअप फ़ाइल से सर्वर कॉन्फ़िगरेशन आयात करें। आयात के बाद आपको टोकन पुनः दर्ज करने होंगे।",
+    "selectFile": "बैकअप फ़ाइल चुनें",
+    "importButton": "सर्वर आयात करें",
+    "preview": "पूर्वावलोकन",
+    "serversFound": "बैकअप में {{count}} सर्वर मिले",
+    "noFile": "कोई फ़ाइल चयनित नहीं",
+    "importSuccess": "सर्वर सफलतापूर्वक आयात किए गए",
+    "importError": "सर्वर आयात करने में विफल",
+    "invalidFile": "अमान्य बैकअप फ़ाइल प्रारूप",
+    "duplicateSkipped": "डुप्लिकेट सर्वर छोड़ दिए गए",
+    "replaceExisting": "मौजूदा सर्वर बदलें",
+    "mergeWithExisting": "मौजूदा सर्वर के साथ मर्ज करें"
+  }
+}
