@@ -208,6 +208,23 @@ export default function SettingsScreen() {
 
         <View style={styles.spacer} />
 
+        {/* Server Config - only available for OpenClaw (Molt) servers */}
+        {currentServer?.providerType === 'molt' && (
+          <Section title={t('settings.serverConfig')} showDivider>
+            <SettingRow
+              icon="grid-outline"
+              label={t('settings.overview')}
+              onPress={() => router.push('/overview')}
+            />
+            <SettingRow
+              icon="time-outline"
+              label={t('settings.cronJobs')}
+              onPress={() => router.push('/scheduler')}
+              showDivider={false}
+            />
+          </Section>
+        )}
+
         {/* Main settings group */}
         <Section showDivider>
           <SettingRow
@@ -272,23 +289,6 @@ export default function SettingsScreen() {
             showDivider={false}
           />
         </Section>
-
-        {/* Server Config - only available for OpenClaw (Molt) servers */}
-        {currentServer?.providerType === 'molt' && (
-          <Section title={t('settings.serverConfig')} showDivider>
-            <SettingRow
-              icon="grid-outline"
-              label={t('settings.overview')}
-              onPress={() => router.push('/overview')}
-            />
-            <SettingRow
-              icon="time-outline"
-              label={t('settings.cronJobs')}
-              onPress={() => router.push('/scheduler')}
-              showDivider={false}
-            />
-          </Section>
-        )}
 
         {/* Developer */}
         {__DEV__ && (
