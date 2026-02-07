@@ -4,6 +4,7 @@ import { EchoChatProvider } from '../echo/EchoChatProvider'
 import { EmergentChatProvider } from '../emergent/EmergentChatProvider'
 import { GeminiChatProvider } from '../gemini/GeminiChatProvider'
 import { GeminiNanoChatProvider } from '../gemini-nano/GeminiNanoChatProvider'
+import { KimiChatProvider } from '../kimi/KimiChatProvider'
 import { OllamaChatProvider } from '../ollama/OllamaChatProvider'
 import { OpenAIChatProvider } from '../openai/OpenAIChatProvider'
 import { OpenRouterChatProvider } from '../openrouter/OpenRouterChatProvider'
@@ -52,6 +53,9 @@ export function createChatProvider(config: ProviderConfig): ChatProvider {
       break
     case 'emergent':
       inner = new EmergentChatProvider(config)
+      break
+    case 'kimi':
+      inner = new KimiChatProvider(config)
       break
     default:
       throw new Error(`Unknown provider type: ${(config as ProviderConfig).type}`)
