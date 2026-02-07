@@ -6,7 +6,7 @@ import { useAtom, useSetAtom } from 'jotai'
 import { RESET } from 'jotai/utils'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ScreenHeader, Section, SettingRow } from '../src/components/ui'
@@ -291,6 +291,16 @@ export default function SettingsScreen() {
             />
           </Section>
         )}
+
+        {/* Contribute */}
+        <Section title={t('settings.contribute')} showDivider>
+          <SettingRow
+            icon="logo-github"
+            label="GitHub"
+            onPress={() => Linking.openURL('https://github.com/ajamaica/lumiere')}
+            showDivider={false}
+          />
+        </Section>
 
         {/* Logout */}
         <Section showDivider>

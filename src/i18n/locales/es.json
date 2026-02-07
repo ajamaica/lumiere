@@ -44,7 +44,8 @@
       "notEnrolledMessage": "No hay credenciales biométricas configuradas en este dispositivo.",
       "enablePrompt": "Autentícate para habilitar el bloqueo con Face ID"
     },
-    "language": "Idioma"
+    "language": "Idioma",
+    "contribute": "Contribuir"
   },
   "home": {
     "connectionError": "Error de Conexión",
