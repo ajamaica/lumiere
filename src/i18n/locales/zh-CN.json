@@ -1,0 +1,154 @@
+{
+  "common": {
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "done": "完成",
+    "error": "错误",
+    "success": "成功",
+    "loading": "加载中...",
+    "retry": "重试",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "skip": "跳过",
+    "confirm": "确认",
+    "active": "活跃"
+  },
+  "settings": {
+    "title": "设置",
+    "servers": "服务器",
+    "noServersConfigured": "未配置服务器",
+    "general": "通用",
+    "colors": "颜色",
+    "faceId": "面容 ID",
+    "notifications": "通知",
+    "favorites": "收藏",
+    "triggers": "触发器",
+    "overview": "概览",
+    "serverConfig": "服务器配置",
+    "cronJobs": "定时任务",
+    "componentGallery": "组件库",
+    "logout": "退出登录",
+    "logoutConfirmTitle": "退出登录",
+    "logoutConfirmMessage": "确定要退出登录吗？所有服务器和设置将被清除。",
+    "theme": {
+      "light": "浅色",
+      "dark": "深色",
+      "system": "跟随系统"
+    },
+    "biometric": {
+      "unavailable": "不可用",
+      "unavailableMessage": "此设备不支持生物识别认证。",
+      "notEnrolled": "未注册",
+      "notEnrolledMessage": "此设备未注册生物识别凭证。",
+      "enablePrompt": "请验证以启用面容 ID 锁定"
+    },
+    "language": "语言"
+  },
+  "home": {
+    "connectionError": "连接错误",
+    "goToSettings": "前往设置",
+    "noServerConfigured": "未配置服务器",
+    "noServerMessage": "请在设置中添加服务器以开始使用。"
+  },
+  "chat": {
+    "placeholder": "输入消息...",
+    "listening": "正在听...",
+    "startSpeaking": "开始说话...",
+    "send": "发送"
+  },
+  "addServer": {
+    "title": "添加服务器",
+    "providerType": "提供商类型",
+    "name": "名称",
+    "url": "URL",
+    "token": "令牌",
+    "apiKey": "API 密钥",
+    "clientId": "客户端 ID",
+    "model": "模型",
+    "addButton": "添加服务器",
+    "placeholders": {
+      "myServer": "我的服务器",
+      "myOllama": "我的 Ollama",
+      "myEchoServer": "我的回声服务器",
+      "myClaude": "我的 Claude"
+    },
+    "providers": {
+      "openClaw": "OpenClaw",
+      "ollama": "Ollama",
+      "claude": "Claude",
+      "appleIntelligence": "Apple Intelligence",
+      "echoServer": "回声服务器"
+    },
+    "appleDescription": "使用 Apple Foundation Models 通过 CoreML 在设备上完全本地运行 AI。需要 iOS 26+ 并支持 Apple Intelligence。",
+    "errors": {
+      "urlRequired": "URL 为必填项",
+      "tokenRequired": "令牌为必填项",
+      "apiKeyRequired": "API 密钥为必填项"
+    }
+  },
+  "editServer": {
+    "title": "编辑服务器",
+    "saveChanges": "保存更改",
+    "deleteServer": "删除服务器",
+    "deleteConfirmTitle": "删除服务器",
+    "deleteConfirmMessage": "确定要删除此服务器吗？此操作无法撤销。"
+  },
+  "biometricLock": {
+    "locked": "已锁定",
+    "unlock": "解锁",
+    "unlockPrompt": "解锁 Lumiere",
+    "authenticateToUnlock": "请验证以解锁 Lumiere",
+    "failed": "认证失败",
+    "failedMessage": "认证尝试出现问题。\n请重试。",
+    "authFailed": "认证失败。点击重试。",
+    "tryAgain": "重试"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "管理你的 AI 代理从未如此简单",
+      "description": "Lumiere 为你提供精美的移动界面，随时随地与 AI 代理交互。监控对话、发送消息，无论身在何处都能保持连接。"
+    },
+    "step2": {
+      "title": "强大功能，全面掌控",
+      "description": "管理多个服务器，切换会话，使用定时任务调度，获取实时通知。一切尽在掌握。"
+    },
+    "step3": {
+      "title": "高度可配置，满足个性化需求",
+      "description": "连接 OpenClaw、Ollama 或 Echo 提供商。自定义主题，设置深度链接触发器，打造适合你工作流程的体验。"
+    },
+    "getStarted": "开始使用"
+  },
+  "sessions": {
+    "title": "会话",
+    "newSession": "新建会话",
+    "editSession": "编辑会话",
+    "deleteSession": "删除会话",
+    "sessionName": "会话名称",
+    "defaultSession": "默认会话"
+  },
+  "favorites": {
+    "title": "收藏",
+    "noFavorites": "暂无收藏",
+    "addFavorite": "添加到收藏",
+    "removeFavorite": "取消收藏"
+  },
+  "triggers": {
+    "title": "触发器",
+    "newTrigger": "新建触发器",
+    "editTrigger": "编辑触发器",
+    "deleteTrigger": "删除触发器",
+    "noTriggers": "未配置触发器"
+  },
+  "scheduler": {
+    "title": "调度器",
+    "cronJobs": "定时任务"
+  },
+  "gallery": {
+    "title": "组件库"
+  },
+  "overview": {
+    "title": "概览"
+  }
+}
