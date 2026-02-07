@@ -105,9 +105,41 @@ async function resolveAtom<T>(value: T | Promise<T>): Promise<T> {
 }
 
 /**
+ * Fetch all session keys for a Molt server via the HTTP RPC endpoint.
+ * Falls back to the provided default session key on failure.
+ */
+async function listServerSessions(
+  serverUrl: string,
+  token: string,
+  fallbackSessionKey: string,
+): Promise<string[]> {
+  try {
+    const response = await fetch(`${httpUrl(serverUrl)}/api/rpc`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ method: 'sessions.list' }),
+    })
+
+    if (!response.ok) return [fallbackSessionKey]
+
+    const data = (await response.json()) as {
+      sessions?: Array<{ key: string }>
+    }
+
+    const keys = data.sessions?.map((s) => s.key).filter(Boolean)
+    return keys && keys.length > 0 ? keys : [fallbackSessionKey]
+  } catch {
+    return [fallbackSessionKey]
+  }
+}
+
+/**
  * The background task that runs periodically. It reads server configs from
- * Jotai store, checks Claude and Clawd servers for new assistant messages,
- * and fires a local notification.
+ * Jotai store, checks Molt servers for new assistant messages across all
+ * sessions, and fires a local notification per new message.
  */
 export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTaskResult> {
   try {
@@ -122,33 +154,32 @@ export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTa
     const sessions = await resolveAtom(store.get(serverSessionsAtom))
     const defaultSession = await resolveAtom(store.get(currentSessionKeyAtom))
 
-    let notifiedCount = 0
-
     for (const serverId of Object.keys(servers)) {
       const server = servers[serverId]
 
-      // Only check Claude and Clawd servers (they have a gateway that supports background polling)
-      const serverName = server.name?.toLowerCase() ?? ''
-      if (serverName !== 'claude' && serverName !== 'clawd') continue
+      // Only Molt servers expose the /api/rpc endpoint for background polling
+      if (server.providerType !== 'molt') continue
 
       const token = await getServerToken(serverId)
       if (!token) continue
 
-      const sessionKey = sessions[serverId] ?? defaultSession
+      const fallbackSessionKey = sessions[serverId] ?? defaultSession
+      const sessionKeys = await listServerSessions(server.url, token, fallbackSessionKey)
 
-      const result = await checkServerForNewMessages(server.url, token, sessionKey, serverId)
+      for (const sessionKey of sessionKeys) {
+        const result = await checkServerForNewMessages(server.url, token, sessionKey, serverId)
 
-      if (result.hasNew) {
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: server.name ?? 'Lumiere',
-            body: result.preview ?? 'You have a new message',
-            data: { serverId, sessionKey },
-            sound: 'default',
-          },
-          trigger: null, // fire immediately
-        })
-        notifiedCount++
+        if (result.hasNew) {
+          await Notifications.scheduleNotificationAsync({
+            content: {
+              title: server.name ?? 'Lumiere',
+              body: result.preview ?? 'You have a new message',
+              data: { serverId, sessionKey },
+              sound: 'default',
+            },
+            trigger: null, // fire immediately
+          })
+        }
       }
     }
 
