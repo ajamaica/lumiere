@@ -535,7 +535,17 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             streaming: true,
           },
         ]
-      : []),
+      : isAgentResponding
+        ? [
+            {
+              id: 'thinking',
+              text: '',
+              sender: 'agent' as const,
+              timestamp: new Date(),
+              thinking: true,
+            },
+          ]
+        : []),
   ]
 
   const filteredMessages = searchQuery
