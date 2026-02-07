@@ -44,7 +44,10 @@
       "notEnrolledMessage": "このデバイスに生体認証情報が登録されていません。",
       "enablePrompt": "Face IDロックを有効にするには認証してください"
     },
-    "language": "言語"
+    "language": "言語",
+    "backupRestore": "バックアップと復元",
+    "backupServers": "サーバーをバックアップ",
+    "restoreServers": "サーバーを復元"
   },
   "home": {
     "connectionError": "接続エラー",
@@ -150,5 +153,29 @@
   },
   "overview": {
     "title": "概要"
+  },
+  "backupServers": {
+    "title": "サーバーをバックアップ",
+    "description": "サーバー設定をJSONファイルとしてエクスポートします。セキュリティのためトークンは含まれません。",
+    "serverCount": "{{count}}件のサーバーがエクスポートされます",
+    "noServers": "バックアップするサーバーがありません",
+    "exportButton": "バックアップをエクスポート",
+    "exportSuccess": "バックアップが正常にエクスポートされました",
+    "exportError": "バックアップのエクスポートに失敗しました"
+  },
+  "restoreServers": {
+    "title": "サーバーを復元",
+    "description": "JSONバックアップファイルからサーバー設定をインポートします。インポート後にトークンを再入力する必要があります。",
+    "selectFile": "バックアップファイルを選択",
+    "importButton": "サーバーをインポート",
+    "preview": "プレビュー",
+    "serversFound": "バックアップに{{count}}件のサーバーが見つかりました",
+    "noFile": "ファイルが選択されていません",
+    "importSuccess": "サーバーが正常にインポートされました",
+    "importError": "サーバーのインポートに失敗しました",
+    "invalidFile": "無効なバックアップファイル形式です",
+    "duplicateSkipped": "重複するサーバーはスキップされました",
+    "replaceExisting": "既存のサーバーを置換",
+    "mergeWithExisting": "既存のサーバーと統合"
   }
 }
