@@ -39,6 +39,7 @@ import {
 import { logger } from '../../utils/logger'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
+import { ThinkingIndicator } from './ThinkingIndicator'
 
 const chatScreenLogger = logger.create('ChatScreen')
 
@@ -460,9 +461,15 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             pointerEvents={isSearchOpen ? 'none' : 'auto'}
           >
             <StatusBubbleContainer {...statusBubbleProps}>
-              <Animated.View style={[styles.connectedDot, pulseStyle]} />
-              <Text style={styles.connectedText}>Health</Text>
-              <Text style={styles.statusOk}>OK</Text>
+              {isAgentResponding ? (
+                <ThinkingIndicator />
+              ) : (
+                <>
+                  <Animated.View style={[styles.connectedDot, pulseStyle]} />
+                  <Text style={styles.connectedText}>Health</Text>
+                  <Text style={styles.statusOk}>OK</Text>
+                </>
+              )}
             </StatusBubbleContainer>
             <View style={styles.statusActions}>
               <TouchableOpacity onPress={handleToggleSearch} activeOpacity={0.7}>
