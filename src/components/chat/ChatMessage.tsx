@@ -7,7 +7,6 @@ import * as WebBrowser from 'expo-web-browser'
 import { useAtom, useSetAtom } from 'jotai'
 import React, { useCallback, useMemo, useState } from 'react'
 import {
-  Image,
   Platform,
   Pressable,
   StyleSheet,
@@ -426,16 +425,40 @@ export function ChatMessage({ message }: ChatMessageProps) {
       <View style={[styles.bubble, isUser ? styles.userBubble : styles.agentBubble]}>
         {message.attachments && message.attachments.length > 0 && (
           <View style={styles.attachmentContainer}>
-            {message.attachments.map((attachment, index) => (
-              <Image
-                key={index}
-                source={{ uri: attachment.uri }}
-                style={styles.attachmentImage}
-                resizeMode="cover"
-                accessibilityLabel={`Attachment ${index + 1}`}
-                accessibilityRole="image"
-              />
-            ))}
+            {message.attachments.map((attachment, index) => {
+              const iconName =
+                attachment.type === 'image'
+                  ? 'image'
+                  : attachment.type === 'video'
+                    ? 'videocam'
+                    : 'document'
+              const label = attachment.name || `${attachment.type} file`
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.attachmentItem}
+                  onPress={() => {
+                    if (attachment.uri) {
+                      Linking.openURL(attachment.uri).catch((err) =>
+                        chatLogger.logError('Failed to open attachment', err),
+                      )
+                    }
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={label}
+                >
+                  <Ionicons
+                    name={iconName as any}
+                    size={24}
+                    color={theme.colors.primary}
+                    style={styles.attachmentItemIcon}
+                  />
+                  <Text style={styles.attachmentItemText} numberOfLines={1}>
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              )
+            })}
           </View>
         )}
         <Markdown
@@ -632,15 +655,26 @@ const createStyles = (theme: Theme) =>
       gap: theme.spacing.xs,
     },
     attachmentContainer: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
+      flexDirection: 'column',
       gap: theme.spacing.xs,
       marginBottom: theme.spacing.sm,
     },
-    attachmentImage: {
-      width: 200,
-      height: 200,
+    attachmentItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
       borderRadius: theme.borderRadius.md,
+      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)',
+    },
+    attachmentItemIcon: {
+      marginRight: theme.spacing.sm,
+    },
+    attachmentItemText: {
+      flex: 1,
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.primary,
+      fontWeight: theme.typography.fontWeight.medium,
     },
   })
 
