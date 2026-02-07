@@ -47,7 +47,8 @@
     "language": "语言",
     "backupRestore": "备份与恢复",
     "backupServers": "备份服务器",
-    "restoreServers": "恢复服务器"
+    "restoreServers": "恢复服务器",
+    "contribute": "贡献"
   },
   "home": {
     "connectionError": "连接错误",
