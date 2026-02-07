@@ -72,12 +72,14 @@ Each provider declares its capabilities via `ProviderCapabilities`. These act as
 | ------------------- | ---------------------- | ---- | ------ | ------ | ------ | ---------- | ----- | ------ |
 | `chat`              | Basic chat messaging   | yes  | yes    | yes    | yes    | yes        | yes   | yes    |
 | `imageAttachments`  | Image upload support   | no   | yes    | no     | no     | no         | no    | no     |
-| `serverSessions`    | Server-side sessions   | yes  | no     | no     | no     | no         | no    | no     |
+| `serverSessions`    | Server-side sessions   | yes  | no     | no     | no     | no         | no\*  | no     |
 | `persistentHistory` | Remote history storage | yes  | no     | no     | no     | no         | no    | no     |
 | `scheduler`         | Cron job scheduling    | yes  | no     | no     | no     | no         | no    | no     |
 | `gatewaySnapshot`   | Health snapshots       | yes  | no     | no     | no     | no         | no    | no     |
 
 > Note: `CachedChatProvider` adds local caching to all providers regardless of their declared `persistentHistory` capability.
+>
+> \* Apple Intelligence does not have server-side sessions but supports local on-device sessions via the `CachedChatProvider` session index. Users can create, switch, and manage multiple sessions on iPad/foldable sidebar and the phone sessions screen.
 
 ## Molt Gateway Configuration
 

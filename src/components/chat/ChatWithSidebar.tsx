@@ -4,7 +4,7 @@ import { Alert } from 'react-native'
 
 import { useServers } from '../../hooks/useServers'
 import { useMoltGateway } from '../../services/molt'
-import { ProviderConfig } from '../../services/providers'
+import { ProviderConfig, readSessionIndex, SessionIndexEntry } from '../../services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../../store'
 import { logger } from '../../utils/logger'
 import { SessionSidebar } from '../layout/SessionSidebar'
@@ -34,8 +34,12 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   // Track last session per server
   const serverSessionsRef = useRef<Record<string, string>>({})
 
-  // Only molt provider supports server-side sessions
+  // Molt provider supports server-side sessions via WebSocket gateway
   const supportsServerSessions = providerConfig?.type === 'molt'
+  // Apple Intelligence supports local on-device sessions via cached session index
+  const supportsLocalSessions = providerConfig?.type === 'apple'
+  // Any form of multi-session support (server-side or local)
+  const supportsSessions = supportsServerSessions || supportsLocalSessions
 
   const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
     url: providerConfig?.url || '',
@@ -53,12 +57,43 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [providerConfig, supportsServerSessions, currentServerId])
 
+  // Load sessions from local session index (for Apple Intelligence)
+  const loadLocalSessions = useCallback(async () => {
+    const loadId = ++sessionLoadIdRef.current
+    setLoadingSessions(true)
+    try {
+      const entries: SessionIndexEntry[] = await readSessionIndex(providerConfig?.serverId)
+      if (loadId !== sessionLoadIdRef.current) return // stale response
+      const localSessions: Session[] = entries
+        .map((entry) => ({
+          key: entry.key,
+          messageCount: entry.messageCount,
+          lastActivity: entry.lastActivity,
+        }))
+        .sort((a, b) => (b.lastActivity ?? 0) - (a.lastActivity ?? 0))
+      setSessions(localSessions)
+    } catch (err) {
+      chatSidebarLogger.logError('Failed to load local sessions', err)
+      setSessions([{ key: currentSessionKey }])
+    } finally {
+      if (loadId === sessionLoadIdRef.current) {
+        setLoadingSessions(false)
+      }
+    }
+  }, [providerConfig?.serverId, currentSessionKey])
+
   const loadSessions = useCallback(async () => {
     // Increment load ID so any in-flight request from a previous server
     // is discarded when it resolves.
     const loadId = ++sessionLoadIdRef.current
 
-    // For non-molt providers, just show current session
+    // Apple Intelligence uses local session index
+    if (supportsLocalSessions) {
+      loadLocalSessions()
+      return
+    }
+
+    // For providers without any session support, just show current session
     if (!supportsServerSessions) {
       setSessions([{ key: currentSessionKey }])
       setLoadingSessions(false)
@@ -100,6 +135,8 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     connected,
     listSessions,
     supportsServerSessions,
+    supportsLocalSessions,
+    loadLocalSessions,
     currentSessionKey,
     currentServerId,
     setCurrentSessionKey,
@@ -118,12 +155,12 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     }
   }, [currentServerId, currentSessionKey])
 
-  // Initialize session for non-molt servers
+  // Initialize session for providers without session support
   useEffect(() => {
-    if (!supportsServerSessions && currentSessionKey !== 'agent:main') {
+    if (!supportsSessions && currentSessionKey !== 'agent:main') {
       setCurrentSessionKey('agent:main')
     }
-  }, [supportsServerSessions, currentSessionKey, setCurrentSessionKey])
+  }, [supportsSessions, currentSessionKey, setCurrentSessionKey])
 
   const handleNewSession = () => {
     const newSessionKey = `agent:main:${Date.now()}`
@@ -143,14 +180,14 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
           style: 'destructive',
           onPress: async () => {
             try {
-              // Only call server reset for providers that support server sessions
+              // Only call server reset for Molt providers with server-side sessions
               if (supportsServerSessions) {
                 await resetSession(currentSessionKey)
               }
               // Increment trigger to reload message history
               setClearMessagesTrigger((prev) => prev + 1)
               Alert.alert('Success', 'Session has been reset')
-              // Reload sessions to update message counts
+              // Reload sessions to update message counts (works for both server and local sessions)
               loadSessions()
             } catch (err) {
               chatSidebarLogger.logError('Failed to reset session', err)
@@ -181,8 +218,11 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
         // For molt servers without a saved session, clear the key so loadSessions picks the first one
         // Use a temporary placeholder to avoid the tracking effect saving the old session
         setCurrentSessionKey('')
+      } else if (server?.providerType === 'apple') {
+        // Apple Intelligence supports local sessions; use default session key
+        setCurrentSessionKey('agent:main:main')
       } else {
-        // For non-molt servers, use consistent "main" session
+        // For other providers, use consistent "main" session
         setCurrentSessionKey('agent:main')
       }
     }
@@ -198,7 +238,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
           sessions={sessions}
           currentSessionKey={currentSessionKey}
           sessionAliases={sessionAliases}
-          supportsServerSessions={supportsServerSessions}
+          supportsServerSessions={supportsSessions}
           servers={serversList}
           currentServerId={currentServerId}
           onSwitchServer={handleSwitchServer}
