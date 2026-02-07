@@ -38,7 +38,7 @@ export interface SendMessageParams {
 }
 
 export interface ProviderAttachment {
-  type: 'image' | 'document'
+  type: 'image' | 'document' | 'audio' | 'video'
   data?: string // base64
   mimeType?: string
   name?: string

@@ -130,10 +130,11 @@ export interface ChatHistoryParams {
 export type { ChatHistoryMessage } from '../providers/types'
 
 export interface Attachment {
-  type: 'image' | 'audio' | 'document'
+  type: 'image' | 'audio' | 'video' | 'document'
   url?: string
   data?: string
   mimeType?: string
+  fileName?: string
 }
 
 // Agent params
