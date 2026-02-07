@@ -57,7 +57,9 @@ export function StatCard({
       {...props}
     >
       <Text style={styles.label}>{label}</Text>
-      <Text style={styles.value}>{value}</Text>
+      <Text style={styles.value} numberOfLines={1} adjustsFontSizeToFit>
+        {value}
+      </Text>
       {description && <Text style={styles.description}>{description}</Text>}
     </View>
   )
