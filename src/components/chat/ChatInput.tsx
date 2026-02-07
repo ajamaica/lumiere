@@ -28,6 +28,7 @@ interface ChatInputProps {
   disabled?: boolean
   queueCount?: number
   supportsImageAttachments?: boolean
+  supportsFileAttachments?: boolean
 }
 
 export function ChatInput({
@@ -36,6 +37,7 @@ export function ChatInput({
   disabled = false,
   queueCount = 0,
   supportsImageAttachments = true,
+  supportsFileAttachments = false,
 }: ChatInputProps) {
   const { theme } = useTheme()
   const { t } = useTranslation()
@@ -191,17 +193,19 @@ export function ChatInput({
                 </View>
                 <Text style={styles.attachmentOptionText}>Video</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.attachmentOption}
-                onPress={handlePickFile}
-                accessibilityRole="button"
-                accessibilityLabel="Attach file"
-              >
-                <View style={styles.attachmentIconContainer}>
-                  <Ionicons name="document" size={24} color={theme.colors.primary} />
-                </View>
-                <Text style={styles.attachmentOptionText}>File</Text>
-              </TouchableOpacity>
+              {supportsFileAttachments && (
+                <TouchableOpacity
+                  style={styles.attachmentOption}
+                  onPress={handlePickFile}
+                  accessibilityRole="button"
+                  accessibilityLabel="Attach file"
+                >
+                  <View style={styles.attachmentIconContainer}>
+                    <Ionicons name="document" size={24} color={theme.colors.primary} />
+                  </View>
+                  <Text style={styles.attachmentOptionText}>File</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </Pressable>
         </Pressable>

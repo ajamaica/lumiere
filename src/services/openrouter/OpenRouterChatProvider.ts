@@ -54,6 +54,7 @@ export class OpenRouterChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: true,
+    fileAttachments: false,
     serverSessions: false,
     persistentHistory: false,
     scheduler: false,

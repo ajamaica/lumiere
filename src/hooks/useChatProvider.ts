@@ -18,6 +18,7 @@ const providerLogger = logger.create('ChatProvider')
 const DEFAULT_CAPABILITIES: ProviderCapabilities = {
   chat: true,
   imageAttachments: false,
+  fileAttachments: false,
   serverSessions: false,
   persistentHistory: false,
   scheduler: false,
