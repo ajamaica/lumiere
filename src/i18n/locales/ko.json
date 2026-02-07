@@ -1,0 +1,182 @@
+{
+  "common": {
+    "cancel": "취소",
+    "save": "저장",
+    "delete": "삭제",
+    "done": "완료",
+    "error": "오류",
+    "success": "성공",
+    "loading": "로딩 중...",
+    "retry": "재시도",
+    "close": "닫기",
+    "back": "뒤로",
+    "next": "다음",
+    "skip": "건너뛰기",
+    "confirm": "확인",
+    "active": "활성"
+  },
+  "settings": {
+    "title": "설정",
+    "servers": "서버",
+    "noServersConfigured": "구성된 서버 없음",
+    "general": "일반",
+    "colors": "색상",
+    "faceId": "Face ID",
+    "notifications": "알림",
+    "favorites": "즐겨찾기",
+    "triggers": "트리거",
+    "overview": "개요",
+    "serverConfig": "서버 설정",
+    "cronJobs": "크론 작업",
+    "componentGallery": "컴포넌트 갤러리",
+    "logout": "로그아웃",
+    "logoutConfirmTitle": "로그아웃",
+    "logoutConfirmMessage": "정말 로그아웃하시겠습니까? 모든 서버와 설정이 삭제됩니다.",
+    "theme": {
+      "light": "라이트",
+      "dark": "다크",
+      "system": "시스템"
+    },
+    "biometric": {
+      "unavailable": "사용 불가",
+      "unavailableMessage": "이 기기에서는 생체 인증을 사용할 수 없습니다.",
+      "notEnrolled": "미등록",
+      "notEnrolledMessage": "이 기기에 등록된 생체 인증 정보가 없습니다.",
+      "enablePrompt": "Face ID 잠금을 활성화하려면 인증하세요"
+    },
+    "language": "언어",
+    "backupRestore": "백업 및 복원",
+    "backupServers": "서버 백업",
+    "restoreServers": "서버 복원",
+    "contribute": "기여하기"
+  },
+  "home": {
+    "connectionError": "연결 오류",
+    "goToSettings": "설정으로 이동",
+    "noServerConfigured": "서버가 구성되지 않음",
+    "noServerMessage": "시작하려면 설정에서 서버를 추가하세요."
+  },
+  "chat": {
+    "placeholder": "메시지를 입력하세요...",
+    "listening": "듣는 중...",
+    "startSpeaking": "말씀하세요...",
+    "send": "보내기"
+  },
+  "addServer": {
+    "title": "서버 추가",
+    "providerType": "제공자 유형",
+    "name": "이름",
+    "url": "URL",
+    "token": "토큰",
+    "apiKey": "API 키",
+    "clientId": "클라이언트 ID",
+    "model": "모델",
+    "addButton": "서버 추가",
+    "placeholders": {
+      "myServer": "내 서버",
+      "myOllama": "내 Ollama",
+      "myEchoServer": "내 Echo 서버",
+      "myClaude": "내 Claude"
+    },
+    "providers": {
+      "openClaw": "OpenClaw",
+      "ollama": "Ollama",
+      "claude": "Claude",
+      "appleIntelligence": "Apple Intelligence",
+      "echoServer": "Echo 서버"
+    },
+    "appleDescription": "CoreML을 통해 기기에서 완전히 AI를 실행하기 위해 Apple Foundation Models를 사용합니다. Apple Intelligence를 지원하는 iOS 26+ 이상이 필요합니다.",
+    "errors": {
+      "urlRequired": "URL은 필수입니다",
+      "tokenRequired": "토큰은 필수입니다",
+      "apiKeyRequired": "API 키는 필수입니다"
+    }
+  },
+  "editServer": {
+    "title": "서버 편집",
+    "saveChanges": "변경사항 저장",
+    "deleteServer": "서버 삭제",
+    "deleteConfirmTitle": "서버 삭제",
+    "deleteConfirmMessage": "정말 이 서버를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+  },
+  "biometricLock": {
+    "locked": "잠김",
+    "unlock": "잠금 해제",
+    "unlockPrompt": "Lumiere 잠금 해제",
+    "authenticateToUnlock": "Lumiere를 잠금 해제하려면 인증하세요",
+    "failed": "인증 실패",
+    "failedMessage": "인증 시도에 문제가 발생했습니다.\n다시 시도해 주세요.",
+    "authFailed": "인증 실패. 다시 시도하려면 탭하세요.",
+    "tryAgain": "다시 시도"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "에이전트 관리가 그 어느 때보다 쉬워졌습니다",
+      "description": "Lumiere는 이동 중에 AI 에이전트와 상호작용할 수 있는 아름다운 모바일 인터페이스를 제공합니다. 대화를 모니터링하고, 메시지를 보내고, 어디서든 연결 상태를 유지하세요."
+    },
+    "step2": {
+      "title": "강력한 기능으로 완벽한 제어",
+      "description": "여러 서버를 관리하고, 세션 간 전환하고, 크론 작업으로 태스크를 예약하고, 실시간 알림을 받으세요. 제어하는 데 필요한 모든 것이 여기에 있습니다."
+    },
+    "step3": {
+      "title": "맞춤 요구에 맞게 고도로 구성 가능",
+      "description": "OpenClaw, Ollama 또는 Echo 제공자에 연결하세요. 테마를 맞춤 설정하고, 딥링크 트리거를 설정하고, 워크플로에 맞게 경험을 조정하세요."
+    },
+    "getStarted": "시작하기"
+  },
+  "sessions": {
+    "title": "세션",
+    "newSession": "새 세션",
+    "editSession": "세션 편집",
+    "deleteSession": "세션 삭제",
+    "sessionName": "세션 이름",
+    "defaultSession": "기본 세션"
+  },
+  "favorites": {
+    "title": "즐겨찾기",
+    "noFavorites": "즐겨찾기가 없습니다",
+    "addFavorite": "즐겨찾기에 추가",
+    "removeFavorite": "즐겨찾기에서 제거"
+  },
+  "triggers": {
+    "title": "트리거",
+    "newTrigger": "새 트리거",
+    "editTrigger": "트리거 편집",
+    "deleteTrigger": "트리거 삭제",
+    "noTriggers": "구성된 트리거 없음"
+  },
+  "scheduler": {
+    "title": "스케줄러",
+    "cronJobs": "크론 작업"
+  },
+  "gallery": {
+    "title": "갤러리"
+  },
+  "overview": {
+    "title": "개요"
+  },
+  "backupServers": {
+    "title": "서버 백업",
+    "description": "서버 구성을 JSON 파일로 내보냅니다. 보안을 위해 토큰은 포함되지 않습니다.",
+    "serverCount": "{{count}}개의 서버가 내보내집니다",
+    "noServers": "백업할 서버 없음",
+    "exportButton": "백업 내보내기",
+    "exportSuccess": "백업이 성공적으로 내보내졌습니다",
+    "exportError": "백업 내보내기 실패"
+  },
+  "restoreServers": {
+    "title": "서버 복원",
+    "description": "JSON 백업 파일에서 서버 구성을 가져옵니다. 가져온 후 토큰을 다시 입력해야 합니다.",
+    "selectFile": "백업 파일 선택",
+    "importButton": "서버 가져오기",
+    "preview": "미리보기",
+    "serversFound": "백업에서 {{count}}개의 서버를 찾았습니다",
+    "noFile": "선택된 파일 없음",
+    "importSuccess": "서버를 성공적으로 가져왔습니다",
+    "importError": "서버 가져오기 실패",
+    "invalidFile": "잘못된 백업 파일 형식",
+    "duplicateSkipped": "중복 서버를 건너뛰었습니다",
+    "replaceExisting": "기존 서버 교체",
+    "mergeWithExisting": "기존 서버와 병합"
+  }
+}
