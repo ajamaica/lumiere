@@ -21,6 +21,8 @@ export const DEFAULT_MODELS = {
   GEMINI: 'gemini-2.0-flash',
   /** Default Emergent model */
   EMERGENT: 'claude-sonnet-4-5',
+  /** Default Kimi (Moonshot AI) model */
+  KIMI: 'moonshot-v1-8k',
 } as const
 
 /**
@@ -37,6 +39,8 @@ export const API_CONFIG = {
   OPENROUTER_MAX_TOKENS: 4096,
   /** Default max tokens for Gemini API responses */
   GEMINI_MAX_TOKENS: 8192,
+  /** Default max tokens for Kimi API responses */
+  KIMI_MAX_TOKENS: 4096,
 } as const
 
 /**

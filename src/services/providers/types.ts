@@ -12,6 +12,7 @@ export type ProviderType =
   | 'gemini-nano'
   | 'gemini'
   | 'emergent'
+  | 'kimi'
 
 export interface ProviderConfig {
   type: ProviderType

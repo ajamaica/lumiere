@@ -1,0 +1,1 @@
+export { KimiChatProvider } from './KimiChatProvider'
