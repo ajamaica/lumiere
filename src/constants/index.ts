@@ -17,6 +17,8 @@ export const DEFAULT_MODELS = {
   OPENAI: 'gpt-4o',
   /** Default OpenRouter model */
   OPENROUTER: 'openai/gpt-4o',
+  /** Default Gemini model */
+  GEMINI: 'gemini-2.0-flash',
   /** Default Emergent model */
   EMERGENT: 'claude-sonnet-4-5',
 } as const
@@ -33,6 +35,8 @@ export const API_CONFIG = {
   OPENAI_MAX_TOKENS: 4096,
   /** Default max tokens for OpenRouter API responses */
   OPENROUTER_MAX_TOKENS: 4096,
+  /** Default max tokens for Gemini API responses */
+  GEMINI_MAX_TOKENS: 8192,
 } as const
 
 /**

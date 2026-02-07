@@ -2,6 +2,7 @@ import { AppleChatProvider } from '../apple-intelligence/AppleChatProvider'
 import { ClaudeChatProvider } from '../claude/ClaudeChatProvider'
 import { EchoChatProvider } from '../echo/EchoChatProvider'
 import { EmergentChatProvider } from '../emergent/EmergentChatProvider'
+import { GeminiChatProvider } from '../gemini/GeminiChatProvider'
 import { GeminiNanoChatProvider } from '../gemini-nano/GeminiNanoChatProvider'
 import { OllamaChatProvider } from '../ollama/OllamaChatProvider'
 import { OpenAIChatProvider } from '../openai/OpenAIChatProvider'
@@ -45,6 +46,9 @@ export function createChatProvider(config: ProviderConfig): ChatProvider {
       break
     case 'gemini-nano':
       inner = new GeminiNanoChatProvider(config)
+      break
+    case 'gemini':
+      inner = new GeminiChatProvider(config)
       break
     case 'emergent':
       inner = new EmergentChatProvider(config)

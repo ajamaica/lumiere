@@ -65,7 +65,8 @@ export function SetupScreen() {
     providerType === 'molt' ||
     providerType === 'claude' ||
     providerType === 'openai' ||
-    providerType === 'openrouter'
+    providerType === 'openrouter' ||
+    providerType === 'gemini'
 
   const handleComplete = async () => {
     if (providerType === 'molt' && localUrl.trim() && localToken.trim()) {
@@ -163,6 +164,25 @@ export function SetupScreen() {
       }))
 
       setOnboardingCompleted(true)
+    } else if (providerType === 'gemini' && localToken.trim()) {
+      const serverId = await addServer(
+        {
+          name: 'My Gemini',
+          url: localUrl.trim() || 'https://generativelanguage.googleapis.com',
+          providerType: 'gemini',
+          model: localModel.trim() || undefined,
+        },
+        localToken.trim(),
+      )
+
+      const sessionKey = DEFAULT_SESSION_KEY
+      setCurrentSessionKey(sessionKey)
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
+
+      setOnboardingCompleted(true)
     } else if (providerType === 'echo') {
       const serverId = await addServer(
         {
@@ -223,7 +243,10 @@ export function SetupScreen() {
   const isValid =
     providerType === 'molt'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
-      : providerType === 'claude' || providerType === 'openai' || providerType === 'openrouter'
+      : providerType === 'claude' ||
+          providerType === 'openai' ||
+          providerType === 'openrouter' ||
+          providerType === 'gemini'
         ? localToken.trim().length > 0
         : providerType === 'ollama'
           ? localUrl.trim().length > 0
@@ -276,7 +299,8 @@ export function SetupScreen() {
               label={
                 providerType === 'claude' ||
                 providerType === 'openai' ||
-                providerType === 'openrouter'
+                providerType === 'openrouter' ||
+                providerType === 'gemini'
                   ? 'API Key'
                   : 'Token'
               }
@@ -285,7 +309,8 @@ export function SetupScreen() {
               placeholder={
                 providerType === 'claude' ||
                 providerType === 'openai' ||
-                providerType === 'openrouter'
+                providerType === 'openrouter' ||
+                providerType === 'gemini'
                   ? 'Your API key'
                   : 'Your authentication token'
               }
@@ -299,7 +324,9 @@ export function SetupScreen() {
                     ? 'Your OpenAI API key'
                     : providerType === 'openrouter'
                       ? 'Your OpenRouter API key'
-                      : 'Your authentication token for the gateway'
+                      : providerType === 'gemini'
+                        ? 'Your Google AI API key'
+                        : 'Your authentication token for the gateway'
               }
             />
           )}
@@ -307,7 +334,8 @@ export function SetupScreen() {
           {(providerType === 'ollama' ||
             providerType === 'claude' ||
             providerType === 'openai' ||
-            providerType === 'openrouter') && (
+            providerType === 'openrouter' ||
+            providerType === 'gemini') && (
             <TextInput
               label="Model"
               value={localModel}
@@ -319,7 +347,9 @@ export function SetupScreen() {
                     ? 'claude-sonnet-4-5'
                     : providerType === 'openai'
                       ? 'gpt-4o'
-                      : 'openai/gpt-4o'
+                      : providerType === 'gemini'
+                        ? 'gemini-2.0-flash'
+                        : 'openai/gpt-4o'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -330,7 +360,9 @@ export function SetupScreen() {
                     ? 'Claude model to use (default: claude-sonnet-4-5)'
                     : providerType === 'openai'
                       ? 'OpenAI model to use (default: gpt-4o)'
-                      : 'OpenRouter model to use (default: openai/gpt-4o)'
+                      : providerType === 'gemini'
+                        ? 'Gemini model to use (default: gemini-2.0-flash)'
+                        : 'OpenRouter model to use (default: openai/gpt-4o)'
               }
             />
           )}
