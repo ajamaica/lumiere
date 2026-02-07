@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -45,37 +45,49 @@ export default function OllamaModelsScreen() {
   const [models, setModels] = useState<OllamaModel[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const abortControllerRef = useRef<AbortController | null>(null)
 
   const currentModel = currentServer?.model || 'llama3.2'
 
-  const fetchModels = useCallback(async () => {
-    if (!currentServer) return
+  const fetchModels = useCallback(
+    async (signal?: AbortSignal) => {
+      if (!currentServer) return
 
-    setLoading(true)
-    setError(null)
+      setLoading(true)
+      setError(null)
 
-    try {
-      const host = currentServer.url.replace(/\/+$/, '')
-      const response = await fetch(`${host}/api/tags`)
+      try {
+        const host = currentServer.url.replace(/\/+$/, '')
+        const response = await fetch(`${host}/api/tags`, { signal })
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`)
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`)
+        }
+
+        const data = await response.json()
+        if (data.models && Array.isArray(data.models)) {
+          setModels(data.models)
+        }
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === 'AbortError') return
+        ollamaLogger.logError('Failed to fetch Ollama models', err)
+        setError('Could not fetch models. Make sure Ollama is running.')
+      } finally {
+        if (!signal?.aborted) {
+          setLoading(false)
+        }
       }
-
-      const data = await response.json()
-      if (data.models && Array.isArray(data.models)) {
-        setModels(data.models)
-      }
-    } catch (err) {
-      ollamaLogger.logError('Failed to fetch Ollama models', err)
-      setError('Could not fetch models. Make sure Ollama is running.')
-    } finally {
-      setLoading(false)
-    }
-  }, [currentServer])
+    },
+    [currentServer],
+  )
 
   useEffect(() => {
-    fetchModels()
+    abortControllerRef.current?.abort()
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+    fetchModels(controller.signal)
+
+    return () => controller.abort()
   }, [fetchModels])
 
   const handleSelectModel = async (modelName: string) => {
@@ -163,7 +175,15 @@ export default function OllamaModelsScreen() {
               <Text color="secondary" center>
                 {error}
               </Text>
-              <TouchableOpacity style={styles.retryButton} onPress={fetchModels}>
+              <TouchableOpacity
+                style={styles.retryButton}
+                onPress={() => {
+                  abortControllerRef.current?.abort()
+                  const controller = new AbortController()
+                  abortControllerRef.current = controller
+                  fetchModels(controller.signal)
+                }}
+              >
                 <Text style={{ color: theme.colors.text.inverse }}>Retry</Text>
               </TouchableOpacity>
             </View>

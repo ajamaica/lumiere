@@ -9,6 +9,7 @@ import {
   Image,
   ImageStyle,
   Modal,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -17,6 +18,7 @@ import {
   View,
 } from 'react-native'
 
+import { useFileDropPaste } from '../../hooks/useFileDropPaste'
 import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useVoiceTranscription } from '../../hooks/useVoiceTranscription'
 import { useTheme } from '../../theme'
@@ -49,6 +51,15 @@ export function ChatInput({
 
   const glassAvailable = isLiquidGlassAvailable()
   const styles = useMemo(() => createStyles(theme, glassAvailable), [theme, glassAvailable])
+
+  const handleFilesReceived = useCallback((newAttachments: MessageAttachment[]) => {
+    setAttachments((prev) => [...prev, ...newAttachments])
+  }, [])
+
+  const { isDragging } = useFileDropPaste({
+    onFiles: handleFilesReceived,
+    enabled: !disabled && supportsImageAttachments,
+  })
 
   const handleSend = () => {
     if ((text.trim() || attachments.length > 0) && !disabled) {
@@ -210,6 +221,21 @@ export function ChatInput({
           </Pressable>
         </Pressable>
       </Modal>
+      {isDragging && Platform.OS === 'web' && (
+        <Modal visible transparent animationType="fade">
+          <View style={styles.dropOverlay}>
+            <View style={styles.dropOverlayContent}>
+              <Ionicons name="cloud-upload-outline" size={48} color={theme.colors.primary} />
+              <Text style={styles.dropOverlayTitle}>
+                {t('chat.dropFilesHere', 'Drop files here')}
+              </Text>
+              <Text style={styles.dropOverlaySubtitle}>
+                {t('chat.dropFilesSubtitle', 'Images, videos, and documents')}
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      )}
       {hasInput && suggestions.length > 0 && (
         <FlatList
           data={suggestions}
@@ -665,5 +691,33 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
       marginTop: 4,
       maxWidth: 60,
       textAlign: 'center',
+    },
+    dropOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    dropOverlayContent: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: theme.spacing.lg * 2,
+      paddingVertical: theme.spacing.lg * 2,
+      borderRadius: theme.borderRadius.md,
+      borderWidth: 2,
+      borderColor: theme.colors.primary,
+      borderStyle: 'dashed' as const,
+      backgroundColor: theme.colors.surface,
+    },
+    dropOverlayTitle: {
+      marginTop: theme.spacing.md,
+      fontSize: theme.typography.fontSize.base,
+      color: theme.colors.text.primary,
+      fontWeight: theme.typography.fontWeight.semibold,
+    },
+    dropOverlaySubtitle: {
+      marginTop: theme.spacing.xs,
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.secondary,
     },
   })

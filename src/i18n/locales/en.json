@@ -45,6 +45,9 @@
       "enablePrompt": "Authenticate to enable Face ID lock"
     },
     "language": "Language",
+    "backupRestore": "Backup & Restore",
+    "backupServers": "Backup Servers",
+    "restoreServers": "Restore Servers",
     "contribute": "Contribute"
   },
   "home": {
@@ -151,5 +154,29 @@
   },
   "overview": {
     "title": "Overview"
+  },
+  "backupServers": {
+    "title": "Backup Servers",
+    "description": "Export your server configurations as a JSON file. Tokens are not included for security.",
+    "serverCount": "{{count}} server(s) will be exported",
+    "noServers": "No servers to back up",
+    "exportButton": "Export Backup",
+    "exportSuccess": "Backup exported successfully",
+    "exportError": "Failed to export backup"
+  },
+  "restoreServers": {
+    "title": "Restore Servers",
+    "description": "Import server configurations from a JSON backup file. You will need to re-enter tokens after import.",
+    "selectFile": "Select Backup File",
+    "importButton": "Import Servers",
+    "preview": "Preview",
+    "serversFound": "{{count}} server(s) found in backup",
+    "noFile": "No file selected",
+    "importSuccess": "Servers imported successfully",
+    "importError": "Failed to import servers",
+    "invalidFile": "Invalid backup file format",
+    "duplicateSkipped": "Duplicate servers were skipped",
+    "replaceExisting": "Replace existing servers",
+    "mergeWithExisting": "Merge with existing servers"
   }
 }

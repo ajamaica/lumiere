@@ -305,8 +305,10 @@ export default function SchedulerScreen() {
                   Agent: {job.agentId}
                 </Text>
                 <Text variant="caption" color="tertiary" style={{ marginTop: theme.spacing.xs }}>
-                  n/a {'\u2022'} next {formatDateTime(job.state?.nextRunAtMs ?? null)} {'\u2022'}{' '}
-                  last {job.state?.lastRunAtMs ? formatDateTime(job.state.lastRunAtMs) : 'n/a'}
+                  Next: {formatDateTime(job.state?.nextRunAtMs ?? null)}
+                </Text>
+                <Text variant="caption" color="tertiary">
+                  Last: {job.state?.lastRunAtMs ? formatDateTime(job.state.lastRunAtMs) : 'n/a'}
                 </Text>
 
                 <View style={styles.badgeRow}>

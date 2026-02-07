@@ -51,12 +51,14 @@ export function Badge({ label, variant = 'default', style, ...props }: BadgeProp
       borderWidth: 1,
       borderColor: colors.text + '30',
       alignSelf: 'flex-start',
+      maxWidth: '100%',
     },
     text: {
       fontSize: theme.typography.fontSize.xs,
       fontWeight: theme.typography.fontWeight.semibold,
       color: colors.text,
       fontFamily: theme.typography.fontFamily.monospace,
+      flexShrink: 1,
     },
   })
 

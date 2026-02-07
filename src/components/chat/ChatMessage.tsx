@@ -19,6 +19,7 @@ import {
 } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
+import { useUrlMetadata } from '../../hooks/useUrlMetadata'
 import {
   clearMessagesAtom,
   currentSessionKeyAtom,
@@ -28,6 +29,7 @@ import {
 import { useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 import { logger } from '../../utils/logger'
+import { LinkPreview } from './LinkPreview'
 
 const chatLogger = logger.create('ChatMessage')
 
@@ -411,6 +413,9 @@ export function ChatMessage({ message }: ChatMessageProps) {
     return linkifyText(text)
   }, [message.text, intents])
 
+  // Fetch URL embed previews for agent messages
+  const { metadata: urlPreviews } = useUrlMetadata(message.text, !!message.streaming, isUser)
+
   return (
     <View
       style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}
@@ -448,6 +453,13 @@ export function ChatMessage({ message }: ChatMessageProps) {
           <Text style={styles.streamingIndicator} selectable={true}>
             ...
           </Text>
+        )}
+        {urlPreviews.length > 0 && (
+          <View style={styles.linkPreviews}>
+            {urlPreviews.map((meta) => (
+              <LinkPreview key={meta.url} metadata={meta} />
+            ))}
+          </View>
         )}
       </View>
       {!message.streaming && intents.length > 0 && (
@@ -614,6 +626,10 @@ const createStyles = (theme: Theme) =>
       color: theme.colors.text.secondary,
       fontSize: theme.typography.fontSize.sm,
       marginTop: theme.spacing.xs,
+    },
+    linkPreviews: {
+      marginTop: theme.spacing.sm,
+      gap: theme.spacing.xs,
     },
     attachmentContainer: {
       flexDirection: 'row',

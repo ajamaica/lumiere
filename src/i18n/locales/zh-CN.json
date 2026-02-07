@@ -44,7 +44,11 @@
       "notEnrolledMessage": "此设备未注册生物识别凭证。",
       "enablePrompt": "请验证以启用面容 ID 锁定"
     },
-    "language": "语言"
+    "language": "语言",
+    "backupRestore": "备份与恢复",
+    "backupServers": "备份服务器",
+    "restoreServers": "恢复服务器",
+    "contribute": "贡献"
   },
   "home": {
     "connectionError": "连接错误",
@@ -150,5 +154,29 @@
   },
   "overview": {
     "title": "概览"
+  },
+  "backupServers": {
+    "title": "备份服务器",
+    "description": "将服务器配置导出为 JSON 文件。出于安全考虑，令牌不会包含在内。",
+    "serverCount": "将导出 {{count}} 个服务器",
+    "noServers": "没有可备份的服务器",
+    "exportButton": "导出备份",
+    "exportSuccess": "备份导出成功",
+    "exportError": "备份导出失败"
+  },
+  "restoreServers": {
+    "title": "恢复服务器",
+    "description": "从 JSON 备份文件导入服务器配置。导入后需要重新输入令牌。",
+    "selectFile": "选择备份文件",
+    "importButton": "导入服务器",
+    "preview": "预览",
+    "serversFound": "在备份中发现 {{count}} 个服务器",
+    "noFile": "未选择文件",
+    "importSuccess": "服务器导入成功",
+    "importError": "服务器导入失败",
+    "invalidFile": "无效的备份文件格式",
+    "duplicateSkipped": "重复的服务器已跳过",
+    "replaceExisting": "替换现有服务器",
+    "mergeWithExisting": "与现有服务器合并"
   }
 }

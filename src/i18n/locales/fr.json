@@ -45,6 +45,9 @@
       "enablePrompt": "Authentifiez-vous pour activer le verrouillage Face ID"
     },
     "language": "Langue",
+    "backupRestore": "Sauvegarde et Restauration",
+    "backupServers": "Sauvegarder les Serveurs",
+    "restoreServers": "Restaurer les Serveurs",
     "contribute": "Contribuer"
   },
   "home": {
@@ -151,5 +154,29 @@
   },
   "overview": {
     "title": "Aperçu"
+  },
+  "backupServers": {
+    "title": "Sauvegarder les Serveurs",
+    "description": "Exportez vos configurations de serveur en fichier JSON. Les jetons ne sont pas inclus pour des raisons de sécurité.",
+    "serverCount": "{{count}} serveur(s) seront exportés",
+    "noServers": "Aucun serveur à sauvegarder",
+    "exportButton": "Exporter la Sauvegarde",
+    "exportSuccess": "Sauvegarde exportée avec succès",
+    "exportError": "Échec de l'exportation de la sauvegarde"
+  },
+  "restoreServers": {
+    "title": "Restaurer les Serveurs",
+    "description": "Importez des configurations de serveur depuis un fichier de sauvegarde JSON. Vous devrez ressaisir les jetons après l'importation.",
+    "selectFile": "Sélectionner le Fichier de Sauvegarde",
+    "importButton": "Importer les Serveurs",
+    "preview": "Aperçu",
+    "serversFound": "{{count}} serveur(s) trouvés dans la sauvegarde",
+    "noFile": "Aucun fichier sélectionné",
+    "importSuccess": "Serveurs importés avec succès",
+    "importError": "Échec de l'importation des serveurs",
+    "invalidFile": "Format de fichier de sauvegarde invalide",
+    "duplicateSkipped": "Les serveurs en double ont été ignorés",
+    "replaceExisting": "Remplacer les serveurs existants",
+    "mergeWithExisting": "Fusionner avec les serveurs existants"
   }
 }
