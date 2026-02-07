@@ -261,10 +261,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
 
   useEffect(() => {
     if (connected) {
-      // Small delay to ensure WebSocket is fully ready
-      setTimeout(() => {
-        loadChatHistory()
-      }, 500)
+      loadChatHistory()
     }
   }, [connected, loadChatHistory])
 
@@ -290,33 +287,21 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   // Auto-send pending trigger message once connected and history has loaded
   useEffect(() => {
     if (connected && !isLoadingHistory && pendingTriggerMessage) {
-      // Small delay so the UI settles before firing the message
+      // Short delay so the UI settles before firing the message
       const timer = setTimeout(() => {
         handleSendRef.current(pendingTriggerMessage)
         setPendingTriggerMessage(null)
-      }, 600)
+      }, 150)
       return () => clearTimeout(timer)
     }
   }, [connected, isLoadingHistory, pendingTriggerMessage, setPendingTriggerMessage])
 
-  // Scroll to bottom after history finishes loading to show latest messages.
-  // The list stays hidden (opacity 0) until this scroll completes so the user
-  // never sees the conversation flash from the top before jumping to the bottom.
+  // The list starts hidden (opacity 0) and is revealed once we have scrolled
+  // to the bottom so the user never sees the conversation flash from the top.
+  // The initial scroll is handled inside onContentSizeChange on the FlashList,
+  // which fires as soon as the list finishes laying out history items —
+  // replacing the previous 400ms blind timeout with an event-driven approach.
   const [historyReady, setHistoryReady] = useState(false)
-
-  useEffect(() => {
-    if (!isLoadingHistory && messages.length > 0 && !hasScrolledOnLoadRef.current) {
-      // Use a longer timeout to ensure FlashList has rendered all history items
-      setTimeout(() => {
-        flatListRef.current?.scrollToEnd({ animated: false })
-        // Mark as scrolled *after* the initial jump so onContentSizeChange
-        // doesn't trigger an animated scroll during history load
-        hasScrolledOnLoadRef.current = true
-        // Reveal the list now that we're scrolled to the bottom
-        setHistoryReady(true)
-      }, 400)
-    }
-  }, [isLoadingHistory, messages.length])
 
   // When there are no history messages, reveal immediately
   useEffect(() => {
@@ -567,6 +552,17 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             contentContainerStyle={[styles.messageList, contentContainerStyle]}
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {
+              // First-load scroll: jump to bottom immediately once FlashList
+              // has laid out the history messages.  This replaces the old
+              // 400ms setTimeout and reacts to the actual render.
+              if (!hasScrolledOnLoadRef.current && !isLoadingHistory && messages.length > 0) {
+                flatListRef.current?.scrollToEnd({ animated: false })
+                hasScrolledOnLoadRef.current = true
+                setHistoryReady(true)
+                return
+              }
+
+              // Normal auto-scroll for new incoming messages
               if (
                 shouldAutoScrollRef.current &&
                 !isLoadingHistory &&
