@@ -298,29 +298,12 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     }
   }, [connected, isLoadingHistory, pendingTriggerMessage, setPendingTriggerMessage])
 
-  // Scroll to bottom after history finishes loading to show latest messages.
-  // The list stays hidden (opacity 0) until this scroll completes so the user
-  // never sees the conversation flash from the top before jumping to the bottom.
-  const [historyReady, setHistoryReady] = useState(false)
-
+  // With the inverted list the newest messages are already at the visual
+  // bottom (offset 0), so we no longer need the opacity-hiding trick or
+  // the manual scrollToEnd after history loads.
   useEffect(() => {
-    if (!isLoadingHistory && messages.length > 0 && !hasScrolledOnLoadRef.current) {
-      // Use a longer timeout to ensure FlashList has rendered all history items
-      setTimeout(() => {
-        flatListRef.current?.scrollToEnd({ animated: false })
-        // Mark as scrolled *after* the initial jump so onContentSizeChange
-        // doesn't trigger an animated scroll during history load
-        hasScrolledOnLoadRef.current = true
-        // Reveal the list now that we're scrolled to the bottom
-        setHistoryReady(true)
-      }, 400)
-    }
-  }, [isLoadingHistory, messages.length])
-
-  // When there are no history messages, reveal immediately
-  useEffect(() => {
-    if (!isLoadingHistory && messages.length === 0) {
-      setHistoryReady(true)
+    if (!isLoadingHistory && messages.length > 0) {
+      hasScrolledOnLoadRef.current = true
     }
   }, [isLoadingHistory, messages.length])
 
@@ -329,7 +312,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
       setIsKeyboardVisible(true)
       setTimeout(() => {
-        flatListRef.current?.scrollToEnd({ animated: true })
+        flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
       }, 100)
     })
 
@@ -542,19 +525,17 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     ? allMessages.filter((m) => m.text.toLowerCase().includes(searchQuery.toLowerCase()))
     : allMessages
 
+  // Reverse so newest messages are at index 0 for the inverted FlashList
+  const invertedMessages = useMemo(() => [...filteredMessages].reverse(), [filteredMessages])
+
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <View style={{ flex: 1 }}>
-        {!historyReady && (
-          <View style={styles.emptyContainer}>
-            <ActivityIndicator size="large" color={theme.colors.primary} />
-            <Text style={styles.loadingText}>Loading conversation...</Text>
-          </View>
-        )}
-        <Animated.View style={[listContainerStyle, { opacity: historyReady ? 1 : 0 }]}>
+        <Animated.View style={listContainerStyle}>
           <FlashList
             ref={flatListRef}
-            data={filteredMessages}
+            data={invertedMessages}
+            inverted
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ChatMessage message={item} />}
             contentContainerStyle={[styles.messageList, contentContainerStyle]}
@@ -565,14 +546,15 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
                 !isLoadingHistory &&
                 hasScrolledOnLoadRef.current
               ) {
-                flatListRef.current?.scrollToEnd({ animated: true })
+                flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
               }
             }}
             onScroll={(event) => {
-              const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
-              const threshold = layoutMeasurement.height * 0.3 // 30% of screen height
-              const isNearBottom =
-                contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
+              const { contentOffset, layoutMeasurement } = event.nativeEvent
+              // In an inverted list, offset 0 is the visual bottom (newest messages).
+              // "Near bottom" means the offset is close to 0.
+              const threshold = layoutMeasurement.height * 0.3
+              const isNearBottom = contentOffset.y <= threshold
               shouldAutoScrollRef.current = isNearBottom
               setShowScrollButton(!isNearBottom)
             }}
@@ -605,7 +587,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             },
           ]}
           onPress={() => {
-            flatListRef.current?.scrollToEnd({ animated: true })
+            flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
             setShowScrollButton(false)
           }}
         >
@@ -792,8 +774,10 @@ const createStyles = (
       fontWeight: theme.typography.fontWeight.semibold,
     },
     messageList: {
-      paddingTop: deviceType === 'foldable' && foldState === 'half-folded' ? 100 : 110,
-      paddingBottom: 60, // Room for input
+      // In an inverted list the visual top is contentContainer's paddingBottom
+      // and the visual bottom is paddingTop.
+      paddingTop: 60, // Room for input (visual bottom)
+      paddingBottom: deviceType === 'foldable' && foldState === 'half-folded' ? 100 : 110, // Status bar (visual top)
       paddingHorizontal: messageListPadding,
     },
     emptyContainer: {
