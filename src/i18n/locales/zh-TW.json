@@ -47,7 +47,8 @@
     "language": "語言",
     "backupRestore": "備份與還原",
     "backupServers": "備份伺服器",
-    "restoreServers": "還原伺服器"
+    "restoreServers": "還原伺服器",
+    "contribute": "貢獻"
   },
   "home": {
     "connectionError": "連線錯誤",

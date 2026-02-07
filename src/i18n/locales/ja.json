@@ -47,7 +47,8 @@
     "language": "言語",
     "backupRestore": "バックアップと復元",
     "backupServers": "サーバーをバックアップ",
-    "restoreServers": "サーバーを復元"
+    "restoreServers": "サーバーを復元",
+    "contribute": "コントリビュート"
   },
   "home": {
     "connectionError": "接続エラー",
