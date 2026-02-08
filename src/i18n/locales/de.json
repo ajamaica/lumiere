@@ -164,6 +164,16 @@
     "exportSuccess": "Backup erfolgreich exportiert",
     "exportError": "Backup-Export fehlgeschlagen"
   },
+  "teachingSkills": {
+    "title": "Lehrfähigkeiten",
+    "addSkill": "Fähigkeit hinzufügen",
+    "description": "Definieren Sie Fähigkeiten, die dem Agenten beigebracht werden. Jede Fähigkeit hat einen Namen und Anweisungen, denen der Agent folgt.",
+    "skillNumber": "Fähigkeit Nr. {{number}}",
+    "skillName": "Fähigkeitsname",
+    "skillNamePlaceholder": "z.B. zusammenfassen",
+    "skillDescription": "Anweisungen",
+    "skillDescriptionPlaceholder": "z.B. Fassen Sie das Gespräch in Kernpunkten zusammen"
+  },
   "restoreServers": {
     "title": "Server wiederherstellen",
     "description": "Importieren Sie Serverkonfigurationen aus einer JSON-Backupdatei. Sie müssen die Tokens nach dem Import erneut eingeben.",

@@ -164,6 +164,16 @@
     "exportSuccess": "Sauvegarde exportée avec succès",
     "exportError": "Échec de l'exportation de la sauvegarde"
   },
+  "teachingSkills": {
+    "title": "Compétences d'enseignement",
+    "addSkill": "Ajouter une compétence",
+    "description": "Définissez des compétences à enseigner à l'agent. Chaque compétence a un nom et des instructions que l'agent suivra.",
+    "skillNumber": "Compétence n°{{number}}",
+    "skillName": "Nom de la compétence",
+    "skillNamePlaceholder": "ex. résumer",
+    "skillDescription": "Instructions",
+    "skillDescriptionPlaceholder": "ex. Résumez la conversation en points clés"
+  },
   "restoreServers": {
     "title": "Restaurer les Serveurs",
     "description": "Importez des configurations de serveur depuis un fichier de sauvegarde JSON. Vous devrez ressaisir les jetons après l'importation.",

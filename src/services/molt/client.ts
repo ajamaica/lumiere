@@ -85,13 +85,17 @@ export class MoltGatewayClient {
   }
 
   private async performHandshake(): Promise<ConnectResponse> {
-    const params = {
+    const params: Record<string, unknown> = {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,
       auth: {
         token: this.config.token,
       },
+    }
+
+    if (this.config.teachingSkills?.length) {
+      params.teachingSkills = this.config.teachingSkills
     }
 
     const response = await this.request('connect', params)

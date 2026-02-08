@@ -5,6 +5,7 @@ export type {
   ServersDict,
   ServerSessions,
   SessionAliases,
+  TeachingSkill,
   TriggerConfig,
   TriggersDict,
 } from './atoms'

@@ -164,6 +164,16 @@
     "exportSuccess": "備份匯出成功",
     "exportError": "備份匯出失敗"
   },
+  "teachingSkills": {
+    "title": "教學技能",
+    "addSkill": "新增技能",
+    "description": "定義要教授給代理的技能。每個技能包含名稱和代理將遵循的指令。",
+    "skillNumber": "技能 #{{number}}",
+    "skillName": "技能名稱",
+    "skillNamePlaceholder": "例如：摘要",
+    "skillDescription": "指令",
+    "skillDescriptionPlaceholder": "例如：將對話整理為重點摘要"
+  },
   "restoreServers": {
     "title": "還原伺服器",
     "description": "從 JSON 備份檔案匯入伺服器設定。匯入後需要重新輸入權杖。",

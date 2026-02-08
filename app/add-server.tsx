@@ -1,6 +1,16 @@
+import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
@@ -14,6 +24,7 @@ import {
 import { getAllProviderOptions } from '../src/config/providerOptions'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
+import type { TeachingSkill } from '../src/store'
 import { useTheme } from '../src/theme'
 
 export default function AddServerScreen() {
@@ -22,12 +33,29 @@ export default function AddServerScreen() {
   const { addServer } = useServers()
   const providerOptions = getAllProviderOptions(theme.colors.text.primary)
 
+  const { t } = useTranslation()
+
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')
   const [token, setToken] = useState('')
   const [clientId, setClientId] = useState('lumiere-mobile')
   const [providerType, setProviderType] = useState<ProviderType>('molt')
   const [model, setModel] = useState('')
+  const [teachingSkills, setTeachingSkills] = useState<TeachingSkill[]>([])
+
+  const addTeachingSkill = () => {
+    setTeachingSkills([...teachingSkills, { name: '', description: '' }])
+  }
+
+  const updateTeachingSkill = (index: number, field: keyof TeachingSkill, value: string) => {
+    const updated = [...teachingSkills]
+    updated[index] = { ...updated[index], [field]: value }
+    setTeachingSkills(updated)
+  }
+
+  const removeTeachingSkill = (index: number) => {
+    setTeachingSkills(teachingSkills.filter((_, i) => i !== index))
+  }
 
   const needsUrl = providerType === 'molt' || providerType === 'ollama'
   const needsToken =
@@ -39,12 +67,14 @@ export default function AddServerScreen() {
 
   const handleAdd = async () => {
     if (providerType === 'molt' && url.trim() && token.trim()) {
+      const validSkills = teachingSkills.filter((s) => s.name.trim() && s.description.trim())
       await addServer(
         {
           name: name.trim() || 'My Server',
           url: url.trim(),
           clientId: clientId.trim() || 'lumiere-mobile',
           providerType: 'molt',
+          teachingSkills: validSkills.length > 0 ? validSkills : undefined,
         },
         token.trim(),
       )
@@ -167,6 +197,36 @@ export default function AddServerScreen() {
       gap: theme.spacing.sm,
       marginTop: theme.spacing.lg,
     },
+    skillsSection: {
+      marginBottom: theme.spacing.md,
+    },
+    skillsHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: theme.spacing.xs,
+    },
+    skillsSectionTitle: {
+      fontSize: theme.typography.fontSize.base,
+      fontWeight: theme.typography.fontWeight.semibold as '600',
+      color: theme.colors.text.primary,
+    },
+    addSkillButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    skillCard: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.md,
+      padding: theme.spacing.md,
+      marginBottom: theme.spacing.sm,
+    },
+    skillCardHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: theme.spacing.sm,
+    },
   })
 
   return (
@@ -275,6 +335,54 @@ export default function AddServerScreen() {
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
+              </View>
+
+              <View style={styles.skillsSection}>
+                <View style={styles.skillsHeader}>
+                  <Text style={styles.skillsSectionTitle}>{t('teachingSkills.title')}</Text>
+                  <TouchableOpacity onPress={addTeachingSkill} style={styles.addSkillButton}>
+                    <Ionicons name="add-circle-outline" size={22} color={theme.colors.primary} />
+                    <Text style={{ color: theme.colors.primary, marginLeft: theme.spacing.xs }}>
+                      {t('teachingSkills.addSkill')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <Text
+                  variant="caption"
+                  color="secondary"
+                  style={{ marginBottom: theme.spacing.sm }}
+                >
+                  {t('teachingSkills.description')}
+                </Text>
+                {teachingSkills.map((skill, index) => (
+                  <View key={index} style={styles.skillCard}>
+                    <View style={styles.skillCardHeader}>
+                      <Text variant="caption" color="secondary">
+                        {t('teachingSkills.skillNumber', { number: index + 1 })}
+                      </Text>
+                      <TouchableOpacity onPress={() => removeTeachingSkill(index)}>
+                        <Ionicons name="trash-outline" size={18} color={theme.colors.error} />
+                      </TouchableOpacity>
+                    </View>
+                    <TextInput
+                      label={t('teachingSkills.skillName')}
+                      value={skill.name}
+                      onChangeText={(v) => updateTeachingSkill(index, 'name', v)}
+                      placeholder={t('teachingSkills.skillNamePlaceholder')}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                    <View style={{ height: theme.spacing.sm }} />
+                    <TextInput
+                      label={t('teachingSkills.skillDescription')}
+                      value={skill.description}
+                      onChangeText={(v) => updateTeachingSkill(index, 'description', v)}
+                      placeholder={t('teachingSkills.skillDescriptionPlaceholder')}
+                      multiline
+                      autoCorrect={false}
+                    />
+                  </View>
+                ))}
               </View>
             </>
           )}

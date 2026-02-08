@@ -19,4 +19,5 @@ export type {
   ProviderConfig,
   ProviderType,
   SendMessageParams,
+  TeachingSkill,
 } from './types'

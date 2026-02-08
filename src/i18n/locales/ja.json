@@ -164,6 +164,16 @@
     "exportSuccess": "バックアップが正常にエクスポートされました",
     "exportError": "バックアップのエクスポートに失敗しました"
   },
+  "teachingSkills": {
+    "title": "ティーチングスキル",
+    "addSkill": "スキルを追加",
+    "description": "エージェントに教えるスキルを定義します。各スキルには名前とエージェントが従う指示があります。",
+    "skillNumber": "スキル #{{number}}",
+    "skillName": "スキル名",
+    "skillNamePlaceholder": "例: 要約",
+    "skillDescription": "指示",
+    "skillDescriptionPlaceholder": "例: 会話を要点にまとめてください"
+  },
   "restoreServers": {
     "title": "サーバーを復元",
     "description": "JSONバックアップファイルからサーバー設定をインポートします。インポート後にトークンを再入力する必要があります。",

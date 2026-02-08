@@ -164,6 +164,16 @@
     "exportSuccess": "Backup exported successfully",
     "exportError": "Failed to export backup"
   },
+  "teachingSkills": {
+    "title": "Teaching Skills",
+    "addSkill": "Add Skill",
+    "description": "Define skills to teach the agent. Each skill has a name and instructions the agent will follow.",
+    "skillNumber": "Skill #{{number}}",
+    "skillName": "Skill Name",
+    "skillNamePlaceholder": "e.g. summarize",
+    "skillDescription": "Instructions",
+    "skillDescriptionPlaceholder": "e.g. Summarize the conversation into key points"
+  },
   "restoreServers": {
     "title": "Restore Servers",
     "description": "Import server configurations from a JSON backup file. You will need to re-enter tokens after import.",

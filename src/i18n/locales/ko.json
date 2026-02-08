@@ -164,6 +164,16 @@
     "exportSuccess": "백업이 성공적으로 내보내졌습니다",
     "exportError": "백업 내보내기 실패"
   },
+  "teachingSkills": {
+    "title": "티칭 스킬",
+    "addSkill": "스킬 추가",
+    "description": "에이전트에게 가르칠 스킬을 정의합니다. 각 스킬에는 이름과 에이전트가 따를 지침이 있습니다.",
+    "skillNumber": "스킬 #{{number}}",
+    "skillName": "스킬 이름",
+    "skillNamePlaceholder": "예: 요약",
+    "skillDescription": "지침",
+    "skillDescriptionPlaceholder": "예: 대화를 핵심 포인트로 요약하세요"
+  },
   "restoreServers": {
     "title": "서버 복원",
     "description": "JSON 백업 파일에서 서버 구성을 가져옵니다. 가져온 후 토큰을 다시 입력해야 합니다.",

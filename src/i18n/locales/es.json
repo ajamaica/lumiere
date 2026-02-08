@@ -164,6 +164,16 @@
     "exportSuccess": "Respaldo exportado exitosamente",
     "exportError": "Error al exportar el respaldo"
   },
+  "teachingSkills": {
+    "title": "Habilidades de Enseñanza",
+    "addSkill": "Agregar Habilidad",
+    "description": "Define habilidades para enseñar al agente. Cada habilidad tiene un nombre e instrucciones que el agente seguirá.",
+    "skillNumber": "Habilidad #{{number}}",
+    "skillName": "Nombre de la Habilidad",
+    "skillNamePlaceholder": "ej. resumir",
+    "skillDescription": "Instrucciones",
+    "skillDescriptionPlaceholder": "ej. Resume la conversación en puntos clave"
+  },
   "restoreServers": {
     "title": "Restaurar Servidores",
     "description": "Importa configuraciones de servidor desde un archivo de respaldo JSON. Necesitarás reingresar los tokens después de la importación.",

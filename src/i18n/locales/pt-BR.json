@@ -164,6 +164,16 @@
     "exportSuccess": "Backup exportado com sucesso",
     "exportError": "Falha ao exportar backup"
   },
+  "teachingSkills": {
+    "title": "Habilidades de Ensino",
+    "addSkill": "Adicionar Habilidade",
+    "description": "Defina habilidades para ensinar ao agente. Cada habilidade tem um nome e instruções que o agente seguirá.",
+    "skillNumber": "Habilidade #{{number}}",
+    "skillName": "Nome da Habilidade",
+    "skillNamePlaceholder": "ex. resumir",
+    "skillDescription": "Instruções",
+    "skillDescriptionPlaceholder": "ex. Resuma a conversa em pontos-chave"
+  },
   "restoreServers": {
     "title": "Restaurar Servidores",
     "description": "Importe configurações de servidor de um arquivo de backup JSON. Você precisará reinserir os tokens após a importação.",

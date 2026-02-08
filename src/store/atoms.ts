@@ -22,6 +22,12 @@ export function getStore() {
   return _store
 }
 
+// Teaching skill definition for Molt servers
+export interface TeachingSkill {
+  name: string
+  description: string
+}
+
 // Server configuration types
 export interface ServerConfig {
   id: string // UUID
@@ -30,6 +36,7 @@ export interface ServerConfig {
   clientId?: string
   providerType: ProviderType // 'molt' | 'ollama'
   model?: string // Model name for Ollama (e.g., 'llama3.2', 'mistral')
+  teachingSkills?: TeachingSkill[] // Skills to teach the Molt agent
   createdAt: number
 }
 
