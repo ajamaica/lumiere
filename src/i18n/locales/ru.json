@@ -48,7 +48,8 @@
     "backupRestore": "Резервное копирование и восстановление",
     "backupServers": "Резервное копирование серверов",
     "restoreServers": "Восстановление серверов",
-    "contribute": "Внести вклад"
+    "contribute": "Внести вклад",
+    "skills": "Навыки"
   },
   "home": {
     "connectionError": "Ошибка подключения",
@@ -178,5 +179,28 @@
     "duplicateSkipped": "Дублирующиеся серверы были пропущены",
     "replaceExisting": "Заменить существующие серверы",
     "mergeWithExisting": "Объединить с существующими серверами"
+  },
+  "skills": {
+    "title": "Навыки",
+    "subtitle": "Обучайте и управляйте навыками вашего агента.",
+    "totalSkills": "НАВЫКИ",
+    "teachNew": "Обучить новый",
+    "teachSkill": "Обучить навык",
+    "teach": "Обучить",
+    "skillsList": "Навыки",
+    "skillsListDescription": "Все навыки, которым обучен агент.",
+    "noSkills": "Навыки не настроены",
+    "namePlaceholder": "Название навыка (напр. резюмировать)",
+    "descriptionPlaceholder": "Краткое описание навыка",
+    "contentPlaceholder": "Содержание или инструкции навыка...",
+    "fillAllFields": "Пожалуйста, заполните все поля",
+    "teachError": "Не удалось обучить навык",
+    "removeSkill": "Удалить навык",
+    "removeConfirm": "Вы уверены, что хотите удалить навык \"{{name}}\"?",
+    "removeError": "Не удалось удалить навык",
+    "created": "Создан",
+    "updated": "Обновлён",
+    "openClawOnly": "Только OpenClaw",
+    "openClawOnlyDescription": "Навыки доступны только для серверов OpenClaw."
   }
 }

@@ -48,7 +48,8 @@
     "backupRestore": "Sauvegarde et Restauration",
     "backupServers": "Sauvegarder les Serveurs",
     "restoreServers": "Restaurer les Serveurs",
-    "contribute": "Contribuer"
+    "contribute": "Contribuer",
+    "skills": "Compétences"
   },
   "home": {
     "connectionError": "Erreur de connexion",
@@ -178,5 +179,28 @@
     "duplicateSkipped": "Les serveurs en double ont été ignorés",
     "replaceExisting": "Remplacer les serveurs existants",
     "mergeWithExisting": "Fusionner avec les serveurs existants"
+  },
+  "skills": {
+    "title": "Compétences",
+    "subtitle": "Enseignez et gérez les compétences de votre agent.",
+    "totalSkills": "COMPÉTENCES",
+    "teachNew": "Enseigner",
+    "teachSkill": "Enseigner une compétence",
+    "teach": "Enseigner",
+    "skillsList": "Compétences",
+    "skillsListDescription": "Toutes les compétences enseignées à l'agent.",
+    "noSkills": "Aucune compétence configurée",
+    "namePlaceholder": "Nom de la compétence (ex. résumer)",
+    "descriptionPlaceholder": "Brève description de la compétence",
+    "contentPlaceholder": "Contenu ou instructions de la compétence...",
+    "fillAllFields": "Veuillez remplir tous les champs",
+    "teachError": "Échec de l'enseignement de la compétence",
+    "removeSkill": "Supprimer la compétence",
+    "removeConfirm": "Êtes-vous sûr de vouloir supprimer la compétence \"{{name}}\" ?",
+    "removeError": "Échec de la suppression de la compétence",
+    "created": "Créée",
+    "updated": "Mise à jour",
+    "openClawOnly": "OpenClaw uniquement",
+    "openClawOnlyDescription": "Les compétences ne sont disponibles que pour les serveurs OpenClaw."
   }
 }

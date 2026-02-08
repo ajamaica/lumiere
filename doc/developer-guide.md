@@ -162,6 +162,7 @@ export class NewChatProvider implements ChatProvider {
     persistentHistory: false,
     scheduler: false,
     gatewaySnapshot: false,
+    skills: false,
   };
 
   async connect(): Promise<void> { /* ... */ }

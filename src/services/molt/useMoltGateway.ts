@@ -11,6 +11,10 @@ import {
   HealthStatus,
   MoltConfig,
   SendMessageParams,
+  Skill,
+  SkillsListResponse,
+  TeachSkillParams,
+  UpdateSkillParams,
 } from './types'
 
 const gatewayLogger = logger.create('MoltGateway')
@@ -38,6 +42,10 @@ export interface UseMoltGatewayResult {
   runCronJob: (jobName: string) => Promise<unknown>
   removeCronJob: (jobName: string) => Promise<unknown>
   getCronJobRuns: (jobName: string) => Promise<unknown>
+  teachSkill: (params: TeachSkillParams) => Promise<Skill>
+  listSkills: () => Promise<SkillsListResponse>
+  removeSkill: (name: string) => Promise<unknown>
+  updateSkill: (params: UpdateSkillParams) => Promise<Skill>
 }
 
 export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
@@ -247,6 +255,43 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     [client],
   )
 
+  const teachSkill = useCallback(
+    async (params: TeachSkillParams) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.teachSkill(params)
+    },
+    [client],
+  )
+
+  const listSkills = useCallback(async () => {
+    if (!client) {
+      throw new Error('Client not connected')
+    }
+    return await client.listSkills()
+  }, [client])
+
+  const removeSkill = useCallback(
+    async (name: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.removeSkill(name)
+    },
+    [client],
+  )
+
+  const updateSkill = useCallback(
+    async (params: UpdateSkillParams) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.updateSkill(params)
+    },
+    [client],
+  )
+
   useEffect(() => {
     return () => {
       if (clientRef.current) {
@@ -278,5 +323,9 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     runCronJob,
     removeCronJob,
     getCronJobRuns,
+    teachSkill,
+    listSkills,
+    removeSkill,
+    updateSkill,
   }
 }
