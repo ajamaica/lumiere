@@ -176,7 +176,8 @@
     "skillDescriptionPlaceholder": "例如：將對話整理為重點摘要",
     "moltOnly": "教學技能僅適用於 Molt 伺服器。",
     "noSkills": "尚無技能",
-    "noSkillsMessage": "點擊上方 + 為你的代理新增技能。"
+    "noSkillsMessage": "點擊上方 + 為你的代理新增技能。",
+    "saveFailed": "無法將技能儲存到閘道。"
   },
   "restoreServers": {
     "title": "還原伺服器",

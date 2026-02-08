@@ -176,7 +176,8 @@
     "skillDescriptionPlaceholder": "例: 会話を要点にまとめてください",
     "moltOnly": "ティーチングスキルはMoltサーバーでのみ利用可能です。",
     "noSkills": "スキルがありません",
-    "noSkillsMessage": "上の + をタップして、エージェントに新しいスキルを教えましょう。"
+    "noSkillsMessage": "上の + をタップして、エージェントに新しいスキルを教えましょう。",
+    "saveFailed": "ゲートウェイへのスキルの保存に失敗しました。"
   },
   "restoreServers": {
     "title": "サーバーを復元",

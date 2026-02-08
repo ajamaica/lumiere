@@ -176,7 +176,8 @@
     "skillDescriptionPlaceholder": "ej. Resume la conversación en puntos clave",
     "moltOnly": "Las habilidades de enseñanza solo están disponibles para servidores Molt.",
     "noSkills": "Sin Habilidades Aún",
-    "noSkillsMessage": "Enseña nuevas habilidades a tu agente tocando + arriba."
+    "noSkillsMessage": "Enseña nuevas habilidades a tu agente tocando + arriba.",
+    "saveFailed": "Error al guardar las habilidades en el gateway."
   },
   "restoreServers": {
     "title": "Restaurar Servidores",

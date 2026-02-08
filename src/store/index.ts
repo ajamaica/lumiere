@@ -6,6 +6,7 @@ export type {
   ServerSessions,
   SessionAliases,
   TeachingSkill,
+  TeachingSkillsDict,
   TriggerConfig,
   TriggersDict,
 } from './atoms'
@@ -31,6 +32,7 @@ export {
   serversAtom,
   serverSessionsAtom,
   sessionAliasesAtom,
+  teachingSkillsAtom,
   themeModeAtom,
   triggersAtom,
 } from './atoms'

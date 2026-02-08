@@ -35,7 +35,6 @@ export class MoltChatProvider implements ChatProvider {
       url: config.url,
       token: config.token,
       clientId: config.clientId,
-      teachingSkills: config.teachingSkills,
     })
   }
 

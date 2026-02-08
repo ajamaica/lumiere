@@ -176,7 +176,8 @@
     "skillDescriptionPlaceholder": "例如：将对话总结为要点",
     "moltOnly": "教学技能仅适用于 Molt 服务器。",
     "noSkills": "暂无技能",
-    "noSkillsMessage": "点击上方 + 为你的代理添加新技能。"
+    "noSkillsMessage": "点击上方 + 为你的代理添加新技能。",
+    "saveFailed": "无法将技能保存到网关。"
   },
   "restoreServers": {
     "title": "恢复服务器",

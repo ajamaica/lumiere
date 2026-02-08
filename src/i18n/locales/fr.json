@@ -176,7 +176,8 @@
     "skillDescriptionPlaceholder": "ex. Résumez la conversation en points clés",
     "moltOnly": "Les compétences d'enseignement ne sont disponibles que pour les serveurs Molt.",
     "noSkills": "Aucune compétence",
-    "noSkillsMessage": "Enseignez de nouvelles compétences à votre agent en appuyant sur + ci-dessus."
+    "noSkillsMessage": "Enseignez de nouvelles compétences à votre agent en appuyant sur + ci-dessus.",
+    "saveFailed": "Échec de l'enregistrement des compétences sur la passerelle."
   },
   "restoreServers": {
     "title": "Restaurer les Serveurs",

@@ -1,7 +1,9 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import { useAtom } from 'jotai'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -13,16 +15,46 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
+import { useMoltGateway } from '../src/services/molt'
 import type { TeachingSkill } from '../src/store'
+import { teachingSkillsAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { logger } from '../src/utils/logger'
+
+const skillsLogger = logger.create('TeachingSkills')
 
 export default function TeachingSkillsScreen() {
   const { theme } = useTheme()
   const { t } = useTranslation()
-  const { currentServer, currentServerId, updateServer } = useServers()
+  const { currentServer, currentServerId, getProviderConfig } = useServers()
 
-  const [skills, setSkills] = useState<TeachingSkill[]>(currentServer?.teachingSkills ?? [])
+  const [allSkills, setAllSkills] = useAtom(teachingSkillsAtom)
+  const serverSkills = currentServerId ? (allSkills[currentServerId] ?? []) : []
+
+  const [skills, setSkills] = useState<TeachingSkill[]>(serverSkills)
   const [hasChanges, setHasChanges] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
+
+  useEffect(() => {
+    const loadConfig = async () => {
+      const providerConfig = await getProviderConfig()
+      setConfig(providerConfig)
+    }
+    loadConfig()
+  }, [getProviderConfig, currentServerId])
+
+  const { connected, connect, teachSkill } = useMoltGateway({
+    url: config?.url || '',
+    token: config?.token || '',
+  })
+
+  useEffect(() => {
+    if (config) {
+      connect()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config])
 
   const addSkill = () => {
     setSkills([...skills, { name: '', description: '' }])
@@ -44,10 +76,29 @@ export default function TeachingSkillsScreen() {
   const handleSave = async () => {
     if (!currentServerId) return
     const validSkills = skills.filter((s) => s.name.trim() && s.description.trim())
-    await updateServer(currentServerId, {
-      teachingSkills: validSkills.length > 0 ? validSkills : undefined,
-    })
-    setHasChanges(false)
+
+    setSaving(true)
+    try {
+      // Teach each skill to the gateway via the agent method
+      if (connected) {
+        for (const skill of validSkills) {
+          await teachSkill(skill.name.trim(), skill.description.trim())
+        }
+      }
+
+      // Persist locally
+      setAllSkills({
+        ...allSkills,
+        [currentServerId]: validSkills.length > 0 ? validSkills : [],
+      })
+      setSkills(validSkills)
+      setHasChanges(false)
+    } catch (err) {
+      skillsLogger.logError('Failed to teach skills to gateway', err)
+      Alert.alert(t('common.error'), t('teachingSkills.saveFailed'))
+    } finally {
+      setSaving(false)
+    }
   }
 
   const styles = StyleSheet.create({
@@ -170,7 +221,12 @@ export default function TeachingSkillsScreen() {
               ))}
 
               {hasChanges && (
-                <Button title={t('common.save')} onPress={handleSave} style={styles.saveButton} />
+                <Button
+                  title={t('common.save')}
+                  onPress={handleSave}
+                  style={styles.saveButton}
+                  disabled={saving}
+                />
               )}
             </>
           ) : (

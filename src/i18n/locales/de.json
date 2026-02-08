@@ -176,7 +176,8 @@
     "skillDescriptionPlaceholder": "z.B. Fassen Sie das Gespräch in Kernpunkten zusammen",
     "moltOnly": "Lehrfähigkeiten sind nur für Molt-Server verfügbar.",
     "noSkills": "Noch keine Fähigkeiten",
-    "noSkillsMessage": "Bringen Sie Ihrem Agenten neue Fähigkeiten bei, indem Sie oben auf + tippen."
+    "noSkillsMessage": "Bringen Sie Ihrem Agenten neue Fähigkeiten bei, indem Sie oben auf + tippen.",
+    "saveFailed": "Fähigkeiten konnten nicht auf dem Gateway gespeichert werden."
   },
   "restoreServers": {
     "title": "Server wiederherstellen",

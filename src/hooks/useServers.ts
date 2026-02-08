@@ -139,7 +139,6 @@ export function useServers(): UseServersResult {
       clientId: currentServer.clientId,
       model: currentServer.model,
       serverId: currentServer.id,
-      teachingSkills: currentServer.teachingSkills,
     }
   }, [currentServer])
 
@@ -163,7 +162,6 @@ export function useServers(): UseServersResult {
         clientId: server.clientId,
         model: server.model,
         serverId: id,
-        teachingSkills: server.teachingSkills,
       }
     },
     [servers],

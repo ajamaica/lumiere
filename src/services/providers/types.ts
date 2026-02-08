@@ -14,11 +14,6 @@ export type ProviderType =
   | 'emergent'
   | 'kimi'
 
-export interface TeachingSkill {
-  name: string
-  description: string
-}
-
 export interface ProviderConfig {
   type: ProviderType
   url: string
@@ -26,7 +21,6 @@ export interface ProviderConfig {
   clientId?: string
   model?: string // Ollama model name (e.g., 'llama3', 'mistral')
   serverId?: string // Server UUID for cache isolation
-  teachingSkills?: TeachingSkill[] // Skills to teach the Molt agent
 }
 
 export interface ChatProviderEvent {

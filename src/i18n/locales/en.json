@@ -176,7 +176,8 @@
     "skillDescriptionPlaceholder": "e.g. Summarize the conversation into key points",
     "moltOnly": "Teaching skills are only available for Molt servers.",
     "noSkills": "No Skills Yet",
-    "noSkillsMessage": "Teach your agent new skills by tapping + above."
+    "noSkillsMessage": "Teach your agent new skills by tapping + above.",
+    "saveFailed": "Failed to save skills to the gateway."
   },
   "restoreServers": {
     "title": "Restore Servers",

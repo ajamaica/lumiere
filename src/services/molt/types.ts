@@ -4,7 +4,6 @@ export interface MoltConfig {
   url: string
   token: string
   clientId?: string
-  teachingSkills?: TeachingSkill[]
 }
 
 // Protocol versions (now configured in gateway.config.ts)
@@ -50,12 +49,6 @@ export interface GatewayError {
   retryAfterMs?: number
 }
 
-// Teaching skill definition
-export interface TeachingSkill {
-  name: string
-  description: string
-}
-
 // Connect request
 export interface ConnectParams {
   minProtocol: number
@@ -71,7 +64,6 @@ export interface ConnectParams {
     password?: string
   }
   locale?: string
-  teachingSkills?: TeachingSkill[]
 }
 
 // Gateway snapshot

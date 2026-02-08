@@ -38,6 +38,7 @@ export interface UseMoltGatewayResult {
   runCronJob: (jobName: string) => Promise<unknown>
   removeCronJob: (jobName: string) => Promise<unknown>
   getCronJobRuns: (jobName: string) => Promise<unknown>
+  teachSkill: (name: string, description: string) => Promise<unknown>
 }
 
 export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
@@ -247,6 +248,16 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     [client],
   )
 
+  const teachSkill = useCallback(
+    async (name: string, description: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.teachSkill(name, description)
+    },
+    [client],
+  )
+
   useEffect(() => {
     return () => {
       if (clientRef.current) {
@@ -278,5 +289,6 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     runCronJob,
     removeCronJob,
     getCronJobRuns,
+    teachSkill,
   }
 }

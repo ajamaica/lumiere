@@ -28,6 +28,11 @@ export interface TeachingSkill {
   description: string
 }
 
+// Per-server teaching skills storage (keyed by serverId)
+export interface TeachingSkillsDict {
+  [serverId: string]: TeachingSkill[]
+}
+
 // Server configuration types
 export interface ServerConfig {
   id: string // UUID
@@ -36,7 +41,6 @@ export interface ServerConfig {
   clientId?: string
   providerType: ProviderType // 'molt' | 'ollama'
   model?: string // Model name for Ollama (e.g., 'llama3.2', 'mistral')
-  teachingSkills?: TeachingSkill[] // Skills to teach the Molt agent
   createdAt: number
 }
 
@@ -160,3 +164,6 @@ export const notificationLastCheckAtom = atomWithStorage<NotificationLastCheckMa
   {},
   storage,
 )
+
+// Teaching skills per server (separate from server config, managed in its own settings section)
+export const teachingSkillsAtom = atomWithStorage<TeachingSkillsDict>('teachingSkills', {}, storage)

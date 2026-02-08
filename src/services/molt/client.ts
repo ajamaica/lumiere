@@ -85,20 +85,14 @@ export class MoltGatewayClient {
   }
 
   private async performHandshake(): Promise<ConnectResponse> {
-    const params: Record<string, unknown> = {
+    const response = await this.request('connect', {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,
       auth: {
         token: this.config.token,
       },
-    }
-
-    if (this.config.teachingSkills?.length) {
-      params.teachingSkills = this.config.teachingSkills
-    }
-
-    const response = await this.request('connect', params)
+    })
     return response as ConnectResponse
   }
 
@@ -259,6 +253,14 @@ export class MoltGatewayClient {
 
   async getCronJobRuns(jobName: string): Promise<unknown> {
     return await this.request('cron.runs', { name: jobName })
+  }
+
+  async teachSkill(name: string, description: string): Promise<unknown> {
+    const message = `/config set skill.${name} ${description}`
+    return await this.request('agent', {
+      message,
+      idempotencyKey: `teach-skill-${name}-${Date.now()}`,
+    })
   }
 
   async sendAgentRequest(
