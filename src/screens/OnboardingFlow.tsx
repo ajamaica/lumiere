@@ -20,15 +20,15 @@ const INTRO_STEPS = [
     illustration: AgentIllustration,
   },
   {
-    title: 'Full control with powerful features',
+    title: 'Full control, powerful features',
     description:
       'Manage multiple servers and switch between sessions instantly. Schedule tasks with cron jobs, get real-time notifications, and stay in command of your workflow.',
     illustration: FeaturesIllustration,
   },
   {
-    title: 'Fully customizable to fit your needs',
+    title: 'Fully customizable, fit your needs',
     description:
-      'Connect to OpenClaw, Ollama, Echo, and more. Personalize themes, configure custom triggers, and tailor every detail to match your workflow.',
+      'Connect to OpenClaw, Ollama, Claude, OpenAI and more. Personalize themes, configure custom triggers, and tailor every detail to match your workflow.',
     illustration: ConfigIllustration,
   },
 ]

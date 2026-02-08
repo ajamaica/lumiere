@@ -35,7 +35,6 @@ export function getProviderIcon(type: ProviderType, color: string): React.ReactN
     'gemini-nano': GeminiNanoIcon,
     emergent: EmergentIcon,
     kimi: KimiIcon,
-    custom: DefaultIcon,
   }
 
   const Icon = icons[type] ?? DefaultIcon
@@ -70,11 +69,6 @@ export function getAllProviderOptions(color: string) {
       : []),
     { value: 'emergent', label: 'Emergent', icon: getProviderIcon('emergent', color) },
     { value: 'kimi', label: 'Kimi', icon: getProviderIcon('kimi', color) },
-    {
-      value: 'custom',
-      label: 'Custom (OpenAI-compatible)',
-      icon: getProviderIcon('custom', color),
-    },
     { value: 'echo', label: 'Echo Server', icon: getProviderIcon('echo', color) },
   ]
   return options
@@ -135,11 +129,6 @@ export function getBasicProviderOptions(color: string) {
       value: 'kimi' as ProviderType,
       label: 'Kimi',
       icon: getProviderIcon('kimi', color),
-    },
-    {
-      value: 'custom' as ProviderType,
-      label: 'Custom (OpenAI-compatible)',
-      icon: getProviderIcon('custom', color),
     },
     {
       value: 'echo' as ProviderType,

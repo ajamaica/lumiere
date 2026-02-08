@@ -53,21 +53,21 @@ export function Button({
   const variantStyles = StyleSheet.create({
     primary: {
       backgroundColor: theme.colors.primary,
-      borderRadius: theme.borderRadius.md,
+      borderRadius: theme.borderRadius.xxl,
     },
     secondary: {
       backgroundColor: theme.colors.surface,
-      borderRadius: theme.borderRadius.md,
+      borderRadius: theme.borderRadius.xxl,
       borderWidth: 1,
       borderColor: theme.colors.border,
     },
     danger: {
       backgroundColor: theme.colors.status.error,
-      borderRadius: theme.borderRadius.md,
+      borderRadius: theme.borderRadius.xxl,
     },
     ghost: {
       backgroundColor: 'transparent',
-      borderRadius: theme.borderRadius.md,
+      borderRadius: theme.borderRadius.xxl,
     },
   })
 

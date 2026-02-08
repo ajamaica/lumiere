@@ -45,8 +45,8 @@ export function Badge({ label, variant = 'default', style, ...props }: BadgeProp
   const styles = StyleSheet.create({
     badge: {
       backgroundColor: colors.bg,
-      borderRadius: theme.borderRadius.sm,
-      paddingHorizontal: theme.spacing.sm,
+      borderRadius: theme.borderRadius.xxl,
+      paddingHorizontal: theme.spacing.md,
       paddingVertical: theme.spacing.xs,
       borderWidth: 1,
       borderColor: colors.text + '30',

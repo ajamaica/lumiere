@@ -2,10 +2,11 @@ import { Ionicons } from '@expo/vector-icons'
 import * as Calendar from 'expo-calendar'
 import * as Clipboard from 'expo-clipboard'
 import * as Contacts from 'expo-contacts'
+import { LinearGradient } from 'expo-linear-gradient'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import { useAtom, useSetAtom } from 'jotai'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   Image,
   Platform,
@@ -18,6 +19,14 @@ import {
   ViewStyle,
 } from 'react-native'
 import Markdown from 'react-native-markdown-display'
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated'
 
 import { useUrlMetadata } from '../../hooks/useUrlMetadata'
 import {
@@ -30,6 +39,8 @@ import { useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 import { logger } from '../../utils/logger'
 import { LinkPreview } from './LinkPreview'
+
+const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient)
 
 const chatLogger = logger.create('ChatMessage')
 
@@ -90,6 +101,36 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const setCurrentSessionKey = useSetAtom(currentSessionKeyAtom)
   const setSessionAliases = useSetAtom(sessionAliasesAtom)
   const setClearMessages = useSetAtom(clearMessagesAtom)
+
+  // Animation values
+  const fadeIn = useSharedValue(0)
+  const shimmerProgress = useSharedValue(0)
+
+  // Entrance animation
+  useEffect(() => {
+    fadeIn.value = withTiming(1, { duration: 300, easing: Easing.out(Easing.ease) })
+
+    // Subtle shimmer for user bubbles
+    if (isUser) {
+      shimmerProgress.value = withRepeat(
+        withSequence(
+          withTiming(1, { duration: 4000, easing: Easing.inOut(Easing.ease) }),
+          withTiming(0, { duration: 4000, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        false,
+      )
+    }
+  }, [fadeIn, shimmerProgress, isUser])
+
+  const animatedContainerStyle = useAnimatedStyle(() => ({
+    opacity: fadeIn.value,
+    transform: [{ translateY: (1 - fadeIn.value) * 8 }],
+  }))
+
+  const animatedGradientStyle = useAnimatedStyle(() => ({
+    opacity: 0.95 + shimmerProgress.value * 0.05,
+  }))
 
   const isFavorited = useMemo(
     () => favorites.some((f) => f.id === message.id),
@@ -416,14 +457,15 @@ export function ChatMessage({ message }: ChatMessageProps) {
   // Fetch URL embed previews for agent messages
   const { metadata: urlPreviews } = useUrlMetadata(message.text, !!message.streaming, isUser)
 
-  return (
-    <View
-      style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}
-      accessible={true}
-      accessibilityLabel={`${isUser ? 'You' : 'Assistant'}: ${message.text.substring(0, 200)}${message.text.length > 200 ? '...' : ''}`}
-      accessibilityRole="text"
-    >
-      <View style={[styles.bubble, isUser ? styles.userBubble : styles.agentBubble]}>
+  // User bubble with gradient
+  const renderUserBubble = () => (
+    <Animated.View style={[styles.userBubbleWrapper, animatedContainerStyle]}>
+      <AnimatedLinearGradient
+        colors={['#22D3EE', '#06B6D4', '#0891B2']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[styles.userGradientBubble, animatedGradientStyle]}
+      >
         {message.attachments && message.attachments.length > 0 && (
           <View style={styles.attachmentContainer}>
             {message.attachments.map((attachment, index) => (
@@ -449,19 +491,61 @@ export function ChatMessage({ message }: ChatMessageProps) {
         >
           {processedText}
         </Markdown>
-        {message.streaming && (
-          <Text style={styles.streamingIndicator} selectable={true}>
-            ...
-          </Text>
-        )}
-        {urlPreviews.length > 0 && (
-          <View style={styles.linkPreviews}>
-            {urlPreviews.map((meta) => (
-              <LinkPreview key={meta.url} metadata={meta} />
-            ))}
-          </View>
-        )}
-      </View>
+      </AnimatedLinearGradient>
+    </Animated.View>
+  )
+
+  // Agent bubble with subtle gradient border
+  const renderAgentBubble = () => (
+    <Animated.View style={[styles.bubble, styles.agentBubble, animatedContainerStyle]}>
+      {message.attachments && message.attachments.length > 0 && (
+        <View style={styles.attachmentContainer}>
+          {message.attachments.map((attachment, index) => (
+            <Image
+              key={index}
+              source={{ uri: attachment.uri }}
+              style={styles.attachmentImage}
+              resizeMode="cover"
+              accessibilityLabel={`Attachment ${index + 1}`}
+              accessibilityRole="image"
+            />
+          ))}
+        </View>
+      )}
+      <Markdown
+        style={markdownStyles}
+        onLinkPress={(url: string) => {
+          handleLinkPress(url)
+          return false
+        }}
+        mergeStyle={true}
+        rules={markdownRules}
+      >
+        {processedText}
+      </Markdown>
+      {message.streaming && (
+        <Text style={styles.streamingIndicator} selectable={true}>
+          ...
+        </Text>
+      )}
+      {urlPreviews.length > 0 && (
+        <View style={styles.linkPreviews}>
+          {urlPreviews.map((meta) => (
+            <LinkPreview key={meta.url} metadata={meta} />
+          ))}
+        </View>
+      )}
+    </Animated.View>
+  )
+
+  return (
+    <View
+      style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}
+      accessible={true}
+      accessibilityLabel={`${isUser ? 'You' : 'Assistant'}: ${message.text.substring(0, 200)}${message.text.length > 200 ? '...' : ''}`}
+      accessibilityRole="text"
+    >
+      {isUser ? renderUserBubble() : renderAgentBubble()}
       {!message.streaming && intents.length > 0 && (
         <View style={styles.intentActions}>
           {intents.map((intent, index) => {
@@ -477,11 +561,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 accessibilityLabel={showCheck ? 'Copied' : intent.label}
               >
                 <Ionicons
-                  name={
-                    (showCheck ? 'checkmark' : intentIcon(intent.action)) as React.ComponentProps<
-                      typeof Ionicons
-                    >['name']
-                  }
+                  name={(showCheck ? 'checkmark' : intentIcon(intent.action)) as any}
                   size={16}
                   color={theme.colors.primary}
                   style={styles.intentButtonIcon}
@@ -577,6 +657,22 @@ const createStyles = (theme: Theme) =>
       maxWidth: '80%',
       backgroundColor: theme.colors.message.user,
       borderBottomRightRadius: theme.borderRadius.sm,
+      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
+    },
+    userBubbleWrapper: {
+      maxWidth: '80%',
+      borderRadius: theme.borderRadius.xxl,
+      borderBottomRightRadius: theme.borderRadius.sm,
+      overflow: 'hidden',
+      shadowColor: '#22D3EE',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 8,
+      elevation: 4,
+    },
+    userGradientBubble: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.sm + 2,
       ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
     },
     agentBubble: {

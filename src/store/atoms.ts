@@ -44,12 +44,12 @@ export interface ServerSessions {
 // Theme mode atom with AsyncStorage persistence
 export const themeModeAtom = atomWithStorage<'light' | 'dark' | 'system'>(
   'themeMode',
-  'system',
+  'dark',
   storage,
 )
 
 // Color theme atom with AsyncStorage persistence
-export const colorThemeAtom = atomWithStorage<string>('colorTheme', 'default', storage)
+export const colorThemeAtom = atomWithStorage<string>('colorTheme', 'lumiere', storage)
 
 // Multi-server storage atoms
 export const serversAtom = atomWithStorage<ServersDict>('servers', {}, storage)

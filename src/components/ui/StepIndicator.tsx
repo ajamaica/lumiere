@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
@@ -20,9 +21,17 @@ export function StepIndicator({ currentStep, totalSteps }: StepIndicatorProps) {
       paddingHorizontal: theme.spacing.xl,
     },
     dot: {
-      height: 3,
+      height: 4,
       flex: 1,
       borderRadius: theme.borderRadius.full,
+      overflow: 'hidden',
+    },
+    inactiveDot: {
+      backgroundColor: theme.colors.border,
+    },
+    gradient: {
+      flex: 1,
+      height: '100%',
     },
   })
 
@@ -34,15 +43,16 @@ export function StepIndicator({ currentStep, totalSteps }: StepIndicatorProps) {
       accessibilityValue={{ min: 1, max: totalSteps, now: currentStep + 1 }}
     >
       {Array.from({ length: totalSteps }).map((_, index) => (
-        <View
-          key={index}
-          style={[
-            styles.dot,
-            {
-              backgroundColor: index <= currentStep ? theme.colors.primary : theme.colors.border,
-            },
-          ]}
-        />
+        <View key={index} style={[styles.dot, index > currentStep && styles.inactiveDot]}>
+          {index <= currentStep && (
+            <LinearGradient
+              colors={['#22D3EE', '#A855F7']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradient}
+            />
+          )}
+        </View>
       ))}
     </View>
   )

@@ -34,7 +34,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } else {
       baseTheme = themeMode === 'dark' ? darkTheme : lightTheme
     }
-    return applyColorTheme(baseTheme, (colorTheme as ColorThemeKey) || 'default')
+    return applyColorTheme(baseTheme, (colorTheme as ColorThemeKey) || 'lumiere')
   }, [themeMode, systemColorScheme, colorTheme])
 
   // Update system UI colors
@@ -56,7 +56,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         themeMode,
         setThemeMode,
         toggleTheme,
-        colorTheme: (colorTheme as ColorThemeKey) || 'default',
+        colorTheme: (colorTheme as ColorThemeKey) || 'lumiere',
         setColorTheme,
       }}
     >

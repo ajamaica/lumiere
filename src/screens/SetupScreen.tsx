@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
+import { LinearGradient } from 'expo-linear-gradient'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
 import {
@@ -11,7 +12,7 @@ import {
 } from 'react-native'
 
 import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
-import { Button, Dropdown, Text, TextInput } from '../components/ui'
+import { Dropdown, GradientButton, GradientText, Text, TextInput } from '../components/ui'
 import { getAllProviderOptions } from '../config/providerOptions'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
@@ -40,6 +41,12 @@ export function SetupScreen() {
   const [showAdvanced, setShowAdvanced] = useState(false)
 
   const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    gradient: {
+      ...StyleSheet.absoluteFillObject,
+    },
     keyboardView: {
       flex: 1,
     },
@@ -47,6 +54,15 @@ export function SetupScreen() {
       flexGrow: 1,
       padding: theme.spacing.xl,
       justifyContent: 'center',
+    },
+    headerSection: {
+      marginBottom: theme.spacing.xxl,
+    },
+    titleRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'baseline',
+      marginBottom: theme.spacing.sm,
     },
     form: {
       marginBottom: theme.spacing.xxl,
@@ -57,17 +73,28 @@ export function SetupScreen() {
       justifyContent: 'space-between',
       paddingVertical: theme.spacing.md,
       marginBottom: theme.spacing.md,
+      paddingHorizontal: theme.spacing.md,
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.lg,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    primaryButton: {
+      shadowColor: theme.colors.primary,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 8,
+      elevation: 8,
     },
   })
 
-  const needsUrl = providerType === 'molt' || providerType === 'ollama' || providerType === 'custom'
+  const needsUrl = providerType === 'molt' || providerType === 'ollama'
   const needsToken =
     providerType === 'molt' ||
     providerType === 'claude' ||
     providerType === 'openai' ||
     providerType === 'openrouter' ||
-    providerType === 'gemini' ||
-    providerType === 'custom'
+    providerType === 'gemini'
 
   const handleComplete = async () => {
     if (providerType === 'molt' && localUrl.trim() && localToken.trim()) {
@@ -238,30 +265,11 @@ export function SetupScreen() {
       }))
 
       setOnboardingCompleted(true)
-    } else if (providerType === 'custom' && localUrl.trim() && localToken.trim()) {
-      const serverId = await addServer(
-        {
-          name: 'My Custom Provider',
-          url: localUrl.trim(),
-          providerType: 'custom',
-          model: localModel.trim() || undefined,
-        },
-        localToken.trim(),
-      )
-
-      const sessionKey = DEFAULT_SESSION_KEY
-      setCurrentSessionKey(sessionKey)
-      setServerSessions((prev) => ({
-        ...prev,
-        [serverId]: sessionKey,
-      }))
-
-      setOnboardingCompleted(true)
     }
   }
 
   const isValid =
-    providerType === 'molt' || providerType === 'custom'
+    providerType === 'molt'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
       : providerType === 'claude' ||
           providerType === 'openai' ||
@@ -273,176 +281,192 @@ export function SetupScreen() {
           : true
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.keyboardView}
-    >
-      <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
-        <Text variant="heading1" style={{ marginBottom: theme.spacing.sm }}>
-          Setup your server
-        </Text>
-        <Text variant="body" color="secondary" style={{ marginBottom: theme.spacing.xxl }}>
-          Choose a provider and connect to start chatting with your agents.
-        </Text>
+    <View style={styles.container}>
+      {/* Background gradient */}
+      <LinearGradient
+        colors={[theme.colors.background, '#0A1628', 'rgba(168, 85, 247, 0.03)']}
+        locations={[0, 0.7, 1]}
+        style={styles.gradient}
+      />
 
-        <View style={styles.form}>
-          <Dropdown
-            label="Provider Type"
-            options={providerOptionsList}
-            value={providerType}
-            onValueChange={setProviderType}
-          />
-
-          {needsUrl && (
-            <TextInput
-              label="URL"
-              value={localUrl}
-              onChangeText={setLocalUrl}
-              placeholder={
-                providerType === 'ollama'
-                  ? 'http://localhost:11434'
-                  : providerType === 'custom'
-                    ? 'https://api.example.com'
-                    : 'https://your-gateway.example.com'
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="url"
-              hint={
-                providerType === 'ollama'
-                  ? 'The URL of your Ollama server'
-                  : providerType === 'custom'
-                    ? 'Base URL of your OpenAI-compatible API'
-                    : 'The URL of your OpenClaw server'
-              }
-            />
-          )}
-
-          {needsToken && (
-            <TextInput
-              label={
-                providerType === 'claude' ||
-                providerType === 'openai' ||
-                providerType === 'openrouter' ||
-                providerType === 'gemini' ||
-                providerType === 'custom'
-                  ? 'API Key'
-                  : 'Token'
-              }
-              value={localToken}
-              onChangeText={setLocalToken}
-              placeholder={
-                providerType === 'claude' ||
-                providerType === 'openai' ||
-                providerType === 'openrouter' ||
-                providerType === 'gemini' ||
-                providerType === 'custom'
-                  ? 'Your API key'
-                  : 'Your authentication token'
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              secureTextEntry
-              hint={
-                providerType === 'claude'
-                  ? 'Your Anthropic API key'
-                  : providerType === 'openai'
-                    ? 'Your OpenAI API key'
-                    : providerType === 'openrouter'
-                      ? 'Your OpenRouter API key'
-                      : providerType === 'gemini'
-                        ? 'Your Google AI API key'
-                        : providerType === 'custom'
-                          ? 'API key for your OpenAI-compatible service'
-                          : 'Your authentication token for the gateway'
-              }
-            />
-          )}
-
-          {(providerType === 'ollama' ||
-            providerType === 'claude' ||
-            providerType === 'openai' ||
-            providerType === 'openrouter' ||
-            providerType === 'gemini' ||
-            providerType === 'custom') && (
-            <TextInput
-              label="Model"
-              value={localModel}
-              onChangeText={setLocalModel}
-              placeholder={
-                providerType === 'ollama'
-                  ? 'llama3.2'
-                  : providerType === 'claude'
-                    ? 'claude-sonnet-4-5'
-                    : providerType === 'openai' || providerType === 'custom'
-                      ? 'gpt-4o'
-                      : providerType === 'gemini'
-                        ? 'gemini-2.0-flash'
-                        : 'openai/gpt-4o'
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              hint={
-                providerType === 'ollama'
-                  ? 'Ollama model to use (default: llama3.2)'
-                  : providerType === 'claude'
-                    ? 'Claude model to use (default: claude-sonnet-4-5)'
-                    : providerType === 'openai'
-                      ? 'OpenAI model to use (default: gpt-4o)'
-                      : providerType === 'gemini'
-                        ? 'Gemini model to use (default: gemini-2.0-flash)'
-                        : providerType === 'custom'
-                          ? 'Model identifier for your API (default: gpt-4o)'
-                          : 'OpenRouter model to use (default: openai/gpt-4o)'
-              }
-            />
-          )}
-
-          {providerType === 'molt' && (
-            <>
-              <TouchableOpacity
-                style={styles.advancedToggle}
-                onPress={() => setShowAdvanced(!showAdvanced)}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardView}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.headerSection}>
+            <View style={styles.titleRow}>
+              <Text variant="heading1">Connect to </Text>
+              <GradientText
+                preset="accent"
+                fontSize={theme.typography.fontSize.xxl}
+                fontWeight="bold"
               >
-                <Text variant="label" color="secondary">
-                  Advanced
-                </Text>
-                <Ionicons
-                  name={showAdvanced ? 'chevron-up' : 'chevron-down'}
-                  size={20}
-                  color={theme.colors.text.secondary}
-                />
-              </TouchableOpacity>
+                your AI
+              </GradientText>
+            </View>
+            <Text variant="body" color="secondary">
+              Choose a provider and connect to start chatting with your agents.
+            </Text>
+          </View>
 
-              {showAdvanced && (
-                <>
-                  <TextInput
-                    label="Client ID"
-                    value={localClientId}
-                    onChangeText={setLocalClientId}
-                    placeholder="lumiere-mobile"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    hint="Identifier for this device (default: lumiere-mobile)"
+          <View style={styles.form}>
+            <Dropdown
+              label="Provider Type"
+              options={providerOptionsList}
+              value={providerType}
+              onValueChange={setProviderType}
+            />
+
+            {needsUrl && (
+              <TextInput
+                label="URL"
+                value={localUrl}
+                onChangeText={setLocalUrl}
+                placeholder={
+                  providerType === 'ollama'
+                    ? 'http://localhost:11434'
+                    : 'https://your-gateway.example.com'
+                }
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="url"
+                hint={
+                  providerType === 'ollama'
+                    ? 'The URL of your Ollama server'
+                    : 'The URL of your OpenClaw server'
+                }
+              />
+            )}
+
+            {needsToken && (
+              <TextInput
+                label={
+                  providerType === 'claude' ||
+                  providerType === 'openai' ||
+                  providerType === 'openrouter' ||
+                  providerType === 'gemini'
+                    ? 'API Key'
+                    : 'Token'
+                }
+                value={localToken}
+                onChangeText={setLocalToken}
+                placeholder={
+                  providerType === 'claude' ||
+                  providerType === 'openai' ||
+                  providerType === 'openrouter' ||
+                  providerType === 'gemini'
+                    ? 'Your API key'
+                    : 'Your authentication token'
+                }
+                autoCapitalize="none"
+                autoCorrect={false}
+                secureTextEntry
+                hint={
+                  providerType === 'claude'
+                    ? 'Your Anthropic API key'
+                    : providerType === 'openai'
+                      ? 'Your OpenAI API key'
+                      : providerType === 'openrouter'
+                        ? 'Your OpenRouter API key'
+                        : providerType === 'gemini'
+                          ? 'Your Google AI API key'
+                          : 'Your authentication token for the gateway'
+                }
+              />
+            )}
+
+            {(providerType === 'ollama' ||
+              providerType === 'claude' ||
+              providerType === 'openai' ||
+              providerType === 'openrouter' ||
+              providerType === 'gemini') && (
+              <TextInput
+                label="Model"
+                value={localModel}
+                onChangeText={setLocalModel}
+                placeholder={
+                  providerType === 'ollama'
+                    ? 'llama3.2'
+                    : providerType === 'claude'
+                      ? 'claude-sonnet-4-5'
+                      : providerType === 'openai'
+                        ? 'gpt-4o'
+                        : providerType === 'gemini'
+                          ? 'gemini-2.0-flash'
+                          : 'openai/gpt-4o'
+                }
+                autoCapitalize="none"
+                autoCorrect={false}
+                hint={
+                  providerType === 'ollama'
+                    ? 'Ollama model to use (default: llama3.2)'
+                    : providerType === 'claude'
+                      ? 'Claude model to use (default: claude-sonnet-4-5)'
+                      : providerType === 'openai'
+                        ? 'OpenAI model to use (default: gpt-4o)'
+                        : providerType === 'gemini'
+                          ? 'Gemini model to use (default: gemini-2.0-flash)'
+                          : 'OpenRouter model to use (default: openai/gpt-4o)'
+                }
+              />
+            )}
+
+            {providerType === 'molt' && (
+              <>
+                <TouchableOpacity
+                  style={styles.advancedToggle}
+                  onPress={() => setShowAdvanced(!showAdvanced)}
+                >
+                  <Text variant="label" color="secondary">
+                    Advanced Options
+                  </Text>
+                  <Ionicons
+                    name={showAdvanced ? 'chevron-up' : 'chevron-down'}
+                    size={20}
+                    color={theme.colors.text.secondary}
                   />
+                </TouchableOpacity>
 
-                  <TextInput
-                    label="Default Session Key"
-                    value={localSessionKey}
-                    onChangeText={setLocalSessionKey}
-                    placeholder={DEFAULT_SESSION_KEY}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    hint={`Session key for chat conversations (default: ${DEFAULT_SESSION_KEY})`}
-                  />
-                </>
-              )}
-            </>
-          )}
-        </View>
+                {showAdvanced && (
+                  <>
+                    <TextInput
+                      label="Client ID"
+                      value={localClientId}
+                      onChangeText={setLocalClientId}
+                      placeholder="lumiere-mobile"
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      hint="Identifier for this device (default: lumiere-mobile)"
+                    />
 
-        <Button title="Get Started" size="lg" onPress={handleComplete} disabled={!isValid} />
-      </ScrollView>
-    </KeyboardAvoidingView>
+                    <TextInput
+                      label="Default Session Key"
+                      value={localSessionKey}
+                      onChangeText={setLocalSessionKey}
+                      placeholder={DEFAULT_SESSION_KEY}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      hint={`Session key for chat conversations (default: ${DEFAULT_SESSION_KEY})`}
+                    />
+                  </>
+                )}
+              </>
+            )}
+          </View>
+
+          <GradientButton
+            title="Get Started"
+            size="lg"
+            onPress={handleComplete}
+            disabled={!isValid}
+            animated={true}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </View>
   )
 }

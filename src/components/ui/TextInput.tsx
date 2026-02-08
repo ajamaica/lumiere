@@ -30,7 +30,7 @@ export function TextInput({ label, hint, error, style, ...props }: TextInputProp
     },
     input: {
       backgroundColor: theme.colors.surface,
-      borderRadius: theme.borderRadius.md,
+      borderRadius: theme.borderRadius.lg,
       paddingHorizontal: theme.spacing.lg,
       paddingVertical: theme.spacing.md,
       fontSize: theme.typography.fontSize.base,
