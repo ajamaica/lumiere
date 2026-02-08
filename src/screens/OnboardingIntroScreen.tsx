@@ -47,6 +47,7 @@ export function OnboardingIntroScreen({
       alignItems: 'center',
       marginBottom: theme.spacing.xl,
       position: 'relative',
+      paddingHorizontal: theme.spacing.md,
     },
     illustrationGlow: {
       position: 'absolute',
