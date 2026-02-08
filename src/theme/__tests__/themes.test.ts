@@ -20,12 +20,7 @@ describe('darkTheme', () => {
 })
 
 describe('applyColorTheme', () => {
-  it('returns base theme unchanged for default color theme', () => {
-    const result = applyColorTheme(lightTheme, 'default')
-    expect(result).toBe(lightTheme)
-  })
-
-  it('overrides primary colors for non-default themes', () => {
+  it('overrides primary colors for color themes', () => {
     const result = applyColorTheme(lightTheme, 'blue')
     expect(result.colors.primary).toBe('#2563EB')
     expect(result.colors.primaryLight).toBe('#60A5FA')

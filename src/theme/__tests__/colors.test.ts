@@ -2,7 +2,7 @@ import { colorThemes, darkColors, lightColors } from '../colors'
 
 describe('lightColors', () => {
   it('has the expected primary color', () => {
-    expect(lightColors.primary).toBe('#FF6B47')
+    expect(lightColors.primary).toBe('#22D3EE')
   })
 
   it('contains all required text color keys', () => {
@@ -43,17 +43,7 @@ describe('darkColors', () => {
 })
 
 describe('colorThemes', () => {
-  const themeKeys = [
-    'default',
-    'pink',
-    'green',
-    'red',
-    'blue',
-    'purple',
-    'orange',
-    'glass',
-    'lumiere',
-  ]
+  const themeKeys = ['pink', 'green', 'red', 'blue', 'purple', 'orange', 'glass', 'lumiere']
 
   it('has all expected theme keys', () => {
     expect(Object.keys(colorThemes)).toEqual(expect.arrayContaining(themeKeys))
