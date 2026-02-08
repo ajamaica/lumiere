@@ -142,7 +142,7 @@ export function OnboardingIntroScreen({
 
       <View style={styles.footer}>
         <GradientButton title="Continue" size="lg" onPress={onNext} animated={true} />
-        <Button title="Skip" size="lg" variant="ghost" onPress={onSkip} />
+        <Button title="Skip" size="md" variant="ghost" onPress={onSkip} />
       </View>
     </View>
   )
