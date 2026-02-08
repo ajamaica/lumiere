@@ -23,6 +23,7 @@ import { useTheme } from '../theme'
 
 export function SetupScreen() {
   const { theme } = useTheme()
+  const insets = useSafeAreaInsets()
   const { addServer } = useServers()
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setServerSessions] = useAtom(serverSessionsAtom)
@@ -48,12 +49,17 @@ export function SetupScreen() {
     gradient: {
       ...StyleSheet.absoluteFillObject,
     },
+    safeContent: {
+      flex: 1,
+      paddingTop: insets.top,
+    },
     keyboardView: {
       flex: 1,
     },
     scrollContent: {
       flexGrow: 1,
       padding: theme.spacing.xl,
+      paddingBottom: Math.max(insets.bottom, theme.spacing.xl),
       justifyContent: 'center',
     },
     headerSection: {
