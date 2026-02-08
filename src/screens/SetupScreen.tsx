@@ -296,29 +296,32 @@ export function SetupScreen() {
         style={styles.gradient}
       />
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
+      <View style={styles.safeContent}>
+        <StepIndicator currentStep={3} totalSteps={4} />
+
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.keyboardView}
         >
-          <View style={styles.headerSection}>
-            <View style={styles.titleRow}>
-              <Text variant="heading1">Connect to </Text>
-              <GradientText
-                preset="accent"
-                fontSize={theme.typography.fontSize.xxl}
-                fontWeight="bold"
-              >
-                your AI
-              </GradientText>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={styles.headerSection}>
+              <View style={styles.titleRow}>
+                <Text variant="heading1">Connect to </Text>
+                <GradientText
+                  preset="accent"
+                  fontSize={theme.typography.fontSize.xxl}
+                  fontWeight="bold"
+                >
+                  your AI
+                </GradientText>
+              </View>
+              <Text variant="body" color="secondary">
+                Choose a provider and connect to start chatting with your agents.
+              </Text>
             </View>
-            <Text variant="body" color="secondary">
-              Choose a provider and connect to start chatting with your agents.
-            </Text>
-          </View>
 
           <View style={styles.form}>
             <Dropdown
