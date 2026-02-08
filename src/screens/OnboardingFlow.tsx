@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
   AgentIllustration,
   ConfigIllustration,
   FeaturesIllustration,
 } from '../components/illustrations'
-import { StepIndicator } from '../components/ui/StepIndicator'
 import { useTheme } from '../theme'
 import { OnboardingIntroScreen } from './OnboardingIntroScreen'
 import { SetupScreen } from './SetupScreen'
