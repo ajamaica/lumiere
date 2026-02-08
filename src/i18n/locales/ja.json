@@ -77,16 +77,19 @@
       "myServer": "マイサーバー",
       "myOllama": "マイOllama",
       "myEchoServer": "マイEchoサーバー",
-      "myClaude": "マイClaude"
+      "myClaude": "マイClaude",
+      "myCustomProvider": "マイカスタムプロバイダー"
     },
     "providers": {
       "openClaw": "OpenClaw",
       "ollama": "Ollama",
       "claude": "Claude",
       "appleIntelligence": "Apple Intelligence",
-      "echoServer": "Echoサーバー"
+      "echoServer": "Echoサーバー",
+      "custom": "カスタム（OpenAI互換）"
     },
     "appleDescription": "Apple Foundation Modelsを使用して、CoreML経由でAIを完全にデバイス上で実行します。Apple Intelligenceに対応したiOS 26以降が必要です。",
+    "customDescription": "独自のエンドポイントURLを指定して、任意のOpenAI互換APIに接続します。",
     "errors": {
       "urlRequired": "URLは必須です",
       "tokenRequired": "トークンは必須です",

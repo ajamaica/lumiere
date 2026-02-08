@@ -60,13 +60,14 @@ export function SetupScreen() {
     },
   })
 
-  const needsUrl = providerType === 'molt' || providerType === 'ollama'
+  const needsUrl = providerType === 'molt' || providerType === 'ollama' || providerType === 'custom'
   const needsToken =
     providerType === 'molt' ||
     providerType === 'claude' ||
     providerType === 'openai' ||
     providerType === 'openrouter' ||
-    providerType === 'gemini'
+    providerType === 'gemini' ||
+    providerType === 'custom'
 
   const handleComplete = async () => {
     if (providerType === 'molt' && localUrl.trim() && localToken.trim()) {
@@ -237,11 +238,30 @@ export function SetupScreen() {
       }))
 
       setOnboardingCompleted(true)
+    } else if (providerType === 'custom' && localUrl.trim() && localToken.trim()) {
+      const serverId = await addServer(
+        {
+          name: 'My Custom Provider',
+          url: localUrl.trim(),
+          providerType: 'custom',
+          model: localModel.trim() || undefined,
+        },
+        localToken.trim(),
+      )
+
+      const sessionKey = DEFAULT_SESSION_KEY
+      setCurrentSessionKey(sessionKey)
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
+
+      setOnboardingCompleted(true)
     }
   }
 
   const isValid =
-    providerType === 'molt'
+    providerType === 'molt' || providerType === 'custom'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
       : providerType === 'claude' ||
           providerType === 'openai' ||
@@ -281,7 +301,9 @@ export function SetupScreen() {
               placeholder={
                 providerType === 'ollama'
                   ? 'http://localhost:11434'
-                  : 'https://your-gateway.example.com'
+                  : providerType === 'custom'
+                    ? 'https://api.example.com'
+                    : 'https://your-gateway.example.com'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -289,7 +311,9 @@ export function SetupScreen() {
               hint={
                 providerType === 'ollama'
                   ? 'The URL of your Ollama server'
-                  : 'The URL of your OpenClaw server'
+                  : providerType === 'custom'
+                    ? 'Base URL of your OpenAI-compatible API'
+                    : 'The URL of your OpenClaw server'
               }
             />
           )}
@@ -300,7 +324,8 @@ export function SetupScreen() {
                 providerType === 'claude' ||
                 providerType === 'openai' ||
                 providerType === 'openrouter' ||
-                providerType === 'gemini'
+                providerType === 'gemini' ||
+                providerType === 'custom'
                   ? 'API Key'
                   : 'Token'
               }
@@ -310,7 +335,8 @@ export function SetupScreen() {
                 providerType === 'claude' ||
                 providerType === 'openai' ||
                 providerType === 'openrouter' ||
-                providerType === 'gemini'
+                providerType === 'gemini' ||
+                providerType === 'custom'
                   ? 'Your API key'
                   : 'Your authentication token'
               }
@@ -326,7 +352,9 @@ export function SetupScreen() {
                       ? 'Your OpenRouter API key'
                       : providerType === 'gemini'
                         ? 'Your Google AI API key'
-                        : 'Your authentication token for the gateway'
+                        : providerType === 'custom'
+                          ? 'API key for your OpenAI-compatible service'
+                          : 'Your authentication token for the gateway'
               }
             />
           )}
@@ -335,7 +363,8 @@ export function SetupScreen() {
             providerType === 'claude' ||
             providerType === 'openai' ||
             providerType === 'openrouter' ||
-            providerType === 'gemini') && (
+            providerType === 'gemini' ||
+            providerType === 'custom') && (
             <TextInput
               label="Model"
               value={localModel}
@@ -345,7 +374,7 @@ export function SetupScreen() {
                   ? 'llama3.2'
                   : providerType === 'claude'
                     ? 'claude-sonnet-4-5'
-                    : providerType === 'openai'
+                    : providerType === 'openai' || providerType === 'custom'
                       ? 'gpt-4o'
                       : providerType === 'gemini'
                         ? 'gemini-2.0-flash'
@@ -362,7 +391,9 @@ export function SetupScreen() {
                       ? 'OpenAI model to use (default: gpt-4o)'
                       : providerType === 'gemini'
                         ? 'Gemini model to use (default: gemini-2.0-flash)'
-                        : 'OpenRouter model to use (default: openai/gpt-4o)'
+                        : providerType === 'custom'
+                          ? 'Model identifier for your API (default: gpt-4o)'
+                          : 'OpenRouter model to use (default: openai/gpt-4o)'
               }
             />
           )}

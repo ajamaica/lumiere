@@ -77,16 +77,19 @@
       "myServer": "Мой сервер",
       "myOllama": "Мой Ollama",
       "myEchoServer": "Мой Echo-сервер",
-      "myClaude": "Мой Claude"
+      "myClaude": "Мой Claude",
+      "myCustomProvider": "Мой пользовательский провайдер"
     },
     "providers": {
       "openClaw": "OpenClaw",
       "ollama": "Ollama",
       "claude": "Claude",
       "appleIntelligence": "Apple Intelligence",
-      "echoServer": "Echo-сервер"
+      "echoServer": "Echo-сервер",
+      "custom": "Пользовательский (совместимый с OpenAI)"
     },
     "appleDescription": "Использует Apple Foundation Models для запуска ИИ полностью на устройстве через CoreML. Требуется iOS 26+ с поддержкой Apple Intelligence.",
+    "customDescription": "Подключитесь к любому OpenAI-совместимому API, указав свой URL-адрес эндпоинта.",
     "errors": {
       "urlRequired": "URL обязателен",
       "tokenRequired": "Токен обязателен",
