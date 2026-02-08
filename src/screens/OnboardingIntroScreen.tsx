@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { Button, GradientButton, GradientText, StepIndicator, Text } from '../components/ui'
 import { useTheme } from '../theme'
@@ -25,6 +26,7 @@ export function OnboardingIntroScreen({
   onSkip,
 }: OnboardingIntroScreenProps) {
   const { theme } = useTheme()
+  const insets = useSafeAreaInsets()
 
   // Split title to highlight key words with gradient
   const titleParts = title.split(',')
@@ -39,11 +41,13 @@ export function OnboardingIntroScreen({
     },
     content: {
       flex: 1,
+      paddingTop: insets.top,
     },
     illustrationContainer: {
       alignItems: 'center',
       marginBottom: theme.spacing.xl,
       position: 'relative',
+      paddingHorizontal: theme.spacing.md,
     },
     illustrationGlow: {
       position: 'absolute',
@@ -72,7 +76,7 @@ export function OnboardingIntroScreen({
     },
     footer: {
       paddingHorizontal: theme.spacing.xl,
-      paddingBottom: theme.spacing.xl,
+      paddingBottom: Math.max(insets.bottom, theme.spacing.xl),
       gap: theme.spacing.md,
     },
     primaryButton: {
@@ -139,7 +143,7 @@ export function OnboardingIntroScreen({
 
       <View style={styles.footer}>
         <GradientButton title="Continue" size="lg" onPress={onNext} animated={true} />
-        <Button title="Skip" size="lg" variant="ghost" onPress={onSkip} />
+        <Button title="Skip" size="md" variant="ghost" onPress={onSkip} />
       </View>
     </View>
   )

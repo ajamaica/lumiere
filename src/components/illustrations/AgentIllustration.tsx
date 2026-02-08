@@ -1,11 +1,15 @@
 import React from 'react'
-import { useWindowDimensions } from 'react-native'
-
-import AgentIllustrationSvg from '../../../assets/agent-illustration.svg'
+import { Image, useWindowDimensions } from 'react-native'
 
 export function AgentIllustration() {
   const { width } = useWindowDimensions()
-  const imageHeight = width * (1024 / 1365) // Maintain aspect ratio (original: 1365x1024)
+  const imageHeight = width * 0.75 // 4:3 aspect ratio for better mobile display
 
-  return <AgentIllustrationSvg width={width} height={imageHeight} />
+  return (
+    <Image
+      source={{ uri: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=85' }}
+      style={{ width, height: imageHeight, borderRadius: 16 }}
+      resizeMode="cover"
+    />
+  )
 }

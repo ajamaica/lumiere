@@ -10,9 +10,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
-import { Dropdown, GradientButton, GradientText, Text, TextInput } from '../components/ui'
+import { Dropdown, GradientButton, GradientText, StepIndicator, Text, TextInput } from '../components/ui'
 import { getAllProviderOptions } from '../config/providerOptions'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
@@ -22,6 +23,7 @@ import { useTheme } from '../theme'
 
 export function SetupScreen() {
   const { theme } = useTheme()
+  const insets = useSafeAreaInsets()
   const { addServer } = useServers()
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setServerSessions] = useAtom(serverSessionsAtom)
@@ -47,12 +49,17 @@ export function SetupScreen() {
     gradient: {
       ...StyleSheet.absoluteFillObject,
     },
+    safeContent: {
+      flex: 1,
+      paddingTop: insets.top,
+    },
     keyboardView: {
       flex: 1,
     },
     scrollContent: {
       flexGrow: 1,
       padding: theme.spacing.xl,
+      paddingBottom: Math.max(insets.bottom, theme.spacing.xl),
       justifyContent: 'center',
     },
     headerSection: {
@@ -289,29 +296,32 @@ export function SetupScreen() {
         style={styles.gradient}
       />
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
+      <View style={styles.safeContent}>
+        <StepIndicator currentStep={3} totalSteps={4} />
+
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.keyboardView}
         >
-          <View style={styles.headerSection}>
-            <View style={styles.titleRow}>
-              <Text variant="heading1">Connect to </Text>
-              <GradientText
-                preset="accent"
-                fontSize={theme.typography.fontSize.xxl}
-                fontWeight="bold"
-              >
-                your AI
-              </GradientText>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={styles.headerSection}>
+              <View style={styles.titleRow}>
+                <Text variant="heading1">Connect to </Text>
+                <GradientText
+                  preset="accent"
+                  fontSize={theme.typography.fontSize.xxl}
+                  fontWeight="bold"
+                >
+                  your AI
+                </GradientText>
+              </View>
+              <Text variant="body" color="secondary">
+                Choose a provider and connect to start chatting with your agents.
+              </Text>
             </View>
-            <Text variant="body" color="secondary">
-              Choose a provider and connect to start chatting with your agents.
-            </Text>
-          </View>
 
           <View style={styles.form}>
             <Dropdown
