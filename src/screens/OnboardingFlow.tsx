@@ -56,7 +56,7 @@ export function OnboardingFlow() {
 
   if (currentStep < INTRO_STEPS.length) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <OnboardingIntroScreen
           step={currentStep}
           totalSteps={totalSteps}
@@ -66,16 +66,13 @@ export function OnboardingFlow() {
           onNext={handleNext}
           onSkip={handleSkip}
         />
-      </SafeAreaView>
+      </View>
     )
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1 }}>
-        <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
-        <SetupScreen />
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <SetupScreen />
+    </View>
   )
 }
