@@ -26,6 +26,7 @@ export function OnboardingIntroScreen({
   onSkip,
 }: OnboardingIntroScreenProps) {
   const { theme } = useTheme()
+  const insets = useSafeAreaInsets()
 
   // Split title to highlight key words with gradient
   const titleParts = title.split(',')
@@ -40,6 +41,7 @@ export function OnboardingIntroScreen({
     },
     content: {
       flex: 1,
+      paddingTop: insets.top,
     },
     illustrationContainer: {
       alignItems: 'center',
@@ -73,7 +75,7 @@ export function OnboardingIntroScreen({
     },
     footer: {
       paddingHorizontal: theme.spacing.xl,
-      paddingBottom: theme.spacing.xl,
+      paddingBottom: Math.max(insets.bottom, theme.spacing.xl),
       gap: theme.spacing.md,
     },
     primaryButton: {
