@@ -48,7 +48,8 @@
     "backupRestore": "バックアップと復元",
     "backupServers": "サーバーをバックアップ",
     "restoreServers": "サーバーを復元",
-    "contribute": "コントリビュート"
+    "contribute": "コントリビュート",
+    "skills": "スキル"
   },
   "home": {
     "connectionError": "接続エラー",
@@ -178,5 +179,28 @@
     "duplicateSkipped": "重複するサーバーはスキップされました",
     "replaceExisting": "既存のサーバーを置換",
     "mergeWithExisting": "既存のサーバーと統合"
+  },
+  "skills": {
+    "title": "スキル",
+    "subtitle": "エージェントのスキルを教え、管理します。",
+    "totalSkills": "スキル",
+    "teachNew": "新規追加",
+    "teachSkill": "スキルを教える",
+    "teach": "教える",
+    "skillsList": "スキル",
+    "skillsListDescription": "エージェントに教えたすべてのスキル。",
+    "noSkills": "スキルが設定されていません",
+    "namePlaceholder": "スキル名（例：要約）",
+    "descriptionPlaceholder": "スキルの簡単な説明",
+    "contentPlaceholder": "スキルの内容または指示...",
+    "fillAllFields": "すべてのフィールドを入力してください",
+    "teachError": "スキルの追加に失敗しました",
+    "removeSkill": "スキルを削除",
+    "removeConfirm": "スキル「{{name}}」を削除してもよろしいですか？",
+    "removeError": "スキルの削除に失敗しました",
+    "created": "作成日",
+    "updated": "更新日",
+    "openClawOnly": "OpenClaw専用",
+    "openClawOnlyDescription": "スキルはOpenClawサーバーでのみ利用可能です。"
   }
 }

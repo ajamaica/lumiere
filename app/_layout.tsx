@@ -102,6 +102,7 @@ function AppContent() {
       <Stack.Screen name="edit-session" options={modalOptions} />
       <Stack.Screen name="overview" options={modalOptions} />
       <Stack.Screen name="scheduler" options={modalOptions} />
+      <Stack.Screen name="skills" options={modalOptions} />
       <Stack.Screen name="gallery" options={modalOptions} />
       <Stack.Screen name="colors" options={modalOptions} />
       <Stack.Screen name="favorites" options={modalOptions} />

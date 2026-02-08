@@ -48,7 +48,8 @@
     "backupRestore": "Respaldo y Restauración",
     "backupServers": "Respaldar Servidores",
     "restoreServers": "Restaurar Servidores",
-    "contribute": "Contribuir"
+    "contribute": "Contribuir",
+    "skills": "Habilidades"
   },
   "home": {
     "connectionError": "Error de Conexión",
@@ -178,5 +179,28 @@
     "duplicateSkipped": "Los servidores duplicados fueron omitidos",
     "replaceExisting": "Reemplazar servidores existentes",
     "mergeWithExisting": "Combinar con servidores existentes"
+  },
+  "skills": {
+    "title": "Habilidades",
+    "subtitle": "Enseña y gestiona habilidades para tu agente.",
+    "totalSkills": "HABILIDADES",
+    "teachNew": "Enseñar Nueva",
+    "teachSkill": "Enseñar Habilidad",
+    "teach": "Enseñar",
+    "skillsList": "Habilidades",
+    "skillsListDescription": "Todas las habilidades enseñadas al agente.",
+    "noSkills": "No hay habilidades configuradas",
+    "namePlaceholder": "Nombre de la habilidad (ej. resumir)",
+    "descriptionPlaceholder": "Descripción breve de la habilidad",
+    "contentPlaceholder": "Contenido o instrucciones de la habilidad...",
+    "fillAllFields": "Por favor, completa todos los campos",
+    "teachError": "Error al enseñar la habilidad",
+    "removeSkill": "Eliminar Habilidad",
+    "removeConfirm": "¿Estás seguro de que deseas eliminar la habilidad \"{{name}}\"?",
+    "removeError": "Error al eliminar la habilidad",
+    "created": "Creada",
+    "updated": "Actualizada",
+    "openClawOnly": "Solo OpenClaw",
+    "openClawOnlyDescription": "Las habilidades solo están disponibles para servidores OpenClaw."
   }
 }

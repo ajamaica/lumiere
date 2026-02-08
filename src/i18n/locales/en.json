@@ -28,6 +28,7 @@
     "overview": "Overview",
     "serverConfig": "Server Config",
     "cronJobs": "Cron Jobs",
+    "skills": "Skills",
     "componentGallery": "Component Gallery",
     "logout": "Logout",
     "logoutConfirmTitle": "Logout",
@@ -148,6 +149,29 @@
   "scheduler": {
     "title": "Scheduler",
     "cronJobs": "Cron Jobs"
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "Teach and manage skills for your agent.",
+    "totalSkills": "SKILLS",
+    "teachNew": "Teach New",
+    "teachSkill": "Teach Skill",
+    "teach": "Teach",
+    "skillsList": "Skills",
+    "skillsListDescription": "All skills taught to the agent.",
+    "noSkills": "No skills configured",
+    "namePlaceholder": "Skill name (e.g. summarize)",
+    "descriptionPlaceholder": "Short description of the skill",
+    "contentPlaceholder": "Skill content or instructions...",
+    "fillAllFields": "Please fill in all fields",
+    "teachError": "Failed to teach skill",
+    "removeSkill": "Remove Skill",
+    "removeConfirm": "Are you sure you want to remove the skill \"{{name}}\"?",
+    "removeError": "Failed to remove skill",
+    "created": "Created",
+    "updated": "Updated",
+    "openClawOnly": "OpenClaw Only",
+    "openClawOnlyDescription": "Skills are only available for OpenClaw servers."
   },
   "gallery": {
     "title": "Gallery"

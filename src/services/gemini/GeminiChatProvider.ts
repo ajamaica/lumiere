@@ -53,6 +53,7 @@ export class GeminiChatProvider implements ChatProvider {
     persistentHistory: false,
     scheduler: false,
     gatewaySnapshot: false,
+    skills: false,
   }
 
   private baseUrl: string

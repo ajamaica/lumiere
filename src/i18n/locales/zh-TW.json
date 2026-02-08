@@ -48,7 +48,8 @@
     "backupRestore": "備份與還原",
     "backupServers": "備份伺服器",
     "restoreServers": "還原伺服器",
-    "contribute": "貢獻"
+    "contribute": "貢獻",
+    "skills": "技能"
   },
   "home": {
     "connectionError": "連線錯誤",
@@ -178,5 +179,28 @@
     "duplicateSkipped": "重複的伺服器已略過",
     "replaceExisting": "取代現有伺服器",
     "mergeWithExisting": "與現有伺服器合併"
+  },
+  "skills": {
+    "title": "技能",
+    "subtitle": "教授和管理代理的技能。",
+    "totalSkills": "技能",
+    "teachNew": "教授新技能",
+    "teachSkill": "教授技能",
+    "teach": "教授",
+    "skillsList": "技能",
+    "skillsListDescription": "所有已教授給代理的技能。",
+    "noSkills": "未設定技能",
+    "namePlaceholder": "技能名稱（例如：摘要）",
+    "descriptionPlaceholder": "技能的簡短描述",
+    "contentPlaceholder": "技能內容或指令...",
+    "fillAllFields": "請填寫所有欄位",
+    "teachError": "教授技能失敗",
+    "removeSkill": "刪除技能",
+    "removeConfirm": "確定要刪除技能「{{name}}」嗎？",
+    "removeError": "刪除技能失敗",
+    "created": "建立時間",
+    "updated": "更新時間",
+    "openClawOnly": "僅限 OpenClaw",
+    "openClawOnlyDescription": "技能僅適用於 OpenClaw 伺服器。"
   }
 }

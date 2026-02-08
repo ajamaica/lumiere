@@ -48,7 +48,8 @@
     "backupRestore": "Sicherung & Wiederherstellung",
     "backupServers": "Server sichern",
     "restoreServers": "Server wiederherstellen",
-    "contribute": "Mitwirken"
+    "contribute": "Mitwirken",
+    "skills": "Fähigkeiten"
   },
   "home": {
     "connectionError": "Verbindungsfehler",
@@ -178,5 +179,28 @@
     "duplicateSkipped": "Doppelte Server wurden übersprungen",
     "replaceExisting": "Vorhandene Server ersetzen",
     "mergeWithExisting": "Mit vorhandenen Servern zusammenführen"
+  },
+  "skills": {
+    "title": "Fähigkeiten",
+    "subtitle": "Fähigkeiten für Ihren Agenten lehren und verwalten.",
+    "totalSkills": "FÄHIGKEITEN",
+    "teachNew": "Neue lehren",
+    "teachSkill": "Fähigkeit lehren",
+    "teach": "Lehren",
+    "skillsList": "Fähigkeiten",
+    "skillsListDescription": "Alle dem Agenten beigebrachten Fähigkeiten.",
+    "noSkills": "Keine Fähigkeiten konfiguriert",
+    "namePlaceholder": "Fähigkeitsname (z.B. zusammenfassen)",
+    "descriptionPlaceholder": "Kurze Beschreibung der Fähigkeit",
+    "contentPlaceholder": "Fähigkeitsinhalt oder Anweisungen...",
+    "fillAllFields": "Bitte füllen Sie alle Felder aus",
+    "teachError": "Fähigkeit konnte nicht gelehrt werden",
+    "removeSkill": "Fähigkeit entfernen",
+    "removeConfirm": "Möchten Sie die Fähigkeit \"{{name}}\" wirklich entfernen?",
+    "removeError": "Fähigkeit konnte nicht entfernt werden",
+    "created": "Erstellt",
+    "updated": "Aktualisiert",
+    "openClawOnly": "Nur OpenClaw",
+    "openClawOnlyDescription": "Fähigkeiten sind nur für OpenClaw-Server verfügbar."
   }
 }

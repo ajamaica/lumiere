@@ -10,6 +10,10 @@ import {
   RequestFrame,
   ResponseFrame,
   SendMessageParams,
+  Skill,
+  SkillsListResponse,
+  TeachSkillParams,
+  UpdateSkillParams,
 } from './types'
 
 const wsLogger = logger.create('WebSocket')
@@ -255,6 +259,22 @@ export class MoltGatewayClient {
 
   async getCronJobRuns(jobName: string): Promise<unknown> {
     return await this.request('cron.runs', { name: jobName })
+  }
+
+  async teachSkill(params: TeachSkillParams): Promise<Skill> {
+    return (await this.request('skills.teach', params)) as Skill
+  }
+
+  async listSkills(): Promise<SkillsListResponse> {
+    return (await this.request('skills.list')) as SkillsListResponse
+  }
+
+  async removeSkill(name: string): Promise<unknown> {
+    return await this.request('skills.remove', { name })
+  }
+
+  async updateSkill(params: UpdateSkillParams): Promise<Skill> {
+    return (await this.request('skills.update', params)) as Skill
   }
 
   async sendAgentRequest(

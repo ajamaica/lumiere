@@ -48,7 +48,8 @@
     "backupRestore": "बैकअप और रिस्टोर",
     "backupServers": "सर्वर बैकअप",
     "restoreServers": "सर्वर रिस्टोर",
-    "contribute": "योगदान करें"
+    "contribute": "योगदान करें",
+    "skills": "कौशल"
   },
   "home": {
     "connectionError": "कनेक्शन त्रुटि",
@@ -178,5 +179,28 @@
     "duplicateSkipped": "डुप्लिकेट सर्वर छोड़ दिए गए",
     "replaceExisting": "मौजूदा सर्वर बदलें",
     "mergeWithExisting": "मौजूदा सर्वर के साथ मर्ज करें"
+  },
+  "skills": {
+    "title": "कौशल",
+    "subtitle": "अपने एजेंट के लिए कौशल सिखाएं और प्रबंधित करें।",
+    "totalSkills": "कौशल",
+    "teachNew": "नया सिखाएं",
+    "teachSkill": "कौशल सिखाएं",
+    "teach": "सिखाएं",
+    "skillsList": "कौशल",
+    "skillsListDescription": "एजेंट को सिखाए गए सभी कौशल।",
+    "noSkills": "कोई कौशल कॉन्फ़िगर नहीं किया गया",
+    "namePlaceholder": "कौशल का नाम (जैसे सारांश)",
+    "descriptionPlaceholder": "कौशल का संक्षिप्त विवरण",
+    "contentPlaceholder": "कौशल सामग्री या निर्देश...",
+    "fillAllFields": "कृपया सभी फ़ील्ड भरें",
+    "teachError": "कौशल सिखाने में विफल",
+    "removeSkill": "कौशल हटाएं",
+    "removeConfirm": "क्या आप वाकई कौशल \"{{name}}\" को हटाना चाहते हैं?",
+    "removeError": "कौशल हटाने में विफल",
+    "created": "बनाया गया",
+    "updated": "अपडेट किया गया",
+    "openClawOnly": "केवल OpenClaw",
+    "openClawOnlyDescription": "कौशल केवल OpenClaw सर्वर के लिए उपलब्ध हैं।"
   }
 }

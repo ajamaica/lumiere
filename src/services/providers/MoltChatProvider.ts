@@ -25,6 +25,7 @@ export class MoltChatProvider implements ChatProvider {
     persistentHistory: true,
     scheduler: true,
     gatewaySnapshot: true,
+    skills: true,
   }
 
   private client: MoltGatewayClient
