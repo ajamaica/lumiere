@@ -477,7 +477,11 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 accessibilityLabel={showCheck ? 'Copied' : intent.label}
               >
                 <Ionicons
-                  name={(showCheck ? 'checkmark' : intentIcon(intent.action)) as any}
+                  name={
+                    (showCheck ? 'checkmark' : intentIcon(intent.action)) as React.ComponentProps<
+                      typeof Ionicons
+                    >['name']
+                  }
                   size={16}
                   color={theme.colors.primary}
                   style={styles.intentButtonIcon}
