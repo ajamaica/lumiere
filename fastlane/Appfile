@@ -1,0 +1,8 @@
+app_identifier("bot.lumiere.app")
+apple_id(ENV["APPLE_ID"])
+team_id(ENV["APPLE_TEAM_ID"])
+
+for_platform :android do
+  package_name("bot.lumiere.app")
+  json_key_file(ENV["GOOGLE_PLAY_JSON_KEY_PATH"])
+end

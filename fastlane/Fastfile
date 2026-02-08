@@ -1,0 +1,38 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Upload metadata to App Store Connect"
+  lane :upload_metadata do
+    api_key = app_store_connect_api_key(
+      key_id: ENV["ASC_KEY_ID"],
+      issuer_id: ENV["ASC_ISSUER_ID"],
+      key_content: ENV["ASC_KEY_CONTENT"],
+      is_key_content_base64: true
+    )
+
+    deliver(
+      api_key: api_key,
+      app_identifier: "bot.lumiere.app",
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      skip_app_version_update: true,
+      force: true,
+      metadata_path: "./fastlane/metadata",
+      precheck_include_in_app_purchases: false
+    )
+  end
+end
+
+platform :android do
+  desc "Upload metadata to Google Play"
+  lane :upload_metadata do
+    supply(
+      package_name: "bot.lumiere.app",
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      metadata_path: "./fastlane/metadata/android"
+    )
+  end
+end

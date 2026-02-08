@@ -1,0 +1,64 @@
+name: Upload Store Metadata
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: "Platform to upload metadata for"
+        required: true
+        type: choice
+        options:
+          - both
+          - ios
+          - android
+        default: "both"
+
+jobs:
+  ios-metadata:
+    name: Upload iOS Metadata
+    if: ${{ inputs.platform == 'both' || inputs.platform == 'ios' }}
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - name: Upload iOS metadata
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+        run: bundle exec fastlane ios upload_metadata
+
+  android-metadata:
+    name: Upload Android Metadata
+    if: ${{ inputs.platform == 'both' || inputs.platform == 'android' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - name: Create Google Play key file
+        env:
+          GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+        run: echo "$GOOGLE_PLAY_JSON_KEY" > google-play-key.json
+
+      - name: Upload Android metadata
+        env:
+          GOOGLE_PLAY_JSON_KEY_PATH: google-play-key.json
+        run: bundle exec fastlane android upload_metadata
+
+      - name: Clean up key file
+        if: always()
+        run: rm -f google-play-key.json
