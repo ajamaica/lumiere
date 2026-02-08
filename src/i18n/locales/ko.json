@@ -28,6 +28,7 @@
     "overview": "개요",
     "serverConfig": "서버 설정",
     "cronJobs": "크론 작업",
+    "teachingSkills": "티칭 스킬",
     "componentGallery": "컴포넌트 갤러리",
     "logout": "로그아웃",
     "logoutConfirmTitle": "로그아웃",
@@ -172,7 +173,10 @@
     "skillName": "스킬 이름",
     "skillNamePlaceholder": "예: 요약",
     "skillDescription": "지침",
-    "skillDescriptionPlaceholder": "예: 대화를 핵심 포인트로 요약하세요"
+    "skillDescriptionPlaceholder": "예: 대화를 핵심 포인트로 요약하세요",
+    "moltOnly": "티칭 스킬은 Molt 서버에서만 사용할 수 있습니다.",
+    "noSkills": "스킬 없음",
+    "noSkillsMessage": "위의 +를 눌러 에이전트에게 새로운 스킬을 가르치세요."
   },
   "restoreServers": {
     "title": "서버 복원",

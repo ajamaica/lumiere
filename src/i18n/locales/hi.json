@@ -28,6 +28,7 @@
     "overview": "अवलोकन",
     "serverConfig": "सर्वर कॉन्फ़िग",
     "cronJobs": "क्रॉन जॉब्स",
+    "teachingSkills": "शिक्षण कौशल",
     "componentGallery": "कंपोनेंट गैलरी",
     "logout": "लॉगआउट",
     "logoutConfirmTitle": "लॉगआउट",
@@ -172,7 +173,10 @@
     "skillName": "कौशल का नाम",
     "skillNamePlaceholder": "उदा. सारांश",
     "skillDescription": "निर्देश",
-    "skillDescriptionPlaceholder": "उदा. बातचीत को मुख्य बिंदुओं में सारांशित करें"
+    "skillDescriptionPlaceholder": "उदा. बातचीत को मुख्य बिंदुओं में सारांशित करें",
+    "moltOnly": "शिक्षण कौशल केवल Molt सर्वर के लिए उपलब्ध हैं।",
+    "noSkills": "अभी तक कोई कौशल नहीं",
+    "noSkillsMessage": "ऊपर + पर टैप करके अपने एजेंट को नए कौशल सिखाएं।"
   },
   "restoreServers": {
     "title": "सर्वर रिस्टोर",

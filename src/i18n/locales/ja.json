@@ -28,6 +28,7 @@
     "overview": "概要",
     "serverConfig": "サーバー設定",
     "cronJobs": "定期実行ジョブ",
+    "teachingSkills": "ティーチングスキル",
     "componentGallery": "コンポーネントギャラリー",
     "logout": "ログアウト",
     "logoutConfirmTitle": "ログアウト",
@@ -172,7 +173,10 @@
     "skillName": "スキル名",
     "skillNamePlaceholder": "例: 要約",
     "skillDescription": "指示",
-    "skillDescriptionPlaceholder": "例: 会話を要点にまとめてください"
+    "skillDescriptionPlaceholder": "例: 会話を要点にまとめてください",
+    "moltOnly": "ティーチングスキルはMoltサーバーでのみ利用可能です。",
+    "noSkills": "スキルがありません",
+    "noSkillsMessage": "上の + をタップして、エージェントに新しいスキルを教えましょう。"
   },
   "restoreServers": {
     "title": "サーバーを復元",

@@ -28,6 +28,7 @@
     "overview": "總覽",
     "serverConfig": "伺服器設定",
     "cronJobs": "排程任務",
+    "teachingSkills": "教學技能",
     "componentGallery": "元件庫",
     "logout": "登出",
     "logoutConfirmTitle": "登出",
@@ -172,7 +173,10 @@
     "skillName": "技能名稱",
     "skillNamePlaceholder": "例如：摘要",
     "skillDescription": "指令",
-    "skillDescriptionPlaceholder": "例如：將對話整理為重點摘要"
+    "skillDescriptionPlaceholder": "例如：將對話整理為重點摘要",
+    "moltOnly": "教學技能僅適用於 Molt 伺服器。",
+    "noSkills": "尚無技能",
+    "noSkillsMessage": "點擊上方 + 為你的代理新增技能。"
   },
   "restoreServers": {
     "title": "還原伺服器",

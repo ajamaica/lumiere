@@ -1,7 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import {
   ActivityIndicator,
   Alert,
@@ -26,7 +25,6 @@ import { getBasicProviderOptions } from '../src/config/providerOptions'
 import { useClaudeModels } from '../src/hooks/useClaudeModels'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
-import type { TeachingSkill } from '../src/store'
 import { useTheme } from '../src/theme'
 
 export default function EditServerScreen() {
@@ -38,31 +36,12 @@ export default function EditServerScreen() {
 
   const server = id ? servers[id] : null
 
-  const { t } = useTranslation()
-
   const [name, setName] = useState(server?.name ?? '')
   const [url, setUrl] = useState(server?.url ?? '')
   const [token, setToken] = useState('')
   const [clientId, setClientId] = useState(server?.clientId || 'lumiere-mobile')
   const [providerType, setProviderType] = useState<ProviderType>(server?.providerType || 'molt')
   const [model, setModel] = useState(server?.model ?? '')
-  const [teachingSkills, setTeachingSkills] = useState<TeachingSkill[]>(
-    server?.teachingSkills ?? [],
-  )
-
-  const addTeachingSkill = () => {
-    setTeachingSkills([...teachingSkills, { name: '', description: '' }])
-  }
-
-  const updateTeachingSkill = (index: number, field: keyof TeachingSkill, value: string) => {
-    const updated = [...teachingSkills]
-    updated[index] = { ...updated[index], [field]: value }
-    setTeachingSkills(updated)
-  }
-
-  const removeTeachingSkill = (index: number) => {
-    setTeachingSkills(teachingSkills.filter((_, i) => i !== index))
-  }
 
   const {
     models: claudeModels,
@@ -104,8 +83,6 @@ export default function EditServerScreen() {
       effectiveUrl = effectiveUrl || 'https://api.emergent.sh'
     }
 
-    const validSkills = teachingSkills.filter((s) => s.name.trim() && s.description.trim())
-
     await updateServer(
       id,
       {
@@ -114,7 +91,6 @@ export default function EditServerScreen() {
         clientId: clientId.trim(),
         providerType,
         model: model.trim() || undefined,
-        teachingSkills: validSkills.length > 0 ? validSkills : undefined,
       },
       token.trim() || undefined,
     )
@@ -200,36 +176,6 @@ export default function EditServerScreen() {
     retryLink: {
       marginTop: theme.spacing.xs,
       paddingVertical: theme.spacing.xs,
-    },
-    skillsSection: {
-      marginBottom: theme.spacing.md,
-    },
-    skillsHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: theme.spacing.xs,
-    },
-    skillsSectionTitle: {
-      fontSize: theme.typography.fontSize.base,
-      fontWeight: theme.typography.fontWeight.semibold as '600',
-      color: theme.colors.text.primary,
-    },
-    addSkillButton: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    skillCard: {
-      backgroundColor: theme.colors.surface,
-      borderRadius: theme.borderRadius.md,
-      padding: theme.spacing.md,
-      marginBottom: theme.spacing.sm,
-    },
-    skillCardHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: theme.spacing.sm,
     },
   })
 
@@ -322,54 +268,6 @@ export default function EditServerScreen() {
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
-              </View>
-
-              <View style={styles.skillsSection}>
-                <View style={styles.skillsHeader}>
-                  <Text style={styles.skillsSectionTitle}>{t('teachingSkills.title')}</Text>
-                  <TouchableOpacity onPress={addTeachingSkill} style={styles.addSkillButton}>
-                    <Ionicons name="add-circle-outline" size={22} color={theme.colors.primary} />
-                    <Text style={{ color: theme.colors.primary, marginLeft: theme.spacing.xs }}>
-                      {t('teachingSkills.addSkill')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <Text
-                  variant="caption"
-                  color="secondary"
-                  style={{ marginBottom: theme.spacing.sm }}
-                >
-                  {t('teachingSkills.description')}
-                </Text>
-                {teachingSkills.map((skill, index) => (
-                  <View key={index} style={styles.skillCard}>
-                    <View style={styles.skillCardHeader}>
-                      <Text variant="caption" color="secondary">
-                        {t('teachingSkills.skillNumber', { number: index + 1 })}
-                      </Text>
-                      <TouchableOpacity onPress={() => removeTeachingSkill(index)}>
-                        <Ionicons name="trash-outline" size={18} color={theme.colors.error} />
-                      </TouchableOpacity>
-                    </View>
-                    <TextInput
-                      label={t('teachingSkills.skillName')}
-                      value={skill.name}
-                      onChangeText={(v) => updateTeachingSkill(index, 'name', v)}
-                      placeholder={t('teachingSkills.skillNamePlaceholder')}
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                    <View style={{ height: theme.spacing.sm }} />
-                    <TextInput
-                      label={t('teachingSkills.skillDescription')}
-                      value={skill.description}
-                      onChangeText={(v) => updateTeachingSkill(index, 'description', v)}
-                      placeholder={t('teachingSkills.skillDescriptionPlaceholder')}
-                      multiline
-                      autoCorrect={false}
-                    />
-                  </View>
-                ))}
               </View>
             </>
           )}

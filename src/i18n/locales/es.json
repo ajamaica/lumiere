@@ -28,6 +28,7 @@
     "overview": "Resumen",
     "serverConfig": "Configuración del Servidor",
     "cronJobs": "Tareas Programadas",
+    "teachingSkills": "Habilidades de Enseñanza",
     "componentGallery": "Galería de Componentes",
     "logout": "Cerrar Sesión",
     "logoutConfirmTitle": "Cerrar Sesión",
@@ -172,7 +173,10 @@
     "skillName": "Nombre de la Habilidad",
     "skillNamePlaceholder": "ej. resumir",
     "skillDescription": "Instrucciones",
-    "skillDescriptionPlaceholder": "ej. Resume la conversación en puntos clave"
+    "skillDescriptionPlaceholder": "ej. Resume la conversación en puntos clave",
+    "moltOnly": "Las habilidades de enseñanza solo están disponibles para servidores Molt.",
+    "noSkills": "Sin Habilidades Aún",
+    "noSkillsMessage": "Enseña nuevas habilidades a tu agente tocando + arriba."
   },
   "restoreServers": {
     "title": "Restaurar Servidores",

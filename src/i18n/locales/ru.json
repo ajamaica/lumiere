@@ -28,6 +28,7 @@
     "overview": "Обзор",
     "serverConfig": "Конфигурация сервера",
     "cronJobs": "Cron-задачи",
+    "teachingSkills": "Обучающие навыки",
     "componentGallery": "Галерея компонентов",
     "logout": "Выйти",
     "logoutConfirmTitle": "Выход",
@@ -172,7 +173,10 @@
     "skillName": "Название навыка",
     "skillNamePlaceholder": "напр. резюмировать",
     "skillDescription": "Инструкции",
-    "skillDescriptionPlaceholder": "напр. Резюмируйте разговор в ключевых пунктах"
+    "skillDescriptionPlaceholder": "напр. Резюмируйте разговор в ключевых пунктах",
+    "moltOnly": "Обучающие навыки доступны только для серверов Molt.",
+    "noSkills": "Навыков пока нет",
+    "noSkillsMessage": "Обучите агента новым навыкам, нажав + выше."
   },
   "restoreServers": {
     "title": "Восстановление серверов",

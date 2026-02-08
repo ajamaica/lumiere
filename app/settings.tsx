@@ -214,6 +214,11 @@ export default function SettingsScreen() {
               icon="time-outline"
               label={t('settings.cronJobs')}
               onPress={() => router.push('/scheduler')}
+            />
+            <SettingRow
+              icon="school-outline"
+              label={t('settings.teachingSkills')}
+              onPress={() => router.push('/teaching-skills')}
               showDivider={false}
             />
           </Section>

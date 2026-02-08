@@ -28,6 +28,7 @@
     "overview": "Übersicht",
     "serverConfig": "Server-Konfiguration",
     "cronJobs": "Cron-Jobs",
+    "teachingSkills": "Lehrfähigkeiten",
     "componentGallery": "Komponentengalerie",
     "logout": "Abmelden",
     "logoutConfirmTitle": "Abmelden",
@@ -172,7 +173,10 @@
     "skillName": "Fähigkeitsname",
     "skillNamePlaceholder": "z.B. zusammenfassen",
     "skillDescription": "Anweisungen",
-    "skillDescriptionPlaceholder": "z.B. Fassen Sie das Gespräch in Kernpunkten zusammen"
+    "skillDescriptionPlaceholder": "z.B. Fassen Sie das Gespräch in Kernpunkten zusammen",
+    "moltOnly": "Lehrfähigkeiten sind nur für Molt-Server verfügbar.",
+    "noSkills": "Noch keine Fähigkeiten",
+    "noSkillsMessage": "Bringen Sie Ihrem Agenten neue Fähigkeiten bei, indem Sie oben auf + tippen."
   },
   "restoreServers": {
     "title": "Server wiederherstellen",

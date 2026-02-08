@@ -28,6 +28,7 @@
     "overview": "Visão geral",
     "serverConfig": "Config. do Servidor",
     "cronJobs": "Cron Jobs",
+    "teachingSkills": "Habilidades de Ensino",
     "componentGallery": "Galeria de Componentes",
     "logout": "Sair",
     "logoutConfirmTitle": "Sair",
@@ -172,7 +173,10 @@
     "skillName": "Nome da Habilidade",
     "skillNamePlaceholder": "ex. resumir",
     "skillDescription": "Instruções",
-    "skillDescriptionPlaceholder": "ex. Resuma a conversa em pontos-chave"
+    "skillDescriptionPlaceholder": "ex. Resuma a conversa em pontos-chave",
+    "moltOnly": "Habilidades de ensino estão disponíveis apenas para servidores Molt.",
+    "noSkills": "Nenhuma Habilidade Ainda",
+    "noSkillsMessage": "Ensine novas habilidades ao seu agente tocando em + acima."
   },
   "restoreServers": {
     "title": "Restaurar Servidores",

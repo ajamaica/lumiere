@@ -28,6 +28,7 @@
     "overview": "Aperçu",
     "serverConfig": "Configuration Serveur",
     "cronJobs": "Tâches planifiées",
+    "teachingSkills": "Compétences d'enseignement",
     "componentGallery": "Galerie de composants",
     "logout": "Déconnexion",
     "logoutConfirmTitle": "Déconnexion",
@@ -172,7 +173,10 @@
     "skillName": "Nom de la compétence",
     "skillNamePlaceholder": "ex. résumer",
     "skillDescription": "Instructions",
-    "skillDescriptionPlaceholder": "ex. Résumez la conversation en points clés"
+    "skillDescriptionPlaceholder": "ex. Résumez la conversation en points clés",
+    "moltOnly": "Les compétences d'enseignement ne sont disponibles que pour les serveurs Molt.",
+    "noSkills": "Aucune compétence",
+    "noSkillsMessage": "Enseignez de nouvelles compétences à votre agent en appuyant sur + ci-dessus."
   },
   "restoreServers": {
     "title": "Restaurer les Serveurs",
