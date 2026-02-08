@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { Button, GradientButton, GradientText, StepIndicator, Text } from '../components/ui'
 import { useTheme } from '../theme'
