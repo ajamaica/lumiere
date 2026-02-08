@@ -10,9 +10,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
-import { Dropdown, GradientButton, GradientText, Text, TextInput } from '../components/ui'
+import { Dropdown, GradientButton, GradientText, StepIndicator, Text, TextInput } from '../components/ui'
 import { getAllProviderOptions } from '../config/providerOptions'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
