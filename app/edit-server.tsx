@@ -66,6 +66,11 @@ export default function EditServerScreen() {
       return
     }
 
+    if (providerType === 'custom' && !url.trim()) {
+      Alert.alert('Error', 'URL is required')
+      return
+    }
+
     let effectiveUrl = url.trim()
     if (providerType === 'echo') {
       effectiveUrl = ''
@@ -224,21 +229,27 @@ export default function EditServerScreen() {
                               ? 'My OpenRouter'
                               : providerType === 'emergent'
                                 ? 'My Emergent'
-                                : 'My Server'
+                                : providerType === 'custom'
+                                  ? 'My Custom Provider'
+                                  : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
             />
           </View>
 
-          {(providerType === 'molt' || providerType === 'ollama') && (
+          {(providerType === 'molt' || providerType === 'ollama' || providerType === 'custom') && (
             <View style={styles.formRow}>
               <TextInput
                 label="URL"
                 value={url}
                 onChangeText={setUrl}
                 placeholder={
-                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                  providerType === 'ollama'
+                    ? 'http://localhost:11434'
+                    : providerType === 'custom'
+                      ? 'https://api.example.com'
+                      : 'wss://gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -287,7 +298,8 @@ export default function EditServerScreen() {
           {(providerType === 'claude' ||
             providerType === 'openai' ||
             providerType === 'openrouter' ||
-            providerType === 'emergent') && (
+            providerType === 'emergent' ||
+            providerType === 'custom') && (
             <>
               <View style={styles.formRow}>
                 <TextInput
@@ -369,7 +381,7 @@ export default function EditServerScreen() {
                     value={model}
                     onChangeText={setModel}
                     placeholder={
-                      providerType === 'openai'
+                      providerType === 'openai' || providerType === 'custom'
                         ? 'gpt-4o'
                         : providerType === 'openrouter'
                           ? 'openai/gpt-4o'

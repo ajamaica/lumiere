@@ -23,6 +23,8 @@ export const DEFAULT_MODELS = {
   EMERGENT: 'claude-sonnet-4-5',
   /** Default Kimi (Moonshot AI) model */
   KIMI: 'moonshot-v1-8k',
+  /** Default model for custom OpenAI-compatible providers */
+  CUSTOM: 'gpt-4o',
 } as const
 
 /**
@@ -41,6 +43,8 @@ export const API_CONFIG = {
   GEMINI_MAX_TOKENS: 8192,
   /** Default max tokens for Kimi API responses */
   KIMI_MAX_TOKENS: 4096,
+  /** Default max tokens for custom OpenAI-compatible API responses */
+  CUSTOM_MAX_TOKENS: 4096,
 } as const
 
 /**

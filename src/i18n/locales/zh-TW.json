@@ -77,16 +77,19 @@
       "myServer": "我的伺服器",
       "myOllama": "我的 Ollama",
       "myEchoServer": "我的回音伺服器",
-      "myClaude": "我的 Claude"
+      "myClaude": "我的 Claude",
+      "myCustomProvider": "我的自訂供應商"
     },
     "providers": {
       "openClaw": "OpenClaw",
       "ollama": "Ollama",
       "claude": "Claude",
       "appleIntelligence": "Apple Intelligence",
-      "echoServer": "回音伺服器"
+      "echoServer": "回音伺服器",
+      "custom": "自訂（OpenAI 相容）"
     },
     "appleDescription": "使用 Apple Foundation Models 透過 CoreML 在裝置上完全本機執行 AI。需要 iOS 26+ 並支援 Apple Intelligence。",
+    "customDescription": "透過提供自己的端點 URL 連接到任何 OpenAI 相容的 API。",
     "errors": {
       "urlRequired": "URL 為必填欄位",
       "tokenRequired": "權杖為必填欄位",

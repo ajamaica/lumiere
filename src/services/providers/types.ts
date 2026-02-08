@@ -13,6 +13,7 @@ export type ProviderType =
   | 'gemini'
   | 'emergent'
   | 'kimi'
+  | 'custom'
 
 export interface ProviderConfig {
   type: ProviderType
