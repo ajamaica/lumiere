@@ -77,19 +77,16 @@
       "myServer": "Mi Servidor",
       "myOllama": "Mi Ollama",
       "myEchoServer": "Mi Servidor Echo",
-      "myClaude": "Mi Claude",
-      "myCustomProvider": "Mi Proveedor Personalizado"
+      "myClaude": "Mi Claude"
     },
     "providers": {
       "openClaw": "OpenClaw",
       "ollama": "Ollama",
       "claude": "Claude",
       "appleIntelligence": "Apple Intelligence",
-      "echoServer": "Servidor Echo",
-      "custom": "Personalizado (compatible con OpenAI)"
+      "echoServer": "Servidor Echo"
     },
     "appleDescription": "Utiliza Apple Foundation Models para ejecutar IA completamente en el dispositivo mediante CoreML. Requiere iOS 26+ con soporte de Apple Intelligence.",
-    "customDescription": "Conéctate a cualquier API compatible con OpenAI proporcionando tu propia URL de endpoint.",
     "errors": {
       "urlRequired": "La URL es requerida",
       "tokenRequired": "El token es requerido",

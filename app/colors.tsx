@@ -8,6 +8,7 @@ import { ColorThemeKey, colorThemes } from '../src/theme/colors'
 
 const COLOR_THEME_KEYS: ColorThemeKey[] = [
   'default',
+  'lumiere',
   'pink',
   'green',
   'red',

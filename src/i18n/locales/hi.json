@@ -77,19 +77,16 @@
       "myServer": "मेरा सर्वर",
       "myOllama": "मेरा Ollama",
       "myEchoServer": "मेरा Echo सर्वर",
-      "myClaude": "मेरा Claude",
-      "myCustomProvider": "मेरा कस्टम प्रोवाइडर"
+      "myClaude": "मेरा Claude"
     },
     "providers": {
       "openClaw": "OpenClaw",
       "ollama": "Ollama",
       "claude": "Claude",
       "appleIntelligence": "Apple Intelligence",
-      "echoServer": "Echo सर्वर",
-      "custom": "कस्टम (OpenAI-संगत)"
+      "echoServer": "Echo सर्वर"
     },
     "appleDescription": "CoreML के माध्यम से पूरी तरह से डिवाइस पर AI चलाने के लिए Apple Foundation Models का उपयोग करता है। iOS 26+ और Apple Intelligence सपोर्ट आवश्यक है।",
-    "customDescription": "अपना खुद का एंडपॉइंट URL प्रदान करके किसी भी OpenAI-संगत API से कनेक्ट करें।",
     "errors": {
       "urlRequired": "URL आवश्यक है",
       "tokenRequired": "टोकन आवश्यक है",

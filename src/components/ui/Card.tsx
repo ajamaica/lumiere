@@ -14,7 +14,7 @@ export function Card({ bordered = true, padded = true, style, children, ...props
   const styles = StyleSheet.create({
     card: {
       backgroundColor: theme.colors.surface,
-      borderRadius: theme.borderRadius.md,
+      borderRadius: theme.borderRadius.lg,
       ...(padded && { padding: theme.spacing.md }),
       ...(bordered && {
         borderWidth: 1,

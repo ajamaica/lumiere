@@ -29,14 +29,13 @@ export default function AddServerScreen() {
   const [providerType, setProviderType] = useState<ProviderType>('molt')
   const [model, setModel] = useState('')
 
-  const needsUrl = providerType === 'molt' || providerType === 'ollama' || providerType === 'custom'
+  const needsUrl = providerType === 'molt' || providerType === 'ollama'
   const needsToken =
     providerType === 'molt' ||
     providerType === 'claude' ||
     providerType === 'openai' ||
     providerType === 'openrouter' ||
-    providerType === 'emergent' ||
-    providerType === 'custom'
+    providerType === 'emergent'
 
   const handleAdd = async () => {
     if (providerType === 'molt' && url.trim() && token.trim()) {
@@ -99,16 +98,6 @@ export default function AddServerScreen() {
         },
         token.trim(),
       )
-    } else if (providerType === 'custom' && url.trim() && token.trim()) {
-      await addServer(
-        {
-          name: name.trim() || 'My Custom Provider',
-          url: url.trim(),
-          providerType: 'custom',
-          model: model.trim() || undefined,
-        },
-        token.trim(),
-      )
     } else if (providerType === 'echo') {
       await addServer(
         {
@@ -145,7 +134,7 @@ export default function AddServerScreen() {
       if (needsToken && !token.trim()) {
         Alert.alert(
           'Error',
-          providerType === 'claude' || providerType === 'openai' || providerType === 'custom'
+          providerType === 'claude' || providerType === 'openai'
             ? 'API Key is required'
             : providerType === 'emergent'
               ? 'Universal Key is required'
@@ -224,9 +213,7 @@ export default function AddServerScreen() {
                               ? 'My OpenRouter'
                               : providerType === 'emergent'
                                 ? 'My Emergent'
-                                : providerType === 'custom'
-                                  ? 'My Custom Provider'
-                                  : 'My Server'
+                                : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -258,11 +245,7 @@ export default function AddServerScreen() {
                 value={url}
                 onChangeText={setUrl}
                 placeholder={
-                  providerType === 'ollama'
-                    ? 'http://localhost:11434'
-                    : providerType === 'custom'
-                      ? 'https://api.example.com'
-                      : 'wss://gateway.example.com'
+                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -401,31 +384,6 @@ export default function AddServerScreen() {
                   value={model}
                   onChangeText={setModel}
                   placeholder="openai/gpt-4o"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
-              </View>
-            </>
-          )}
-
-          {providerType === 'custom' && (
-            <>
-              <View style={styles.formRow}>
-                <TextInput
-                  label="API Key"
-                  value={token}
-                  onChangeText={setToken}
-                  secureTextEntry
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
-              </View>
-              <View style={styles.formRow}>
-                <TextInput
-                  label="Model"
-                  value={model}
-                  onChangeText={setModel}
-                  placeholder="gpt-4o"
                   autoCapitalize="none"
                   autoCorrect={false}
                 />

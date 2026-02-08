@@ -45,3 +45,7 @@ coverage/
 # generated native folders
 /ios
 /android
+-e 
+# Environment files
+*.env
+*.env.*

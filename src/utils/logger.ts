@@ -78,7 +78,7 @@ class Logger {
   /**
    * Log debug message
    */
-  debug(message: string, ...args: unknown[]): void {
+  debug(message: string, ...args: any[]): void {
     if (!this.shouldLog(LogLevel.DEBUG)) return
 
     const formatted = this.formatMessage('DEBUG', message)
@@ -88,7 +88,7 @@ class Logger {
   /**
    * Log info message
    */
-  info(message: string, ...args: unknown[]): void {
+  info(message: string, ...args: any[]): void {
     if (!this.shouldLog(LogLevel.INFO)) return
 
     const formatted = this.formatMessage('INFO', message)
@@ -98,7 +98,7 @@ class Logger {
   /**
    * Log warning message
    */
-  warn(message: string, ...args: unknown[]): void {
+  warn(message: string, ...args: any[]): void {
     if (!this.shouldLog(LogLevel.WARN)) return
 
     const formatted = this.formatMessage('WARN', message)
@@ -108,7 +108,7 @@ class Logger {
   /**
    * Log error message
    */
-  error(message: string, ...args: unknown[]): void {
+  error(message: string, ...args: any[]): void {
     if (!this.shouldLog(LogLevel.ERROR)) return
 
     const formatted = this.formatMessage('ERROR', message)
@@ -118,7 +118,7 @@ class Logger {
   /**
    * Log an error object
    */
-  logError(message: string, error: Error | unknown, ...args: unknown[]): void {
+  logError(message: string, error: Error | unknown, ...args: any[]): void {
     if (!this.shouldLog(LogLevel.ERROR)) return
 
     const formatted = this.formatMessage('ERROR', message)
