@@ -1,24 +1,24 @@
 export const lightColors = {
-  primary: '#FF6B47',
-  primaryLight: '#FF8A6B',
-  primaryDark: '#E85A3C',
+  primary: '#22D3EE',
+  primaryLight: '#67E8F9',
+  primaryDark: '#06B6D4',
 
-  background: '#F2EFE9',
-  surface: '#E8E5DD',
-  surfaceVariant: '#DDD9D0',
+  background: '#F0F4F8',
+  surface: '#FFFFFF',
+  surfaceVariant: '#E8EDF4',
 
   text: {
-    primary: '#3C3C3C',
-    secondary: '#9B9B9B',
-    tertiary: '#B8B8B8',
+    primary: '#1A2A3A',
+    secondary: '#64748B',
+    tertiary: '#94A3B8',
     inverse: '#FFFFFF',
   },
 
   message: {
-    user: '#FF6B47',
-    agent: '#DDD9D0',
-    userText: '#FFFFFF',
-    agentText: '#3C3C3C',
+    user: '#22D3EE',
+    agent: '#E8EDF4',
+    userText: '#050A18',
+    agentText: '#1A2A3A',
   },
 
   status: {
@@ -28,9 +28,9 @@ export const lightColors = {
     info: '#5AC8FA',
   },
 
-  border: '#DDD9D0',
-  divider: '#C7C7C7',
-  shadow: 'rgba(0, 0, 0, 0.08)',
+  border: '#CBD5E1',
+  divider: '#E2E8F0',
+  shadow: 'rgba(0, 40, 80, 0.08)',
 }
 
 export const darkColors = {
@@ -112,7 +112,7 @@ export interface ColorThemePalette {
 }
 
 export type ColorThemeKey =
-  | 'default'
+  | 'lumiere'
   | 'pink'
   | 'green'
   | 'red'
@@ -120,26 +120,8 @@ export type ColorThemeKey =
   | 'purple'
   | 'orange'
   | 'glass'
-  | 'lumiere'
 
 export const colorThemes: Record<ColorThemeKey, ColorThemePalette> = {
-  default: {
-    name: 'Default',
-    light: {
-      primary: '#FF6B47',
-      primaryLight: '#FF8A6B',
-      primaryDark: '#E85A3C',
-      messageUser: '#FF6B47',
-      messageUserText: '#FFFFFF',
-    },
-    dark: {
-      primary: '#FFD60A',
-      primaryLight: '#FFE34D',
-      primaryDark: '#FFCC00',
-      messageUser: '#FFD60A',
-      messageUserText: '#000000',
-    },
-  },
   pink: {
     name: 'Pink',
     light: {

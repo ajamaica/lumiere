@@ -65,7 +65,11 @@ export function GradientBubble({
 
   const isUser = variant === 'user'
 
-  const userGradientColors = ['#22D3EE', '#06B6D4', '#0891B2'] as const
+  const userGradientColors = [
+    theme.colors.primary,
+    theme.colors.primaryDark,
+    theme.colors.primaryDark,
+  ] as const
   const agentGradientColors = [theme.colors.surface, theme.colors.surfaceVariant] as const
 
   const styles = StyleSheet.create({
