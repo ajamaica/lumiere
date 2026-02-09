@@ -54,11 +54,7 @@ function AppContent() {
 
   useEffect(() => {
     const handleAppStateChange = (nextState: AppStateStatus) => {
-      if (
-        biometricLockEnabled &&
-        appState.current === 'active' &&
-        nextState.match(/inactive|background/)
-      ) {
+      if (biometricLockEnabled && appState.current === 'active' && nextState === 'background') {
         setIsUnlocked(false)
       }
       appState.current = nextState
