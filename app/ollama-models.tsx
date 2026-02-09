@@ -10,6 +10,7 @@ import { useServers } from '../src/hooks/useServers'
 import { currentServerIdAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
+import { normalizeOllamaUrl } from '../src/utils/ollama'
 
 const ollamaLogger = logger.create('OllamaModels')
 
@@ -57,7 +58,7 @@ export default function OllamaModelsScreen() {
       setError(null)
 
       try {
-        const host = currentServer.url.replace(/\/+$/, '')
+        const host = normalizeOllamaUrl(currentServer.url)
         const response = await fetch(`${host}/api/tags`, { signal })
 
         if (!response.ok) {

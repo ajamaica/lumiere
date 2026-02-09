@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 
 import { useTheme } from '../../theme'
+import { normalizeOllamaUrl } from '../../utils/ollama'
 import { Text } from './Text'
 
 interface OllamaModel {
@@ -61,7 +62,7 @@ export function OllamaModelPicker({
       setError(null)
 
       try {
-        const host = ollamaUrl.trim().replace(/\/+$/, '')
+        const host = normalizeOllamaUrl(ollamaUrl)
         const response = await fetch(`${host}/api/tags`, { signal })
 
         if (!response.ok) {
