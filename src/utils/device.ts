@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Dimensions, Platform, ScaledSize } from 'react-native'
 
 const TABLET_MIN_WIDTH = 768
+const FOLDABLE_MIN_WIDTH = 580 // Foldable inner displays report ~600-660dp min dimension
 
 /**
  * Check if the current device is a tablet based on screen dimensions
@@ -32,9 +33,9 @@ export function isFoldable(): boolean {
 
   // Foldables in unfolded state typically have aspect ratios between 1.1 and 1.6
   // (closer to square than typical phones which are 2:1 or wider)
-  // Also check if the device meets minimum tablet width when unfolded
+  // Use a lower threshold than tablets since foldable inner displays report ~600-660dp
   const minDimension = Math.min(width, height)
-  const isUnfoldedSize = minDimension >= TABLET_MIN_WIDTH
+  const isUnfoldedSize = minDimension >= FOLDABLE_MIN_WIDTH
   const isFoldableAspectRatio = aspectRatio >= 1.1 && aspectRatio <= 1.6
 
   return isUnfoldedSize && isFoldableAspectRatio
@@ -54,7 +55,7 @@ export function getFoldState(): FoldState {
   const aspectRatio = Math.max(width, height) / Math.min(width, height)
 
   // When folded, device acts like a phone (narrow)
-  if (minDimension < TABLET_MIN_WIDTH) {
+  if (minDimension < FOLDABLE_MIN_WIDTH) {
     return 'folded'
   }
 
@@ -99,9 +100,9 @@ export function useDeviceType(): DeviceType {
         const minDimension = Math.min(width, height)
         const aspectRatio = Math.max(width, height) / minDimension
 
-        // Check for foldable first
+        // Check for foldable first (use lower threshold than tablets)
         if (Platform.OS === 'android') {
-          const isUnfoldedSize = minDimension >= TABLET_MIN_WIDTH
+          const isUnfoldedSize = minDimension >= FOLDABLE_MIN_WIDTH
           const isFoldableAspectRatio = aspectRatio >= 1.1 && aspectRatio <= 1.6
           if (isUnfoldedSize && isFoldableAspectRatio) {
             setDeviceType('foldable')
@@ -151,7 +152,7 @@ export function useFoldState(): FoldState {
         const aspectRatio = Math.max(width, height) / minDimension
 
         // Determine fold state based on dimensions
-        if (minDimension < TABLET_MIN_WIDTH) {
+        if (minDimension < FOLDABLE_MIN_WIDTH) {
           setFoldState('folded')
         } else if (aspectRatio > 1.6 && aspectRatio < 2.5) {
           setFoldState('half-folded')
