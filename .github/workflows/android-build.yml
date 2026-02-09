@@ -50,6 +50,8 @@ jobs:
       - name: Set Android build number
         run: |
           BUILD_NUMBER="${{ github.run_number }}"
+          # Use last 5 digits of run_number
+          BUILD_NUMBER=$((BUILD_NUMBER % 100000))
           npx json -I -f app.json -e "this.expo.android.versionCode=${BUILD_NUMBER:-1}"
 
       - name: Build Android app
