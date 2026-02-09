@@ -123,7 +123,8 @@
       "title": "Highly configurable for custom needs",
       "description": "Connect to OpenClaw, Ollama, or Echo providers. Customize themes, set up deep link triggers, and tailor the experience to fit your workflow."
     },
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "restoreFromBackup": "Restore from a backup"
   },
   "sessions": {
     "title": "Sessions",

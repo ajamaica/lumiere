@@ -123,7 +123,8 @@
       "title": "Altamente configurable para necesidades personalizadas",
       "description": "Conéctate a proveedores OpenClaw, Ollama o Echo. Personaliza temas, configura disparadores de enlaces profundos y adapta la experiencia a tu flujo de trabajo."
     },
-    "getStarted": "Comenzar"
+    "getStarted": "Comenzar",
+    "restoreFromBackup": "Restaurar desde una copia de seguridad"
   },
   "sessions": {
     "title": "Sesiones",

@@ -123,7 +123,8 @@
       "title": "高度可配置，满足个性化需求",
       "description": "连接 OpenClaw、Ollama 或 Echo 提供商。自定义主题，设置深度链接触发器，打造适合你工作流程的体验。"
     },
-    "getStarted": "开始使用"
+    "getStarted": "开始使用",
+    "restoreFromBackup": "从备份恢复"
   },
   "sessions": {
     "title": "会话",

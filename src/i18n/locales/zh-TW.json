@@ -123,7 +123,8 @@
       "title": "高度可設定，滿足個人化需求",
       "description": "連接 OpenClaw、Ollama 或 Echo 供應商。自訂主題，設定深層連結觸發器，打造適合你工作流程的體驗。"
     },
-    "getStarted": "開始使用"
+    "getStarted": "開始使用",
+    "restoreFromBackup": "從備份還原"
   },
   "sessions": {
     "title": "工作階段",

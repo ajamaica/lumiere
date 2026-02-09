@@ -123,7 +123,8 @@
       "title": "Hochgradig konfigurierbar für individuelle Bedürfnisse",
       "description": "Verbinden Sie sich mit OpenClaw-, Ollama- oder Echo-Anbietern. Passen Sie Themes an, richten Sie Deep-Link-Auslöser ein und gestalten Sie das Erlebnis nach Ihrem Workflow."
     },
-    "getStarted": "Loslegen"
+    "getStarted": "Loslegen",
+    "restoreFromBackup": "Aus einem Backup wiederherstellen"
   },
   "sessions": {
     "title": "Sitzungen",

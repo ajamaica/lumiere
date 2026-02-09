@@ -123,7 +123,8 @@
       "title": "맞춤 요구에 맞게 고도로 구성 가능",
       "description": "OpenClaw, Ollama 또는 Echo 제공자에 연결하세요. 테마를 맞춤 설정하고, 딥링크 트리거를 설정하고, 워크플로에 맞게 경험을 조정하세요."
     },
-    "getStarted": "시작하기"
+    "getStarted": "시작하기",
+    "restoreFromBackup": "백업에서 복원"
   },
   "sessions": {
     "title": "세션",

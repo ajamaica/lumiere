@@ -1,8 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
+import * as DocumentPicker from 'expo-document-picker'
+import { File as ExpoFile } from 'expo-file-system'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -17,15 +21,23 @@ import { getAllProviderOptions } from '../config/providerOptions'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
 import { ProviderType } from '../services/providers'
-import { currentSessionKeyAtom, onboardingCompletedAtom, serverSessionsAtom } from '../store'
+import {
+  currentSessionKeyAtom,
+  onboardingCompletedAtom,
+  ServerConfig,
+  serversAtom,
+  serverSessionsAtom,
+} from '../store'
 import { useTheme } from '../theme'
 
 export function SetupScreen() {
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const { addServer } = useServers()
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setServerSessions] = useAtom(serverSessionsAtom)
   const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
+  const [, setServers] = useAtom(serversAtom)
 
   const allOptions = getAllProviderOptions(theme.colors.text.primary)
   const providerOptionsList = isAppleAIAvailable()
@@ -85,6 +97,14 @@ export function SetupScreen() {
       shadowOpacity: 0.3,
       shadowRadius: 8,
       elevation: 8,
+    },
+    restoreLink: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: theme.spacing.xs,
+      marginTop: theme.spacing.lg,
+      paddingVertical: theme.spacing.sm,
     },
   })
 
@@ -280,6 +300,47 @@ export function SetupScreen() {
           ? localUrl.trim().length > 0
           : true
 
+  const handleRestoreFromBackup = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'application/json',
+        copyToCacheDirectory: true,
+      })
+
+      if (result.canceled) return
+
+      const asset = result.assets[0]
+      const file = new ExpoFile(asset.uri)
+      const content = await file.text()
+      const data = JSON.parse(content) as { version?: number; servers?: ServerConfig[] }
+
+      if (!data.version || !Array.isArray(data.servers)) {
+        Alert.alert(t('common.error'), t('restoreServers.invalidFile'))
+        return
+      }
+
+      const validServers = data.servers.filter(
+        (s) => s.id && s.name && s.providerType && s.createdAt,
+      )
+
+      if (validServers.length === 0) {
+        Alert.alert(t('common.error'), t('restoreServers.invalidFile'))
+        return
+      }
+
+      const newServers: Record<string, ServerConfig> = {}
+      for (const server of validServers) {
+        newServers[server.id] = server
+      }
+      setServers(newServers)
+
+      Alert.alert(t('common.success'), t('restoreServers.importSuccess'))
+      setOnboardingCompleted(true)
+    } catch {
+      Alert.alert(t('common.error'), t('restoreServers.importError'))
+    }
+  }
+
   return (
     <View style={styles.container}>
       {/* Background gradient */}
@@ -465,6 +526,17 @@ export function SetupScreen() {
             disabled={!isValid}
             animated={true}
           />
+
+          <TouchableOpacity
+            style={styles.restoreLink}
+            onPress={handleRestoreFromBackup}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="cloud-upload-outline" size={16} color={theme.colors.text.secondary} />
+            <Text variant="caption" color="secondary">
+              {t('onboarding.restoreFromBackup')}
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
     </View>

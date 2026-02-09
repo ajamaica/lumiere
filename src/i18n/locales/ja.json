@@ -123,7 +123,8 @@
       "title": "カスタムニーズに合わせた高い柔軟性",
       "description": "OpenClaw、Ollama、またはEchoプロバイダーに接続。テーマのカスタマイズ、ディープリンクトリガーの設定、ワークフローに合わせた体験の調整が可能です。"
     },
-    "getStarted": "はじめる"
+    "getStarted": "はじめる",
+    "restoreFromBackup": "バックアップから復元"
   },
   "sessions": {
     "title": "セッション",
