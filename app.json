@@ -8,11 +8,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/logo.png",
+      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#F2EFE9"
+      "backgroundColor": "#ffffff"
     },
     "ios": {
+      "icon": {
+        "light": "./assets/icon.png",
+        "dark": "./assets/icon-dark.png"
+      },
       "supportsTablet": true,
       "bundleIdentifier": "bot.lumiere.app",
       "buildNumber": "1",
@@ -33,7 +37,8 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "monochromeImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#11344a"
       },
       "versionCode": 1,
       "edgeToEdgeEnabled": true,
@@ -62,11 +67,11 @@
         {
           "image": "./assets/splash-icon.png",
           "resizeMode": "contain",
-          "backgroundColor": "#F2EFE9",
+          "backgroundColor": "#ffffff",
           "dark": {
-            "image": "./assets/splash-icon.png",
+            "image": "./assets/splash-icon-dark.png",
             "resizeMode": "contain",
-            "backgroundColor": "#000000"
+            "backgroundColor": "#11344a"
           }
         }
       ],

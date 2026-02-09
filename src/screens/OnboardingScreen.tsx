@@ -2,7 +2,6 @@ import { Ionicons } from '@expo/vector-icons'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
 import {
-  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -12,6 +11,7 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { LumiereLogo } from '../components/illustrations/LumiereLogo'
 import { Button, Text, TextInput } from '../components/ui'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
@@ -47,11 +47,6 @@ export function OnboardingScreen() {
     header: {
       marginBottom: theme.spacing.xxl,
       alignItems: 'center',
-    },
-    logo: {
-      width: 280,
-      height: 120,
-      marginBottom: theme.spacing.lg,
     },
     form: {
       marginBottom: theme.spacing.xxl,
@@ -109,14 +104,7 @@ export function OnboardingScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.header}>
-            <Image
-              // eslint-disable-next-line @typescript-eslint/no-require-imports
-              source={require('../../assets/logo.png')}
-              style={styles.logo}
-              resizeMode="contain"
-              accessibilityLabel="Lumiere logo"
-              accessibilityRole="image"
-            />
+            <LumiereLogo width={280} height={120} />
           </View>
 
           <View style={styles.form}>
