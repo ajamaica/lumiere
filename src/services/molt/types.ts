@@ -163,6 +163,31 @@ export type AgentEvent = {
   ts: number
 }
 
+// Skills types
+export interface TeachSkillParams {
+  name: string
+  description: string
+  content: string
+}
+
+export interface UpdateSkillParams {
+  name: string
+  description?: string
+  content?: string
+}
+
+export interface Skill {
+  name: string
+  description: string
+  content: string
+  createdAtMs: number
+  updatedAtMs: number
+}
+
+export interface SkillsListResponse {
+  skills: Skill[]
+}
+
 // Event types
 export type GatewayEvent =
   | { event: 'agent'; payload: AgentEvent; seq?: number }

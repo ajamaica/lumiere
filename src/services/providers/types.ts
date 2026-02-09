@@ -80,6 +80,8 @@ export interface ProviderCapabilities {
   scheduler: boolean
   /** Gateway snapshot with presence & instance info */
   gatewaySnapshot: boolean
+  /** Skills management (teach, list, remove) */
+  skills: boolean
 }
 
 /**

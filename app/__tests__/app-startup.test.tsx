@@ -109,7 +109,7 @@ jest.mock('../../src/theme', () => {
       themeMode: 'light' as const,
       setThemeMode: jest.fn(),
       toggleTheme: jest.fn(),
-      colorTheme: 'default' as const,
+      colorTheme: 'lumiere' as const,
       setColorTheme: jest.fn(),
     }),
   }

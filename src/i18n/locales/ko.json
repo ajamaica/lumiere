@@ -48,7 +48,8 @@
     "backupRestore": "백업 및 복원",
     "backupServers": "서버 백업",
     "restoreServers": "서버 복원",
-    "contribute": "기여하기"
+    "contribute": "기여하기",
+    "skills": "스킬"
   },
   "home": {
     "connectionError": "연결 오류",
@@ -178,5 +179,28 @@
     "duplicateSkipped": "중복 서버를 건너뛰었습니다",
     "replaceExisting": "기존 서버 교체",
     "mergeWithExisting": "기존 서버와 병합"
+  },
+  "skills": {
+    "title": "스킬",
+    "subtitle": "에이전트의 스킬을 가르치고 관리합니다.",
+    "totalSkills": "스킬",
+    "teachNew": "새로 가르치기",
+    "teachSkill": "스킬 가르치기",
+    "teach": "가르치기",
+    "skillsList": "스킬",
+    "skillsListDescription": "에이전트에게 가르친 모든 스킬.",
+    "noSkills": "구성된 스킬 없음",
+    "namePlaceholder": "스킬 이름 (예: 요약)",
+    "descriptionPlaceholder": "스킬에 대한 간단한 설명",
+    "contentPlaceholder": "스킬 내용 또는 지침...",
+    "fillAllFields": "모든 필드를 입력하세요",
+    "teachError": "스킬 가르치기 실패",
+    "removeSkill": "스킬 삭제",
+    "removeConfirm": "스킬 \"{{name}}\"을(를) 삭제하시겠습니까?",
+    "removeError": "스킬 삭제 실패",
+    "created": "생성일",
+    "updated": "수정일",
+    "openClawOnly": "OpenClaw 전용",
+    "openClawOnlyDescription": "스킬은 OpenClaw 서버에서만 사용할 수 있습니다."
   }
 }

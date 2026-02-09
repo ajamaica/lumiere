@@ -33,10 +33,6 @@ export type ThemeMode = 'light' | 'dark' | 'system'
  * Themes like "glass" also override backgrounds, surfaces, text, and borders.
  */
 export function applyColorTheme(baseTheme: Theme, colorThemeKey: ColorThemeKey): Theme {
-  if (colorThemeKey === 'default') {
-    return baseTheme
-  }
-
   const palette = colorThemes[colorThemeKey]
   const variant = baseTheme.isDark ? palette.dark : palette.light
 

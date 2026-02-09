@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import * as DocumentPicker from 'expo-document-picker'
-import * as FileSystem from 'expo-file-system'
+import { File as ExpoFile } from 'expo-file-system'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -36,8 +36,9 @@ export default function RestoreServersScreen() {
 
       if (result.canceled) return
 
-      const file = result.assets[0]
-      const content = await FileSystem.readAsStringAsync(file.uri)
+      const asset = result.assets[0]
+      const file = new ExpoFile(asset.uri)
+      const content = await file.text()
       const data = JSON.parse(content) as BackupData
 
       if (!data.version || !Array.isArray(data.servers)) {

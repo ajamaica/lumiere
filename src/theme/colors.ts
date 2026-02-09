@@ -1,24 +1,24 @@
 export const lightColors = {
-  primary: '#FF6B47',
-  primaryLight: '#FF8A6B',
-  primaryDark: '#E85A3C',
+  primary: '#22D3EE',
+  primaryLight: '#67E8F9',
+  primaryDark: '#06B6D4',
 
-  background: '#F2EFE9',
-  surface: '#E8E5DD',
-  surfaceVariant: '#DDD9D0',
+  background: '#F0F4F8',
+  surface: '#FFFFFF',
+  surfaceVariant: '#E8EDF4',
 
   text: {
-    primary: '#3C3C3C',
-    secondary: '#9B9B9B',
-    tertiary: '#B8B8B8',
+    primary: '#1A2A3A',
+    secondary: '#64748B',
+    tertiary: '#94A3B8',
     inverse: '#FFFFFF',
   },
 
   message: {
-    user: '#FF6B47',
-    agent: '#DDD9D0',
-    userText: '#FFFFFF',
-    agentText: '#3C3C3C',
+    user: '#22D3EE',
+    agent: '#E8EDF4',
+    userText: '#050A18',
+    agentText: '#1A2A3A',
   },
 
   status: {
@@ -28,45 +28,57 @@ export const lightColors = {
     info: '#5AC8FA',
   },
 
-  border: '#DDD9D0',
-  divider: '#C7C7C7',
-  shadow: 'rgba(0, 0, 0, 0.08)',
+  border: '#CBD5E1',
+  divider: '#E2E8F0',
+  shadow: 'rgba(0, 40, 80, 0.08)',
 }
 
 export const darkColors = {
-  primary: '#FFD60A',
-  primaryLight: '#FFE34D',
-  primaryDark: '#FFCC00',
+  primary: '#22D3EE',
+  primaryLight: '#67E8F9',
+  primaryDark: '#06B6D4',
 
-  background: '#000000',
-  surface: '#1C1C1E',
-  surfaceVariant: '#2C2C2E',
+  background: '#050A18',
+  surface: '#0A1628',
+  surfaceVariant: '#0F1D32',
 
   text: {
-    primary: '#FFFFFF',
-    secondary: '#8E8E93',
-    tertiary: '#48484A',
-    inverse: '#000000',
+    primary: '#F0F4F8',
+    secondary: '#8892A8',
+    tertiary: '#4A5568',
+    inverse: '#050A18',
   },
 
   message: {
-    user: '#FFD60A',
-    agent: '#2C2C2E',
-    userText: '#000000',
-    agentText: '#FFFFFF',
+    user: '#22D3EE',
+    agent: '#0F1D32',
+    userText: '#050A18',
+    agentText: '#F0F4F8',
   },
 
   status: {
-    success: '#32D74B',
-    error: '#FF453A',
-    warning: '#FF9F0A',
-    info: '#64D2FF',
+    success: '#10B981',
+    error: '#EF4444',
+    warning: '#F59E0B',
+    info: '#22D3EE',
   },
 
-  border: '#38383A',
-  divider: '#48484A',
-  shadow: 'rgba(0, 0, 0, 0.3)',
+  border: '#1E3A5F',
+  divider: '#1E3A5F',
+  shadow: 'rgba(0, 0, 0, 0.5)',
 }
+
+// Gradient color definitions for use across the app
+export const gradientColors = {
+  primary: ['#22D3EE', '#06B6D4'],
+  accent: ['#A855F7', '#22D3EE'],
+  hero: ['#22D3EE', '#A855F7', '#EC4899'],
+  subtle: ['#22D3EE', '#67E8F9'],
+  purple: ['#A855F7', '#7C3AED'],
+  warm: ['#F59E0B', '#EC4899'],
+}
+
+export type GradientKey = keyof typeof gradientColors
 
 export type Colors = typeof lightColors
 
@@ -100,7 +112,7 @@ export interface ColorThemePalette {
 }
 
 export type ColorThemeKey =
-  | 'default'
+  | 'lumiere'
   | 'pink'
   | 'green'
   | 'red'
@@ -110,23 +122,6 @@ export type ColorThemeKey =
   | 'glass'
 
 export const colorThemes: Record<ColorThemeKey, ColorThemePalette> = {
-  default: {
-    name: 'Default',
-    light: {
-      primary: '#FF6B47',
-      primaryLight: '#FF8A6B',
-      primaryDark: '#E85A3C',
-      messageUser: '#FF6B47',
-      messageUserText: '#FFFFFF',
-    },
-    dark: {
-      primary: '#FFD60A',
-      primaryLight: '#FFE34D',
-      primaryDark: '#FFCC00',
-      messageUser: '#FFD60A',
-      messageUserText: '#000000',
-    },
-  },
   pink: {
     name: 'Pink',
     light: {
@@ -268,6 +263,47 @@ export const colorThemes: Record<ColorThemeKey, ColorThemePalette> = {
       border: 'rgba(255, 255, 255, 0.10)',
       divider: 'rgba(255, 255, 255, 0.06)',
       shadow: 'rgba(0, 0, 0, 0.40)',
+    },
+  },
+  lumiere: {
+    name: 'Lumiere',
+    light: {
+      primary: '#22D3EE',
+      primaryLight: '#67E8F9',
+      primaryDark: '#06B6D4',
+      messageUser: '#22D3EE',
+      messageUserText: '#050A18',
+      background: '#F0F4F8',
+      surface: '#FFFFFF',
+      surfaceVariant: '#E8EDF4',
+      messageAgent: '#E8EDF4',
+      messageAgentText: '#1A2A3A',
+      textPrimary: '#1A2A3A',
+      textSecondary: '#64748B',
+      textTertiary: '#94A3B8',
+      textInverse: '#FFFFFF',
+      border: '#CBD5E1',
+      divider: '#E2E8F0',
+      shadow: 'rgba(0, 40, 80, 0.08)',
+    },
+    dark: {
+      primary: '#22D3EE',
+      primaryLight: '#67E8F9',
+      primaryDark: '#06B6D4',
+      messageUser: '#22D3EE',
+      messageUserText: '#050A18',
+      background: '#050A18',
+      surface: '#0A1628',
+      surfaceVariant: '#0F1D32',
+      messageAgent: '#0F1D32',
+      messageAgentText: '#F0F4F8',
+      textPrimary: '#F0F4F8',
+      textSecondary: '#8892A8',
+      textTertiary: '#4A5568',
+      textInverse: '#050A18',
+      border: '#1E3A5F',
+      divider: '#1E3A5F',
+      shadow: 'rgba(0, 0, 0, 0.5)',
     },
   },
 }

@@ -2,7 +2,7 @@ import { colorThemes, darkColors, lightColors } from '../colors'
 
 describe('lightColors', () => {
   it('has the expected primary color', () => {
-    expect(lightColors.primary).toBe('#FF6B47')
+    expect(lightColors.primary).toBe('#22D3EE')
   })
 
   it('contains all required text color keys', () => {
@@ -29,21 +29,21 @@ describe('lightColors', () => {
 
 describe('darkColors', () => {
   it('has the expected primary color', () => {
-    expect(darkColors.primary).toBe('#FFD60A')
+    expect(darkColors.primary).toBe('#22D3EE')
   })
 
   it('has a dark background', () => {
-    expect(darkColors.background).toBe('#000000')
+    expect(darkColors.background).toBe('#050A18')
   })
 
   it('has inverse text colors compared to light', () => {
-    expect(darkColors.text.primary).toBe('#FFFFFF')
-    expect(darkColors.text.inverse).toBe('#000000')
+    expect(darkColors.text.primary).toBe('#F0F4F8')
+    expect(darkColors.text.inverse).toBe('#050A18')
   })
 })
 
 describe('colorThemes', () => {
-  const themeKeys = ['default', 'pink', 'green', 'red', 'blue', 'purple', 'orange', 'glass']
+  const themeKeys = ['pink', 'green', 'red', 'blue', 'purple', 'orange', 'glass', 'lumiere']
 
   it('has all expected theme keys', () => {
     expect(Object.keys(colorThemes)).toEqual(expect.arrayContaining(themeKeys))
@@ -71,5 +71,13 @@ describe('colorThemes', () => {
     expect(glass.light.surface).toBeDefined()
     expect(glass.dark.background).toBeDefined()
     expect(glass.dark.surface).toBeDefined()
+  })
+
+  it('lumiere theme has surface overrides', () => {
+    const lumiere = colorThemes.lumiere
+    expect(lumiere.light.background).toBeDefined()
+    expect(lumiere.light.surface).toBeDefined()
+    expect(lumiere.dark.background).toBeDefined()
+    expect(lumiere.dark.surface).toBeDefined()
   })
 })
