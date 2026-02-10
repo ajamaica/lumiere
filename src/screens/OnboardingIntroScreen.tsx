@@ -195,7 +195,7 @@ export function OnboardingIntroScreen({
   const styles = StyleSheet.create({
     page: {
       width: screenWidth,
-      flex: 1,
+      height: '100%',
     },
     gradient: {
       ...StyleSheet.absoluteFillObject,

@@ -101,6 +101,7 @@ export function OnboardingFlow() {
           onMomentumScrollEnd={handleMomentumScrollEnd}
           bounces={false}
           style={{ flex: 1 }}
+          contentContainerStyle={{ height: '100%' }}
         >
           {STEP_KEYS.map((stepKey, index) => (
             <OnboardingIntroScreen
