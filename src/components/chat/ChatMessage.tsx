@@ -11,6 +11,7 @@ import {
   Image,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextStyle,
@@ -229,9 +230,18 @@ export function ChatMessage({ message }: ChatMessageProps) {
         _parent: unknown,
         styles: { fence: TextStyle },
       ) => (
-        <Text key={node.key} style={styles.fence} selectable={true}>
-          {node.content}
-        </Text>
+        <ScrollView
+          key={node.key}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{
+            marginVertical: (styles.fence as Record<string, number>).marginVertical ?? 0,
+          }}
+        >
+          <Text style={[styles.fence, { marginVertical: 0 }]} selectable={true}>
+            {node.content}
+          </Text>
+        </ScrollView>
       ),
       code_block: (
         node: { key: string; content: string },
@@ -239,9 +249,18 @@ export function ChatMessage({ message }: ChatMessageProps) {
         _parent: unknown,
         styles: { code_block: TextStyle },
       ) => (
-        <Text key={node.key} style={styles.code_block} selectable={true}>
-          {node.content}
-        </Text>
+        <ScrollView
+          key={node.key}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{
+            marginVertical: (styles.code_block as Record<string, number>).marginVertical ?? 0,
+          }}
+        >
+          <Text style={[styles.code_block, { marginVertical: 0 }]} selectable={true}>
+            {node.content}
+          </Text>
+        </ScrollView>
       ),
       heading1: (
         node: { key: string },
@@ -680,6 +699,7 @@ const createStyles = (theme: Theme) =>
       backgroundColor: 'transparent',
       borderRadius: 0,
       paddingHorizontal: 0,
+      overflow: 'hidden' as const,
       ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
     },
     intentActions: {
@@ -752,6 +772,7 @@ const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
       color: textColor,
       fontSize: theme.typography.fontSize.base,
       lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
+      flexShrink: 1,
       ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
     },
     text: {
