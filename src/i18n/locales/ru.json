@@ -87,6 +87,10 @@
       "echoServer": "Echo-сервер"
     },
     "appleDescription": "Использует Apple Foundation Models для запуска ИИ полностью на устройстве через CoreML. Требуется iOS 26+ с поддержкой Apple Intelligence.",
+    "importJson": "Импорт из JSON",
+    "orFillManually": "или заполнить вручную",
+    "importJsonSuccess": "Поля заполнены из JSON-файла. Проверьте и завершите заполнение формы.",
+    "importJsonInvalid": "Не удалось прочитать конфигурацию сервера из этого файла.",
     "errors": {
       "urlRequired": "URL обязателен",
       "tokenRequired": "Токен обязателен",

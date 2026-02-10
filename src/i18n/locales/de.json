@@ -87,6 +87,10 @@
       "echoServer": "Echo-Server"
     },
     "appleDescription": "Verwendet Apple Foundation Models, um KI vollständig auf dem Gerät über CoreML auszuführen. Erfordert iOS 26+ mit Apple Intelligence-Unterstützung.",
+    "importJson": "Aus JSON importieren",
+    "orFillManually": "oder manuell ausfüllen",
+    "importJsonSuccess": "Felder aus der JSON-Datei befüllt. Überprüfen und vervollständigen Sie das Formular.",
+    "importJsonInvalid": "Die Serverkonfiguration konnte aus dieser Datei nicht gelesen werden.",
     "errors": {
       "urlRequired": "URL ist erforderlich",
       "tokenRequired": "Token ist erforderlich",

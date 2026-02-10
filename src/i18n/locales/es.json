@@ -87,6 +87,10 @@
       "echoServer": "Servidor Echo"
     },
     "appleDescription": "Utiliza Apple Foundation Models para ejecutar IA completamente en el dispositivo mediante CoreML. Requiere iOS 26+ con soporte de Apple Intelligence.",
+    "importJson": "Importar desde JSON",
+    "orFillManually": "o completar manualmente",
+    "importJsonSuccess": "Campos completados desde el archivo JSON. Revisa y completa el formulario.",
+    "importJsonInvalid": "No se pudo leer la configuración del servidor de este archivo.",
     "errors": {
       "urlRequired": "La URL es requerida",
       "tokenRequired": "El token es requerido",

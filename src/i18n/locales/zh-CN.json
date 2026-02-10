@@ -87,6 +87,10 @@
       "echoServer": "回声服务器"
     },
     "appleDescription": "使用 Apple Foundation Models 通过 CoreML 在设备上完全本地运行 AI。需要 iOS 26+ 并支持 Apple Intelligence。",
+    "importJson": "从 JSON 导入",
+    "orFillManually": "或手动填写",
+    "importJsonSuccess": "已从 JSON 文件填充字段。请检查并完成表单。",
+    "importJsonInvalid": "无法从此文件读取服务器配置。",
     "errors": {
       "urlRequired": "URL 为必填项",
       "tokenRequired": "令牌为必填项",

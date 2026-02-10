@@ -87,6 +87,10 @@
       "echoServer": "Echo सर्वर"
     },
     "appleDescription": "CoreML के माध्यम से पूरी तरह से डिवाइस पर AI चलाने के लिए Apple Foundation Models का उपयोग करता है। iOS 26+ और Apple Intelligence सपोर्ट आवश्यक है।",
+    "importJson": "JSON से आयात करें",
+    "orFillManually": "या मैन्युअल रूप से भरें",
+    "importJsonSuccess": "JSON फ़ाइल से फ़ील्ड भरे गए। फ़ॉर्म की समीक्षा करें और पूरा करें।",
+    "importJsonInvalid": "इस फ़ाइल से सर्वर कॉन्फ़िगरेशन नहीं पढ़ा जा सका।",
     "errors": {
       "urlRequired": "URL आवश्यक है",
       "tokenRequired": "टोकन आवश्यक है",
