@@ -84,8 +84,10 @@
       "ollama": "Ollama",
       "claude": "Claude",
       "appleIntelligence": "Apple Intelligence",
-      "echoServer": "Echoサーバー"
+      "echoServer": "Echoサーバー",
+      "openaiCompatible": "OpenAI互換"
     },
+    "openaiCompatibleDescription": "カスタムベースURLを指定して、OpenAI互換のAPIに接続します。",
     "appleDescription": "Apple Foundation Modelsを使用して、CoreML経由でAIを完全にデバイス上で実行します。Apple Intelligenceに対応したiOS 26以降が必要です。",
     "errors": {
       "urlRequired": "URLは必須です",

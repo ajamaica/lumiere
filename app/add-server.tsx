@@ -29,11 +29,13 @@ export default function AddServerScreen() {
   const [providerType, setProviderType] = useState<ProviderType>('molt')
   const [model, setModel] = useState('')
 
-  const needsUrl = providerType === 'molt' || providerType === 'ollama'
+  const needsUrl =
+    providerType === 'molt' || providerType === 'ollama' || providerType === 'openai-compatible'
   const needsToken =
     providerType === 'molt' ||
     providerType === 'claude' ||
     providerType === 'openai' ||
+    providerType === 'openai-compatible' ||
     providerType === 'openrouter'
 
   const handleAdd = async () => {
@@ -73,6 +75,16 @@ export default function AddServerScreen() {
           name: name.trim() || 'My OpenAI',
           url: url.trim() || 'https://api.openai.com',
           providerType: 'openai',
+          model: model.trim() || undefined,
+        },
+        token.trim(),
+      )
+    } else if (providerType === 'openai-compatible' && url.trim() && token.trim()) {
+      await addServer(
+        {
+          name: name.trim() || 'My OpenAI Compatible',
+          url: url.trim(),
+          providerType: 'openai-compatible',
           model: model.trim() || undefined,
         },
         token.trim(),
@@ -123,7 +135,9 @@ export default function AddServerScreen() {
       if (needsToken && !token.trim()) {
         Alert.alert(
           'Error',
-          providerType === 'claude' || providerType === 'openai'
+          providerType === 'claude' ||
+            providerType === 'openai' ||
+            providerType === 'openai-compatible'
             ? 'API Key is required'
             : 'Token is required',
         )
@@ -196,9 +210,11 @@ export default function AddServerScreen() {
                           ? 'My Claude'
                           : providerType === 'openai'
                             ? 'My OpenAI'
-                            : providerType === 'openrouter'
-                              ? 'My OpenRouter'
-                              : 'My Server'
+                            : providerType === 'openai-compatible'
+                              ? 'My OpenAI Compatible'
+                              : providerType === 'openrouter'
+                                ? 'My OpenRouter'
+                                : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -230,7 +246,11 @@ export default function AddServerScreen() {
                 value={url}
                 onChangeText={setUrl}
                 placeholder={
-                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                  providerType === 'ollama'
+                    ? 'http://localhost:11434'
+                    : providerType === 'openai-compatible'
+                      ? 'https://api.example.com'
+                      : 'wss://gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -302,6 +322,31 @@ export default function AddServerScreen() {
           )}
 
           {providerType === 'openai' && (
+            <>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="API Key"
+                  value={token}
+                  onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="Model"
+                  value={model}
+                  onChangeText={setModel}
+                  placeholder="gpt-4o"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+            </>
+          )}
+
+          {providerType === 'openai-compatible' && (
             <>
               <View style={styles.formRow}>
                 <TextInput

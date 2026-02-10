@@ -41,6 +41,9 @@ export function createChatProvider(config: ProviderConfig): ChatProvider {
     case 'openai':
       inner = new OpenAIChatProvider(config)
       break
+    case 'openai-compatible':
+      inner = new OpenAIChatProvider(config)
+      break
     case 'openrouter':
       inner = new OpenRouterChatProvider(config)
       break
