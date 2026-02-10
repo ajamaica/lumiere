@@ -5,7 +5,6 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AppState, AppStateStatus, View } from 'react-native'
-import { KeyboardProvider } from 'react-native-keyboard-controller'
 
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { ErrorBoundary } from '../src/components/ui'
@@ -17,6 +16,7 @@ import { useQuickActions } from '../src/hooks/useQuickActions'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
+import { KeyboardProvider } from '../src/utils/KeyboardProvider'
 
 SplashScreen.preventAutoHideAsync()
 

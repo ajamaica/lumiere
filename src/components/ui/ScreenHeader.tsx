@@ -1,10 +1,10 @@
 import { Ionicons } from '@expo/vector-icons'
-import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ViewProps } from 'react-native'
 
 import { useTheme } from '../../theme'
+import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
 
 export interface ScreenHeaderProps extends ViewProps {
   title: string

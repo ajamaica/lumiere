@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
 import * as DocumentPicker from 'expo-document-picker'
-import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import * as ImagePicker from 'expo-image-picker'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,6 +21,7 @@ import { useFileDropPaste } from '../../hooks/useFileDropPaste'
 import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useVoiceTranscription } from '../../hooks/useVoiceTranscription'
 import { useTheme } from '../../theme'
+import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
 import { MessageAttachment } from './ChatMessage'
 
 interface ChatInputProps {

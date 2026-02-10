@@ -1,7 +1,14 @@
-import * as LocalAuthentication from 'expo-local-authentication'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AppState, AppStateStatus, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  AppState,
+  AppStateStatus,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 import { useTheme } from '../theme'
 
@@ -16,7 +23,12 @@ export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
   const appState = useRef(AppState.currentState)
 
   const authenticate = useCallback(async () => {
+    if (Platform.OS === 'web') {
+      onUnlock()
+      return
+    }
     setError(null)
+    const LocalAuthentication = await import('expo-local-authentication')
     const result = await LocalAuthentication.authenticateAsync({
       promptMessage: t('biometricLock.unlockPrompt'),
       disableDeviceFallback: false,
@@ -29,9 +41,14 @@ export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
   }, [onUnlock, t])
 
   useEffect(() => {
+    if (Platform.OS === 'web') {
+      onUnlock()
+      return
+    }
     let mounted = true
     const doInitialAuth = async () => {
       if (!mounted) return
+      const LocalAuthentication = await import('expo-local-authentication')
       const result = await LocalAuthentication.authenticateAsync({
         promptMessage: t('biometricLock.unlockPrompt'),
         disableDeviceFallback: false,

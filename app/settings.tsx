@@ -1,12 +1,20 @@
 import { Ionicons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
-import * as LocalAuthentication from 'expo-local-authentication'
 import { useRouter } from 'expo-router'
 import { useAtom, useSetAtom } from 'jotai'
 import { RESET } from 'jotai/utils'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Alert,
+  Linking,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ScreenHeader, Section, SettingRow } from '../src/components/ui'
@@ -44,7 +52,12 @@ export default function SettingsScreen() {
   )
 
   const handleBiometricToggle = async (value: boolean) => {
+    if (Platform.OS === 'web') {
+      Alert.alert(t('settings.biometric.unavailable'), t('settings.biometric.unavailableMessage'))
+      return
+    }
     if (value) {
+      const LocalAuthentication = await import('expo-local-authentication')
       const compatible = await LocalAuthentication.hasHardwareAsync()
       if (!compatible) {
         Alert.alert(t('settings.biometric.unavailable'), t('settings.biometric.unavailableMessage'))
