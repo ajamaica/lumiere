@@ -301,14 +301,15 @@ export function SetupScreen() {
           ? localUrl.trim().length > 0
           : true
 
+  // Theme-aware gradient background (purple-tinted for setup)
+  const gradientColors = theme.isDark
+    ? ([theme.colors.background, '#0A1628', 'rgba(168, 85, 247, 0.03)'] as const)
+    : ([theme.colors.background, '#E5E0F2', 'rgba(168, 85, 247, 0.06)'] as const)
+
   return (
     <View style={styles.container}>
       {/* Background gradient */}
-      <LinearGradient
-        colors={[theme.colors.background, '#0A1628', 'rgba(168, 85, 247, 0.03)']}
-        locations={[0, 0.7, 1]}
-        style={styles.gradient}
-      />
+      <LinearGradient colors={gradientColors} locations={[0, 0.7, 1]} style={styles.gradient} />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

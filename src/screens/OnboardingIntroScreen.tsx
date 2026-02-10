@@ -299,14 +299,20 @@ export function OnboardingIntroScreen({
 
   const orbs = orbConfigs[index] ?? orbConfigs[0]
 
+  // Theme-aware gradient backgrounds
+  const gradientColors = theme.isDark
+    ? ([theme.colors.background, '#0A1628', 'rgba(34, 211, 238, 0.05)'] as const)
+    : ([theme.colors.background, '#E0E9F2', 'rgba(34, 211, 238, 0.08)'] as const)
+
+  // Theme-aware illustration glow
+  const glowColors = theme.isDark
+    ? (['rgba(34, 211, 238, 0.2)', 'transparent'] as const)
+    : (['rgba(34, 211, 238, 0.15)', 'transparent'] as const)
+
   return (
     <View style={styles.page}>
       {/* Background gradient */}
-      <LinearGradient
-        colors={[theme.colors.background, '#0A1628', 'rgba(34, 211, 238, 0.05)']}
-        locations={[0, 0.6, 1]}
-        style={styles.gradient}
-      />
+      <LinearGradient colors={gradientColors} locations={[0, 0.6, 1]} style={styles.gradient} />
 
       {/* Floating orbs */}
       <View style={styles.orbContainer}>
@@ -319,7 +325,7 @@ export function OnboardingIntroScreen({
         {/* Parallax illustration */}
         <Animated.View style={[styles.illustrationContainer, illustrationStyle]}>
           <LinearGradient
-            colors={['rgba(34, 211, 238, 0.2)', 'transparent']}
+            colors={glowColors}
             style={styles.illustrationGlow}
             start={{ x: 0.5, y: 0 }}
             end={{ x: 0.5, y: 1 }}
