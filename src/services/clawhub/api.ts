@@ -67,7 +67,7 @@ async function fetchWithFallback(path: string): Promise<Response> {
 
 export async function searchClawHubSkills(query: string): Promise<ClawHubSkillResult[]> {
   const encodedQuery = encodeURIComponent(query)
-  const response = await fetchWithFallback(`/api/v1/skills/search?q=${encodedQuery}&limit=20`)
+  const response = await fetchWithFallback(`/api/v1/search?q=${encodedQuery}&limit=20`)
 
   if (!response.ok) {
     throw new Error(`ClawHub search failed with status ${response.status}`)
@@ -75,7 +75,7 @@ export async function searchClawHubSkills(query: string): Promise<ClawHubSkillRe
 
   const data = (await response.json()) as ClawHubSearchApiResponse
 
-  return data.results.map((result) => ({
+  return (data.results ?? []).map((result) => ({
     slug: result.slug,
     name: result.displayName || result.slug,
     description: result.summary || '',
