@@ -11,7 +11,6 @@ export type ProviderType =
   | 'openrouter'
   | 'gemini-nano'
   | 'gemini'
-  | 'emergent'
   | 'kimi'
 
 export interface ProviderConfig {

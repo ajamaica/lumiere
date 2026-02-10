@@ -34,8 +34,7 @@ export default function AddServerScreen() {
     providerType === 'molt' ||
     providerType === 'claude' ||
     providerType === 'openai' ||
-    providerType === 'openrouter' ||
-    providerType === 'emergent'
+    providerType === 'openrouter'
 
   const handleAdd = async () => {
     if (providerType === 'molt' && url.trim() && token.trim()) {
@@ -88,16 +87,6 @@ export default function AddServerScreen() {
         },
         token.trim(),
       )
-    } else if (providerType === 'emergent' && token.trim()) {
-      await addServer(
-        {
-          name: name.trim() || 'My Emergent',
-          url: url.trim() || 'https://api.emergent.sh',
-          providerType: 'emergent',
-          model: model.trim() || undefined,
-        },
-        token.trim(),
-      )
     } else if (providerType === 'echo') {
       await addServer(
         {
@@ -136,9 +125,7 @@ export default function AddServerScreen() {
           'Error',
           providerType === 'claude' || providerType === 'openai'
             ? 'API Key is required'
-            : providerType === 'emergent'
-              ? 'Universal Key is required'
-              : 'Token is required',
+            : 'Token is required',
         )
         return
       }
@@ -211,9 +198,7 @@ export default function AddServerScreen() {
                             ? 'My OpenAI'
                             : providerType === 'openrouter'
                               ? 'My OpenRouter'
-                              : providerType === 'emergent'
-                                ? 'My Emergent'
-                                : 'My Server'
+                              : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -334,31 +319,6 @@ export default function AddServerScreen() {
                   value={model}
                   onChangeText={setModel}
                   placeholder="gpt-4o"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
-              </View>
-            </>
-          )}
-
-          {providerType === 'emergent' && (
-            <>
-              <View style={styles.formRow}>
-                <TextInput
-                  label="Universal Key"
-                  value={token}
-                  onChangeText={setToken}
-                  secureTextEntry
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
-              </View>
-              <View style={styles.formRow}>
-                <TextInput
-                  label="Model"
-                  value={model}
-                  onChangeText={setModel}
-                  placeholder="claude-sonnet-4-5"
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
