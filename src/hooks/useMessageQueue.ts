@@ -37,6 +37,9 @@ interface UseMessageQueueProps {
   onAgentMessageUpdate: (text: string) => void
   onAgentMessageComplete: (message: Message) => void
   onSendStart?: () => void
+  /** Optional async transform applied to the message text before sending to the provider.
+   *  The original (untransformed) text is shown in the UI. */
+  contextTransform?: (text: string) => Promise<string>
 }
 
 export function useMessageQueue({
@@ -46,6 +49,7 @@ export function useMessageQueue({
   onAgentMessageUpdate,
   onAgentMessageComplete,
   onSendStart,
+  contextTransform,
 }: UseMessageQueueProps) {
   const [messageQueue, setMessageQueue] = useAtom(messageQueueAtom)
   const [isAgentResponding, setIsAgentResponding] = useState(false)
@@ -108,9 +112,12 @@ export function useMessageQueue({
       }
 
       try {
+        // Apply workflow context or other transforms before sending
+        const messageForProvider = contextTransform ? await contextTransform(text) : text
+
         await providerSendMessage(
           {
-            message: text,
+            message: messageForProvider,
             sessionKey: currentSessionKey,
             attachments: providerAttachments,
           },
@@ -144,6 +151,7 @@ export function useMessageQueue({
       onAgentMessageUpdate,
       onAgentMessageComplete,
       onSendStart,
+      contextTransform,
     ],
   )
 

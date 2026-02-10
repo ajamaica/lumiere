@@ -49,7 +49,8 @@
     "backupServers": "备份服务器",
     "restoreServers": "恢复服务器",
     "contribute": "贡献",
-    "skills": "技能"
+    "skills": "技能",
+    "workflowMode": "工作流模式"
   },
   "home": {
     "connectionError": "连接错误",
@@ -205,5 +206,22 @@
     "updated": "更新时间",
     "openClawOnly": "仅限 OpenClaw",
     "openClawOnlyDescription": "技能仅适用于 OpenClaw 服务器。"
+  },
+  "workflow": {
+    "title": "工作流模式",
+    "enableWorkflowMode": "启用工作流模式",
+    "enableDescription": "加载本地文档作为聊天会话的上下文。",
+    "on": "开",
+    "off": "关",
+    "infoDescription": "启用后，选定的文档将被读取并作为上下文随每条消息一起发送。AI 可以引用并建议编辑你的文件。",
+    "privacyNote": "文档在本地读取，仅在你发送消息时才会发送到你配置的 AI 提供商。",
+    "documents": "文档",
+    "noDocuments": "暂无文档",
+    "noDocumentsDescription": "添加文档以为你的 AI 会话提供项目文件的上下文。",
+    "addDocuments": "添加文档",
+    "removeFile": "移除文件",
+    "removeFileConfirm": "从工作流上下文中移除「{{name}}」？",
+    "clearAll": "清除全部",
+    "clearAllConfirm": "从工作流上下文中移除所有文档？"
   }
 }

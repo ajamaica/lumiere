@@ -9,7 +9,13 @@ import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/componen
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { ProviderConfig, readSessionIndex, SessionIndexEntry } from '../src/services/providers'
-import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
+import { ENABLE_WORKFLOW_MODE } from '../src/services/workflow'
+import {
+  clearMessagesAtom,
+  currentSessionKeyAtom,
+  sessionAliasesAtom,
+  workflowConfigAtom,
+} from '../src/store'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
 
@@ -28,6 +34,8 @@ export default function SessionsScreen() {
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [sessionAliases] = useAtom(sessionAliasesAtom)
+  const [workflowConfigs] = useAtom(workflowConfigAtom)
+  const workflowEnabled = workflowConfigs[currentSessionKey]?.enabled ?? false
   const [config, setConfig] = useState<ProviderConfig | null>(null)
 
   const [sessions, setSessions] = useState<Session[]>([])
@@ -260,6 +268,18 @@ export default function SessionsScreen() {
             />
             <Text style={styles.actionText}>Reset Current Session</Text>
           </TouchableOpacity>
+
+          {ENABLE_WORKFLOW_MODE && (
+            <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/workflow')}>
+              <Ionicons
+                name={workflowEnabled ? 'folder-open' : 'folder-open-outline'}
+                size={22}
+                color={workflowEnabled ? theme.colors.primary : theme.colors.text.secondary}
+                style={styles.actionIcon}
+              />
+              <Text style={styles.actionText}>Workflow Mode{workflowEnabled ? ' (On)' : ''}</Text>
+            </TouchableOpacity>
+          )}
         </Section>
 
         {/* Available sessions - shown for all providers */}

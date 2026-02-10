@@ -49,7 +49,8 @@
     "backupRestore": "Backup & Restore",
     "backupServers": "Backup Servers",
     "restoreServers": "Restore Servers",
-    "contribute": "Contribute"
+    "contribute": "Contribute",
+    "workflowMode": "Workflow Mode"
   },
   "home": {
     "connectionError": "Connection Error",
@@ -205,5 +206,22 @@
     "duplicateSkipped": "Duplicate servers were skipped",
     "replaceExisting": "Replace existing servers",
     "mergeWithExisting": "Merge with existing servers"
+  },
+  "workflow": {
+    "title": "Workflow Mode",
+    "enableWorkflowMode": "Enable Workflow Mode",
+    "enableDescription": "Load local documents as context for your chat session.",
+    "on": "ON",
+    "off": "OFF",
+    "infoDescription": "When enabled, selected documents are read and sent as context with each message. The AI can reference and suggest edits to your files.",
+    "privacyNote": "Documents are read locally and only sent to your configured AI provider when you send a message.",
+    "documents": "Documents",
+    "noDocuments": "No Documents",
+    "noDocumentsDescription": "Add documents to give your AI session context about your project files.",
+    "addDocuments": "Add Documents",
+    "removeFile": "Remove File",
+    "removeFileConfirm": "Remove \"{{name}}\" from workflow context?",
+    "clearAll": "Clear All",
+    "clearAllConfirm": "Remove all documents from workflow context?"
   }
 }

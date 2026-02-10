@@ -27,6 +27,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useChatProvider } from '../../hooks/useChatProvider'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
+import { useWorkflowContext } from '../../hooks/useWorkflowContext'
 import { ProviderConfig, readCachedHistory } from '../../services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, pendingTriggerMessageAtom } from '../../store'
 import { useTheme } from '../../theme'
@@ -176,6 +177,8 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const { connected, connecting, error, capabilities, retry, sendMessage, getChatHistory } =
     useChatProvider(providerConfig)
 
+  const { isActive: isWorkflowActive, prependContext } = useWorkflowContext()
+
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
     sendMessage,
     currentSessionKey,
@@ -188,6 +191,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     onSendStart: () => {
       shouldAutoScrollRef.current = true
     },
+    contextTransform: isWorkflowActive ? prependContext : undefined,
   })
 
   // Convert raw history messages into UI Message objects
@@ -457,6 +461,13 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
               )}
             </StatusBubbleContainer>
             <View style={styles.statusActions}>
+              {isWorkflowActive && (
+                <TouchableOpacity onPress={() => router.push('/workflow')} activeOpacity={0.7}>
+                  <SettingsButtonContainer {...settingsButtonProps}>
+                    <Ionicons name="folder-open" size={20} color={theme.colors.primary} />
+                  </SettingsButtonContainer>
+                </TouchableOpacity>
+              )}
               <TouchableOpacity onPress={handleToggleSearch} activeOpacity={0.7}>
                 <SettingsButtonContainer {...settingsButtonProps}>
                   <Ionicons name="search" size={22} color={theme.colors.text.secondary} />

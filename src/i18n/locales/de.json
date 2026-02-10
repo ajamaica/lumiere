@@ -49,7 +49,8 @@
     "backupServers": "Server sichern",
     "restoreServers": "Server wiederherstellen",
     "contribute": "Mitwirken",
-    "skills": "Fähigkeiten"
+    "skills": "Fähigkeiten",
+    "workflowMode": "Workflow-Modus"
   },
   "home": {
     "connectionError": "Verbindungsfehler",
@@ -205,5 +206,22 @@
     "updated": "Aktualisiert",
     "openClawOnly": "Nur OpenClaw",
     "openClawOnlyDescription": "Fähigkeiten sind nur für OpenClaw-Server verfügbar."
+  },
+  "workflow": {
+    "title": "Workflow-Modus",
+    "enableWorkflowMode": "Workflow-Modus aktivieren",
+    "enableDescription": "Lokale Dokumente als Kontext für Ihre Chat-Sitzung laden.",
+    "on": "AN",
+    "off": "AUS",
+    "infoDescription": "Wenn aktiviert, werden ausgewählte Dokumente gelesen und als Kontext mit jeder Nachricht gesendet. Die KI kann Ihre Dateien referenzieren und Änderungen vorschlagen.",
+    "privacyNote": "Dokumente werden lokal gelesen und nur an Ihren konfigurierten KI-Anbieter gesendet, wenn Sie eine Nachricht senden.",
+    "documents": "Dokumente",
+    "noDocuments": "Keine Dokumente",
+    "noDocumentsDescription": "Fügen Sie Dokumente hinzu, um Ihrer KI-Sitzung Kontext über Ihre Projektdateien zu geben.",
+    "addDocuments": "Dokumente Hinzufügen",
+    "removeFile": "Datei Entfernen",
+    "removeFileConfirm": "\"{{name}}\" aus dem Workflow-Kontext entfernen?",
+    "clearAll": "Alles Löschen",
+    "clearAllConfirm": "Alle Dokumente aus dem Workflow-Kontext entfernen?"
   }
 }
