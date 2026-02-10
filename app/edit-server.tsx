@@ -79,8 +79,6 @@ export default function EditServerScreen() {
       effectiveUrl = effectiveUrl || 'https://api.openai.com'
     } else if (providerType === 'openrouter') {
       effectiveUrl = effectiveUrl || 'https://openrouter.ai'
-    } else if (providerType === 'emergent') {
-      effectiveUrl = effectiveUrl || 'https://api.emergent.sh'
     }
 
     await updateServer(
@@ -222,9 +220,7 @@ export default function EditServerScreen() {
                             ? 'My OpenAI'
                             : providerType === 'openrouter'
                               ? 'My OpenRouter'
-                              : providerType === 'emergent'
-                                ? 'My Emergent'
-                                : 'My Server'
+                              : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -286,16 +282,11 @@ export default function EditServerScreen() {
 
           {(providerType === 'claude' ||
             providerType === 'openai' ||
-            providerType === 'openrouter' ||
-            providerType === 'emergent') && (
+            providerType === 'openrouter') && (
             <>
               <View style={styles.formRow}>
                 <TextInput
-                  label={
-                    providerType === 'emergent'
-                      ? 'Universal Key (leave blank to keep current)'
-                      : 'API Key (leave blank to keep current)'
-                  }
+                  label="API Key (leave blank to keep current)"
                   value={token}
                   onChangeText={setToken}
                   secureTextEntry

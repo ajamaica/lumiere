@@ -19,8 +19,6 @@ export const DEFAULT_MODELS = {
   OPENROUTER: 'openai/gpt-4o',
   /** Default Gemini model */
   GEMINI: 'gemini-2.0-flash',
-  /** Default Emergent model */
-  EMERGENT: 'claude-sonnet-4-5',
   /** Default Kimi (Moonshot AI) model */
   KIMI: 'moonshot-v1-8k',
 } as const

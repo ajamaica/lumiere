@@ -55,7 +55,6 @@ lumiere/
 │   │   ├── openrouter/         # OpenRouter API
 │   │   ├── apple-intelligence/ # iOS-only Apple Foundation Models
 │   │   ├── gemini-nano/        # Android-only Gemini Nano
-│   │   ├── emergent/           # Emergent API
 │   │   ├── echo/               # Echo test provider (dev)
 │   │   ├── notifications/      # Background fetch service
 │   │   └── secureTokenStorage.ts # Keychain API wrapper
@@ -166,7 +165,6 @@ All chat providers implement a shared `ChatProvider` interface defined in `src/s
 │  ├── OpenRouterChatProvider (REST + SSE)    │
 │  ├── AppleChatProvider    (Native bridge)   │
 │  ├── GeminiNanoChatProvider (Native bridge) │
-│  ├── EmergentChatProvider (REST + SSE)      │
 │  └── EchoChatProvider     (In-memory)       │
 └─────────────────────────────────────────────┘
 ```

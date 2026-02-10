@@ -6,7 +6,6 @@ import AppleIcon from '../../assets/provider-apple.svg'
 import ClaudeIcon from '../../assets/provider-claude.svg'
 import DefaultIcon from '../../assets/provider-default.svg'
 import EchoIcon from '../../assets/provider-echo.svg'
-import EmergentIcon from '../../assets/provider-emergent.svg'
 import GeminiIcon from '../../assets/provider-gemini.svg'
 import GeminiNanoIcon from '../../assets/provider-gemini-nano.svg'
 import KimiIcon from '../../assets/provider-kimi.svg'
@@ -33,7 +32,6 @@ export function getProviderIcon(type: ProviderType, color: string): React.ReactN
     echo: EchoIcon,
     gemini: GeminiIcon,
     'gemini-nano': GeminiNanoIcon,
-    emergent: EmergentIcon,
     kimi: KimiIcon,
   }
 
@@ -67,7 +65,6 @@ export function getAllProviderOptions(color: string) {
           },
         ]
       : []),
-    { value: 'emergent', label: 'Emergent', icon: getProviderIcon('emergent', color) },
     { value: 'kimi', label: 'Kimi', icon: getProviderIcon('kimi', color) },
     { value: 'echo', label: 'Echo Server', icon: getProviderIcon('echo', color) },
   ]
@@ -120,11 +117,6 @@ export function getBasicProviderOptions(color: string) {
           },
         ]
       : []),
-    {
-      value: 'emergent' as ProviderType,
-      label: 'Emergent',
-      icon: getProviderIcon('emergent', color),
-    },
     {
       value: 'kimi' as ProviderType,
       label: 'Kimi',
