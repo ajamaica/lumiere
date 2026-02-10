@@ -7,6 +7,9 @@ export type {
   SessionAliases,
   TriggerConfig,
   TriggersDict,
+  WorkflowConfig,
+  WorkflowConfigMap,
+  WorkflowFile,
 } from './atoms'
 export {
   backgroundFetchIntervalAtom,
@@ -32,4 +35,5 @@ export {
   sessionAliasesAtom,
   themeModeAtom,
   triggersAtom,
+  workflowConfigAtom,
 } from './atoms'

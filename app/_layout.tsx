@@ -106,6 +106,7 @@ function AppContent() {
       <Stack.Screen name="ollama-models" options={modalOptions} />
       <Stack.Screen name="backup-servers" options={modalOptions} />
       <Stack.Screen name="restore-servers" options={modalOptions} />
+      <Stack.Screen name="workflow" options={modalOptions} />
     </Stack>
   )
 }

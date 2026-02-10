@@ -49,7 +49,8 @@
     "backupServers": "備份伺服器",
     "restoreServers": "還原伺服器",
     "contribute": "貢獻",
-    "skills": "技能"
+    "skills": "技能",
+    "workflowMode": "工作流程模式"
   },
   "home": {
     "connectionError": "連線錯誤",
@@ -203,5 +204,22 @@
     "updated": "更新時間",
     "openClawOnly": "僅限 OpenClaw",
     "openClawOnlyDescription": "技能僅適用於 OpenClaw 伺服器。"
+  },
+  "workflow": {
+    "title": "工作流程模式",
+    "enableWorkflowMode": "啟用工作流程模式",
+    "enableDescription": "載入本機文件作為聊天工作階段的上下文。",
+    "on": "開",
+    "off": "關",
+    "infoDescription": "啟用後，選定的文件將被讀取並作為上下文隨每則訊息一起傳送。AI 可以參考並建議編輯你的檔案。",
+    "privacyNote": "文件在本機讀取，僅在你傳送訊息時才會傳送到你設定的 AI 供應商。",
+    "documents": "文件",
+    "noDocuments": "尚無文件",
+    "noDocumentsDescription": "新增文件以為你的 AI 工作階段提供專案檔案的上下文。",
+    "addDocuments": "新增文件",
+    "removeFile": "移除檔案",
+    "removeFileConfirm": "從工作流程上下文中移除「{{name}}」？",
+    "clearAll": "清除全部",
+    "clearAllConfirm": "從工作流程上下文中移除所有文件？"
   }
 }

@@ -49,7 +49,8 @@
     "backupServers": "서버 백업",
     "restoreServers": "서버 복원",
     "contribute": "기여하기",
-    "skills": "스킬"
+    "skills": "스킬",
+    "workflowMode": "워크플로 모드"
   },
   "home": {
     "connectionError": "연결 오류",
@@ -203,5 +204,22 @@
     "updated": "수정일",
     "openClawOnly": "OpenClaw 전용",
     "openClawOnlyDescription": "스킬은 OpenClaw 서버에서만 사용할 수 있습니다."
+  },
+  "workflow": {
+    "title": "워크플로 모드",
+    "enableWorkflowMode": "워크플로 모드 활성화",
+    "enableDescription": "채팅 세션의 컨텍스트로 로컬 문서를 로드합니다.",
+    "on": "켜짐",
+    "off": "꺼짐",
+    "infoDescription": "활성화하면 선택한 문서를 읽어 각 메시지와 함께 컨텍스트로 전송합니다. AI가 파일을 참조하고 편집을 제안할 수 있습니다.",
+    "privacyNote": "문서는 로컬에서 읽히며, 메시지를 보낼 때만 구성된 AI 제공자에게 전송됩니다.",
+    "documents": "문서",
+    "noDocuments": "문서 없음",
+    "noDocumentsDescription": "AI 세션에 프로젝트 파일에 대한 컨텍스트를 제공하려면 문서를 추가하세요.",
+    "addDocuments": "문서 추가",
+    "removeFile": "파일 삭제",
+    "removeFileConfirm": "워크플로 컨텍스트에서 \"{{name}}\"을(를) 삭제하시겠습니까?",
+    "clearAll": "모두 삭제",
+    "clearAllConfirm": "워크플로 컨텍스트에서 모든 문서를 삭제하시겠습니까?"
   }
 }

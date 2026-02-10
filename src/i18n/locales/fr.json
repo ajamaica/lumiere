@@ -49,7 +49,8 @@
     "backupServers": "Sauvegarder les Serveurs",
     "restoreServers": "Restaurer les Serveurs",
     "contribute": "Contribuer",
-    "skills": "Compétences"
+    "skills": "Compétences",
+    "workflowMode": "Mode Workflow"
   },
   "home": {
     "connectionError": "Erreur de connexion",
@@ -203,5 +204,22 @@
     "updated": "Mise à jour",
     "openClawOnly": "OpenClaw uniquement",
     "openClawOnlyDescription": "Les compétences ne sont disponibles que pour les serveurs OpenClaw."
+  },
+  "workflow": {
+    "title": "Mode Workflow",
+    "enableWorkflowMode": "Activer le Mode Workflow",
+    "enableDescription": "Charge des documents locaux comme contexte pour votre session de chat.",
+    "on": "ON",
+    "off": "OFF",
+    "infoDescription": "Lorsqu'il est activé, les documents sélectionnés sont lus et envoyés comme contexte avec chaque message. L'IA peut référencer et suggérer des modifications à vos fichiers.",
+    "privacyNote": "Les documents sont lus localement et envoyés uniquement à votre fournisseur d'IA configuré lorsque vous envoyez un message.",
+    "documents": "Documents",
+    "noDocuments": "Aucun Document",
+    "noDocumentsDescription": "Ajoutez des documents pour donner du contexte à votre session d'IA sur les fichiers de votre projet.",
+    "addDocuments": "Ajouter des Documents",
+    "removeFile": "Supprimer le Fichier",
+    "removeFileConfirm": "Supprimer \"{{name}}\" du contexte de workflow ?",
+    "clearAll": "Tout Effacer",
+    "clearAllConfirm": "Supprimer tous les documents du contexte de workflow ?"
   }
 }

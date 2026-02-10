@@ -49,7 +49,8 @@
     "backupServers": "サーバーをバックアップ",
     "restoreServers": "サーバーを復元",
     "contribute": "コントリビュート",
-    "skills": "スキル"
+    "skills": "スキル",
+    "workflowMode": "ワークフローモード"
   },
   "home": {
     "connectionError": "接続エラー",
@@ -203,5 +204,22 @@
     "updated": "更新日",
     "openClawOnly": "OpenClaw専用",
     "openClawOnlyDescription": "スキルはOpenClawサーバーでのみ利用可能です。"
+  },
+  "workflow": {
+    "title": "ワークフローモード",
+    "enableWorkflowMode": "ワークフローモードを有効化",
+    "enableDescription": "チャットセッションのコンテキストとしてローカルドキュメントを読み込みます。",
+    "on": "オン",
+    "off": "オフ",
+    "infoDescription": "有効にすると、選択したドキュメントが読み込まれ、各メッセージとともにコンテキストとして送信されます。AIはファイルを参照し、編集を提案できます。",
+    "privacyNote": "ドキュメントはローカルで読み取られ、メッセージ送信時にのみ設定済みのAIプロバイダーに送信されます。",
+    "documents": "ドキュメント",
+    "noDocuments": "ドキュメントなし",
+    "noDocumentsDescription": "AIセッションにプロジェクトファイルのコンテキストを与えるためにドキュメントを追加してください。",
+    "addDocuments": "ドキュメントを追加",
+    "removeFile": "ファイルを削除",
+    "removeFileConfirm": "\"{{name}}\"をワークフローコンテキストから削除しますか？",
+    "clearAll": "すべて削除",
+    "clearAllConfirm": "ワークフローコンテキストからすべてのドキュメントを削除しますか？"
   }
 }

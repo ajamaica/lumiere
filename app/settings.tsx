@@ -270,6 +270,11 @@ export default function SettingsScreen() {
             icon="flash-outline"
             label={t('settings.triggers')}
             onPress={() => router.push('/triggers')}
+          />
+          <SettingRow
+            icon="folder-open-outline"
+            label={t('settings.workflowMode')}
+            onPress={() => router.push('/workflow')}
             showDivider={false}
           />
         </Section>
