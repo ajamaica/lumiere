@@ -84,8 +84,10 @@
       "ollama": "Ollama",
       "claude": "Claude",
       "appleIntelligence": "Apple Intelligence",
-      "echoServer": "回声服务器"
+      "echoServer": "回声服务器",
+      "openaiCompatible": "OpenAI 兼容"
     },
+    "openaiCompatibleDescription": "通过指定自定义基础 URL 连接到任何 OpenAI 兼容的 API。",
     "appleDescription": "使用 Apple Foundation Models 通过 CoreML 在设备上完全本地运行 AI。需要 iOS 26+ 并支持 Apple Intelligence。",
     "errors": {
       "urlRequired": "URL 为必填项",

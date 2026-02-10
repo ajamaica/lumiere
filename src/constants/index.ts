@@ -15,6 +15,8 @@ export const DEFAULT_MODELS = {
   OLLAMA: 'llama3.2',
   /** Default OpenAI model */
   OPENAI: 'gpt-4o',
+  /** Default OpenAI-compatible model */
+  OPENAI_COMPATIBLE: 'gpt-4o',
   /** Default OpenRouter model */
   OPENROUTER: 'openai/gpt-4o',
   /** Default Gemini model */

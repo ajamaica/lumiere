@@ -88,11 +88,13 @@ export function SetupScreen() {
     },
   })
 
-  const needsUrl = providerType === 'molt' || providerType === 'ollama'
+  const needsUrl =
+    providerType === 'molt' || providerType === 'ollama' || providerType === 'openai-compatible'
   const needsToken =
     providerType === 'molt' ||
     providerType === 'claude' ||
     providerType === 'openai' ||
+    providerType === 'openai-compatible' ||
     providerType === 'openrouter' ||
     providerType === 'gemini'
 
@@ -160,6 +162,25 @@ export function SetupScreen() {
           name: 'My OpenAI',
           url: localUrl.trim() || 'https://api.openai.com',
           providerType: 'openai',
+          model: localModel.trim() || undefined,
+        },
+        localToken.trim(),
+      )
+
+      const sessionKey = DEFAULT_SESSION_KEY
+      setCurrentSessionKey(sessionKey)
+      setServerSessions((prev) => ({
+        ...prev,
+        [serverId]: sessionKey,
+      }))
+
+      setOnboardingCompleted(true)
+    } else if (providerType === 'openai-compatible' && localUrl.trim() && localToken.trim()) {
+      const serverId = await addServer(
+        {
+          name: 'My OpenAI Compatible',
+          url: localUrl.trim(),
+          providerType: 'openai-compatible',
           model: localModel.trim() || undefined,
         },
         localToken.trim(),
@@ -269,7 +290,7 @@ export function SetupScreen() {
   }
 
   const isValid =
-    providerType === 'molt'
+    providerType === 'molt' || providerType === 'openai-compatible'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
       : providerType === 'claude' ||
           providerType === 'openai' ||
@@ -329,7 +350,9 @@ export function SetupScreen() {
                 placeholder={
                   providerType === 'ollama'
                     ? 'http://localhost:11434'
-                    : 'https://your-gateway.example.com'
+                    : providerType === 'openai-compatible'
+                      ? 'https://api.example.com'
+                      : 'https://your-gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -337,7 +360,9 @@ export function SetupScreen() {
                 hint={
                   providerType === 'ollama'
                     ? 'The URL of your Ollama server'
-                    : 'The URL of your OpenClaw server'
+                    : providerType === 'openai-compatible'
+                      ? 'The base URL of your OpenAI-compatible API'
+                      : 'The URL of your OpenClaw server'
                 }
               />
             )}
@@ -347,6 +372,7 @@ export function SetupScreen() {
                 label={
                   providerType === 'claude' ||
                   providerType === 'openai' ||
+                  providerType === 'openai-compatible' ||
                   providerType === 'openrouter' ||
                   providerType === 'gemini'
                     ? 'API Key'
@@ -357,6 +383,7 @@ export function SetupScreen() {
                 placeholder={
                   providerType === 'claude' ||
                   providerType === 'openai' ||
+                  providerType === 'openai-compatible' ||
                   providerType === 'openrouter' ||
                   providerType === 'gemini'
                     ? 'Your API key'
@@ -370,11 +397,13 @@ export function SetupScreen() {
                     ? 'Your Anthropic API key'
                     : providerType === 'openai'
                       ? 'Your OpenAI API key'
-                      : providerType === 'openrouter'
-                        ? 'Your OpenRouter API key'
-                        : providerType === 'gemini'
-                          ? 'Your Google AI API key'
-                          : 'Your authentication token for the gateway'
+                      : providerType === 'openai-compatible'
+                        ? 'Your API key for the OpenAI-compatible service'
+                        : providerType === 'openrouter'
+                          ? 'Your OpenRouter API key'
+                          : providerType === 'gemini'
+                            ? 'Your Google AI API key'
+                            : 'Your authentication token for the gateway'
                 }
               />
             )}
@@ -382,6 +411,7 @@ export function SetupScreen() {
             {(providerType === 'ollama' ||
               providerType === 'claude' ||
               providerType === 'openai' ||
+              providerType === 'openai-compatible' ||
               providerType === 'openrouter' ||
               providerType === 'gemini') && (
               <TextInput
@@ -393,7 +423,7 @@ export function SetupScreen() {
                     ? 'llama3.2'
                     : providerType === 'claude'
                       ? 'claude-sonnet-4-5'
-                      : providerType === 'openai'
+                      : providerType === 'openai' || providerType === 'openai-compatible'
                         ? 'gpt-4o'
                         : providerType === 'gemini'
                           ? 'gemini-2.0-flash'
@@ -408,9 +438,11 @@ export function SetupScreen() {
                       ? 'Claude model to use (default: claude-sonnet-4-5)'
                       : providerType === 'openai'
                         ? 'OpenAI model to use (default: gpt-4o)'
-                        : providerType === 'gemini'
-                          ? 'Gemini model to use (default: gemini-2.0-flash)'
-                          : 'OpenRouter model to use (default: openai/gpt-4o)'
+                        : providerType === 'openai-compatible'
+                          ? 'Model to use (default: gpt-4o)'
+                          : providerType === 'gemini'
+                            ? 'Gemini model to use (default: gemini-2.0-flash)'
+                            : 'OpenRouter model to use (default: openai/gpt-4o)'
                 }
               />
             )}

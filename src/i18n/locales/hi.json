@@ -84,8 +84,10 @@
       "ollama": "Ollama",
       "claude": "Claude",
       "appleIntelligence": "Apple Intelligence",
-      "echoServer": "Echo सर्वर"
+      "echoServer": "Echo सर्वर",
+      "openaiCompatible": "OpenAI संगत"
     },
+    "openaiCompatibleDescription": "कस्टम बेस URL निर्दिष्ट करके किसी भी OpenAI-संगत API से कनेक्ट करें।",
     "appleDescription": "CoreML के माध्यम से पूरी तरह से डिवाइस पर AI चलाने के लिए Apple Foundation Models का उपयोग करता है। iOS 26+ और Apple Intelligence सपोर्ट आवश्यक है।",
     "errors": {
       "urlRequired": "URL आवश्यक है",

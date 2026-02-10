@@ -84,8 +84,10 @@
       "ollama": "Ollama",
       "claude": "Claude",
       "appleIntelligence": "Apple Intelligence",
-      "echoServer": "Serveur Echo"
+      "echoServer": "Serveur Echo",
+      "openaiCompatible": "Compatible OpenAI"
     },
+    "openaiCompatibleDescription": "Connectez-vous à n'importe quelle API compatible OpenAI en spécifiant une URL de base personnalisée.",
     "appleDescription": "Utilise les modèles Apple Foundation pour exécuter l'IA entièrement sur l'appareil via CoreML. Nécessite iOS 26+ avec support Apple Intelligence.",
     "errors": {
       "urlRequired": "L'URL est requise",
