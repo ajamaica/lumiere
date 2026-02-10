@@ -307,20 +307,6 @@ export default function SkillsScreen() {
       <ScreenHeader title={t('skills.title')} subtitle={t('skills.subtitle')} showBack />
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Section>
-          <View style={styles.statsRow}>
-            <StatCard label={t('skills.totalSkills')} value={skills.length} style={{ flex: 1 }} />
-          </View>
-
-          <View style={{ flexDirection: 'row', gap: theme.spacing.sm }}>
-            <Button title={t('common.retry')} variant="secondary" onPress={handleRefresh} />
-            <Button
-              title={showTeachForm ? t('common.cancel') : t('skills.teachNew')}
-              onPress={() => setShowTeachForm(!showTeachForm)}
-            />
-          </View>
-        </Section>
-
         <Section title={t('skills.clawHub.title')}>
           <Text variant="bodySmall" color="secondary" style={{ marginBottom: theme.spacing.md }}>
             {t('skills.clawHub.description')}
@@ -389,6 +375,20 @@ export default function SkillsScreen() {
               </View>
             </Card>
           ))}
+        </Section>
+
+        <Section>
+          <View style={styles.statsRow}>
+            <StatCard label={t('skills.totalSkills')} value={skills.length} style={{ flex: 1 }} />
+          </View>
+
+          <View style={{ flexDirection: 'row', gap: theme.spacing.sm }}>
+            <Button title={t('common.retry')} variant="secondary" onPress={handleRefresh} />
+            <Button
+              title={showTeachForm ? t('common.cancel') : t('skills.teachNew')}
+              onPress={() => setShowTeachForm(!showTeachForm)}
+            />
+          </View>
         </Section>
 
         {showTeachForm && (
