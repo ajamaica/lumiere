@@ -68,11 +68,12 @@ export class MoltChatProvider implements ChatProvider {
       idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
       agentId: agentConfig.defaultAgentId,
       sessionKey: params.sessionKey,
-      attachments: params.attachments?.map((a) => ({
-        type: a.type,
-        content: a.data,
-        mimeType: a.mimeType,
-        fileName: a.name,
+      attachments: params.attachments?.map((a, index) => ({
+        url: a.data
+          ? `data:${a.mimeType || 'application/octet-stream'};base64,${a.data}`
+          : undefined,
+        mime: a.mimeType,
+        index,
       })),
     }
 

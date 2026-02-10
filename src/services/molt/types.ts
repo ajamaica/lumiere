@@ -137,6 +137,17 @@ export interface Attachment {
   fileName?: string
 }
 
+/**
+ * OpenClaw MediaAttachment format for agent RPC calls.
+ * Inline data is passed as data-URI strings in the `url` field.
+ */
+export interface MediaAttachment {
+  url?: string
+  path?: string
+  mime?: string
+  index: number
+}
+
 // Agent params
 export interface AgentParams {
   message: string
@@ -144,7 +155,7 @@ export interface AgentParams {
   agentId?: string
   sessionKey?: string
   model?: string
-  attachments?: Attachment[]
+  attachments?: MediaAttachment[]
 }
 
 // Agent events
