@@ -21,7 +21,7 @@ import { currentSessionKeyAtom, onboardingCompletedAtom, serverSessionsAtom } fr
 import { useTheme } from '../theme'
 
 export function SetupScreen() {
-  const { theme } = useTheme()
+  const { theme, isDark } = useTheme()
   const { addServer } = useServers()
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setServerSessions] = useAtom(serverSessionsAtom)
@@ -301,14 +301,15 @@ export function SetupScreen() {
           ? localUrl.trim().length > 0
           : true
 
+  // Theme-aware gradient background (purple-tinted for setup)
+  const gradientColors = isDark
+    ? [theme.colors.background, '#0A1628', 'rgba(168, 85, 247, 0.03)']
+    : [theme.colors.background, '#E5E0F2', 'rgba(168, 85, 247, 0.06)']
+
   return (
     <View style={styles.container}>
       {/* Background gradient */}
-      <LinearGradient
-        colors={[theme.colors.background, '#0A1628', 'rgba(168, 85, 247, 0.03)']}
-        locations={[0, 0.7, 1]}
-        style={styles.gradient}
-      />
+      <LinearGradient colors={gradientColors} locations={[0, 0.7, 1]} style={styles.gradient} />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
