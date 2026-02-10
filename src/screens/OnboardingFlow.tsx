@@ -4,11 +4,6 @@ import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import {
-  AgentIllustration,
-  ConfigIllustration,
-  FeaturesIllustration,
-} from '../components/illustrations'
 import { Button, GradientButton } from '../components/ui'
 import { AnimatedStepIndicator } from '../components/ui/AnimatedStepIndicator'
 import { StepIndicator } from '../components/ui/StepIndicator'
@@ -18,7 +13,7 @@ import { SetupScreen } from './SetupScreen'
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView)
 
-const ILLUSTRATIONS = [AgentIllustration, FeaturesIllustration, ConfigIllustration]
+const INTRO_STEP_COUNT = 3
 const STEP_KEYS = ['step1', 'step2', 'step3'] as const
 
 export function OnboardingFlow() {
@@ -30,7 +25,7 @@ export function OnboardingFlow() {
   const [showSetup, setShowSetup] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
 
-  const totalSteps = ILLUSTRATIONS.length + 1 // 3 intro + 1 setup
+  const totalSteps = INTRO_STEP_COUNT + 1 // 3 intro + 1 setup
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
@@ -39,7 +34,7 @@ export function OnboardingFlow() {
   })
 
   const handleNext = useCallback(() => {
-    if (currentPage < ILLUSTRATIONS.length - 1) {
+    if (currentPage < INTRO_STEP_COUNT - 1) {
       const nextPage = currentPage + 1
       scrollViewRef.current?.scrollTo({ x: nextPage * width, animated: true })
       setCurrentPage(nextPage)
@@ -72,6 +67,9 @@ export function OnboardingFlow() {
       paddingHorizontal: theme.spacing.xl,
       paddingBottom: theme.spacing.xl,
       gap: theme.spacing.md,
+      maxWidth: 480,
+      width: '100%',
+      alignSelf: 'center',
     },
   })
 
@@ -79,7 +77,7 @@ export function OnboardingFlow() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.setupContainer}>
-          <StepIndicator currentStep={ILLUSTRATIONS.length} totalSteps={totalSteps} />
+          <StepIndicator currentStep={INTRO_STEP_COUNT} totalSteps={totalSteps} />
           <SetupScreen />
         </View>
       </SafeAreaView>
@@ -111,7 +109,6 @@ export function OnboardingFlow() {
               screenWidth={width}
               titleKey={`onboarding.${stepKey}.title`}
               descriptionKey={`onboarding.${stepKey}.description`}
-              Illustration={ILLUSTRATIONS[index]}
             />
           ))}
         </AnimatedScrollView>

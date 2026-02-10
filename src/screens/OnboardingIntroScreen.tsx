@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import Animated, {
@@ -23,7 +23,6 @@ interface OnboardingIntroScreenProps {
   screenWidth: number
   titleKey: string
   descriptionKey: string
-  Illustration: React.ComponentType
 }
 
 /** Floating gradient orb that drifts and pulses in the background */
@@ -122,7 +121,6 @@ export function OnboardingIntroScreen({
   screenWidth,
   titleKey,
   descriptionKey,
-  Illustration,
 }: OnboardingIntroScreenProps) {
   const { theme } = useTheme()
   const { t } = useTranslation()
@@ -134,27 +132,7 @@ export function OnboardingIntroScreen({
   const titleParts = title.split(',')
   const hasComma = titleParts.length > 1
 
-  // Parallax: illustration moves at 0.3x scroll speed (lags behind content)
-  const illustrationStyle = useAnimatedStyle(() => {
-    const inputRange = [(index - 1) * screenWidth, index * screenWidth, (index + 1) * screenWidth]
-
-    const translateX = interpolate(scrollX.value, inputRange, [
-      screenWidth * 0.3,
-      0,
-      -screenWidth * 0.3,
-    ])
-
-    const scale = interpolate(scrollX.value, inputRange, [0.8, 1, 0.8])
-
-    const opacity = interpolate(scrollX.value, inputRange, [0, 1, 0])
-
-    return {
-      transform: [{ translateX }, { scale }],
-      opacity,
-    }
-  })
-
-  // Text slides faster than illustration for parallax depth effect
+  // Text slides with parallax depth effect
   const titleStyle = useAnimatedStyle(() => {
     const inputRange = [(index - 1) * screenWidth, index * screenWidth, (index + 1) * screenWidth]
 
@@ -206,36 +184,30 @@ export function OnboardingIntroScreen({
     },
     content: {
       flex: 1,
-    },
-    illustrationContainer: {
+      justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: theme.spacing.xl,
-      position: 'relative',
-    },
-    illustrationGlow: {
-      position: 'absolute',
-      top: '20%',
-      left: '10%',
-      right: '10%',
-      bottom: '20%',
-      borderRadius: 200,
-      opacity: 0.3,
     },
     textContent: {
       paddingHorizontal: theme.spacing.xl,
+      alignItems: 'center',
+      maxWidth: 480,
+      width: '100%',
     },
     titleContainer: {
       marginBottom: theme.spacing.lg,
+      alignItems: 'center',
     },
     title: {
       fontSize: theme.typography.fontSize.xxl,
       fontWeight: theme.typography.fontWeight.bold,
       color: theme.colors.text.primary,
       lineHeight: theme.typography.fontSize.xxl * 1.2,
+      textAlign: 'center',
     },
     description: {
       lineHeight: 24,
       fontSize: theme.typography.fontSize.base,
+      textAlign: 'center',
     },
   })
 
@@ -304,11 +276,6 @@ export function OnboardingIntroScreen({
     ? ([theme.colors.background, '#0A1628', 'rgba(34, 211, 238, 0.05)'] as const)
     : ([theme.colors.background, '#E0E9F2', 'rgba(34, 211, 238, 0.08)'] as const)
 
-  // Theme-aware illustration glow
-  const glowColors = theme.isDark
-    ? (['rgba(34, 211, 238, 0.2)', 'transparent'] as const)
-    : (['rgba(34, 211, 238, 0.15)', 'transparent'] as const)
-
   return (
     <View style={styles.page}>
       {/* Background gradient */}
@@ -322,17 +289,6 @@ export function OnboardingIntroScreen({
       </View>
 
       <View style={styles.content}>
-        {/* Parallax illustration */}
-        <Animated.View style={[styles.illustrationContainer, illustrationStyle]}>
-          <LinearGradient
-            colors={glowColors}
-            style={styles.illustrationGlow}
-            start={{ x: 0.5, y: 0 }}
-            end={{ x: 0.5, y: 1 }}
-          />
-          <Illustration />
-        </Animated.View>
-
         <View style={styles.textContent}>
           {/* Animated title */}
           <Animated.View style={[styles.titleContainer, titleStyle]}>

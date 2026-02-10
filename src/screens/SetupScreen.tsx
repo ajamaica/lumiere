@@ -54,6 +54,9 @@ export function SetupScreen() {
       flexGrow: 1,
       padding: theme.spacing.xl,
       justifyContent: 'center',
+      maxWidth: 480,
+      width: '100%',
+      alignSelf: 'center',
     },
     headerSection: {
       marginBottom: theme.spacing.xxl,
