@@ -221,6 +221,10 @@
     "replaceExisting": "Replace existing servers",
     "mergeWithExisting": "Merge with existing servers"
   },
+  "colors": {
+    "appearance": "Appearance",
+    "colorTheme": "Color Theme"
+  },
   "workflow": {
     "title": "Workflow Mode",
     "enableWorkflowMode": "Enable Workflow Mode",

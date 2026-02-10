@@ -221,6 +221,10 @@
       "installMessage": "Изучи навык \"{{name}}\": {{description}}\n\n{{content}}"
     }
   },
+  "colors": {
+    "appearance": "Внешний вид",
+    "colorTheme": "Цветовая тема"
+  },
   "workflow": {
     "title": "Режим Workflow",
     "enableWorkflowMode": "Включить режим Workflow",
