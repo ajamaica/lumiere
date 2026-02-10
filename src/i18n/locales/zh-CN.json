@@ -205,7 +205,20 @@
     "created": "创建时间",
     "updated": "更新时间",
     "openClawOnly": "仅限 OpenClaw",
-    "openClawOnlyDescription": "技能仅适用于 OpenClaw 服务器。"
+    "openClawOnlyDescription": "技能仅适用于 OpenClaw 服务器。",
+    "clawHub": {
+      "title": "ClawHub",
+      "description": "在 ClawHub 搜索社区技能并安装到您的代理。",
+      "searchPlaceholder": "搜索 ClawHub 技能...",
+      "search": "搜索",
+      "noResults": "未找到技能。请尝试其他搜索词。",
+      "author": "作者",
+      "installs": "安装次数",
+      "install": "安装",
+      "installSuccess": "技能「{{name}}」安装成功。",
+      "installError": "从 ClawHub 安装技能失败。",
+      "searchError": "ClawHub 搜索失败。请重试。"
+    }
   },
   "workflow": {
     "title": "工作流模式",

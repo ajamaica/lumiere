@@ -188,6 +188,23 @@ export interface SkillsListResponse {
   skills: Skill[]
 }
 
+// ClawHub types
+export interface ClawHubSearchParams {
+  query: string
+}
+
+export interface ClawHubSkill {
+  name: string
+  description: string
+  content: string
+  author?: string
+  installs?: number
+}
+
+export interface ClawHubSearchResponse {
+  skills: ClawHubSkill[]
+}
+
 // Event types
 export type GatewayEvent =
   | { event: 'agent'; payload: AgentEvent; seq?: number }

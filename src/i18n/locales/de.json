@@ -205,7 +205,20 @@
     "created": "Erstellt",
     "updated": "Aktualisiert",
     "openClawOnly": "Nur OpenClaw",
-    "openClawOnlyDescription": "Fähigkeiten sind nur für OpenClaw-Server verfügbar."
+    "openClawOnlyDescription": "Fähigkeiten sind nur für OpenClaw-Server verfügbar.",
+    "clawHub": {
+      "title": "ClawHub",
+      "description": "Durchsuchen Sie Community-Fähigkeiten auf ClawHub und installieren Sie sie für Ihren Agenten.",
+      "searchPlaceholder": "ClawHub-Fähigkeiten suchen...",
+      "search": "Suchen",
+      "noResults": "Keine Fähigkeiten gefunden. Versuchen Sie einen anderen Suchbegriff.",
+      "author": "Autor",
+      "installs": "Installationen",
+      "install": "Installieren",
+      "installSuccess": "Die Fähigkeit \"{{name}}\" wurde erfolgreich installiert.",
+      "installError": "Fehler beim Installieren der Fähigkeit von ClawHub.",
+      "searchError": "Fehler bei der ClawHub-Suche. Bitte versuchen Sie es erneut."
+    }
   },
   "workflow": {
     "title": "Workflow-Modus",

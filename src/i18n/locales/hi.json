@@ -205,7 +205,20 @@
     "created": "बनाया गया",
     "updated": "अपडेट किया गया",
     "openClawOnly": "केवल OpenClaw",
-    "openClawOnlyDescription": "कौशल केवल OpenClaw सर्वर के लिए उपलब्ध हैं।"
+    "openClawOnlyDescription": "कौशल केवल OpenClaw सर्वर के लिए उपलब्ध हैं।",
+    "clawHub": {
+      "title": "ClawHub",
+      "description": "ClawHub पर सामुदायिक कौशल खोजें और उन्हें अपने एजेंट में इंस्टॉल करें।",
+      "searchPlaceholder": "ClawHub कौशल खोजें...",
+      "search": "खोजें",
+      "noResults": "कोई कौशल नहीं मिला। कोई अन्य खोज शब्द आज़माएं।",
+      "author": "लेखक",
+      "installs": "इंस्टॉल",
+      "install": "इंस्टॉल करें",
+      "installSuccess": "कौशल \"{{name}}\" सफलतापूर्वक इंस्टॉल किया गया।",
+      "installError": "ClawHub से कौशल इंस्टॉल करने में विफल।",
+      "searchError": "ClawHub खोज विफल। कृपया पुनः प्रयास करें।"
+    }
   },
   "workflow": {
     "title": "वर्कफ़्लो मोड",

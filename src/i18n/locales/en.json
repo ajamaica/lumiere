@@ -175,7 +175,20 @@
     "created": "Created",
     "updated": "Updated",
     "openClawOnly": "OpenClaw Only",
-    "openClawOnlyDescription": "Skills are only available for OpenClaw servers."
+    "openClawOnlyDescription": "Skills are only available for OpenClaw servers.",
+    "clawHub": {
+      "title": "ClawHub",
+      "description": "Search community skills from ClawHub and install them to your agent.",
+      "searchPlaceholder": "Search ClawHub skills...",
+      "search": "Search",
+      "noResults": "No skills found. Try a different search term.",
+      "author": "Author",
+      "installs": "Installs",
+      "install": "Install",
+      "installSuccess": "Skill \"{{name}}\" installed successfully.",
+      "installError": "Failed to install skill from ClawHub.",
+      "searchError": "Failed to search ClawHub. Please try again."
+    }
   },
   "gallery": {
     "title": "Gallery"

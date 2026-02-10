@@ -205,7 +205,20 @@
     "created": "建立時間",
     "updated": "更新時間",
     "openClawOnly": "僅限 OpenClaw",
-    "openClawOnlyDescription": "技能僅適用於 OpenClaw 伺服器。"
+    "openClawOnlyDescription": "技能僅適用於 OpenClaw 伺服器。",
+    "clawHub": {
+      "title": "ClawHub",
+      "description": "在 ClawHub 搜尋社群技能並安裝到您的代理。",
+      "searchPlaceholder": "搜尋 ClawHub 技能...",
+      "search": "搜尋",
+      "noResults": "未找到技能。請嘗試其他搜尋詞。",
+      "author": "作者",
+      "installs": "安裝次數",
+      "install": "安裝",
+      "installSuccess": "技能「{{name}}」安裝成功。",
+      "installError": "從 ClawHub 安裝技能失敗。",
+      "searchError": "ClawHub 搜尋失敗。請重試。"
+    }
   },
   "workflow": {
     "title": "工作流程模式",

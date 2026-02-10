@@ -205,7 +205,20 @@
     "created": "作成日",
     "updated": "更新日",
     "openClawOnly": "OpenClaw専用",
-    "openClawOnlyDescription": "スキルはOpenClawサーバーでのみ利用可能です。"
+    "openClawOnlyDescription": "スキルはOpenClawサーバーでのみ利用可能です。",
+    "clawHub": {
+      "title": "ClawHub",
+      "description": "ClawHubでコミュニティスキルを検索し、エージェントにインストールします。",
+      "searchPlaceholder": "ClawHubスキルを検索...",
+      "search": "検索",
+      "noResults": "スキルが見つかりません。別の検索語をお試しください。",
+      "author": "作成者",
+      "installs": "インストール数",
+      "install": "インストール",
+      "installSuccess": "スキル「{{name}}」が正常にインストールされました。",
+      "installError": "ClawHubからのスキルのインストールに失敗しました。",
+      "searchError": "ClawHubの検索に失敗しました。もう一度お試しください。"
+    }
   },
   "workflow": {
     "title": "ワークフローモード",

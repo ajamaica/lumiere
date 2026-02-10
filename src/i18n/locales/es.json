@@ -205,7 +205,20 @@
     "created": "Creada",
     "updated": "Actualizada",
     "openClawOnly": "Solo OpenClaw",
-    "openClawOnlyDescription": "Las habilidades solo están disponibles para servidores OpenClaw."
+    "openClawOnlyDescription": "Las habilidades solo están disponibles para servidores OpenClaw.",
+    "clawHub": {
+      "title": "ClawHub",
+      "description": "Busca habilidades de la comunidad en ClawHub e instálalas en tu agente.",
+      "searchPlaceholder": "Buscar habilidades en ClawHub...",
+      "search": "Buscar",
+      "noResults": "No se encontraron habilidades. Prueba con otro término de búsqueda.",
+      "author": "Autor",
+      "installs": "Instalaciones",
+      "install": "Instalar",
+      "installSuccess": "La habilidad \"{{name}}\" se instaló correctamente.",
+      "installError": "Error al instalar la habilidad desde ClawHub.",
+      "searchError": "Error al buscar en ClawHub. Por favor, inténtalo de nuevo."
+    }
   },
   "workflow": {
     "title": "Modo Workflow",

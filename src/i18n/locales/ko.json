@@ -205,7 +205,20 @@
     "created": "생성일",
     "updated": "수정일",
     "openClawOnly": "OpenClaw 전용",
-    "openClawOnlyDescription": "스킬은 OpenClaw 서버에서만 사용할 수 있습니다."
+    "openClawOnlyDescription": "스킬은 OpenClaw 서버에서만 사용할 수 있습니다.",
+    "clawHub": {
+      "title": "ClawHub",
+      "description": "ClawHub에서 커뮤니티 스킬을 검색하고 에이전트에 설치하세요.",
+      "searchPlaceholder": "ClawHub 스킬 검색...",
+      "search": "검색",
+      "noResults": "스킬을 찾을 수 없습니다. 다른 검색어를 시도해 보세요.",
+      "author": "작성자",
+      "installs": "설치 수",
+      "install": "설치",
+      "installSuccess": "스킬 \"{{name}}\"이(가) 성공적으로 설치되었습니다.",
+      "installError": "ClawHub에서 스킬 설치에 실패했습니다.",
+      "searchError": "ClawHub 검색에 실패했습니다. 다시 시도해 주세요."
+    }
   },
   "workflow": {
     "title": "워크플로 모드",
