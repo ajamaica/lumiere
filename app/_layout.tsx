@@ -4,7 +4,7 @@ import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { AppState, AppStateStatus, View } from 'react-native'
+import { AppState, AppStateStatus, Platform, View } from 'react-native'
 
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { ErrorBoundary } from '../src/components/ui'
@@ -19,6 +19,21 @@ import { ThemeProvider, useTheme } from '../src/theme'
 import { KeyboardProvider } from '../src/utils/KeyboardProvider'
 
 SplashScreen.preventAutoHideAsync()
+
+// Load Ionicons font on web via CSS @font-face.
+// The font file lives in public/fonts/ and is copied to dist/fonts/ during export.
+// This avoids the broken bundled path through pnpm's node_modules that Cloudflare Pages can't serve.
+if (Platform.OS === 'web' && typeof document !== 'undefined') {
+  const style = document.createElement('style')
+  style.textContent = `
+    @font-face {
+      font-family: 'Ionicons';
+      src: url('/fonts/Ionicons.ttf') format('truetype');
+      font-display: swap;
+    }
+  `
+  document.head.appendChild(style)
+}
 
 function AppContent() {
   const { theme } = useTheme()
