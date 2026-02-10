@@ -21,7 +21,7 @@
     "noServersConfigured": "Keine Server konfiguriert",
     "general": "Allgemein",
     "colors": "Farben",
-    "faceId": "Face ID",
+    "biometrics": "Biometrie",
     "notifications": "Benachrichtigungen",
     "favorites": "Favoriten",
     "triggers": "Auslöser",
@@ -42,7 +42,7 @@
       "unavailableMessage": "Biometrische Authentifizierung ist auf diesem Gerät nicht verfügbar.",
       "notEnrolled": "Nicht registriert",
       "notEnrolledMessage": "Auf diesem Gerät sind keine biometrischen Daten registriert.",
-      "enablePrompt": "Authentifizieren Sie sich, um die Face ID-Sperre zu aktivieren"
+      "enablePrompt": "Authentifizieren Sie sich, um die biometrische Sperre zu aktivieren"
     },
     "language": "Sprache",
     "backupRestore": "Sicherung & Wiederherstellung",

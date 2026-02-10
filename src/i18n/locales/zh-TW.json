@@ -21,7 +21,7 @@
     "noServersConfigured": "未設定伺服器",
     "general": "一般",
     "colors": "顏色",
-    "faceId": "Face ID",
+    "biometrics": "生物辨識",
     "notifications": "通知",
     "favorites": "收藏",
     "triggers": "觸發器",
@@ -42,7 +42,7 @@
       "unavailableMessage": "此裝置不支援生物辨識認證。",
       "notEnrolled": "未註冊",
       "notEnrolledMessage": "此裝置未註冊生物辨識憑證。",
-      "enablePrompt": "請驗證以啟用 Face ID 鎖定"
+      "enablePrompt": "請驗證以啟用生物辨識鎖定"
     },
     "language": "語言",
     "backupRestore": "備份與還原",

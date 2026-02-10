@@ -21,7 +21,7 @@
     "noServersConfigured": "Nenhum servidor configurado",
     "general": "Geral",
     "colors": "Cores",
-    "faceId": "Face ID",
+    "biometrics": "Biometria",
     "notifications": "Notificações",
     "favorites": "Favoritos",
     "triggers": "Gatilhos",
@@ -42,7 +42,7 @@
       "unavailableMessage": "A autenticação biométrica não está disponível neste dispositivo.",
       "notEnrolled": "Não cadastrado",
       "notEnrolledMessage": "Nenhuma credencial biométrica cadastrada neste dispositivo.",
-      "enablePrompt": "Autentique-se para ativar o bloqueio por Face ID"
+      "enablePrompt": "Autentique-se para ativar o bloqueio biométrico"
     },
     "language": "Idioma",
     "backupRestore": "Backup e Restauração",

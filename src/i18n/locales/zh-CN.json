@@ -21,7 +21,7 @@
     "noServersConfigured": "未配置服务器",
     "general": "通用",
     "colors": "颜色",
-    "faceId": "面容 ID",
+    "biometrics": "生物识别",
     "notifications": "通知",
     "favorites": "收藏",
     "triggers": "触发器",
@@ -42,7 +42,7 @@
       "unavailableMessage": "此设备不支持生物识别认证。",
       "notEnrolled": "未注册",
       "notEnrolledMessage": "此设备未注册生物识别凭证。",
-      "enablePrompt": "请验证以启用面容 ID 锁定"
+      "enablePrompt": "请验证以启用生物识别锁定"
     },
     "language": "语言",
     "backupRestore": "备份与恢复",

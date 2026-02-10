@@ -21,7 +21,7 @@
     "noServersConfigured": "कोई सर्वर कॉन्फ़िगर नहीं किया गया",
     "general": "सामान्य",
     "colors": "रंग",
-    "faceId": "Face ID",
+    "biometrics": "बायोमेट्रिक्स",
     "notifications": "सूचनाएं",
     "favorites": "पसंदीदा",
     "triggers": "ट्रिगर",
@@ -42,7 +42,7 @@
       "unavailableMessage": "इस डिवाइस पर बायोमेट्रिक प्रमाणीकरण उपलब्ध नहीं है।",
       "notEnrolled": "नामांकित नहीं",
       "notEnrolledMessage": "इस डिवाइस पर कोई बायोमेट्रिक क्रेडेंशियल नामांकित नहीं है।",
-      "enablePrompt": "Face ID लॉक सक्षम करने के लिए प्रमाणित करें"
+      "enablePrompt": "बायोमेट्रिक लॉक सक्षम करने के लिए प्रमाणित करें"
     },
     "language": "भाषा",
     "backupRestore": "बैकअप और रिस्टोर",
