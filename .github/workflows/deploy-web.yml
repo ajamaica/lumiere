@@ -54,7 +54,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          packageManager: npm
+          packageManager: pnpm
           wranglerVersion: '3'
           preCommands: |
             wrangler pages project create lumiere-webapp --production-branch=main || true
