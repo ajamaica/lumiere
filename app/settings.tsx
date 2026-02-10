@@ -14,6 +14,7 @@ import { getProviderIcon } from '../src/config/providerOptions'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
 import { backgroundCheckTask } from '../src/services/notifications'
+import { ENABLE_WORKFLOW_MODE } from '../src/services/workflow'
 import {
   backgroundNotificationsEnabledAtom,
   biometricLockEnabledAtom,
@@ -271,12 +272,14 @@ export default function SettingsScreen() {
             label={t('settings.triggers')}
             onPress={() => router.push('/triggers')}
           />
-          <SettingRow
-            icon="folder-open-outline"
-            label={t('settings.workflowMode')}
-            onPress={() => router.push('/workflow')}
-            showDivider={false}
-          />
+          {ENABLE_WORKFLOW_MODE && (
+            <SettingRow
+              icon="folder-open-outline"
+              label={t('settings.workflowMode')}
+              onPress={() => router.push('/workflow')}
+              showDivider={false}
+            />
+          )}
         </Section>
 
         {/* Backup & Restore */}

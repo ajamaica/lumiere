@@ -1,7 +1,11 @@
 import { useAtom } from 'jotai'
 import { useCallback } from 'react'
 
-import { buildWorkflowContext, formatWorkflowContextPrefix } from '../services/workflow'
+import {
+  buildWorkflowContext,
+  ENABLE_WORKFLOW_MODE,
+  formatWorkflowContextPrefix,
+} from '../services/workflow'
 import { currentSessionKeyAtom, workflowConfigAtom } from '../store'
 import { logger } from '../utils/logger'
 
@@ -18,7 +22,7 @@ export function useWorkflowContext() {
   const [workflowConfigs] = useAtom(workflowConfigAtom)
 
   const config = workflowConfigs[currentSessionKey]
-  const isActive = config?.enabled && config.files.length > 0
+  const isActive = ENABLE_WORKFLOW_MODE && config?.enabled && config.files.length > 0
 
   /**
    * Prepend workflow document context to a user message.

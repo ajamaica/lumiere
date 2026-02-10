@@ -5,15 +5,15 @@ import { logger } from '../utils/logger'
 
 const workflowLogger = logger.create('Workflow')
 
+/**
+ * Feature flag for the entire workflow mode feature.
+ * When false, all workflow UI entry points and context injection are disabled.
+ * Set to true to enable workflow mode across the app.
+ */
+export const ENABLE_WORKFLOW_MODE = false
+
 /** Maximum size (in bytes) of a single file we'll read into context */
 const MAX_FILE_SIZE = 100_000 // ~100 KB
-
-/**
- * Feature flag: when false, cumulative limits are not enforced and
- * buildWorkflowContext behaves as if there is no total budget.
- * Set to true to enable MAX_TOTAL_CONTEXT_CHARS and MAX_FILE_COUNT guards.
- */
-const ENABLE_CUMULATIVE_LIMITS = false
 
 /** Maximum cumulative size (in characters) of all file contents combined */
 const MAX_TOTAL_CONTEXT_CHARS = 500_000 // ~500 K characters
@@ -128,7 +128,7 @@ export async function buildWorkflowContext(files: WorkflowFile[]): Promise<FileC
   let totalChars = 0
 
   for (const file of textFiles) {
-    if (ENABLE_CUMULATIVE_LIMITS && results.length >= MAX_FILE_COUNT) {
+    if (results.length >= MAX_FILE_COUNT) {
       workflowLogger.info(
         `Reached max file count (${MAX_FILE_COUNT}), skipping remaining ${textFiles.length - results.length} file(s)`,
       )
@@ -138,7 +138,7 @@ export async function buildWorkflowContext(files: WorkflowFile[]): Promise<FileC
     const content = await readWorkflowFile(file)
     if (!content) continue
 
-    if (ENABLE_CUMULATIVE_LIMITS && totalChars + content.length > MAX_TOTAL_CONTEXT_CHARS) {
+    if (totalChars + content.length > MAX_TOTAL_CONTEXT_CHARS) {
       workflowLogger.info(
         `Skipping ${file.name}: would exceed total context budget (${totalChars} + ${content.length} > ${MAX_TOTAL_CONTEXT_CHARS})`,
       )

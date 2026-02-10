@@ -9,6 +9,7 @@ import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/componen
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { ProviderConfig, readSessionIndex, SessionIndexEntry } from '../src/services/providers'
+import { ENABLE_WORKFLOW_MODE } from '../src/services/workflow'
 import {
   clearMessagesAtom,
   currentSessionKeyAtom,
@@ -268,15 +269,17 @@ export default function SessionsScreen() {
             <Text style={styles.actionText}>Reset Current Session</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/workflow')}>
-            <Ionicons
-              name={workflowEnabled ? 'folder-open' : 'folder-open-outline'}
-              size={22}
-              color={workflowEnabled ? theme.colors.primary : theme.colors.text.secondary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>Workflow Mode{workflowEnabled ? ' (On)' : ''}</Text>
-          </TouchableOpacity>
+          {ENABLE_WORKFLOW_MODE && (
+            <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/workflow')}>
+              <Ionicons
+                name={workflowEnabled ? 'folder-open' : 'folder-open-outline'}
+                size={22}
+                color={workflowEnabled ? theme.colors.primary : theme.colors.text.secondary}
+                style={styles.actionIcon}
+              />
+              <Text style={styles.actionText}>Workflow Mode{workflowEnabled ? ' (On)' : ''}</Text>
+            </TouchableOpacity>
+          )}
         </Section>
 
         {/* Available sessions - shown for all providers */}
