@@ -221,6 +221,10 @@
       "installMessage": "「{{name}}」というスキルを学んでください：{{description}}\n\n{{content}}"
     }
   },
+  "colors": {
+    "appearance": "外観",
+    "colorTheme": "カラーテーマ"
+  },
   "workflow": {
     "title": "ワークフローモード",
     "enableWorkflowMode": "ワークフローモードを有効化",

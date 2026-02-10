@@ -221,6 +221,10 @@
       "installMessage": "Lerne diese Fähigkeit namens \"{{name}}\": {{description}}\n\n{{content}}"
     }
   },
+  "colors": {
+    "appearance": "Erscheinungsbild",
+    "colorTheme": "Farbthema"
+  },
   "workflow": {
     "title": "Workflow-Modus",
     "enableWorkflowMode": "Workflow-Modus aktivieren",

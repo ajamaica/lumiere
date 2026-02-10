@@ -221,6 +221,10 @@
       "installMessage": "Aprende esta habilidad llamada \"{{name}}\": {{description}}\n\n{{content}}"
     }
   },
+  "colors": {
+    "appearance": "Apariencia",
+    "colorTheme": "Tema de Color"
+  },
   "workflow": {
     "title": "Modo Workflow",
     "enableWorkflowMode": "Activar Modo Workflow",

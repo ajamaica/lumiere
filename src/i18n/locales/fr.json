@@ -221,6 +221,10 @@
       "installMessage": "Apprends cette compétence appelée \"{{name}}\" : {{description}}\n\n{{content}}"
     }
   },
+  "colors": {
+    "appearance": "Apparence",
+    "colorTheme": "Thème de Couleur"
+  },
   "workflow": {
     "title": "Mode Workflow",
     "enableWorkflowMode": "Activer le Mode Workflow",

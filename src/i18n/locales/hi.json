@@ -221,6 +221,10 @@
       "installMessage": "\"{{name}}\" नामक यह कौशल सीखें: {{description}}\n\n{{content}}"
     }
   },
+  "colors": {
+    "appearance": "दिखावट",
+    "colorTheme": "रंग थीम"
+  },
   "workflow": {
     "title": "वर्कफ़्लो मोड",
     "enableWorkflowMode": "वर्कफ़्लो मोड सक्षम करें",

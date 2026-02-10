@@ -36,7 +36,7 @@ import { useTheme } from '../src/theme'
 import { colorThemes } from '../src/theme/colors'
 
 export default function SettingsScreen() {
-  const { theme, themeMode, setThemeMode, colorTheme } = useTheme()
+  const { theme, colorTheme } = useTheme()
   const router = useRouter()
   const { t } = useTranslation()
   const { currentLanguageName } = useLanguage()
@@ -77,26 +77,6 @@ export default function SettingsScreen() {
     } else {
       setBiometricLockEnabled(false)
     }
-  }
-
-  const getThemeLabel = () => {
-    switch (themeMode) {
-      case 'light':
-        return t('settings.theme.light')
-      case 'dark':
-        return t('settings.theme.dark')
-      case 'system':
-        return t('settings.theme.system')
-      default:
-        return t('settings.theme.system')
-    }
-  }
-
-  const handleThemeToggle = () => {
-    const modes = ['light', 'dark', 'system'] as const
-    const currentIndex = modes.indexOf(themeMode)
-    const nextIndex = (currentIndex + 1) % modes.length
-    setThemeMode(modes[nextIndex])
   }
 
   const handleTestNotifications = async () => {
@@ -240,12 +220,6 @@ export default function SettingsScreen() {
 
         {/* Main settings group */}
         <Section showDivider>
-          <SettingRow
-            icon="settings-outline"
-            label={t('settings.general')}
-            onPress={handleThemeToggle}
-            value={getThemeLabel()}
-          />
           <SettingRow
             icon="color-palette-outline"
             label={t('settings.colors')}

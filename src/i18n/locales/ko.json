@@ -221,6 +221,10 @@
       "installMessage": "\"{{name}}\"이라는 스킬을 배우세요: {{description}}\n\n{{content}}"
     }
   },
+  "colors": {
+    "appearance": "외관",
+    "colorTheme": "색상 테마"
+  },
   "workflow": {
     "title": "워크플로 모드",
     "enableWorkflowMode": "워크플로 모드 활성화",

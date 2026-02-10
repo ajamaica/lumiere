@@ -221,6 +221,10 @@
       "installMessage": "学习这个名为\"{{name}}\"的技能：{{description}}\n\n{{content}}"
     }
   },
+  "colors": {
+    "appearance": "外观",
+    "colorTheme": "颜色主题"
+  },
   "workflow": {
     "title": "工作流模式",
     "enableWorkflowMode": "启用工作流模式",
