@@ -7,8 +7,11 @@ const TABLET_MIN_WIDTH = 768
  * Check if the current device is a tablet based on screen dimensions
  */
 export function isTablet(): boolean {
-  if (Platform.OS === 'web') return false
   const { width, height } = Dimensions.get('window')
+  // On web, use viewport width directly since the browser window isn't rotated
+  if (Platform.OS === 'web') {
+    return width >= TABLET_MIN_WIDTH
+  }
   const minDimension = Math.min(width, height)
   return minDimension >= TABLET_MIN_WIDTH
 }
@@ -110,7 +113,9 @@ export function useDeviceType(): DeviceType {
         }
 
         // Fall back to tablet or phone
-        setDeviceType(minDimension >= TABLET_MIN_WIDTH ? 'tablet' : 'phone')
+        // On web, use width directly since browser windows aren't rotated
+        const effectiveSize = Platform.OS === 'web' ? width : minDimension
+        setDeviceType(effectiveSize >= TABLET_MIN_WIDTH ? 'tablet' : 'phone')
       },
     )
 
