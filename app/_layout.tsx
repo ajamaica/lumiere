@@ -27,7 +27,7 @@ function AppContent() {
   const [isUnlocked, setIsUnlocked] = useState(false)
   const appState = useRef(AppState.currentState)
   const isLocked = biometricLockEnabled && !isUnlocked
-  useDeepLinking(isLocked)
+  useDeepLinking(isLocked, onboardingCompleted)
   useNotifications()
   useQuickActions()
   useAppleShortcuts()

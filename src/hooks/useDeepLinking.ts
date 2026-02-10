@@ -54,12 +54,10 @@ function parseDeepLink(url: string): DeepLinkResult | TriggerResult | null {
     const parsed = Linking.parse(url)
     const path = parsed.path?.replace(/^\/+/, '').replace(/\/+$/, '') ?? ''
 
+    // Ignore empty/root paths — navigating to '/' is a no-op that causes
+    // redirect loops on web where getInitialURL() returns the browser URL.
     if (!path || path === '') {
-      return {
-        type: 'navigate',
-        route: '/',
-        params: (parsed.queryParams as Record<string, string>) ?? {},
-      }
+      return null
     }
     // Match trigger deep links: lumiere://trigger/autotrigger/{slug}
     const triggerMatch = path.match(/^autotrigger\/([a-zA-Z0-9]{8})$/)
@@ -104,7 +102,7 @@ async function executeTrigger(slug: string) {
  * @param isLocked – when true (biometric lock active), deep links are queued
  *                   and processed once the app is unlocked.
  */
-export function useDeepLinking(isLocked: boolean) {
+export function useDeepLinking(isLocked: boolean, onboardingCompleted = true) {
   const router = useRouter()
   // Subscribe to triggers atom to ensure hydration completes before handling URLs
   // This matches the pattern used by useQuickActions for reliable trigger execution
@@ -139,21 +137,23 @@ export function useDeepLinking(isLocked: boolean) {
 
   // Process any queued deep link once triggers are hydrated and app is unlocked
   useEffect(() => {
-    // Wait for triggers to be hydrated (not a Promise) and app unlocked
+    // Wait for triggers to be hydrated (not a Promise), app unlocked, and onboarding done
     if (triggers instanceof Promise) return
     if (isLocked) return
+    if (!onboardingCompleted) return
     if (!pendingUrlRef.current) return
 
     const url = pendingUrlRef.current
     pendingUrlRef.current = null
     handleUrl(url)
-  }, [triggers, isLocked, handleUrl])
+  }, [triggers, isLocked, onboardingCompleted, handleUrl])
 
   // Handle cold start: check initial URL once triggers are hydrated
   useEffect(() => {
-    // Skip if already handled or triggers not hydrated yet
+    // Skip if already handled, triggers not hydrated, or onboarding not done
     if (initialUrlHandledRef.current) return
     if (triggers instanceof Promise) return
+    if (!onboardingCompleted) return
 
     const handleInitialURL = async () => {
       const initialUrl = await Linking.getInitialURL()
@@ -168,7 +168,7 @@ export function useDeepLinking(isLocked: boolean) {
       }
     }
     handleInitialURL()
-  }, [triggers, handleUrl])
+  }, [triggers, onboardingCompleted, handleUrl])
 
   // Listen for URLs received while app is in foreground/background
   useEffect(() => {
