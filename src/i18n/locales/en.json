@@ -113,22 +113,6 @@
     "authFailed": "Authentication failed. Tap to try again.",
     "tryAgain": "Try Again"
   },
-  "onboarding": {
-    "step1": {
-      "title": "Your AI agents, always at your fingertips",
-      "description": "Chat with your agents on the go with a beautiful mobile interface. Monitor conversations, send messages, and stay connected from anywhere."
-    },
-    "step2": {
-      "title": "Full control, powerful features",
-      "description": "Manage multiple servers and switch between sessions instantly. Schedule tasks with cron jobs, get real-time notifications, and stay in command of your workflow."
-    },
-    "step3": {
-      "title": "Fully customizable, fit your needs",
-      "description": "Connect to OpenClaw, Ollama, Claude, OpenAI and more. Personalize themes, configure custom triggers, and tailor every detail to match your workflow."
-    },
-    "continue": "Continue",
-    "getStarted": "Get Started"
-  },
   "sessions": {
     "title": "Sessions",
     "newSession": "New Session",

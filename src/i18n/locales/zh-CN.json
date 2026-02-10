@@ -113,22 +113,6 @@
     "authFailed": "认证失败。点击重试。",
     "tryAgain": "重试"
   },
-  "onboarding": {
-    "step1": {
-      "title": "你的 AI 代理，触手可及",
-      "description": "通过精美的移动界面随时随地与代理聊天。监控对话、发送消息，无论身在何处都能保持连接。"
-    },
-    "step2": {
-      "title": "全面掌控，强大功能",
-      "description": "管理多个服务器，即时切换会话。使用定时任务调度，获取实时通知，全面掌控你的工作流程。"
-    },
-    "step3": {
-      "title": "完全可定制，满足你的需求",
-      "description": "连接 OpenClaw、Ollama、Claude、OpenAI 等。个性化主题，配置自定义触发器，调整每一个细节以匹配你的工作流程。"
-    },
-    "continue": "继续",
-    "getStarted": "开始使用"
-  },
   "sessions": {
     "title": "会话",
     "newSession": "新建会话",
