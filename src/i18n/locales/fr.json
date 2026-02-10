@@ -112,17 +112,18 @@
   },
   "onboarding": {
     "step1": {
-      "title": "Gérer vos agents n'a jamais été aussi simple",
-      "description": "Lumiere vous offre une belle interface mobile pour interagir avec vos agents IA en déplacement. Surveillez les conversations, envoyez des messages et restez connecté où que vous soyez."
+      "title": "Vos agents IA, toujours à portée de main",
+      "description": "Discutez avec vos agents en déplacement grâce à une interface mobile élégante. Surveillez les conversations, envoyez des messages et restez connecté où que vous soyez."
     },
     "step2": {
-      "title": "Contrôle total avec des fonctionnalités puissantes",
-      "description": "Gérez plusieurs serveurs, passez d'une session à l'autre, planifiez des tâches avec des cron jobs et recevez des notifications en temps réel. Tout ce dont vous avez besoin pour garder le contrôle."
+      "title": "Contrôle total, fonctionnalités puissantes",
+      "description": "Gérez plusieurs serveurs et passez d'une session à l'autre instantanément. Planifiez des tâches avec des cron jobs, recevez des notifications en temps réel et gardez le contrôle de votre flux de travail."
     },
     "step3": {
-      "title": "Hautement configurable pour des besoins personnalisés",
-      "description": "Connectez-vous à OpenClaw, Ollama ou aux fournisseurs Echo. Personnalisez les thèmes, configurez des déclencheurs de liens profonds et adaptez l'expérience à votre flux de travail."
+      "title": "Entièrement personnalisable, à votre image",
+      "description": "Connectez-vous à OpenClaw, Ollama, Claude, OpenAI et plus encore. Personnalisez les thèmes, configurez des déclencheurs personnalisés et ajustez chaque détail à votre flux de travail."
     },
+    "continue": "Continuer",
     "getStarted": "Commencer"
   },
   "sessions": {

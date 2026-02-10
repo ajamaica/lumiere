@@ -112,17 +112,18 @@
   },
   "onboarding": {
     "step1": {
-      "title": "Die Verwaltung Ihrer Agenten ist einfacher denn je",
-      "description": "Lumiere bietet Ihnen eine schöne mobile Oberfläche, um unterwegs mit Ihren KI-Agenten zu interagieren. Überwachen Sie Gespräche, senden Sie Nachrichten und bleiben Sie von überall verbunden."
+      "title": "Ihre KI-Agenten, immer griffbereit",
+      "description": "Chatten Sie unterwegs mit Ihren Agenten über eine elegante mobile Oberfläche. Überwachen Sie Gespräche, senden Sie Nachrichten und bleiben Sie von überall verbunden."
     },
     "step2": {
-      "title": "Volle Kontrolle mit leistungsstarken Funktionen",
-      "description": "Verwalten Sie mehrere Server, wechseln Sie zwischen Sitzungen, planen Sie Aufgaben mit Cron-Jobs und erhalten Sie Echtzeit-Benachrichtigungen. Alles, was Sie brauchen, um die Kontrolle zu behalten."
+      "title": "Volle Kontrolle, leistungsstarke Funktionen",
+      "description": "Verwalten Sie mehrere Server und wechseln Sie sofort zwischen Sitzungen. Planen Sie Aufgaben mit Cron-Jobs, erhalten Sie Echtzeit-Benachrichtigungen und behalten Sie die Kontrolle über Ihren Workflow."
     },
     "step3": {
-      "title": "Hochgradig konfigurierbar für individuelle Bedürfnisse",
-      "description": "Verbinden Sie sich mit OpenClaw-, Ollama- oder Echo-Anbietern. Passen Sie Themes an, richten Sie Deep-Link-Auslöser ein und gestalten Sie das Erlebnis nach Ihrem Workflow."
+      "title": "Vollständig anpassbar, ganz nach Ihren Wünschen",
+      "description": "Verbinden Sie sich mit OpenClaw, Ollama, Claude, OpenAI und mehr. Personalisieren Sie Themes, konfigurieren Sie benutzerdefinierte Auslöser und passen Sie jedes Detail an Ihren Workflow an."
     },
+    "continue": "Weiter",
     "getStarted": "Loslegen"
   },
   "sessions": {
