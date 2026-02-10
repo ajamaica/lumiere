@@ -217,7 +217,8 @@
       "install": "インストール",
       "installSuccess": "スキル「{{name}}」が正常にインストールされました。",
       "installError": "ClawHubからのスキルのインストールに失敗しました。",
-      "searchError": "ClawHubの検索に失敗しました。もう一度お試しください。"
+      "searchError": "ClawHubの検索に失敗しました。もう一度お試しください。",
+      "installMessage": "「{{name}}」というスキルを学んでください：{{description}}\n\n{{content}}"
     }
   },
   "workflow": {

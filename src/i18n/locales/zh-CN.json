@@ -217,7 +217,8 @@
       "install": "安装",
       "installSuccess": "技能「{{name}}」安装成功。",
       "installError": "从 ClawHub 安装技能失败。",
-      "searchError": "ClawHub 搜索失败。请重试。"
+      "searchError": "ClawHub 搜索失败。请重试。",
+      "installMessage": "学习这个名为\"{{name}}\"的技能：{{description}}\n\n{{content}}"
     }
   },
   "workflow": {

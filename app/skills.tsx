@@ -1,4 +1,5 @@
 import { useRouter } from 'expo-router'
+import { useSetAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, TextInput, View } from 'react-native'
@@ -9,6 +10,7 @@ import { useServers } from '../src/hooks/useServers'
 import { getClawHubSkillContent, searchClawHubSkills } from '../src/services/clawhub/api'
 import { useMoltGateway } from '../src/services/molt'
 import { ClawHubSkill, Skill } from '../src/services/molt/types'
+import { pendingTriggerMessageAtom } from '../src/store/atoms'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
 
@@ -33,6 +35,7 @@ export default function SkillsScreen() {
   const [clawHubSearching, setClawHubSearching] = useState(false)
   const [clawHubSearched, setClawHubSearched] = useState(false)
   const [installingSkill, setInstallingSkill] = useState<string | null>(null)
+  const setPendingTriggerMessage = useSetAtom(pendingTriggerMessageAtom)
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -149,13 +152,13 @@ export default function SkillsScreen() {
     setInstallingSkill(skill.name)
     try {
       const content = await getClawHubSkillContent(skill.slug)
-      await teachSkill({
+      const message = t('skills.clawHub.installMessage', {
         name: skill.name,
         description: skill.description,
         content,
       })
-      await fetchSkills()
-      Alert.alert(t('common.success'), t('skills.clawHub.installSuccess', { name: skill.name }))
+      setPendingTriggerMessage(message)
+      router.dismissAll()
     } catch (err) {
       skillsLogger.logError('Failed to install ClawHub skill', err)
       Alert.alert(t('common.error'), t('skills.clawHub.installError'))

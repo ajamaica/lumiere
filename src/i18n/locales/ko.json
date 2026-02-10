@@ -217,7 +217,8 @@
       "install": "설치",
       "installSuccess": "스킬 \"{{name}}\"이(가) 성공적으로 설치되었습니다.",
       "installError": "ClawHub에서 스킬 설치에 실패했습니다.",
-      "searchError": "ClawHub 검색에 실패했습니다. 다시 시도해 주세요."
+      "searchError": "ClawHub 검색에 실패했습니다. 다시 시도해 주세요.",
+      "installMessage": "\"{{name}}\"이라는 스킬을 배우세요: {{description}}\n\n{{content}}"
     }
   },
   "workflow": {
