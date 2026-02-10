@@ -8,6 +8,7 @@ export type ProviderType =
   | 'apple'
   | 'claude'
   | 'openai'
+  | 'openai-compatible'
   | 'openrouter'
   | 'gemini-nano'
   | 'gemini'

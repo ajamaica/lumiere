@@ -27,6 +27,7 @@ export function getProviderIcon(type: ProviderType, color: string): React.ReactN
     ollama: OllamaIcon,
     claude: ClaudeIcon,
     openai: OpenAIIcon,
+    'openai-compatible': OpenAIIcon,
     openrouter: OpenRouterIcon,
     apple: AppleIcon,
     echo: EchoIcon,
@@ -45,6 +46,11 @@ export function getAllProviderOptions(color: string) {
     { value: 'ollama', label: 'Ollama', icon: getProviderIcon('ollama', color) },
     { value: 'claude', label: 'Claude', icon: getProviderIcon('claude', color) },
     { value: 'openai', label: 'OpenAI', icon: getProviderIcon('openai', color) },
+    {
+      value: 'openai-compatible',
+      label: 'OpenAI Compatible',
+      icon: getProviderIcon('openai-compatible', color),
+    },
     { value: 'openrouter', label: 'OpenRouter', icon: getProviderIcon('openrouter', color) },
     { value: 'gemini', label: 'Gemini', icon: getProviderIcon('gemini', color) },
     ...(Platform.OS === 'ios'
@@ -88,6 +94,11 @@ export function getBasicProviderOptions(color: string) {
       value: 'openai' as ProviderType,
       label: 'OpenAI',
       icon: getProviderIcon('openai', color),
+    },
+    {
+      value: 'openai-compatible' as ProviderType,
+      label: 'OpenAI Compatible',
+      icon: getProviderIcon('openai-compatible', color),
     },
     {
       value: 'openrouter' as ProviderType,

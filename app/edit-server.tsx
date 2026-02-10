@@ -66,6 +66,11 @@ export default function EditServerScreen() {
       return
     }
 
+    if (providerType === 'openai-compatible' && !url.trim()) {
+      Alert.alert('Error', 'URL is required')
+      return
+    }
+
     let effectiveUrl = url.trim()
     if (providerType === 'echo') {
       effectiveUrl = ''
@@ -218,23 +223,31 @@ export default function EditServerScreen() {
                           ? 'My Claude'
                           : providerType === 'openai'
                             ? 'My OpenAI'
-                            : providerType === 'openrouter'
-                              ? 'My OpenRouter'
-                              : 'My Server'
+                            : providerType === 'openai-compatible'
+                              ? 'My OpenAI Compatible'
+                              : providerType === 'openrouter'
+                                ? 'My OpenRouter'
+                                : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
             />
           </View>
 
-          {(providerType === 'molt' || providerType === 'ollama') && (
+          {(providerType === 'molt' ||
+            providerType === 'ollama' ||
+            providerType === 'openai-compatible') && (
             <View style={styles.formRow}>
               <TextInput
                 label="URL"
                 value={url}
                 onChangeText={setUrl}
                 placeholder={
-                  providerType === 'ollama' ? 'http://localhost:11434' : 'wss://gateway.example.com'
+                  providerType === 'ollama'
+                    ? 'http://localhost:11434'
+                    : providerType === 'openai-compatible'
+                      ? 'https://api.example.com'
+                      : 'wss://gateway.example.com'
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -282,6 +295,7 @@ export default function EditServerScreen() {
 
           {(providerType === 'claude' ||
             providerType === 'openai' ||
+            providerType === 'openai-compatible' ||
             providerType === 'openrouter') && (
             <>
               <View style={styles.formRow}>
@@ -360,7 +374,7 @@ export default function EditServerScreen() {
                     value={model}
                     onChangeText={setModel}
                     placeholder={
-                      providerType === 'openai'
+                      providerType === 'openai' || providerType === 'openai-compatible'
                         ? 'gpt-4o'
                         : providerType === 'openrouter'
                           ? 'openai/gpt-4o'
