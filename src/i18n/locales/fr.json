@@ -21,7 +21,7 @@
     "noServersConfigured": "Aucun serveur configuré",
     "general": "Général",
     "colors": "Couleurs",
-    "faceId": "Face ID",
+    "biometrics": "Biométrie",
     "notifications": "Notifications",
     "favorites": "Favoris",
     "triggers": "Déclencheurs",
@@ -42,7 +42,7 @@
       "unavailableMessage": "L'authentification biométrique n'est pas disponible sur cet appareil.",
       "notEnrolled": "Non configuré",
       "notEnrolledMessage": "Aucune donnée biométrique n'est enregistrée sur cet appareil.",
-      "enablePrompt": "Authentifiez-vous pour activer le verrouillage Face ID"
+      "enablePrompt": "Authentifiez-vous pour activer le verrouillage biométrique"
     },
     "language": "Langue",
     "backupRestore": "Sauvegarde et Restauration",

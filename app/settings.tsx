@@ -239,8 +239,8 @@ export default function SettingsScreen() {
             onPress={() => router.push('/colors')}
           />
           <SettingRow
-            icon="scan-outline"
-            label={t('settings.faceId')}
+            icon="finger-print-outline"
+            label={t('settings.biometrics')}
             switchValue={biometricLockEnabled}
             onSwitchChange={handleBiometricToggle}
           />

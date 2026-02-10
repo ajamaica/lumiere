@@ -21,7 +21,7 @@
     "noServersConfigured": "サーバーが設定されていません",
     "general": "一般",
     "colors": "カラー",
-    "faceId": "Face ID",
+    "biometrics": "生体認証",
     "notifications": "通知",
     "favorites": "お気に入り",
     "triggers": "トリガー",
@@ -42,7 +42,7 @@
       "unavailableMessage": "このデバイスでは生体認証を利用できません。",
       "notEnrolled": "未登録",
       "notEnrolledMessage": "このデバイスに生体認証情報が登録されていません。",
-      "enablePrompt": "Face IDロックを有効にするには認証してください"
+      "enablePrompt": "生体認証ロックを有効にするには認証してください"
     },
     "language": "言語",
     "backupRestore": "バックアップと復元",

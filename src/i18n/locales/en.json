@@ -21,7 +21,7 @@
     "noServersConfigured": "No servers configured",
     "general": "General",
     "colors": "Colors",
-    "faceId": "Face ID",
+    "biometrics": "Biometrics",
     "notifications": "Notifications",
     "favorites": "Favorites",
     "triggers": "Triggers",
@@ -43,7 +43,7 @@
       "unavailableMessage": "Biometric authentication is not available on this device.",
       "notEnrolled": "Not Enrolled",
       "notEnrolledMessage": "No biometric credentials are enrolled on this device.",
-      "enablePrompt": "Authenticate to enable Face ID lock"
+      "enablePrompt": "Authenticate to enable biometric lock"
     },
     "language": "Language",
     "backupRestore": "Backup & Restore",
