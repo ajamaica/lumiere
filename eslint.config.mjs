@@ -18,6 +18,8 @@ export default [
       'android/**',
       'ios/**',
       'plugins/**',
+      'chrome-extension/**',
+      'scripts/**',
       '*.config.js',
     ],
   },
