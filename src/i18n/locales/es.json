@@ -217,7 +217,8 @@
       "install": "Instalar",
       "installSuccess": "La habilidad \"{{name}}\" se instaló correctamente.",
       "installError": "Error al instalar la habilidad desde ClawHub.",
-      "searchError": "Error al buscar en ClawHub. Por favor, inténtalo de nuevo."
+      "searchError": "Error al buscar en ClawHub. Por favor, inténtalo de nuevo.",
+      "installMessage": "Aprende esta habilidad llamada \"{{name}}\": {{description}}\n\n{{content}}"
     }
   },
   "workflow": {

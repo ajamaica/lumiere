@@ -187,7 +187,8 @@
       "install": "Install",
       "installSuccess": "Skill \"{{name}}\" installed successfully.",
       "installError": "Failed to install skill from ClawHub.",
-      "searchError": "Failed to search ClawHub. Please try again."
+      "searchError": "Failed to search ClawHub. Please try again.",
+      "installMessage": "Learn this skill called \"{{name}}\": {{description}}\n\n{{content}}"
     }
   },
   "gallery": {

@@ -217,7 +217,8 @@
       "install": "Установить",
       "installSuccess": "Навык \"{{name}}\" успешно установлен.",
       "installError": "Не удалось установить навык из ClawHub.",
-      "searchError": "Ошибка поиска в ClawHub. Пожалуйста, попробуйте снова."
+      "searchError": "Ошибка поиска в ClawHub. Пожалуйста, попробуйте снова.",
+      "installMessage": "Изучи навык \"{{name}}\": {{description}}\n\n{{content}}"
     }
   },
   "workflow": {

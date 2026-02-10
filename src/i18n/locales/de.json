@@ -217,7 +217,8 @@
       "install": "Installieren",
       "installSuccess": "Die Fähigkeit \"{{name}}\" wurde erfolgreich installiert.",
       "installError": "Fehler beim Installieren der Fähigkeit von ClawHub.",
-      "searchError": "Fehler bei der ClawHub-Suche. Bitte versuchen Sie es erneut."
+      "searchError": "Fehler bei der ClawHub-Suche. Bitte versuchen Sie es erneut.",
+      "installMessage": "Lerne diese Fähigkeit namens \"{{name}}\": {{description}}\n\n{{content}}"
     }
   },
   "workflow": {

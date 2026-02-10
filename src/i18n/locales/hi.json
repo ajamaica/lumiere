@@ -217,7 +217,8 @@
       "install": "इंस्टॉल करें",
       "installSuccess": "कौशल \"{{name}}\" सफलतापूर्वक इंस्टॉल किया गया।",
       "installError": "ClawHub से कौशल इंस्टॉल करने में विफल।",
-      "searchError": "ClawHub खोज विफल। कृपया पुनः प्रयास करें।"
+      "searchError": "ClawHub खोज विफल। कृपया पुनः प्रयास करें।",
+      "installMessage": "\"{{name}}\" नामक यह कौशल सीखें: {{description}}\n\n{{content}}"
     }
   },
   "workflow": {
