@@ -480,7 +480,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const renderUserBubble = () => (
     <Animated.View style={[styles.userBubbleWrapper, animatedContainerStyle]}>
       <AnimatedLinearGradient
-        colors={['#22D3EE', '#06B6D4', '#0891B2']}
+        colors={[theme.colors.primary, theme.colors.primaryDark, theme.colors.primaryDark]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={[styles.userGradientBubble, animatedGradientStyle]}
@@ -683,7 +683,7 @@ const createStyles = (theme: Theme) =>
       borderRadius: theme.borderRadius.xxl,
       borderBottomRightRadius: theme.borderRadius.sm,
       overflow: 'hidden',
-      shadowColor: '#22D3EE',
+      shadowColor: theme.colors.primary,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.2,
       shadowRadius: 8,
