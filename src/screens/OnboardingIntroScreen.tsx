@@ -1,41 +1,208 @@
 import { LinearGradient } from 'expo-linear-gradient'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
+import Animated, {
+  Easing,
+  interpolate,
+  SharedValue,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated'
 
-import { Button, GradientButton, GradientText, StepIndicator, Text } from '../components/ui'
+import { GradientText, Text } from '../components/ui'
 import { useTheme } from '../theme'
 
 interface OnboardingIntroScreenProps {
-  step: number
-  totalSteps: number
-  title: string
-  description: string
+  index: number
+  scrollX: SharedValue<number>
+  screenWidth: number
+  titleKey: string
+  descriptionKey: string
   Illustration: React.ComponentType
-  onNext: () => void
-  onSkip: () => void
+}
+
+/** Floating gradient orb that drifts and pulses in the background */
+function FloatingOrb({
+  color,
+  size,
+  startX,
+  startY,
+  delay,
+}: {
+  color: string
+  size: number
+  startX: number
+  startY: number
+  delay: number
+}) {
+  const translateY = useSharedValue(0)
+  const translateX = useSharedValue(0)
+  const scale = useSharedValue(1)
+  const opacity = useSharedValue(0)
+
+  useEffect(() => {
+    // Fade in
+    opacity.value = withDelay(delay, withTiming(0.6, { duration: 1000 }))
+
+    // Float vertically
+    translateY.value = withDelay(
+      delay,
+      withRepeat(
+        withSequence(
+          withTiming(-20, { duration: 3000, easing: Easing.inOut(Easing.ease) }),
+          withTiming(20, { duration: 3000, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        true,
+      ),
+    )
+
+    // Drift horizontally
+    translateX.value = withDelay(
+      delay,
+      withRepeat(
+        withSequence(
+          withTiming(15, { duration: 4000, easing: Easing.inOut(Easing.ease) }),
+          withTiming(-15, { duration: 4000, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        true,
+      ),
+    )
+
+    // Pulse scale
+    scale.value = withDelay(
+      delay,
+      withRepeat(
+        withSequence(
+          withTiming(1.2, { duration: 2500, easing: Easing.inOut(Easing.ease) }),
+          withTiming(0.8, { duration: 2500, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        true,
+      ),
+    )
+  }, [delay, opacity, scale, translateX, translateY])
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: translateX.value },
+      { translateY: translateY.value },
+      { scale: scale.value },
+    ],
+    opacity: opacity.value,
+  }))
+
+  return (
+    <Animated.View
+      style={[
+        {
+          position: 'absolute',
+          left: startX,
+          top: startY,
+          width: size,
+          height: size,
+          borderRadius: size / 2,
+          backgroundColor: color,
+        },
+        animatedStyle,
+      ]}
+    />
+  )
 }
 
 export function OnboardingIntroScreen({
-  step,
-  totalSteps,
-  title,
-  description,
+  index,
+  scrollX,
+  screenWidth,
+  titleKey,
+  descriptionKey,
   Illustration,
-  onNext,
-  onSkip,
 }: OnboardingIntroScreenProps) {
   const { theme } = useTheme()
+  const { t } = useTranslation()
+
+  const title = t(titleKey)
+  const description = t(descriptionKey)
 
   // Split title to highlight key words with gradient
   const titleParts = title.split(',')
   const hasComma = titleParts.length > 1
 
+  // Parallax: illustration moves at 0.3x scroll speed (lags behind content)
+  const illustrationStyle = useAnimatedStyle(() => {
+    const inputRange = [(index - 1) * screenWidth, index * screenWidth, (index + 1) * screenWidth]
+
+    const translateX = interpolate(scrollX.value, inputRange, [
+      screenWidth * 0.3,
+      0,
+      -screenWidth * 0.3,
+    ])
+
+    const scale = interpolate(scrollX.value, inputRange, [0.8, 1, 0.8])
+
+    const opacity = interpolate(scrollX.value, inputRange, [0, 1, 0])
+
+    return {
+      transform: [{ translateX }, { scale }],
+      opacity,
+    }
+  })
+
+  // Text slides faster than illustration for parallax depth effect
+  const titleStyle = useAnimatedStyle(() => {
+    const inputRange = [(index - 1) * screenWidth, index * screenWidth, (index + 1) * screenWidth]
+
+    const translateX = interpolate(scrollX.value, inputRange, [
+      screenWidth * 0.5,
+      0,
+      -screenWidth * 0.5,
+    ])
+
+    const opacity = interpolate(scrollX.value, inputRange, [0, 1, 0])
+
+    return {
+      transform: [{ translateX }],
+      opacity,
+    }
+  })
+
+  // Description enters with extra offset for staggered feel
+  const descriptionStyle = useAnimatedStyle(() => {
+    const inputRange = [(index - 1) * screenWidth, index * screenWidth, (index + 1) * screenWidth]
+
+    const translateX = interpolate(scrollX.value, inputRange, [
+      screenWidth * 0.7,
+      0,
+      -screenWidth * 0.7,
+    ])
+
+    const translateY = interpolate(scrollX.value, inputRange, [10, 0, 10])
+
+    const opacity = interpolate(scrollX.value, inputRange, [0, 1, 0])
+
+    return {
+      transform: [{ translateX }, { translateY }],
+      opacity,
+    }
+  })
+
   const styles = StyleSheet.create({
-    container: {
+    page: {
+      width: screenWidth,
       flex: 1,
     },
     gradient: {
       ...StyleSheet.absoluteFillObject,
+    },
+    orbContainer: {
+      ...StyleSheet.absoluteFillObject,
+      overflow: 'hidden',
     },
     content: {
       flex: 1,
@@ -70,22 +237,70 @@ export function OnboardingIntroScreen({
       lineHeight: 24,
       fontSize: theme.typography.fontSize.base,
     },
-    footer: {
-      paddingHorizontal: theme.spacing.xl,
-      paddingBottom: theme.spacing.xl,
-      gap: theme.spacing.md,
-    },
-    primaryButton: {
-      shadowColor: theme.colors.primary,
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.3,
-      shadowRadius: 8,
-      elevation: 8,
-    },
   })
 
+  // Unique orb configurations per screen for visual variety
+  const orbConfigs = [
+    // Screen 1: Cyan-focused orbs
+    [
+      { color: 'rgba(34, 211, 238, 0.15)', size: 120, startX: -20, startY: 80, delay: 0 },
+      {
+        color: 'rgba(168, 85, 247, 0.12)',
+        size: 80,
+        startX: screenWidth - 100,
+        startY: 200,
+        delay: 500,
+      },
+      {
+        color: 'rgba(34, 211, 238, 0.08)',
+        size: 150,
+        startX: screenWidth / 2 - 75,
+        startY: 400,
+        delay: 1000,
+      },
+    ],
+    // Screen 2: Purple-focused orbs
+    [
+      {
+        color: 'rgba(168, 85, 247, 0.15)',
+        size: 100,
+        startX: screenWidth - 80,
+        startY: 60,
+        delay: 200,
+      },
+      { color: 'rgba(236, 72, 153, 0.12)', size: 130, startX: -30, startY: 300, delay: 700 },
+      {
+        color: 'rgba(168, 85, 247, 0.08)',
+        size: 90,
+        startX: screenWidth / 3,
+        startY: 450,
+        delay: 400,
+      },
+    ],
+    // Screen 3: Mixed orbs
+    [
+      {
+        color: 'rgba(34, 211, 238, 0.12)',
+        size: 110,
+        startX: screenWidth - 120,
+        startY: 120,
+        delay: 300,
+      },
+      { color: 'rgba(168, 85, 247, 0.15)', size: 100, startX: 20, startY: 250, delay: 0 },
+      {
+        color: 'rgba(236, 72, 153, 0.10)',
+        size: 140,
+        startX: screenWidth / 2 - 70,
+        startY: 380,
+        delay: 600,
+      },
+    ],
+  ]
+
+  const orbs = orbConfigs[index] ?? orbConfigs[0]
+
   return (
-    <View style={styles.container}>
+    <View style={styles.page}>
       {/* Background gradient */}
       <LinearGradient
         colors={[theme.colors.background, '#0A1628', 'rgba(34, 211, 238, 0.05)']}
@@ -93,11 +308,16 @@ export function OnboardingIntroScreen({
         style={styles.gradient}
       />
 
-      <StepIndicator currentStep={step} totalSteps={totalSteps} />
+      {/* Floating orbs */}
+      <View style={styles.orbContainer}>
+        {orbs.map((orb, i) => (
+          <FloatingOrb key={i} {...orb} />
+        ))}
+      </View>
 
       <View style={styles.content}>
-        <View style={styles.illustrationContainer}>
-          {/* Subtle glow behind illustration */}
+        {/* Parallax illustration */}
+        <Animated.View style={[styles.illustrationContainer, illustrationStyle]}>
           <LinearGradient
             colors={['rgba(34, 211, 238, 0.2)', 'transparent']}
             style={styles.illustrationGlow}
@@ -105,10 +325,11 @@ export function OnboardingIntroScreen({
             end={{ x: 0.5, y: 1 }}
           />
           <Illustration />
-        </View>
+        </Animated.View>
 
         <View style={styles.textContent}>
-          <View style={styles.titleContainer}>
+          {/* Animated title */}
+          <Animated.View style={[styles.titleContainer, titleStyle]}>
             {hasComma ? (
               <>
                 <Text style={styles.title}>{titleParts[0]},</Text>
@@ -129,17 +350,15 @@ export function OnboardingIntroScreen({
                 {title}
               </GradientText>
             )}
-          </View>
+          </Animated.View>
 
-          <Text variant="body" color="secondary" style={styles.description}>
-            {description}
-          </Text>
+          {/* Animated description */}
+          <Animated.View style={descriptionStyle}>
+            <Text variant="body" color="secondary" style={styles.description}>
+              {description}
+            </Text>
+          </Animated.View>
         </View>
-      </View>
-
-      <View style={styles.footer}>
-        <GradientButton title="Continue" size="lg" onPress={onNext} animated={true} />
-        <Button title="Skip" size="lg" variant="ghost" onPress={onSkip} />
       </View>
     </View>
   )

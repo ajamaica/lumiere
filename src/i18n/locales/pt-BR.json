@@ -112,17 +112,18 @@
   },
   "onboarding": {
     "step1": {
-      "title": "Gerenciar seus Agentes é mais fácil do que nunca",
-      "description": "O Lumiere oferece uma interface móvel bonita para interagir com seus agentes de IA em qualquer lugar. Monitore conversas, envie mensagens e mantenha-se conectado de qualquer lugar."
+      "title": "Seus agentes de IA, sempre ao alcance das mãos",
+      "description": "Converse com seus agentes em qualquer lugar com uma interface móvel elegante. Monitore conversas, envie mensagens e mantenha-se conectado de qualquer lugar."
     },
     "step2": {
-      "title": "Controle total com recursos poderosos",
-      "description": "Gerencie múltiplos servidores, alterne entre sessões, agende tarefas com cron jobs e receba notificações em tempo real. Tudo que você precisa para manter o controle."
+      "title": "Controle total, recursos poderosos",
+      "description": "Gerencie múltiplos servidores e alterne entre sessões instantaneamente. Agende tarefas com cron jobs, receba notificações em tempo real e mantenha o controle do seu fluxo de trabalho."
     },
     "step3": {
-      "title": "Altamente configurável para necessidades personalizadas",
-      "description": "Conecte-se a provedores OpenClaw, Ollama ou Echo. Personalize temas, configure gatilhos de deep link e adapte a experiência ao seu fluxo de trabalho."
+      "title": "Totalmente personalizável, do seu jeito",
+      "description": "Conecte-se ao OpenClaw, Ollama, Claude, OpenAI e mais. Personalize temas, configure gatilhos personalizados e ajuste cada detalhe ao seu fluxo de trabalho."
     },
+    "continue": "Continuar",
     "getStarted": "Começar"
   },
   "sessions": {

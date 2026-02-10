@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import React, { useCallback, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
+import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
@@ -7,65 +9,79 @@ import {
   ConfigIllustration,
   FeaturesIllustration,
 } from '../components/illustrations'
+import { Button, GradientButton } from '../components/ui'
+import { AnimatedStepIndicator } from '../components/ui/AnimatedStepIndicator'
 import { StepIndicator } from '../components/ui/StepIndicator'
 import { useTheme } from '../theme'
 import { OnboardingIntroScreen } from './OnboardingIntroScreen'
 import { SetupScreen } from './SetupScreen'
 
-const INTRO_STEPS = [
-  {
-    title: 'Your AI agents, always at your fingertips',
-    description:
-      'Chat with your agents on the go with a beautiful mobile interface. Monitor conversations, send messages, and stay connected from anywhere.',
-    illustration: AgentIllustration,
-  },
-  {
-    title: 'Full control, powerful features',
-    description:
-      'Manage multiple servers and switch between sessions instantly. Schedule tasks with cron jobs, get real-time notifications, and stay in command of your workflow.',
-    illustration: FeaturesIllustration,
-  },
-  {
-    title: 'Fully customizable, fit your needs',
-    description:
-      'Connect to OpenClaw, Ollama, Claude, OpenAI and more. Personalize themes, configure custom triggers, and tailor every detail to match your workflow.',
-    illustration: ConfigIllustration,
-  },
-]
+const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView)
+
+const ILLUSTRATIONS = [AgentIllustration, FeaturesIllustration, ConfigIllustration]
+const STEP_KEYS = ['step1', 'step2', 'step3'] as const
 
 export function OnboardingFlow() {
   const { theme } = useTheme()
-  const [currentStep, setCurrentStep] = useState(0)
+  const { t } = useTranslation()
+  const { width } = useWindowDimensions()
+  const scrollX = useSharedValue(0)
+  const scrollViewRef = useRef<ScrollView>(null)
+  const [showSetup, setShowSetup] = useState(false)
+  const [currentPage, setCurrentPage] = useState(0)
 
-  const totalSteps = INTRO_STEPS.length + 1 // 3 intro + 1 setup
+  const totalSteps = ILLUSTRATIONS.length + 1 // 3 intro + 1 setup
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollX.value = event.contentOffset.x
+    },
+  })
+
+  const handleNext = useCallback(() => {
+    if (currentPage < ILLUSTRATIONS.length - 1) {
+      const nextPage = currentPage + 1
+      scrollViewRef.current?.scrollTo({ x: nextPage * width, animated: true })
+      setCurrentPage(nextPage)
+    } else {
+      setShowSetup(true)
+    }
+  }, [currentPage, width])
+
+  const handleSkip = useCallback(() => {
+    setShowSetup(true)
+  }, [])
+
+  const handleMomentumScrollEnd = useCallback(
+    (event: { nativeEvent: { contentOffset: { x: number } } }) => {
+      const page = Math.round(event.nativeEvent.contentOffset.x / width)
+      setCurrentPage(page)
+    },
+    [width],
+  )
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
+    setupContainer: {
+      flex: 1,
+    },
+    footer: {
+      paddingHorizontal: theme.spacing.xl,
+      paddingBottom: theme.spacing.xl,
+      gap: theme.spacing.md,
+    },
   })
 
-  const handleNext = () => {
-    setCurrentStep((prev) => prev + 1)
-  }
-
-  const handleSkip = () => {
-    setCurrentStep(INTRO_STEPS.length) // Jump to setup
-  }
-
-  if (currentStep < INTRO_STEPS.length) {
+  if (showSetup) {
     return (
       <SafeAreaView style={styles.container}>
-        <OnboardingIntroScreen
-          step={currentStep}
-          totalSteps={totalSteps}
-          title={INTRO_STEPS[currentStep].title}
-          description={INTRO_STEPS[currentStep].description}
-          Illustration={INTRO_STEPS[currentStep].illustration}
-          onNext={handleNext}
-          onSkip={handleSkip}
-        />
+        <View style={styles.setupContainer}>
+          <StepIndicator currentStep={ILLUSTRATIONS.length} totalSteps={totalSteps} />
+          <SetupScreen />
+        </View>
       </SafeAreaView>
     )
   }
@@ -73,8 +89,41 @@ export function OnboardingFlow() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1 }}>
-        <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
-        <SetupScreen />
+        <AnimatedStepIndicator scrollX={scrollX} totalSteps={totalSteps} screenWidth={width} />
+
+        <AnimatedScrollView
+          ref={scrollViewRef}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={scrollHandler}
+          scrollEventThrottle={16}
+          onMomentumScrollEnd={handleMomentumScrollEnd}
+          bounces={false}
+          style={{ flex: 1 }}
+        >
+          {STEP_KEYS.map((stepKey, index) => (
+            <OnboardingIntroScreen
+              key={stepKey}
+              index={index}
+              scrollX={scrollX}
+              screenWidth={width}
+              titleKey={`onboarding.${stepKey}.title`}
+              descriptionKey={`onboarding.${stepKey}.description`}
+              Illustration={ILLUSTRATIONS[index]}
+            />
+          ))}
+        </AnimatedScrollView>
+
+        <View style={styles.footer}>
+          <GradientButton
+            title={t('onboarding.continue')}
+            size="lg"
+            onPress={handleNext}
+            animated={true}
+          />
+          <Button title={t('common.skip')} size="lg" variant="ghost" onPress={handleSkip} />
+        </View>
       </View>
     </SafeAreaView>
   )
