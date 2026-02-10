@@ -1,0 +1,5 @@
+export { BACKGROUND_FETCH_TASK, backgroundCheckTask } from './notificationService.native'
+export { configureNotificationHandler } from './notificationService.native'
+export { registerBackgroundFetch } from './notificationService.native'
+export { requestNotificationPermissions } from './notificationService.native'
+export { unregisterBackgroundFetch } from './notificationService.native'
