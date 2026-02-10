@@ -39,6 +39,7 @@ import {
 import { useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 import { logger } from '../../utils/logger'
+import { processXmlTags } from '../../utils/xmlTagProcessor'
 import { LinkPreview } from './LinkPreview'
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient)
@@ -344,7 +345,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   )
 
   const handleCopy = async () => {
-    await Clipboard.setStringAsync(message.text)
+    await Clipboard.setStringAsync(processXmlTags(message.text))
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -467,9 +468,10 @@ export function ChatMessage({ message }: ChatMessageProps) {
     [setCurrentSessionKey, setSessionAliases, setClearMessages],
   )
 
-  // Strip intent URLs from displayed text, then linkify
+  // Strip XML tags, intent URLs from displayed text, then linkify
   const processedText = useMemo(() => {
-    const text = intents.length > 0 ? stripIntents(message.text) : message.text
+    let text = processXmlTags(message.text)
+    text = intents.length > 0 ? stripIntents(text) : text
     return linkifyText(text)
   }, [message.text, intents])
 
