@@ -67,6 +67,9 @@ export function OnboardingFlow() {
       paddingHorizontal: theme.spacing.xl,
       paddingBottom: theme.spacing.xl,
       gap: theme.spacing.md,
+      maxWidth: 480,
+      width: '100%',
+      alignSelf: 'center',
     },
   })
 

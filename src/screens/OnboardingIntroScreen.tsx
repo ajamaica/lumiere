@@ -190,6 +190,8 @@ export function OnboardingIntroScreen({
     textContent: {
       paddingHorizontal: theme.spacing.xl,
       alignItems: 'center',
+      maxWidth: 480,
+      width: '100%',
     },
     titleContainer: {
       marginBottom: theme.spacing.lg,
