@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Badge, Button, Card, ScreenHeader, Section, StatCard, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
+import { getClawHubSkillContent, searchClawHubSkills } from '../src/services/clawhub/api'
 import { useMoltGateway } from '../src/services/molt'
 import { ClawHubSkill, Skill } from '../src/services/molt/types'
 import { useTheme } from '../src/theme'
@@ -41,12 +42,10 @@ export default function SkillsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connected, connect, listSkills, teachSkill, removeSkill, searchClawHub } = useMoltGateway(
-    {
-      url: config?.url || '',
-      token: config?.token || '',
-    },
-  )
+  const { connected, connect, listSkills, teachSkill, removeSkill } = useMoltGateway({
+    url: config?.url || '',
+    token: config?.token || '',
+  })
 
   useEffect(() => {
     if (config) {
@@ -128,8 +127,15 @@ export default function SkillsScreen() {
     setClawHubSearching(true)
     setClawHubSearched(false)
     try {
-      const result = await searchClawHub({ query: clawHubQuery.trim() })
-      setClawHubResults(result?.skills || [])
+      const results = await searchClawHubSkills(clawHubQuery.trim())
+      setClawHubResults(
+        results.map((r) => ({
+          slug: r.slug,
+          name: r.name,
+          description: r.description,
+          content: r.content,
+        })),
+      )
       setClawHubSearched(true)
     } catch (err) {
       skillsLogger.logError('ClawHub search failed', err)
@@ -142,10 +148,11 @@ export default function SkillsScreen() {
   const handleInstallClawHubSkill = async (skill: ClawHubSkill) => {
     setInstallingSkill(skill.name)
     try {
+      const content = await getClawHubSkillContent(skill.slug)
       await teachSkill({
         name: skill.name,
         description: skill.description,
-        content: skill.content,
+        content,
       })
       await fetchSkills()
       Alert.alert(t('common.success'), t('skills.clawHub.installSuccess', { name: skill.name }))

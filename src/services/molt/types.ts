@@ -189,20 +189,13 @@ export interface SkillsListResponse {
 }
 
 // ClawHub types
-export interface ClawHubSearchParams {
-  query: string
-}
-
 export interface ClawHubSkill {
+  slug: string
   name: string
   description: string
   content: string
   author?: string
   installs?: number
-}
-
-export interface ClawHubSearchResponse {
-  skills: ClawHubSkill[]
 }
 
 // Event types

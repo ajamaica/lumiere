@@ -3,8 +3,6 @@ import { logger } from '../../utils/logger'
 import {
   AgentEvent,
   AgentParams,
-  ClawHubSearchParams,
-  ClawHubSearchResponse,
   ConnectResponse,
   EventFrame,
   HealthStatus,
@@ -277,10 +275,6 @@ export class MoltGatewayClient {
 
   async updateSkill(params: UpdateSkillParams): Promise<Skill> {
     return (await this.request('skills.update', params)) as Skill
-  }
-
-  async searchClawHub(params: ClawHubSearchParams): Promise<ClawHubSearchResponse> {
-    return (await this.request('clawhub.search', params)) as ClawHubSearchResponse
   }
 
   async sendAgentRequest(
