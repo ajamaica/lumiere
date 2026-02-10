@@ -8,6 +8,12 @@ const workflowLogger = logger.create('Workflow')
 /** Maximum size (in bytes) of a single file we'll read into context */
 const MAX_FILE_SIZE = 100_000 // ~100 KB
 
+/** Maximum cumulative size (in characters) of all file contents combined */
+const MAX_TOTAL_CONTEXT_CHARS = 500_000 // ~500 K characters
+
+/** Maximum number of files to include in a single context */
+const MAX_FILE_COUNT = 20
+
 /** MIME types we treat as readable text documents */
 const TEXT_MIME_TYPES = new Set([
   'text/plain',
@@ -103,16 +109,37 @@ export interface FileContext {
 /**
  * Build the context string from all readable workflow files.
  * Returns an array of { name, content } objects for files that were successfully read.
+ *
+ * Enforces cumulative limits: stops adding files once MAX_FILE_COUNT is reached
+ * or the total character length would exceed MAX_TOTAL_CONTEXT_CHARS.
+ * If a file would push the total over the budget, it is skipped entirely
+ * (no partial/truncated content) and remaining files are also skipped.
  */
 export async function buildWorkflowContext(files: WorkflowFile[]): Promise<FileContext[]> {
   const textFiles = files.filter(isTextFile)
   const results: FileContext[] = []
+  let totalChars = 0
 
   for (const file of textFiles) {
-    const content = await readWorkflowFile(file)
-    if (content) {
-      results.push({ name: file.name, content })
+    if (results.length >= MAX_FILE_COUNT) {
+      workflowLogger.info(
+        `Reached max file count (${MAX_FILE_COUNT}), skipping remaining ${textFiles.length - results.length} file(s)`,
+      )
+      break
     }
+
+    const content = await readWorkflowFile(file)
+    if (!content) continue
+
+    if (totalChars + content.length > MAX_TOTAL_CONTEXT_CHARS) {
+      workflowLogger.info(
+        `Skipping ${file.name}: would exceed total context budget (${totalChars} + ${content.length} > ${MAX_TOTAL_CONTEXT_CHARS})`,
+      )
+      break
+    }
+
+    results.push({ name: file.name, content })
+    totalChars += content.length
   }
 
   return results
