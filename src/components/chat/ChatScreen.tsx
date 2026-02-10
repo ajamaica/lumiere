@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
 import { FlashList, FlashListRef } from '@shopify/flash-list'
-import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -13,7 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller'
 import Animated, {
   Easing,
   interpolate,
@@ -37,6 +35,8 @@ import {
   useFoldResponsiveValue,
   useFoldState,
 } from '../../utils/device'
+import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
+import { useReanimatedKeyboardAnimation } from '../../utils/keyboardAnimation'
 import { logger } from '../../utils/logger'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'

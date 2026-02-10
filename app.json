@@ -58,7 +58,11 @@
       "package": "bot.lumiere.app",
       "permissions": ["android.permission.RECORD_AUDIO"]
     },
-    "platforms": ["ios", "android"],
+    "platforms": ["ios", "android", "web"],
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/icon.png"
+    },
     "scheme": "lumiere",
     "plugins": [
       "expo-router",
