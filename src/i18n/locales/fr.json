@@ -205,7 +205,20 @@
     "created": "Créée",
     "updated": "Mise à jour",
     "openClawOnly": "OpenClaw uniquement",
-    "openClawOnlyDescription": "Les compétences ne sont disponibles que pour les serveurs OpenClaw."
+    "openClawOnlyDescription": "Les compétences ne sont disponibles que pour les serveurs OpenClaw.",
+    "clawHub": {
+      "title": "ClawHub",
+      "description": "Recherchez des compétences communautaires sur ClawHub et installez-les sur votre agent.",
+      "searchPlaceholder": "Rechercher des compétences ClawHub...",
+      "search": "Rechercher",
+      "noResults": "Aucune compétence trouvée. Essayez un autre terme de recherche.",
+      "author": "Auteur",
+      "installs": "Installations",
+      "install": "Installer",
+      "installSuccess": "La compétence \"{{name}}\" a été installée avec succès.",
+      "installError": "Échec de l'installation de la compétence depuis ClawHub.",
+      "searchError": "Échec de la recherche sur ClawHub. Veuillez réessayer."
+    }
   },
   "workflow": {
     "title": "Mode Workflow",

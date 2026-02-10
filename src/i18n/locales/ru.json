@@ -205,7 +205,20 @@
     "created": "Создан",
     "updated": "Обновлён",
     "openClawOnly": "Только OpenClaw",
-    "openClawOnlyDescription": "Навыки доступны только для серверов OpenClaw."
+    "openClawOnlyDescription": "Навыки доступны только для серверов OpenClaw.",
+    "clawHub": {
+      "title": "ClawHub",
+      "description": "Ищите навыки сообщества на ClawHub и устанавливайте их для вашего агента.",
+      "searchPlaceholder": "Поиск навыков в ClawHub...",
+      "search": "Поиск",
+      "noResults": "Навыки не найдены. Попробуйте другой поисковый запрос.",
+      "author": "Автор",
+      "installs": "Установки",
+      "install": "Установить",
+      "installSuccess": "Навык \"{{name}}\" успешно установлен.",
+      "installError": "Не удалось установить навык из ClawHub.",
+      "searchError": "Ошибка поиска в ClawHub. Пожалуйста, попробуйте снова."
+    }
   },
   "workflow": {
     "title": "Режим Workflow",
