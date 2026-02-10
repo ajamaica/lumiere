@@ -20,10 +20,15 @@ export async function setServerToken(serverId: string, token: string): Promise<v
     return
   }
 
-  const SecureStore = await import('expo-secure-store')
-  await SecureStore.setItemAsync(`${TOKEN_PREFIX}${serverId}`, token, {
-    requireAuthentication: false,
-  })
+  try {
+    const SecureStore = await import('expo-secure-store')
+    await SecureStore.setItemAsync(`${TOKEN_PREFIX}${serverId}`, token, {
+      requireAuthentication: false,
+    })
+  } catch (error) {
+    // If keychain storage fails, log but don't throw
+    tokenLogger.warn(`Failed to store token for server ${serverId}`, error)
+  }
 }
 
 /**
