@@ -124,7 +124,7 @@ export function OnboardingIntroScreen({
   descriptionKey,
   Illustration,
 }: OnboardingIntroScreenProps) {
-  const { theme, isDark } = useTheme()
+  const { theme } = useTheme()
   const { t } = useTranslation()
 
   const title = t(titleKey)
@@ -300,14 +300,14 @@ export function OnboardingIntroScreen({
   const orbs = orbConfigs[index] ?? orbConfigs[0]
 
   // Theme-aware gradient backgrounds
-  const gradientColors = isDark
-    ? [theme.colors.background, '#0A1628', 'rgba(34, 211, 238, 0.05)']
-    : [theme.colors.background, '#E0E9F2', 'rgba(34, 211, 238, 0.08)']
+  const gradientColors = theme.isDark
+    ? ([theme.colors.background, '#0A1628', 'rgba(34, 211, 238, 0.05)'] as const)
+    : ([theme.colors.background, '#E0E9F2', 'rgba(34, 211, 238, 0.08)'] as const)
 
   // Theme-aware illustration glow
-  const glowColors = isDark
-    ? ['rgba(34, 211, 238, 0.2)', 'transparent']
-    : ['rgba(34, 211, 238, 0.15)', 'transparent']
+  const glowColors = theme.isDark
+    ? (['rgba(34, 211, 238, 0.2)', 'transparent'] as const)
+    : (['rgba(34, 211, 238, 0.15)', 'transparent'] as const)
 
   return (
     <View style={styles.page}>

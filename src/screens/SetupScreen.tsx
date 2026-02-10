@@ -21,7 +21,7 @@ import { currentSessionKeyAtom, onboardingCompletedAtom, serverSessionsAtom } fr
 import { useTheme } from '../theme'
 
 export function SetupScreen() {
-  const { theme, isDark } = useTheme()
+  const { theme } = useTheme()
   const { addServer } = useServers()
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setServerSessions] = useAtom(serverSessionsAtom)
@@ -302,9 +302,9 @@ export function SetupScreen() {
           : true
 
   // Theme-aware gradient background (purple-tinted for setup)
-  const gradientColors = isDark
-    ? [theme.colors.background, '#0A1628', 'rgba(168, 85, 247, 0.03)']
-    : [theme.colors.background, '#E5E0F2', 'rgba(168, 85, 247, 0.06)']
+  const gradientColors = theme.isDark
+    ? ([theme.colors.background, '#0A1628', 'rgba(168, 85, 247, 0.03)'] as const)
+    : ([theme.colors.background, '#E5E0F2', 'rgba(168, 85, 247, 0.06)'] as const)
 
   return (
     <View style={styles.container}>
