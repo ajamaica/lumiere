@@ -675,13 +675,13 @@ const createStyles = (theme: Theme) =>
       borderRadius: theme.borderRadius.xxl,
     },
     userBubble: {
-      maxWidth: '80%',
+      maxWidth: '100%',
       backgroundColor: theme.colors.message.user,
       borderBottomRightRadius: theme.borderRadius.sm,
       ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
     },
     userBubbleWrapper: {
-      maxWidth: '80%',
+      maxWidth: '100%',
       borderRadius: theme.borderRadius.xxl,
       borderBottomRightRadius: theme.borderRadius.sm,
       overflow: 'hidden',
