@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Platform } from 'react-native'
 
 import { MessageAttachment } from '../components/chat/ChatMessage'
+import { resizeWebImage } from '../utils/imageResize'
 
 /**
  * Read a web File object and convert it to a MessageAttachment.
@@ -15,12 +16,12 @@ async function processWebFile(file: globalThis.File): Promise<MessageAttachment>
   if (isImage) {
     // Read images as data-URL so we have the base64 payload the providers expect.
     const dataUrl = await readAsDataURL(file)
-    const base64 = dataUrl.split(',')[1]
+    const resized = await resizeWebImage(dataUrl)
     return {
       type: 'image',
-      uri: dataUrl,
-      base64,
-      mimeType: file.type || 'image/jpeg',
+      uri: resized.uri,
+      base64: resized.base64,
+      mimeType: 'image/jpeg',
       name: file.name,
     }
   }

@@ -22,6 +22,7 @@ import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useVoiceTranscription } from '../../hooks/useVoiceTranscription'
 import { useTheme } from '../../theme'
 import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
+import { resizeImageForUpload } from '../../utils/imageResize'
 import { MessageAttachment } from './ChatMessage'
 
 interface ChatInputProps {
@@ -86,13 +87,22 @@ export function ChatInput({
     })
 
     if (!result.canceled && result.assets.length > 0) {
-      const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
-        type: 'image' as const,
-        uri: asset.uri,
-        base64: asset.base64 ?? undefined,
-        mimeType: asset.mimeType ?? 'image/jpeg',
-        name: asset.fileName ?? undefined,
-      }))
+      const newAttachments: MessageAttachment[] = await Promise.all(
+        result.assets.map(async (asset) => {
+          const resized = await resizeImageForUpload(
+            asset.uri,
+            asset.width ?? undefined,
+            asset.height ?? undefined,
+          )
+          return {
+            type: 'image' as const,
+            uri: resized.uri,
+            base64: resized.base64 ?? asset.base64 ?? undefined,
+            mimeType: 'image/jpeg',
+            name: asset.fileName ?? undefined,
+          }
+        }),
+      )
       setAttachments((prev) => [...prev, ...newAttachments])
     }
   }
