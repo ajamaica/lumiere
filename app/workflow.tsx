@@ -363,7 +363,7 @@ export default function WorkflowScreen() {
             <Button
               title={t('workflow.addDocuments')}
               onPress={handleAddFiles}
-              variant="outline"
+              variant="secondary"
               style={styles.addButton}
             />
           </>
