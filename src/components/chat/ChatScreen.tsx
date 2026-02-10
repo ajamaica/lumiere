@@ -553,12 +553,18 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {
               // First-load scroll: jump to bottom immediately once FlashList
-              // has laid out the history messages.  This replaces the old
-              // 400ms setTimeout and reacts to the actual render.
+              // has laid out the history messages.  We keep the list at
+              // opacity 0 and only reveal it after the native scroll command
+              // has been processed, so the user never sees a flash from
+              // the top.
               if (!hasScrolledOnLoadRef.current && !isLoadingHistory && messages.length > 0) {
                 flatListRef.current?.scrollToEnd({ animated: false })
                 hasScrolledOnLoadRef.current = true
-                setHistoryReady(true)
+                // Delay reveal until the next frame so the native scroll
+                // command settles before the list becomes visible.
+                requestAnimationFrame(() => {
+                  setHistoryReady(true)
+                })
                 return
               }
 
