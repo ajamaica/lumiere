@@ -1,5 +1,4 @@
 import { useRouter } from 'expo-router'
-import { useSetAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, TextInput, View } from 'react-native'
@@ -10,7 +9,6 @@ import { useServers } from '../src/hooks/useServers'
 import { getClawHubSkillContent, searchClawHubSkills } from '../src/services/clawhub/api'
 import { useMoltGateway } from '../src/services/molt'
 import { ClawHubSkill, Skill } from '../src/services/molt/types'
-import { pendingTriggerMessageAtom } from '../src/store/atoms'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
 
@@ -35,7 +33,6 @@ export default function SkillsScreen() {
   const [clawHubSearching, setClawHubSearching] = useState(false)
   const [clawHubSearched, setClawHubSearched] = useState(false)
   const [installingSkill, setInstallingSkill] = useState<string | null>(null)
-  const setPendingTriggerMessage = useSetAtom(pendingTriggerMessageAtom)
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -45,7 +42,7 @@ export default function SkillsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connected, connect, listSkills, teachSkill, removeSkill } = useMoltGateway({
+  const { connected, connect, listSkills, teachSkill, removeSkill, sendAgentRequest } = useMoltGateway({
     url: config?.url || '',
     token: config?.token || '',
   })
@@ -157,8 +154,11 @@ export default function SkillsScreen() {
         description: skill.description,
         content,
       })
-      setPendingTriggerMessage(message)
-      router.dismissAll()
+      await sendAgentRequest({
+        message,
+        idempotencyKey: `clawhub-install-${skill.slug}-${Date.now()}`,
+      })
+      Alert.alert(t('common.success'), t('skills.clawHub.installSuccess', { name: skill.name }))
     } catch (err) {
       skillsLogger.logError('Failed to install ClawHub skill', err)
       Alert.alert(t('common.error'), t('skills.clawHub.installError'))
