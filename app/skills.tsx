@@ -251,7 +251,6 @@ export default function SkillsScreen() {
             </Card>
           ))}
         </Section>
-
       </ScrollView>
     </SafeAreaView>
   )
