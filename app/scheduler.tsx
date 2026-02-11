@@ -113,9 +113,9 @@ export default function SchedulerScreen() {
     setBusyJobIds((prev) => new Set(prev).add(job.id))
     try {
       if (job.enabled) {
-        await disableCronJob(job.name)
+        await disableCronJob(job.id)
       } else {
-        await enableCronJob(job.name)
+        await enableCronJob(job.id)
       }
       await fetchSchedulerData()
     } catch (err) {
@@ -134,7 +134,7 @@ export default function SchedulerScreen() {
     if (busyJobIds.has(job.id)) return
     setBusyJobIds((prev) => new Set(prev).add(job.id))
     try {
-      await runCronJob(job.name)
+      await runCronJob(job.id)
       await fetchSchedulerData()
       Alert.alert('Success', `Job "${job.name}" has been triggered`)
     } catch (err) {
@@ -159,7 +159,7 @@ export default function SchedulerScreen() {
         onPress: async () => {
           setBusyJobIds((prev) => new Set(prev).add(job.id))
           try {
-            await removeCronJob(job.name)
+            await removeCronJob(job.id)
             await fetchSchedulerData()
           } catch (err) {
             schedulerLogger.logError('Failed to remove job', err)
