@@ -20,6 +20,7 @@ import {
 import { useFileDropPaste } from '../../hooks/useFileDropPaste'
 import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useVoiceTranscription } from '../../hooks/useVoiceTranscription'
+import { ProviderType } from '../../services/providers/types'
 import { useTheme } from '../../theme'
 import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
 import { MessageAttachment } from './ChatMessage'
@@ -31,6 +32,7 @@ interface ChatInputProps {
   queueCount?: number
   supportsImageAttachments?: boolean
   supportsFileAttachments?: boolean
+  providerType?: ProviderType
 }
 
 export function ChatInput({
@@ -40,13 +42,14 @@ export function ChatInput({
   queueCount = 0,
   supportsImageAttachments = true,
   supportsFileAttachments = false,
+  providerType,
 }: ChatInputProps) {
   const { theme } = useTheme()
   const { t } = useTranslation()
   const [text, setText] = useState('')
   const [attachments, setAttachments] = useState<MessageAttachment[]>([])
   const [showAttachmentMenu, setShowAttachmentMenu] = useState(false)
-  const { suggestions, hasInput } = useSlashCommands(text)
+  const { suggestions, hasInput } = useSlashCommands(text, providerType)
   const voice = useVoiceTranscription()
   const glassAvailable = isLiquidGlassAvailable()
   const styles = useMemo(() => createStyles(theme, glassAvailable), [theme, glassAvailable])
