@@ -86,8 +86,12 @@ function AppContent() {
   }, [])
 
   const handlePasswordUnlock = useCallback(async (key: CryptoKey) => {
-    await setSessionCryptoKey(key)
-    await hydrateSecureServers(getStore(), key)
+    try {
+      await setSessionCryptoKey(key)
+      await hydrateSecureServers(getStore(), key)
+    } catch {
+      // Hydration may fail on first setup (no encrypted data yet) — that's OK.
+    }
     setWebPasswordUnlocked(true)
   }, [])
 

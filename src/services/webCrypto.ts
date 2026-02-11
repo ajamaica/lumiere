@@ -61,7 +61,7 @@ async function deriveAESKey(password: string, salt: Uint8Array): Promise<CryptoK
     { name: 'PBKDF2', salt: salt as BufferSource, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
     baseKey,
     { name: 'AES-GCM', length: KEY_LENGTH },
-    false,
+    true,
     ['encrypt', 'decrypt'],
   )
 }
