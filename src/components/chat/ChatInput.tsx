@@ -21,6 +21,7 @@ import { useFileDropPaste } from '../../hooks/useFileDropPaste'
 import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useVoiceTranscription } from '../../hooks/useVoiceTranscription'
 import { useTheme } from '../../theme'
+import { compressImageToJpeg } from '../../utils/compressImage'
 import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
 import { MessageAttachment } from './ChatMessage'
 
@@ -80,18 +81,22 @@ export function ChatInput({
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsMultipleSelection: true,
-      quality: 0.8,
-      base64: true,
+      quality: 1,
     })
 
     if (!result.canceled && result.assets.length > 0) {
-      const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
-        type: 'image' as const,
-        uri: asset.uri,
-        base64: asset.base64 ?? undefined,
-        mimeType: asset.mimeType ?? 'image/jpeg',
-        name: asset.fileName ?? undefined,
-      }))
+      const newAttachments: MessageAttachment[] = await Promise.all(
+        result.assets.map(async (asset) => {
+          const compressed = await compressImageToJpeg(asset.uri)
+          return {
+            type: 'image' as const,
+            uri: compressed.uri,
+            base64: compressed.base64,
+            mimeType: compressed.mimeType,
+            name: asset.fileName ?? undefined,
+          }
+        }),
+      )
       setAttachments((prev) => [...prev, ...newAttachments])
     }
   }

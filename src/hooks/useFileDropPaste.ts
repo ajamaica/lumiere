@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Platform } from 'react-native'
 
 import { MessageAttachment } from '../components/chat/ChatMessage'
+import { compressImageToJpeg } from '../utils/compressImage'
 
 /**
  * Read a web File object and convert it to a MessageAttachment.
@@ -13,14 +14,14 @@ async function processWebFile(file: globalThis.File): Promise<MessageAttachment>
   const isVideo = file.type.startsWith('video/')
 
   if (isImage) {
-    // Read images as data-URL so we have the base64 payload the providers expect.
+    // Read the file as a data-URL, then compress and convert to JPEG.
     const dataUrl = await readAsDataURL(file)
-    const base64 = dataUrl.split(',')[1]
+    const compressed = await compressImageToJpeg(dataUrl)
     return {
       type: 'image',
-      uri: dataUrl,
-      base64,
-      mimeType: file.type || 'image/jpeg',
+      uri: compressed.uri,
+      base64: compressed.base64,
+      mimeType: compressed.mimeType,
       name: file.name,
     }
   }
