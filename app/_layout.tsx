@@ -79,7 +79,14 @@ function AppContent() {
     let cancelled = false
     const restore = async () => {
       const key = await getSessionCryptoKey()
-      if (cancelled || !key) return
+      if (cancelled) return
+      if (!key) {
+        // The sync check (hasSessionCryptoKey) found a value but the
+        // async import failed — the stored JWK is corrupt or invalid.
+        // Fall back to the password lock screen so the user can recover.
+        setWebPasswordUnlocked(false)
+        return
+      }
       try {
         await hydrateSecureServers(getStore(), key)
       } catch {
