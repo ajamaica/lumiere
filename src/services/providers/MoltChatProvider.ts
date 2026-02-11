@@ -63,10 +63,14 @@ export class MoltChatProvider implements ChatProvider {
     params: SendMessageParams,
     onEvent: (event: ChatProviderEvent) => void,
   ): Promise<void> {
+    // Extract agentId from session key format: agent:<agentId>:<sessionName>
+    const sessionParts = params.sessionKey.split(':')
+    const agentId = sessionParts.length >= 2 ? sessionParts[1] : agentConfig.defaultAgentId
+
     const agentParams = {
       message: params.message,
       idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
-      agentId: agentConfig.defaultAgentId,
+      agentId,
       sessionKey: params.sessionKey,
       attachments: params.attachments?.map((a) => ({
         type: a.type,

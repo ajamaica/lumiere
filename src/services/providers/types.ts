@@ -54,9 +54,15 @@ export interface ChatHistoryResponse {
   messages: ChatHistoryMessage[]
 }
 
+export interface AgentInfo {
+  available: boolean
+  error?: string
+}
+
 export interface HealthStatus {
   status: 'healthy' | 'degraded' | 'unhealthy'
   message?: string
+  agents?: Record<string, AgentInfo>
 }
 
 /**

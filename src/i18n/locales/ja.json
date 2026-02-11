@@ -225,5 +225,12 @@
     "removeFileConfirm": "\"{{name}}\"をワークフローコンテキストから削除しますか？",
     "clearAll": "すべて削除",
     "clearAllConfirm": "ワークフローコンテキストからすべてのドキュメントを削除しますか？"
+  },
+  "agents": {
+    "selectAgent": "エージェントを選択",
+    "loading": "エージェントを読み込み中...",
+    "available": "利用可能",
+    "unavailable": "利用不可",
+    "noAgents": "エージェントが見つかりません"
   }
 }

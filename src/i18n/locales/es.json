@@ -225,5 +225,12 @@
     "removeFileConfirm": "¿Eliminar \"{{name}}\" del contexto de workflow?",
     "clearAll": "Limpiar Todo",
     "clearAllConfirm": "¿Eliminar todos los documentos del contexto de workflow?"
+  },
+  "agents": {
+    "selectAgent": "Seleccionar Agente",
+    "loading": "Cargando agentes...",
+    "available": "Disponible",
+    "unavailable": "No disponible",
+    "noAgents": "No se encontraron agentes"
   }
 }

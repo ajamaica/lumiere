@@ -225,5 +225,12 @@
     "removeFileConfirm": "워크플로 컨텍스트에서 \"{{name}}\"을(를) 삭제하시겠습니까?",
     "clearAll": "모두 삭제",
     "clearAllConfirm": "워크플로 컨텍스트에서 모든 문서를 삭제하시겠습니까?"
+  },
+  "agents": {
+    "selectAgent": "에이전트 선택",
+    "loading": "에이전트 로딩 중...",
+    "available": "사용 가능",
+    "unavailable": "사용 불가",
+    "noAgents": "에이전트를 찾을 수 없습니다"
   }
 }

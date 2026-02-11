@@ -17,6 +17,7 @@ export {
   biometricLockEnabledAtom,
   clearMessagesAtom,
   colorThemeAtom,
+  currentAgentIdAtom,
   currentServerIdAtom,
   currentSessionKeyAtom,
   favoritesAtom,

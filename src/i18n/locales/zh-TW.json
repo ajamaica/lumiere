@@ -225,5 +225,12 @@
     "removeFileConfirm": "從工作流程上下文中移除「{{name}}」？",
     "clearAll": "清除全部",
     "clearAllConfirm": "從工作流程上下文中移除所有文件？"
+  },
+  "agents": {
+    "selectAgent": "選擇代理",
+    "loading": "正在載入代理...",
+    "available": "可用",
+    "unavailable": "不可用",
+    "noAgents": "未找到代理"
   }
 }

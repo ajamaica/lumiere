@@ -9,6 +9,7 @@ export {
 export { createChatProvider } from './createProvider'
 export { MoltChatProvider } from './MoltChatProvider'
 export type {
+  AgentInfo,
   ChatHistoryMessage,
   ChatHistoryResponse,
   ChatProvider,

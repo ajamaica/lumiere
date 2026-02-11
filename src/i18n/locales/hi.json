@@ -225,5 +225,12 @@
     "removeFileConfirm": "\"{{name}}\" को वर्कफ़्लो संदर्भ से हटाएं?",
     "clearAll": "सब हटाएं",
     "clearAllConfirm": "वर्कफ़्लो संदर्भ से सभी दस्तावेज़ हटाएं?"
+  },
+  "agents": {
+    "selectAgent": "एजेंट चुनें",
+    "loading": "एजेंट लोड हो रहे हैं...",
+    "available": "उपलब्ध",
+    "unavailable": "अनुपलब्ध",
+    "noAgents": "कोई एजेंट नहीं मिला"
   }
 }
