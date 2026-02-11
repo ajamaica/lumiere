@@ -1,6 +1,6 @@
 import { agentConfig } from '../../config/gateway.config'
-import { MoltGatewayClient } from '../molt/client'
-import { AgentEvent } from '../molt/types'
+import { generateIdempotencyKey, MoltGatewayClient } from '../molt/client'
+import { AgentEvent, ConnectionState } from '../molt/types'
 import {
   ChatHistoryResponse,
   ChatProvider,
@@ -29,7 +29,6 @@ export class MoltChatProvider implements ChatProvider {
   }
 
   private client: MoltGatewayClient
-  private connected = false
 
   constructor(config: ProviderConfig) {
     this.client = new MoltGatewayClient({
@@ -41,22 +40,27 @@ export class MoltChatProvider implements ChatProvider {
 
   async connect(): Promise<void> {
     await this.client.connect()
-    this.connected = true
   }
 
   disconnect(): void {
     this.client.disconnect()
-    this.connected = false
   }
 
   isConnected(): boolean {
-    return this.client.isConnected()
+    return this.client.isConnected
   }
 
+  /**
+   * Adapts the new ConnectionState-based listener to the legacy
+   * (connected: boolean, reconnecting: boolean) signature expected
+   * by the ChatProvider interface.
+   */
   onConnectionStateChange(
     listener: (connected: boolean, reconnecting: boolean) => void,
   ): () => void {
-    return this.client.onConnectionStateChange(listener)
+    return this.client.onConnectionStateChange((state: ConnectionState) => {
+      listener(state === 'connected', state === 'reconnecting')
+    })
   }
 
   async sendMessage(
@@ -69,7 +73,7 @@ export class MoltChatProvider implements ChatProvider {
 
     const agentParams = {
       message: params.message,
-      idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
+      idempotencyKey: generateIdempotencyKey(),
       agentId,
       sessionKey: params.sessionKey,
       attachments: params.attachments?.map((a) => ({

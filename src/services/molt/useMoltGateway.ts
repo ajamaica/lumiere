@@ -5,8 +5,8 @@ import { MoltGatewayClient } from './client'
 import {
   AgentEvent,
   AgentParams,
+  ConnectionState,
   ConnectResponse,
-  EventFrame,
   GatewayLogsParams,
   GatewayLogsResponse,
   GatewaySnapshot,
@@ -25,12 +25,14 @@ export interface UseMoltGatewayResult {
   client: MoltGatewayClient | null
   connected: boolean
   connecting: boolean
+  reconnecting: boolean
   error: string | null
   health: HealthStatus | null
   snapshot: GatewaySnapshot | null
   connectResponse: ConnectResponse | null
   connect: () => Promise<void>
   disconnect: () => void
+  retryConnection: () => Promise<void>
   refreshHealth: () => Promise<void>
   sendMessage: (params: SendMessageParams) => Promise<unknown>
   sendAgentRequest: (params: AgentParams, onEvent?: (event: AgentEvent) => void) => Promise<unknown>
@@ -51,10 +53,20 @@ export interface UseMoltGatewayResult {
   getLogs: (params?: GatewayLogsParams) => Promise<GatewayLogsResponse>
 }
 
+/** Derive boolean flags from the ConnectionState enum. */
+function deriveStateFlags(state: ConnectionState) {
+  return {
+    connected: state === 'connected',
+    connecting: state === 'connecting',
+    reconnecting: state === 'reconnecting',
+  }
+}
+
 export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
   const [client, setClient] = useState<MoltGatewayClient | null>(null)
   const [connected, setConnected] = useState(false)
   const [connecting, setConnecting] = useState(false)
+  const [reconnecting, setReconnecting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [health, setHealth] = useState<HealthStatus | null>(null)
   const [snapshot, setSnapshot] = useState<GatewaySnapshot | null>(null)
@@ -85,28 +97,25 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       setConnectResponse(response)
       setSnapshot(response.snapshot || null)
 
-      // Set up event listeners
-      newClient.addEventListener((event: EventFrame) => {
-        gatewayLogger.info('Gateway event', event)
+      // Subscribe to connection state changes
+      newClient.onConnectionStateChange((state: ConnectionState) => {
+        const flags = deriveStateFlags(state)
+        gatewayLogger.info(`Connection state: ${state}`)
+        setConnected(flags.connected)
+        setConnecting(flags.connecting)
+        setReconnecting(flags.reconnecting)
 
-        if (event.event === 'shutdown') {
-          setConnected(false)
-          setError('Gateway shutdown')
+        if (flags.reconnecting) {
+          setError('Reconnecting...')
+        } else if (flags.connected) {
+          setError(null)
         }
       })
 
-      // Set up connection state listener
-      newClient.onConnectionStateChange((isConnected, reconnecting) => {
-        gatewayLogger.info(
-          `Connection state: connected=${isConnected}, reconnecting=${reconnecting}`,
-        )
-        setConnected(isConnected)
-        setConnecting(reconnecting)
-        if (reconnecting) {
-          setError('Reconnecting...')
-        } else if (isConnected) {
-          setError(null)
-        }
+      // Subscribe to shutdown events
+      newClient.on('shutdown', () => {
+        setConnected(false)
+        setError('Gateway shutdown')
       })
 
       // Fetch initial health status
@@ -134,10 +143,30 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     }
     setClient(null)
     setConnected(false)
+    setConnecting(false)
+    setReconnecting(false)
     setHealth(null)
     setSnapshot(null)
     setConnectResponse(null)
   }, [])
+
+  const retryConnection = useCallback(async () => {
+    if (!clientRef.current) {
+      // No existing client — do a fresh connect
+      return connect()
+    }
+    setError(null)
+    try {
+      const response = await clientRef.current.retryConnection()
+      setConnected(true)
+      setConnectResponse(response)
+      setSnapshot(response.snapshot || null)
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Retry failed'
+      setError(errorMessage)
+      gatewayLogger.logError('Failed to retry connection', err)
+    }
+  }, [connect])
 
   const refreshHealth = useCallback(async () => {
     if (!client) {
@@ -317,12 +346,14 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     client,
     connected,
     connecting,
+    reconnecting,
     error,
     health,
     snapshot,
     connectResponse,
     connect,
     disconnect,
+    retryConnection,
     refreshHealth,
     sendMessage,
     sendAgentRequest,
