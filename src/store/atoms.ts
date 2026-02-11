@@ -126,6 +126,9 @@ export const triggersAtom = atomWithStorage<TriggersDict>('triggers', {}, storag
 // In-memory atom for pending trigger messages (set by deep link, consumed by ChatScreen)
 export const pendingTriggerMessageAtom = atom<string | null>(null)
 
+// In-memory atom for pending share intent text (set by share extension, consumed by ChatInput)
+export const pendingShareTextAtom = atom<string | null>(null)
+
 // Background notifications setting (off by default)
 export const backgroundNotificationsEnabledAtom = atomWithStorage<boolean>(
   'backgroundNotificationsEnabled',

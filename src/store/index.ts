@@ -30,6 +30,7 @@ export {
   messageQueueAtom,
   notificationLastCheckAtom,
   onboardingCompletedAtom,
+  pendingShareTextAtom,
   pendingTriggerMessageAtom,
   serversAtom,
   serverSessionsAtom,
