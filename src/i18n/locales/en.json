@@ -50,7 +50,8 @@
     "backupServers": "Backup Servers",
     "restoreServers": "Restore Servers",
     "contribute": "Contribute",
-    "workflowMode": "Workflow Mode"
+    "workflowMode": "Workflow Mode",
+    "gatewayLogs": "Gateway Logs"
   },
   "home": {
     "connectionError": "Connection Error",
@@ -257,5 +258,15 @@
     "available": "Available",
     "unavailable": "Unavailable",
     "noAgents": "No agents found"
+  },
+  "gatewayLogs": {
+    "title": "Gateway Logs",
+    "subtitle": "View recent logs from the gateway server.",
+    "openClawOnlyDescription": "Gateway logs are only available for OpenClaw servers.",
+    "filterAll": "All",
+    "refresh": "Refresh",
+    "logsSection": "Logs",
+    "logsDescription": "Recent log entries from the gateway.",
+    "noLogs": "No log entries found"
   }
 }

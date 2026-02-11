@@ -50,7 +50,8 @@
     "restoreServers": "Restaurar Servidores",
     "contribute": "Contribuir",
     "skills": "Habilidades",
-    "workflowMode": "Modo Workflow"
+    "workflowMode": "Modo Workflow",
+    "gatewayLogs": "Logs do Gateway"
   },
   "home": {
     "connectionError": "Erro de Conexão",
@@ -257,5 +258,15 @@
     "available": "Disponível",
     "unavailable": "Indisponível",
     "noAgents": "Nenhum agente encontrado"
+  },
+  "gatewayLogs": {
+    "title": "Logs do Gateway",
+    "subtitle": "Ver logs recentes do servidor gateway.",
+    "openClawOnlyDescription": "Os logs do gateway estão disponíveis apenas para servidores OpenClaw.",
+    "filterAll": "Todos",
+    "refresh": "Atualizar",
+    "logsSection": "Logs",
+    "logsDescription": "Entradas de log recentes do gateway.",
+    "noLogs": "Nenhuma entrada de log encontrada"
   }
 }

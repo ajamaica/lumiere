@@ -50,7 +50,8 @@
     "restoreServers": "恢复服务器",
     "contribute": "贡献",
     "skills": "技能",
-    "workflowMode": "工作流模式"
+    "workflowMode": "工作流模式",
+    "gatewayLogs": "网关日志"
   },
   "home": {
     "connectionError": "连接错误",
@@ -257,5 +258,15 @@
     "available": "可用",
     "unavailable": "不可用",
     "noAgents": "未找到代理"
+  },
+  "gatewayLogs": {
+    "title": "网关日志",
+    "subtitle": "查看网关服务器的最近日志。",
+    "openClawOnlyDescription": "网关日志仅适用于 OpenClaw 服务器。",
+    "filterAll": "全部",
+    "refresh": "刷新",
+    "logsSection": "日志",
+    "logsDescription": "网关的最近日志条目。",
+    "noLogs": "未找到日志条目"
   }
 }

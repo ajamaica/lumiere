@@ -213,6 +213,11 @@ export default function SettingsScreen() {
               icon="bulb-outline"
               label={t('settings.skills')}
               onPress={() => router.push('/skills')}
+            />
+            <SettingRow
+              icon="document-text-outline"
+              label={t('settings.gatewayLogs')}
+              onPress={() => router.push('/gateway-logs')}
               showDivider={false}
             />
           </Section>

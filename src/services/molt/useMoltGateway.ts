@@ -7,6 +7,8 @@ import {
   AgentParams,
   ConnectResponse,
   EventFrame,
+  GatewayLogsParams,
+  GatewayLogsResponse,
   GatewaySnapshot,
   HealthStatus,
   MoltConfig,
@@ -46,6 +48,7 @@ export interface UseMoltGatewayResult {
   listSkills: () => Promise<SkillsListResponse>
   removeSkill: (name: string) => Promise<unknown>
   updateSkill: (params: UpdateSkillParams) => Promise<Skill>
+  getLogs: (params?: GatewayLogsParams) => Promise<GatewayLogsResponse>
 }
 
 export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
@@ -292,6 +295,16 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     [client],
   )
 
+  const getLogs = useCallback(
+    async (params?: GatewayLogsParams) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.getLogs(params)
+    },
+    [client],
+  )
+
   useEffect(() => {
     return () => {
       if (clientRef.current) {
@@ -327,5 +340,6 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     listSkills,
     removeSkill,
     updateSkill,
+    getLogs,
   }
 }

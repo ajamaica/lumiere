@@ -50,7 +50,8 @@
     "restoreServers": "서버 복원",
     "contribute": "기여하기",
     "skills": "스킬",
-    "workflowMode": "워크플로 모드"
+    "workflowMode": "워크플로 모드",
+    "gatewayLogs": "게이트웨이 로그"
   },
   "home": {
     "connectionError": "연결 오류",
@@ -257,5 +258,15 @@
     "available": "사용 가능",
     "unavailable": "사용 불가",
     "noAgents": "에이전트를 찾을 수 없습니다"
+  },
+  "gatewayLogs": {
+    "title": "게이트웨이 로그",
+    "subtitle": "게이트웨이 서버의 최근 로그를 확인합니다.",
+    "openClawOnlyDescription": "게이트웨이 로그는 OpenClaw 서버에서만 사용할 수 있습니다.",
+    "filterAll": "전체",
+    "refresh": "새로고침",
+    "logsSection": "로그",
+    "logsDescription": "게이트웨이의 최근 로그 항목.",
+    "noLogs": "로그 항목을 찾을 수 없습니다"
   }
 }
