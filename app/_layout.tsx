@@ -24,6 +24,7 @@ import {
   hasSessionCryptoKey,
   hydrateSecureServers,
   onboardingCompletedAtom,
+  secureStoreHydratedAtom,
   setSessionCryptoKey,
 } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
@@ -65,6 +66,10 @@ function AppContent() {
     if (Platform.OS !== 'web') return true
     return hasSessionCryptoKey()
   })
+  // Track whether encrypted data has been loaded into the atom.
+  // On native this is always true (not used); on web it becomes true
+  // after hydrateSecureServers completes.
+  const [secureHydrated] = useAtom(secureStoreHydratedAtom)
 
   // On mount, hydrate secure servers from encrypted localStorage when a
   // session key is available.  This covers page reloads where the key
@@ -155,7 +160,14 @@ function AppContent() {
     )
   }
 
-  // 3. Biometric lock (native only)
+  // 3. Wait for encrypted data to hydrate before rendering the app.
+  //    Without this, useServers mounts with an empty atom and the
+  //    auto-persist effect can overwrite localStorage with {}.
+  if (Platform.OS === 'web' && !secureHydrated) {
+    return <View style={backgroundStyle} />
+  }
+
+  // 4. Biometric lock (native only)
   if (isLocked) {
     return (
       <View style={backgroundStyle}>
