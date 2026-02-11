@@ -154,6 +154,9 @@ export const notificationLastCheckAtom = atomWithStorage<NotificationLastCheckMa
   storage,
 )
 
+// Current agent ID for OpenClaw (Molt) provider
+export const currentAgentIdAtom = atomWithStorage<string>('currentAgentId', 'main', storage)
+
 // Workflow mode — per-session document context
 export interface WorkflowFile {
   uri: string // Content URI / file path

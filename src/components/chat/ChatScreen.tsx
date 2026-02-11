@@ -27,7 +27,12 @@ import { useChatProvider } from '../../hooks/useChatProvider'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
 import { useWorkflowContext } from '../../hooks/useWorkflowContext'
 import { ProviderConfig, readCachedHistory } from '../../services/providers'
-import { clearMessagesAtom, currentSessionKeyAtom, pendingTriggerMessageAtom } from '../../store'
+import {
+  clearMessagesAtom,
+  currentAgentIdAtom,
+  currentSessionKeyAtom,
+  pendingTriggerMessageAtom,
+} from '../../store'
 import { useTheme } from '../../theme'
 import {
   useContentContainerStyle,
@@ -38,6 +43,7 @@ import {
 import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
 import { useReanimatedKeyboardAnimation } from '../../utils/keyboardAnimation'
 import { logger } from '../../utils/logger'
+import { AgentPicker } from './AgentPicker'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
 import { ThinkingIndicator } from './ThinkingIndicator'
@@ -64,9 +70,12 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const glassAvailable = isLiquidGlassAvailable()
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
-  const [currentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [currentAgentId, setCurrentAgentId] = useAtom(currentAgentIdAtom)
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [pendingTriggerMessage, setPendingTriggerMessage] = useAtom(pendingTriggerMessageAtom)
+  const [isAgentPickerOpen, setIsAgentPickerOpen] = useState(false)
+  const isMoltProvider = providerConfig.type === 'molt'
   const flatListRef = useRef<FlashListRef<Message>>(null)
   const shouldAutoScrollRef = useRef(true)
   const hasScrolledOnLoadRef = useRef(false)
@@ -174,7 +183,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     }
   }, [providerConfig.serverId])
 
-  const { connected, connecting, error, capabilities, retry, sendMessage, getChatHistory } =
+  const { connected, connecting, error, health, capabilities, retry, sendMessage, getChatHistory } =
     useChatProvider(providerConfig)
 
   const { isActive: isWorkflowActive, prependContext } = useWorkflowContext()
@@ -361,6 +370,17 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     router.push('/settings')
   }
 
+  const handleSelectAgent = useCallback(
+    (agentId: string) => {
+      setCurrentAgentId(agentId)
+      // Update session key to match new agent: agent:<agentId>:<sessionName>
+      const parts = currentSessionKey.split(':')
+      const sessionName = parts.length >= 3 ? parts[2] : 'main'
+      setCurrentSessionKey(`agent:${agentId}:${sessionName}`)
+    },
+    [currentSessionKey, setCurrentAgentId, setCurrentSessionKey],
+  )
+
   const handleToggleSearch = () => {
     if (isSearchOpen) {
       searchProgress.value = withTiming(0, { duration: 250, easing: Easing.out(Easing.ease) })
@@ -461,6 +481,13 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
               )}
             </StatusBubbleContainer>
             <View style={styles.statusActions}>
+              {isMoltProvider && health?.agents && Object.keys(health.agents).length > 1 && (
+                <TouchableOpacity onPress={() => setIsAgentPickerOpen(true)} activeOpacity={0.7}>
+                  <SettingsButtonContainer {...settingsButtonProps}>
+                    <Ionicons name="people" size={20} color={theme.colors.primary} />
+                  </SettingsButtonContainer>
+                </TouchableOpacity>
+              )}
               {isWorkflowActive && (
                 <TouchableOpacity onPress={() => router.push('/workflow')} activeOpacity={0.7}>
                   <SettingsButtonContainer {...settingsButtonProps}>
@@ -643,6 +670,15 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
         </Animated.View>
       </View>
       {renderConnectionStatus()}
+      {isMoltProvider && (
+        <AgentPicker
+          visible={isAgentPickerOpen}
+          onClose={() => setIsAgentPickerOpen(false)}
+          agents={health?.agents ?? {}}
+          currentAgentId={currentAgentId}
+          onSelectAgent={handleSelectAgent}
+        />
+      )}
     </SafeAreaView>
   )
 }
