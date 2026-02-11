@@ -205,6 +205,11 @@
       "installMessage": "學習這個名為\"{{name}}\"的技能：{{description}}\n\n{{content}}"
     }
   },
+  "setup": {
+    "or": "或",
+    "restoreFromBackup": "從備份還原",
+    "importSuccess": "已從備份還原伺服器。您可能需要重新輸入 API 金鑰。"
+  },
   "colors": {
     "appearance": "外觀",
     "colorTheme": "顏色主題"

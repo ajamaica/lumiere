@@ -205,6 +205,11 @@
       "installMessage": "Изучи навык \"{{name}}\": {{description}}\n\n{{content}}"
     }
   },
+  "setup": {
+    "or": "или",
+    "restoreFromBackup": "Восстановить из резервной копии",
+    "importSuccess": "Серверы восстановлены из резервной копии. Возможно, потребуется повторно ввести API-ключи."
+  },
   "colors": {
     "appearance": "Внешний вид",
     "colorTheme": "Цветовая тема"

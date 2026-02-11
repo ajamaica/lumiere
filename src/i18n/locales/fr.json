@@ -205,6 +205,11 @@
       "installMessage": "Apprends cette compétence appelée \"{{name}}\" : {{description}}\n\n{{content}}"
     }
   },
+  "setup": {
+    "or": "ou",
+    "restoreFromBackup": "Restaurer depuis une Sauvegarde",
+    "importSuccess": "Serveurs restaurés depuis la sauvegarde. Vous devrez peut-être saisir à nouveau les clés API."
+  },
   "colors": {
     "appearance": "Apparence",
     "colorTheme": "Thème de Couleur"
