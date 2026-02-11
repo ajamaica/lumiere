@@ -16,6 +16,7 @@ import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
 import { useShareExtension } from '../src/hooks/useShareIntent'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
+import { isPasswordConfigured } from '../src/services/webCrypto'
 import {
   biometricLockEnabledAtom,
   getSessionCryptoKey,
@@ -123,15 +124,7 @@ function AppContent() {
 
   const backgroundStyle = { flex: 1, backgroundColor: theme.colors.background }
 
-  // Web password lock — prompt before anything else
-  if (Platform.OS === 'web' && !webPasswordUnlocked) {
-    return (
-      <View style={backgroundStyle}>
-        <PasswordLockScreen onUnlock={handlePasswordUnlock} />
-      </View>
-    )
-  }
-
+  // 1. Onboarding must complete first (server setup, etc.)
   if (!onboardingCompleted) {
     return (
       <View style={backgroundStyle}>
@@ -140,6 +133,22 @@ function AppContent() {
     )
   }
 
+  // 2. Web password lock — shown after setup when a password has been
+  //    configured previously OR when this is the first session after
+  //    onboarding (password not yet created).
+  const needsWebPasswordLock =
+    Platform.OS === 'web' &&
+    !webPasswordUnlocked &&
+    (isPasswordConfigured() || !hasSessionCryptoKey())
+  if (needsWebPasswordLock) {
+    return (
+      <View style={backgroundStyle}>
+        <PasswordLockScreen onUnlock={handlePasswordUnlock} />
+      </View>
+    )
+  }
+
+  // 3. Biometric lock (native only)
   if (isLocked) {
     return (
       <View style={backgroundStyle}>
