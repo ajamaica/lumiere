@@ -1,4 +1,4 @@
-import { useAtom } from 'jotai'
+import { type PrimitiveAtom, useAtom } from 'jotai'
 import { useCallback, useEffect, useMemo } from 'react'
 import { Platform } from 'react-native'
 
@@ -13,6 +13,11 @@ import {
   serversAtom,
   ServersDict,
 } from '../store'
+
+// Both atoms hold ServersDict — cast to a common type so the conditional
+// expression satisfies useAtom's overload without collapsing to `never`.
+const webAtom = secureServersAtom as PrimitiveAtom<ServersDict>
+const nativeAtom = serversAtom as unknown as PrimitiveAtom<ServersDict>
 
 export interface UseServersResult {
   // State
@@ -41,7 +46,7 @@ export function useServers(): UseServersResult {
 
   // On web, use the password-encrypted secure atom.
   // On native, use the normal AsyncStorage-backed atom.
-  const [servers, setServers] = useAtom(isWeb ? secureServersAtom : serversAtom)
+  const [servers, setServers] = useAtom(isWeb ? webAtom : nativeAtom)
   const [currentServerId, setCurrentServerId] = useAtom(currentServerIdAtom)
   const [hydrated] = useAtom(secureStoreHydratedAtom)
 

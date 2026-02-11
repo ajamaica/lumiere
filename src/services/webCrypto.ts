@@ -50,13 +50,15 @@ function fromBase64(base64: string): Uint8Array {
 // ─── Key derivation ────────────────────────────────────────
 
 async function importPasswordKey(password: string): Promise<CryptoKey> {
-  return crypto.subtle.importKey('raw', encode(password), 'PBKDF2', false, ['deriveKey'])
+  return crypto.subtle.importKey('raw', encode(password) as BufferSource, 'PBKDF2', false, [
+    'deriveKey',
+  ])
 }
 
 async function deriveAESKey(password: string, salt: Uint8Array): Promise<CryptoKey> {
   const baseKey = await importPasswordKey(password)
   return crypto.subtle.deriveKey(
-    { name: 'PBKDF2', salt, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
+    { name: 'PBKDF2', salt: salt as BufferSource, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
     baseKey,
     { name: 'AES-GCM', length: KEY_LENGTH },
     false,
@@ -71,7 +73,11 @@ async function deriveAESKey(password: string, salt: Uint8Array): Promise<CryptoK
  */
 async function encrypt(plaintext: string, key: CryptoKey): Promise<string> {
   const iv = randomBytes(IV_LENGTH)
-  const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encode(plaintext))
+  const ciphertext = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv: iv as BufferSource },
+    key,
+    encode(plaintext) as BufferSource,
+  )
   // Concatenate IV + ciphertext into a single buffer
   const combined = new Uint8Array(iv.length + ciphertext.byteLength)
   combined.set(iv, 0)
@@ -87,7 +93,11 @@ async function decrypt(encoded: string, key: CryptoKey): Promise<string> {
   const combined = fromBase64(encoded)
   const iv = combined.slice(0, IV_LENGTH)
   const ciphertext = combined.slice(IV_LENGTH)
-  const plaintext = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext)
+  const plaintext = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv: iv as BufferSource },
+    key,
+    ciphertext as BufferSource,
+  )
   return decode(plaintext)
 }
 
