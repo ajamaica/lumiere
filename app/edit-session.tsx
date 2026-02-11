@@ -1,6 +1,7 @@
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -11,6 +12,7 @@ import { useTheme } from '../src/theme'
 export default function EditSessionScreen() {
   const { theme } = useTheme()
   const router = useRouter()
+  const { t } = useTranslation()
   const { key } = useLocalSearchParams<{ key: string }>()
   const [sessionAliases, setSessionAliases] = useAtom(sessionAliasesAtom)
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
@@ -24,9 +26,9 @@ export default function EditSessionScreen() {
   if (!key) {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
-        <ScreenHeader title="Edit Session" showBack />
+        <ScreenHeader title={t('sessions.editSession')} showBack />
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text color="secondary">Session not found</Text>
+          <Text color="secondary">{t('sessions.sessionNotFound')}</Text>
         </View>
       </SafeAreaView>
     )
@@ -36,7 +38,7 @@ export default function EditSessionScreen() {
     const trimmedName = name.trim()
 
     if (!sessionKey.trim()) {
-      Alert.alert('Error', 'Session key is required')
+      Alert.alert(t('common.error'), t('sessions.sessionKeyRequired'))
       return
     }
 
@@ -85,7 +87,7 @@ export default function EditSessionScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader title="Edit Session" showBack />
+      <ScreenHeader title={t('sessions.editSession')} showBack />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
@@ -96,7 +98,7 @@ export default function EditSessionScreen() {
         >
           <View style={styles.formRow}>
             <TextInput
-              label="Display Name"
+              label={t('sessions.displayName')}
               value={name}
               onChangeText={setName}
               placeholder="My Chat Session"
@@ -107,7 +109,7 @@ export default function EditSessionScreen() {
 
           <View style={styles.formRow}>
             <TextInput
-              label="Session Key"
+              label={t('sessions.sessionKey')}
               value={sessionKey}
               onChangeText={setSessionKey}
               placeholder="agent:main:session-name"
@@ -117,9 +119,9 @@ export default function EditSessionScreen() {
           </View>
 
           <View style={styles.buttonRow}>
-            <Button title="Save" onPress={handleSave} style={{ flex: 1 }} />
+            <Button title={t('common.save')} onPress={handleSave} style={{ flex: 1 }} />
             <Button
-              title="Cancel"
+              title={t('common.cancel')}
               variant="secondary"
               onPress={() => router.back()}
               style={{ flex: 1 }}

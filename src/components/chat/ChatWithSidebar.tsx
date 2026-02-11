@@ -2,9 +2,10 @@ import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-native'
 
+import { DEFAULT_SESSION_KEY } from '../../constants'
 import { useServers } from '../../hooks/useServers'
 import { useMoltGateway } from '../../services/molt'
-import { ProviderConfig } from '../../services/providers'
+import { deleteSessionData, ProviderConfig } from '../../services/providers'
 import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../../store'
 import { logger } from '../../utils/logger'
 import { SessionSidebar } from '../layout/SessionSidebar'
@@ -162,6 +163,43 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     )
   }
 
+  const handleDeleteSession = (sessionKey: string) => {
+    Alert.alert(
+      'Delete Session',
+      'Are you sure you want to delete this session? This action cannot be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              // For Molt, reset on the server side first
+              if (supportsServerSessions) {
+                await resetSession(sessionKey)
+              }
+
+              // Delete local cache and session index entry
+              await deleteSessionData(providerConfig?.serverId, sessionKey)
+
+              // If deleting the current session, switch to default
+              if (sessionKey === currentSessionKey) {
+                setCurrentSessionKey(DEFAULT_SESSION_KEY)
+                setClearMessagesTrigger((prev) => prev + 1)
+              }
+
+              // Reload sessions list
+              loadSessions()
+            } catch (err) {
+              chatSidebarLogger.logError('Failed to delete session', err)
+              Alert.alert('Error', 'Failed to delete session')
+            }
+          },
+        },
+      ],
+    )
+  }
+
   const handleSelectSession = (sessionKey: string) => {
     setCurrentSessionKey(sessionKey)
   }
@@ -194,6 +232,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
         <SessionSidebar
           onNewSession={handleNewSession}
           onResetSession={handleResetSession}
+          onDeleteSession={handleDeleteSession}
           onSelectSession={handleSelectSession}
           sessions={sessions}
           currentSessionKey={currentSessionKey}
