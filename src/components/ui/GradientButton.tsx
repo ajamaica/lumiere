@@ -14,6 +14,7 @@ import Animated, {
   useSharedValue,
   withRepeat,
   withSequence,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated'
 
@@ -86,7 +87,7 @@ export function GradientButton({
   }, [scaleValue])
 
   const handlePressOut = useCallback(() => {
-    scaleValue.value = withTiming(1, { duration: 150, easing: Easing.out(Easing.ease) }) // eslint-disable-line react-hooks/immutability
+    scaleValue.value = withSpring(1, { damping: 12, stiffness: 400 }) // eslint-disable-line react-hooks/immutability
   }, [scaleValue])
 
   const sizeStyles = {

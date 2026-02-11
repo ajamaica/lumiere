@@ -1,8 +1,17 @@
 import { Ionicons } from '@expo/vector-icons'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native'
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated'
 
 import { useTheme } from '../../theme'
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
 type IconButtonVariant = 'filled' | 'ghost'
 type IconButtonSize = 'sm' | 'md' | 'lg'
@@ -26,6 +35,19 @@ export function IconButton({
   ...props
 }: IconButtonProps) {
   const { theme } = useTheme()
+  const scaleValue = useSharedValue(1)
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleValue.value }],
+  }))
+
+  const handlePressIn = useCallback(() => {
+    scaleValue.value = withTiming(0.85, { duration: 100, easing: Easing.out(Easing.ease) }) // eslint-disable-line react-hooks/immutability
+  }, [scaleValue])
+
+  const handlePressOut = useCallback(() => {
+    scaleValue.value = withSpring(1, { damping: 12, stiffness: 400 }) // eslint-disable-line react-hooks/immutability
+  }, [scaleValue])
 
   const sizeMap = {
     sm: { button: 32, icon: 18 },
@@ -51,15 +73,17 @@ export function IconButton({
   })
 
   return (
-    <TouchableOpacity
-      style={[styles.button, disabled && { opacity: 0.5 }, style]}
+    <AnimatedTouchableOpacity
+      style={[styles.button, disabled && { opacity: 0.5 }, animatedStyle, style]}
       disabled={disabled}
       activeOpacity={0.7}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
       accessibilityRole="button"
       accessibilityState={{ disabled: !!disabled }}
       {...props}
     >
       <Ionicons name={icon} size={s.icon} color={iconColor} />
-    </TouchableOpacity>
+    </AnimatedTouchableOpacity>
   )
 }
