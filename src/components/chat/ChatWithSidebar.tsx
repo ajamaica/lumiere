@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
+import { DEFAULT_SESSION_KEY } from '../../constants'
 import { useServers } from '../../hooks/useServers'
 import { useMoltGateway } from '../../services/molt'
 import { ProviderConfig } from '../../services/providers'
@@ -109,8 +110,8 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
 
   // Track current session for current server
   useEffect(() => {
-    if (currentServerId && currentSessionKey && currentSessionKey !== 'agent:main') {
-      // Don't track the default "agent:main" session - it's not server-specific
+    if (currentServerId && currentSessionKey && currentSessionKey !== DEFAULT_SESSION_KEY) {
+      // Don't track the default "agent:main:main" session - it's not server-specific
       // Only track actual session keys
       serverSessionsRef.current[currentServerId] = currentSessionKey
     }
@@ -118,8 +119,8 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
 
   // Initialize session for non-molt servers
   useEffect(() => {
-    if (!supportsServerSessions && currentSessionKey !== 'agent:main') {
-      setCurrentSessionKey('agent:main')
+    if (!supportsServerSessions && currentSessionKey !== DEFAULT_SESSION_KEY) {
+      setCurrentSessionKey(DEFAULT_SESSION_KEY)
     }
   }, [supportsServerSessions, currentSessionKey, setCurrentSessionKey])
 
@@ -151,7 +152,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
         setCurrentSessionKey('')
       } else {
         // For non-molt servers, use consistent "main" session
-        setCurrentSessionKey('agent:main')
+        setCurrentSessionKey(DEFAULT_SESSION_KEY)
       }
     }
   }
