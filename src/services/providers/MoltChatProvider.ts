@@ -1,6 +1,7 @@
 import { agentConfig } from '../../config/gateway.config'
+import { detectAndLoadPromptImages, formatAttachmentForGateway } from '../../utils/attachments'
 import { MoltGatewayClient } from '../molt/client'
-import { AgentEvent } from '../molt/types'
+import { AgentEvent, ChatSendAttachment } from '../molt/types'
 import {
   ChatHistoryResponse,
   ChatProvider,
@@ -63,20 +64,35 @@ export class MoltChatProvider implements ChatProvider {
     params: SendMessageParams,
     onEvent: (event: ChatProviderEvent) => void,
   ): Promise<void> {
-    const agentParams = {
+    // Convert provider attachments to the gateway data-URI format.
+    const gatewayAttachments: ChatSendAttachment[] = []
+
+    if (params.attachments?.length) {
+      for (const a of params.attachments) {
+        gatewayAttachments.push(formatAttachmentForGateway(a))
+      }
+    }
+
+    // Detect inline image references (data-URIs) in the prompt text and
+    // include them as additional image attachments so the model can see them.
+    const promptImages = detectAndLoadPromptImages(params.message)
+    for (const img of promptImages) {
+      gatewayAttachments.push({
+        type: 'image',
+        mimeType: img.mimeType,
+        content: img.source, // already a data-URI
+      })
+    }
+
+    const chatSendParams = {
       message: params.message,
       idempotencyKey: `msg-${Date.now()}-${Math.random()}`,
       agentId: agentConfig.defaultAgentId,
       sessionKey: params.sessionKey,
-      attachments: params.attachments?.map((a) => ({
-        type: a.type,
-        content: a.data,
-        mimeType: a.mimeType,
-        fileName: a.name,
-      })),
+      attachments: gatewayAttachments.length > 0 ? gatewayAttachments : undefined,
     }
 
-    await this.client.sendAgentRequest(agentParams, (event: AgentEvent) => {
+    await this.client.chatSend(chatSendParams, (event: AgentEvent) => {
       if (event.stream === 'assistant' && event.data.delta) {
         onEvent({ type: 'delta', delta: event.data.delta })
       } else if (event.stream === 'lifecycle') {

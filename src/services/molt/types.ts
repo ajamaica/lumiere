@@ -137,6 +137,25 @@ export interface Attachment {
   fileName?: string
 }
 
+// Attachment format accepted by the gateway chat.send RPC method.
+// The `content` field must be a data-URI (e.g. "data:image/png;base64,…").
+export interface ChatSendAttachment {
+  type: 'image' | 'audio' | 'video' | 'document'
+  mimeType: string
+  content: string // data-URI
+  fileName?: string
+}
+
+// Params for the chat.send RPC method
+export interface ChatSendParams {
+  message: string
+  idempotencyKey: string
+  agentId?: string
+  sessionKey?: string
+  model?: string
+  attachments?: ChatSendAttachment[]
+}
+
 // Agent params
 export interface AgentParams {
   message: string

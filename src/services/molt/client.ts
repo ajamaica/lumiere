@@ -3,6 +3,7 @@ import { logger } from '../../utils/logger'
 import {
   AgentEvent,
   AgentParams,
+  ChatSendParams,
   ConnectResponse,
   EventFrame,
   HealthStatus,
@@ -219,6 +220,39 @@ export class MoltGatewayClient {
 
   async sendMessage(params: SendMessageParams): Promise<unknown> {
     return await this.request('send', params)
+  }
+
+  /**
+   * Send a chat message via the `chat.send` RPC method.
+   *
+   * Attachments must use the gateway format where `content` is a data-URI
+   * (e.g. `data:image/png;base64,…`).  Use {@link formatAttachmentForGateway}
+   * from `src/utils/attachments` to convert provider attachments.
+   *
+   * Streaming events are delivered through the optional `onEvent` callback,
+   * following the same pattern as {@link sendAgentRequest}.
+   */
+  async chatSend(params: ChatSendParams, onEvent?: (event: AgentEvent) => void): Promise<unknown> {
+    if (onEvent) {
+      let unsubscribe: (() => void) | null = null
+
+      unsubscribe = this.addEventListener((frame) => {
+        if (frame.event === 'agent') {
+          const agentEvent = frame.payload as AgentEvent
+          onEvent(agentEvent)
+
+          if (agentEvent.stream === 'lifecycle' && agentEvent.data.phase === 'end') {
+            if (unsubscribe) {
+              unsubscribe()
+            }
+          }
+        }
+      })
+
+      return await this.request('chat.send', params)
+    } else {
+      return await this.request('chat.send', params)
+    }
   }
 
   async getChatHistory(sessionKey: string, limit?: number): Promise<unknown> {
