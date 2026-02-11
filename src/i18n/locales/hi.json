@@ -50,7 +50,8 @@
     "restoreServers": "सर्वर रिस्टोर",
     "contribute": "योगदान करें",
     "skills": "कौशल",
-    "workflowMode": "वर्कफ़्लो मोड"
+    "workflowMode": "वर्कफ़्लो मोड",
+    "gatewayLogs": "गेटवे लॉग"
   },
   "home": {
     "connectionError": "कनेक्शन त्रुटि",
@@ -257,5 +258,15 @@
     "available": "उपलब्ध",
     "unavailable": "अनुपलब्ध",
     "noAgents": "कोई एजेंट नहीं मिला"
+  },
+  "gatewayLogs": {
+    "title": "गेटवे लॉग",
+    "subtitle": "गेटवे सर्वर से हाल के लॉग देखें।",
+    "openClawOnlyDescription": "गेटवे लॉग केवल OpenClaw सर्वर के लिए उपलब्ध हैं।",
+    "filterAll": "सभी",
+    "refresh": "रीफ्रेश",
+    "logsSection": "लॉग",
+    "logsDescription": "गेटवे से हाल की लॉग प्रविष्टियाँ।",
+    "noLogs": "कोई लॉग प्रविष्टि नहीं मिली"
   }
 }

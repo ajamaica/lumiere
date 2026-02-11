@@ -50,7 +50,8 @@
     "restoreServers": "Restaurer les Serveurs",
     "contribute": "Contribuer",
     "skills": "Compétences",
-    "workflowMode": "Mode Workflow"
+    "workflowMode": "Mode Workflow",
+    "gatewayLogs": "Journaux du Gateway"
   },
   "home": {
     "connectionError": "Erreur de connexion",
@@ -257,5 +258,15 @@
     "available": "Disponible",
     "unavailable": "Indisponible",
     "noAgents": "Aucun agent trouvé"
+  },
+  "gatewayLogs": {
+    "title": "Journaux du Gateway",
+    "subtitle": "Voir les journaux récents du serveur gateway.",
+    "openClawOnlyDescription": "Les journaux du gateway ne sont disponibles que pour les serveurs OpenClaw.",
+    "filterAll": "Tous",
+    "refresh": "Actualiser",
+    "logsSection": "Journaux",
+    "logsDescription": "Entrées de journal récentes du gateway.",
+    "noLogs": "Aucune entrée de journal trouvée"
   }
 }

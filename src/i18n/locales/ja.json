@@ -50,7 +50,8 @@
     "restoreServers": "サーバーを復元",
     "contribute": "コントリビュート",
     "skills": "スキル",
-    "workflowMode": "ワークフローモード"
+    "workflowMode": "ワークフローモード",
+    "gatewayLogs": "ゲートウェイログ"
   },
   "home": {
     "connectionError": "接続エラー",
@@ -257,5 +258,15 @@
     "available": "利用可能",
     "unavailable": "利用不可",
     "noAgents": "エージェントが見つかりません"
+  },
+  "gatewayLogs": {
+    "title": "ゲートウェイログ",
+    "subtitle": "ゲートウェイサーバーの最近のログを表示します。",
+    "openClawOnlyDescription": "ゲートウェイログはOpenClawサーバーでのみ利用可能です。",
+    "filterAll": "すべて",
+    "refresh": "更新",
+    "logsSection": "ログ",
+    "logsDescription": "ゲートウェイからの最近のログエントリ。",
+    "noLogs": "ログエントリが見つかりません"
   }
 }

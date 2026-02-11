@@ -50,7 +50,8 @@
     "restoreServers": "Восстановление серверов",
     "contribute": "Внести вклад",
     "skills": "Навыки",
-    "workflowMode": "Режим Workflow"
+    "workflowMode": "Режим Workflow",
+    "gatewayLogs": "Журналы шлюза"
   },
   "home": {
     "connectionError": "Ошибка подключения",
@@ -257,5 +258,15 @@
     "available": "Доступен",
     "unavailable": "Недоступен",
     "noAgents": "Агенты не найдены"
+  },
+  "gatewayLogs": {
+    "title": "Журналы шлюза",
+    "subtitle": "Просмотр последних журналов сервера шлюза.",
+    "openClawOnlyDescription": "Журналы шлюза доступны только для серверов OpenClaw.",
+    "filterAll": "Все",
+    "refresh": "Обновить",
+    "logsSection": "Журналы",
+    "logsDescription": "Последние записи журнала шлюза.",
+    "noLogs": "Записей в журнале не найдено"
   }
 }

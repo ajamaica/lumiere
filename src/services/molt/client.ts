@@ -5,6 +5,8 @@ import {
   AgentParams,
   ConnectResponse,
   EventFrame,
+  GatewayLogsParams,
+  GatewayLogsResponse,
   HealthStatus,
   MoltConfig,
   RequestFrame,
@@ -275,6 +277,10 @@ export class MoltGatewayClient {
 
   async updateSkill(params: UpdateSkillParams): Promise<Skill> {
     return (await this.request('skills.update', params)) as Skill
+  }
+
+  async getLogs(params?: GatewayLogsParams): Promise<GatewayLogsResponse> {
+    return (await this.request('logs.list', params)) as GatewayLogsResponse
   }
 
   async sendAgentRequest(

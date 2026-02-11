@@ -198,6 +198,25 @@ export interface ClawHubSkill {
   installs?: number
 }
 
+// Gateway logs
+export interface GatewayLogEntry {
+  ts: number
+  level: 'debug' | 'info' | 'warn' | 'error'
+  message: string
+  source?: string
+  meta?: Record<string, unknown>
+}
+
+export interface GatewayLogsParams {
+  limit?: number
+  before?: number
+  level?: 'debug' | 'info' | 'warn' | 'error'
+}
+
+export interface GatewayLogsResponse {
+  logs: GatewayLogEntry[]
+}
+
 // Event types
 export type GatewayEvent =
   | { event: 'agent'; payload: AgentEvent; seq?: number }

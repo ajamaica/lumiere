@@ -50,7 +50,8 @@
     "restoreServers": "還原伺服器",
     "contribute": "貢獻",
     "skills": "技能",
-    "workflowMode": "工作流程模式"
+    "workflowMode": "工作流程模式",
+    "gatewayLogs": "閘道日誌"
   },
   "home": {
     "connectionError": "連線錯誤",
@@ -257,5 +258,15 @@
     "available": "可用",
     "unavailable": "不可用",
     "noAgents": "未找到代理"
+  },
+  "gatewayLogs": {
+    "title": "閘道日誌",
+    "subtitle": "查看閘道伺服器的最近日誌。",
+    "openClawOnlyDescription": "閘道日誌僅適用於 OpenClaw 伺服器。",
+    "filterAll": "全部",
+    "refresh": "重新整理",
+    "logsSection": "日誌",
+    "logsDescription": "閘道的最近日誌條目。",
+    "noLogs": "未找到日誌條目"
   }
 }

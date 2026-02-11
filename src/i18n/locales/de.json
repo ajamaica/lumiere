@@ -50,7 +50,8 @@
     "restoreServers": "Server wiederherstellen",
     "contribute": "Mitwirken",
     "skills": "Fähigkeiten",
-    "workflowMode": "Workflow-Modus"
+    "workflowMode": "Workflow-Modus",
+    "gatewayLogs": "Gateway-Protokolle"
   },
   "home": {
     "connectionError": "Verbindungsfehler",
@@ -257,5 +258,15 @@
     "available": "Verfügbar",
     "unavailable": "Nicht verfügbar",
     "noAgents": "Keine Agenten gefunden"
+  },
+  "gatewayLogs": {
+    "title": "Gateway-Protokolle",
+    "subtitle": "Aktuelle Protokolle des Gateway-Servers anzeigen.",
+    "openClawOnlyDescription": "Gateway-Protokolle sind nur für OpenClaw-Server verfügbar.",
+    "filterAll": "Alle",
+    "refresh": "Aktualisieren",
+    "logsSection": "Protokolle",
+    "logsDescription": "Aktuelle Protokolleinträge des Gateways.",
+    "noLogs": "Keine Protokolleinträge gefunden"
   }
 }
