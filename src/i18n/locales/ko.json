@@ -225,6 +225,11 @@
       "installMessage": "\"{{name}}\"이라는 스킬을 배우세요: {{description}}\n\n{{content}}"
     }
   },
+  "setup": {
+    "or": "또는",
+    "restoreFromBackup": "백업에서 복원",
+    "importSuccess": "백업에서 서버가 복원되었습니다. API 키를 다시 입력해야 할 수 있습니다."
+  },
   "colors": {
     "appearance": "외관",
     "colorTheme": "색상 테마"

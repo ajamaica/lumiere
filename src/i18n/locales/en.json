@@ -225,6 +225,11 @@
     "replaceExisting": "Replace existing servers",
     "mergeWithExisting": "Merge with existing servers"
   },
+  "setup": {
+    "or": "or",
+    "restoreFromBackup": "Restore from Backup",
+    "importSuccess": "Servers restored from backup. You may need to re-enter API keys."
+  },
   "colors": {
     "appearance": "Appearance",
     "colorTheme": "Color Theme"

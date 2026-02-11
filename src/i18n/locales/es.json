@@ -225,6 +225,11 @@
       "installMessage": "Aprende esta habilidad llamada \"{{name}}\": {{description}}\n\n{{content}}"
     }
   },
+  "setup": {
+    "or": "o",
+    "restoreFromBackup": "Restaurar desde Copia de Seguridad",
+    "importSuccess": "Servidores restaurados desde la copia de seguridad. Es posible que necesites volver a ingresar las claves API."
+  },
   "colors": {
     "appearance": "Apariencia",
     "colorTheme": "Tema de Color"

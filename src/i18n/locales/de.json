@@ -225,6 +225,11 @@
       "installMessage": "Lerne diese Fähigkeit namens \"{{name}}\": {{description}}\n\n{{content}}"
     }
   },
+  "setup": {
+    "or": "oder",
+    "restoreFromBackup": "Aus Sicherung wiederherstellen",
+    "importSuccess": "Server aus Sicherung wiederhergestellt. Möglicherweise müssen Sie die API-Schlüssel erneut eingeben."
+  },
   "colors": {
     "appearance": "Erscheinungsbild",
     "colorTheme": "Farbthema"

@@ -1,8 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
+import * as DocumentPicker from 'expo-document-picker'
+import { File as ExpoFile } from 'expo-file-system'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -17,15 +21,29 @@ import { getAllProviderOptions } from '../config/providerOptions'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
 import { ProviderType } from '../services/providers'
-import { currentSessionKeyAtom, onboardingCompletedAtom, serverSessionsAtom } from '../store'
+import {
+  currentSessionKeyAtom,
+  onboardingCompletedAtom,
+  ServerConfig,
+  serversAtom,
+  serverSessionsAtom,
+} from '../store'
 import { useTheme } from '../theme'
+
+interface BackupData {
+  version: number
+  exportedAt: string
+  servers: ServerConfig[]
+}
 
 export function SetupScreen() {
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const { addServer } = useServers()
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [, setServerSessions] = useAtom(serverSessionsAtom)
   const [, setOnboardingCompleted] = useAtom(onboardingCompletedAtom)
+  const [, setServers] = useAtom(serversAtom)
 
   const allOptions = getAllProviderOptions(theme.colors.text.primary)
   const providerOptionsList = isAppleAIAvailable()
@@ -89,6 +107,27 @@ export function SetupScreen() {
       shadowRadius: 8,
       elevation: 8,
     },
+    dividerContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: theme.spacing.lg,
+    },
+    dividerLine: {
+      flex: 1,
+      height: 1,
+      backgroundColor: theme.colors.border,
+    },
+    dividerText: {
+      marginHorizontal: theme.spacing.md,
+    },
+    restoreButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: theme.spacing.sm,
+      marginTop: theme.spacing.lg,
+      paddingVertical: theme.spacing.md,
+    },
   })
 
   const needsUrl =
@@ -100,6 +139,54 @@ export function SetupScreen() {
     providerType === 'openai-compatible' ||
     providerType === 'openrouter' ||
     providerType === 'gemini'
+
+  const handleRestoreFromBackup = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'application/json',
+        copyToCacheDirectory: true,
+      })
+
+      if (result.canceled) return
+
+      const asset = result.assets[0]
+      const file = new ExpoFile(asset.uri)
+      const content = await file.text()
+      const data = JSON.parse(content) as BackupData
+
+      if (!data.version || !Array.isArray(data.servers)) {
+        Alert.alert(t('common.error'), t('restoreServers.invalidFile'))
+        return
+      }
+
+      const validServers = data.servers.filter(
+        (s) => s.id && s.name && s.url && s.providerType && s.createdAt,
+      )
+
+      if (validServers.length === 0) {
+        Alert.alert(t('common.error'), t('restoreServers.invalidFile'))
+        return
+      }
+
+      const newServers: Record<string, ServerConfig> = {}
+      for (const server of validServers) {
+        newServers[server.id] = server
+      }
+      setServers(newServers)
+
+      const firstServerId = validServers[0].id
+      setCurrentSessionKey(DEFAULT_SESSION_KEY)
+      setServerSessions((prev) => ({
+        ...prev,
+        [firstServerId]: DEFAULT_SESSION_KEY,
+      }))
+
+      Alert.alert(t('common.success'), t('setup.importSuccess'))
+      setOnboardingCompleted(true)
+    } catch {
+      Alert.alert(t('common.error'), t('restoreServers.importError'))
+    }
+  }
 
   const handleComplete = async () => {
     if (providerType === 'molt' && localUrl.trim() && localToken.trim()) {
@@ -497,6 +584,25 @@ export function SetupScreen() {
             disabled={!isValid}
             animated={true}
           />
+
+          <View style={styles.dividerContainer}>
+            <View style={styles.dividerLine} />
+            <Text variant="caption" color="tertiary" style={styles.dividerText}>
+              {t('setup.or')}
+            </Text>
+            <View style={styles.dividerLine} />
+          </View>
+
+          <TouchableOpacity
+            style={styles.restoreButton}
+            onPress={handleRestoreFromBackup}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="cloud-upload-outline" size={18} color={theme.colors.primary} />
+            <Text variant="body" style={{ color: theme.colors.primary }}>
+              {t('setup.restoreFromBackup')}
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
     </View>

@@ -225,6 +225,11 @@
       "installMessage": "「{{name}}」というスキルを学んでください：{{description}}\n\n{{content}}"
     }
   },
+  "setup": {
+    "or": "または",
+    "restoreFromBackup": "バックアップから復元",
+    "importSuccess": "バックアップからサーバーを復元しました。APIキーの再入力が必要な場合があります。"
+  },
   "colors": {
     "appearance": "外観",
     "colorTheme": "カラーテーマ"

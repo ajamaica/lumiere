@@ -225,6 +225,11 @@
       "installMessage": "\"{{name}}\" नामक यह कौशल सीखें: {{description}}\n\n{{content}}"
     }
   },
+  "setup": {
+    "or": "या",
+    "restoreFromBackup": "बैकअप से पुनर्स्थापित करें",
+    "importSuccess": "बैकअप से सर्वर पुनर्स्थापित किए गए। आपको API कुंजियाँ फिर से दर्ज करनी पड़ सकती हैं।"
+  },
   "colors": {
     "appearance": "दिखावट",
     "colorTheme": "रंग थीम"
