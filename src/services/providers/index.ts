@@ -3,6 +3,7 @@ export {
   buildCacheKey,
   buildSessionIndexKey,
   CachedChatProvider,
+  deleteSessionData,
   readCachedHistory,
   readSessionIndex,
 } from './CachedChatProvider'

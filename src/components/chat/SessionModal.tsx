@@ -16,6 +16,7 @@ interface SessionModalProps {
   onClose: () => void
   onNewSession: () => void
   onResetSession: () => void
+  onDeleteSession?: (sessionKey: string) => void
   onSelectSession: (sessionKey: string) => void
   sessions: Session[]
   currentSessionKey: string
@@ -27,6 +28,7 @@ export function SessionModal({
   onClose,
   onNewSession,
   onResetSession,
+  onDeleteSession,
   onSelectSession,
   sessions,
   currentSessionKey,
@@ -216,6 +218,21 @@ export function SessionModal({
                 />
                 <Text style={styles.actionText}>Edit Current</Text>
               </TouchableOpacity>
+
+              {onDeleteSession && (
+                <TouchableOpacity
+                  style={[styles.actionButton, { borderColor: '#EF4444' + '30' }]}
+                  onPress={() => {
+                    onDeleteSession(currentSessionKey)
+                    onClose()
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel="Delete Current"
+                >
+                  <Ionicons name="trash" size={22} color="#EF4444" style={styles.actionIcon} />
+                  <Text style={[styles.actionText, { color: '#EF4444' }]}>Delete Current</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             <View style={styles.section}>

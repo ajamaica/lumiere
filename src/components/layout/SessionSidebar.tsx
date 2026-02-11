@@ -26,6 +26,7 @@ interface Session {
 interface SessionSidebarProps {
   onNewSession: () => void
   onResetSession: () => void
+  onDeleteSession?: (sessionKey: string) => void
   onSelectSession: (sessionKey: string) => void
   sessions: Session[]
   currentSessionKey: string
@@ -40,6 +41,7 @@ interface SessionSidebarProps {
 export const SessionSidebar: React.FC<SessionSidebarProps> = ({
   onNewSession,
   onResetSession,
+  onDeleteSession,
   onSelectSession,
   sessions,
   currentSessionKey,
@@ -294,6 +296,18 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
               />
               <Text style={styles.actionText}>Edit Current</Text>
             </TouchableOpacity>
+
+            {onDeleteSession && (
+              <TouchableOpacity
+                style={[styles.actionButton, { borderColor: '#EF4444' + '30' }]}
+                onPress={() => onDeleteSession(currentSessionKey)}
+                accessibilityRole="button"
+                accessibilityLabel="Delete Current"
+              >
+                <Ionicons name="trash" size={22} color="#EF4444" style={styles.actionIcon} />
+                <Text style={[styles.actionText, { color: '#EF4444' }]}>Delete Current</Text>
+              </TouchableOpacity>
+            )}
           </View>
         }
 

@@ -36,6 +36,43 @@ export function buildSessionIndexKey(serverId: string | undefined): string {
  * This allows the UI to list known sessions without needing a connected
  * provider (e.g. for the Sessions screen).
  */
+/**
+ * Write the session index for a server directly to AsyncStorage.
+ */
+export async function writeSessionIndex(
+  serverId: string | undefined,
+  entries: SessionIndexEntry[],
+): Promise<void> {
+  try {
+    const key = buildSessionIndexKey(serverId)
+    await jotaiStorage.setItem(key, entries)
+  } catch (error) {
+    if (__DEV__) {
+      cacheLogger.warn(`Failed to write session index for server "${serverId}"`, error)
+    }
+  }
+}
+
+/**
+ * Delete all data for a session: the cached messages and the index entry.
+ *
+ * This is a standalone function so UI code can delete sessions without
+ * needing a connected provider instance.
+ */
+export async function deleteSessionData(
+  serverId: string | undefined,
+  sessionKey: string,
+): Promise<void> {
+  // Remove cached messages
+  const cacheKey = buildCacheKey(serverId, sessionKey)
+  await jotaiStorage.removeItem(cacheKey)
+
+  // Remove from session index
+  const entries = await readSessionIndex(serverId)
+  const filtered = entries.filter((e) => e.key !== sessionKey)
+  await writeSessionIndex(serverId, filtered)
+}
+
 export async function readSessionIndex(serverId: string | undefined): Promise<SessionIndexEntry[]> {
   try {
     const key = buildSessionIndexKey(serverId)
