@@ -104,6 +104,25 @@
     "deleteConfirmTitle": "サーバーを削除",
     "deleteConfirmMessage": "このサーバーを削除してもよろしいですか？この操作は元に戻せません。"
   },
+  "passwordLock": {
+    "titleSetup": "パスワードを作成",
+    "titleReturning": "おかえりなさい",
+    "subtitleSetup": "このデバイスのサーバーデータを保護するためにパスワードを設定してください。",
+    "subtitleReturning": "パスワードを入力してサーバーのロックを解除してください。",
+    "passwordLabel": "パスワード",
+    "confirmLabel": "パスワードの確認",
+    "passwordPlaceholder": "パスワードを入力",
+    "confirmPlaceholder": "パスワードを再入力",
+    "unlockButton": "ロック解除",
+    "createButton": "パスワードを作成",
+    "errors": {
+      "required": "パスワードは必須です",
+      "tooShort": "パスワードは6文字以上である必要があります",
+      "mismatch": "パスワードが一致しません",
+      "incorrect": "パスワードが正しくありません",
+      "generic": "問題が発生しました。もう一度お試しください。"
+    }
+  },
   "biometricLock": {
     "locked": "ロック中",
     "unlock": "ロック解除",

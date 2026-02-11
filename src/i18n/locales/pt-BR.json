@@ -104,6 +104,25 @@
     "deleteConfirmTitle": "Excluir Servidor",
     "deleteConfirmMessage": "Tem certeza de que deseja excluir este servidor? Esta ação não pode ser desfeita."
   },
+  "passwordLock": {
+    "titleSetup": "Criar Senha",
+    "titleReturning": "Bem-vindo de Volta",
+    "subtitleSetup": "Defina uma senha para proteger os dados dos seus servidores neste dispositivo.",
+    "subtitleReturning": "Digite sua senha para desbloquear seus servidores.",
+    "passwordLabel": "Senha",
+    "confirmLabel": "Confirmar Senha",
+    "passwordPlaceholder": "Digite a senha",
+    "confirmPlaceholder": "Redigite a senha",
+    "unlockButton": "Desbloquear",
+    "createButton": "Criar Senha",
+    "errors": {
+      "required": "A senha é obrigatória",
+      "tooShort": "A senha deve ter pelo menos 6 caracteres",
+      "mismatch": "As senhas não coincidem",
+      "incorrect": "Senha incorreta",
+      "generic": "Algo deu errado. Por favor, tente novamente."
+    }
+  },
   "biometricLock": {
     "locked": "Bloqueado",
     "unlock": "Desbloquear",

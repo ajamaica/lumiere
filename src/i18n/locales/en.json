@@ -104,6 +104,25 @@
     "deleteConfirmTitle": "Delete Server",
     "deleteConfirmMessage": "Are you sure you want to delete this server? This action cannot be undone."
   },
+  "passwordLock": {
+    "titleSetup": "Create Password",
+    "titleReturning": "Welcome Back",
+    "subtitleSetup": "Set a password to protect your server data on this device.",
+    "subtitleReturning": "Enter your password to unlock your servers.",
+    "passwordLabel": "Password",
+    "confirmLabel": "Confirm Password",
+    "passwordPlaceholder": "Enter password",
+    "confirmPlaceholder": "Re-enter password",
+    "unlockButton": "Unlock",
+    "createButton": "Create Password",
+    "errors": {
+      "required": "Password is required",
+      "tooShort": "Password must be at least 6 characters",
+      "mismatch": "Passwords do not match",
+      "incorrect": "Incorrect password",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
   "biometricLock": {
     "locked": "Locked",
     "unlock": "Unlock",

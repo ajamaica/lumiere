@@ -104,6 +104,25 @@
     "deleteConfirmTitle": "Supprimer le serveur",
     "deleteConfirmMessage": "Êtes-vous sûr de vouloir supprimer ce serveur ? Cette action est irréversible."
   },
+  "passwordLock": {
+    "titleSetup": "Créer un mot de passe",
+    "titleReturning": "Bon retour",
+    "subtitleSetup": "Définissez un mot de passe pour protéger les données de vos serveurs sur cet appareil.",
+    "subtitleReturning": "Entrez votre mot de passe pour déverrouiller vos serveurs.",
+    "passwordLabel": "Mot de passe",
+    "confirmLabel": "Confirmer le mot de passe",
+    "passwordPlaceholder": "Entrez le mot de passe",
+    "confirmPlaceholder": "Ressaisissez le mot de passe",
+    "unlockButton": "Déverrouiller",
+    "createButton": "Créer le mot de passe",
+    "errors": {
+      "required": "Le mot de passe est requis",
+      "tooShort": "Le mot de passe doit contenir au moins 6 caractères",
+      "mismatch": "Les mots de passe ne correspondent pas",
+      "incorrect": "Mot de passe incorrect",
+      "generic": "Une erreur est survenue. Veuillez réessayer."
+    }
+  },
   "biometricLock": {
     "locked": "Verrouillé",
     "unlock": "Déverrouiller",

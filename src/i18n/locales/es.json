@@ -104,6 +104,25 @@
     "deleteConfirmTitle": "Eliminar Servidor",
     "deleteConfirmMessage": "¿Estás seguro de que deseas eliminar este servidor? Esta acción no se puede deshacer."
   },
+  "passwordLock": {
+    "titleSetup": "Crear Contraseña",
+    "titleReturning": "Bienvenido de Vuelta",
+    "subtitleSetup": "Establece una contraseña para proteger los datos de tu servidor en este dispositivo.",
+    "subtitleReturning": "Ingresa tu contraseña para desbloquear tus servidores.",
+    "passwordLabel": "Contraseña",
+    "confirmLabel": "Confirmar Contraseña",
+    "passwordPlaceholder": "Ingresa la contraseña",
+    "confirmPlaceholder": "Reingresa la contraseña",
+    "unlockButton": "Desbloquear",
+    "createButton": "Crear Contraseña",
+    "errors": {
+      "required": "La contraseña es obligatoria",
+      "tooShort": "La contraseña debe tener al menos 6 caracteres",
+      "mismatch": "Las contraseñas no coinciden",
+      "incorrect": "Contraseña incorrecta",
+      "generic": "Algo salió mal. Por favor, inténtalo de nuevo."
+    }
+  },
   "biometricLock": {
     "locked": "Bloqueado",
     "unlock": "Desbloquear",

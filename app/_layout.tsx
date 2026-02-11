@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AppState, AppStateStatus, Platform, View } from 'react-native'
 
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
+import { PasswordLockScreen } from '../src/components/PasswordLockScreen'
 import { ErrorBoundary } from '../src/components/ui'
 import { useAppleShortcuts } from '../src/hooks/useAppleShortcuts'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
@@ -15,7 +16,17 @@ import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
 import { useShareExtension } from '../src/hooks/useShareIntent'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
-import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
+import { isPasswordConfigured } from '../src/services/webCrypto'
+import {
+  biometricLockEnabledAtom,
+  getSessionCryptoKey,
+  getStore,
+  hasSessionCryptoKey,
+  hydrateSecureServers,
+  onboardingCompletedAtom,
+  secureStoreHydratedAtom,
+  setSessionCryptoKey,
+} from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
 import { KeyboardProvider } from '../src/utils/KeyboardProvider'
 
@@ -50,6 +61,55 @@ function AppContent() {
   useShareExtension()
   useLanguage() // Initialize language sync
 
+  // Web password lock state — only used on web
+  const [webPasswordUnlocked, setWebPasswordUnlocked] = useState(() => {
+    if (Platform.OS !== 'web') return true
+    return hasSessionCryptoKey()
+  })
+  // Track whether encrypted data has been loaded into the atom.
+  // On native this is always true (not used); on web it becomes true
+  // after hydrateSecureServers completes.
+  const [secureHydrated] = useAtom(secureStoreHydratedAtom)
+
+  // On mount, hydrate secure servers from encrypted localStorage when a
+  // session key is available.  This covers page reloads where the key
+  // survives in sessionStorage but the in-memory atom resets to {}.
+  useEffect(() => {
+    if (Platform.OS !== 'web') return
+    let cancelled = false
+    const restore = async () => {
+      const key = await getSessionCryptoKey()
+      if (cancelled) return
+      if (!key) {
+        // The sync check (hasSessionCryptoKey) found a value but the
+        // async import failed — the stored JWK is corrupt or invalid.
+        // Fall back to the password lock screen so the user can recover.
+        setWebPasswordUnlocked(false)
+        return
+      }
+      try {
+        await hydrateSecureServers(getStore(), key)
+      } catch {
+        // Decryption / storage errors are non-fatal.
+      }
+      if (!cancelled) setWebPasswordUnlocked(true)
+    }
+    restore()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const handlePasswordUnlock = useCallback(async (key: CryptoKey) => {
+    try {
+      await setSessionCryptoKey(key)
+      await hydrateSecureServers(getStore(), key)
+    } catch {
+      // Hydration may fail on first setup (no encrypted data yet) — that's OK.
+    }
+    setWebPasswordUnlocked(true)
+  }, [])
+
   // Use modal presentation for all devices to ensure content is fully accessible
   const modalOptions = useMemo(
     () =>
@@ -83,6 +143,7 @@ function AppContent() {
 
   const backgroundStyle = { flex: 1, backgroundColor: theme.colors.background }
 
+  // 1. Onboarding must complete first (server setup, etc.)
   if (!onboardingCompleted) {
     return (
       <View style={backgroundStyle}>
@@ -91,6 +152,29 @@ function AppContent() {
     )
   }
 
+  // 2. Web password lock — shown after setup when a password has been
+  //    configured previously OR when this is the first session after
+  //    onboarding (password not yet created).
+  const needsWebPasswordLock =
+    Platform.OS === 'web' &&
+    !webPasswordUnlocked &&
+    (isPasswordConfigured() || !hasSessionCryptoKey())
+  if (needsWebPasswordLock) {
+    return (
+      <View style={backgroundStyle}>
+        <PasswordLockScreen onUnlock={handlePasswordUnlock} />
+      </View>
+    )
+  }
+
+  // 3. Wait for encrypted data to hydrate before rendering the app.
+  //    Without this, useServers mounts with an empty atom and the
+  //    auto-persist effect can overwrite localStorage with {}.
+  if (Platform.OS === 'web' && !secureHydrated) {
+    return <View style={backgroundStyle} />
+  }
+
+  // 4. Biometric lock (native only)
   if (isLocked) {
     return (
       <View style={backgroundStyle}>
