@@ -1,9 +1,18 @@
 import { useAtom } from 'jotai'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
+import { Platform } from 'react-native'
 
 import { ProviderConfig } from '../services/providers'
 import { deleteServerToken, getServerToken, setServerToken } from '../services/secureTokenStorage'
-import { currentServerIdAtom, ServerConfig, serversAtom, ServersDict } from '../store'
+import {
+  currentServerIdAtom,
+  persistSecureServers,
+  secureServersAtom,
+  secureStoreHydratedAtom,
+  ServerConfig,
+  serversAtom,
+  ServersDict,
+} from '../store'
 
 export interface UseServersResult {
   // State
@@ -28,8 +37,19 @@ export interface UseServersResult {
 }
 
 export function useServers(): UseServersResult {
-  const [servers, setServers] = useAtom(serversAtom)
+  const isWeb = Platform.OS === 'web'
+
+  // On web, use the password-encrypted secure atom.
+  // On native, use the normal AsyncStorage-backed atom.
+  const [servers, setServers] = useAtom(isWeb ? secureServersAtom : serversAtom)
   const [currentServerId, setCurrentServerId] = useAtom(currentServerIdAtom)
+  const [hydrated] = useAtom(secureStoreHydratedAtom)
+
+  // Auto-persist encrypted servers whenever the atom changes (web only)
+  useEffect(() => {
+    if (!isWeb || !hydrated) return
+    persistSecureServers(servers)
+  }, [servers, isWeb, hydrated])
 
   // Derived state
   const currentServer = useMemo(() => servers[currentServerId] || null, [servers, currentServerId])

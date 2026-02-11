@@ -104,6 +104,25 @@
     "deleteConfirmTitle": "서버 삭제",
     "deleteConfirmMessage": "정말 이 서버를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
   },
+  "passwordLock": {
+    "titleSetup": "비밀번호 생성",
+    "titleReturning": "다시 오신 것을 환영합니다",
+    "subtitleSetup": "이 기기에서 서버 데이터를 보호하기 위해 비밀번호를 설정하세요.",
+    "subtitleReturning": "서버 잠금을 해제하려면 비밀번호를 입력하세요.",
+    "passwordLabel": "비밀번호",
+    "confirmLabel": "비밀번호 확인",
+    "passwordPlaceholder": "비밀번호 입력",
+    "confirmPlaceholder": "비밀번호 재입력",
+    "unlockButton": "잠금 해제",
+    "createButton": "비밀번호 생성",
+    "errors": {
+      "required": "비밀번호를 입력해야 합니다",
+      "tooShort": "비밀번호는 6자 이상이어야 합니다",
+      "mismatch": "비밀번호가 일치하지 않습니다",
+      "incorrect": "비밀번호가 올바르지 않습니다",
+      "generic": "문제가 발생했습니다. 다시 시도해 주세요."
+    }
+  },
   "biometricLock": {
     "locked": "잠김",
     "unlock": "잠금 해제",

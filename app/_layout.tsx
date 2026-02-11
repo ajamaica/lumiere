@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AppState, AppStateStatus, Platform, View } from 'react-native'
 
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
+import { PasswordLockScreen } from '../src/components/PasswordLockScreen'
 import { ErrorBoundary } from '../src/components/ui'
 import { useAppleShortcuts } from '../src/hooks/useAppleShortcuts'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
@@ -15,7 +16,15 @@ import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
 import { useShareExtension } from '../src/hooks/useShareIntent'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
-import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
+import {
+  biometricLockEnabledAtom,
+  getSessionCryptoKey,
+  getStore,
+  hasSessionCryptoKey,
+  hydrateSecureServers,
+  onboardingCompletedAtom,
+  setSessionCryptoKey,
+} from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
 import { KeyboardProvider } from '../src/utils/KeyboardProvider'
 
@@ -50,6 +59,37 @@ function AppContent() {
   useShareExtension()
   useLanguage() // Initialize language sync
 
+  // Web password lock state — only used on web
+  const [webPasswordUnlocked, setWebPasswordUnlocked] = useState(() => {
+    if (Platform.OS !== 'web') return true
+    return hasSessionCryptoKey()
+  })
+
+  // On mount, try to restore CryptoKey from sessionStorage (survives page reload)
+  useEffect(() => {
+    if (Platform.OS !== 'web' || webPasswordUnlocked) return
+    let cancelled = false
+    const restore = async () => {
+      const key = await getSessionCryptoKey()
+      if (cancelled) return
+      if (key) {
+        await hydrateSecureServers(getStore(), key)
+        setWebPasswordUnlocked(true)
+      }
+    }
+    restore()
+    return () => {
+      cancelled = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handlePasswordUnlock = useCallback(async (key: CryptoKey) => {
+    await setSessionCryptoKey(key)
+    await hydrateSecureServers(getStore(), key)
+    setWebPasswordUnlocked(true)
+  }, [])
+
   // Use modal presentation for all devices to ensure content is fully accessible
   const modalOptions = useMemo(
     () =>
@@ -82,6 +122,15 @@ function AppContent() {
   }, [biometricLockEnabled])
 
   const backgroundStyle = { flex: 1, backgroundColor: theme.colors.background }
+
+  // Web password lock — prompt before anything else
+  if (Platform.OS === 'web' && !webPasswordUnlocked) {
+    return (
+      <View style={backgroundStyle}>
+        <PasswordLockScreen onUnlock={handlePasswordUnlock} />
+      </View>
+    )
+  }
 
   if (!onboardingCompleted) {
     return (

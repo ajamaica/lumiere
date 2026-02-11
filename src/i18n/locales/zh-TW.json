@@ -104,6 +104,25 @@
     "deleteConfirmTitle": "刪除伺服器",
     "deleteConfirmMessage": "確定要刪除此伺服器嗎？此操作無法復原。"
   },
+  "passwordLock": {
+    "titleSetup": "建立密碼",
+    "titleReturning": "歡迎回來",
+    "subtitleSetup": "設定密碼以保護此裝置上的伺服器資料。",
+    "subtitleReturning": "輸入密碼以解鎖你的伺服器。",
+    "passwordLabel": "密碼",
+    "confirmLabel": "確認密碼",
+    "passwordPlaceholder": "輸入密碼",
+    "confirmPlaceholder": "重新輸入密碼",
+    "unlockButton": "解鎖",
+    "createButton": "建立密碼",
+    "errors": {
+      "required": "密碼為必填欄位",
+      "tooShort": "密碼至少需要6個字元",
+      "mismatch": "兩次輸入的密碼不一致",
+      "incorrect": "密碼錯誤",
+      "generic": "發生錯誤，請重試。"
+    }
+  },
   "biometricLock": {
     "locked": "已鎖定",
     "unlock": "解鎖",

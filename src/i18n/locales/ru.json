@@ -104,6 +104,25 @@
     "deleteConfirmTitle": "Удалить сервер",
     "deleteConfirmMessage": "Вы уверены, что хотите удалить этот сервер? Это действие нельзя отменить."
   },
+  "passwordLock": {
+    "titleSetup": "Создать пароль",
+    "titleReturning": "С возвращением",
+    "subtitleSetup": "Установите пароль для защиты данных серверов на этом устройстве.",
+    "subtitleReturning": "Введите пароль, чтобы разблокировать серверы.",
+    "passwordLabel": "Пароль",
+    "confirmLabel": "Подтвердите пароль",
+    "passwordPlaceholder": "Введите пароль",
+    "confirmPlaceholder": "Повторите пароль",
+    "unlockButton": "Разблокировать",
+    "createButton": "Создать пароль",
+    "errors": {
+      "required": "Пароль обязателен",
+      "tooShort": "Пароль должен содержать не менее 6 символов",
+      "mismatch": "Пароли не совпадают",
+      "incorrect": "Неверный пароль",
+      "generic": "Что-то пошло не так. Пожалуйста, попробуйте снова."
+    }
+  },
   "biometricLock": {
     "locked": "Заблокировано",
     "unlock": "Разблокировать",

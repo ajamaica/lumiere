@@ -104,6 +104,25 @@
     "deleteConfirmTitle": "Server löschen",
     "deleteConfirmMessage": "Möchten Sie diesen Server wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
   },
+  "passwordLock": {
+    "titleSetup": "Passwort erstellen",
+    "titleReturning": "Willkommen zurück",
+    "subtitleSetup": "Legen Sie ein Passwort fest, um Ihre Serverdaten auf diesem Gerät zu schützen.",
+    "subtitleReturning": "Geben Sie Ihr Passwort ein, um Ihre Server zu entsperren.",
+    "passwordLabel": "Passwort",
+    "confirmLabel": "Passwort bestätigen",
+    "passwordPlaceholder": "Passwort eingeben",
+    "confirmPlaceholder": "Passwort erneut eingeben",
+    "unlockButton": "Entsperren",
+    "createButton": "Passwort erstellen",
+    "errors": {
+      "required": "Passwort ist erforderlich",
+      "tooShort": "Das Passwort muss mindestens 6 Zeichen lang sein",
+      "mismatch": "Passwörter stimmen nicht überein",
+      "incorrect": "Falsches Passwort",
+      "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+    }
+  },
   "biometricLock": {
     "locked": "Gesperrt",
     "unlock": "Entsperren",

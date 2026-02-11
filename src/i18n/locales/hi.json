@@ -104,6 +104,25 @@
     "deleteConfirmTitle": "सर्वर हटाएं",
     "deleteConfirmMessage": "क्या आप वाकई इस सर्वर को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।"
   },
+  "passwordLock": {
+    "titleSetup": "पासवर्ड बनाएं",
+    "titleReturning": "वापसी पर स्वागत है",
+    "subtitleSetup": "इस डिवाइस पर अपने सर्वर डेटा की सुरक्षा के लिए एक पासवर्ड सेट करें।",
+    "subtitleReturning": "अपने सर्वर अनलॉक करने के लिए अपना पासवर्ड दर्ज करें।",
+    "passwordLabel": "पासवर्ड",
+    "confirmLabel": "पासवर्ड की पुष्टि करें",
+    "passwordPlaceholder": "पासवर्ड दर्ज करें",
+    "confirmPlaceholder": "पासवर्ड पुनः दर्ज करें",
+    "unlockButton": "अनलॉक करें",
+    "createButton": "पासवर्ड बनाएं",
+    "errors": {
+      "required": "पासवर्ड आवश्यक है",
+      "tooShort": "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए",
+      "mismatch": "पासवर्ड मेल नहीं खाते",
+      "incorrect": "गलत पासवर्ड",
+      "generic": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।"
+    }
+  },
   "biometricLock": {
     "locked": "लॉक है",
     "unlock": "अनलॉक करें",
