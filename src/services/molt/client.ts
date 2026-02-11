@@ -242,11 +242,11 @@ export class MoltGatewayClient {
   }
 
   async disableCronJob(jobId: string): Promise<unknown> {
-    return await this.request('cron.update', { jobId, enabled: false })
+    return await this.request('cron.update', { jobId, patch: { enabled: false } })
   }
 
   async enableCronJob(jobId: string): Promise<unknown> {
-    return await this.request('cron.update', { jobId, enabled: true })
+    return await this.request('cron.update', { jobId, patch: { enabled: true } })
   }
 
   async runCronJob(jobId: string, mode: 'force' | 'due' = 'force'): Promise<unknown> {
