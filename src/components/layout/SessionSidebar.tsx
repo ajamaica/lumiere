@@ -25,8 +25,6 @@ interface Session {
 
 interface SessionSidebarProps {
   onNewSession: () => void
-  onResetSession: () => void
-  onDeleteSession?: (sessionKey: string) => void
   onSelectSession: (sessionKey: string) => void
   sessions: Session[]
   currentSessionKey: string
@@ -40,8 +38,6 @@ interface SessionSidebarProps {
 
 export const SessionSidebar: React.FC<SessionSidebarProps> = ({
   onNewSession,
-  onResetSession,
-  onDeleteSession,
   onSelectSession,
   sessions,
   currentSessionKey,
@@ -71,13 +67,6 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
     // Extract readable part from session key
     const parts = key.split(':')
     return parts[parts.length - 1] || key
-  }
-
-  const handleEditSession = () => {
-    router.push({
-      pathname: '/edit-session',
-      params: { key: currentSessionKey },
-    })
   }
 
   const handleOpenSettings = () => {
@@ -266,48 +255,6 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
               />
               <Text style={styles.actionText}>New Session</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={onResetSession}
-              accessibilityRole="button"
-              accessibilityLabel="Reset Current"
-            >
-              <Ionicons
-                name="refresh"
-                size={22}
-                color={theme.colors.primary}
-                style={styles.actionIcon}
-              />
-              <Text style={styles.actionText}>Reset Current</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={handleEditSession}
-              accessibilityRole="button"
-              accessibilityLabel="Edit Current"
-            >
-              <Ionicons
-                name="create"
-                size={22}
-                color={theme.colors.primary}
-                style={styles.actionIcon}
-              />
-              <Text style={styles.actionText}>Edit Current</Text>
-            </TouchableOpacity>
-
-            {onDeleteSession && (
-              <TouchableOpacity
-                style={[styles.actionButton, { borderColor: '#EF4444' + '30' }]}
-                onPress={() => onDeleteSession(currentSessionKey)}
-                accessibilityRole="button"
-                accessibilityLabel="Delete Current"
-              >
-                <Ionicons name="trash" size={22} color="#EF4444" style={styles.actionIcon} />
-                <Text style={[styles.actionText, { color: '#EF4444' }]}>Delete Current</Text>
-              </TouchableOpacity>
-            )}
           </View>
         }
 

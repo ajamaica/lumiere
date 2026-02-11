@@ -1,12 +1,10 @@
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Alert } from 'react-native'
 
-import { DEFAULT_SESSION_KEY } from '../../constants'
 import { useServers } from '../../hooks/useServers'
 import { useMoltGateway } from '../../services/molt'
-import { deleteSessionData, ProviderConfig } from '../../services/providers'
-import { clearMessagesAtom, currentSessionKeyAtom, sessionAliasesAtom } from '../../store'
+import { ProviderConfig } from '../../services/providers'
+import { currentSessionKeyAtom, sessionAliasesAtom } from '../../store'
 import { logger } from '../../utils/logger'
 import { SessionSidebar } from '../layout/SessionSidebar'
 import { SidebarLayout } from '../layout/SidebarLayout'
@@ -27,7 +25,6 @@ interface ChatWithSidebarProps {
 export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   const { currentServerId, serversList, switchToServer } = useServers()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
-  const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [sessionAliases] = useAtom(sessionAliasesAtom)
   const [sessions, setSessions] = useState<Session[]>([])
   const [loadingSessions, setLoadingSessions] = useState(false)
@@ -38,7 +35,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   // Only molt provider supports server-side sessions
   const supportsServerSessions = providerConfig?.type === 'molt'
 
-  const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
+  const { connected, connect, disconnect, listSessions } = useMoltGateway({
     url: providerConfig?.url || '',
     token: providerConfig?.token || '',
   })
@@ -133,73 +130,6 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     loadSessions()
   }
 
-  const handleResetSession = () => {
-    Alert.alert(
-      'Reset Session',
-      'Are you sure you want to reset the current session? This will clear all message history.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Reset',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              // Only call server reset for providers that support server sessions
-              if (supportsServerSessions) {
-                await resetSession(currentSessionKey)
-              }
-              // Increment trigger to reload message history
-              setClearMessagesTrigger((prev) => prev + 1)
-              Alert.alert('Success', 'Session has been reset')
-              // Reload sessions to update message counts
-              loadSessions()
-            } catch (err) {
-              chatSidebarLogger.logError('Failed to reset session', err)
-              Alert.alert('Error', 'Failed to reset session')
-            }
-          },
-        },
-      ],
-    )
-  }
-
-  const handleDeleteSession = (sessionKey: string) => {
-    Alert.alert(
-      'Delete Session',
-      'Are you sure you want to delete this session? This action cannot be undone.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              // For Molt, reset on the server side first
-              if (supportsServerSessions) {
-                await resetSession(sessionKey)
-              }
-
-              // Delete local cache and session index entry
-              await deleteSessionData(providerConfig?.serverId, sessionKey)
-
-              // If deleting the current session, switch to default
-              if (sessionKey === currentSessionKey) {
-                setCurrentSessionKey(DEFAULT_SESSION_KEY)
-                setClearMessagesTrigger((prev) => prev + 1)
-              }
-
-              // Reload sessions list
-              loadSessions()
-            } catch (err) {
-              chatSidebarLogger.logError('Failed to delete session', err)
-              Alert.alert('Error', 'Failed to delete session')
-            }
-          },
-        },
-      ],
-    )
-  }
-
   const handleSelectSession = (sessionKey: string) => {
     setCurrentSessionKey(sessionKey)
   }
@@ -231,8 +161,6 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       sidebar={
         <SessionSidebar
           onNewSession={handleNewSession}
-          onResetSession={handleResetSession}
-          onDeleteSession={handleDeleteSession}
           onSelectSession={handleSelectSession}
           sessions={sessions}
           currentSessionKey={currentSessionKey}
