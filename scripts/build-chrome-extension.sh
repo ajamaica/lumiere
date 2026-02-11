@@ -48,6 +48,23 @@ else
   done
 fi
 
+# ── Rename _expo → expo (Chrome disallows leading underscores) ──
+# Expo's web export places bundled assets in a "_expo" directory.
+# Chrome extensions reserve filenames starting with "_", so we rename
+# the directory and rewrite all references in the generated files.
+echo "==> Renaming _expo directory (Chrome reserves underscore-prefixed names)..."
+if [ -d "$DIST/_expo" ]; then
+  mv "$DIST/_expo" "$DIST/expo"
+  # Update all references in HTML, JS, and JSON files
+  find "$DIST" -type f \( -name '*.html' -o -name '*.js' -o -name '*.json' -o -name '*.map' \) \
+    -exec sed -i 's|_expo/|expo/|g' {} +
+  find "$DIST" -type f \( -name '*.html' -o -name '*.js' -o -name '*.json' -o -name '*.map' \) \
+    -exec sed -i 's|"_expo"|"expo"|g' {} +
+  echo "   Renamed _expo → expo and updated all references."
+else
+  echo "   No _expo directory found — skipping rename."
+fi
+
 # ── CSP: extract inline scripts from index.html ──────────
 # Chrome Manifest V3 forbids inline <script> tags.  Expo's web export may
 # include small inline scripts (e.g. for async chunk loading).  We extract
