@@ -287,5 +287,9 @@
     "logsSection": "ログ",
     "logsDescription": "ゲートウェイからの最近のログエントリ。",
     "noLogs": "ログエントリが見つかりません"
+  },
+  "extension": {
+    "openFullscreen": "新しいタブで開く",
+    "openSidebar": "サイドバーで開く"
   }
 }

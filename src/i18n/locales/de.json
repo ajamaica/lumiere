@@ -287,5 +287,9 @@
     "logsSection": "Protokolle",
     "logsDescription": "Aktuelle Protokolleinträge des Gateways.",
     "noLogs": "Keine Protokolleinträge gefunden"
+  },
+  "extension": {
+    "openFullscreen": "In neuem Tab öffnen",
+    "openSidebar": "In Seitenleiste öffnen"
   }
 }

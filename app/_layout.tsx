@@ -45,6 +45,21 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
     }
   `
   document.head.appendChild(style)
+
+  // Chrome extension popup mode — set explicit dimensions so the popup
+  // window renders at a fixed, mobile-app-like size (400 x 600).
+  const params = new URLSearchParams(window.location.search)
+  if (params.get('mode') === 'popup') {
+    const popupStyle = document.createElement('style')
+    popupStyle.textContent = `
+      html, body, #root {
+        width: 400px;
+        height: 600px;
+        overflow: hidden;
+      }
+    `
+    document.head.appendChild(popupStyle)
+  }
 }
 
 function AppContent() {

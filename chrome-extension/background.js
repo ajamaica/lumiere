@@ -1,28 +1,43 @@
 // Lumiere Chrome Extension — Background Service Worker
 //
-// Default behaviour: clicking the extension icon opens the app in a new tab
-// (or focuses an existing one).  If the browser supports the Side Panel API
-// (Chrome 114+) and the user right-clicks → "Open in side panel", it will
-// open there instead via the side_panel manifest entry.
+// Display modes:
+//   1. Popup    — clicking the extension icon opens the app as a popup (default_popup)
+//   2. Tab      — full-screen mode, opened via runtime message from popup/sidebar
+//   3. Sidebar  — Chrome Side Panel (114+), opened via runtime message
+//
+// The popup and sidebar communicate with this worker to switch between modes.
 
 const APP_PATH = 'index.html'
 
-// Keep track of the tab we opened so we can re-focus it instead of opening duplicates.
+// Keep track of the full-screen tab so we can re-focus instead of opening duplicates.
 let appTabId = null
 
-chrome.action.onClicked.addListener(async () => {
-  // If we previously opened a tab, check whether it still exists.
+// Listen for messages from the popup or side panel to switch display modes.
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message.action === 'open-fullscreen') {
+    openFullscreen().then(() => sendResponse({ success: true }))
+    return true // keep channel open for async response
+  }
+
+  if (message.action === 'open-sidebar') {
+    openSidebar()
+      .then(() => sendResponse({ success: true }))
+      .catch(() => sendResponse({ success: false }))
+    return true
+  }
+})
+
+async function openFullscreen() {
+  // Re-focus existing tab if it's still open.
   if (appTabId !== null) {
     try {
       const tab = await chrome.tabs.get(appTabId)
       if (tab) {
-        // Tab still exists — focus it.
         await chrome.tabs.update(appTabId, { active: true })
         await chrome.windows.update(tab.windowId, { focused: true })
         return
       }
     } catch {
-      // Tab was closed; fall through to create a new one.
       appTabId = null
     }
   }
@@ -31,7 +46,12 @@ chrome.action.onClicked.addListener(async () => {
     url: chrome.runtime.getURL(APP_PATH),
   })
   appTabId = tab.id
-})
+}
+
+async function openSidebar() {
+  const win = await chrome.windows.getCurrent()
+  await chrome.sidePanel.open({ windowId: win.id })
+}
 
 // Clear the tracked tab id when it's closed.
 chrome.tabs.onRemoved.addListener((tabId) => {

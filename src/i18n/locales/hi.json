@@ -287,5 +287,9 @@
     "logsSection": "लॉग",
     "logsDescription": "गेटवे से हाल की लॉग प्रविष्टियाँ।",
     "noLogs": "कोई लॉग प्रविष्टि नहीं मिली"
+  },
+  "extension": {
+    "openFullscreen": "नए टैब में खोलें",
+    "openSidebar": "साइडबार में खोलें"
   }
 }

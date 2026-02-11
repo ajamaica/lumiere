@@ -287,5 +287,9 @@
     "logsSection": "Registros",
     "logsDescription": "Entradas de registro recientes del gateway.",
     "noLogs": "No se encontraron entradas de registro"
+  },
+  "extension": {
+    "openFullscreen": "Abrir en pestaña nueva",
+    "openSidebar": "Abrir en barra lateral"
   }
 }

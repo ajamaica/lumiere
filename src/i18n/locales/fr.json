@@ -287,5 +287,9 @@
     "logsSection": "Journaux",
     "logsDescription": "Entrées de journal récentes du gateway.",
     "noLogs": "Aucune entrée de journal trouvée"
+  },
+  "extension": {
+    "openFullscreen": "Ouvrir dans un nouvel onglet",
+    "openSidebar": "Ouvrir dans le panneau latéral"
   }
 }
