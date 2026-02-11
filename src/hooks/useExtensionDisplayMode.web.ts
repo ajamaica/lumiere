@@ -4,8 +4,10 @@
  * Detects whether the app is running inside a Chrome extension popup,
  * sidebar (side panel), full-screen tab, or a regular web page.
  *
- * Provides helpers to switch between modes by messaging the background
- * service worker defined in chrome-extension/background.js.
+ * Provides helpers to switch between modes.  Where possible we call
+ * Chrome extension APIs directly (e.g. chrome.tabs.create) so there
+ * is no race between sending a message and the popup closing.  The
+ * background service worker is used only as a fallback.
  */
 
 import { useMemo } from 'react'
@@ -20,24 +22,19 @@ export interface ExtensionDisplayModeResult {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Chrome runtime helpers                                             */
+/*  Chrome API helpers                                                 */
 /* ------------------------------------------------------------------ */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getChromeRuntime(): any | null {
+function getChrome(): any | null {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const c = (window as any).chrome
-    if (c?.runtime?.id) return c.runtime
+    if (c?.runtime?.id) return c
   } catch {
     // Not in an extension context
   }
   return null
-}
-
-function sendExtensionMessage(message: Record<string, string>): void {
-  const runtime = getChromeRuntime()
-  runtime?.sendMessage?.(message)
 }
 
 /* ------------------------------------------------------------------ */
@@ -45,8 +42,8 @@ function sendExtensionMessage(message: Record<string, string>): void {
 /* ------------------------------------------------------------------ */
 
 function detectMode(): { mode: ExtensionDisplayMode; isExtension: boolean } {
-  const runtime = getChromeRuntime()
-  if (!runtime) return { mode: 'web', isExtension: false }
+  const c = getChrome()
+  if (!c) return { mode: 'web', isExtension: false }
 
   const params = new URLSearchParams(window.location.search)
   const modeParam = params.get('mode')
@@ -67,15 +64,33 @@ export function useExtensionDisplayMode(): ExtensionDisplayModeResult {
     const { mode, isExtension } = detectMode()
 
     const openFullscreen = () => {
-      sendExtensionMessage({ action: 'open-fullscreen' })
-      // Close the popup after triggering the new tab — the background
-      // worker has already received the message and will open the tab.
+      const c = getChrome()
+      if (!c) return
+
+      // Call chrome.tabs.create directly — avoids the race condition
+      // where the popup closes before the background worker processes
+      // a runtime message.
+      c.tabs.create({ url: c.runtime.getURL('index.html') })
       if (mode === 'popup') window.close()
     }
 
     const openSidebar = () => {
-      sendExtensionMessage({ action: 'open-sidebar' })
-      if (mode === 'popup') window.close()
+      const c = getChrome()
+      if (!c) return
+
+      // sidePanel.open requires a windowId; get it then open.
+      c.windows.getCurrent().then((win: { id: number }) => {
+        c.sidePanel
+          .open({ windowId: win.id })
+          .then(() => {
+            if (mode === 'popup') window.close()
+          })
+          .catch(() => {
+            // Fallback: message the background service worker
+            c.runtime.sendMessage({ action: 'open-sidebar' })
+            if (mode === 'popup') setTimeout(() => window.close(), 300)
+          })
+      })
     }
 
     return { mode, isExtension, openFullscreen, openSidebar }

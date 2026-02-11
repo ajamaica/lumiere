@@ -46,10 +46,39 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
   `
   document.head.appendChild(style)
 
-  // Chrome extension popup mode — set explicit dimensions so the popup
-  // window renders at a fixed, mobile-app-like size (400 x 600).
+  // Chrome extension — slim scrollbars and popup sizing.
   const params = new URLSearchParams(window.location.search)
-  if (params.get('mode') === 'popup') {
+  const extensionMode = params.get('mode') // 'popup' | 'sidebar' | null
+
+  if (extensionMode) {
+    const extensionStyle = document.createElement('style')
+    extensionStyle.textContent = `
+      /* Thin, unobtrusive scrollbars for the extension */
+      ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(128, 128, 128, 0.3);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(128, 128, 128, 0.5);
+      }
+      /* Firefox */
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
+      }
+    `
+    document.head.appendChild(extensionStyle)
+  }
+
+  // Popup mode — fixed dimensions so the popup renders at a mobile-app-like size.
+  if (extensionMode === 'popup') {
     const popupStyle = document.createElement('style')
     popupStyle.textContent = `
       html, body, #root {
