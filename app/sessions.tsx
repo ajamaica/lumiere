@@ -3,26 +3,14 @@ import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
-import { DEFAULT_SESSION_KEY } from '../src/constants'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import {
-  deleteSessionData,
-  ProviderConfig,
-  readSessionIndex,
-  SessionIndexEntry,
-} from '../src/services/providers'
-import { ENABLE_WORKFLOW_MODE } from '../src/services/workflow'
-import {
-  clearMessagesAtom,
-  currentSessionKeyAtom,
-  sessionAliasesAtom,
-  workflowConfigAtom,
-} from '../src/store'
+import { ProviderConfig, readSessionIndex, SessionIndexEntry } from '../src/services/providers'
+import { currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
 
@@ -40,10 +28,7 @@ export default function SessionsScreen() {
   const { t } = useTranslation()
   const { getProviderConfig, currentServerId } = useServers()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
-  const [, setClearMessagesTrigger] = useAtom(clearMessagesAtom)
-  const [sessionAliases, setSessionAliases] = useAtom(sessionAliasesAtom)
-  const [workflowConfigs] = useAtom(workflowConfigAtom)
-  const workflowEnabled = workflowConfigs[currentSessionKey]?.enabled ?? false
+  const [sessionAliases] = useAtom(sessionAliasesAtom)
   const [config, setConfig] = useState<ProviderConfig | null>(null)
 
   const [sessions, setSessions] = useState<Session[]>([])
@@ -60,7 +45,7 @@ export default function SessionsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connected, connect, disconnect, listSessions, resetSession } = useMoltGateway({
+  const { connected, connect, disconnect, listSessions } = useMoltGateway({
     url: config?.url || '',
     token: config?.token || '',
   })
@@ -125,66 +110,6 @@ export default function SessionsScreen() {
     const newSessionKey = `agent:main:${Date.now()}`
     setCurrentSessionKey(newSessionKey)
     router.back()
-  }
-
-  const handleResetSession = (sessionKey: string) => {
-    Alert.alert(t('sessions.resetConfirmTitle'), t('sessions.resetConfirmMessage'), [
-      { text: t('common.cancel'), style: 'cancel' },
-      {
-        text: t('sessions.reset'),
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            // Only call server reset for Molt provider
-            if (isMoltProvider) {
-              await resetSession(sessionKey)
-            }
-            if (sessionKey === currentSessionKey) {
-              setClearMessagesTrigger((prev) => prev + 1)
-            }
-          } catch (err) {
-            sessionsLogger.logError('Failed to reset session', err)
-          }
-        },
-      },
-    ])
-  }
-
-  const handleDeleteSession = (sessionKey: string) => {
-    Alert.alert(t('sessions.deleteConfirmTitle'), t('sessions.deleteConfirmMessage'), [
-      { text: t('common.cancel'), style: 'cancel' },
-      {
-        text: t('common.delete'),
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            // For Molt, reset on the server side first
-            if (isMoltProvider) {
-              await resetSession(sessionKey)
-            }
-
-            // Delete local cache and session index entry
-            await deleteSessionData(config?.serverId, sessionKey)
-
-            // Remove alias if any
-            const newAliases = { ...sessionAliases }
-            delete newAliases[sessionKey]
-            setSessionAliases(newAliases)
-
-            // If deleting the current session, switch to default
-            if (sessionKey === currentSessionKey) {
-              setCurrentSessionKey(DEFAULT_SESSION_KEY)
-              setClearMessagesTrigger((prev) => prev + 1)
-            }
-
-            // Refresh session list
-            setSessions((prev) => prev.filter((s) => s.key !== sessionKey))
-          } catch (err) {
-            sessionsLogger.logError('Failed to delete session', err)
-          }
-        },
-      },
-    ])
   }
 
   const handleSelectSession = (sessionKey: string) => {
@@ -301,57 +226,6 @@ export default function SessionsScreen() {
             />
             <Text style={styles.actionText}>{t('sessions.newSession')}</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => handleEditSession(currentSessionKey)}
-          >
-            <Ionicons
-              name="create"
-              size={22}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>{t('sessions.editSession')}</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => handleResetSession(currentSessionKey)}
-          >
-            <Ionicons
-              name="refresh"
-              size={22}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>{t('sessions.resetSession')}</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.actionButton, { borderColor: '#EF4444' + '30' }]}
-            onPress={() => handleDeleteSession(currentSessionKey)}
-          >
-            <Ionicons name="trash" size={22} color="#EF4444" style={styles.actionIcon} />
-            <Text style={[styles.actionText, { color: '#EF4444' }]}>
-              {t('sessions.deleteSession')}
-            </Text>
-          </TouchableOpacity>
-
-          {ENABLE_WORKFLOW_MODE && (
-            <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/workflow')}>
-              <Ionicons
-                name={workflowEnabled ? 'folder-open' : 'folder-open-outline'}
-                size={22}
-                color={workflowEnabled ? theme.colors.primary : theme.colors.text.secondary}
-                style={styles.actionIcon}
-              />
-              <Text style={styles.actionText}>
-                {t('settings.workflowMode')}
-                {workflowEnabled ? ' (On)' : ''}
-              </Text>
-            </TouchableOpacity>
-          )}
         </Section>
 
         {/* Available sessions */}
@@ -381,33 +255,6 @@ export default function SessionsScreen() {
                       onPress={() => handleSelectSession(session.key)}
                       showDivider={index < sessions.length - 1}
                     />
-                  </View>
-                  <View style={styles.sessionActions}>
-                    <TouchableOpacity
-                      style={styles.sessionActionButton}
-                      onPress={() => handleEditSession(session.key)}
-                      accessibilityLabel={t('sessions.editSession')}
-                    >
-                      <Ionicons name="create-outline" size={18} color={theme.colors.primary} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.sessionActionButton}
-                      onPress={() => handleResetSession(session.key)}
-                      accessibilityLabel={t('sessions.resetSession')}
-                    >
-                      <Ionicons
-                        name="refresh-outline"
-                        size={18}
-                        color={theme.colors.text.secondary}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.sessionActionButton}
-                      onPress={() => handleDeleteSession(session.key)}
-                      accessibilityLabel={t('sessions.deleteSession')}
-                    >
-                      <Ionicons name="trash-outline" size={18} color="#EF4444" />
-                    </TouchableOpacity>
                   </View>
                 </View>
               )
