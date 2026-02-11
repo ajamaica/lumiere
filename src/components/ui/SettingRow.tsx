@@ -8,6 +8,7 @@ export interface SettingRowProps {
   label: string
   value?: string
   onPress?: () => void
+  onLongPress?: () => void
   switchValue?: boolean
   onSwitchChange?: (value: boolean) => void
   /** Ionicons icon name */
@@ -28,6 +29,7 @@ export function SettingRow({
   label,
   value,
   onPress,
+  onLongPress,
   switchValue,
   onSwitchChange,
   icon,
@@ -109,10 +111,11 @@ export function SettingRow({
     </View>
   )
 
-  if (onPress) {
+  if (onPress || onLongPress) {
     return (
       <TouchableOpacity
         onPress={onPress}
+        onLongPress={onLongPress}
         activeOpacity={0.6}
         accessibilityRole="button"
         accessibilityLabel={subtitle ? `${label}, ${subtitle}` : label}
