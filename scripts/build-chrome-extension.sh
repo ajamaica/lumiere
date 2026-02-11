@@ -55,11 +55,15 @@ fi
 echo "==> Renaming _expo directory (Chrome reserves underscore-prefixed names)..."
 if [ -d "$DIST/_expo" ]; then
   mv "$DIST/_expo" "$DIST/expo"
-  # Update all references in HTML, JS, and JSON files
+  # Update all references in HTML, JS, JSON, and source map files.
+  # Detect GNU vs BSD sed for portable in-place editing.
+  if sed --version &>/dev/null 2>&1; then
+    SED_INPLACE=(sed -i)          # GNU sed
+  else
+    SED_INPLACE=(sed -i '')       # BSD/macOS sed
+  fi
   find "$DIST" -type f \( -name '*.html' -o -name '*.js' -o -name '*.json' -o -name '*.map' \) \
-    -exec sed -i 's|_expo/|expo/|g' {} +
-  find "$DIST" -type f \( -name '*.html' -o -name '*.js' -o -name '*.json' -o -name '*.map' \) \
-    -exec sed -i 's|"_expo"|"expo"|g' {} +
+    -exec "${SED_INPLACE[@]}" -e 's|_expo/|expo/|g' -e 's|"_expo"|"expo"|g' {} +
   echo "   Renamed _expo → expo and updated all references."
 else
   echo "   No _expo directory found — skipping rename."
