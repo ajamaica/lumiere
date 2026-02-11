@@ -1,22 +1,27 @@
 // Molt Gateway Protocol Types
 
+// ─── Connection ─────────────────────────────────────────────────────────────────
+
+export type ConnectionState = 'disconnected' | 'connecting' | 'connected' | 'reconnecting'
+
 export interface MoltConfig {
   url: string
   token: string
   clientId?: string
+  /** Auto-reconnect on unexpected close (default true) */
+  autoReconnect?: boolean
+  /** Default request timeout in ms (default 15 000) */
+  defaultTimeoutMs?: number
 }
 
-// Protocol versions (now configured in gateway.config.ts)
+// ─── Frame Types ────────────────────────────────────────────────────────────────
 
-// Frame types
 export type FrameType = 'req' | 'res' | 'event'
 
-// Base frame structure
 export interface BaseFrame {
   type: FrameType
 }
 
-// Request frame
 export interface RequestFrame extends BaseFrame {
   type: 'req'
   id: string
@@ -24,24 +29,27 @@ export interface RequestFrame extends BaseFrame {
   params?: unknown
 }
 
-// Response frame
 export interface ResponseFrame extends BaseFrame {
   type: 'res'
   id: string
   ok: boolean
   payload?: unknown
-  error?: GatewayError
+  error?: GatewayErrorShape
 }
 
-// Event frame
 export interface EventFrame extends BaseFrame {
   type: 'event'
   event: string
+  seq?: number
   payload?: unknown
 }
 
-// Error structure
-export interface GatewayError {
+export type GatewayFrame = RequestFrame | ResponseFrame | EventFrame
+
+// ─── Errors ─────────────────────────────────────────────────────────────────────
+
+/** Wire-format error shape returned by the gateway. */
+export interface GatewayErrorShape {
   code: string
   message: string
   details?: unknown
@@ -49,7 +57,33 @@ export interface GatewayError {
   retryAfterMs?: number
 }
 
-// Connect request
+/** Typed error class for gateway failures. */
+export class GatewayError extends Error {
+  public readonly code: string
+  public readonly details?: unknown
+  public readonly retryable?: boolean
+  public readonly retryAfterMs?: number
+
+  constructor(error: GatewayErrorShape) {
+    super(error.message)
+    this.name = 'GatewayError'
+    this.code = error.code
+    this.details = error.details
+    this.retryable = error.retryable
+    this.retryAfterMs = error.retryAfterMs
+  }
+}
+
+// ─── Pending Request ────────────────────────────────────────────────────────────
+
+export interface PendingRequest {
+  resolve: (payload: unknown) => void
+  reject: (error: Error) => void
+  timer: ReturnType<typeof setTimeout>
+}
+
+// ─── Connect ────────────────────────────────────────────────────────────────────
+
 export interface ConnectParams {
   minProtocol: number
   maxProtocol: number
@@ -66,7 +100,6 @@ export interface ConnectParams {
   locale?: string
 }
 
-// Gateway snapshot
 export interface GatewaySnapshot {
   tickInterval?: number
   lastChannelsRefresh?: number
@@ -85,7 +118,6 @@ export interface GatewaySnapshot {
   }>
 }
 
-// Connect response
 export interface ConnectResponse {
   protocol: number
   gateway: {
@@ -93,9 +125,11 @@ export interface ConnectResponse {
     capabilities?: string[]
   }
   snapshot?: GatewaySnapshot
+  tickIntervalMs?: number
 }
 
-// Health status
+// ─── Health ─────────────────────────────────────────────────────────────────────
+
 export interface HealthStatus {
   status: 'healthy' | 'degraded' | 'unhealthy'
   channels?: Record<string, ChannelStatus>
@@ -112,21 +146,20 @@ export interface AgentStatus {
   error?: string
 }
 
-// Send message params
+// ─── Chat / Messages ────────────────────────────────────────────────────────────
+
 export interface SendMessageParams {
   channel: string
   text: string
   attachments?: Attachment[]
 }
 
-// Chat history params
 export interface ChatHistoryParams {
   sessionKey: string
   limit?: number
 }
 
-// Chat message from history — re-exported from the shared provider types
-// to keep backwards compatibility for any molt-specific imports.
+// Re-export from shared provider types for backwards compatibility.
 export type { ChatHistoryMessage } from '../providers/types'
 
 export interface Attachment {
@@ -137,7 +170,8 @@ export interface Attachment {
   fileName?: string
 }
 
-// Agent params
+// ─── Agent ──────────────────────────────────────────────────────────────────────
+
 export interface AgentParams {
   message: string
   idempotencyKey: string
@@ -147,7 +181,6 @@ export interface AgentParams {
   attachments?: Attachment[]
 }
 
-// Agent events
 export type AgentEvent = {
   data: {
     delta?: string
@@ -163,7 +196,8 @@ export type AgentEvent = {
   ts: number
 }
 
-// Skills types
+// ─── Skills ─────────────────────────────────────────────────────────────────────
+
 export interface TeachSkillParams {
   name: string
   description: string
@@ -188,7 +222,6 @@ export interface SkillsListResponse {
   skills: Skill[]
 }
 
-// ClawHub types
 export interface ClawHubSkill {
   slug: string
   name: string
@@ -198,7 +231,8 @@ export interface ClawHubSkill {
   installs?: number
 }
 
-// Gateway logs
+// ─── Logs ───────────────────────────────────────────────────────────────────────
+
 export interface GatewayLogEntry {
   ts: number
   level: 'debug' | 'info' | 'warn' | 'error'
@@ -217,9 +251,18 @@ export interface GatewayLogsResponse {
   logs: GatewayLogEntry[]
 }
 
-// Event types
+// ─── Event Listener Types ───────────────────────────────────────────────────────
+
+export type EventCallback = (payload: unknown) => void
+export type ConnectionStateCallback = (state: ConnectionState) => void
+export type AgentEventCallback = (event: AgentEvent) => void
+
+// ─── Wire Event Union ───────────────────────────────────────────────────────────
+
 export type GatewayEvent =
   | { event: 'agent'; payload: AgentEvent; seq?: number }
   | { event: 'presence'; payload: unknown }
   | { event: 'tick'; payload: { timestamp: number } }
   | { event: 'shutdown'; payload: { restartIn?: number } }
+  | { event: 'health'; payload: HealthStatus }
+  | { event: 'seq.gap'; payload: { expected: number; received: number } }
