@@ -37,11 +37,11 @@ export interface UseMoltGatewayResult {
   listSessions: () => Promise<unknown>
   getSchedulerStatus: () => Promise<unknown>
   listCronJobs: () => Promise<unknown>
-  disableCronJob: (jobName: string) => Promise<unknown>
-  enableCronJob: (jobName: string) => Promise<unknown>
-  runCronJob: (jobName: string) => Promise<unknown>
-  removeCronJob: (jobName: string) => Promise<unknown>
-  getCronJobRuns: (jobName: string) => Promise<unknown>
+  disableCronJob: (jobId: string) => Promise<unknown>
+  enableCronJob: (jobId: string) => Promise<unknown>
+  runCronJob: (jobId: string, mode?: 'force' | 'due') => Promise<unknown>
+  removeCronJob: (jobId: string) => Promise<unknown>
+  getCronJobRuns: (jobId: string) => Promise<unknown>
   teachSkill: (params: TeachSkillParams) => Promise<Skill>
   listSkills: () => Promise<SkillsListResponse>
   removeSkill: (name: string) => Promise<unknown>
@@ -206,51 +206,51 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
   }, [client])
 
   const disableCronJob = useCallback(
-    async (jobName: string) => {
+    async (jobId: string) => {
       if (!client) {
         throw new Error('Client not connected')
       }
-      return await client.disableCronJob(jobName)
+      return await client.disableCronJob(jobId)
     },
     [client],
   )
 
   const enableCronJob = useCallback(
-    async (jobName: string) => {
+    async (jobId: string) => {
       if (!client) {
         throw new Error('Client not connected')
       }
-      return await client.enableCronJob(jobName)
+      return await client.enableCronJob(jobId)
     },
     [client],
   )
 
   const runCronJob = useCallback(
-    async (jobName: string) => {
+    async (jobId: string, mode?: 'force' | 'due') => {
       if (!client) {
         throw new Error('Client not connected')
       }
-      return await client.runCronJob(jobName)
+      return await client.runCronJob(jobId, mode)
     },
     [client],
   )
 
   const removeCronJob = useCallback(
-    async (jobName: string) => {
+    async (jobId: string) => {
       if (!client) {
         throw new Error('Client not connected')
       }
-      return await client.removeCronJob(jobName)
+      return await client.removeCronJob(jobId)
     },
     [client],
   )
 
   const getCronJobRuns = useCallback(
-    async (jobName: string) => {
+    async (jobId: string) => {
       if (!client) {
         throw new Error('Client not connected')
       }
-      return await client.getCronJobRuns(jobName)
+      return await client.getCronJobRuns(jobId)
     },
     [client],
   )

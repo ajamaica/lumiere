@@ -49,6 +49,7 @@ export default function SchedulerScreen() {
 
   const [schedulerStatus, setSchedulerStatus] = useState<SchedulerStatus | null>(null)
   const [cronJobs, setCronJobs] = useState<CronJob[]>([])
+  const [busyJobIds, setBusyJobIds] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -108,42 +109,67 @@ export default function SchedulerScreen() {
   }
 
   const handleToggleJob = async (job: CronJob) => {
+    if (busyJobIds.has(job.id)) return
+    setBusyJobIds((prev) => new Set(prev).add(job.id))
     try {
       if (job.enabled) {
-        await disableCronJob(job.name)
+        await disableCronJob(job.id)
       } else {
-        await enableCronJob(job.name)
+        await enableCronJob(job.id)
       }
       await fetchSchedulerData()
     } catch (err) {
       schedulerLogger.logError('Failed to toggle job', err)
       Alert.alert('Error', 'Failed to toggle job')
+    } finally {
+      setBusyJobIds((prev) => {
+        const next = new Set(prev)
+        next.delete(job.id)
+        return next
+      })
     }
   }
 
   const handleRunJob = async (job: CronJob) => {
+    if (busyJobIds.has(job.id)) return
+    setBusyJobIds((prev) => new Set(prev).add(job.id))
     try {
-      await runCronJob(job.name)
+      await runCronJob(job.id)
+      await fetchSchedulerData()
       Alert.alert('Success', `Job "${job.name}" has been triggered`)
     } catch (err) {
       schedulerLogger.logError('Failed to run job', err)
       Alert.alert('Error', 'Failed to run job')
+    } finally {
+      setBusyJobIds((prev) => {
+        const next = new Set(prev)
+        next.delete(job.id)
+        return next
+      })
     }
   }
 
   const handleRemoveJob = async (job: CronJob) => {
+    if (busyJobIds.has(job.id)) return
     Alert.alert('Remove Job', `Are you sure you want to remove the job "${job.name}"?`, [
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Remove',
         style: 'destructive',
         onPress: async () => {
+          setBusyJobIds((prev) => new Set(prev).add(job.id))
           try {
-            await removeCronJob(job.name)
+            await removeCronJob(job.id)
             await fetchSchedulerData()
           } catch (err) {
             schedulerLogger.logError('Failed to remove job', err)
             Alert.alert('Error', 'Failed to remove job')
+          } finally {
+            setBusyJobIds((prev) => {
+              const next = new Set(prev)
+              next.delete(job.id)
+              return next
+            })
           }
         },
       },
@@ -312,7 +338,11 @@ export default function SchedulerScreen() {
                 </Text>
 
                 <View style={styles.badgeRow}>
-                  {job.enabled && <Badge label="enabled" variant="success" />}
+                  {job.enabled ? (
+                    <Badge label="enabled" variant="success" />
+                  ) : (
+                    <Badge label="disabled" variant="error" />
+                  )}
                   <Badge label={job.agentId} />
                   <Badge label={job.wakeMode} />
                   {job.state?.tags?.map((tag) => (
@@ -325,18 +355,21 @@ export default function SchedulerScreen() {
                     title={job.enabled ? 'Disable' : 'Enable'}
                     variant="secondary"
                     size="sm"
+                    loading={busyJobIds.has(job.id)}
                     onPress={() => handleToggleJob(job)}
                   />
                   <Button
                     title="Run"
                     variant="secondary"
                     size="sm"
+                    loading={busyJobIds.has(job.id)}
                     onPress={() => handleRunJob(job)}
                   />
                   <Button
                     title="Remove"
                     variant="danger"
                     size="sm"
+                    loading={busyJobIds.has(job.id)}
                     onPress={() => handleRemoveJob(job)}
                   />
                 </View>

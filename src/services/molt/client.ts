@@ -241,24 +241,24 @@ export class MoltGatewayClient {
     return await this.request('cron.list')
   }
 
-  async disableCronJob(jobName: string): Promise<unknown> {
-    return await this.request('cron.update', { name: jobName, enabled: false })
+  async disableCronJob(jobId: string): Promise<unknown> {
+    return await this.request('cron.update', { jobId, patch: { enabled: false } })
   }
 
-  async enableCronJob(jobName: string): Promise<unknown> {
-    return await this.request('cron.update', { name: jobName, enabled: true })
+  async enableCronJob(jobId: string): Promise<unknown> {
+    return await this.request('cron.update', { jobId, patch: { enabled: true } })
   }
 
-  async runCronJob(jobName: string): Promise<unknown> {
-    return await this.request('cron.run', { name: jobName })
+  async runCronJob(jobId: string, mode: 'force' | 'due' = 'force'): Promise<unknown> {
+    return await this.request('cron.run', { jobId, mode })
   }
 
-  async removeCronJob(jobName: string): Promise<unknown> {
-    return await this.request('cron.remove', { name: jobName })
+  async removeCronJob(jobId: string): Promise<unknown> {
+    return await this.request('cron.remove', { jobId })
   }
 
-  async getCronJobRuns(jobName: string): Promise<unknown> {
-    return await this.request('cron.runs', { name: jobName })
+  async getCronJobRuns(jobId: string): Promise<unknown> {
+    return await this.request('cron.runs', { jobId })
   }
 
   async teachSkill(params: TeachSkillParams): Promise<Skill> {
