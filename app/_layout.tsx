@@ -66,23 +66,26 @@ function AppContent() {
     return hasSessionCryptoKey()
   })
 
-  // On mount, try to restore CryptoKey from sessionStorage (survives page reload)
+  // On mount, hydrate secure servers from encrypted localStorage when a
+  // session key is available.  This covers page reloads where the key
+  // survives in sessionStorage but the in-memory atom resets to {}.
   useEffect(() => {
-    if (Platform.OS !== 'web' || webPasswordUnlocked) return
+    if (Platform.OS !== 'web') return
     let cancelled = false
     const restore = async () => {
       const key = await getSessionCryptoKey()
-      if (cancelled) return
-      if (key) {
+      if (cancelled || !key) return
+      try {
         await hydrateSecureServers(getStore(), key)
-        setWebPasswordUnlocked(true)
+      } catch {
+        // Decryption / storage errors are non-fatal.
       }
+      if (!cancelled) setWebPasswordUnlocked(true)
     }
     restore()
     return () => {
       cancelled = true
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handlePasswordUnlock = useCallback(async (key: CryptoKey) => {
