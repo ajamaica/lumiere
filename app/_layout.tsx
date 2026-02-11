@@ -13,6 +13,7 @@ import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
+import { useShareExtension } from '../src/hooks/useShareIntent'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { biometricLockEnabledAtom, onboardingCompletedAtom } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
@@ -46,6 +47,7 @@ function AppContent() {
   useNotifications()
   useQuickActions()
   useAppleShortcuts()
+  useShareExtension()
   useLanguage() // Initialize language sync
 
   // Use modal presentation for all devices to ensure content is fully accessible

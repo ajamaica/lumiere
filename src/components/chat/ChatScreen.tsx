@@ -31,6 +31,7 @@ import {
   clearMessagesAtom,
   currentAgentIdAtom,
   currentSessionKeyAtom,
+  pendingShareTextAtom,
   pendingTriggerMessageAtom,
 } from '../../store'
 import { useTheme } from '../../theme'
@@ -74,6 +75,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const [currentAgentId, setCurrentAgentId] = useAtom(currentAgentIdAtom)
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [pendingTriggerMessage, setPendingTriggerMessage] = useAtom(pendingTriggerMessageAtom)
+  const [pendingShareText, setPendingShareText] = useAtom(pendingShareTextAtom)
   const [isAgentPickerOpen, setIsAgentPickerOpen] = useState(false)
   const isMoltProvider = providerConfig.type === 'molt'
   const flatListRef = useRef<FlashListRef<Message>>(null)
@@ -308,6 +310,17 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       return () => clearTimeout(timer)
     }
   }, [connected, isLoadingHistory, pendingTriggerMessage, setPendingTriggerMessage])
+
+  // Auto-send content shared from other apps via the share extension
+  useEffect(() => {
+    if (connected && !isLoadingHistory && pendingShareText) {
+      const timer = setTimeout(() => {
+        handleSendRef.current(pendingShareText)
+        setPendingShareText(null)
+      }, 150)
+      return () => clearTimeout(timer)
+    }
+  }, [connected, isLoadingHistory, pendingShareText, setPendingShareText])
 
   // The list starts hidden (opacity 0) and is revealed once we have scrolled
   // to the bottom so the user never sees the conversation flash from the top.

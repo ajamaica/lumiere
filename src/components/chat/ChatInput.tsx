@@ -48,7 +48,6 @@ export function ChatInput({
   const [showAttachmentMenu, setShowAttachmentMenu] = useState(false)
   const { suggestions, hasInput } = useSlashCommands(text)
   const voice = useVoiceTranscription()
-
   const glassAvailable = isLiquidGlassAvailable()
   const styles = useMemo(() => createStyles(theme, glassAvailable), [theme, glassAvailable])
 

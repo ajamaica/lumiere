@@ -86,7 +86,23 @@
           "color": "#ffffff"
         }
       ],
-      "expo-quick-actions"
+      "expo-quick-actions",
+      [
+        "expo-share-intent",
+        {
+          "iosActivationRules": {
+            "NSExtensionActivationSupportsText": true,
+            "NSExtensionActivationSupportsWebURLWithMaxCount": 1,
+            "NSExtensionActivationSupportsWebPageWithMaxCount": 1,
+            "NSExtensionActivationSupportsImageWithMaxCount": 1
+          },
+          "iosShareExtensionName": "Share with Lumiere",
+          "androidIntentFilters": ["text/*", "image/*"],
+          "androidMainActivityAttributes": {
+            "android:launchMode": "singleTask"
+          }
+        }
+      ]
     ],
     "extra": {
       "eas": {
