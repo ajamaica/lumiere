@@ -113,22 +113,6 @@
     "authFailed": "Authentifizierung fehlgeschlagen. Tippen Sie, um es erneut zu versuchen.",
     "tryAgain": "Erneut versuchen"
   },
-  "onboarding": {
-    "step1": {
-      "title": "Ihre KI-Agenten, immer griffbereit",
-      "description": "Chatten Sie unterwegs mit Ihren Agenten über eine elegante mobile Oberfläche. Überwachen Sie Gespräche, senden Sie Nachrichten und bleiben Sie von überall verbunden."
-    },
-    "step2": {
-      "title": "Volle Kontrolle, leistungsstarke Funktionen",
-      "description": "Verwalten Sie mehrere Server und wechseln Sie sofort zwischen Sitzungen. Planen Sie Aufgaben mit Cron-Jobs, erhalten Sie Echtzeit-Benachrichtigungen und behalten Sie die Kontrolle über Ihren Workflow."
-    },
-    "step3": {
-      "title": "Vollständig anpassbar, ganz nach Ihren Wünschen",
-      "description": "Verbinden Sie sich mit OpenClaw, Ollama, Claude, OpenAI und mehr. Personalisieren Sie Themes, konfigurieren Sie benutzerdefinierte Auslöser und passen Sie jedes Detail an Ihren Workflow an."
-    },
-    "continue": "Weiter",
-    "getStarted": "Loslegen"
-  },
   "sessions": {
     "title": "Sitzungen",
     "newSession": "Neue Sitzung",

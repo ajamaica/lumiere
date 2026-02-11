@@ -113,22 +113,6 @@
     "authFailed": "Autenticação falhou. Toque para tentar novamente.",
     "tryAgain": "Tentar Novamente"
   },
-  "onboarding": {
-    "step1": {
-      "title": "Seus agentes de IA, sempre ao alcance das mãos",
-      "description": "Converse com seus agentes em qualquer lugar com uma interface móvel elegante. Monitore conversas, envie mensagens e mantenha-se conectado de qualquer lugar."
-    },
-    "step2": {
-      "title": "Controle total, recursos poderosos",
-      "description": "Gerencie múltiplos servidores e alterne entre sessões instantaneamente. Agende tarefas com cron jobs, receba notificações em tempo real e mantenha o controle do seu fluxo de trabalho."
-    },
-    "step3": {
-      "title": "Totalmente personalizável, do seu jeito",
-      "description": "Conecte-se ao OpenClaw, Ollama, Claude, OpenAI e mais. Personalize temas, configure gatilhos personalizados e ajuste cada detalhe ao seu fluxo de trabalho."
-    },
-    "continue": "Continuar",
-    "getStarted": "Começar"
-  },
   "sessions": {
     "title": "Sessões",
     "newSession": "Nova Sessão",

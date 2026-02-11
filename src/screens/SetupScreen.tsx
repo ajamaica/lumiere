@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 
 import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
-import { Dropdown, GradientButton, GradientText, Text, TextInput } from '../components/ui'
+import { Dropdown, GradientButton, Text, TextInput } from '../components/ui'
 import { getAllProviderOptions } from '../config/providerOptions'
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
@@ -325,13 +325,9 @@ export function SetupScreen() {
           <View style={styles.headerSection}>
             <View style={styles.titleRow}>
               <Text variant="heading1">Connect to </Text>
-              <GradientText
-                preset="accent"
-                fontSize={theme.typography.fontSize.xxl}
-                fontWeight="bold"
-              >
+              <Text variant="heading1" style={{ color: theme.colors.primary }}>
                 your AI
-              </GradientText>
+              </Text>
             </View>
             <Text variant="body" color="secondary">
               Choose a provider and connect to start chatting with your agents.
