@@ -83,15 +83,29 @@ export const secureStoreHydratedAtom = atom<boolean>(false)
 export async function hydrateSecureServers(
   store: {
     get: (a: typeof secureServersAtom) => ServersDict
-
     set: <V>(a: WritableAtom<V, [V], void>, v: V) => void
   },
   key: CryptoKey,
 ): Promise<ServersDict> {
-  const servers = await loadAndDecrypt<ServersDict>(SECURE_SERVERS_STORAGE_KEY, key, {})
-  store.set(secureServersAtom, servers)
+  // Try to load previously-encrypted data from localStorage.
+  // Pass `null` as default so we can distinguish "nothing stored" from "empty dict".
+  const loaded = await loadAndDecrypt<ServersDict | null>(SECURE_SERVERS_STORAGE_KEY, key, null)
+
+  if (loaded !== null) {
+    // Encrypted data exists — restore it into the atom.
+    store.set(secureServersAtom, loaded)
+  } else {
+    // No encrypted data yet (first setup after onboarding).
+    // The atom may already contain servers added during onboarding —
+    // persist them now so they survive a page reload.
+    const current = store.get(secureServersAtom)
+    if (Object.keys(current).length > 0) {
+      await encryptAndStore(SECURE_SERVERS_STORAGE_KEY, current, key)
+    }
+  }
+
   store.set(secureStoreHydratedAtom, true)
-  return servers
+  return store.get(secureServersAtom)
 }
 
 /**
