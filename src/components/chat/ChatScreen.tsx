@@ -3,6 +3,7 @@ import { FlashList, FlashListRef } from '@shopify/flash-list'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   ActivityIndicator,
   Keyboard,
@@ -24,6 +25,7 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useChatProvider } from '../../hooks/useChatProvider'
+import { useExtensionDisplayMode } from '../../hooks/useExtensionDisplayMode'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
 import { useWorkflowContext } from '../../hooks/useWorkflowContext'
 import { ProviderConfig, readCachedHistory } from '../../services/providers'
@@ -68,7 +70,14 @@ interface ChatScreenProps {
 export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const { theme } = useTheme()
   const router = useRouter()
+  const { t } = useTranslation()
   const glassAvailable = isLiquidGlassAvailable()
+  const {
+    isExtension,
+    mode: extensionMode,
+    openFullscreen,
+    openSidebar,
+  } = useExtensionDisplayMode()
   const [messages, setMessages] = useState<Message[]>([])
   const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
@@ -433,13 +442,37 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             <ActivityIndicator size="small" color={theme.colors.primary} />
             <Text style={styles.statusText}>Connecting...</Text>
           </StatusBubbleContainer>
-          {showSettingsButton && (
-            <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
-              <SettingsButtonContainer {...settingsButtonProps}>
-                <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
-              </SettingsButtonContainer>
-            </TouchableOpacity>
-          )}
+          <View style={styles.statusActions}>
+            {isExtension && extensionMode !== 'fullscreen' && (
+              <TouchableOpacity
+                onPress={openFullscreen}
+                activeOpacity={0.7}
+                accessibilityLabel={t('extension.openFullscreen')}
+              >
+                <SettingsButtonContainer {...settingsButtonProps}>
+                  <Ionicons name="expand-outline" size={22} color={theme.colors.text.secondary} />
+                </SettingsButtonContainer>
+              </TouchableOpacity>
+            )}
+            {isExtension && extensionMode !== 'sidebar' && (
+              <TouchableOpacity
+                onPress={openSidebar}
+                activeOpacity={0.7}
+                accessibilityLabel={t('extension.openSidebar')}
+              >
+                <SettingsButtonContainer {...settingsButtonProps}>
+                  <Ionicons name="browsers-outline" size={22} color={theme.colors.text.secondary} />
+                </SettingsButtonContainer>
+              </TouchableOpacity>
+            )}
+            {showSettingsButton && (
+              <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
+                <SettingsButtonContainer {...settingsButtonProps}>
+                  <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+                </SettingsButtonContainer>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       )
     }
@@ -458,13 +491,37 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
               <Text style={styles.retryText}>Retry</Text>
             </TouchableOpacity>
           </StatusBubbleContainer>
-          {showSettingsButton && (
-            <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
-              <SettingsButtonContainer {...settingsButtonProps}>
-                <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
-              </SettingsButtonContainer>
-            </TouchableOpacity>
-          )}
+          <View style={styles.statusActions}>
+            {isExtension && extensionMode !== 'fullscreen' && (
+              <TouchableOpacity
+                onPress={openFullscreen}
+                activeOpacity={0.7}
+                accessibilityLabel={t('extension.openFullscreen')}
+              >
+                <SettingsButtonContainer {...settingsButtonProps}>
+                  <Ionicons name="expand-outline" size={22} color={theme.colors.text.secondary} />
+                </SettingsButtonContainer>
+              </TouchableOpacity>
+            )}
+            {isExtension && extensionMode !== 'sidebar' && (
+              <TouchableOpacity
+                onPress={openSidebar}
+                activeOpacity={0.7}
+                accessibilityLabel={t('extension.openSidebar')}
+              >
+                <SettingsButtonContainer {...settingsButtonProps}>
+                  <Ionicons name="browsers-outline" size={22} color={theme.colors.text.secondary} />
+                </SettingsButtonContainer>
+              </TouchableOpacity>
+            )}
+            {showSettingsButton && (
+              <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
+                <SettingsButtonContainer {...settingsButtonProps}>
+                  <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
+                </SettingsButtonContainer>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       )
     }
@@ -513,6 +570,32 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
                   <Ionicons name="search" size={22} color={theme.colors.text.secondary} />
                 </SettingsButtonContainer>
               </TouchableOpacity>
+              {isExtension && extensionMode !== 'fullscreen' && (
+                <TouchableOpacity
+                  onPress={openFullscreen}
+                  activeOpacity={0.7}
+                  accessibilityLabel={t('extension.openFullscreen')}
+                >
+                  <SettingsButtonContainer {...settingsButtonProps}>
+                    <Ionicons name="expand-outline" size={22} color={theme.colors.text.secondary} />
+                  </SettingsButtonContainer>
+                </TouchableOpacity>
+              )}
+              {isExtension && extensionMode !== 'sidebar' && (
+                <TouchableOpacity
+                  onPress={openSidebar}
+                  activeOpacity={0.7}
+                  accessibilityLabel={t('extension.openSidebar')}
+                >
+                  <SettingsButtonContainer {...settingsButtonProps}>
+                    <Ionicons
+                      name="browsers-outline"
+                      size={22}
+                      color={theme.colors.text.secondary}
+                    />
+                  </SettingsButtonContainer>
+                </TouchableOpacity>
+              )}
               {showSettingsButton && (
                 <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
                   <SettingsButtonContainer {...settingsButtonProps}>

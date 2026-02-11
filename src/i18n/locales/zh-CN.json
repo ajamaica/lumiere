@@ -287,5 +287,9 @@
     "logsSection": "日志",
     "logsDescription": "网关的最近日志条目。",
     "noLogs": "未找到日志条目"
+  },
+  "extension": {
+    "openFullscreen": "在新标签页中打开",
+    "openSidebar": "在侧边栏中打开"
   }
 }

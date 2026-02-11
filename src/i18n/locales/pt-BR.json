@@ -287,5 +287,9 @@
     "logsSection": "Logs",
     "logsDescription": "Entradas de log recentes do gateway.",
     "noLogs": "Nenhuma entrada de log encontrada"
+  },
+  "extension": {
+    "openFullscreen": "Abrir em nova aba",
+    "openSidebar": "Abrir na barra lateral"
   }
 }

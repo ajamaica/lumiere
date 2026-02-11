@@ -287,5 +287,9 @@
     "logsSection": "日誌",
     "logsDescription": "閘道的最近日誌條目。",
     "noLogs": "未找到日誌條目"
+  },
+  "extension": {
+    "openFullscreen": "在新分頁中開啟",
+    "openSidebar": "在側邊欄中開啟"
   }
 }
