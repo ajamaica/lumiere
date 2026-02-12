@@ -762,6 +762,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             queueCount={queueCount}
             supportsImageAttachments={capabilities.imageAttachments}
             supportsFileAttachments={capabilities.fileAttachments}
+            providerType={providerConfig.type}
           />
         </Animated.View>
       </View>
