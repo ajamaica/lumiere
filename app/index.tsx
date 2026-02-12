@@ -1,13 +1,23 @@
 import { useRouter } from 'expo-router'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
+import { ChatScreen } from '../src/components/chat/ChatScreen'
 import { ChatWithSidebar } from '../src/components/chat/ChatWithSidebar'
 import { Button, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderConfig } from '../src/services/providers'
 import { useTheme } from '../src/theme'
+import { isAppClip } from '../src/utils/appClip'
+
+/** Static Echo provider config used in App Clip mode. */
+const APP_CLIP_ECHO_CONFIG: ProviderConfig = {
+  type: 'echo',
+  url: '',
+  token: '',
+  serverId: 'app-clip-echo',
+}
 
 export default function HomeScreen() {
   const { theme } = useTheme()
@@ -16,9 +26,13 @@ export default function HomeScreen() {
   const { getProviderConfig, currentServerId } = useServers()
   const [config, setConfig] = useState<ProviderConfig | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(!isAppClip)
+
+  // In App Clip mode, use the Echo provider directly — no server lookup needed.
+  const effectiveConfig = useMemo(() => (isAppClip ? APP_CLIP_ECHO_CONFIG : config), [config])
 
   useEffect(() => {
+    if (isAppClip) return // Skip server lookup in App Clip mode
     const loadConfig = async () => {
       // Only show loading on initial load, not when switching servers
       if (!config) {
@@ -78,7 +92,7 @@ export default function HomeScreen() {
   }
 
   // Show setup prompt if no server configured
-  if (!config) {
+  if (!effectiveConfig) {
     return (
       <View
         style={{
@@ -100,5 +114,10 @@ export default function HomeScreen() {
     )
   }
 
-  return <ChatWithSidebar providerConfig={config} />
+  // App Clip: render ChatScreen directly without the sidebar
+  if (isAppClip) {
+    return <ChatScreen providerConfig={effectiveConfig} />
+  }
+
+  return <ChatWithSidebar providerConfig={effectiveConfig} />
 }

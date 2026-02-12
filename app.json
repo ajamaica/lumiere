@@ -103,7 +103,8 @@
             "android:launchMode": "singleTask"
           }
         }
-      ]
+      ],
+      "./plugins/withAppClip"
     ],
     "extra": {
       "eas": {

@@ -29,6 +29,7 @@ import {
   setSessionCryptoKey,
 } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
+import { isAppClip } from '../src/utils/appClip'
 import { KeyboardProvider } from '../src/utils/KeyboardProvider'
 import { isWeb } from '../src/utils/platform'
 
@@ -190,42 +191,45 @@ function AppContent() {
 
   const backgroundStyle = { flex: 1, backgroundColor: theme.colors.background }
 
-  // 1. Onboarding must complete first (server setup, etc.)
-  if (!onboardingCompleted) {
-    return (
-      <View style={backgroundStyle}>
-        <OnboardingFlow />
-      </View>
-    )
-  }
+  // App Clip mode — skip all gates and go straight to the chat
+  if (!isAppClip) {
+    // 1. Onboarding must complete first (server setup, etc.)
+    if (!onboardingCompleted) {
+      return (
+        <View style={backgroundStyle}>
+          <OnboardingFlow />
+        </View>
+      )
+    }
 
-  // 2. Web password lock — shown after setup when a password has been
-  //    configured previously OR when this is the first session after
-  //    onboarding (password not yet created).
-  const needsWebPasswordLock =
-    isWeb && !webPasswordUnlocked && (isPasswordConfigured() || !hasSessionCryptoKey())
-  if (needsWebPasswordLock) {
-    return (
-      <View style={backgroundStyle}>
-        <PasswordLockScreen onUnlock={handlePasswordUnlock} />
-      </View>
-    )
-  }
+    // 2. Web password lock — shown after setup when a password has been
+    //    configured previously OR when this is the first session after
+    //    onboarding (password not yet created).
+    const needsWebPasswordLock =
+      isWeb && !webPasswordUnlocked && (isPasswordConfigured() || !hasSessionCryptoKey())
+    if (needsWebPasswordLock) {
+      return (
+        <View style={backgroundStyle}>
+          <PasswordLockScreen onUnlock={handlePasswordUnlock} />
+        </View>
+      )
+    }
 
-  // 3. Wait for encrypted data to hydrate before rendering the app.
-  //    Without this, useServers mounts with an empty atom and the
-  //    auto-persist effect can overwrite localStorage with {}.
-  if (isWeb && !secureHydrated) {
-    return <View style={backgroundStyle} />
-  }
+    // 3. Wait for encrypted data to hydrate before rendering the app.
+    //    Without this, useServers mounts with an empty atom and the
+    //    auto-persist effect can overwrite localStorage with {}.
+    if (isWeb && !secureHydrated) {
+      return <View style={backgroundStyle} />
+    }
 
-  // 4. Biometric lock (native only)
-  if (isLocked) {
-    return (
-      <View style={backgroundStyle}>
-        <BiometricLockScreen onUnlock={handleUnlock} />
-      </View>
-    )
+    // 4. Biometric lock (native only)
+    if (isLocked) {
+      return (
+        <View style={backgroundStyle}>
+          <BiometricLockScreen onUnlock={handleUnlock} />
+        </View>
+      )
+    }
   }
 
   return (
