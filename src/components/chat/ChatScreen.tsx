@@ -181,8 +181,8 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   // Track whether we pre-populated from local cache so we can skip the loader
   const hasCacheRef = useRef(false)
 
-  // Detect server switches and reset refs without touching visual state,
-  // so old messages stay visible until new data arrives.
+  // Detect server switches and clear chat so stale messages from the
+  // previous server are never shown while the new history loads.
   const prevServerIdRef = useRef(providerConfig.serverId)
   useEffect(() => {
     if (prevServerIdRef.current !== providerConfig.serverId) {
@@ -190,7 +190,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       hasCacheRef.current = false
       hasScrolledOnLoadRef.current = false
       shouldAutoScrollRef.current = true
+      setMessages([])
       setCurrentAgentMessage('')
+      setIsLoadingHistory(true)
     }
   }, [providerConfig.serverId])
 
