@@ -51,7 +51,14 @@
     "contribute": "贡献",
     "skills": "技能",
     "gatewayLogs": "网关日志",
-    "missions": "任务"
+    "missions": "任务",
+    "icloudSync": "iCloud 同步",
+    "icloud": {
+      "availableSubtitle": "在你的 Apple 设备间同步数据",
+      "unavailableSubtitle": "登录 iCloud 以启用同步",
+      "unavailable": "iCloud 不可用",
+      "unavailableMessage": "请在设备设置中登录 iCloud 以使用此功能。"
+    }
   },
   "home": {
     "connectionError": "连接错误",

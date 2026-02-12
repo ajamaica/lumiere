@@ -51,7 +51,14 @@
     "contribute": "Contribuir",
     "skills": "Habilidades",
     "gatewayLogs": "Logs do Gateway",
-    "missions": "Missões"
+    "missions": "Missões",
+    "icloudSync": "Sincronização iCloud",
+    "icloud": {
+      "availableSubtitle": "Sincronize dados entre seus dispositivos Apple",
+      "unavailableSubtitle": "Faça login no iCloud para ativar a sincronização",
+      "unavailable": "iCloud indisponível",
+      "unavailableMessage": "Faça login no iCloud nas configurações do seu dispositivo para usar este recurso."
+    }
   },
   "home": {
     "connectionError": "Erro de Conexão",

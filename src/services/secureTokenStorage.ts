@@ -1,5 +1,6 @@
 import { logger } from '../utils/logger'
 import { isWeb } from '../utils/platform'
+import { isSyncEnabled, pushTokenToICloud } from './icloudSync'
 
 const TOKEN_PREFIX = 'server_token_'
 const tokenLogger = logger.create('SecureToken')
@@ -27,6 +28,11 @@ export async function setServerToken(serverId: string, token: string): Promise<v
   } catch (error) {
     // If keychain storage fails, log but don't throw
     tokenLogger.warn(`Failed to store token for server ${serverId}`, error)
+  }
+
+  // Sync token to iCloud if sync is active
+  if (isSyncEnabled()) {
+    pushTokenToICloud(serverId, token)
   }
 }
 
@@ -80,5 +86,10 @@ export async function deleteServerToken(serverId: string): Promise<void> {
   } catch (error) {
     // If keychain deletion fails, log but don't throw
     tokenLogger.warn(`Failed to delete token for server ${serverId}`, error)
+  }
+
+  // Remove token from iCloud if sync is active
+  if (isSyncEnabled()) {
+    pushTokenToICloud(serverId, null)
   }
 }

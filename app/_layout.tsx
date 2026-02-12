@@ -12,6 +12,7 @@ import { ErrorBoundary } from '../src/components/ui'
 import { useAndroidShortcuts } from '../src/hooks/useAndroidShortcuts'
 import { useAppleShortcuts } from '../src/hooks/useAppleShortcuts'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
+import { useICloudSync } from '../src/hooks/useICloudSync'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
@@ -107,6 +108,7 @@ function AppContent() {
   useAndroidShortcuts()
   useShareExtension()
   useLanguage() // Initialize language sync
+  useICloudSync() // Initialize iCloud sync (iOS only)
 
   // Web password lock state — only used on web
   const [webPasswordUnlocked, setWebPasswordUnlocked] = useState(() => {
