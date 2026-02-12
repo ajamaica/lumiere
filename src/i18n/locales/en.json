@@ -63,7 +63,14 @@
     "placeholder": "Type a message...",
     "listening": "Listening...",
     "startSpeaking": "Start speaking...",
-    "send": "Send"
+    "send": "Send",
+    "attachPicture": "Attach picture",
+    "picture": "Picture",
+    "attachVideo": "Attach video",
+    "video": "Video",
+    "attachFile": "Attach file",
+    "file": "File",
+    "removeAttachment": "Remove attachment {{number}}"
   },
   "addServer": {
     "title": "Add Server",

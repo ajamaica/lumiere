@@ -63,7 +63,14 @@
     "placeholder": "メッセージを入力...",
     "listening": "聞き取り中...",
     "startSpeaking": "話しかけてください...",
-    "send": "送信"
+    "send": "送信",
+    "attachPicture": "画像を添付",
+    "picture": "画像",
+    "attachVideo": "動画を添付",
+    "video": "動画",
+    "attachFile": "ファイルを添付",
+    "file": "ファイル",
+    "removeAttachment": "添付ファイル{{number}}を削除"
   },
   "addServer": {
     "title": "サーバーを追加",

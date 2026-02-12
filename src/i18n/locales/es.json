@@ -63,7 +63,14 @@
     "placeholder": "Escribe un mensaje...",
     "listening": "Escuchando...",
     "startSpeaking": "Comienza a hablar...",
-    "send": "Enviar"
+    "send": "Enviar",
+    "attachPicture": "Adjuntar imagen",
+    "picture": "Imagen",
+    "attachVideo": "Adjuntar video",
+    "video": "Video",
+    "attachFile": "Adjuntar archivo",
+    "file": "Archivo",
+    "removeAttachment": "Eliminar adjunto {{number}}"
   },
   "addServer": {
     "title": "Añadir Servidor",
