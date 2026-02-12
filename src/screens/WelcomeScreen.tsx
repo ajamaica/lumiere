@@ -108,15 +108,26 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
   const phoneHeight = phoneWidth * 1.6
   const iconBaseSize = isTablet ? 44 : isSmallScreen ? 34 : 38
 
-  // Provider icons arranged in a cluster around the phone area
+  // Provider icons arranged in a cluster around the phone area — 14 bubbles, random sizes
   const bubbles: BubbleConfig[] = [
-    { Icon: OpenClawIcon, size: iconBaseSize + 6, top: -8, left: -14, delay: 100, bg: '#0F1D32' },
-    { Icon: ClaudeIcon, size: iconBaseSize, top: 20, left: phoneWidth - 20, delay: 200, bg: '#1A1412' },
-    { Icon: OpenAIIcon, size: iconBaseSize + 4, top: phoneHeight * 0.35, left: -20, delay: 300, bg: '#0F1D32' },
-    { Icon: GeminiIcon, size: iconBaseSize - 2, top: phoneHeight * 0.3, left: phoneWidth - 10, delay: 400, bg: '#121A2E' },
-    { Icon: OllamaIcon, size: iconBaseSize + 2, top: phoneHeight * 0.65, left: -16, delay: 500, bg: '#141E14' },
-    { Icon: OpenRouterIcon, size: iconBaseSize - 4, top: phoneHeight * 0.7, left: phoneWidth - 14, delay: 600, bg: '#1E1428' },
-    { Icon: KimiIcon, size: iconBaseSize - 6, top: phoneHeight * 0.9, left: phoneWidth * 0.15, delay: 700, bg: '#1A1A2E' },
+    // Left side
+    { Icon: OpenClawIcon, size: iconBaseSize + 10, top: -12, left: -18, delay: 100, bg: '#0F1D32' },
+    { Icon: OpenAIIcon, size: iconBaseSize + 2, top: phoneHeight * 0.18, left: -22, delay: 250, bg: '#0F1D32' },
+    { Icon: OllamaIcon, size: iconBaseSize + 8, top: phoneHeight * 0.4, left: -20, delay: 400, bg: '#141E14' },
+    { Icon: AppleIcon, size: iconBaseSize - 4, top: phoneHeight * 0.6, left: -14, delay: 520, bg: '#1A1A2E' },
+    { Icon: EchoIcon, size: iconBaseSize + 4, top: phoneHeight * 0.82, left: -18, delay: 650, bg: '#1E1428' },
+    // Right side
+    { Icon: ClaudeIcon, size: iconBaseSize + 6, top: -6, left: phoneWidth - 18, delay: 150, bg: '#1A1412' },
+    { Icon: GeminiIcon, size: iconBaseSize - 2, top: phoneHeight * 0.16, left: phoneWidth - 10, delay: 300, bg: '#121A2E' },
+    { Icon: KimiIcon, size: iconBaseSize + 12, top: phoneHeight * 0.36, left: phoneWidth - 16, delay: 450, bg: '#1A1A2E' },
+    { Icon: OpenRouterIcon, size: iconBaseSize - 6, top: phoneHeight * 0.56, left: phoneWidth - 12, delay: 550, bg: '#1E1428' },
+    { Icon: GeminiNanoIcon, size: iconBaseSize + 2, top: phoneHeight * 0.76, left: phoneWidth - 20, delay: 700, bg: '#0F1D32' },
+    // Bottom
+    { Icon: DefaultIcon, size: iconBaseSize - 2, top: phoneHeight * 0.95, left: phoneWidth * 0.08, delay: 750, bg: '#121A2E' },
+    { Icon: OpenClawIcon, size: iconBaseSize + 4, top: phoneHeight * 0.92, left: phoneWidth * 0.55, delay: 800, bg: '#0F1D32' },
+    // Top center extras
+    { Icon: OpenAIIcon, size: iconBaseSize - 6, top: -14, left: phoneWidth * 0.45, delay: 180, bg: '#0F1D32' },
+    { Icon: ClaudeIcon, size: iconBaseSize + 8, top: phoneHeight * 0.98, left: phoneWidth * 0.3, delay: 850, bg: '#1A1412' },
   ]
 
   const gradientColors = theme.isDark
