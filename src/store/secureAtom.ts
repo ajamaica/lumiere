@@ -12,7 +12,7 @@
 import { atom, type WritableAtom } from 'jotai'
 
 import { encryptAndStore, loadAndDecrypt } from '../services/webCrypto'
-import type { ServersDict } from './atoms'
+import type { ServersDict } from './types'
 
 // ─── Session key holder ────────────────────────────────────
 

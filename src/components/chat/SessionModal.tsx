@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
+import { parseSessionKey } from '../../store'
 import { useTheme } from '../../theme'
 
 interface Session {
@@ -130,13 +131,10 @@ export function SessionModal({
   })
 
   const formatSessionKey = (key: string) => {
-    // Check if there's an alias
     if (sessionAliases[key]) {
       return sessionAliases[key]
     }
-    // Extract readable part from session key
-    const parts = key.split(':')
-    return parts[parts.length - 1] || key
+    return parseSessionKey(key).sessionName || key
   }
 
   return (

@@ -31,8 +31,10 @@ import { useWorkflowContext } from '../../hooks/useWorkflowContext'
 import { ProviderConfig, readCachedHistory } from '../../services/providers'
 import {
   clearMessagesAtom,
+  createSessionKey,
   currentAgentIdAtom,
   currentSessionKeyAtom,
+  parseSessionKey,
   pendingShareTextAtom,
   pendingTriggerMessageAtom,
   sessionContextAtom,
@@ -402,10 +404,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const handleSelectAgent = useCallback(
     (agentId: string) => {
       setCurrentAgentId(agentId)
-      // Update session key to match new agent: agent:<agentId>:<sessionName>
-      const parts = currentSessionKey.split(':')
-      const sessionName = parts.length >= 3 ? parts[2] : 'main'
-      setCurrentSessionKey(`agent:${agentId}:${sessionName}`)
+      // Update session key to match new agent
+      const { sessionName } = parseSessionKey(currentSessionKey)
+      setCurrentSessionKey(createSessionKey(agentId, sessionName))
     },
     [currentSessionKey, setCurrentAgentId, setCurrentSessionKey],
   )

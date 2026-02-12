@@ -13,7 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { getProviderIcon } from '../../config/providerOptions'
-import type { ServerConfig } from '../../store'
+import { parseSessionKey, type ServerConfig } from '../../store'
 import { useTheme } from '../../theme'
 import { useFoldResponsiveValue } from '../../utils/device'
 
@@ -60,13 +60,10 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
   )
 
   const formatSessionKey = (key: string) => {
-    // Check if there's an alias
     if (sessionAliases[key]) {
       return sessionAliases[key]
     }
-    // Extract readable part from session key
-    const parts = key.split(':')
-    return parts[parts.length - 1] || key
+    return parseSessionKey(key).sessionName || key
   }
 
   const handleOpenSettings = () => {

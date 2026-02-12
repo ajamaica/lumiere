@@ -1,4 +1,5 @@
 import { agentConfig } from '../../config/gateway.config'
+import { parseSessionKey } from '../../store'
 import { generateIdempotencyKey, MoltGatewayClient } from '../molt/client'
 import { AgentEvent, ConnectionState } from '../molt/types'
 import {
@@ -67,9 +68,8 @@ export class MoltChatProvider implements ChatProvider {
     params: SendMessageParams,
     onEvent: (event: ChatProviderEvent) => void,
   ): Promise<void> {
-    // Extract agentId from session key format: agent:<agentId>:<sessionName>
-    const sessionParts = params.sessionKey.split(':')
-    const agentId = sessionParts.length >= 2 ? sessionParts[1] : agentConfig.defaultAgentId
+    const { agentId: parsedAgentId } = parseSessionKey(params.sessionKey)
+    const agentId = parsedAgentId || agentConfig.defaultAgentId
 
     // Prepend system message as context for Molt gateway
     const message = params.systemMessage
