@@ -1,44 +1,58 @@
-export type {
-  FavoriteItem,
-  NotificationLastCheckMap,
-  ServerConfig,
-  ServersDict,
-  ServerSessions,
-  SessionAliases,
-  TriggerConfig,
-  TriggersDict,
-  WorkflowConfig,
-  WorkflowConfigMap,
-  WorkflowFile,
-} from './atoms'
+// ─── Shared utilities ────────────────────────────────────
+export { getStore, jotaiStorage } from './storeUtils'
+
+// ─── Session domain ──────────────────────────────────────
+export type { ServerSessions, SessionAliases } from './sessionAtoms'
+export {
+  currentAgentIdAtom,
+  currentSessionKeyAtom,
+  serverSessionsAtom,
+  sessionAliasesAtom,
+} from './sessionAtoms'
+
+// ─── Server domain ───────────────────────────────────────
+export type { ServerConfig, ServersDict } from './serverAtoms'
+export { currentServerIdAtom, serversAtom } from './serverAtoms'
+
+// ─── Gateway domain ──────────────────────────────────────
+export { gatewayConnectedAtom, gatewayConnectingAtom, gatewayErrorAtom } from './gatewayAtoms'
+
+// ─── Chat domain ─────────────────────────────────────────
+export type { FavoriteItem } from './chatAtoms'
+export {
+  clearMessagesAtom,
+  favoritesAtom,
+  messageQueueAtom,
+  pendingShareTextAtom,
+  pendingTriggerMessageAtom,
+} from './chatAtoms'
+
+// ─── Trigger domain ──────────────────────────────────────
+export type { TriggerConfig, TriggersDict } from './triggerAtoms'
+export { triggersAtom } from './triggerAtoms'
+
+// ─── Workflow domain ─────────────────────────────────────
+export type { WorkflowConfig, WorkflowConfigMap, WorkflowFile } from './workflowAtoms'
+export { workflowConfigAtom } from './workflowAtoms'
+
+// ─── Notification domain ─────────────────────────────────
+export type { NotificationLastCheckMap } from './notificationAtoms'
 export {
   backgroundFetchIntervalAtom,
   backgroundNotificationsEnabledAtom,
-  biometricLockEnabledAtom,
-  clearMessagesAtom,
-  colorThemeAtom,
-  currentAgentIdAtom,
-  currentServerIdAtom,
-  currentSessionKeyAtom,
-  favoritesAtom,
-  gatewayConnectedAtom,
-  gatewayConnectingAtom,
-  gatewayErrorAtom,
-  getStore,
-  jotaiStorage,
-  languageAtom,
-  messageQueueAtom,
   notificationLastCheckAtom,
+} from './notificationAtoms'
+
+// ─── Preferences domain ──────────────────────────────────
+export {
+  biometricLockEnabledAtom,
+  colorThemeAtom,
+  languageAtom,
   onboardingCompletedAtom,
-  pendingShareTextAtom,
-  pendingTriggerMessageAtom,
-  serversAtom,
-  serverSessionsAtom,
-  sessionAliasesAtom,
   themeModeAtom,
-  triggersAtom,
-  workflowConfigAtom,
-} from './atoms'
+} from './preferencesAtoms'
+
+// ─── Secure store (web) ──────────────────────────────────
 export {
   clearSessionCryptoKey,
   getSessionCryptoKey,
