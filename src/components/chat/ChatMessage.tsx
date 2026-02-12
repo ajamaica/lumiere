@@ -2,17 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useAtom, useSetAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 import Animated, {
   Easing,
@@ -24,44 +14,27 @@ import Animated, {
 } from 'react-native-reanimated'
 
 import { useUrlMetadata } from '../../hooks/useUrlMetadata'
-import { copyToClipboard, executeIntent, openBrowser } from '../../services/intents'
+import { copyToClipboard, executeIntent } from '../../services/intents'
 import {
   clearMessagesAtom,
   currentSessionKeyAtom,
   favoritesAtom,
   sessionAliasesAtom,
 } from '../../store'
-import { Theme, useTheme } from '../../theme'
+import { useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 import { logger } from '../../utils/logger'
-import { webStyle } from '../../utils/platform'
 import { processXmlTags } from '../../utils/xmlTagProcessor'
+import { createMarkdownStyles, createStyles } from './ChatMessage.styles'
+import { Message, MessageAttachment } from './chatMessageTypes'
 import { LinkPreview } from './LinkPreview'
+import { useMarkdownRules } from './useMarkdownRules'
+
+export type { Message, MessageAttachment }
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient)
 
 const chatLogger = logger.create('ChatMessage')
-
-export interface MessageAttachment {
-  type: 'image' | 'video' | 'file'
-  uri: string
-  base64?: string
-  mimeType?: string
-  name?: string
-}
-
-export interface Message {
-  id: string
-  text: string
-  sender: 'user' | 'agent'
-  timestamp: Date
-  streaming?: boolean
-  attachments?: MessageAttachment[]
-}
-
-interface ChatMessageProps {
-  message: Message
-}
 
 // Convert plain URLs to markdown links
 const linkifyText = (text: string): string => {
@@ -90,7 +63,7 @@ const linkifyText = (text: string): string => {
   return protectedText
 }
 
-export function ChatMessage({ message }: ChatMessageProps) {
+export function ChatMessage({ message }: { message: Message }) {
   const { theme } = useTheme()
   const isUser = message.sender === 'user'
   const [copied, setCopied] = useState(false)
@@ -153,189 +126,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
 
   const styles = useMemo(() => createStyles(theme), [theme])
   const markdownStyles = useMemo(() => createMarkdownStyles(theme, isUser), [theme, isUser])
-
-  const handleLinkPress = React.useCallback(
-    async (url: string) => {
-      chatLogger.debug('Link pressed', url)
-      try {
-        await openBrowser(url, theme.colors.primary)
-      } catch (err) {
-        chatLogger.logError('Failed to open URL', err)
-      }
-    },
-    [theme.colors.primary],
-  )
-
-  const markdownRules = useMemo(
-    () => ({
-      text: (
-        node: { key: string; content: string },
-        _children: unknown,
-        _parent: unknown,
-        styles: { text: TextStyle },
-      ) => (
-        <Text key={node.key} style={styles.text} selectable={true}>
-          {node.content}
-        </Text>
-      ),
-      paragraph: (
-        node: { key: string },
-        children: React.ReactNode,
-        _parent: unknown,
-        styles: { paragraph: TextStyle },
-      ) => (
-        <Text key={node.key} style={styles.paragraph} selectable={true}>
-          {children}
-        </Text>
-      ),
-      strong: (
-        node: { key: string },
-        children: React.ReactNode,
-        _parent: unknown,
-        styles: { strong: TextStyle },
-      ) => (
-        <Text key={node.key} style={styles.strong} selectable={true}>
-          {children}
-        </Text>
-      ),
-      em: (
-        node: { key: string },
-        children: React.ReactNode,
-        _parent: unknown,
-        styles: { em: TextStyle },
-      ) => (
-        <Text key={node.key} style={styles.em} selectable={true}>
-          {children}
-        </Text>
-      ),
-      code_inline: (
-        node: { key: string; content: string },
-        _children: unknown,
-        _parent: unknown,
-        styles: { code_inline: TextStyle },
-      ) => (
-        <Text key={node.key} style={styles.code_inline} selectable={true}>
-          {node.content}
-        </Text>
-      ),
-      fence: (
-        node: { key: string; content: string },
-        _children: unknown,
-        _parent: unknown,
-        styles: { fence: TextStyle },
-      ) => (
-        <ScrollView
-          key={node.key}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{
-            marginVertical: (styles.fence as Record<string, number>).marginVertical ?? 0,
-          }}
-        >
-          <Text style={[styles.fence, { marginVertical: 0 }]} selectable={true}>
-            {node.content}
-          </Text>
-        </ScrollView>
-      ),
-      code_block: (
-        node: { key: string; content: string },
-        _children: unknown,
-        _parent: unknown,
-        styles: { code_block: TextStyle },
-      ) => (
-        <ScrollView
-          key={node.key}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{
-            marginVertical: (styles.code_block as Record<string, number>).marginVertical ?? 0,
-          }}
-        >
-          <Text style={[styles.code_block, { marginVertical: 0 }]} selectable={true}>
-            {node.content}
-          </Text>
-        </ScrollView>
-      ),
-      heading1: (
-        node: { key: string },
-        children: React.ReactNode,
-        _parent: unknown,
-        styles: { heading1: TextStyle },
-      ) => (
-        <Text key={node.key} style={styles.heading1} selectable={true}>
-          {children}
-        </Text>
-      ),
-      heading2: (
-        node: { key: string },
-        children: React.ReactNode,
-        _parent: unknown,
-        styles: { heading2: TextStyle },
-      ) => (
-        <Text key={node.key} style={styles.heading2} selectable={true}>
-          {children}
-        </Text>
-      ),
-      heading3: (
-        node: { key: string },
-        children: React.ReactNode,
-        _parent: unknown,
-        styles: { heading3: TextStyle },
-      ) => (
-        <Text key={node.key} style={styles.heading3} selectable={true}>
-          {children}
-        </Text>
-      ),
-      link: (
-        node: { key: string; attributes?: { href?: string } },
-        children: React.ReactNode,
-        _parent: unknown,
-        styles: { link: TextStyle },
-      ) => {
-        const url = node.attributes?.href || ''
-        return (
-          <Pressable key={node.key} onPress={() => handleLinkPress(url)}>
-            <Text style={styles.link} selectable={true}>
-              {children}
-            </Text>
-          </Pressable>
-        )
-      },
-      textgroup: (
-        node: { key: string },
-        children: React.ReactNode,
-        _parent: unknown,
-        styles: { textgroup: TextStyle },
-      ) => (
-        <Text key={node.key} style={styles.textgroup} selectable={true}>
-          {children}
-        </Text>
-      ),
-      list_item: (
-        node: { key: string },
-        children: React.ReactNode,
-        _parent: unknown,
-        styles: { list_item: ViewStyle },
-      ) => (
-        <View key={node.key} style={styles.list_item}>
-          {React.Children.map(children, (child) =>
-            typeof child === 'string' ? <Text selectable={true}>{child}</Text> : child,
-          )}
-        </View>
-      ),
-      blockquote: (
-        node: { key: string },
-        children: React.ReactNode,
-        _parent: unknown,
-        styles: { blockquote: ViewStyle },
-      ) => (
-        <View key={node.key} style={styles.blockquote}>
-          {children}
-        </View>
-      ),
-    }),
-    [handleLinkPress],
-  )
+  const { markdownRules, handleLinkPress } = useMarkdownRules()
 
   const handleCopy = async () => {
     await copyToClipboard(processXmlTags(message.text))
@@ -378,6 +169,38 @@ export function ChatMessage({ message }: ChatMessageProps) {
   // Fetch URL embed previews for agent messages
   const { metadata: urlPreviews } = useUrlMetadata(message.text, !!message.streaming, isUser)
 
+  const renderAttachments = () => {
+    if (!message.attachments || message.attachments.length === 0) return null
+    return (
+      <View style={styles.attachmentContainer}>
+        {message.attachments.map((attachment, index) => (
+          <Image
+            key={index}
+            source={{ uri: attachment.uri }}
+            style={styles.attachmentImage}
+            resizeMode="cover"
+            accessibilityLabel={`Attachment ${index + 1}`}
+            accessibilityRole="image"
+          />
+        ))}
+      </View>
+    )
+  }
+
+  const renderMarkdown = () => (
+    <Markdown
+      style={markdownStyles}
+      onLinkPress={(url: string) => {
+        handleLinkPress(url)
+        return false
+      }}
+      mergeStyle={true}
+      rules={markdownRules}
+    >
+      {processedText}
+    </Markdown>
+  )
+
   // User bubble with gradient
   const renderUserBubble = () => (
     <Animated.View style={[styles.userBubbleWrapper, animatedContainerStyle]}>
@@ -387,31 +210,8 @@ export function ChatMessage({ message }: ChatMessageProps) {
         end={{ x: 1, y: 1 }}
         style={[styles.userGradientBubble, animatedGradientStyle]}
       >
-        {message.attachments && message.attachments.length > 0 && (
-          <View style={styles.attachmentContainer}>
-            {message.attachments.map((attachment, index) => (
-              <Image
-                key={index}
-                source={{ uri: attachment.uri }}
-                style={styles.attachmentImage}
-                resizeMode="cover"
-                accessibilityLabel={`Attachment ${index + 1}`}
-                accessibilityRole="image"
-              />
-            ))}
-          </View>
-        )}
-        <Markdown
-          style={markdownStyles}
-          onLinkPress={(url: string) => {
-            handleLinkPress(url)
-            return false
-          }}
-          mergeStyle={true}
-          rules={markdownRules}
-        >
-          {processedText}
-        </Markdown>
+        {renderAttachments()}
+        {renderMarkdown()}
       </AnimatedLinearGradient>
     </Animated.View>
   )
@@ -419,31 +219,8 @@ export function ChatMessage({ message }: ChatMessageProps) {
   // Agent bubble with subtle gradient border
   const renderAgentBubble = () => (
     <Animated.View style={[styles.bubble, styles.agentBubble, animatedContainerStyle]}>
-      {message.attachments && message.attachments.length > 0 && (
-        <View style={styles.attachmentContainer}>
-          {message.attachments.map((attachment, index) => (
-            <Image
-              key={index}
-              source={{ uri: attachment.uri }}
-              style={styles.attachmentImage}
-              resizeMode="cover"
-              accessibilityLabel={`Attachment ${index + 1}`}
-              accessibilityRole="image"
-            />
-          ))}
-        </View>
-      )}
-      <Markdown
-        style={markdownStyles}
-        onLinkPress={(url: string) => {
-          handleLinkPress(url)
-          return false
-        }}
-        mergeStyle={true}
-        rules={markdownRules}
-      >
-        {processedText}
-      </Markdown>
+      {renderAttachments()}
+      {renderMarkdown()}
       {message.streaming && (
         <Text style={styles.streamingIndicator} selectable={true}>
           ...
@@ -529,277 +306,4 @@ export function ChatMessage({ message }: ChatMessageProps) {
       </Text>
     </View>
   )
-}
-
-const createStyles = (theme: Theme) =>
-  StyleSheet.create({
-    container: {
-      marginVertical: theme.spacing.xs,
-      marginHorizontal: theme.spacing.md,
-    },
-    userContainer: {
-      alignItems: 'flex-end',
-    },
-    agentContainer: {
-      alignItems: 'flex-start',
-    },
-    bubble: {
-      paddingHorizontal: theme.spacing.lg,
-      paddingVertical: theme.spacing.sm + 2,
-      borderRadius: theme.borderRadius.xxl,
-    },
-    userBubble: {
-      maxWidth: '100%',
-      backgroundColor: theme.colors.message.user,
-      borderBottomRightRadius: theme.borderRadius.sm,
-      ...webStyle({ userSelect: 'text' as const }),
-    },
-    userBubbleWrapper: {
-      maxWidth: '100%',
-      borderRadius: theme.borderRadius.xxl,
-      borderBottomRightRadius: theme.borderRadius.sm,
-      overflow: 'hidden',
-      shadowColor: theme.colors.primary,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 8,
-      elevation: 4,
-    },
-    userGradientBubble: {
-      paddingHorizontal: theme.spacing.lg,
-      paddingVertical: theme.spacing.sm + 2,
-      ...webStyle({ userSelect: 'text' as const }),
-    },
-    agentBubble: {
-      width: '100%',
-      backgroundColor: 'transparent',
-      borderRadius: 0,
-      paddingHorizontal: 0,
-      overflow: 'hidden' as const,
-      ...webStyle({ userSelect: 'text' as const }),
-    },
-    intentActions: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      marginTop: theme.spacing.sm,
-      gap: theme.spacing.xs,
-    },
-    intentButton: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: theme.spacing.md,
-      paddingVertical: theme.spacing.sm,
-      borderRadius: theme.borderRadius.xxl,
-      borderWidth: 1,
-      borderColor: theme.colors.primary,
-      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)',
-    },
-    intentButtonIcon: {
-      marginRight: theme.spacing.xs,
-    },
-    intentButtonText: {
-      color: theme.colors.primary,
-      fontSize: theme.typography.fontSize.sm,
-      fontWeight: theme.typography.fontWeight.semibold,
-    },
-    actionButtons: {
-      flexDirection: 'row',
-      marginTop: theme.spacing.sm,
-      marginLeft: theme.spacing.xs,
-      gap: theme.spacing.xs,
-    },
-    actionButton: {
-      padding: theme.spacing.xs,
-      borderRadius: theme.borderRadius.sm,
-    },
-    timestamp: {
-      fontSize: theme.typography.fontSize.xs,
-      color: theme.colors.text.secondary,
-      marginTop: theme.spacing.xs,
-      marginHorizontal: theme.spacing.xs,
-    },
-    streamingIndicator: {
-      color: theme.colors.text.secondary,
-      fontSize: theme.typography.fontSize.sm,
-      marginTop: theme.spacing.xs,
-    },
-    linkPreviews: {
-      marginTop: theme.spacing.sm,
-      gap: theme.spacing.xs,
-    },
-    attachmentContainer: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      gap: theme.spacing.xs,
-      marginBottom: theme.spacing.sm,
-    },
-    attachmentImage: {
-      width: 200,
-      height: 200,
-      borderRadius: theme.borderRadius.md,
-    },
-  })
-
-const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
-  const textColor = isUser ? theme.colors.message.userText : theme.colors.message.agentText
-
-  return {
-    body: {
-      color: textColor,
-      fontSize: theme.typography.fontSize.base,
-      lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
-      flexShrink: 1,
-      ...webStyle({ userSelect: 'text' as const }),
-    },
-    text: {
-      color: textColor,
-    },
-    heading1: {
-      color: textColor,
-      fontSize: theme.typography.fontSize.xl,
-      fontWeight: theme.typography.fontWeight.bold,
-      marginTop: theme.spacing.md,
-      marginBottom: theme.spacing.sm,
-    },
-    heading2: {
-      color: textColor,
-      fontSize: theme.typography.fontSize.lg,
-      fontWeight: theme.typography.fontWeight.bold,
-      marginTop: theme.spacing.md,
-      marginBottom: theme.spacing.sm,
-    },
-    heading3: {
-      color: textColor,
-      fontSize: theme.typography.fontSize.base,
-      fontWeight: theme.typography.fontWeight.bold,
-      marginTop: theme.spacing.sm,
-      marginBottom: theme.spacing.xs,
-    },
-    paragraph: {
-      marginTop: 0,
-      marginBottom: theme.spacing.sm,
-      color: textColor,
-      fontSize: theme.typography.fontSize.base,
-      lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
-    },
-    strong: {
-      fontWeight: theme.typography.fontWeight.bold,
-      color: textColor,
-    },
-    em: {
-      fontStyle: 'italic' as const,
-      color: textColor,
-    },
-    code_inline: {
-      backgroundColor: isUser
-        ? 'rgba(0, 0, 0, 0.15)'
-        : theme.isDark
-          ? 'rgba(255, 255, 255, 0.1)'
-          : 'rgba(0, 0, 0, 0.1)',
-      color: textColor,
-      paddingHorizontal: theme.spacing.xs,
-      paddingVertical: 2,
-      borderRadius: theme.borderRadius.xs,
-      fontFamily: 'Courier',
-      fontSize: theme.typography.fontSize.sm,
-    },
-    fence: {
-      backgroundColor: isUser
-        ? 'rgba(0, 0, 0, 0.15)'
-        : theme.isDark
-          ? 'rgba(255, 255, 255, 0.1)'
-          : 'rgba(0, 0, 0, 0.1)',
-      color: textColor,
-      padding: theme.spacing.md,
-      borderRadius: theme.borderRadius.md,
-      fontFamily: 'Courier',
-      fontSize: theme.typography.fontSize.sm,
-      marginVertical: theme.spacing.sm,
-    },
-    code_block: {
-      backgroundColor: isUser
-        ? 'rgba(0, 0, 0, 0.15)'
-        : theme.isDark
-          ? 'rgba(255, 255, 255, 0.1)'
-          : 'rgba(0, 0, 0, 0.1)',
-      color: textColor,
-      padding: theme.spacing.md,
-      borderRadius: theme.borderRadius.md,
-      fontFamily: 'Courier',
-      fontSize: theme.typography.fontSize.sm,
-      marginVertical: theme.spacing.sm,
-    },
-    blockquote: {
-      backgroundColor: isUser
-        ? 'rgba(0, 0, 0, 0.1)'
-        : theme.isDark
-          ? 'rgba(255, 255, 255, 0.05)'
-          : 'rgba(0, 0, 0, 0.05)',
-      borderLeftColor: textColor,
-      borderLeftWidth: 3,
-      paddingLeft: theme.spacing.md,
-      paddingVertical: theme.spacing.xs,
-      marginVertical: theme.spacing.sm,
-    },
-    bullet_list: {
-      marginVertical: theme.spacing.xs,
-    },
-    ordered_list: {
-      marginVertical: theme.spacing.xs,
-    },
-    list_item: {
-      color: textColor,
-      marginVertical: theme.spacing.xs / 2,
-    },
-    bullet_list_icon: {
-      color: textColor,
-      marginLeft: theme.spacing.xs,
-      marginRight: theme.spacing.sm,
-    },
-    ordered_list_icon: {
-      color: textColor,
-      marginLeft: theme.spacing.xs,
-      marginRight: theme.spacing.sm,
-    },
-    link: {
-      color: isUser && !theme.isDark ? '#FFFFFF' : theme.colors.primary,
-      textDecorationLine: 'underline' as const,
-      fontWeight: theme.typography.fontWeight.medium,
-    },
-    hr: {
-      backgroundColor: textColor,
-      height: 1,
-      opacity: 0.3,
-      marginVertical: theme.spacing.md,
-    },
-    table: {
-      borderWidth: 1,
-      borderColor: textColor,
-      borderRadius: theme.borderRadius.sm,
-      marginVertical: theme.spacing.sm,
-    },
-    thead: {
-      backgroundColor: isUser
-        ? 'rgba(0, 0, 0, 0.1)'
-        : theme.isDark
-          ? 'rgba(255, 255, 255, 0.05)'
-          : 'rgba(0, 0, 0, 0.05)',
-    },
-    tr: {
-      borderBottomWidth: 1,
-      borderColor: textColor,
-      flexDirection: 'row' as const,
-    },
-    th: {
-      flex: 1,
-      padding: theme.spacing.sm,
-      color: textColor,
-      fontWeight: theme.typography.fontWeight.bold,
-    },
-    td: {
-      flex: 1,
-      padding: theme.spacing.sm,
-      color: textColor,
-    },
-  }
 }
