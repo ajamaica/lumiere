@@ -13,12 +13,23 @@ export function useMissions() {
   const [rawActiveMissionId, setActiveMissionId] = useAtom(activeMissionIdAtom)
 
   // unwrap() guarantees synchronous values, but TypeScript still infers
-  // the union type. Cast to the concrete types for safe property access.
-  const missions = useMemo(() => (rawMissions ?? {}) as MissionsDict, [rawMissions])
+  // the union type. Cast to the concrete types and strip any null entries
+  // that may linger in storage after deletions.
+  const missions = useMemo(() => {
+    const raw = (rawMissions ?? {}) as MissionsDict
+    const clean: MissionsDict = {}
+    for (const [k, v] of Object.entries(raw)) {
+      if (v != null && typeof v.updatedAt === 'number') clean[k] = v
+    }
+    return clean
+  }, [rawMissions])
   const activeMissionId = (rawActiveMissionId ?? null) as string | null
 
   const missionList = useMemo(
-    () => Object.values(missions).sort((a, b) => b.updatedAt - a.updatedAt),
+    () =>
+      Object.values(missions)
+        .filter((m): m is Mission => m != null && typeof m.updatedAt === 'number')
+        .sort((a, b) => b.updatedAt - a.updatedAt),
     [missions],
   )
 
