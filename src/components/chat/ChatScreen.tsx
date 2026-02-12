@@ -35,11 +35,13 @@ import {
   currentAgentIdAtom,
   currentSessionKeyAtom,
   parseSessionKey,
+  pendingShareMediaAtom,
   pendingShareTextAtom,
   pendingTriggerMessageAtom,
   sessionContextAtom,
 } from '../../store'
 import { Theme, useTheme } from '../../theme'
+import { compressImageToJpeg } from '../../utils/compressImage'
 import {
   useContentContainerStyle,
   useDeviceType,
@@ -51,7 +53,7 @@ import { useReanimatedKeyboardAnimation } from '../../utils/keyboardAnimation'
 import { logger } from '../../utils/logger'
 import { AgentPicker } from './AgentPicker'
 import { ChatInput } from './ChatInput'
-import { ChatMessage, Message } from './ChatMessage'
+import { ChatMessage, Message, MessageAttachment } from './ChatMessage'
 import { ThinkingIndicator } from './ThinkingIndicator'
 
 const chatScreenLogger = logger.create('ChatScreen')
@@ -88,6 +90,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [pendingTriggerMessage, setPendingTriggerMessage] = useAtom(pendingTriggerMessageAtom)
   const [pendingShareText, setPendingShareText] = useAtom(pendingShareTextAtom)
+  const [pendingShareMedia, setPendingShareMedia] = useAtom(pendingShareMediaAtom)
   const [sessionContextMap] = useAtom(sessionContextAtom)
   const [isAgentPickerOpen, setIsAgentPickerOpen] = useState(false)
   const isMoltProvider = providerConfig.type === 'molt'
@@ -331,14 +334,68 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
 
   // Auto-send content shared from other apps via the share extension
   useEffect(() => {
-    if (connected && !isLoadingHistory && pendingShareText) {
-      const timer = setTimeout(() => {
-        handleSendRef.current(pendingShareText)
+    if (connected && !isLoadingHistory && pendingShareText !== null) {
+      const timer = setTimeout(async () => {
+        let attachments: MessageAttachment[] | undefined
+        if (pendingShareMedia && pendingShareMedia.length > 0) {
+          const converted: MessageAttachment[] = []
+          for (const media of pendingShareMedia) {
+            if (media.mimeType.startsWith('image/')) {
+              try {
+                const compressed = await compressImageToJpeg(media.uri)
+                converted.push({
+                  type: 'image',
+                  uri: compressed.uri,
+                  base64: compressed.base64,
+                  mimeType: compressed.mimeType,
+                  name: media.fileName,
+                })
+              } catch {
+                // Fall back to uncompressed URI if compression fails
+                converted.push({
+                  type: 'image',
+                  uri: media.uri,
+                  mimeType: media.mimeType,
+                  name: media.fileName,
+                })
+              }
+            } else if (media.mimeType.startsWith('video/')) {
+              converted.push({
+                type: 'video',
+                uri: media.uri,
+                mimeType: media.mimeType,
+                name: media.fileName,
+              })
+            } else {
+              converted.push({
+                type: 'file',
+                uri: media.uri,
+                mimeType: media.mimeType,
+                name: media.fileName,
+              })
+            }
+          }
+          if (converted.length > 0) {
+            attachments = converted
+          }
+          setPendingShareMedia(null)
+        }
+        const text = pendingShareText || ''
+        if (text || attachments) {
+          handleSendRef.current(text, attachments)
+        }
         setPendingShareText(null)
       }, 150)
       return () => clearTimeout(timer)
     }
-  }, [connected, isLoadingHistory, pendingShareText, setPendingShareText])
+  }, [
+    connected,
+    isLoadingHistory,
+    pendingShareText,
+    setPendingShareText,
+    pendingShareMedia,
+    setPendingShareMedia,
+  ])
 
   // The list starts hidden (opacity 0) and is revealed once we have scrolled
   // to the bottom so the user never sees the conversation flash from the top.

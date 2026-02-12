@@ -9,5 +9,8 @@ export const clearMessagesAtom = atom<number>(0)
 /** Pending message from a deep link trigger, consumed by ChatScreen */
 export const pendingTriggerMessageAtom = atom<string | null>(null)
 
-/** Pending text from share extension, consumed by ChatInput */
+/** Pending text from share extension, consumed by ChatScreen */
 export const pendingShareTextAtom = atom<string | null>(null)
+
+/** Pending media from share extension, consumed by ChatScreen */
+export const pendingShareMediaAtom = atom<import('./types').PendingShareMedia[] | null>(null)

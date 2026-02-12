@@ -74,6 +74,14 @@ export interface TriggersDict {
   [slug: string]: TriggerConfig
 }
 
+// ─── Messaging types ────────────────────────────────────
+
+export interface PendingShareMedia {
+  uri: string
+  mimeType: string
+  fileName?: string
+}
+
 // ─── Notification types ──────────────────────────────────
 
 export interface NotificationLastCheckMap {
