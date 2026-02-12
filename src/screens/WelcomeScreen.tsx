@@ -14,7 +14,11 @@ import Animated, {
 } from 'react-native-reanimated'
 import { SvgProps } from 'react-native-svg'
 
+import AppleIcon from '../../assets/provider-apple.svg'
 import ClaudeIcon from '../../assets/provider-claude.svg'
+import DefaultIcon from '../../assets/provider-default.svg'
+import EchoIcon from '../../assets/provider-echo.svg'
+import GeminiNanoIcon from '../../assets/provider-gemini-nano.svg'
 import GeminiIcon from '../../assets/provider-gemini.svg'
 import KimiIcon from '../../assets/provider-kimi.svg'
 import OllamaIcon from '../../assets/provider-ollama.svg'
