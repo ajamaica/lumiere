@@ -53,3 +53,6 @@ coverage/
 # development artifacts
 memory/
 test_reports/
+
+# Desktop build output
+desktop-dist/
