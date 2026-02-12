@@ -345,6 +345,7 @@
     "skillSuggestion": "The agent suggests installing \"{{name}}\"",
     "installSkill": "Install Skill",
     "skipSkill": "Skip",
+    "systemMessageEmpty": "Mission system message is empty. Please recreate the mission.",
     "justNow": "Just now",
     "minutesAgo": "{{count}}m ago",
     "hoursAgo": "{{count}}h ago",

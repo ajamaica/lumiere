@@ -345,6 +345,7 @@
     "skillSuggestion": "에이전트가 \"{{name}}\" 설치를 제안합니다",
     "installSkill": "스킬 설치",
     "skipSkill": "건너뛰기",
+    "systemMessageEmpty": "미션 시스템 메시지가 비어 있습니다. 미션을 다시 생성해 주세요.",
     "justNow": "방금",
     "minutesAgo": "{{count}}분 전",
     "hoursAgo": "{{count}}시간 전",

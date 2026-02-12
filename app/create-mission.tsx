@@ -133,10 +133,13 @@ export default function CreateMissionScreen() {
     setPhase('analyzing')
 
     try {
-      const planPrompt = `Analyze this task and break it into concrete subtasks (3-8 steps). Return ONLY a JSON object with this exact format, no other text:
-{"title": "Short mission title", "subtasks": [{"id": "subtask-1", "title": "First step description"}, {"id": "subtask-2", "title": "Second step description"}]}
+      const planSessionKey = `agent:main:mission-plan-${Date.now()}`
+      const planPrompt = `You are a task planner. Analyze the following user request and break it into concrete, actionable subtasks (3-8 steps). Each subtask should be a single clear action.
 
-Task: ${prompt.trim()}`
+Return ONLY a valid JSON object in this exact format with no surrounding text or markdown:
+{"title": "Short descriptive mission title", "subtasks": [{"id": "subtask-1", "title": "First step description"}, {"id": "subtask-2", "title": "Second step description"}]}
+
+User request: ${prompt.trim()}`
 
       let responseText = ''
 
@@ -144,6 +147,7 @@ Task: ${prompt.trim()}`
         {
           message: planPrompt,
           idempotencyKey: `mission-plan-${Date.now()}`,
+          sessionKey: planSessionKey,
         },
         (event) => {
           if (event.data?.delta) {
@@ -153,7 +157,7 @@ Task: ${prompt.trim()}`
       )
 
       const parsed = tryParsePlan(responseText)
-      if (parsed) {
+      if (parsed && parsed.subtasks.length > 0) {
         setPlan(parsed)
         setPhase('review')
       } else {
@@ -172,9 +176,14 @@ Task: ${prompt.trim()}`
   }, [prompt, gateway, t])
 
   const handleStartMission = useCallback(() => {
-    if (!plan) return
+    if (!plan || plan.subtasks.length === 0) return
 
     const systemMessage = buildMissionSystemMessage(plan.title, prompt.trim(), plan.subtasks)
+
+    if (!systemMessage.trim()) {
+      Alert.alert(t('common.error'), t('missions.systemMessageEmpty'))
+      return
+    }
 
     const mission = createMission({
       title: plan.title,
@@ -202,6 +211,7 @@ Task: ${prompt.trim()}`
     updateMissionStatus,
     setActiveMissionId,
     router,
+    t,
   ])
 
   const styles = StyleSheet.create({

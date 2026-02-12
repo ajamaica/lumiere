@@ -345,6 +345,7 @@
     "skillSuggestion": "Der Agent schlägt vor, \"{{name}}\" zu installieren",
     "installSkill": "Fähigkeit installieren",
     "skipSkill": "Überspringen",
+    "systemMessageEmpty": "Die Systemnachricht der Mission ist leer. Bitte erstellen Sie die Mission neu.",
     "justNow": "Gerade eben",
     "minutesAgo": "vor {{count}}m",
     "hoursAgo": "vor {{count}}h",

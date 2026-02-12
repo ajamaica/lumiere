@@ -345,6 +345,7 @@
     "skillSuggestion": "エージェントが「{{name}}」のインストールを提案しています",
     "installSkill": "スキルをインストール",
     "skipSkill": "スキップ",
+    "systemMessageEmpty": "ミッションのシステムメッセージが空です。ミッションを再作成してください。",
     "justNow": "たった今",
     "minutesAgo": "{{count}}分前",
     "hoursAgo": "{{count}}時間前",

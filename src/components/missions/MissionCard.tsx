@@ -99,6 +99,15 @@ export function MissionCard({ mission, onPress }: MissionCardProps) {
         {mission.prompt}
       </Text>
 
+      <Text
+        variant="caption"
+        color="tertiary"
+        numberOfLines={1}
+        style={{ marginTop: theme.spacing.xs, fontFamily: 'monospace', fontSize: 11 }}
+      >
+        {mission.sessionKey}
+      </Text>
+
       {totalCount > 0 && (
         <View style={styles.progressRow}>
           <View style={styles.progressBar}>

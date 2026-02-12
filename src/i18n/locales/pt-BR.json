@@ -345,6 +345,7 @@
     "skillSuggestion": "O agente sugere instalar \"{{name}}\"",
     "installSkill": "Instalar Habilidade",
     "skipSkill": "Pular",
+    "systemMessageEmpty": "A mensagem de sistema da missão está vazia. Por favor, recrie a missão.",
     "justNow": "Agora mesmo",
     "minutesAgo": "{{count}}min atrás",
     "hoursAgo": "{{count}}h atrás",

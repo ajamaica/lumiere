@@ -345,6 +345,7 @@
     "skillSuggestion": "代理建议安装「{{name}}」",
     "installSkill": "安装技能",
     "skipSkill": "跳过",
+    "systemMessageEmpty": "任务系统消息为空。请重新创建任务。",
     "justNow": "刚刚",
     "minutesAgo": "{{count}}分钟前",
     "hoursAgo": "{{count}}小时前",

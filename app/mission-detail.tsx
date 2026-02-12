@@ -50,6 +50,7 @@ export default function MissionDetailScreen() {
   const [isStreaming, setIsStreaming] = useState(false)
   const scrollRef = useRef<ScrollView>(null)
   const streamingTextRef = useRef('')
+  const systemMessageSentRef = useRef(false)
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -182,6 +183,15 @@ export default function MissionDetailScreen() {
     async (text: string, isAutoStart = false) => {
       if (!activeMission || !gateway.connected) return
 
+      // Validate system message exists before the very first request
+      if (!systemMessageSentRef.current && !activeMission.systemMessage?.trim()) {
+        missionLogger.logError('Cannot start mission: system message is empty')
+        updateMissionStatus(activeMission.id, 'error', {
+          errorMessage: 'Mission system message is empty. Please recreate the mission.',
+        })
+        return
+      }
+
       if (!isAutoStart) {
         setMessages((prev) => [
           ...prev,
@@ -203,10 +213,17 @@ export default function MissionDetailScreen() {
         updateMissionStatus(activeMission.id, 'in_progress')
       }
 
+      // Prepend system message on the first request so the agent has mission context
+      let messageToSend = text
+      if (!systemMessageSentRef.current) {
+        messageToSend = `[System: ${activeMission.systemMessage}]\n\n${text}`
+        systemMessageSentRef.current = true
+      }
+
       try {
         await gateway.sendAgentRequest(
           {
-            message: text,
+            message: messageToSend,
             idempotencyKey: `mission-${activeMission.id}-${Date.now()}`,
             sessionKey: activeMission.sessionKey,
           },
@@ -426,6 +443,13 @@ export default function MissionDetailScreen() {
             </View>
             <Text variant="bodySmall" color="secondary">
               {activeMission.prompt}
+            </Text>
+            <Text
+              variant="caption"
+              color="tertiary"
+              style={{ marginTop: theme.spacing.xs, fontFamily: 'monospace', fontSize: 11 }}
+            >
+              {activeMission.sessionKey}
             </Text>
           </View>
 

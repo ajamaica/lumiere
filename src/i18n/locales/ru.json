@@ -345,6 +345,7 @@
     "skillSuggestion": "Агент предлагает установить \"{{name}}\"",
     "installSkill": "Установить навык",
     "skipSkill": "Пропустить",
+    "systemMessageEmpty": "Системное сообщение миссии пустое. Пожалуйста, пересоздайте миссию.",
     "justNow": "Только что",
     "minutesAgo": "{{count}}мин назад",
     "hoursAgo": "{{count}}ч назад",

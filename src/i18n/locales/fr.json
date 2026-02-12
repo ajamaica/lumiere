@@ -345,6 +345,7 @@
     "skillSuggestion": "L'agent suggère d'installer \"{{name}}\"",
     "installSkill": "Installer la Compétence",
     "skipSkill": "Passer",
+    "systemMessageEmpty": "Le message système de la mission est vide. Veuillez recréer la mission.",
     "justNow": "À l'instant",
     "minutesAgo": "il y a {{count}}m",
     "hoursAgo": "il y a {{count}}h",

@@ -345,6 +345,7 @@
     "skillSuggestion": "एजेंट \"{{name}}\" इंस्टॉल करने का सुझाव देता है",
     "installSkill": "कौशल इंस्टॉल करें",
     "skipSkill": "छोड़ें",
+    "systemMessageEmpty": "मिशन का सिस्टम संदेश खाली है। कृपया मिशन को फिर से बनाएं।",
     "justNow": "अभी",
     "minutesAgo": "{{count}}मि पहले",
     "hoursAgo": "{{count}}घं पहले",
