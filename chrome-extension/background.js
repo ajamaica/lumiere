@@ -25,6 +25,11 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       .catch(() => sendResponse({ success: false }))
     return true
   }
+
+  if (message.action === 'get-active-tab-url') {
+    getActiveTabUrl().then((url) => sendResponse({ url }))
+    return true
+  }
 })
 
 async function openFullscreen() {
@@ -57,5 +62,48 @@ async function openSidebar() {
 chrome.tabs.onRemoved.addListener((tabId) => {
   if (tabId === appTabId) {
     appTabId = null
+  }
+})
+
+// ── Active-tab URL helpers ──────────────────────────────────
+
+/**
+ * Return the URL of the currently active tab in the focused window,
+ * filtering out chrome:// and extension pages.
+ */
+async function getActiveTabUrl() {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true })
+    if (tab?.url && isWebUrl(tab.url)) {
+      return tab.url
+    }
+  } catch {
+    // Permission or context error — ignore
+  }
+  return null
+}
+
+function isWebUrl(url) {
+  return /^https?:\/\//.test(url)
+}
+
+/**
+ * Broadcast the active-tab URL to every extension view (popup, sidebar)
+ * whenever the user switches tabs or navigates within a tab.
+ */
+function broadcastActiveTabUrl(url) {
+  chrome.runtime.sendMessage({ action: 'active-tab-changed', url: url || null }).catch(() => {
+    // No receivers — that's fine
+  })
+}
+
+chrome.tabs.onActivated.addListener(async () => {
+  const url = await getActiveTabUrl()
+  broadcastActiveTabUrl(url)
+})
+
+chrome.tabs.onUpdated.addListener((_tabId, changeInfo) => {
+  if (changeInfo.url) {
+    getActiveTabUrl().then(broadcastActiveTabUrl)
   }
 })

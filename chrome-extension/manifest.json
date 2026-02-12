@@ -25,7 +25,7 @@
   "side_panel": {
     "default_path": "index.html?mode=sidebar"
   },
-  "permissions": ["sidePanel", "storage"],
+  "permissions": ["sidePanel", "storage", "activeTab", "tabs"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   }

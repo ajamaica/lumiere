@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { useActiveWebsite } from '../../hooks/useActiveWebsite'
 import { useChatProvider } from '../../hooks/useChatProvider'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
 import { useWorkflowContext } from '../../hooks/useWorkflowContext'
@@ -64,7 +65,17 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
 
   const { isActive: isWorkflowActive, prependContext } = useWorkflowContext()
 
+  const activeWebsite = useActiveWebsite()
+
   const sessionSystemMessage = sessionContextMap[currentSessionKey]?.systemMessage
+
+  // Combine the user-configured system message with the active website context
+  const effectiveSystemMessage = useMemo(() => {
+    const parts: string[] = []
+    if (sessionSystemMessage) parts.push(sessionSystemMessage)
+    if (activeWebsite) parts.push(`The user is currently browsing: ${activeWebsite}`)
+    return parts.length > 0 ? parts.join('\n\n') : undefined
+  }, [sessionSystemMessage, activeWebsite])
 
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
     sendMessage,
@@ -79,7 +90,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
       shouldAutoScrollRef.current = true
     },
     contextTransform: isWorkflowActive ? prependContext : undefined,
-    systemMessage: sessionSystemMessage,
+    systemMessage: effectiveSystemMessage,
   })
 
   // Detect server switches and clear stale messages
