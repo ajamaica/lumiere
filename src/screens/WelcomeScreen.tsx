@@ -102,7 +102,7 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
 
   const phoneWidth = isTablet ? 260 : isSmallScreen ? 200 : 230
   const phoneHeight = phoneWidth * 1.6
-  const iconBaseSize = isTablet ? 88 : isSmallScreen ? 68 : 76
+  const iconBaseSize = isTablet ? 66 : isSmallScreen ? 51 : 57
 
   // 7 provider icon bubbles at double size with random variation
   const bubbles: BubbleConfig[] = [
