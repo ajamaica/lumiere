@@ -1,4 +1,5 @@
 // ─── Types ───────────────────────────────────────────────
+export type { Mission, MissionsDict, MissionStatus, MissionSubtask } from './missionTypes'
 export type {
   FavoriteItem,
   NotificationLastCheckMap,
@@ -61,6 +62,9 @@ export {
   backgroundNotificationsEnabledAtom,
   notificationLastCheckAtom,
 } from './notificationAtoms'
+
+// ─── Mission atoms ──────────────────────────────────────
+export { activeMissionIdAtom, missionsAtom } from './missionAtoms'
 
 // ─── Secure store (web only) ─────────────────────────────
 export {

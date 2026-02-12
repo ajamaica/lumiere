@@ -252,6 +252,9 @@ function AppContent() {
       <Stack.Screen name="ollama-models" options={modalOptions} />
       <Stack.Screen name="backup-servers" options={modalOptions} />
       <Stack.Screen name="restore-servers" options={modalOptions} />
+      <Stack.Screen name="missions" options={modalOptions} />
+      <Stack.Screen name="create-mission" options={modalOptions} />
+      <Stack.Screen name="mission-detail" options={modalOptions} />
     </Stack>
   )
 }
