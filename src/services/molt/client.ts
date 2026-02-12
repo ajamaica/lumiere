@@ -311,6 +311,10 @@ export class MoltGatewayClient {
     return this.request(GatewayMethods.SESSIONS_RESET, { key: sessionKey })
   }
 
+  async deleteSession(sessionKey: string): Promise<unknown> {
+    return this.request(GatewayMethods.SESSIONS_DELETE, { key: sessionKey })
+  }
+
   async listSessions(): Promise<unknown> {
     return this.request(GatewayMethods.SESSIONS_LIST)
   }

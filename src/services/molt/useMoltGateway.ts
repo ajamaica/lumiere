@@ -51,6 +51,7 @@ export interface UseMoltGatewayResult {
   sendAgentRequest: (params: AgentParams, onEvent?: (event: AgentEvent) => void) => Promise<unknown>
   getChatHistory: (sessionKey: string, limit?: number) => Promise<unknown>
   resetSession: (sessionKey: string) => Promise<unknown>
+  deleteSession: (sessionKey: string) => Promise<unknown>
   listSessions: () => Promise<unknown>
   getSchedulerStatus: () => Promise<unknown>
   listCronJobs: () => Promise<unknown>
@@ -258,6 +259,16 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     [client],
   )
 
+  const deleteSession = useCallback(
+    async (sessionKey: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.deleteSession(sessionKey)
+    },
+    [client],
+  )
+
   const listSessions = useCallback(async () => {
     if (!client) {
       return null
@@ -403,6 +414,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     sendAgentRequest,
     getChatHistory,
     resetSession,
+    deleteSession,
     listSessions,
     getSchedulerStatus,
     listCronJobs,

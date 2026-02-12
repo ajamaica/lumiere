@@ -52,7 +52,7 @@ export default function SessionsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connected, connect, disconnect, listSessions } = useMoltGateway({
+  const { connected, connect, disconnect, listSessions, deleteSession } = useMoltGateway({
     url: config?.url || '',
     token: config?.token || '',
   })
@@ -146,6 +146,14 @@ export default function SessionsScreen() {
         text: t('common.delete'),
         style: 'destructive',
         onPress: async () => {
+          // Delete from the remote Molt server if this is a Molt provider
+          if (isMoltProvider && connected) {
+            try {
+              await deleteSession(sessionKey)
+            } catch (err) {
+              sessionsLogger.logError('Failed to delete remote session', err)
+            }
+          }
           await deleteSessionData(config?.serverId, sessionKey)
           setSessions((prev) => prev.filter((s) => s.key !== sessionKey))
           if (sessionKey === currentSessionKey) {
