@@ -330,6 +330,7 @@
     "analyzeError": "任務分析失敗。請重試。",
     "planReady": "任務計畫已就緒",
     "planDescription": "查看下方的子任務。您可以在開始前編輯標題。",
+    "refinedPromptLabel": "優化後的描述",
     "titlePlaceholder": "任務標題",
     "launchMission": "啟動任務",
     "startMission": "開始任務",

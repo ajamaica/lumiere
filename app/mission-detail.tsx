@@ -15,11 +15,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ChatInput } from '../src/components/chat/ChatInput'
 import { ChatMessage, Message } from '../src/components/chat/ChatMessage'
+import { ThinkingIndicator } from '../src/components/chat/ThinkingIndicator'
 import { MissionConclusionCard } from '../src/components/missions/MissionConclusionCard'
 import { MissionStatusBadge } from '../src/components/missions/MissionStatusBadge'
 import { SubtaskTimeline } from '../src/components/missions/SubtaskTimeline'
 import { Button, Card, ScreenHeader, Text } from '../src/components/ui'
-import { useMissionEventParser } from '../src/hooks/useMissionEventParser'
+import { stripMissionMarkers, useMissionEventParser } from '../src/hooks/useMissionEventParser'
 import { useMissions } from '../src/hooks/useMissions'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
@@ -382,6 +383,10 @@ export default function MissionDetailScreen() {
           borderWidth: 1,
           borderColor: theme.colors.status.warning + '30',
         },
+        thinkingContainer: {
+          paddingVertical: theme.spacing.sm,
+          paddingHorizontal: theme.spacing.md,
+        },
       }),
     [theme],
   )
@@ -533,7 +538,7 @@ export default function MissionDetailScreen() {
           )}
 
           {/* Chat messages */}
-          {messages.length > 0 && (
+          {(messages.length > 0 || isStreaming) && (
             <View style={styles.chatSection}>
               <View style={styles.chatHeader}>
                 <Ionicons
@@ -546,8 +551,21 @@ export default function MissionDetailScreen() {
                 </Text>
               </View>
               {messages.map((msg) => (
-                <ChatMessage key={msg.id} message={msg} />
+                <ChatMessage
+                  key={msg.id}
+                  message={
+                    msg.sender === 'agent' ? { ...msg, text: stripMissionMarkers(msg.text) } : msg
+                  }
+                />
               ))}
+              {isStreaming &&
+                (messages.length === 0 ||
+                  messages[messages.length - 1]?.sender !== 'agent' ||
+                  !messages[messages.length - 1]?.text) && (
+                  <View style={styles.thinkingContainer}>
+                    <ThinkingIndicator />
+                  </View>
+                )}
             </View>
           )}
         </ScrollView>

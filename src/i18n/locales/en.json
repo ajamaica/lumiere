@@ -330,6 +330,7 @@
     "analyzeError": "Failed to analyze your mission. Please try again.",
     "planReady": "Mission Plan Ready",
     "planDescription": "Review the subtasks below. You can edit the title before starting.",
+    "refinedPromptLabel": "Refined description",
     "titlePlaceholder": "Mission title",
     "launchMission": "Launch Mission",
     "startMission": "Start Mission",

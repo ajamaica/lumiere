@@ -330,6 +330,7 @@
     "analyzeError": "Die Analyse Ihrer Mission ist fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "planReady": "Missionsplan bereit",
     "planDescription": "Überprüfen Sie die Teilaufgaben unten. Sie können den Titel vor dem Start bearbeiten.",
+    "refinedPromptLabel": "Verfeinerte Beschreibung",
     "titlePlaceholder": "Missionstitel",
     "launchMission": "Mission starten",
     "startMission": "Mission beginnen",

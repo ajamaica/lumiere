@@ -330,6 +330,7 @@
     "analyzeError": "Error al analizar tu misión. Por favor, inténtalo de nuevo.",
     "planReady": "Plan de Misión Listo",
     "planDescription": "Revisa las subtareas a continuación. Puedes editar el título antes de comenzar.",
+    "refinedPromptLabel": "Descripción refinada",
     "titlePlaceholder": "Título de la misión",
     "launchMission": "Lanzar Misión",
     "startMission": "Iniciar Misión",
