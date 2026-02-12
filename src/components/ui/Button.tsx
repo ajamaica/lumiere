@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import {
   ActivityIndicator,
   StyleSheet,
@@ -6,8 +6,17 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native'
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated'
 
 import { useTheme } from '../../theme'
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost'
 type ButtonSize = 'sm' | 'md' | 'lg'
@@ -31,6 +40,19 @@ export function Button({
   ...props
 }: ButtonProps) {
   const { theme } = useTheme()
+  const scaleValue = useSharedValue(1)
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleValue.value }],
+  }))
+
+  const handlePressIn = useCallback(() => {
+    scaleValue.value = withTiming(0.95, { duration: 100, easing: Easing.out(Easing.ease) }) // eslint-disable-line react-hooks/immutability
+  }, [scaleValue])
+
+  const handlePressOut = useCallback(() => {
+    scaleValue.value = withSpring(1, { damping: 12, stiffness: 400 }) // eslint-disable-line react-hooks/immutability
+  }, [scaleValue])
 
   const sizeStyles = {
     sm: {
@@ -81,7 +103,7 @@ export function Button({
   const s = sizeStyles[size]
 
   return (
-    <TouchableOpacity
+    <AnimatedTouchableOpacity
       style={[
         variantStyles[variant],
         {
@@ -93,10 +115,13 @@ export function Button({
           gap: theme.spacing.sm,
         },
         (disabled || loading) && { opacity: 0.5 },
+        animatedStyle,
         style,
       ]}
       disabled={disabled || loading}
       activeOpacity={0.7}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
       accessibilityRole="button"
       accessibilityLabel={title}
       accessibilityState={{ disabled: disabled || loading, busy: loading }}
@@ -118,6 +143,6 @@ export function Button({
           </Text>
         </>
       )}
-    </TouchableOpacity>
+    </AnimatedTouchableOpacity>
   )
 }
