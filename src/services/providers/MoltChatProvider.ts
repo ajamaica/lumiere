@@ -1,4 +1,5 @@
 import { agentConfig } from '../../config/gateway.config'
+import { toMoltAttachments } from '../../utils/attachments'
 import { generateIdempotencyKey, MoltGatewayClient } from '../molt/client'
 import { AgentEvent, ConnectionState } from '../molt/types'
 import {
@@ -76,12 +77,7 @@ export class MoltChatProvider implements ChatProvider {
       idempotencyKey: generateIdempotencyKey(),
       agentId,
       sessionKey: params.sessionKey,
-      attachments: params.attachments?.map((a) => ({
-        type: a.type,
-        content: a.data,
-        mimeType: a.mimeType,
-        fileName: a.name,
-      })),
+      attachments: toMoltAttachments(params.attachments),
     }
 
     await this.client.sendAgentRequest(agentParams, (event: AgentEvent) => {

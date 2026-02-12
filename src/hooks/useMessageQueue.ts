@@ -1,14 +1,10 @@
-import { File as ExpoFile } from 'expo-file-system'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 
 import { MessageAttachment } from '../components/chat/ChatMessage'
-import {
-  ChatProviderEvent,
-  ProviderAttachment,
-  SendMessageParams as ProviderSendParams,
-} from '../services/providers'
+import { ChatProviderEvent, SendMessageParams as ProviderSendParams } from '../services/providers'
 import { messageQueueAtom } from '../store'
+import { convertMessageAttachments } from '../utils/attachments'
 import { generateId } from '../utils/generateId'
 import { logger } from '../utils/logger'
 
@@ -71,45 +67,9 @@ export function useMessageQueue({
 
       let accumulatedText = ''
 
-      // Convert MessageAttachments to provider attachments
-      // Include image attachments (base64) and file/document attachments (read from URI)
-      let providerAttachments: ProviderAttachment[] | undefined
-      if (attachments?.length) {
-        const converted: ProviderAttachment[] = []
-        for (const a of attachments) {
-          if (a.type === 'image' && a.base64) {
-            converted.push({
-              type: 'image' as const,
-              data: a.base64,
-              mimeType: a.mimeType,
-              name: a.name,
-            })
-          } else if ((a.type === 'file' || a.type === 'video') && a.uri) {
-            try {
-              const file = new ExpoFile(a.uri)
-              const buffer = await file.arrayBuffer()
-              const bytes = new Uint8Array(buffer)
-              let binary = ''
-              for (let i = 0; i < bytes.byteLength; i++) {
-                binary += String.fromCharCode(bytes[i])
-              }
-              const base64 = btoa(binary)
-              const providerType = a.type === 'video' ? ('video' as const) : ('document' as const)
-              converted.push({
-                type: providerType,
-                data: base64,
-                mimeType: a.mimeType || 'application/octet-stream',
-                name: a.name,
-              })
-            } catch (err) {
-              queueLogger.logError('Failed to read file as base64', err)
-            }
-          }
-        }
-        if (converted.length > 0) {
-          providerAttachments = converted
-        }
-      }
+      // Convert UI attachments to provider-ready format via the unified pipeline
+      const converted = attachments?.length ? await convertMessageAttachments(attachments) : []
+      const providerAttachments = converted.length > 0 ? converted : undefined
 
       try {
         // Apply workflow context or other transforms before sending
