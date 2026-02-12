@@ -21,7 +21,7 @@ import { useFileDropPaste } from '../../hooks/useFileDropPaste'
 import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useVoiceTranscription } from '../../hooks/useVoiceTranscription'
 import { ProviderType } from '../../services/providers/types'
-import { useTheme } from '../../theme'
+import { Theme, useTheme } from '../../theme'
 import { compressImageToJpeg } from '../../utils/compressImage'
 import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
 import { MessageAttachment } from './ChatMessage'
@@ -439,22 +439,6 @@ export function ChatInput({
       </View>
     </>
   )
-}
-
-interface Theme {
-  colors: {
-    background: string
-    border: string
-    surface: string
-    text: { primary: string; secondary: string; tertiary: string; inverse: string }
-    primary: string
-  }
-  spacing: { xs: number; sm: number; md: number; lg: number }
-  borderRadius: { sm: number; md: number; xxl: number }
-  typography: {
-    fontSize: { xs: number; sm: number; base: number }
-    fontWeight: { semibold: '600' }
-  }
 }
 
 const createStyles = (theme: Theme, _glassAvailable: boolean) =>
