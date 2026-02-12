@@ -13,12 +13,17 @@ import { getProviderIcon } from '../src/config/providerOptions'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
 import { backgroundCheckTask } from '../src/services/notifications'
+import { deleteServerToken } from '../src/services/secureTokenStorage'
+import { clearAllPasswordData } from '../src/services/webCrypto'
 import { ENABLE_WORKFLOW_MODE } from '../src/services/workflow'
 import {
   backgroundNotificationsEnabledAtom,
   biometricLockEnabledAtom,
+  clearSessionCryptoKey,
   currentServerIdAtom,
   onboardingCompletedAtom,
+  secureServersAtom,
+  secureStoreHydratedAtom,
   serversAtom,
   serverSessionsAtom,
   triggersAtom,
@@ -35,6 +40,8 @@ export default function SettingsScreen() {
   const { currentServer, currentServerId, serversList, switchToServer } = useServers()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
   const setServers = useSetAtom(serversAtom)
+  const setSecureServers = useSetAtom(secureServersAtom)
+  const setSecureStoreHydrated = useSetAtom(secureStoreHydratedAtom)
   const setCurrentServerId = useSetAtom(currentServerIdAtom)
   const setServerSessions = useSetAtom(serverSessionsAtom)
   const setTriggers = useSetAtom(triggersAtom)
@@ -90,7 +97,23 @@ export default function SettingsScreen() {
       {
         text: t('settings.logout'),
         style: 'destructive',
-        onPress: () => {
+        onPress: async () => {
+          // On web, clean up encrypted localStorage and session storage
+          // that the native atom RESET doesn't cover.
+          if (isWeb) {
+            // Delete all server tokens from localStorage
+            for (const server of serversList) {
+              await deleteServerToken(server.id)
+            }
+            // Clear the session crypto key from sessionStorage
+            clearSessionCryptoKey()
+            // Remove encrypted servers, password salt, and verification
+            clearAllPasswordData()
+            // Reset the web-only secure atoms
+            setSecureServers({})
+            setSecureStoreHydrated(false)
+          }
+
           // Reset all atoms to their default values using Jotai's RESET symbol
           setServers(RESET)
           setCurrentServerId(RESET)
