@@ -51,14 +51,7 @@
     "contribute": "Contribuer",
     "skills": "Compétences",
     "gatewayLogs": "Journaux du Gateway",
-    "missions": "Missions",
-    "icloudSync": "Synchronisation iCloud",
-    "icloud": {
-      "availableSubtitle": "Synchronisez les données entre vos appareils Apple",
-      "unavailableSubtitle": "Connectez-vous à iCloud pour activer la synchronisation",
-      "unavailable": "iCloud indisponible",
-      "unavailableMessage": "Veuillez vous connecter à iCloud dans les réglages de votre appareil pour utiliser cette fonctionnalité."
-    }
+    "missions": "Missions"
   },
   "home": {
     "connectionError": "Erreur de connexion",

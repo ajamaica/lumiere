@@ -20,9 +20,6 @@
       "supportsTablet": true,
       "bundleIdentifier": "bot.lumiere.app",
       "buildNumber": "2",
-      "entitlements": {
-        "com.apple.developer.ubiquity-kvstore-identifier": "$(TeamIdentifierPrefix)bot.lumiere.app"
-      },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSMicrophoneUsageDescription": "Lumiere needs access to your microphone to transcribe voice messages.",

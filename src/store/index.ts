@@ -37,7 +37,6 @@ export { currentServerIdAtom, serversAtom } from './serverAtoms'
 export {
   biometricLockEnabledAtom,
   colorThemeAtom,
-  icloudSyncEnabledAtom,
   languageAtom,
   onboardingCompletedAtom,
   themeModeAtom,

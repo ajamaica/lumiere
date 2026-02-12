@@ -51,14 +51,7 @@
     "contribute": "योगदान करें",
     "skills": "कौशल",
     "gatewayLogs": "गेटवे लॉग",
-    "missions": "मिशन",
-    "icloudSync": "iCloud सिंक",
-    "icloud": {
-      "availableSubtitle": "अपने Apple डिवाइस में डेटा सिंक करें",
-      "unavailableSubtitle": "सिंक सक्षम करने के लिए iCloud में साइन इन करें",
-      "unavailable": "iCloud अनुपलब्ध",
-      "unavailableMessage": "इस सुविधा का उपयोग करने के लिए कृपया अपनी डिवाइस सेटिंग्स में iCloud में साइन इन करें।"
-    }
+    "missions": "मिशन"
   },
   "home": {
     "connectionError": "कनेक्शन त्रुटि",

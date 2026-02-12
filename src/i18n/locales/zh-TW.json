@@ -51,14 +51,7 @@
     "contribute": "貢獻",
     "skills": "技能",
     "gatewayLogs": "閘道日誌",
-    "missions": "任務",
-    "icloudSync": "iCloud 同步",
-    "icloud": {
-      "availableSubtitle": "在你的 Apple 裝置間同步資料",
-      "unavailableSubtitle": "登入 iCloud 以啟用同步",
-      "unavailable": "iCloud 不可用",
-      "unavailableMessage": "請在裝置設定中登入 iCloud 以使用此功能。"
-    }
+    "missions": "任務"
   },
   "home": {
     "connectionError": "連線錯誤",

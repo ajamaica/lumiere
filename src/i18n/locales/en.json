@@ -51,14 +51,7 @@
     "restoreServers": "Restore Servers",
     "contribute": "Contribute",
     "gatewayLogs": "Gateway Logs",
-    "missions": "Missions",
-    "icloudSync": "iCloud Sync",
-    "icloud": {
-      "availableSubtitle": "Sync data across your Apple devices",
-      "unavailableSubtitle": "Sign in to iCloud to enable sync",
-      "unavailable": "iCloud Unavailable",
-      "unavailableMessage": "Please sign in to iCloud in your device settings to use this feature."
-    }
+    "missions": "Missions"
   },
   "home": {
     "connectionError": "Connection Error",
