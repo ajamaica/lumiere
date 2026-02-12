@@ -286,7 +286,10 @@
     "refresh": "Actualiser",
     "logsSection": "Journaux",
     "logsDescription": "Entrées de journal récentes du gateway.",
-    "noLogs": "Aucune entrée de journal trouvée"
+    "noLogs": "Aucune entrée de journal trouvée",
+    "connectionError": "Erreur de connexion",
+    "fetchError": "Échec du chargement des journaux",
+    "connecting": "Connexion au gateway..."
   },
   "extension": {
     "openFullscreen": "Ouvrir dans un nouvel onglet",

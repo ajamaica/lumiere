@@ -286,7 +286,10 @@
     "refresh": "Actualizar",
     "logsSection": "Registros",
     "logsDescription": "Entradas de registro recientes del gateway.",
-    "noLogs": "No se encontraron entradas de registro"
+    "noLogs": "No se encontraron entradas de registro",
+    "connectionError": "Error de conexión",
+    "fetchError": "Error al cargar los registros",
+    "connecting": "Conectando al gateway..."
   },
   "extension": {
     "openFullscreen": "Abrir en pestaña nueva",

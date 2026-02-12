@@ -286,7 +286,10 @@
     "refresh": "रीफ्रेश",
     "logsSection": "लॉग",
     "logsDescription": "गेटवे से हाल की लॉग प्रविष्टियाँ।",
-    "noLogs": "कोई लॉग प्रविष्टि नहीं मिली"
+    "noLogs": "कोई लॉग प्रविष्टि नहीं मिली",
+    "connectionError": "कनेक्शन त्रुटि",
+    "fetchError": "लॉग लोड करने में विफल",
+    "connecting": "गेटवे से कनेक्ट हो रहा है..."
   },
   "extension": {
     "openFullscreen": "नए टैब में खोलें",
