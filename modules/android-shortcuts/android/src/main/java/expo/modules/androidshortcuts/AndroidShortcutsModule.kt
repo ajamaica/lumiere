@@ -88,9 +88,7 @@ class AndroidShortcutsModule : Module() {
       val jsonArray = JSONArray(shortcutsJson)
       val shortcuts = mutableListOf<ShortcutInfo>()
 
-      // Static shortcuts count against the limit, so reserve slots
-      val maxDynamic = manager.maxShortcutCountPerActivity -
-        manager.manifestShortcuts.size
+      val maxDynamic = manager.maxShortcutCountPerActivity
 
       for (i in 0 until minOf(jsonArray.length(), maxDynamic)) {
         val obj = jsonArray.getJSONObject(i)
