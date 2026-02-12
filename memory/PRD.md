@@ -16,7 +16,7 @@ Create an onboarding/welcome screen before the setup screen in Lumiere. The scre
 ## What's Been Implemented (Feb 12, 2026)
 - ✅ Created `WelcomeScreen.tsx` with phone mockup, chat bubbles, floating provider icons
 - ✅ Modified `OnboardingFlow.tsx` to show WelcomeScreen before SetupScreen
-- ✅ 7 provider SVG icons (OpenClaw, Claude, OpenAI, Gemini, Ollama, OpenRouter, Kimi) floating around phone
+- ✅ 7 provider SVG icon bubbles at 2x size with random size variation (OpenClaw, Claude, OpenAI, Gemini, Ollama, OpenRouter, Kimi)
 - ✅ Decorative chat conversation inside phone mockup
 - ✅ "Welcome to Lumiere" with cyan accent + intro text
 - ✅ Animated entrance with react-native-reanimated (FadeInDown, FadeInUp)
