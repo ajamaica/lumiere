@@ -39,13 +39,21 @@ export function useNotifications() {
   useEffect(() => {
     if (enabled) {
       ;(async () => {
-        const granted = await requestNotificationPermissions()
-        if (granted) {
-          await registerBackgroundFetch(interval)
+        try {
+          // Unregister first to avoid duplicate registrations when interval changes
+          await unregisterBackgroundFetch()
+          const granted = await requestNotificationPermissions()
+          if (granted) {
+            await registerBackgroundFetch(interval)
+          }
+        } catch (error) {
+          console.error('[useNotifications] Failed to register background task:', error)
         }
       })()
     } else {
-      unregisterBackgroundFetch()
+      unregisterBackgroundFetch().catch((error) => {
+        console.error('[useNotifications] Failed to unregister background task:', error)
+      })
     }
   }, [enabled, interval])
 
