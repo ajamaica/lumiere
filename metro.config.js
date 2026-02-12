@@ -1,4 +1,5 @@
 const { getDefaultConfig } = require('expo/metro-config')
+const { getPlatformResolver } = require('@callstack/out-of-tree-platforms')
 
 const config = getDefaultConfig(__dirname)
 
@@ -12,6 +13,9 @@ config.resolver = {
   ...resolver,
   assetExts: resolver.assetExts.filter((ext) => ext !== 'svg'),
   sourceExts: [...resolver.sourceExts, 'svg'],
+  resolveRequest: getPlatformResolver({
+    platformNameMap: { visionos: '@callstack/react-native-visionos' },
+  }),
 }
 
 module.exports = config

@@ -21,6 +21,10 @@ ios/Pods
 android/app/build
 android/.gradle
 
+# visionOS
+visionos/Pods
+visionos/build
+
 # Generated files
 *.log
 .DS_Store

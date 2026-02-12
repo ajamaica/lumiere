@@ -58,7 +58,7 @@
       "package": "bot.lumiere.app",
       "permissions": ["android.permission.RECORD_AUDIO"]
     },
-    "platforms": ["ios", "android", "web"],
+    "platforms": ["ios", "android", "web", "visionos"],
     "web": {
       "bundler": "metro",
       "favicon": "./assets/icon.png"

@@ -13,6 +13,8 @@
     "lint:fix": "eslint . --fix",
     "build:chrome": "bash scripts/build-chrome-extension.sh",
     "build:desktop": "bash scripts/build-desktop.sh",
+    "visionos": "npx react-native run-visionos",
+    "visionos:pods": "cd visionos && bundle exec pod install",
     "desktop:dev": "npx expo export --platform web && npx electron desktop/main.js",
     "sauce:upload": "./.saucelabs/upload-app.sh",
     "test": "jest",
@@ -20,6 +22,8 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@callstack/out-of-tree-platforms": "^0.77.0",
+    "@callstack/react-native-visionos": "0.79.6",
     "@expo/vector-icons": "^15.0.3",
     "@openrouter/sdk": "^0.8.0",
     "@react-native-async-storage/async-storage": "^2.2.0",
@@ -73,6 +77,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@react-native-community/cli-platform-apple": "^20.1.1",
+    "@react-native-community/cli-platform-ios": "^20.1.1",
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^13.3.3",
     "@types/jest": "~29.5.14",

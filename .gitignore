@@ -56,3 +56,9 @@ test_reports/
 
 # Desktop build output
 desktop-dist/
+
+# visionOS build artifacts
+visionos/Pods/
+visionos/Podfile.lock
+visionos/build/
+visionos/.xcode.env.local

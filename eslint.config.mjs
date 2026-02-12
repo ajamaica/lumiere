@@ -17,6 +17,7 @@ export default [
       'build/**',
       'android/**',
       'ios/**',
+      'visionos/**',
       'plugins/**',
       'chrome-extension/**',
       'scripts/**',
