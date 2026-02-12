@@ -3,21 +3,18 @@ import { useRouter } from 'expo-router'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
-import Markdown from 'react-native-markdown-display'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { createMarkdownStyles } from '../src/components/chat/ChatMessage.styles'
-import { useMarkdownRules } from '../src/components/chat/useMarkdownRules'
+import { ChatInput } from '../src/components/chat/ChatInput'
+import { ChatMessage, Message } from '../src/components/chat/ChatMessage'
 import { MissionConclusionCard } from '../src/components/missions/MissionConclusionCard'
 import { MissionStatusBadge } from '../src/components/missions/MissionStatusBadge'
 import { SubtaskTimeline } from '../src/components/missions/SubtaskTimeline'
@@ -32,13 +29,6 @@ import { logger } from '../src/utils/logger'
 
 const missionLogger = logger.create('MissionDetail')
 
-interface ChatMessage {
-  id: string
-  role: 'user' | 'assistant'
-  text: string
-  timestamp: number
-}
-
 export default function MissionDetailScreen() {
   const { theme } = useTheme()
   const router = useRouter()
@@ -46,13 +36,9 @@ export default function MissionDetailScreen() {
   const { activeMission, updateMissionStatus, updateSubtaskStatus, addMissionSkill } = useMissions()
   const { getProviderConfig, currentServerId } = useServers()
   const { parseChunk, resetBuffer } = useMissionEventParser()
-  const { markdownRules, handleLinkPress } = useMarkdownRules()
-  const userMarkdownStyles = useMemo(() => createMarkdownStyles(theme, true), [theme])
-  const assistantMarkdownStyles = useMemo(() => createMarkdownStyles(theme, false), [theme])
 
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
-  const [messages, setMessages] = useState<ChatMessage[]>([])
-  const [inputText, setInputText] = useState('')
+  const [messages, setMessages] = useState<Message[]>([])
   const [isStreaming, setIsStreaming] = useState(false)
   const scrollRef = useRef<ScrollView>(null)
   const streamingTextRef = useRef('')
@@ -102,16 +88,20 @@ export default function MissionDetailScreen() {
         // Update the last assistant message in-place
         setMessages((prev) => {
           const last = prev[prev.length - 1]
-          if (last && last.role === 'assistant') {
-            return [...prev.slice(0, -1), { ...last, text: streamingTextRef.current }]
+          if (last && last.sender === 'agent') {
+            return [
+              ...prev.slice(0, -1),
+              { ...last, text: streamingTextRef.current, streaming: true },
+            ]
           }
           return [
             ...prev,
             {
               id: `msg-${Date.now()}`,
-              role: 'assistant' as const,
+              sender: 'agent' as const,
               text: streamingTextRef.current,
-              timestamp: Date.now(),
+              timestamp: new Date(),
+              streaming: true,
             },
           ]
         })
@@ -169,6 +159,14 @@ export default function MissionDetailScreen() {
       }
 
       if (event.data?.phase === 'end') {
+        // Mark last message as no longer streaming
+        setMessages((prev) => {
+          const last = prev[prev.length - 1]
+          if (last && last.streaming) {
+            return [...prev.slice(0, -1), { ...last, streaming: false }]
+          }
+          return prev
+        })
         setIsStreaming(false)
         streamingTextRef.current = ''
         resetBuffer()
@@ -203,9 +201,9 @@ export default function MissionDetailScreen() {
           ...prev,
           {
             id: `msg-${Date.now()}`,
-            role: 'user',
+            sender: 'user' as const,
             text,
-            timestamp: Date.now(),
+            timestamp: new Date(),
           },
         ])
       }
@@ -246,12 +244,12 @@ export default function MissionDetailScreen() {
     [activeMission, gateway, resetBuffer, updateMissionStatus, handleAgentEvent],
   )
 
-  const handleSend = useCallback(() => {
-    const text = inputText.trim()
-    if (!text) return
-    setInputText('')
-    handleSendToAgent(text)
-  }, [inputText, handleSendToAgent])
+  const handleChatInputSend = useCallback(
+    (text: string) => {
+      handleSendToAgent(text)
+    },
+    [handleSendToAgent],
+  )
 
   const handleAbort = useCallback(() => {
     if (!activeMission) return
@@ -294,9 +292,6 @@ export default function MissionDetailScreen() {
           flex: 1,
           marginRight: theme.spacing.sm,
         },
-        promptCard: {
-          marginBottom: theme.spacing.lg,
-        },
         subtasksCard: {
           marginBottom: theme.spacing.lg,
         },
@@ -308,49 +303,6 @@ export default function MissionDetailScreen() {
           alignItems: 'center',
           gap: theme.spacing.sm,
           marginBottom: theme.spacing.md,
-        },
-        messageBubble: {
-          padding: theme.spacing.md,
-          borderRadius: theme.borderRadius.lg,
-          marginBottom: theme.spacing.sm,
-          maxWidth: '85%',
-        },
-        userBubble: {
-          backgroundColor: theme.colors.message.user,
-          alignSelf: 'flex-end',
-        },
-        assistantBubble: {
-          backgroundColor: theme.colors.message.agent,
-          alignSelf: 'flex-start',
-        },
-        inputRow: {
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-          gap: theme.spacing.sm,
-          padding: theme.spacing.md,
-          backgroundColor: theme.colors.surface,
-          borderTopWidth: 1,
-          borderTopColor: theme.colors.border,
-        },
-        textInput: {
-          flex: 1,
-          backgroundColor: theme.colors.background,
-          borderRadius: theme.borderRadius.lg,
-          paddingHorizontal: theme.spacing.md,
-          paddingVertical: theme.spacing.sm,
-          color: theme.colors.text.primary,
-          fontSize: 15,
-          maxHeight: 100,
-          borderWidth: 1,
-          borderColor: theme.colors.border,
-        },
-        sendButton: {
-          width: 40,
-          height: 40,
-          borderRadius: 20,
-          backgroundColor: theme.colors.primary,
-          alignItems: 'center',
-          justifyContent: 'center',
         },
         errorCard: {
           backgroundColor: theme.colors.status.error + '15',
@@ -529,59 +481,15 @@ export default function MissionDetailScreen() {
                 </Text>
               </View>
               {messages.map((msg) => (
-                <View
-                  key={msg.id}
-                  style={[
-                    styles.messageBubble,
-                    msg.role === 'user' ? styles.userBubble : styles.assistantBubble,
-                  ]}
-                >
-                  <Markdown
-                    style={msg.role === 'user' ? userMarkdownStyles : assistantMarkdownStyles}
-                    onLinkPress={(url: string) => {
-                      handleLinkPress(url)
-                      return false
-                    }}
-                    mergeStyle={true}
-                    rules={markdownRules}
-                  >
-                    {msg.text}
-                  </Markdown>
-                </View>
+                <ChatMessage key={msg.id} message={msg} />
               ))}
-              {isStreaming && (
-                <View style={{ alignItems: 'flex-start', marginBottom: theme.spacing.sm }}>
-                  <ActivityIndicator size="small" color={theme.colors.primary} />
-                </View>
-              )}
             </View>
           )}
         </ScrollView>
 
         {/* Input bar */}
         {isActive && (
-          <View style={styles.inputRow}>
-            <TextInput
-              style={styles.textInput}
-              value={inputText}
-              onChangeText={setInputText}
-              placeholder={t('chat.placeholder')}
-              placeholderTextColor={theme.colors.text.tertiary}
-              multiline
-              editable={!isStreaming}
-              onSubmitEditing={handleSend}
-              blurOnSubmit={false}
-            />
-            <TouchableOpacity
-              style={[styles.sendButton, (!inputText.trim() || isStreaming) && { opacity: 0.5 }]}
-              onPress={handleSend}
-              disabled={!inputText.trim() || isStreaming}
-              accessibilityRole="button"
-              accessibilityLabel={t('chat.send')}
-            >
-              <Ionicons name="send" size={18} color="#FFFFFF" />
-            </TouchableOpacity>
-          </View>
+          <ChatInput onSend={handleChatInputSend} disabled={isStreaming} providerType="molt" />
         )}
       </KeyboardAvoidingView>
     </SafeAreaView>
