@@ -32,7 +32,7 @@ import {
   favoritesAtom,
   sessionAliasesAtom,
 } from '../../store'
-import { useTheme } from '../../theme'
+import { Theme, useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 import { logger } from '../../utils/logger'
 import { processXmlTags } from '../../utils/xmlTagProcessor'
@@ -529,32 +529,6 @@ export function ChatMessage({ message }: ChatMessageProps) {
       </Text>
     </View>
   )
-}
-
-interface Theme {
-  colors: {
-    background: string
-    surface: string
-    border: string
-    text: { primary: string; secondary: string; tertiary: string; inverse: string }
-    primary: string
-    message: {
-      user: string
-      agent: string
-      userText: string
-      agentText: string
-    }
-    status: { success: string; error: string; warning: string }
-  }
-  spacing: { xs: number; sm: number; md: number; lg: number }
-  borderRadius: { xs: number; sm: number; md: number; xxl: number }
-  typography: {
-    fontSize: { xs: number; sm: number; base: number; lg: number; xl: number }
-    lineHeight: { normal: number }
-    fontWeight: { medium: '500'; semibold: '600'; bold: '700' }
-    fontFamily: { monospace: string }
-  }
-  isDark: boolean
 }
 
 const createStyles = (theme: Theme) =>
