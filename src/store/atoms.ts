@@ -179,3 +179,14 @@ export interface WorkflowConfigMap {
 }
 
 export const workflowConfigAtom = atomWithStorage<WorkflowConfigMap>('workflowConfig', {}, storage)
+
+// Session context — per-session system message (hidden context)
+export interface SessionContextConfig {
+  systemMessage: string
+}
+
+export interface SessionContextMap {
+  [sessionKey: string]: SessionContextConfig
+}
+
+export const sessionContextAtom = atomWithStorage<SessionContextMap>('sessionContext', {}, storage)

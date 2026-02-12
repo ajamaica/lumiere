@@ -159,7 +159,10 @@
     "displayName": "显示名称",
     "sessionKey": "会话密钥",
     "sessionNotFound": "未找到会话",
-    "sessionKeyRequired": "会话密钥为必填项"
+    "sessionKeyRequired": "会话密钥为必填项",
+    "systemMessage": "系统消息",
+    "systemMessageHint": "随每条消息发送的隐藏指令。在聊天中不可见。",
+    "systemMessagePlaceholder": "例如：你是一个有用的编程助手..."
   },
   "favorites": {
     "title": "收藏",

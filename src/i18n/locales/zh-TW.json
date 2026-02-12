@@ -159,7 +159,10 @@
     "displayName": "顯示名稱",
     "sessionKey": "工作階段金鑰",
     "sessionNotFound": "找不到工作階段",
-    "sessionKeyRequired": "工作階段金鑰為必填"
+    "sessionKeyRequired": "工作階段金鑰為必填",
+    "systemMessage": "系統訊息",
+    "systemMessageHint": "隨每則訊息傳送的隱藏指令。在聊天中不可見。",
+    "systemMessagePlaceholder": "例如：你是一個有用的程式設計助手..."
   },
   "favorites": {
     "title": "收藏",

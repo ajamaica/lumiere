@@ -159,7 +159,10 @@
     "displayName": "Nome de Exibição",
     "sessionKey": "Chave da Sessão",
     "sessionNotFound": "Sessão não encontrada",
-    "sessionKeyRequired": "A chave da sessão é obrigatória"
+    "sessionKeyRequired": "A chave da sessão é obrigatória",
+    "systemMessage": "Mensagem do sistema",
+    "systemMessageHint": "Instruções ocultas enviadas com cada mensagem. Não visíveis no chat.",
+    "systemMessagePlaceholder": "ex. Você é um assistente de programação útil..."
   },
   "favorites": {
     "title": "Favoritos",
