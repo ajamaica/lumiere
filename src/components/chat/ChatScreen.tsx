@@ -3,60 +3,31 @@ import { FlashList, FlashListRef } from '@shopify/flash-list'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import {
-  ActivityIndicator,
-  Keyboard,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import Animated, {
-  Easing,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withTiming,
-} from 'react-native-reanimated'
+import { ActivityIndicator, Keyboard, Text, TouchableOpacity, View } from 'react-native'
+import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { useChatProvider } from '../../hooks/useChatProvider'
-import { useExtensionDisplayMode } from '../../hooks/useExtensionDisplayMode'
-import { useMessageQueue } from '../../hooks/useMessageQueue'
-import { useWorkflowContext } from '../../hooks/useWorkflowContext'
-import { ProviderConfig, readCachedHistory } from '../../services/providers'
+import { ProviderConfig } from '../../services/providers'
 import {
-  clearMessagesAtom,
   createSessionKey,
   currentAgentIdAtom,
   currentSessionKeyAtom,
   parseSessionKey,
-  pendingShareMediaAtom,
-  pendingShareTextAtom,
-  pendingTriggerMessageAtom,
-  sessionContextAtom,
 } from '../../store'
-import { Theme, useTheme } from '../../theme'
-import { compressImageToJpeg } from '../../utils/compressImage'
+import { useTheme } from '../../theme'
 import {
   useContentContainerStyle,
   useDeviceType,
   useFoldResponsiveValue,
   useFoldState,
 } from '../../utils/device'
-import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
 import { useReanimatedKeyboardAnimation } from '../../utils/keyboardAnimation'
-import { logger } from '../../utils/logger'
 import { AgentPicker } from './AgentPicker'
 import { ChatInput } from './ChatInput'
-import { ChatMessage, Message, MessageAttachment } from './ChatMessage'
-import { ThinkingIndicator } from './ThinkingIndicator'
-
-const chatScreenLogger = logger.create('ChatScreen')
+import { ChatMessage, Message } from './ChatMessage'
+import { createChatScreenStyles } from './ChatScreen.styles'
+import { ConnectionStatusBar } from './ConnectionStatusBar'
+import { useChatHistory } from './useChatHistory'
 
 interface ChatScreenProps {
   providerConfig: ProviderConfig
@@ -75,65 +46,63 @@ interface ChatScreenProps {
 export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const { theme } = useTheme()
   const router = useRouter()
-  const { t } = useTranslation()
-  const glassAvailable = isLiquidGlassAvailable()
-  const {
-    isExtension,
-    mode: extensionMode,
-    openFullscreen,
-    openSidebar,
-  } = useExtensionDisplayMode()
-  const [messages, setMessages] = useState<Message[]>([])
-  const [currentAgentMessage, setCurrentAgentMessage] = useState<string>('')
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [currentAgentId, setCurrentAgentId] = useAtom(currentAgentIdAtom)
-  const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
-  const [pendingTriggerMessage, setPendingTriggerMessage] = useAtom(pendingTriggerMessageAtom)
-  const [pendingShareText, setPendingShareText] = useAtom(pendingShareTextAtom)
-  const [pendingShareMedia, setPendingShareMedia] = useAtom(pendingShareMediaAtom)
-  const [sessionContextMap] = useAtom(sessionContextAtom)
   const [isAgentPickerOpen, setIsAgentPickerOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const isMoltProvider = providerConfig.type === 'molt'
   const flatListRef = useRef<FlashListRef<Message>>(null)
-  const shouldAutoScrollRef = useRef(true)
-  const hasScrolledOnLoadRef = useRef(false)
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
-  const [isLoadingHistory, setIsLoadingHistory] = useState(true)
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
-  const searchInputRef = useRef<TextInput>(null)
 
-  // Foldable device support
+  // Device & layout
   const deviceType = useDeviceType()
   const foldState = useFoldState()
   const contentContainerStyle = useContentContainerStyle()
-
-  // Responsive values for foldable devices
   const messageListPadding = useFoldResponsiveValue(
-    theme.spacing.sm, // folded (narrow screen)
-    theme.spacing.md, // unfolded (wider screen)
-    theme.spacing.sm, // half-folded
+    theme.spacing.sm,
+    theme.spacing.md,
+    theme.spacing.sm,
   )
 
   const styles = useMemo(
-    () => createStyles(theme, glassAvailable, deviceType, foldState, messageListPadding),
-    [theme, glassAvailable, deviceType, foldState, messageListPadding],
+    () => createChatScreenStyles(theme, deviceType, foldState, messageListPadding),
+    [theme, deviceType, foldState, messageListPadding],
   )
 
-  // Track keyboard position in real-time for smooth interactive dismissal
-  const { height: keyboardHeight } = useReanimatedKeyboardAnimation()
+  // Chat history, messages, and connection state
+  const {
+    connected,
+    connecting,
+    error,
+    health,
+    capabilities,
+    retry,
+    allMessages,
+    isLoadingHistory,
+    historyReady,
+    setHistoryReady,
+    handleSend,
+    isAgentResponding,
+    queueCount,
+    isWorkflowActive,
+    hasScrolledOnLoadRef,
+    shouldAutoScrollRef,
+    messages,
+  } = useChatHistory({ providerConfig })
 
-  // Track the chat input container height so the list margin adjusts dynamically
+  // Keyboard animation
+  const { height: keyboardHeight } = useReanimatedKeyboardAnimation()
   const inputHeight = useSharedValue(40)
+
   const handleInputLayout = useCallback(
     (e: { nativeEvent: { layout: { height: number } } }) => {
+      // eslint-disable-next-line react-hooks/immutability -- Reanimated shared value
       inputHeight.value = e.nativeEvent.layout.height
     },
     [inputHeight],
   )
 
-  // Animated style for resizing the list when keyboard opens
   const listContainerStyle = useAnimatedStyle(() => {
     'worklet'
     return {
@@ -142,8 +111,6 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     }
   })
 
-  // Animated style for moving the input with keyboard
-  // Position absolutely at bottom, moving up with keyboard height
   const inputContainerStyle = useAnimatedStyle(() => {
     'worklet'
     return {
@@ -152,264 +119,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       bottom: 0,
       left: 0,
       right: 0,
-      transform: [
-        {
-          translateY: keyboardHeight.value - 20,
-        },
-      ],
+      transform: [{ translateY: keyboardHeight.value - 20 }],
     }
   })
-
-  // Pulse animation for status dot using Reanimated
-  const pulseOpacity = useSharedValue(1)
-  const pulseStyle = useAnimatedStyle(() => ({
-    opacity: pulseOpacity.value,
-  }))
-
-  // Search bar expand/collapse animation
-  const searchProgress = useSharedValue(0)
-
-  // Keep transform on the outer wrapper so the GlassView is never inside an
-  // animated-opacity ancestor (iOS rasterises the subtree and breaks the blur).
-  const searchBarTransformStyle = useAnimatedStyle(() => ({
-    transform: [{ scaleX: interpolate(searchProgress.value, [0, 1], [0.7, 1]) }],
-  }))
-
-  // Fade the *content* inside the GlassView instead.
-  const searchBarContentStyle = useAnimatedStyle(() => ({
-    opacity: searchProgress.value,
-  }))
-
-  const statusBubbleAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: 1 - searchProgress.value,
-    transform: [{ scale: interpolate(searchProgress.value, [0, 1], [1, 0.85]) }],
-  }))
-
-  // Track whether we pre-populated from local cache so we can skip the loader
-  const hasCacheRef = useRef(false)
-
-  // Detect server switches and clear chat so stale messages from the
-  // previous server are never shown while the new history loads.
-  const prevServerIdRef = useRef(providerConfig.serverId)
-  useEffect(() => {
-    if (prevServerIdRef.current !== providerConfig.serverId) {
-      prevServerIdRef.current = providerConfig.serverId
-      hasCacheRef.current = false
-      hasScrolledOnLoadRef.current = false
-      shouldAutoScrollRef.current = true
-      setMessages([])
-      setCurrentAgentMessage('')
-      setIsLoadingHistory(true)
-    }
-  }, [providerConfig.serverId])
-
-  const { connected, connecting, error, health, capabilities, retry, sendMessage, getChatHistory } =
-    useChatProvider(providerConfig)
-
-  const { isActive: isWorkflowActive, prependContext } = useWorkflowContext()
-
-  const sessionSystemMessage = sessionContextMap[currentSessionKey]?.systemMessage
-
-  const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
-    sendMessage,
-    currentSessionKey,
-    onMessageAdd: (message) => setMessages((prev) => [...prev, message]),
-    onAgentMessageUpdate: (text) => setCurrentAgentMessage(text),
-    onAgentMessageComplete: (message) => {
-      setMessages((prev) => [...prev, message])
-      setCurrentAgentMessage('')
-    },
-    onSendStart: () => {
-      shouldAutoScrollRef.current = true
-    },
-    contextTransform: isWorkflowActive ? prependContext : undefined,
-    systemMessage: sessionSystemMessage,
-  })
-
-  // Convert raw history messages into UI Message objects
-  const historyToMessages = useCallback(
-    (
-      msgs: { role: string; content: Array<{ type: string; text?: string }>; timestamp: number }[],
-    ): Message[] => {
-      return msgs
-        .filter((msg) => msg.role === 'user' || msg.role === 'assistant')
-        .map((msg, index) => {
-          const textContent = msg.content.find((c) => c.type === 'text')
-          const text = textContent?.text || ''
-          if (!text) return null
-          return {
-            id: `history-${msg.timestamp}-${index}`,
-            text,
-            sender: msg.role === 'user' ? 'user' : 'agent',
-            timestamp: new Date(msg.timestamp),
-          } as Message
-        })
-        .filter((msg): msg is Message => msg !== null)
-    },
-    [],
-  )
-
-  // Pre-populate from local cache before the provider connects.
-  // This lets us show cached messages instantly and skip the loading spinner.
-  useEffect(() => {
-    let cancelled = false
-    readCachedHistory(providerConfig.serverId, currentSessionKey, 100).then((cached) => {
-      if (cancelled || cached.length === 0) return
-      const cachedMessages = historyToMessages(cached)
-      if (cachedMessages.length > 0) {
-        hasCacheRef.current = true
-        setMessages(cachedMessages)
-        setIsLoadingHistory(false)
-      }
-    })
-    return () => {
-      cancelled = true
-    }
-  }, [providerConfig.serverId, currentSessionKey, historyToMessages])
-
-  // Load chat history on mount or server switch.
-  // Keep old messages visible during the fetch so the screen never flashes blank.
-  const loadChatHistory = useCallback(async () => {
-    const hadCache = hasCacheRef.current
-
-    if (!hadCache) {
-      hasScrolledOnLoadRef.current = false
-      setIsLoadingHistory(true)
-    }
-
-    try {
-      const historyResponse = await getChatHistory(currentSessionKey, 100)
-      chatScreenLogger.info('Chat history loaded', historyResponse)
-
-      if (historyResponse?.messages && Array.isArray(historyResponse.messages)) {
-        const historyMessages = historyToMessages(historyResponse.messages)
-        setMessages(historyMessages)
-        chatScreenLogger.info(`Loaded ${historyMessages.length} messages from history`)
-      } else {
-        setMessages([])
-      }
-    } catch (err) {
-      chatScreenLogger.logError('Failed to load chat history', err)
-    } finally {
-      setIsLoadingHistory(false)
-    }
-  }, [getChatHistory, currentSessionKey, historyToMessages])
-
-  useEffect(() => {
-    if (connected) {
-      loadChatHistory()
-    }
-  }, [connected, loadChatHistory])
-
-  // Clear messages when reset session is triggered
-  useEffect(() => {
-    if (clearMessagesTrigger > 0 && connected) {
-      hasCacheRef.current = false
-      setMessages([])
-      setCurrentAgentMessage('')
-      hasScrolledOnLoadRef.current = false
-      loadChatHistory()
-    }
-  }, [clearMessagesTrigger, connected, loadChatHistory])
-
-  // Keep a ref to handleSend so the trigger timer isn't reset every time
-  // handleSend's identity changes (which happens on every render because the
-  // inline callbacks passed to useMessageQueue create new references).
-  const handleSendRef = useRef(handleSend)
-  useEffect(() => {
-    handleSendRef.current = handleSend
-  }, [handleSend])
-
-  // Auto-send pending trigger message once connected and history has loaded
-  useEffect(() => {
-    if (connected && !isLoadingHistory && pendingTriggerMessage) {
-      // Short delay so the UI settles before firing the message
-      const timer = setTimeout(() => {
-        handleSendRef.current(pendingTriggerMessage)
-        setPendingTriggerMessage(null)
-      }, 150)
-      return () => clearTimeout(timer)
-    }
-  }, [connected, isLoadingHistory, pendingTriggerMessage, setPendingTriggerMessage])
-
-  // Auto-send content shared from other apps via the share extension
-  useEffect(() => {
-    if (connected && !isLoadingHistory && pendingShareText !== null) {
-      const timer = setTimeout(async () => {
-        let attachments: MessageAttachment[] | undefined
-        if (pendingShareMedia && pendingShareMedia.length > 0) {
-          const converted: MessageAttachment[] = []
-          for (const media of pendingShareMedia) {
-            if (media.mimeType.startsWith('image/')) {
-              try {
-                const compressed = await compressImageToJpeg(media.uri)
-                converted.push({
-                  type: 'image',
-                  uri: compressed.uri,
-                  base64: compressed.base64,
-                  mimeType: compressed.mimeType,
-                  name: media.fileName,
-                })
-              } catch {
-                // Fall back to uncompressed URI if compression fails
-                converted.push({
-                  type: 'image',
-                  uri: media.uri,
-                  mimeType: media.mimeType,
-                  name: media.fileName,
-                })
-              }
-            } else if (media.mimeType.startsWith('video/')) {
-              converted.push({
-                type: 'video',
-                uri: media.uri,
-                mimeType: media.mimeType,
-                name: media.fileName,
-              })
-            } else {
-              converted.push({
-                type: 'file',
-                uri: media.uri,
-                mimeType: media.mimeType,
-                name: media.fileName,
-              })
-            }
-          }
-          if (converted.length > 0) {
-            attachments = converted
-          }
-          setPendingShareMedia(null)
-        }
-        const text = pendingShareText || ''
-        if (text || attachments) {
-          handleSendRef.current(text, attachments)
-        }
-        setPendingShareText(null)
-      }, 150)
-      return () => clearTimeout(timer)
-    }
-  }, [
-    connected,
-    isLoadingHistory,
-    pendingShareText,
-    setPendingShareText,
-    pendingShareMedia,
-    setPendingShareMedia,
-  ])
-
-  // The list starts hidden (opacity 0) and is revealed once we have scrolled
-  // to the bottom so the user never sees the conversation flash from the top.
-  // The initial scroll is handled inside onContentSizeChange on the FlashList,
-  // which fires as soon as the list finishes laying out history items —
-  // replacing the previous 400ms blind timeout with an event-driven approach.
-  const [historyReady, setHistoryReady] = useState(false)
-
-  // When there are no history messages, reveal immediately
-  useEffect(() => {
-    if (!isLoadingHistory && messages.length === 0) {
-      setHistoryReady(true)
-    }
-  }, [isLoadingHistory, messages.length])
 
   // Track keyboard visibility and scroll to bottom when keyboard opens
   useEffect(() => {
@@ -430,22 +142,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     }
   }, [])
 
-  // Pulse animation for status dot when agent is responding
-  useEffect(() => {
-    if (isAgentResponding) {
-      pulseOpacity.value = withRepeat(
-        withSequence(
-          withTiming(0.3, { duration: 800, easing: Easing.inOut(Easing.ease) }),
-          withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) }),
-        ),
-        -1,
-        false,
-      )
-    } else {
-      pulseOpacity.value = withTiming(1, { duration: 200 })
-    }
-  }, [isAgentResponding, pulseOpacity])
-
+  // Navigation handlers
   const handleOpenSessionMenu = () => {
     if (providerConfig.type === 'ollama') {
       router.push('/ollama-models')
@@ -461,274 +158,13 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const handleSelectAgent = useCallback(
     (agentId: string) => {
       setCurrentAgentId(agentId)
-      // Update session key to match new agent
       const { sessionName } = parseSessionKey(currentSessionKey)
       setCurrentSessionKey(createSessionKey(agentId, sessionName))
     },
     [currentSessionKey, setCurrentAgentId, setCurrentSessionKey],
   )
 
-  const handleToggleSearch = () => {
-    if (isSearchOpen) {
-      searchProgress.value = withTiming(0, { duration: 250, easing: Easing.out(Easing.ease) })
-      setSearchQuery('')
-      setIsSearchOpen(false)
-    } else {
-      setIsSearchOpen(true)
-      searchProgress.value = withTiming(1, { duration: 300, easing: Easing.out(Easing.ease) })
-      setTimeout(() => searchInputRef.current?.focus(), 150)
-    }
-  }
-
-  const handleCloseSearch = () => {
-    searchProgress.value = withTiming(0, { duration: 250, easing: Easing.out(Easing.ease) })
-    setSearchQuery('')
-    setTimeout(() => setIsSearchOpen(false), 200)
-  }
-
-  const renderConnectionStatus = () => {
-    // Hide settings button on tablets/foldables since it's in the sidebar
-    const showSettingsButton = deviceType === 'phone'
-
-    const StatusBubbleContainer = glassAvailable ? GlassView : View
-    const statusBubbleProps = glassAvailable
-      ? { style: styles.statusBubble, glassEffectStyle: 'regular' as const }
-      : { style: [styles.statusBubble, styles.statusBubbleFallback] }
-
-    const SettingsButtonContainer = glassAvailable ? GlassView : View
-    const settingsButtonProps = glassAvailable
-      ? { style: styles.settingsButton, glassEffectStyle: 'regular' as const }
-      : { style: [styles.settingsButton, styles.settingsButtonFallback] }
-
-    if (connecting) {
-      return (
-        <View style={styles.statusBarContainer}>
-          <StatusBubbleContainer {...statusBubbleProps}>
-            <ActivityIndicator size="small" color={theme.colors.primary} />
-            <Text style={styles.statusText}>Connecting...</Text>
-          </StatusBubbleContainer>
-          <View style={styles.statusActions}>
-            {isExtension && extensionMode !== 'fullscreen' && (
-              <TouchableOpacity
-                onPress={openFullscreen}
-                activeOpacity={0.7}
-                accessibilityLabel={t('extension.openFullscreen')}
-              >
-                <SettingsButtonContainer {...settingsButtonProps}>
-                  <Ionicons name="expand-outline" size={22} color={theme.colors.text.secondary} />
-                </SettingsButtonContainer>
-              </TouchableOpacity>
-            )}
-            {isExtension && extensionMode !== 'sidebar' && (
-              <TouchableOpacity
-                onPress={openSidebar}
-                activeOpacity={0.7}
-                accessibilityLabel={t('extension.openSidebar')}
-              >
-                <SettingsButtonContainer {...settingsButtonProps}>
-                  <Ionicons name="browsers-outline" size={22} color={theme.colors.text.secondary} />
-                </SettingsButtonContainer>
-              </TouchableOpacity>
-            )}
-            {showSettingsButton && (
-              <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
-                <SettingsButtonContainer {...settingsButtonProps}>
-                  <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
-                </SettingsButtonContainer>
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
-      )
-    }
-
-    if (error) {
-      const errorBubbleProps = glassAvailable
-        ? { style: styles.statusBubble, glassEffectStyle: 'regular' as const }
-        : { style: [styles.statusBubble, styles.statusBubbleFallback, styles.errorBubble] }
-      return (
-        <View style={styles.statusBarContainer}>
-          <StatusBubbleContainer {...errorBubbleProps}>
-            <Text style={styles.errorText} numberOfLines={1}>
-              Connection failed: {error}
-            </Text>
-            <TouchableOpacity onPress={retry} style={styles.retryButton}>
-              <Text style={styles.retryText}>Retry</Text>
-            </TouchableOpacity>
-          </StatusBubbleContainer>
-          <View style={styles.statusActions}>
-            {isExtension && extensionMode !== 'fullscreen' && (
-              <TouchableOpacity
-                onPress={openFullscreen}
-                activeOpacity={0.7}
-                accessibilityLabel={t('extension.openFullscreen')}
-              >
-                <SettingsButtonContainer {...settingsButtonProps}>
-                  <Ionicons name="expand-outline" size={22} color={theme.colors.text.secondary} />
-                </SettingsButtonContainer>
-              </TouchableOpacity>
-            )}
-            {isExtension && extensionMode !== 'sidebar' && (
-              <TouchableOpacity
-                onPress={openSidebar}
-                activeOpacity={0.7}
-                accessibilityLabel={t('extension.openSidebar')}
-              >
-                <SettingsButtonContainer {...settingsButtonProps}>
-                  <Ionicons name="browsers-outline" size={22} color={theme.colors.text.secondary} />
-                </SettingsButtonContainer>
-              </TouchableOpacity>
-            )}
-            {showSettingsButton && (
-              <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
-                <SettingsButtonContainer {...settingsButtonProps}>
-                  <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
-                </SettingsButtonContainer>
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
-      )
-    }
-
-    if (connected) {
-      const SearchBarContainer = glassAvailable ? GlassView : View
-      const searchBarProps = glassAvailable
-        ? { style: styles.searchBar, glassEffectStyle: 'regular' as const }
-        : { style: [styles.searchBar, styles.searchBarFallback] }
-
-      return (
-        <View style={styles.statusBarContainer}>
-          {/* Status bubble layer - fades out when search opens */}
-          <Animated.View
-            style={[styles.statusRow, statusBubbleAnimatedStyle]}
-            pointerEvents={isSearchOpen ? 'none' : 'auto'}
-          >
-            <StatusBubbleContainer {...statusBubbleProps}>
-              {isAgentResponding ? (
-                <ThinkingIndicator />
-              ) : (
-                <>
-                  <Animated.View style={[styles.connectedDot, pulseStyle]} />
-                  <Text style={styles.connectedText}>Health</Text>
-                  <Text style={styles.statusOk}>OK</Text>
-                </>
-              )}
-            </StatusBubbleContainer>
-            <View style={styles.statusActions}>
-              {isMoltProvider && health?.agents && Object.keys(health.agents).length > 1 && (
-                <TouchableOpacity onPress={() => setIsAgentPickerOpen(true)} activeOpacity={0.7}>
-                  <SettingsButtonContainer {...settingsButtonProps}>
-                    <Ionicons name="people" size={20} color={theme.colors.primary} />
-                  </SettingsButtonContainer>
-                </TouchableOpacity>
-              )}
-              {isWorkflowActive && (
-                <TouchableOpacity onPress={() => router.push('/workflow')} activeOpacity={0.7}>
-                  <SettingsButtonContainer {...settingsButtonProps}>
-                    <Ionicons name="folder-open" size={20} color={theme.colors.primary} />
-                  </SettingsButtonContainer>
-                </TouchableOpacity>
-              )}
-              <TouchableOpacity onPress={handleToggleSearch} activeOpacity={0.7}>
-                <SettingsButtonContainer {...settingsButtonProps}>
-                  <Ionicons name="search" size={22} color={theme.colors.text.secondary} />
-                </SettingsButtonContainer>
-              </TouchableOpacity>
-              {isExtension && extensionMode !== 'fullscreen' && (
-                <TouchableOpacity
-                  onPress={openFullscreen}
-                  activeOpacity={0.7}
-                  accessibilityLabel={t('extension.openFullscreen')}
-                >
-                  <SettingsButtonContainer {...settingsButtonProps}>
-                    <Ionicons name="expand-outline" size={22} color={theme.colors.text.secondary} />
-                  </SettingsButtonContainer>
-                </TouchableOpacity>
-              )}
-              {isExtension && extensionMode !== 'sidebar' && (
-                <TouchableOpacity
-                  onPress={openSidebar}
-                  activeOpacity={0.7}
-                  accessibilityLabel={t('extension.openSidebar')}
-                >
-                  <SettingsButtonContainer {...settingsButtonProps}>
-                    <Ionicons
-                      name="browsers-outline"
-                      size={22}
-                      color={theme.colors.text.secondary}
-                    />
-                  </SettingsButtonContainer>
-                </TouchableOpacity>
-              )}
-              {showSettingsButton && (
-                <TouchableOpacity onPress={handleOpenSettings} activeOpacity={0.7}>
-                  <SettingsButtonContainer {...settingsButtonProps}>
-                    <Ionicons
-                      name="settings-outline"
-                      size={24}
-                      color={theme.colors.text.secondary}
-                    />
-                  </SettingsButtonContainer>
-                </TouchableOpacity>
-              )}
-            </View>
-          </Animated.View>
-
-          {/* Search bar layer - expands in when search opens */}
-          {isSearchOpen && (
-            <Animated.View style={[styles.searchBarWrapper, searchBarTransformStyle]}>
-              <SearchBarContainer {...searchBarProps}>
-                <Animated.View style={[styles.searchBarContent, searchBarContentStyle]}>
-                  <Ionicons name="search" size={18} color={theme.colors.text.secondary} />
-                  <TextInput
-                    ref={searchInputRef}
-                    style={styles.searchInput}
-                    placeholder="Search messages..."
-                    placeholderTextColor={theme.colors.text.tertiary}
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                    autoCorrect={false}
-                    returnKeyType="search"
-                  />
-                  {searchQuery.length > 0 && (
-                    <Text style={styles.searchCount}>
-                      {
-                        allMessages.filter((m) =>
-                          m.text.toLowerCase().includes(searchQuery.toLowerCase()),
-                        ).length
-                      }
-                    </Text>
-                  )}
-                  <TouchableOpacity onPress={handleCloseSearch} hitSlop={8}>
-                    <Ionicons name="close-circle" size={20} color={theme.colors.text.secondary} />
-                  </TouchableOpacity>
-                </Animated.View>
-              </SearchBarContainer>
-            </Animated.View>
-          )}
-        </View>
-      )
-    }
-
-    return null
-  }
-
-  const allMessages = [
-    ...messages,
-    ...(currentAgentMessage
-      ? [
-          {
-            id: 'streaming',
-            text: currentAgentMessage,
-            sender: 'agent' as const,
-            timestamp: new Date(),
-            streaming: true,
-          },
-        ]
-      : []),
-  ]
-
+  // Filter messages by search query
   const filteredMessages = searchQuery
     ? allMessages.filter((m) => m.text.toLowerCase().includes(searchQuery.toLowerCase()))
     : allMessages
@@ -751,23 +187,15 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             contentContainerStyle={[styles.messageList, contentContainerStyle]}
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {
-              // First-load scroll: jump to bottom immediately once FlashList
-              // has laid out the history messages.  We keep the list at
-              // opacity 0 and only reveal it after the native scroll command
-              // has been processed, so the user never sees a flash from
-              // the top.
               if (!hasScrolledOnLoadRef.current && !isLoadingHistory && messages.length > 0) {
                 flatListRef.current?.scrollToEnd({ animated: false })
                 hasScrolledOnLoadRef.current = true
-                // Delay reveal until the next frame so the native scroll
-                // command settles before the list becomes visible.
                 requestAnimationFrame(() => {
                   setHistoryReady(true)
                 })
                 return
               }
 
-              // Normal auto-scroll for new incoming messages
               if (
                 shouldAutoScrollRef.current &&
                 !isLoadingHistory &&
@@ -778,7 +206,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             }}
             onScroll={(event) => {
               const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
-              const threshold = layoutMeasurement.height * 0.3 // 30% of screen height
+              const threshold = layoutMeasurement.height * 0.3
               const isNearBottom =
                 contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
               shouldAutoScrollRef.current = isNearBottom
@@ -831,7 +259,21 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
           />
         </Animated.View>
       </View>
-      {renderConnectionStatus()}
+      <ConnectionStatusBar
+        connecting={connecting}
+        connected={connected}
+        error={error}
+        health={health}
+        retry={retry}
+        isAgentResponding={isAgentResponding}
+        isMoltProvider={isMoltProvider}
+        isWorkflowActive={isWorkflowActive}
+        onOpenSettings={handleOpenSettings}
+        onOpenAgentPicker={() => setIsAgentPickerOpen(true)}
+        allMessages={allMessages}
+        searchQuery={searchQuery}
+        onSearchQueryChange={setSearchQuery}
+      />
       {isMoltProvider && (
         <AgentPicker
           visible={isAgentPickerOpen}
@@ -843,196 +285,4 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       )}
     </SafeAreaView>
   )
-}
-
-const createStyles = (
-  theme: Theme,
-  _glassAvailable: boolean,
-  deviceType: 'phone' | 'tablet' | 'foldable',
-  foldState: 'folded' | 'unfolded' | 'half-folded',
-  messageListPadding: number,
-) => {
-  // Adjust status bar position for foldable devices in half-folded state
-  const statusBarTop = deviceType === 'foldable' && foldState === 'half-folded' ? 40 : 40
-
-  // Adjust left position on tablets/foldables to appear next to toggle button
-  const statusBarLeft = deviceType !== 'phone' ? 40 : 0
-
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
-    statusBarContainer: {
-      position: 'absolute',
-      top: statusBarTop,
-      left: statusBarLeft,
-      right: 0,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingVertical: theme.spacing.sm,
-      paddingHorizontal: theme.spacing.lg,
-      backgroundColor: 'transparent',
-      zIndex: 1000,
-    },
-    statusBubble: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: theme.spacing.md + 2,
-      paddingVertical: theme.spacing.sm + 2,
-      borderRadius: theme.borderRadius.xxl,
-      alignSelf: 'flex-start',
-      marginRight: theme.spacing.md,
-      flexShrink: 1,
-      overflow: 'hidden',
-    },
-    statusBubbleFallback: {
-      backgroundColor: theme.colors.surface,
-    },
-    settingsButton: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexShrink: 0,
-      overflow: 'hidden',
-    },
-    settingsButtonFallback: {
-      backgroundColor: theme.colors.surface,
-    },
-    statusRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      flex: 1,
-    },
-    statusActions: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: theme.spacing.sm,
-    },
-    searchBarWrapper: {
-      position: 'absolute',
-      left: theme.spacing.lg,
-      right: theme.spacing.lg,
-      transformOrigin: 'right center',
-    },
-    searchBar: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: theme.spacing.md,
-      paddingVertical: theme.spacing.sm,
-      borderRadius: theme.borderRadius.xxl,
-      overflow: 'hidden',
-    },
-    searchBarContent: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    searchBarFallback: {
-      backgroundColor: theme.colors.surface,
-    },
-    searchInput: {
-      flex: 1,
-      fontSize: theme.typography.fontSize.sm,
-      color: theme.colors.text.primary,
-      marginLeft: theme.spacing.md,
-      marginRight: theme.spacing.md,
-      paddingVertical: 4,
-    },
-    searchCount: {
-      fontSize: theme.typography.fontSize.xs,
-      color: theme.colors.text.secondary,
-      marginRight: theme.spacing.sm,
-    },
-    errorBubble: {
-      backgroundColor: theme.isDark ? '#3A1B1B' : '#FFEBEE',
-    },
-    statusText: {
-      fontSize: theme.typography.fontSize.sm,
-      color: theme.colors.primary,
-      marginLeft: theme.spacing.sm,
-    },
-    connectedText: {
-      fontSize: theme.typography.fontSize.sm,
-      color: theme.colors.text.primary,
-      marginLeft: theme.spacing.sm,
-    },
-    statusOk: {
-      fontSize: theme.typography.fontSize.sm,
-      color: theme.colors.text.primary,
-      marginLeft: theme.spacing.xs,
-      fontWeight: theme.typography.fontWeight.semibold,
-    },
-    connectedDot: {
-      width: 10,
-      height: 10,
-      borderRadius: 5,
-      backgroundColor: theme.colors.status.success,
-    },
-    errorText: {
-      fontSize: theme.typography.fontSize.sm,
-      color: theme.colors.status.error,
-      flex: 1,
-    },
-    retryButton: {
-      paddingHorizontal: theme.spacing.md,
-      paddingVertical: theme.spacing.xs + 2,
-      backgroundColor: theme.colors.primary,
-      borderRadius: theme.borderRadius.sm,
-      marginLeft: theme.spacing.sm,
-    },
-    retryText: {
-      color: theme.colors.text.inverse,
-      fontSize: theme.typography.fontSize.sm,
-      fontWeight: theme.typography.fontWeight.semibold,
-    },
-    messageList: {
-      paddingTop: deviceType === 'foldable' && foldState === 'half-folded' ? 100 : 110,
-      paddingBottom: 60, // Room for input
-      paddingHorizontal: messageListPadding,
-    },
-    emptyContainer: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingVertical: 60,
-    },
-    emptyText: {
-      fontSize: theme.typography.fontSize.base,
-      color: theme.colors.text.secondary,
-      textAlign: 'center',
-    },
-    loadingText: {
-      fontSize: theme.typography.fontSize.base,
-      color: theme.colors.text.secondary,
-      textAlign: 'center',
-      marginTop: theme.spacing.md,
-    },
-    scrollToBottomButton: {
-      position: 'absolute',
-      bottom: 150,
-      left: '50%',
-      marginLeft: -24,
-      width: 48,
-      height: 48,
-      borderRadius: 24,
-      backgroundColor: theme.colors.primary,
-      alignItems: 'center',
-      justifyContent: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      zIndex: 1000,
-    },
-  })
 }
