@@ -91,7 +91,13 @@ function withWatchTarget(config) {
     )
 
     if (watchTarget) {
-      // Add source files to the Watch target
+      // Separate Swift sources from resource files
+      const swiftFiles = sourceFiles.filter((f) => f.endsWith('.swift'))
+      const resourceFiles = sourceFiles.filter(
+        (f) => f.endsWith('.xcstrings') || f.endsWith('.plist'),
+      )
+
+      // Create a PBX group containing all files
       const watchGroupKey = project.addPbxGroup(sourceFiles, WATCH_TARGET_NAME, WATCH_TARGET_NAME)
 
       if (watchGroupKey) {
@@ -100,20 +106,79 @@ function withWatchTarget(config) {
         project.addToPbxGroup(watchGroupKey.uuid, mainGroupId)
       }
 
-      // Add each Swift file to the Watch target's sources build phase
-      for (const file of sourceFiles) {
-        if (file.endsWith('.swift')) {
-          project.addSourceFile(
-            `${WATCH_TARGET_NAME}/${file}`,
-            { target: watchTarget.uuid },
-            watchGroupKey?.uuid,
-          )
-        } else if (file.endsWith('.xcstrings')) {
-          project.addResourceFile(
-            `${WATCH_TARGET_NAME}/${file}`,
-            { target: watchTarget.uuid },
-            watchGroupKey?.uuid,
-          )
+      // Add Swift files to the Watch target's sources build phase
+      for (const file of swiftFiles) {
+        project.addSourceFile(
+          `${WATCH_TARGET_NAME}/${file}`,
+          { target: watchTarget.uuid },
+          watchGroupKey?.uuid,
+        )
+      }
+
+      // Manually add resource files to the Watch target's resources build phase.
+      // We cannot use project.addResourceFile() because it calls correctForResourcesPath()
+      // which expects a "Resources" group to exist — and our new Watch target doesn't have one.
+      if (resourceFiles.length > 0 && watchGroupKey) {
+        // Find the PBXResourcesBuildPhase for the Watch target
+        const nativeTarget = project.pbxNativeTargetSection()[watchTarget.uuid]
+        let resourcesPhaseUuid = null
+
+        if (nativeTarget && nativeTarget.buildPhases) {
+          for (const phase of nativeTarget.buildPhases) {
+            const phaseObj = project.hash.project.objects['PBXResourcesBuildPhase'][phase.value]
+            if (phaseObj) {
+              resourcesPhaseUuid = phase.value
+              break
+            }
+          }
+        }
+
+        // If no resources phase exists, create one
+        if (!resourcesPhaseUuid) {
+          resourcesPhaseUuid = project.generateUuid()
+          project.hash.project.objects['PBXResourcesBuildPhase'][resourcesPhaseUuid] = {
+            isa: 'PBXResourcesBuildPhase',
+            buildActionMask: 2147483647,
+            files: [],
+            runOnlyForDeploymentPostprocessing: 0,
+          }
+          project.hash.project.objects['PBXResourcesBuildPhase'][resourcesPhaseUuid + '_comment'] =
+            'Resources'
+
+          if (nativeTarget && nativeTarget.buildPhases) {
+            nativeTarget.buildPhases.push({
+              value: resourcesPhaseUuid,
+              comment: 'Resources',
+            })
+          }
+        }
+
+        const resourcesPhase =
+          project.hash.project.objects['PBXResourcesBuildPhase'][resourcesPhaseUuid]
+
+        for (const file of resourceFiles) {
+          // Find the file reference that addPbxGroup created
+          const groupChildren = watchGroupKey.pbxGroup ? watchGroupKey.pbxGroup.children : []
+          const fileRefEntry = groupChildren.find((child) => child.comment === file)
+          if (!fileRefEntry) continue
+
+          // Create a PBXBuildFile entry linking the file reference
+          const buildFileUuid = project.generateUuid()
+          const buildFileSection = project.pbxBuildFileSection()
+          buildFileSection[buildFileUuid] = {
+            isa: 'PBXBuildFile',
+            fileRef: fileRefEntry.value,
+            fileRef_comment: file,
+          }
+          buildFileSection[buildFileUuid + '_comment'] = `${file} in Resources`
+
+          // Add to the resources build phase
+          if (resourcesPhase && resourcesPhase.files) {
+            resourcesPhase.files.push({
+              value: buildFileUuid,
+              comment: `${file} in Resources`,
+            })
+          }
         }
       }
 
