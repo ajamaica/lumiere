@@ -5,6 +5,8 @@ import { MoltGatewayClient } from './client'
 import {
   AgentEvent,
   AgentParams,
+  ChatAttachmentPayload,
+  ChatSendResponse,
   ConnectionState,
   ConnectResponse,
   GatewayLogsParams,
@@ -35,6 +37,17 @@ export interface UseMoltGatewayResult {
   retryConnection: () => Promise<void>
   refreshHealth: () => Promise<void>
   sendMessage: (params: SendMessageParams) => Promise<unknown>
+  chatSend: (
+    sessionKey: string,
+    message: string,
+    options?: {
+      thinking?: string
+      attachments?: ChatAttachmentPayload[]
+      idempotencyKey?: string
+      timeoutMs?: number
+    },
+  ) => Promise<ChatSendResponse>
+  chatAbort: (sessionKey: string, runId: string) => Promise<void>
   sendAgentRequest: (params: AgentParams, onEvent?: (event: AgentEvent) => void) => Promise<unknown>
   getChatHistory: (sessionKey: string, limit?: number) => Promise<unknown>
   resetSession: (sessionKey: string) => Promise<unknown>
@@ -182,6 +195,35 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
         throw new Error('Client not connected')
       }
       return await client.sendMessage(params)
+    },
+    [client],
+  )
+
+  const chatSend = useCallback(
+    async (
+      sessionKey: string,
+      message: string,
+      options?: {
+        thinking?: string
+        attachments?: ChatAttachmentPayload[]
+        idempotencyKey?: string
+        timeoutMs?: number
+      },
+    ) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.chatSend(sessionKey, message, options)
+    },
+    [client],
+  )
+
+  const chatAbort = useCallback(
+    async (sessionKey: string, runId: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.chatAbort(sessionKey, runId)
     },
     [client],
   )
@@ -356,6 +398,8 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     retryConnection,
     refreshHealth,
     sendMessage,
+    chatSend,
+    chatAbort,
     sendAgentRequest,
     getChatHistory,
     resetSession,
