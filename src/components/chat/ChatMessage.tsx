@@ -1,10 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import * as Calendar from 'expo-calendar'
-import * as Clipboard from 'expo-clipboard'
-import * as Contacts from 'expo-contacts'
 import { LinearGradient } from 'expo-linear-gradient'
-import * as Linking from 'expo-linking'
-import * as WebBrowser from 'expo-web-browser'
 import { useAtom, useSetAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -30,13 +25,14 @@ import Animated, {
 } from 'react-native-reanimated'
 
 import { useUrlMetadata } from '../../hooks/useUrlMetadata'
+import { copyToClipboard, executeIntent, openBrowser } from '../../services/intents'
 import {
   clearMessagesAtom,
   currentSessionKeyAtom,
   favoritesAtom,
   sessionAliasesAtom,
 } from '../../store'
-import { useTheme } from '../../theme'
+import { Theme, useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 import { logger } from '../../utils/logger'
 import { processXmlTags } from '../../utils/xmlTagProcessor'
@@ -162,10 +158,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
     async (url: string) => {
       chatLogger.debug('Link pressed', url)
       try {
-        await WebBrowser.openBrowserAsync(url, {
-          presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
-          controlsColor: theme.colors.primary,
-        })
+        await openBrowser(url, theme.colors.primary)
       } catch (err) {
         chatLogger.logError('Failed to open URL', err)
       }
@@ -345,7 +338,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   )
 
   const handleCopy = async () => {
-    await Clipboard.setStringAsync(processXmlTags(message.text))
+    await copyToClipboard(processXmlTags(message.text))
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -359,107 +352,14 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const handleIntentPress = useCallback(
     async (intent: ChatIntent) => {
       try {
-        switch (intent.action) {
-          case 'copyToClipboard': {
-            const text = intent.params.text ?? ''
-            await Clipboard.setStringAsync(text)
-            setIntentCopied(true)
-            setTimeout(() => setIntentCopied(false), 2000)
-            break
-          }
-          case 'openSession': {
-            const key = intent.params.key
-            if (!key) break
-            const label = intent.params.label
-            if (label) {
-              setSessionAliases((prev) => ({ ...prev, [key]: label }))
-            }
-            setCurrentSessionKey(key)
-            setClearMessages((n) => n + 1)
-            break
-          }
-          case 'storeContact': {
-            const { status } = await Contacts.requestPermissionsAsync()
-            if (status !== 'granted') {
-              chatLogger.warn('Contacts permission not granted')
-              break
-            }
-            const contact: Contacts.Contact = {
-              contactType: Contacts.ContactTypes.Person,
-              name: intent.params.name ?? '',
-              firstName: intent.params.firstName ?? '',
-              lastName: intent.params.lastName ?? '',
-              emails: intent.params.email
-                ? [{ email: intent.params.email, label: 'email' }]
-                : undefined,
-              phoneNumbers: intent.params.phone
-                ? [{ number: intent.params.phone, label: 'mobile' }]
-                : undefined,
-              company: intent.params.company ?? '',
-              jobTitle: intent.params.jobTitle ?? '',
-            }
-            await Contacts.addContactAsync(contact)
-            setIntentCopied(true)
-            setTimeout(() => setIntentCopied(false), 2000)
-            break
-          }
-          case 'storeCalendarEvent': {
-            const { status } = await Calendar.requestCalendarPermissionsAsync()
-            if (status !== 'granted') {
-              chatLogger.warn('Calendar permission not granted')
-              break
-            }
-            const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT)
-            const defaultCalendar =
-              calendars.find((cal) => cal.isPrimary) ??
-              calendars.find((cal) => cal.allowsModifications) ??
-              calendars[0]
-            if (!defaultCalendar) {
-              chatLogger.warn('No calendar available')
-              break
-            }
-            const startDate = intent.params.startDate
-              ? new Date(intent.params.startDate)
-              : new Date()
-            const endDate = intent.params.endDate
-              ? new Date(intent.params.endDate)
-              : new Date(startDate.getTime() + 60 * 60 * 1000) // Default 1 hour duration
-            await Calendar.createEventAsync(defaultCalendar.id, {
-              title: intent.params.title ?? 'New Event',
-              startDate,
-              endDate,
-              location: intent.params.location,
-              notes: intent.params.notes,
-              allDay: intent.params.allDay === 'true',
-            })
-            setIntentCopied(true)
-            setTimeout(() => setIntentCopied(false), 2000)
-            break
-          }
-          case 'makeCall': {
-            const phone = intent.params.phone
-            if (!phone) {
-              chatLogger.warn('No phone number provided for makeCall intent')
-              break
-            }
-            await Linking.openURL(`tel:${encodeURIComponent(phone)}`)
-            break
-          }
-          case 'openMaps': {
-            const { latitude, longitude, label } = intent.params
-            if (!latitude || !longitude) {
-              chatLogger.warn('Missing latitude or longitude for openMaps intent')
-              break
-            }
-            // Use geo: URI scheme which works on both iOS and Android
-            const geoUrl = label
-              ? `geo:${latitude},${longitude}?q=${latitude},${longitude}(${encodeURIComponent(label)})`
-              : `geo:${latitude},${longitude}?q=${latitude},${longitude}`
-            await Linking.openURL(geoUrl)
-            break
-          }
-          default:
-            await Linking.openURL(intent.raw)
+        const confirmed = await executeIntent(intent, {
+          setSessionAlias: (key, label) => setSessionAliases((prev) => ({ ...prev, [key]: label })),
+          switchSession: (key) => setCurrentSessionKey(key),
+          clearMessages: () => setClearMessages((n) => n + 1),
+        })
+        if (confirmed) {
+          setIntentCopied(true)
+          setTimeout(() => setIntentCopied(false), 2000)
         }
       } catch (err) {
         chatLogger.logError('Failed to execute intent', err)
@@ -629,32 +529,6 @@ export function ChatMessage({ message }: ChatMessageProps) {
       </Text>
     </View>
   )
-}
-
-interface Theme {
-  colors: {
-    background: string
-    surface: string
-    border: string
-    text: { primary: string; secondary: string; tertiary: string; inverse: string }
-    primary: string
-    message: {
-      user: string
-      agent: string
-      userText: string
-      agentText: string
-    }
-    status: { success: string; error: string; warning: string }
-  }
-  spacing: { xs: number; sm: number; md: number; lg: number }
-  borderRadius: { xs: number; sm: number; md: number; xxl: number }
-  typography: {
-    fontSize: { xs: number; sm: number; base: number; lg: number; xl: number }
-    lineHeight: { normal: number }
-    fontWeight: { medium: '500'; semibold: '600'; bold: '700' }
-    fontFamily: { monospace: string }
-  }
-  isDark: boolean
 }
 
 const createStyles = (theme: Theme) =>
