@@ -239,7 +239,7 @@ export default function SessionsScreen() {
       fontWeight: theme.typography.fontWeight.medium,
     },
     menuItemDestructive: {
-      color: theme.colors.error,
+      color: theme.colors.status.error,
     },
     menuDivider: {
       height: StyleSheet.hairlineWidth,
@@ -400,7 +400,7 @@ export default function SessionsScreen() {
                 <Ionicons
                   name="trash-outline"
                   size={20}
-                  color={theme.colors.error}
+                  color={theme.colors.status.error}
                   style={styles.menuItemIcon}
                 />
                 <Text style={[styles.menuItemText, styles.menuItemDestructive]}>
