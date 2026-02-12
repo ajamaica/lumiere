@@ -182,7 +182,9 @@
     "newTrigger": "Novo Gatilho",
     "editTrigger": "Editar Gatilho",
     "deleteTrigger": "Excluir Gatilho",
-    "noTriggers": "Nenhum gatilho configurado"
+    "noTriggers": "Nenhum gatilho configurado",
+    "pinToHome": "Fixar na tela inicial",
+    "pinError": "Não foi possível fixar o atalho na tela inicial."
   },
   "scheduler": {
     "title": "Agendador",

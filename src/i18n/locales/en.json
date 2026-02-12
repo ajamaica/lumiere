@@ -182,7 +182,9 @@
     "newTrigger": "New Trigger",
     "editTrigger": "Edit Trigger",
     "deleteTrigger": "Delete Trigger",
-    "noTriggers": "No triggers configured"
+    "noTriggers": "No triggers configured",
+    "pinToHome": "Pin to Home",
+    "pinError": "Could not pin shortcut to home screen."
   },
   "scheduler": {
     "title": "Scheduler",

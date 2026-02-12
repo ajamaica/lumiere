@@ -182,7 +182,9 @@
     "newTrigger": "新建觸發器",
     "editTrigger": "編輯觸發器",
     "deleteTrigger": "刪除觸發器",
-    "noTriggers": "未設定觸發器"
+    "noTriggers": "未設定觸發器",
+    "pinToHome": "釘選到主畫面",
+    "pinError": "無法將捷徑釘選到主畫面。"
   },
   "scheduler": {
     "title": "排程器",

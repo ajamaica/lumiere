@@ -182,7 +182,9 @@
     "newTrigger": "새 트리거",
     "editTrigger": "트리거 편집",
     "deleteTrigger": "트리거 삭제",
-    "noTriggers": "구성된 트리거 없음"
+    "noTriggers": "구성된 트리거 없음",
+    "pinToHome": "홈 화면에 고정",
+    "pinError": "홈 화면에 바로가기를 고정할 수 없습니다."
   },
   "scheduler": {
     "title": "스케줄러",
