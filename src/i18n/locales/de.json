@@ -51,7 +51,14 @@
     "contribute": "Mitwirken",
     "skills": "Fähigkeiten",
     "gatewayLogs": "Gateway-Protokolle",
-    "missions": "Missionen"
+    "missions": "Missionen",
+    "icloudSync": "iCloud-Synchronisierung",
+    "icloud": {
+      "availableSubtitle": "Daten zwischen Ihren Apple-Geräten synchronisieren",
+      "unavailableSubtitle": "Melden Sie sich bei iCloud an, um die Synchronisierung zu aktivieren",
+      "unavailable": "iCloud nicht verfügbar",
+      "unavailableMessage": "Bitte melden Sie sich in den Geräteeinstellungen bei iCloud an, um diese Funktion zu nutzen."
+    }
   },
   "home": {
     "connectionError": "Verbindungsfehler",

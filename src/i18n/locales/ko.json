@@ -51,7 +51,14 @@
     "contribute": "기여하기",
     "skills": "스킬",
     "gatewayLogs": "게이트웨이 로그",
-    "missions": "미션"
+    "missions": "미션",
+    "icloudSync": "iCloud 동기화",
+    "icloud": {
+      "availableSubtitle": "Apple 기기 간 데이터 동기화",
+      "unavailableSubtitle": "동기화를 활성화하려면 iCloud에 로그인하세요",
+      "unavailable": "iCloud 사용 불가",
+      "unavailableMessage": "이 기능을 사용하려면 기기 설정에서 iCloud에 로그인하세요."
+    }
   },
   "home": {
     "connectionError": "연결 오류",

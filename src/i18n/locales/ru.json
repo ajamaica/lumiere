@@ -51,7 +51,14 @@
     "contribute": "Внести вклад",
     "skills": "Навыки",
     "gatewayLogs": "Журналы шлюза",
-    "missions": "Миссии"
+    "missions": "Миссии",
+    "icloudSync": "Синхронизация iCloud",
+    "icloud": {
+      "availableSubtitle": "Синхронизация данных между вашими устройствами Apple",
+      "unavailableSubtitle": "Войдите в iCloud для включения синхронизации",
+      "unavailable": "iCloud недоступен",
+      "unavailableMessage": "Пожалуйста, войдите в iCloud в настройках устройства, чтобы использовать эту функцию."
+    }
   },
   "home": {
     "connectionError": "Ошибка подключения",

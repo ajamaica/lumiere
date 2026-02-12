@@ -28,3 +28,6 @@ export const biometricLockEnabledAtom = atomWithStorage<boolean>(
   false,
   storage,
 )
+
+/** iCloud sync setting (off by default, iOS only) */
+export const icloudSyncEnabledAtom = atomWithStorage<boolean>('icloudSyncEnabled', false, storage)

@@ -51,7 +51,14 @@
     "contribute": "コントリビュート",
     "skills": "スキル",
     "gatewayLogs": "ゲートウェイログ",
-    "missions": "ミッション"
+    "missions": "ミッション",
+    "icloudSync": "iCloud同期",
+    "icloud": {
+      "availableSubtitle": "Appleデバイス間でデータを同期",
+      "unavailableSubtitle": "同期を有効にするにはiCloudにサインインしてください",
+      "unavailable": "iCloudが利用できません",
+      "unavailableMessage": "この機能を使用するには、デバイスの設定でiCloudにサインインしてください。"
+    }
   },
   "home": {
     "connectionError": "接続エラー",
