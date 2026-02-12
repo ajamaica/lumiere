@@ -6,14 +6,14 @@
  * iCloud and remote changes from other devices are pulled into local state.
  *
  * Data synced:
- * - Server configurations (without tokens)
+ * - Server configurations
+ * - API tokens (synced as a token map in iCloud, stored in Keychain locally)
  * - Session mappings and aliases
  * - Session context (system messages)
  * - Favorites and triggers
  * - Theme, color, and language preferences
  *
  * NOT synced (transient or device-specific):
- * - API tokens (kept in Keychain only)
  * - Biometric lock setting (device-specific)
  * - Onboarding state (device-specific)
  * - Message queue (transient)
@@ -139,6 +139,13 @@ function handleStoreChanged(event: StoreChangedEvent): void {
   if (isApplyingLocal) return
 
   for (const iKey of event.changedKeys) {
+    // Handle token changes
+    if (iKey === TOKEN_ICLOUD_KEY) {
+      const value = event.changedValues[iKey] ?? getItem(iKey)
+      pullTokensFromICloud(value ?? null)
+      continue
+    }
+
     const key = stripPrefix(iKey) as SyncedKey
     if (SYNCED_KEYS.includes(key)) {
       const value = event.changedValues[iKey] ?? getItem(iKey)
@@ -170,7 +177,8 @@ function subscribeToAtoms(): void {
  * Do an initial sync: pull any existing iCloud data, then push local data
  * for keys not yet in iCloud.
  */
-function initialSync(): void {
+async function initialSync(): Promise<void> {
+  // Sync atoms
   for (const key of SYNCED_KEYS) {
     const iKey = icloudKey(key)
     const remoteValue = getItem(iKey)
@@ -182,20 +190,30 @@ function initialSync(): void {
       pushToICloud(key)
     }
   }
+
+  // Sync tokens
+  const remoteTokens = getItem(TOKEN_ICLOUD_KEY)
+  if (remoteTokens) {
+    await pullTokensFromICloud(remoteTokens)
+  } else {
+    await pushAllTokensToICloud()
+  }
 }
 
 /**
  * Start iCloud sync. Call this when iCloud sync is enabled.
  * Sets up bidirectional sync between Jotai atoms and NSUbiquitousKeyValueStore.
  */
-export function startICloudSync(): void {
+export async function startICloudSync(): Promise<void> {
   if (!isAvailable()) return
 
   // Stop any existing sync first
   stopICloudSync()
 
-  // Do initial data sync
-  initialSync()
+  isSyncActive = true
+
+  // Do initial data sync (includes tokens)
+  await initialSync()
 
   // Listen for remote changes from other devices
   removeChangeListener = addOnStoreChangedListener(handleStoreChanged)
@@ -208,6 +226,8 @@ export function startICloudSync(): void {
  * Stop iCloud sync. Call this when iCloud sync is disabled.
  */
 export function stopICloudSync(): void {
+  isSyncActive = false
+
   // Remove iCloud change listener
   if (removeChangeListener) {
     removeChangeListener()
@@ -226,4 +246,98 @@ export function stopICloudSync(): void {
  */
 export function isICloudAvailable(): boolean {
   return isAvailable()
+}
+
+// ─── Token Sync ──────────────────────────────────────────────────────────────
+
+const TOKEN_ICLOUD_KEY = icloudKey('serverTokens')
+
+/** Whether iCloud sync is currently active */
+let isSyncActive = false
+
+/**
+ * Returns true when iCloud sync is running, so callers can check
+ * before deciding to push token changes.
+ */
+export function isSyncEnabled(): boolean {
+  return isSyncActive
+}
+
+/**
+ * Push a single token change to iCloud.
+ * Called from secureTokenStorage when a token is set or deleted.
+ */
+export function pushTokenToICloud(serverId: string, token: string | null): void {
+  if (!isSyncActive || isApplyingRemote) return
+
+  const existing = getItem(TOKEN_ICLOUD_KEY)
+  let tokenMap: Record<string, string> = {}
+  if (existing) {
+    try {
+      tokenMap = JSON.parse(existing)
+    } catch {
+      // ignore
+    }
+  }
+
+  if (token) {
+    tokenMap[serverId] = token
+  } else {
+    delete tokenMap[serverId]
+  }
+
+  isApplyingLocal = true
+  setItem(TOKEN_ICLOUD_KEY, JSON.stringify(tokenMap))
+  isApplyingLocal = false
+}
+
+/**
+ * Pull all tokens from iCloud and store them in the local Keychain.
+ * Called during initial sync and when remote token changes arrive.
+ */
+async function pullTokensFromICloud(serialized: string | null): Promise<void> {
+  if (!serialized) return
+
+  let tokenMap: Record<string, string>
+  try {
+    tokenMap = JSON.parse(serialized)
+  } catch {
+    return
+  }
+
+  // Dynamic import to avoid circular dependency
+  const { setServerToken } = await import('./secureTokenStorage')
+  isApplyingRemote = true
+  for (const [serverId, token] of Object.entries(tokenMap)) {
+    if (token) {
+      await setServerToken(serverId, token)
+    }
+  }
+  isApplyingRemote = false
+}
+
+/**
+ * Push all local tokens to iCloud. Called during initial sync.
+ */
+async function pushAllTokensToICloud(): Promise<void> {
+  const store = getStore()
+  const servers = store.get(serversAtom)
+  const serverIds = Object.keys(servers)
+  if (serverIds.length === 0) return
+
+  const { getServerToken } = await import('./secureTokenStorage')
+  const tokenMap: Record<string, string> = {}
+
+  for (const id of serverIds) {
+    const token = await getServerToken(id)
+    if (token) {
+      tokenMap[id] = token
+    }
+  }
+
+  if (Object.keys(tokenMap).length > 0) {
+    isApplyingLocal = true
+    setItem(TOKEN_ICLOUD_KEY, JSON.stringify(tokenMap))
+    isApplyingLocal = false
+  }
 }
