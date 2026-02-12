@@ -83,7 +83,6 @@ export default function GatewayLogsScreen() {
     try {
       const response = await getLogs({
         limit: 100,
-        level: filterLevel ?? undefined,
       })
       const entries = extractLogs(response)
       setLogs(entries)
@@ -97,7 +96,7 @@ export default function GatewayLogsScreen() {
     } finally {
       setLoading(false)
     }
-  }, [connected, getLogs, filterLevel])
+  }, [connected, getLogs])
 
   useEffect(() => {
     if (connected) {
@@ -112,6 +111,8 @@ export default function GatewayLogsScreen() {
   const handleFilterChange = (level: 'debug' | 'info' | 'warn' | 'error' | null) => {
     setFilterLevel(level)
   }
+
+  const filteredLogs = filterLevel ? logs.filter((entry) => entry.level === filterLevel) : logs
 
   const getLevelColor = (level: string) => {
     switch (level) {
@@ -311,12 +312,12 @@ export default function GatewayLogsScreen() {
             </Text>
           )}
 
-          {!connecting && !connectionError && !fetchError && logs.length === 0 ? (
+          {!connecting && !connectionError && !fetchError && filteredLogs.length === 0 ? (
             <Text color="secondary" center>
               {t('gatewayLogs.noLogs')}
             </Text>
           ) : (
-            logs.map((entry, index) => (
+            filteredLogs.map((entry, index) => (
               <Card key={`${entry.ts}-${index}`} style={styles.logEntry}>
                 <View style={styles.logHeader}>
                   <Badge label={entry.level.toUpperCase()} variant={getLevelVariant(entry.level)} />
