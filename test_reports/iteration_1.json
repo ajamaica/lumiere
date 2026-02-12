@@ -17,7 +17,7 @@
     "Get Started button is clickable and functional",
     "Navigation from WelcomeScreen to SetupScreen works correctly",
     "Responsive design works on mobile (390x844)",
-    "Responsive design works on tablet (768x1024)", 
+    "Responsive design works on tablet (768x1024)",
     "Responsive design works on desktop (1920x800)",
     "7 provider SVG icons visible in floating bubbles",
     "Navigation functionality works on all screen sizes"

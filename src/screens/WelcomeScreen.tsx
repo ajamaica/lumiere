@@ -8,10 +8,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native'
-import Animated, {
-  FadeInDown,
-  FadeInUp,
-} from 'react-native-reanimated'
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated'
 import { SvgProps } from 'react-native-svg'
 
 import ClaudeIcon from '../../assets/provider-claude.svg'
@@ -107,12 +104,54 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
   // 7 provider icon bubbles at double size with random variation
   const bubbles: BubbleConfig[] = [
     { Icon: OpenClawIcon, size: iconBaseSize + 12, top: -22, left: -34, delay: 100, bg: '#0F1D32' },
-    { Icon: ClaudeIcon, size: iconBaseSize - 8, top: -14, left: phoneWidth - 24, delay: 200, bg: '#1A1412' },
-    { Icon: OpenAIIcon, size: iconBaseSize + 6, top: phoneHeight * 0.30, left: -38, delay: 300, bg: '#0F1D32' },
-    { Icon: GeminiIcon, size: iconBaseSize - 14, top: phoneHeight * 0.26, left: phoneWidth - 14, delay: 400, bg: '#121A2E' },
-    { Icon: OllamaIcon, size: iconBaseSize + 16, top: phoneHeight * 0.60, left: -36, delay: 500, bg: '#141E14' },
-    { Icon: OpenRouterIcon, size: iconBaseSize - 4, top: phoneHeight * 0.62, left: phoneWidth - 20, delay: 600, bg: '#1E1428' },
-    { Icon: KimiIcon, size: iconBaseSize + 2, top: phoneHeight * 0.90, left: phoneWidth * 0.3, delay: 700, bg: '#1A1A2E' },
+    {
+      Icon: ClaudeIcon,
+      size: iconBaseSize - 8,
+      top: -14,
+      left: phoneWidth - 24,
+      delay: 200,
+      bg: '#1A1412',
+    },
+    {
+      Icon: OpenAIIcon,
+      size: iconBaseSize + 6,
+      top: phoneHeight * 0.3,
+      left: -38,
+      delay: 300,
+      bg: '#0F1D32',
+    },
+    {
+      Icon: GeminiIcon,
+      size: iconBaseSize - 14,
+      top: phoneHeight * 0.26,
+      left: phoneWidth - 14,
+      delay: 400,
+      bg: '#121A2E',
+    },
+    {
+      Icon: OllamaIcon,
+      size: iconBaseSize + 16,
+      top: phoneHeight * 0.6,
+      left: -36,
+      delay: 500,
+      bg: '#141E14',
+    },
+    {
+      Icon: OpenRouterIcon,
+      size: iconBaseSize - 4,
+      top: phoneHeight * 0.62,
+      left: phoneWidth - 20,
+      delay: 600,
+      bg: '#1E1428',
+    },
+    {
+      Icon: KimiIcon,
+      size: iconBaseSize + 2,
+      top: phoneHeight * 0.9,
+      left: phoneWidth * 0.3,
+      delay: 700,
+      bg: '#1A1A2E',
+    },
   ]
 
   const gradientColors = theme.isDark
@@ -240,27 +279,14 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
 
   return (
     <View style={styles.container} data-testid="welcome-screen">
-      <LinearGradient
-        colors={gradientColors}
-        locations={[0, 0.5, 1]}
-        style={styles.gradient}
-      />
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
+      <LinearGradient colors={gradientColors} locations={[0, 0.5, 1]} style={styles.gradient} />
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* Phone mockup + floating agent icons */}
-        <Animated.View
-          entering={FadeInDown.duration(700).springify()}
-          style={styles.phoneSection}
-        >
+        <Animated.View entering={FadeInDown.duration(700).springify()} style={styles.phoneSection}>
           <View style={styles.phoneContainer}>
             {/* The phone frame */}
             <View style={styles.phoneFrame}>
-              <LinearGradient
-                colors={phoneScreenGradient}
-                style={styles.phoneScreenGradient}
-              >
+              <LinearGradient colors={phoneScreenGradient} style={styles.phoneScreenGradient}>
                 {/* Notch */}
                 <View style={styles.notch} />
 
@@ -333,14 +359,11 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
           style={styles.textSection}
         >
           <Text style={styles.title}>
-            Welcome to{' '}
-            <Text style={[styles.title, { color: theme.colors.primary }]}>
-              Lumiere
-            </Text>
+            Welcome to <Text style={[styles.title, { color: theme.colors.primary }]}>Lumiere</Text>
           </Text>
           <Text style={styles.subtitle}>
-            Your AI agents, one beautiful app. Chat with Claude, OpenAI, Ollama, and
-            more — all from a single, privacy-first interface.
+            Your AI agents, one beautiful app. Chat with Claude, OpenAI, Ollama, and more — all from
+            a single, privacy-first interface.
           </Text>
         </Animated.View>
 
