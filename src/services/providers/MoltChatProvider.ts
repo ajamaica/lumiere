@@ -1,7 +1,5 @@
-import { agentConfig } from '../../config/gateway.config'
-import { parseSessionKey } from '../../store'
-import { generateIdempotencyKey, MoltGatewayClient } from '../molt/client'
-import { AgentEvent, ConnectionState } from '../molt/types'
+import { MoltGatewayClient } from '../molt/client'
+import { AgentEvent, ChatAttachmentPayload, ConnectionState } from '../molt/types'
 import {
   ChatHistoryResponse,
   ChatProvider,
@@ -68,34 +66,45 @@ export class MoltChatProvider implements ChatProvider {
     params: SendMessageParams,
     onEvent: (event: ChatProviderEvent) => void,
   ): Promise<void> {
-    const { agentId: parsedAgentId } = parseSessionKey(params.sessionKey)
-    const agentId = parsedAgentId || agentConfig.defaultAgentId
+    // Convert provider attachments to the wire-format ChatAttachmentPayload
+    let attachments: ChatAttachmentPayload[] | undefined
+    if (params.attachments?.length) {
+      attachments = params.attachments
+        .filter((a) => a.data) // only include attachments with actual content
+        .map((a) => ({
+          type: a.type,
+          mimeType: a.mimeType || 'application/octet-stream',
+          fileName: a.name || 'attachment',
+          content: a.data!,
+        }))
+      if (attachments.length === 0) attachments = undefined
+    }
 
     // Prepend system message as context for Molt gateway
     const message = params.systemMessage
       ? `[System: ${params.systemMessage}]\n\n${params.message}`
       : params.message
 
-    const agentParams = {
-      message,
-      idempotencyKey: generateIdempotencyKey(),
-      agentId,
-      sessionKey: params.sessionKey,
-      attachments: params.attachments?.map((a) => ({
-        type: a.type,
-        content: a.data,
-        mimeType: a.mimeType,
-        fileName: a.name,
-      })),
-    }
-
-    await this.client.sendAgentRequest(agentParams, (event: AgentEvent) => {
+    // Subscribe to agent events for streaming before sending
+    const unsubscribe = this.client.onAgentEvent((event: AgentEvent) => {
       if (event.stream === 'assistant' && event.data.delta) {
         onEvent({ type: 'delta', delta: event.data.delta })
       } else if (event.stream === 'lifecycle') {
         onEvent({ type: 'lifecycle', phase: event.data.phase })
+        if (event.data.phase === 'end') {
+          unsubscribe()
+        }
       }
     })
+
+    try {
+      await this.client.chatSend(params.sessionKey, message, {
+        attachments,
+      })
+    } catch (err) {
+      unsubscribe()
+      throw err
+    }
   }
 
   async getChatHistory(sessionKey: string, limit?: number): Promise<ChatHistoryResponse> {
