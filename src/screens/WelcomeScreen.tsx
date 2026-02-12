@@ -288,7 +288,7 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
                     delay={700}
                   />
                   <ChatBubble
-                    text="Let's get started. Connect your favorite AI provider."
+                    text="Ready when you are! Pick a provider and we can begin."
                     align="left"
                     color={agentBubbleColor}
                     textColor={agentBubbleText}
