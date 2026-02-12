@@ -323,7 +323,7 @@ const createStatusBarStyles = (
   deviceType: 'phone' | 'tablet' | 'foldable',
   foldState: 'folded' | 'unfolded' | 'half-folded',
 ) => {
-  const statusBarTop = deviceType === 'foldable' && foldState === 'half-folded' ? 40 : 40
+  const statusBarTop = deviceType === 'foldable' && foldState === 'half-folded' ? 45 : 45
   const statusBarLeft = deviceType !== 'phone' ? 40 : 0
 
   return StyleSheet.create({
