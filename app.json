@@ -86,6 +86,7 @@
           "color": "#ffffff"
         }
       ],
+      "expo-background-task",
       "expo-quick-actions",
       [
         "expo-share-intent",
