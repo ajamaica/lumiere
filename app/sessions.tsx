@@ -3,15 +3,21 @@ import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { ProviderConfig, readSessionIndex, SessionIndexEntry } from '../src/services/providers'
+import {
+  deleteSessionData,
+  ProviderConfig,
+  readSessionIndex,
+  SessionIndexEntry,
+} from '../src/services/providers'
 import { currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { GlassView } from '../src/utils/glassEffect'
 import { logger } from '../src/utils/logger'
 
 const sessionsLogger = logger.create('Sessions')
@@ -33,6 +39,7 @@ export default function SessionsScreen() {
 
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
+  const [menuSessionKey, setMenuSessionKey] = useState<string | null>(null)
 
   // Molt provider uses server-side sessions via WebSocket gateway
   const isMoltProvider = config?.type === 'molt'
@@ -127,6 +134,29 @@ export default function SessionsScreen() {
     router.push({ pathname: '/edit-session', params: { key: sessionKey } })
   }
 
+  const handleLongPressSession = (sessionKey: string) => {
+    setMenuSessionKey(sessionKey)
+  }
+
+  const handleDeleteSession = (sessionKey: string) => {
+    setMenuSessionKey(null)
+    Alert.alert(t('sessions.deleteConfirmTitle'), t('sessions.deleteConfirmMessage'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('common.delete'),
+        style: 'destructive',
+        onPress: async () => {
+          await deleteSessionData(config?.serverId, sessionKey)
+          setSessions((prev) => prev.filter((s) => s.key !== sessionKey))
+          if (sessionKey === currentSessionKey) {
+            const newKey = `agent:main:${Date.now()}`
+            setCurrentSessionKey(newKey)
+          }
+        },
+      },
+    ])
+  }
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -171,6 +201,57 @@ export default function SessionsScreen() {
     },
     sessionActionButton: {
       padding: theme.spacing.xs,
+    },
+    menuOverlay: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    },
+    menuContainer: {
+      width: '75%',
+      borderRadius: theme.borderRadius.lg,
+      overflow: 'hidden',
+    },
+    menuGlass: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.lg,
+      paddingVertical: theme.spacing.sm,
+    },
+    menuHeader: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.md,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: theme.colors.divider,
+    },
+    menuItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.md,
+    },
+    menuItemIcon: {
+      marginRight: theme.spacing.md,
+    },
+    menuItemText: {
+      fontSize: theme.typography.fontSize.base,
+      color: theme.colors.text.primary,
+      fontWeight: theme.typography.fontWeight.medium,
+    },
+    menuItemDestructive: {
+      color: theme.colors.status.error,
+    },
+    menuDivider: {
+      height: StyleSheet.hairlineWidth,
+      backgroundColor: theme.colors.divider,
+    },
+    menuCancelItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: theme.spacing.md,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      borderTopColor: theme.colors.divider,
     },
   })
 
@@ -253,6 +334,7 @@ export default function SessionsScreen() {
                       }
                       value={isActive ? t('common.active') : undefined}
                       onPress={() => handleSelectSession(session.key)}
+                      onLongPress={() => handleLongPressSession(session.key)}
                       showDivider={index < sessions.length - 1}
                     />
                   </View>
@@ -269,6 +351,75 @@ export default function SessionsScreen() {
           )}
         </Section>
       </ScrollView>
+
+      {/* Long-press context menu */}
+      <Modal
+        visible={menuSessionKey !== null}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setMenuSessionKey(null)}
+      >
+        <TouchableOpacity
+          style={styles.menuOverlay}
+          activeOpacity={1}
+          onPress={() => setMenuSessionKey(null)}
+        >
+          <View style={styles.menuContainer}>
+            <GlassView style={styles.menuGlass}>
+              <View style={styles.menuHeader}>
+                <Text variant="heading3" numberOfLines={1}>
+                  {menuSessionKey ? formatSessionKey(menuSessionKey) : ''}
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => {
+                  const key = menuSessionKey
+                  setMenuSessionKey(null)
+                  if (key) handleEditSession(key)
+                }}
+              >
+                <Ionicons
+                  name="pencil-outline"
+                  size={20}
+                  color={theme.colors.text.primary}
+                  style={styles.menuItemIcon}
+                />
+                <Text style={styles.menuItemText}>{t('sessions.editSession')}</Text>
+              </TouchableOpacity>
+
+              <View style={styles.menuDivider} />
+
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => {
+                  if (menuSessionKey) handleDeleteSession(menuSessionKey)
+                }}
+              >
+                <Ionicons
+                  name="trash-outline"
+                  size={20}
+                  color={theme.colors.status.error}
+                  style={styles.menuItemIcon}
+                />
+                <Text style={[styles.menuItemText, styles.menuItemDestructive]}>
+                  {t('sessions.deleteSession')}
+                </Text>
+              </TouchableOpacity>
+
+              <View style={styles.menuDivider} />
+
+              <TouchableOpacity
+                style={styles.menuCancelItem}
+                onPress={() => setMenuSessionKey(null)}
+              >
+                <Text style={styles.menuItemText}>{t('common.cancel')}</Text>
+              </TouchableOpacity>
+            </GlassView>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   )
 }
