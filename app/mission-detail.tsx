@@ -50,6 +50,7 @@ export default function MissionDetailScreen() {
   const scrollRef = useRef<ScrollView>(null)
   const streamingTextRef = useRef('')
   const systemMessageSentRef = useRef(false)
+  const stoppedRef = useRef(false)
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -71,6 +72,11 @@ export default function MissionDetailScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
+  // Reset stopped guard when mission changes
+  useEffect(() => {
+    stoppedRef.current = false
+  }, [activeMission?.id])
+
   // Auto-start mission on first load if in_progress and no messages
   useEffect(() => {
     if (
@@ -89,16 +95,19 @@ export default function MissionDetailScreen() {
     (event: AgentEvent) => {
       if (!activeMission) return
 
+      // If the mission was stopped, still consume events but skip status updates
+      const isStopped = stoppedRef.current
+
       if (event.data?.delta) {
         streamingTextRef.current += event.data.delta
 
-        // Update the last assistant message in-place
+        // Update the last assistant message in-place (even if stopped, so user sees what was received)
         setMessages((prev) => {
           const last = prev[prev.length - 1]
           if (last && last.sender === 'agent') {
             return [
               ...prev.slice(0, -1),
-              { ...last, text: streamingTextRef.current, streaming: true },
+              { ...last, text: streamingTextRef.current, streaming: !isStopped },
             ]
           }
           return [
@@ -108,59 +117,61 @@ export default function MissionDetailScreen() {
               sender: 'agent' as const,
               text: streamingTextRef.current,
               timestamp: new Date(),
-              streaming: true,
+              streaming: !isStopped,
             },
           ]
         })
 
-        // Parse for mission markers
-        const updates = parseChunk(event.data.delta)
-        for (const update of updates) {
-          switch (update.type) {
-            case 'subtask_complete':
-              if (update.subtaskId) {
-                updateSubtaskStatus(activeMission.id, update.subtaskId, 'completed')
-                // Move next subtask to in_progress
-                const currentIdx = activeMission.subtasks.findIndex(
-                  (s) => s.id === update.subtaskId,
-                )
-                if (currentIdx >= 0 && currentIdx < activeMission.subtasks.length - 1) {
-                  updateSubtaskStatus(
-                    activeMission.id,
-                    activeMission.subtasks[currentIdx + 1].id,
-                    'in_progress',
+        // Skip marker processing when stopped — don't let markers overwrite the stopped status
+        if (!isStopped) {
+          const updates = parseChunk(event.data.delta)
+          for (const update of updates) {
+            switch (update.type) {
+              case 'subtask_complete':
+                if (update.subtaskId) {
+                  updateSubtaskStatus(activeMission.id, update.subtaskId, 'completed')
+                  // Move next subtask to in_progress
+                  const currentIdx = activeMission.subtasks.findIndex(
+                    (s) => s.id === update.subtaskId,
                   )
+                  if (currentIdx >= 0 && currentIdx < activeMission.subtasks.length - 1) {
+                    updateSubtaskStatus(
+                      activeMission.id,
+                      activeMission.subtasks[currentIdx + 1].id,
+                      'in_progress',
+                    )
+                  }
                 }
-              }
-              break
-            case 'waiting_input':
-              updateMissionStatus(activeMission.id, 'idle')
-              break
-            case 'suggest_skill':
-              if (update.skillName) {
-                Alert.alert(t('missions.skillSuggestion', { name: update.skillName }), '', [
-                  { text: t('missions.skipSkill'), style: 'cancel' },
-                  {
-                    text: t('missions.installSkill'),
-                    onPress: () => {
-                      if (update.skillName) {
-                        addMissionSkill(activeMission.id, update.skillName)
-                      }
+                break
+              case 'waiting_input':
+                updateMissionStatus(activeMission.id, 'idle')
+                break
+              case 'suggest_skill':
+                if (update.skillName) {
+                  Alert.alert(t('missions.skillSuggestion', { name: update.skillName }), '', [
+                    { text: t('missions.skipSkill'), style: 'cancel' },
+                    {
+                      text: t('missions.installSkill'),
+                      onPress: () => {
+                        if (update.skillName) {
+                          addMissionSkill(activeMission.id, update.skillName)
+                        }
+                      },
                     },
-                  },
-                ])
-              }
-              break
-            case 'mission_complete':
-              updateMissionStatus(activeMission.id, 'completed', {
-                conclusion: streamingTextRef.current,
-              })
-              break
-            case 'mission_error':
-              updateMissionStatus(activeMission.id, 'error', {
-                errorMessage: update.reason,
-              })
-              break
+                  ])
+                }
+                break
+              case 'mission_complete':
+                updateMissionStatus(activeMission.id, 'completed', {
+                  conclusion: streamingTextRef.current,
+                })
+                break
+              case 'mission_error':
+                updateMissionStatus(activeMission.id, 'error', {
+                  errorMessage: update.reason,
+                })
+                break
+            }
           }
         }
       }
@@ -266,11 +277,26 @@ export default function MissionDetailScreen() {
         text: t('missions.stopMission'),
         style: 'destructive',
         onPress: () => {
+          // Guard: prevent event handler from overwriting the stopped status
+          stoppedRef.current = true
+
+          // Finalize any in-flight streaming message
+          setMessages((prev) => {
+            const last = prev[prev.length - 1]
+            if (last && last.streaming) {
+              return [...prev.slice(0, -1), { ...last, streaming: false }]
+            }
+            return prev
+          })
+          setIsStreaming(false)
+          streamingTextRef.current = ''
+          resetBuffer()
+
           stopMission(activeMission.id)
         },
       },
     ])
-  }, [activeMission, stopMission, t])
+  }, [activeMission, stopMission, resetBuffer, t])
 
   const handleArchive = useCallback(() => {
     if (!activeMission) return
@@ -378,7 +404,10 @@ export default function MissionDetailScreen() {
     )
   }
 
-  const isActive = activeMission.status === 'in_progress' || activeMission.status === 'idle'
+  const isActive =
+    activeMission.status === 'pending' ||
+    activeMission.status === 'in_progress' ||
+    activeMission.status === 'idle'
   const canArchive =
     activeMission.status === 'completed' ||
     activeMission.status === 'stopped' ||
