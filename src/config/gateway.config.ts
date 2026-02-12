@@ -38,7 +38,7 @@ export const GatewayMethods = {
   SKILLS_LIST: 'skills.list',
   SKILLS_REMOVE: 'skills.remove',
   SKILLS_UPDATE: 'skills.update',
-  LOGS_LIST: 'logs.list',
+  LOGS_TAIL: 'logs.tail',
   AGENT: 'agent',
 } as const
 

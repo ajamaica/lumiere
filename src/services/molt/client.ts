@@ -315,7 +315,7 @@ export class MoltGatewayClient {
   }
 
   async getLogs(params?: GatewayLogsParams): Promise<GatewayLogsResponse> {
-    return this.request<GatewayLogsResponse>(GatewayMethods.LOGS_LIST, params)
+    return this.request<GatewayLogsResponse>(GatewayMethods.LOGS_TAIL, params)
   }
 
   async sendAgentRequest(
