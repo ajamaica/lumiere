@@ -23,7 +23,7 @@ export const GatewayMethods = {
   CONNECT: 'connect',
   HEALTH: 'health',
   STATUS: 'status',
-  CHAT_SEND: 'send',
+  CHAT_SEND: 'chat.send',
   CHAT_HISTORY: 'chat.history',
   CHAT_ABORT: 'chat.abort',
   SESSIONS_LIST: 'sessions.list',
@@ -45,9 +45,13 @@ export const GatewayMethods = {
 /** Well-known gateway event names. */
 export const GatewayEvents = {
   AGENT: 'agent',
+  CHAT: 'chat',
   PRESENCE: 'presence',
   TICK: 'tick',
   SHUTDOWN: 'shutdown',
   HEALTH: 'health',
   SEQ_GAP: 'seq.gap',
+  CONNECT_CHALLENGE: 'connect.challenge',
+  DEVICE_PAIR_REQUESTED: 'device.pair.requested',
+  DEVICE_PAIR_RESOLVED: 'device.pair.resolved',
 } as const

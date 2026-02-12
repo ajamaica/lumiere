@@ -17,6 +17,8 @@ import {
   AgentEvent,
   AgentEventCallback,
   AgentParams,
+  ChatAttachmentPayload,
+  ChatSendResponse,
   ConnectionState,
   ConnectionStateCallback,
   ConnectResponse,
@@ -256,6 +258,49 @@ export class MoltGatewayClient {
 
   async sendMessage(params: SendMessageParams): Promise<unknown> {
     return this.request(GatewayMethods.CHAT_SEND, params)
+  }
+
+  /**
+   * Send a chat message with optional thinking and file attachments.
+   * Uses the `chat.send` RPC method aligned with the gateway protocol.
+   *
+   * The server-side timeout is forwarded so the gateway knows how long to
+   * allow for the agent run. The client-side timeout adds a 5-second buffer
+   * beyond the server timeout to account for network latency.
+   */
+  async chatSend(
+    sessionKey: string,
+    message: string,
+    options?: {
+      thinking?: string
+      attachments?: ChatAttachmentPayload[]
+      idempotencyKey?: string
+      timeoutMs?: number
+    },
+  ): Promise<ChatSendResponse> {
+    const idempotencyKey = options?.idempotencyKey ?? generateIdempotencyKey()
+    const serverTimeout = options?.timeoutMs ?? 30_000
+
+    return this.request<ChatSendResponse>(
+      GatewayMethods.CHAT_SEND,
+      {
+        sessionKey,
+        message,
+        thinking: options?.thinking ?? '',
+        attachments: options?.attachments?.length ? options.attachments : undefined,
+        timeoutMs: serverTimeout,
+        idempotencyKey,
+      },
+      // Extra buffer beyond the server-side timeout for network latency
+      serverTimeout + 5_000,
+    )
+  }
+
+  /**
+   * Abort a running chat agent by session and run ID.
+   */
+  async chatAbort(sessionKey: string, runId: string): Promise<void> {
+    await this.request(GatewayMethods.CHAT_ABORT, { sessionKey, runId }, 10_000)
   }
 
   async getChatHistory(sessionKey: string, limit?: number): Promise<unknown> {
