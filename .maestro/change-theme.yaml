@@ -1,0 +1,30 @@
+# Theme: navigate to the colors screen and switch theme
+appId: bot.lumiere.app
+tags:
+  - theme
+  - settings
+---
+- runFlow: onboarding-echo.yaml
+
+# Open settings
+- tapOn:
+    id: "settings-button"
+    optional: true
+- tapOn:
+    text: ".*settings.*"
+    optional: true
+
+# Tap on Colors row
+- tapOn: "Colors"
+
+# Verify colors screen loaded with theme options
+- assertVisible: "Pink"
+- assertVisible: "Green"
+- assertVisible: "Blue"
+- assertVisible: "Purple"
+
+# Select a different theme
+- tapOn: "Pink"
+
+# Go back to verify theme applied (no crash)
+- back

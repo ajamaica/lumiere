@@ -1,0 +1,5 @@
+# Maestro configuration for Lumiere
+# https://maestro.mobile.dev/
+
+appId: bot.lumiere.app
+name: Lumiere E2E Tests

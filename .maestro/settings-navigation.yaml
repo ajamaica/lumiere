@@ -1,0 +1,29 @@
+# Settings: open the settings screen and verify key sections are visible
+appId: bot.lumiere.app
+tags:
+  - settings
+  - navigation
+---
+- runFlow: onboarding-echo.yaml
+
+# Open settings — the gear icon in the header
+- tapOn:
+    id: "settings-button"
+    optional: true
+# Fallback: try tapping a common settings affordance
+- tapOn:
+    text: ".*settings.*"
+    optional: true
+
+# Verify settings screen sections
+- assertVisible: "Settings"
+- assertVisible: "Echo Agent"
+- assertVisible: "Colors"
+- assertVisible: "Favorites"
+- assertVisible: "Triggers"
+- assertVisible: "Logout"
+- scrollUntilVisible:
+    element: "Logout"
+    direction: DOWN
+    timeout: 3000
+    optional: true

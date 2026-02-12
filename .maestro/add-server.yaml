@@ -1,0 +1,40 @@
+# Add Server: navigate to add-server screen and fill in a Claude provider
+appId: bot.lumiere.app
+tags:
+  - servers
+---
+- runFlow: onboarding-echo.yaml
+
+# Open settings
+- tapOn:
+    id: "settings-button"
+    optional: true
+- tapOn:
+    text: ".*settings.*"
+    optional: true
+
+# Tap the add server button (+ icon next to Servers section)
+- tapOn:
+    id: "add-server-button"
+    optional: true
+- tapOn:
+    text: "add-circle-outline"
+    optional: true
+
+# Verify add-server screen
+- assertVisible: "Provider Type"
+
+# Select Claude provider
+- tapOn: "Provider Type"
+- tapOn: "Claude"
+
+# Fill in token
+- tapOn: "API Key"
+- inputText: "sk-test-fake-key-for-e2e"
+
+# Fill in model
+- tapOn: "Model"
+- inputText: "claude-sonnet-4-5"
+
+# Verify the save/add button is present
+- assertVisible: "Add Server"
