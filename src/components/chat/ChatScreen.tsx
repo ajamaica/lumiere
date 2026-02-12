@@ -36,7 +36,7 @@ import {
   pendingShareTextAtom,
   pendingTriggerMessageAtom,
 } from '../../store'
-import { useTheme } from '../../theme'
+import { Theme, useTheme } from '../../theme'
 import {
   useContentContainerStyle,
   useDeviceType,
@@ -780,24 +780,6 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       )}
     </SafeAreaView>
   )
-}
-
-interface Theme {
-  colors: {
-    background: string
-    surface: string
-    border: string
-    text: { primary: string; secondary: string; tertiary: string; inverse: string }
-    primary: string
-    status: { success: string; error: string; warning: string }
-  }
-  spacing: { xs: number; sm: number; md: number; lg: number; xl: number }
-  borderRadius: { sm: number; md: number; xxl: number }
-  typography: {
-    fontSize: { xs: number; sm: number; base: number }
-    fontWeight: { semibold: '600' }
-  }
-  isDark: boolean
 }
 
 const createStyles = (

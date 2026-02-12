@@ -286,7 +286,10 @@
     "refresh": "새로고침",
     "logsSection": "로그",
     "logsDescription": "게이트웨이의 최근 로그 항목.",
-    "noLogs": "로그 항목을 찾을 수 없습니다"
+    "noLogs": "로그 항목을 찾을 수 없습니다",
+    "connectionError": "연결 오류",
+    "fetchError": "로그를 불러오지 못했습니다",
+    "connecting": "게이트웨이에 연결 중..."
   },
   "extension": {
     "openFullscreen": "새 탭에서 열기",

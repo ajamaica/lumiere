@@ -286,7 +286,10 @@
     "refresh": "刷新",
     "logsSection": "日志",
     "logsDescription": "网关的最近日志条目。",
-    "noLogs": "未找到日志条目"
+    "noLogs": "未找到日志条目",
+    "connectionError": "连接错误",
+    "fetchError": "加载日志失败",
+    "connecting": "正在连接网关..."
   },
   "extension": {
     "openFullscreen": "在新标签页中打开",

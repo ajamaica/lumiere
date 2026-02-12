@@ -286,7 +286,10 @@
     "refresh": "更新",
     "logsSection": "ログ",
     "logsDescription": "ゲートウェイからの最近のログエントリ。",
-    "noLogs": "ログエントリが見つかりません"
+    "noLogs": "ログエントリが見つかりません",
+    "connectionError": "接続エラー",
+    "fetchError": "ログの読み込みに失敗しました",
+    "connecting": "ゲートウェイに接続中..."
   },
   "extension": {
     "openFullscreen": "新しいタブで開く",
