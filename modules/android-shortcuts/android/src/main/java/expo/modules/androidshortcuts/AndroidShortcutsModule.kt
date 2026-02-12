@@ -119,7 +119,7 @@ class AndroidShortcutsModule : Module() {
      * Remove all dynamic shortcuts.
      */
     Function("removeAllDynamicShortcuts") {
-      val context = getContext() ?: return@Function
+      val context = getContext() ?: return@Function Unit
       ShortcutManagerCompat.removeAllDynamicShortcuts(context)
     }
 
