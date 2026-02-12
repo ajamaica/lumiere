@@ -11,6 +11,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated'
 
+import { useReducedMotion } from '../../hooks/useReducedMotion'
+
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient)
 
 type AnimationPreset = 'shimmer' | 'pulse' | 'wave' | 'breathe' | 'none'
@@ -30,11 +32,12 @@ export function AnimatedGradient({
   children,
   ...props
 }: AnimatedGradientProps) {
+  const reducedMotion = useReducedMotion()
   const progress = useSharedValue(0)
   const opacity = useSharedValue(1)
 
   useEffect(() => {
-    if (animationPreset === 'none') return
+    if (animationPreset === 'none' || reducedMotion) return
 
     switch (animationPreset) {
       case 'shimmer':
@@ -79,7 +82,7 @@ export function AnimatedGradient({
         )
         break
     }
-  }, [animationPreset, duration, progress, opacity])
+  }, [animationPreset, duration, progress, opacity, reducedMotion])
 
   const animatedStyle = useAnimatedStyle(() => {
     return {

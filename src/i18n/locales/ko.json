@@ -304,5 +304,23 @@
   "extension": {
     "openFullscreen": "새 탭에서 열기",
     "openSidebar": "사이드바에서 열기"
+  },
+  "accessibility": {
+    "scrollToBottom": "맨 아래로 스크롤",
+    "scrollToBottomHint": "가장 최근 메시지로 스크롤합니다",
+    "searchMessages": "메시지 검색",
+    "agentIsThinking": "에이전트가 생각 중입니다",
+    "copyMessage": "메시지 복사",
+    "copied": "복사됨",
+    "addToFavorites": "즐겨찾기에 추가",
+    "removeFromFavorites": "즐겨찾기에서 제거",
+    "messageFromYou": "나",
+    "messageFromAssistant": "어시스턴트",
+    "attachmentLabel": "첨부파일 {{index}}",
+    "sessionMenu": "세션 메뉴",
+    "addAttachment": "첨부파일 추가",
+    "startVoiceInput": "음성 입력 시작",
+    "sendMessage": "메시지 보내기",
+    "messagesQueued": "{{count}}개의 메시지가 대기 중"
   }
 }

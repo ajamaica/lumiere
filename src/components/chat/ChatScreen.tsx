@@ -3,6 +3,7 @@ import { FlashList, FlashListRef } from '@shopify/flash-list'
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, Keyboard, Text, TouchableOpacity, View } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -45,6 +46,7 @@ interface ChatScreenProps {
  */
 export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const router = useRouter()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [currentAgentId, setCurrentAgentId] = useAtom(currentAgentIdAtom)
@@ -244,6 +246,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             flatListRef.current?.scrollToEnd({ animated: true })
             setShowScrollButton(false)
           }}
+          accessibilityRole="button"
+          accessibilityLabel={t('accessibility.scrollToBottom')}
+          accessibilityHint={t('accessibility.scrollToBottomHint')}
         >
           <Ionicons name="arrow-down" size={22} color={theme.colors.text.inverse} />
         </TouchableOpacity>

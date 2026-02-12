@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 import { Animated, StyleSheet } from 'react-native'
 
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { useTheme } from '../../theme'
 
 type StatusDotVariant = 'success' | 'error' | 'warning' | 'info' | 'neutral'
@@ -13,6 +14,7 @@ export interface StatusDotProps {
 
 export function StatusDot({ variant = 'success', pulse = false, size = 10 }: StatusDotProps) {
   const { theme } = useTheme()
+  const reducedMotion = useReducedMotion()
   const pulseAnim = useMemo(() => new Animated.Value(1), [])
 
   const colorMap: Record<StatusDotVariant, string> = {
@@ -24,7 +26,7 @@ export function StatusDot({ variant = 'success', pulse = false, size = 10 }: Sta
   }
 
   useEffect(() => {
-    if (pulse) {
+    if (pulse && !reducedMotion) {
       const animation = Animated.loop(
         Animated.sequence([
           Animated.timing(pulseAnim, {
@@ -48,7 +50,7 @@ export function StatusDot({ variant = 'success', pulse = false, size = 10 }: Sta
         useNativeDriver: true,
       }).start()
     }
-  }, [pulse, pulseAnim])
+  }, [pulse, pulseAnim, reducedMotion])
 
   const styles = StyleSheet.create({
     dot: {

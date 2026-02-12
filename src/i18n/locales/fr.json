@@ -304,5 +304,23 @@
   "extension": {
     "openFullscreen": "Ouvrir dans un nouvel onglet",
     "openSidebar": "Ouvrir dans le panneau latéral"
+  },
+  "accessibility": {
+    "scrollToBottom": "Défiler vers le bas",
+    "scrollToBottomHint": "Défile vers le message le plus récent",
+    "searchMessages": "Rechercher des messages",
+    "agentIsThinking": "L'agent réfléchit",
+    "copyMessage": "Copier le message",
+    "copied": "Copié",
+    "addToFavorites": "Ajouter aux favoris",
+    "removeFromFavorites": "Retirer des favoris",
+    "messageFromYou": "Vous",
+    "messageFromAssistant": "Assistant",
+    "attachmentLabel": "Pièce jointe {{index}}",
+    "sessionMenu": "Menu de session",
+    "addAttachment": "Ajouter une pièce jointe",
+    "startVoiceInput": "Démarrer la saisie vocale",
+    "sendMessage": "Envoyer le message",
+    "messagesQueued": "{{count}} message(s) en attente"
   }
 }

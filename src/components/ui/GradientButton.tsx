@@ -18,6 +18,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated'
 
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { useTheme } from '../../theme'
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient)
@@ -49,6 +50,7 @@ export function GradientButton({
   ...props
 }: GradientButtonProps) {
   const { theme } = useTheme()
+  const reducedMotion = useReducedMotion()
   const shimmerProgress = useSharedValue(0)
   const scaleValue = useSharedValue(1)
 
@@ -62,7 +64,7 @@ export function GradientButton({
   const gradientColors = colors || presetColors[preset]
 
   useEffect(() => {
-    if (animated && !disabled && !loading) {
+    if (animated && !disabled && !loading && !reducedMotion) {
       shimmerProgress.value = withRepeat(
         withSequence(
           withTiming(1, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
@@ -72,7 +74,7 @@ export function GradientButton({
         false,
       )
     }
-  }, [animated, disabled, loading, shimmerProgress])
+  }, [animated, disabled, loading, reducedMotion, shimmerProgress])
 
   const animatedGradientStyle = useAnimatedStyle(() => ({
     opacity: 0.9 + shimmerProgress.value * 0.1,
@@ -83,12 +85,14 @@ export function GradientButton({
   }))
 
   const handlePressIn = useCallback(() => {
+    if (reducedMotion) return
     scaleValue.value = withTiming(0.97, { duration: 100, easing: Easing.out(Easing.ease) }) // eslint-disable-line react-hooks/immutability
-  }, [scaleValue])
+  }, [scaleValue, reducedMotion])
 
   const handlePressOut = useCallback(() => {
+    if (reducedMotion) return
     scaleValue.value = withSpring(1, { damping: 12, stiffness: 400 }) // eslint-disable-line react-hooks/immutability
-  }, [scaleValue])
+  }, [scaleValue, reducedMotion])
 
   const sizeStyles = {
     sm: {

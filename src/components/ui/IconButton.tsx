@@ -9,6 +9,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated'
 
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { useTheme } from '../../theme'
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
@@ -35,6 +36,7 @@ export function IconButton({
   ...props
 }: IconButtonProps) {
   const { theme } = useTheme()
+  const reducedMotion = useReducedMotion()
   const scaleValue = useSharedValue(1)
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -42,12 +44,14 @@ export function IconButton({
   }))
 
   const handlePressIn = useCallback(() => {
+    if (reducedMotion) return
     scaleValue.value = withTiming(0.85, { duration: 100, easing: Easing.out(Easing.ease) }) // eslint-disable-line react-hooks/immutability
-  }, [scaleValue])
+  }, [scaleValue, reducedMotion])
 
   const handlePressOut = useCallback(() => {
+    if (reducedMotion) return
     scaleValue.value = withSpring(1, { damping: 12, stiffness: 400 }) // eslint-disable-line react-hooks/immutability
-  }, [scaleValue])
+  }, [scaleValue, reducedMotion])
 
   const sizeMap = {
     sm: { button: 32, icon: 18 },

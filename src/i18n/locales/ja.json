@@ -304,5 +304,23 @@
   "extension": {
     "openFullscreen": "新しいタブで開く",
     "openSidebar": "サイドバーで開く"
+  },
+  "accessibility": {
+    "scrollToBottom": "一番下にスクロール",
+    "scrollToBottomHint": "最新のメッセージまでスクロールします",
+    "searchMessages": "メッセージを検索",
+    "agentIsThinking": "エージェントが考え中",
+    "copyMessage": "メッセージをコピー",
+    "copied": "コピーしました",
+    "addToFavorites": "お気に入りに追加",
+    "removeFromFavorites": "お気に入りから削除",
+    "messageFromYou": "あなた",
+    "messageFromAssistant": "アシスタント",
+    "attachmentLabel": "添付ファイル {{index}}",
+    "sessionMenu": "セッションメニュー",
+    "addAttachment": "添付ファイルを追加",
+    "startVoiceInput": "音声入力を開始",
+    "sendMessage": "メッセージを送信",
+    "messagesQueued": "{{count}}件のメッセージがキューに入っています"
   }
 }

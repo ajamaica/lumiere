@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useAtom, useSetAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 import Animated, {
@@ -13,6 +14,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated'
 
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { useUrlMetadata } from '../../hooks/useUrlMetadata'
 import { copyToClipboard, executeIntent } from '../../services/intents'
 import {
@@ -65,6 +67,8 @@ const linkifyText = (text: string): string => {
 
 export function ChatMessage({ message }: { message: Message }) {
   const { theme } = useTheme()
+  const { t } = useTranslation()
+  const reducedMotion = useReducedMotion()
   const isUser = message.sender === 'user'
   const [copied, setCopied] = useState(false)
   const [intentCopied, setIntentCopied] = useState(false)
@@ -79,6 +83,10 @@ export function ChatMessage({ message }: { message: Message }) {
 
   // Entrance animation
   useEffect(() => {
+    if (reducedMotion) {
+      fadeIn.value = 1
+      return
+    }
     fadeIn.value = withTiming(1, { duration: 300, easing: Easing.out(Easing.ease) })
 
     // Subtle shimmer for user bubbles
@@ -92,7 +100,7 @@ export function ChatMessage({ message }: { message: Message }) {
         false,
       )
     }
-  }, [fadeIn, shimmerProgress, isUser])
+  }, [fadeIn, shimmerProgress, isUser, reducedMotion])
 
   const animatedContainerStyle = useAnimatedStyle(() => ({
     opacity: fadeIn.value,
@@ -179,7 +187,7 @@ export function ChatMessage({ message }: { message: Message }) {
             source={{ uri: attachment.uri }}
             style={styles.attachmentImage}
             resizeMode="cover"
-            accessibilityLabel={`Attachment ${index + 1}`}
+            accessibilityLabel={t('accessibility.attachmentLabel', { index: index + 1 })}
             accessibilityRole="image"
           />
         ))}
@@ -240,8 +248,9 @@ export function ChatMessage({ message }: { message: Message }) {
     <View
       style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}
       accessible={true}
-      accessibilityLabel={`${isUser ? 'You' : 'Assistant'}: ${message.text.substring(0, 200)}${message.text.length > 200 ? '...' : ''}`}
+      accessibilityLabel={`${isUser ? t('accessibility.messageFromYou') : t('accessibility.messageFromAssistant')}: ${message.text.substring(0, 200)}${message.text.length > 200 ? '...' : ''}`}
       accessibilityRole="text"
+      accessibilityLiveRegion={!isUser ? 'polite' : 'none'}
     >
       {isUser ? renderUserBubble() : renderAgentBubble()}
       {!message.streaming && intents.length > 0 && (
@@ -256,7 +265,7 @@ export function ChatMessage({ message }: { message: Message }) {
                 onPress={() => handleIntentPress(intent)}
                 activeOpacity={0.7}
                 accessibilityRole="button"
-                accessibilityLabel={showCheck ? 'Copied' : intent.label}
+                accessibilityLabel={showCheck ? t('accessibility.copied') : intent.label}
               >
                 <Ionicons
                   name={(showCheck ? 'checkmark' : intentIcon(intent.action)) as any}
@@ -277,7 +286,9 @@ export function ChatMessage({ message }: { message: Message }) {
               style={styles.actionButton}
               onPress={handleCopy}
               accessibilityRole="button"
-              accessibilityLabel={copied ? 'Copied' : 'Copy message'}
+              accessibilityLabel={
+                copied ? t('accessibility.copied') : t('accessibility.copyMessage')
+              }
             >
               <Ionicons
                 name={copied ? 'checkmark' : 'copy-outline'}
@@ -290,7 +301,11 @@ export function ChatMessage({ message }: { message: Message }) {
             style={styles.actionButton}
             onPress={handleToggleFavorite}
             accessibilityRole="button"
-            accessibilityLabel={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
+            accessibilityLabel={
+              isFavorited
+                ? t('accessibility.removeFromFavorites')
+                : t('accessibility.addToFavorites')
+            }
             accessibilityState={{ selected: isFavorited }}
           >
             <Ionicons

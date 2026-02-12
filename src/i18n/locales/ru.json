@@ -304,5 +304,23 @@
   "extension": {
     "openFullscreen": "Открыть в новой вкладке",
     "openSidebar": "Открыть в боковой панели"
+  },
+  "accessibility": {
+    "scrollToBottom": "Прокрутить вниз",
+    "scrollToBottomHint": "Прокручивает к последнему сообщению",
+    "searchMessages": "Поиск сообщений",
+    "agentIsThinking": "Агент думает",
+    "copyMessage": "Копировать сообщение",
+    "copied": "Скопировано",
+    "addToFavorites": "Добавить в избранное",
+    "removeFromFavorites": "Удалить из избранного",
+    "messageFromYou": "Вы",
+    "messageFromAssistant": "Ассистент",
+    "attachmentLabel": "Вложение {{index}}",
+    "sessionMenu": "Меню сессии",
+    "addAttachment": "Добавить вложение",
+    "startVoiceInput": "Начать голосовой ввод",
+    "sendMessage": "Отправить сообщение",
+    "messagesQueued": "{{count}} сообщение(й) в очереди"
   }
 }
