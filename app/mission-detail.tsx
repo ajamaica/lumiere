@@ -393,7 +393,11 @@ export default function MissionDetailScreen() {
           <View style={styles.missionHeader}>
             <View style={styles.titleRow}>
               <View style={styles.titleWrap}>
-                <Text variant="heading2" style={{ color: theme.colors.text.primary }}>
+                <Text
+                  variant="heading2"
+                  numberOfLines={2}
+                  style={{ color: theme.colors.text.primary }}
+                >
                   {activeMission.title}
                 </Text>
               </View>

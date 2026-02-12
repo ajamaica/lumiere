@@ -88,7 +88,7 @@ export function MissionCard({ mission, onPress }: MissionCardProps) {
     >
       <View style={styles.header}>
         <View style={styles.titleWrap}>
-          <Text variant="heading3" style={{ color: theme.colors.text.primary }}>
+          <Text variant="heading3" numberOfLines={2} style={{ color: theme.colors.text.primary }}>
             {mission.title}
           </Text>
         </View>

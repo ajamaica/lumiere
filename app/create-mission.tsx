@@ -26,6 +26,9 @@ import { logger } from '../src/utils/logger'
 
 const missionLogger = logger.create('Mission')
 
+const COMMANDER_SESSION_KEY = 'agent:main:mission-commander'
+const MAX_TITLE_LENGTH = 50
+
 interface PlanSubtask {
   id: string
   title: string
@@ -36,6 +39,12 @@ interface ParsedPlan {
   subtasks: PlanSubtask[]
 }
 
+function clampTitle(title: string): string {
+  const trimmed = title.trim()
+  if (trimmed.length <= MAX_TITLE_LENGTH) return trimmed
+  return trimmed.slice(0, MAX_TITLE_LENGTH - 1).trimEnd() + '…'
+}
+
 function tryParsePlan(text: string): ParsedPlan | null {
   // Try to extract JSON from the response
   const jsonMatch = text.match(/\{[\s\S]*"title"[\s\S]*"subtasks"[\s\S]*\}/)
@@ -44,7 +53,7 @@ function tryParsePlan(text: string): ParsedPlan | null {
       const parsed = JSON.parse(jsonMatch[0])
       if (parsed.title && Array.isArray(parsed.subtasks)) {
         return {
-          title: parsed.title,
+          title: clampTitle(parsed.title),
           subtasks: parsed.subtasks.map((s: { id?: string; title?: string }, i: number) => ({
             id: s.id || `subtask-${i + 1}`,
             title: s.title || `Step ${i + 1}`,
@@ -63,7 +72,7 @@ function tryParsePlan(text: string): ParsedPlan | null {
 
   if (subtaskLines.length > 0) {
     return {
-      title: titleLine?.replace(/^#+\s*/, '').trim() || 'Mission',
+      title: clampTitle(titleLine?.replace(/^#+\s*/, '').trim() || 'Mission'),
       subtasks: subtaskLines.map((l, i) => ({
         id: `subtask-${i + 1}`,
         title: l.replace(/^\d+[.)]\s*/, '').trim(),
@@ -133,11 +142,15 @@ export default function CreateMissionScreen() {
     setPhase('analyzing')
 
     try {
-      const planSessionKey = `agent:main:mission-plan-${Date.now()}`
-      const planPrompt = `You are a task planner. Analyze the following user request and break it into concrete, actionable subtasks (3-8 steps). Each subtask should be a single clear action.
+      const planPrompt = `You are Mission Commander — a task planner that decomposes user requests into actionable steps.
 
-Return ONLY a valid JSON object in this exact format with no surrounding text or markdown:
-{"title": "Short descriptive mission title", "subtasks": [{"id": "subtask-1", "title": "First step description"}, {"id": "subtask-2", "title": "Second step description"}]}
+Analyze the request below and return ONLY a valid JSON object (no markdown, no extra text):
+{"title": "<concise title, max ${MAX_TITLE_LENGTH} chars>", "subtasks": [{"id": "subtask-1", "title": "First step"}, {"id": "subtask-2", "title": "Second step"}]}
+
+Rules:
+- Title MUST be ${MAX_TITLE_LENGTH} characters or fewer. It should be a short, descriptive label.
+- Create 3-8 subtasks. Each should be a single, clear action.
+- Use sequential IDs: subtask-1, subtask-2, etc.
 
 User request: ${prompt.trim()}`
 
@@ -147,7 +160,7 @@ User request: ${prompt.trim()}`
         {
           message: planPrompt,
           idempotencyKey: `mission-plan-${Date.now()}`,
-          sessionKey: planSessionKey,
+          sessionKey: COMMANDER_SESSION_KEY,
         },
         (event) => {
           if (event.data?.delta) {
@@ -163,7 +176,7 @@ User request: ${prompt.trim()}`
       } else {
         // Fallback: create a simple single-step plan
         setPlan({
-          title: prompt.trim().slice(0, 60),
+          title: clampTitle(prompt.trim()),
           subtasks: [{ id: 'subtask-1', title: prompt.trim() }],
         })
         setPhase('review')
@@ -361,6 +374,7 @@ User request: ${prompt.trim()}`
                 onChangeText={(text) => setPlan({ ...plan, title: text })}
                 placeholder={t('missions.titlePlaceholder')}
                 placeholderTextColor={theme.colors.text.tertiary}
+                maxLength={MAX_TITLE_LENGTH}
               />
 
               <Card style={{ marginBottom: theme.spacing.lg }}>
