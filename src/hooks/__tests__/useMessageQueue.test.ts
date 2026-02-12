@@ -21,6 +21,18 @@ jest.mock('react', () => {
   }
 })
 
+jest.mock('../../utils/attachments', () => ({
+  toProviderAttachments: jest.fn(
+    async (attachments: Array<{ type: string; base64?: string; mimeType?: string }>) => {
+      // Simulate the real conversion: images use base64 as data
+      const converted = attachments
+        .filter((a) => a.type === 'image' && a.base64)
+        .map((a) => ({ type: 'image', data: a.base64, mimeType: a.mimeType }))
+      return converted.length > 0 ? converted : undefined
+    },
+  ),
+}))
+
 // ---------- helpers ----------
 
 type OnEvent = (event: ChatProviderEvent) => void
