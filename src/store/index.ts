@@ -2,6 +2,7 @@
 export type {
   FavoriteItem,
   NotificationLastCheckMap,
+  PendingShareMedia,
   ServerConfig,
   ServersDict,
   ServerSessions,
@@ -50,6 +51,7 @@ export { gatewayConnectedAtom, gatewayConnectingAtom, gatewayErrorAtom } from '.
 export {
   clearMessagesAtom,
   messageQueueAtom,
+  pendingShareMediaAtom,
   pendingShareTextAtom,
   pendingTriggerMessageAtom,
 } from './messagingAtoms'
