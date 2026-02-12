@@ -223,12 +223,14 @@ export default function SettingsScreen() {
             value={colorThemes[colorTheme].name}
             onPress={() => router.push('/colors')}
           />
-          <SettingRow
-            icon="finger-print-outline"
-            label={t('settings.biometrics')}
-            switchValue={biometricLockEnabled}
-            onSwitchChange={handleBiometricToggle}
-          />
+          {!isWeb && (
+            <SettingRow
+              icon="finger-print-outline"
+              label={t('settings.biometrics')}
+              switchValue={biometricLockEnabled}
+              onSwitchChange={handleBiometricToggle}
+            />
+          )}
           <SettingRow
             icon="notifications-outline"
             label={t('settings.notifications')}
