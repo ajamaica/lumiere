@@ -109,22 +109,23 @@ function withAppClipTarget(config) {
 
     // --- Configure build settings ---
 
+    // Values that contain special characters ($, /, spaces) must be
+    // wrapped in escaped double-quotes so the pbxproj serialiser
+    // produces valid plist syntax (e.g.  PRODUCT_NAME = "$(TARGET_NAME)"; ).
     const commonBuildSettings = {
       ASSETCATALOG_COMPILER_APPICON_NAME: 'AppIcon',
       CLANG_ENABLE_MODULES: 'YES',
-      CODE_SIGN_ENTITLEMENTS: `${APP_CLIP_TARGET_NAME}/AppClip.entitlements`,
+      CODE_SIGN_ENTITLEMENTS: `"${APP_CLIP_TARGET_NAME}/AppClip.entitlements"`,
       CODE_SIGN_STYLE: 'Automatic',
       CURRENT_PROJECT_VERSION: buildNumber,
-      INFOPLIST_FILE: `${APP_CLIP_TARGET_NAME}/Info.plist`,
+      INFOPLIST_FILE: `"${APP_CLIP_TARGET_NAME}/Info.plist"`,
       IPHONEOS_DEPLOYMENT_TARGET: '16.0',
       MARKETING_VERSION: appVersion,
-      PRODUCT_BUNDLE_IDENTIFIER: appClipBundleId,
-      PRODUCT_NAME: '$(TARGET_NAME)',
+      PRODUCT_BUNDLE_IDENTIFIER: `"${appClipBundleId}"`,
+      PRODUCT_NAME: '"$(TARGET_NAME)"',
       SUPPORTS_MACCATALYST: 'NO',
       SWIFT_VERSION: '5.0',
       TARGETED_DEVICE_FAMILY: '"1,2"',
-      // App Clips must be under 10MB
-      ASSETCATALOG_COMPILER_APPICON_NAME: 'AppIcon',
     }
 
     // Apply build settings to all configurations
