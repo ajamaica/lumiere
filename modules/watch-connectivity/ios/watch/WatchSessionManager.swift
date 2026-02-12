@@ -39,26 +39,22 @@ class WatchSessionManager: NSObject, ObservableObject, WCSessionDelegate {
         ]
 
         if WCSession.default.isReachable {
-            WCSession.default.sendMessage(message, replyHandler: nil) { [weak self] _ in
+            WCSession.default.sendMessage(message, replyHandler: nil) { _ in
+                // Fall back to transferUserInfo if sendMessage fails
                 DispatchQueue.main.async {
-                    // Fall back to transferUserInfo
                     WCSession.default.transferUserInfo(message)
-                }
-                // Set a timeout for unreachable phone
-                DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
-                    guard let self = self, self.isLoading, self.latestResponseSlug == slug else { return }
-                    self.isLoading = false
-                    self.errorMessage = String(localized: "watch.response.error")
                 }
             }
         } else {
             WCSession.default.transferUserInfo(message)
-            // Set a timeout for background delivery
-            DispatchQueue.main.asyncAfter(deadline: .now() + 30) { [weak self] in
-                guard let self = self, self.isLoading, self.latestResponseSlug == slug else { return }
-                self.isLoading = false
-                self.errorMessage = String(localized: "watch.response.error")
-            }
+        }
+
+        // Unconditional timeout — clears loading if no response arrives
+        // regardless of whether sendMessage or transferUserInfo was used.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 30) { [weak self] in
+            guard let self = self, self.isLoading, self.latestResponseSlug == slug else { return }
+            self.isLoading = false
+            self.errorMessage = String(localized: "watch.response.error")
         }
     }
 

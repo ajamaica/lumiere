@@ -23,6 +23,10 @@ struct ResponseView: View {
                     errorView(error)
                 } else if let response = sessionManager.latestResponse {
                     responseView(response)
+                } else {
+                    // Fallback when no state is set yet (e.g. view presented
+                    // before isLoading has been toggled on)
+                    loadingView
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

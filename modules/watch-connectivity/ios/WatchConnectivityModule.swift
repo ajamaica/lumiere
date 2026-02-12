@@ -19,14 +19,18 @@ public class WatchConnectivityModule: Module {
     Events("onWatchTriggerRequest", "onWatchVoiceMessage")
 
     /// Returns true when a Watch is paired with this iPhone.
+    /// Only reads the property after activation completes to avoid stale values.
     Function("isWatchPaired") { () -> Bool in
       guard WCSession.isSupported() else { return false }
+      guard WCSession.default.activationState == .activated else { return false }
       return WCSession.default.isPaired
     }
 
     /// Returns true when the companion Watch app is installed.
+    /// Only reads the property after activation completes to avoid stale values.
     Function("isWatchAppInstalled") { () -> Bool in
       guard WCSession.isSupported() else { return false }
+      guard WCSession.default.activationState == .activated else { return false }
       return WCSession.default.isWatchAppInstalled
     }
 

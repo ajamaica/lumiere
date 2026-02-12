@@ -70,8 +70,8 @@ function withWatchTarget(config) {
       CFBundleInfoDictionaryVersion: '6.0',
       CFBundleName: '$(PRODUCT_NAME)',
       CFBundlePackageType: '$(PRODUCT_TYPE_PACKAGE_TYPE)',
-      CFBundleShortVersionString: config.ios?.buildNumber || '1.0',
-      CFBundleVersion: '1',
+      CFBundleShortVersionString: config.version || config.ios?.version || '1.0',
+      CFBundleVersion: config.ios?.buildNumber || '1',
       UISupportedInterfaceOrientations: [
         'UIInterfaceOrientationPortrait',
         'UIInterfaceOrientationPortraitUpsideDown',

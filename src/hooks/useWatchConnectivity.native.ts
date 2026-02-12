@@ -13,29 +13,13 @@ import {
   ProviderConfig,
   SendMessageParams,
 } from '../services/providers'
-import {
-  currentServerIdAtom,
-  currentSessionKeyAtom,
-  serversAtom,
-  type ServersDict,
-  type TriggerConfig,
-  triggersAtom,
-} from '../store'
+import { currentServerIdAtom, currentSessionKeyAtom, serversAtom, triggersAtom } from '../store'
 
 /**
- * Resolves the triggers atom value, handling the Promise that
- * atomWithStorage may return before hydration completes.
+ * Resolves an atom value that may be a Promise (atomWithStorage hydration).
+ * Read the raw value once and await if needed.
  */
-async function resolveTriggers(
-  raw: Record<string, TriggerConfig> | Promise<Record<string, TriggerConfig>>,
-): Promise<Record<string, TriggerConfig>> {
-  return raw instanceof Promise ? await raw : raw
-}
-
-/**
- * Resolves the servers atom value, handling the Promise from atomWithStorage.
- */
-async function resolveServers(raw: ServersDict | Promise<ServersDict>): Promise<ServersDict> {
+async function resolveAtom<T>(raw: T | Promise<T>): Promise<T> {
   return raw instanceof Promise ? await raw : raw
 }
 
@@ -81,8 +65,8 @@ export function useWatchConnectivity() {
   // Sync triggers → Watch whenever they change
   useEffect(() => {
     async function sync() {
-      const resolved = await resolveTriggers(triggers)
-      const resolvedServers = await resolveServers(servers)
+      const resolved = await resolveAtom(triggers)
+      const resolvedServers = await resolveAtom(servers)
 
       const items = Object.values(resolved)
         .sort((a, b) => b.createdAt - a.createdAt)
@@ -103,11 +87,11 @@ export function useWatchConnectivity() {
     const cleanup = addTriggerRequestListener(async (slug) => {
       try {
         const store = getDefaultStore()
-        const resolved = await resolveTriggers(store.get(triggersAtom))
+        const resolved = await resolveAtom(store.get(triggersAtom))
         const trigger = resolved[slug]
         if (!trigger) return
 
-        const resolvedServers = await resolveServers(store.get(serversAtom))
+        const resolvedServers = await resolveAtom(store.get(serversAtom))
         const server = resolvedServers[trigger.serverId]
         if (!server) return
 
@@ -145,20 +129,15 @@ export function useWatchConnectivity() {
       try {
         const store = getDefaultStore()
 
-        // Use the current active server and session
-        const serverId =
-          store.get(currentServerIdAtom) instanceof Promise
-            ? await store.get(currentServerIdAtom)
-            : store.get(currentServerIdAtom)
-        const sessionKey =
-          store.get(currentSessionKeyAtom) instanceof Promise
-            ? await store.get(currentSessionKeyAtom)
-            : store.get(currentSessionKeyAtom)
+        // Use the current active server and session — read each atom
+        // once and await if still hydrating.
+        const serverId = await resolveAtom(store.get(currentServerIdAtom))
+        const sessionKey = await resolveAtom(store.get(currentSessionKeyAtom))
 
         if (!serverId || !sessionKey) return
 
-        const resolvedServers = await resolveServers(store.get(serversAtom))
-        const server = resolvedServers[serverId as string]
+        const resolvedServers = await resolveAtom(store.get(serversAtom))
+        const server = resolvedServers[serverId]
         if (!server) return
 
         const config: ProviderConfig = {
@@ -172,7 +151,7 @@ export function useWatchConnectivity() {
 
         const response = await sendAndCollectResponse(config, {
           message: text,
-          sessionKey: sessionKey as string,
+          sessionKey,
         })
 
         await sendResponseToWatch('voice', response)

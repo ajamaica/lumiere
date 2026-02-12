@@ -63,10 +63,14 @@ struct ContentView: View {
 
     private var triggerList: some View {
         List {
-            // Voice dictation button
-            Button(action: startDictation) {
-                Label(String(localized: "watch.dictate.button"), systemImage: "mic.fill")
-                    .foregroundStyle(.blue)
+            // Voice dictation — SwiftUI-native text field that invokes
+            // the system voice input on watchOS
+            TextField(
+                String(localized: "watch.dictate.button"),
+                text: $dictatedText
+            )
+            .onSubmit {
+                submitDictation()
             }
 
             // Trigger items
@@ -94,26 +98,12 @@ struct ContentView: View {
         showingResponse = true
     }
 
-    private func startDictation() {
-        // On watchOS, we present text input with dictation
-        // WKExtension doesn't have a direct dictation API in SwiftUI,
-        // but we can use the TextInputController pattern via presentTextInputController
-        // For SwiftUI, we use a simple TextField approach that triggers voice input
-        activeTriggerName = nil
-
-        #if os(watchOS)
-        WKExtension.shared().visibleInterfaceController?.presentTextInputController(
-            withSuggestions: nil,
-            allowedInputMode: .plain
-        ) { results in
-            guard let text = results?.first as? String, !text.isEmpty else { return }
-            DispatchQueue.main.async {
-                self.dictatedText = text
-                self.activeTriggerName = text
-                sessionManager.sendVoiceMessage(text: text)
-                self.showingResponse = true
-            }
-        }
-        #endif
+    private func submitDictation() {
+        let text = dictatedText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { return }
+        activeTriggerName = text
+        sessionManager.sendVoiceMessage(text: text)
+        showingResponse = true
+        dictatedText = ""
     }
 }
