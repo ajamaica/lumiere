@@ -76,7 +76,6 @@ export function useMessageQueue({
         : undefined
 
       try {
-        // Apply workflow context or other transforms before sending
         const messageForProvider = contextTransform ? await contextTransform(text) : text
 
         await providerSendMessage(

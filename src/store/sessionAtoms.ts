@@ -2,7 +2,7 @@ import { atomWithStorage } from 'jotai/utils'
 
 import { DEFAULT_SESSION_KEY } from '../constants'
 import { storage } from './storage'
-import type { ServerSessions, SessionAliases, SessionContextMap, WorkflowConfigMap } from './types'
+import type { ServerSessions, SessionAliases, SessionContextMap } from './types'
 
 // ─── Session key utilities ───────────────────────────────
 
@@ -51,6 +51,3 @@ export const currentAgentIdAtom = atomWithStorage<string>('currentAgentId', 'mai
 
 /** Per-session system message (hidden context) */
 export const sessionContextAtom = atomWithStorage<SessionContextMap>('sessionContext', {}, storage)
-
-/** Per-session document context for workflow mode */
-export const workflowConfigAtom = atomWithStorage<WorkflowConfigMap>('workflowConfig', {}, storage)
