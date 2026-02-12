@@ -233,6 +233,37 @@ src/
 - Responsive layouts
 - Landscape orientation support
 
+### visionOS (Apple Vision Pro)
+
+Lumiere can run as a native visionOS window on Apple Vision Pro using [`@callstack/react-native-visionos`](https://github.com/callstack/react-native-visionos).
+
+#### Prerequisites
+
+- macOS with [Xcode](https://developer.apple.com/xcode/) installed
+- visionOS SDK and Simulator runtime (install via Xcode > Settings > Platforms)
+- [CMake](https://cmake.org/) v3.29.0+ (`brew install cmake`)
+- [CocoaPods](https://cocoapods.org/) (`gem install cocoapods`) or [Bundler](https://bundler.io/) (`gem install bundler`)
+
+#### Building for visionOS
+
+```bash
+# 1. Install dependencies
+pnpm install
+
+# 2. Install CocoaPods for the visionOS target
+cd visionos
+bundle install          # one-time setup
+bundle exec pod install
+cd ..
+
+# 3. Run on the visionOS Simulator
+pnpm visionos
+```
+
+Alternatively, open `visionos/lumiere.xcodeproj` in Xcode, select an Apple Vision Pro simulator, and build from there.
+
+> **Note:** The visionOS build uses `@callstack/react-native-visionos` v0.79.6. Some Expo native modules may need platform guards if they don't compile for visionOS — these can be excluded in the Podfile as needed.
+
 ## Contributing
 
 1. Fork the repository
