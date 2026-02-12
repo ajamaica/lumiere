@@ -26,6 +26,7 @@ jest.mock('jotai', () => ({
 jest.mock('jotai/utils', () => ({
   atomWithStorage: jest.fn((_key: string, initial: unknown) => ({ init: initial })),
   createJSONStorage: jest.fn(),
+  unwrap: jest.fn((atom: unknown) => atom),
 }))
 
 jest.mock('react', () => {
