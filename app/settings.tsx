@@ -10,7 +10,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { getProviderIcon } from '../src/config/providerOptions'
-import { useICloudSync } from '../src/hooks/useICloudSync'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
 import { backgroundCheckTask } from '../src/services/notifications'
@@ -30,7 +29,7 @@ import {
 } from '../src/store'
 import { useTheme } from '../src/theme'
 import { colorThemes } from '../src/theme/colors'
-import { isIOS, isWeb } from '../src/utils/platform'
+import { isWeb } from '../src/utils/platform'
 
 export default function SettingsScreen() {
   const { theme, colorTheme } = useTheme()
@@ -38,7 +37,6 @@ export default function SettingsScreen() {
   const { t } = useTranslation()
   const { currentLanguageName } = useLanguage()
   const { currentServer, currentServerId, serversList, switchToServer } = useServers()
-  const { icloudSyncEnabled, setIcloudSyncEnabled, isICloudAvailable } = useICloudSync()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
   const setServers = useSetAtom(serversAtom)
   const setSecureServers = useSetAtom(secureServersAtom)
@@ -266,28 +264,6 @@ export default function SettingsScreen() {
             switchValue={backgroundNotificationsEnabled}
             onSwitchChange={setBackgroundNotificationsEnabled}
           />
-          {isIOS && (
-            <SettingRow
-              icon="cloud-outline"
-              label={t('settings.icloudSync')}
-              subtitle={
-                isICloudAvailable
-                  ? t('settings.icloud.availableSubtitle')
-                  : t('settings.icloud.unavailableSubtitle')
-              }
-              switchValue={icloudSyncEnabled}
-              onSwitchChange={(value) => {
-                if (value && !isICloudAvailable) {
-                  Alert.alert(
-                    t('settings.icloud.unavailable'),
-                    t('settings.icloud.unavailableMessage'),
-                  )
-                  return
-                }
-                setIcloudSyncEnabled(value)
-              }}
-            />
-          )}
           <SettingRow
             icon="language-outline"
             label={t('settings.language')}
