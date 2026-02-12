@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_new_chat_short">新聊天</string>
+    <string name="shortcut_new_chat_long">開始新聊天</string>
+    <string name="shortcut_triggers_short">觸發器</string>
+    <string name="shortcut_triggers_long">檢視你的觸發器</string>
+    <string name="shortcut_settings_short">設定</string>
+    <string name="shortcut_settings_long">開啟設定</string>
+    <string name="shortcut_disabled">捷徑無法使用</string>
+</resources>

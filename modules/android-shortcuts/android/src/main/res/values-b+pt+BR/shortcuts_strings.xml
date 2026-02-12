@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_new_chat_short">Novo chat</string>
+    <string name="shortcut_new_chat_long">Iniciar um novo chat</string>
+    <string name="shortcut_triggers_short">Gatilhos</string>
+    <string name="shortcut_triggers_long">Ver seus gatilhos</string>
+    <string name="shortcut_settings_short">Configurações</string>
+    <string name="shortcut_settings_long">Abrir configurações</string>
+    <string name="shortcut_disabled">Atalho indisponível</string>
+</resources>

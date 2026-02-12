@@ -182,7 +182,9 @@
     "newTrigger": "Neuer Auslöser",
     "editTrigger": "Auslöser bearbeiten",
     "deleteTrigger": "Auslöser löschen",
-    "noTriggers": "Keine Auslöser konfiguriert"
+    "noTriggers": "Keine Auslöser konfiguriert",
+    "pinToHome": "Zum Startbildschirm",
+    "pinError": "Verknüpfung konnte nicht auf dem Startbildschirm erstellt werden."
   },
   "scheduler": {
     "title": "Planer",

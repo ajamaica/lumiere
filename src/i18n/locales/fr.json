@@ -182,7 +182,9 @@
     "newTrigger": "Nouveau déclencheur",
     "editTrigger": "Modifier le déclencheur",
     "deleteTrigger": "Supprimer le déclencheur",
-    "noTriggers": "Aucun déclencheur configuré"
+    "noTriggers": "Aucun déclencheur configuré",
+    "pinToHome": "Épingler à l'accueil",
+    "pinError": "Impossible d'épingler le raccourci sur l'écran d'accueil."
   },
   "scheduler": {
     "title": "Planificateur",

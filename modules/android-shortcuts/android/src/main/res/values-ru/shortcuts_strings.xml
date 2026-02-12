@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_new_chat_short">Новый чат</string>
+    <string name="shortcut_new_chat_long">Начать новый чат</string>
+    <string name="shortcut_triggers_short">Триггеры</string>
+    <string name="shortcut_triggers_long">Просмотреть триггеры</string>
+    <string name="shortcut_settings_short">Настройки</string>
+    <string name="shortcut_settings_long">Открыть настройки</string>
+    <string name="shortcut_disabled">Ярлык недоступен</string>
+</resources>

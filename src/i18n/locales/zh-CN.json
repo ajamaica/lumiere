@@ -182,7 +182,9 @@
     "newTrigger": "新建触发器",
     "editTrigger": "编辑触发器",
     "deleteTrigger": "删除触发器",
-    "noTriggers": "未配置触发器"
+    "noTriggers": "未配置触发器",
+    "pinToHome": "固定到主屏幕",
+    "pinError": "无法将快捷方式固定到主屏幕。"
   },
   "scheduler": {
     "title": "调度器",

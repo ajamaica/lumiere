@@ -65,6 +65,11 @@ function parseDeepLink(url: string): DeepLinkResult | TriggerResult | null {
       return { type: 'trigger', slug: triggerMatch[1] }
     }
 
+    // "chat" deep link navigates to the root chat screen
+    if (path === 'chat') {
+      return { type: 'navigate', route: '/', params: {} }
+    }
+
     if (isValidRoute(path)) {
       return {
         type: 'navigate',

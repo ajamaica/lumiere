@@ -2,13 +2,24 @@ import { Ionicons } from '@expo/vector-icons'
 import * as Clipboard from 'expo-clipboard'
 import { useAtom } from 'jotai'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Alert, Dimensions, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+  Alert,
+  Dimensions,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { isPinningSupported, requestPinShortcut } from '../modules/android-shortcuts'
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { currentSessionKeyAtom, TriggerConfig, triggersAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+
+const canPinShortcuts = Platform.OS === 'android' && isPinningSupported()
 
 function generateSlug(): string {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
@@ -118,6 +129,17 @@ export default function TriggersScreen() {
     const deepLink = `lumiere://trigger/autotrigger/${slug}`
     Clipboard.setStringAsync(deepLink)
     Alert.alert('Copied', 'Deep link copied to clipboard.')
+  }, [])
+
+  const handlePinToHome = useCallback(async (trigger: TriggerConfig) => {
+    const label =
+      trigger.message.length > 25 ? `${trigger.message.slice(0, 22)}...` : trigger.message
+    const deepLink = `lumiere://trigger/autotrigger/${trigger.id}`
+    try {
+      await requestPinShortcut(trigger.id, label, trigger.message, deepLink)
+    } catch {
+      Alert.alert('Error', 'Could not pin shortcut to home screen.')
+    }
   }, [])
 
   const formatSessionKey = (key: string) => {
@@ -348,6 +370,7 @@ export default function TriggersScreen() {
                   theme={theme}
                   onCopy={handleCopyLink}
                   onDelete={handleDelete}
+                  onPin={canPinShortcuts ? handlePinToHome : undefined}
                   formatSessionKey={formatSessionKey}
                 />
               ))}
@@ -386,6 +409,7 @@ function TriggerCard({
   theme,
   onCopy,
   onDelete,
+  onPin,
   formatSessionKey,
 }: {
   trigger: TriggerConfig
@@ -393,6 +417,7 @@ function TriggerCard({
   theme: ReturnType<typeof useTheme>['theme']
   onCopy: (id: string) => void
   onDelete: (id: string) => void
+  onPin?: (trigger: TriggerConfig) => void
   formatSessionKey: (key: string) => string
 }) {
   const icon = getTriggerIcon(trigger.id)
@@ -426,6 +451,16 @@ function TriggerCard({
           >
             <Ionicons name="link-outline" size={15} color={theme.colors.primary} />
           </TouchableOpacity>
+          {onPin && (
+            <TouchableOpacity
+              style={styles.cardActionBtn}
+              onPress={() => onPin(trigger)}
+              accessibilityLabel="Pin to home screen"
+              accessibilityRole="button"
+            >
+              <Ionicons name="pin-outline" size={15} color={theme.colors.primary} />
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             style={styles.cardActionBtn}
             onPress={() => onDelete(trigger.id)}

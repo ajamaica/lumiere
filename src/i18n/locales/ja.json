@@ -182,7 +182,9 @@
     "newTrigger": "新しいトリガー",
     "editTrigger": "トリガーを編集",
     "deleteTrigger": "トリガーを削除",
-    "noTriggers": "トリガーが設定されていません"
+    "noTriggers": "トリガーが設定されていません",
+    "pinToHome": "ホームに追加",
+    "pinError": "ショートカットをホーム画面に追加できませんでした。"
   },
   "scheduler": {
     "title": "スケジューラー",

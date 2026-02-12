@@ -182,7 +182,9 @@
     "newTrigger": "Nuevo Disparador",
     "editTrigger": "Editar Disparador",
     "deleteTrigger": "Eliminar Disparador",
-    "noTriggers": "No hay disparadores configurados"
+    "noTriggers": "No hay disparadores configurados",
+    "pinToHome": "Fijar en inicio",
+    "pinError": "No se pudo fijar el atajo en la pantalla de inicio."
   },
   "scheduler": {
     "title": "Programador",
