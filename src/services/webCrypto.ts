@@ -197,3 +197,14 @@ export async function loadAndDecrypt<T>(
 export function removeEncrypted(storageKey: string): void {
   localStorage.removeItem(`${STORAGE_PREFIX}${storageKey}`)
 }
+
+/**
+ * Remove all password-related data from localStorage (salt, verification,
+ * and encrypted server data). Call this during logout to fully reset
+ * the web encryption state.
+ */
+export function clearAllPasswordData(): void {
+  localStorage.removeItem(SALT_KEY)
+  localStorage.removeItem(VERIFICATION_KEY)
+  localStorage.removeItem(`${STORAGE_PREFIX}servers_encrypted`)
+}
