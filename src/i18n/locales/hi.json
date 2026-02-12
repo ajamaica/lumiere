@@ -63,7 +63,14 @@
     "placeholder": "संदेश लिखें...",
     "listening": "सुन रहा है...",
     "startSpeaking": "बोलना शुरू करें...",
-    "send": "भेजें"
+    "send": "भेजें",
+    "attachPicture": "चित्र संलग्न करें",
+    "picture": "चित्र",
+    "attachVideo": "वीडियो संलग्न करें",
+    "video": "वीडियो",
+    "attachFile": "फ़ाइल संलग्न करें",
+    "file": "फ़ाइल",
+    "removeAttachment": "अनुलग्नक {{number}} हटाएं"
   },
   "addServer": {
     "title": "सर्वर जोड़ें",

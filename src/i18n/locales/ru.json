@@ -63,7 +63,14 @@
     "placeholder": "Введите сообщение...",
     "listening": "Слушаю...",
     "startSpeaking": "Говорите...",
-    "send": "Отправить"
+    "send": "Отправить",
+    "attachPicture": "Прикрепить изображение",
+    "picture": "Изображение",
+    "attachVideo": "Прикрепить видео",
+    "video": "Видео",
+    "attachFile": "Прикрепить файл",
+    "file": "Файл",
+    "removeAttachment": "Удалить вложение {{number}}"
   },
   "addServer": {
     "title": "Добавить сервер",

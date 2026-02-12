@@ -63,7 +63,14 @@
     "placeholder": "輸入訊息...",
     "listening": "正在聆聽...",
     "startSpeaking": "開始說話...",
-    "send": "傳送"
+    "send": "傳送",
+    "attachPicture": "附加圖片",
+    "picture": "圖片",
+    "attachVideo": "附加影片",
+    "video": "影片",
+    "attachFile": "附加檔案",
+    "file": "檔案",
+    "removeAttachment": "移除附件 {{number}}"
   },
   "addServer": {
     "title": "新增伺服器",

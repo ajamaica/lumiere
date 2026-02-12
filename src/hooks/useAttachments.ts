@@ -4,6 +4,9 @@ import { useCallback, useState } from 'react'
 
 import { MessageAttachment } from '../components/chat/ChatMessage'
 import { compressImageToJpeg } from '../utils/compressImage'
+import { logger } from '../utils/logger'
+
+const attachmentLogger = logger.create('Attachments')
 
 interface UseAttachmentsOptions {
   disabled: boolean
@@ -23,66 +26,78 @@ export function useAttachments({ disabled, supportsImageAttachments }: UseAttach
     // Wait for modal dismiss animation to complete before presenting system picker.
     // Without this delay, the picker silently fails to present on iOS and Android.
     await new Promise<void>((resolve) => setTimeout(resolve, 500))
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      allowsMultipleSelection: true,
-      quality: 1,
-    })
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images'],
+        allowsMultipleSelection: true,
+        quality: 1,
+      })
 
-    if (!result.canceled && result.assets.length > 0) {
-      const newAttachments: MessageAttachment[] = await Promise.all(
-        result.assets.map(async (asset) => {
-          const compressed = await compressImageToJpeg(asset.uri)
-          return {
-            type: 'image' as const,
-            uri: compressed.uri,
-            base64: compressed.base64,
-            mimeType: compressed.mimeType,
-            name: asset.fileName ?? undefined,
-          }
-        }),
-      )
-      setAttachments((prev) => [...prev, ...newAttachments])
+      if (!result.canceled && result.assets.length > 0) {
+        const newAttachments: MessageAttachment[] = await Promise.all(
+          result.assets.map(async (asset) => {
+            const compressed = await compressImageToJpeg(asset.uri)
+            return {
+              type: 'image' as const,
+              uri: compressed.uri,
+              base64: compressed.base64,
+              mimeType: compressed.mimeType,
+              name: asset.fileName ?? undefined,
+            }
+          }),
+        )
+        setAttachments((prev) => [...prev, ...newAttachments])
+      }
+    } catch (error) {
+      attachmentLogger.error('Failed to pick image', error)
     }
   }, [])
 
   const handlePickVideo = useCallback(async () => {
     setShowMenu(false)
     await new Promise<void>((resolve) => setTimeout(resolve, 500))
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['videos'],
-      allowsMultipleSelection: true,
-      quality: 0.8,
-    })
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['videos'],
+        allowsMultipleSelection: true,
+        quality: 0.8,
+      })
 
-    if (!result.canceled && result.assets.length > 0) {
-      const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
-        type: 'video' as const,
-        uri: asset.uri,
-        mimeType: asset.mimeType ?? 'video/mp4',
-        name: asset.fileName ?? undefined,
-      }))
-      setAttachments((prev) => [...prev, ...newAttachments])
+      if (!result.canceled && result.assets.length > 0) {
+        const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
+          type: 'video' as const,
+          uri: asset.uri,
+          mimeType: asset.mimeType ?? 'video/mp4',
+          name: asset.fileName ?? undefined,
+        }))
+        setAttachments((prev) => [...prev, ...newAttachments])
+      }
+    } catch (error) {
+      attachmentLogger.error('Failed to pick video', error)
     }
   }, [])
 
   const handlePickFile = useCallback(async () => {
     setShowMenu(false)
     await new Promise<void>((resolve) => setTimeout(resolve, 500))
-    const result = await DocumentPicker.getDocumentAsync({
-      type: '*/*',
-      multiple: true,
-      copyToCacheDirectory: true,
-    })
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*',
+        multiple: true,
+        copyToCacheDirectory: true,
+      })
 
-    if (!result.canceled && result.assets.length > 0) {
-      const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
-        type: 'file' as const,
-        uri: asset.uri,
-        mimeType: asset.mimeType ?? 'application/octet-stream',
-        name: asset.name,
-      }))
-      setAttachments((prev) => [...prev, ...newAttachments])
+      if (!result.canceled && result.assets.length > 0) {
+        const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
+          type: 'file' as const,
+          uri: asset.uri,
+          mimeType: asset.mimeType ?? 'application/octet-stream',
+          name: asset.name,
+        }))
+        setAttachments((prev) => [...prev, ...newAttachments])
+      }
+    } catch (error) {
+      attachmentLogger.error('Failed to pick file', error)
     }
   }, [])
 

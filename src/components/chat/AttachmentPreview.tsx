@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Image, ImageStyle, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { Theme, useTheme } from '../../theme'
@@ -12,6 +13,7 @@ interface AttachmentPreviewProps {
 
 export function AttachmentPreview({ attachments, onRemove }: AttachmentPreviewProps) {
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const styles = useMemo(() => createStyles(theme), [theme])
 
   if (attachments.length === 0) return null
@@ -40,7 +42,7 @@ export function AttachmentPreview({ attachments, onRemove }: AttachmentPreviewPr
             style={styles.removeButton}
             onPress={() => onRemove(index)}
             accessibilityRole="button"
-            accessibilityLabel={`Remove attachment ${index + 1}`}
+            accessibilityLabel={t('chat.removeAttachment', { number: index + 1 })}
           >
             <Ionicons name="close-circle" size={20} color={theme.colors.text.inverse} />
           </TouchableOpacity>

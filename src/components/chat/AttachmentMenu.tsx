@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { Theme, useTheme } from '../../theme'
@@ -22,6 +23,7 @@ export function AttachmentMenu({
   supportsFileAttachments,
 }: AttachmentMenuProps) {
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const styles = useMemo(() => createStyles(theme), [theme])
 
   return (
@@ -33,35 +35,35 @@ export function AttachmentMenu({
               style={styles.option}
               onPress={onPickImage}
               accessibilityRole="button"
-              accessibilityLabel="Attach picture"
+              accessibilityLabel={t('chat.attachPicture')}
             >
               <View style={styles.iconContainer}>
                 <Ionicons name="image" size={24} color={theme.colors.primary} />
               </View>
-              <Text style={styles.optionText}>Picture</Text>
+              <Text style={styles.optionText}>{t('chat.picture')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.option}
               onPress={onPickVideo}
               accessibilityRole="button"
-              accessibilityLabel="Attach video"
+              accessibilityLabel={t('chat.attachVideo')}
             >
               <View style={styles.iconContainer}>
                 <Ionicons name="videocam" size={24} color={theme.colors.primary} />
               </View>
-              <Text style={styles.optionText}>Video</Text>
+              <Text style={styles.optionText}>{t('chat.video')}</Text>
             </TouchableOpacity>
             {supportsFileAttachments && (
               <TouchableOpacity
                 style={styles.option}
                 onPress={onPickFile}
                 accessibilityRole="button"
-                accessibilityLabel="Attach file"
+                accessibilityLabel={t('chat.attachFile')}
               >
                 <View style={styles.iconContainer}>
                   <Ionicons name="document" size={24} color={theme.colors.primary} />
                 </View>
-                <Text style={styles.optionText}>File</Text>
+                <Text style={styles.optionText}>{t('chat.file')}</Text>
               </TouchableOpacity>
             )}
           </View>
