@@ -170,6 +170,23 @@ export interface Attachment {
   fileName?: string
 }
 
+/**
+ * Wire-format attachment for `chat.send` — matches the gateway protocol.
+ * All fields are required so the server can process the file correctly.
+ */
+export interface ChatAttachmentPayload {
+  type: string
+  mimeType: string
+  fileName: string
+  /** base64-encoded file content */
+  content: string
+}
+
+export interface ChatSendResponse {
+  runId: string
+  status: string
+}
+
 // ─── Agent ──────────────────────────────────────────────────────────────────────
 
 export interface AgentParams {
