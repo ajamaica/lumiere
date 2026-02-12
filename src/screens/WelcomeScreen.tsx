@@ -106,13 +106,13 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
 
   // 7 provider icon bubbles at double size with random variation
   const bubbles: BubbleConfig[] = [
-    { Icon: OpenClawIcon, size: iconBaseSize + 12, top: -18, left: -28, delay: 100, bg: '#0F1D32' },
-    { Icon: ClaudeIcon, size: iconBaseSize - 8, top: -10, left: phoneWidth - 30, delay: 200, bg: '#1A1412' },
-    { Icon: OpenAIIcon, size: iconBaseSize + 6, top: phoneHeight * 0.32, left: -32, delay: 300, bg: '#0F1D32' },
-    { Icon: GeminiIcon, size: iconBaseSize - 14, top: phoneHeight * 0.28, left: phoneWidth - 20, delay: 400, bg: '#121A2E' },
-    { Icon: OllamaIcon, size: iconBaseSize + 16, top: phoneHeight * 0.62, left: -30, delay: 500, bg: '#141E14' },
-    { Icon: OpenRouterIcon, size: iconBaseSize - 4, top: phoneHeight * 0.65, left: phoneWidth - 26, delay: 600, bg: '#1E1428' },
-    { Icon: KimiIcon, size: iconBaseSize + 2, top: phoneHeight * 0.92, left: phoneWidth * 0.3, delay: 700, bg: '#1A1A2E' },
+    { Icon: OpenClawIcon, size: iconBaseSize + 12, top: -22, left: -34, delay: 100, bg: '#0F1D32' },
+    { Icon: ClaudeIcon, size: iconBaseSize - 8, top: -14, left: phoneWidth - 24, delay: 200, bg: '#1A1412' },
+    { Icon: OpenAIIcon, size: iconBaseSize + 6, top: phoneHeight * 0.30, left: -38, delay: 300, bg: '#0F1D32' },
+    { Icon: GeminiIcon, size: iconBaseSize - 14, top: phoneHeight * 0.26, left: phoneWidth - 14, delay: 400, bg: '#121A2E' },
+    { Icon: OllamaIcon, size: iconBaseSize + 16, top: phoneHeight * 0.60, left: -36, delay: 500, bg: '#141E14' },
+    { Icon: OpenRouterIcon, size: iconBaseSize - 4, top: phoneHeight * 0.62, left: phoneWidth - 20, delay: 600, bg: '#1E1428' },
+    { Icon: KimiIcon, size: iconBaseSize + 2, top: phoneHeight * 0.90, left: phoneWidth * 0.3, delay: 700, bg: '#1A1A2E' },
   ]
 
   const gradientColors = theme.isDark
