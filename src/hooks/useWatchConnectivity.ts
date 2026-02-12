@@ -1,0 +1,2 @@
+/** No-op on web/Android — Watch Connectivity is iOS-only. */
+export function useWatchConnectivity(): void {}

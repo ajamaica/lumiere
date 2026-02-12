@@ -16,6 +16,7 @@ import { useLanguage } from '../src/hooks/useLanguage'
 import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
 import { useShareExtension } from '../src/hooks/useShareIntent'
+import { useWatchConnectivity } from '../src/hooks/useWatchConnectivity'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { isPasswordConfigured } from '../src/services/webCrypto'
 import {
@@ -106,6 +107,7 @@ function AppContent() {
   useAppleShortcuts()
   useAndroidShortcuts()
   useShareExtension()
+  useWatchConnectivity()
   useLanguage() // Initialize language sync
 
   // Web password lock state — only used on web

@@ -1,0 +1,118 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "watch.triggers.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Triggers" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Disparadores" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Déclencheurs" } },
+        "de": { "stringUnit": { "state": "translated", "value": "Auslöser" } },
+        "hi": { "stringUnit": { "state": "translated", "value": "ट्रिगर" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "トリガー" } },
+        "ko": { "stringUnit": { "state": "translated", "value": "트리거" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Gatilhos" } },
+        "ru": { "stringUnit": { "state": "translated", "value": "Триггеры" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "触发器" } },
+        "zh-Hant": { "stringUnit": { "state": "translated", "value": "觸發器" } }
+      }
+    },
+    "watch.triggers.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No triggers configured. Add triggers in the Lumiere app on your iPhone." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No hay disparadores configurados. Añade disparadores en la app Lumiere de tu iPhone." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun déclencheur configuré. Ajoutez des déclencheurs dans l'app Lumiere sur votre iPhone." } },
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Auslöser konfiguriert. Füge Auslöser in der Lumiere-App auf deinem iPhone hinzu." } },
+        "hi": { "stringUnit": { "state": "translated", "value": "कोई ट्रिगर कॉन्फ़िगर नहीं किया गया है। अपने iPhone पर Lumiere ऐप में ट्रिगर जोड़ें।" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "トリガーが設定されていません。iPhoneのLumiereアプリでトリガーを追加してください。" } },
+        "ko": { "stringUnit": { "state": "translated", "value": "구성된 트리거가 없습니다. iPhone의 Lumiere 앱에서 트리거를 추가하세요." } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Nenhum gatilho configurado. Adicione gatilhos no app Lumiere no seu iPhone." } },
+        "ru": { "stringUnit": { "state": "translated", "value": "Триггеры не настроены. Добавьте триггеры в приложении Lumiere на вашем iPhone." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "未配置触发器。请在 iPhone 上的 Lumiere 应用中添加触发器。" } },
+        "zh-Hant": { "stringUnit": { "state": "translated", "value": "尚未設定觸發器。請在 iPhone 上的 Lumiere 應用程式中新增觸發器。" } }
+      }
+    },
+    "watch.dictate.button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Ask Lumiere" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Preguntar a Lumiere" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Demander à Lumiere" } },
+        "de": { "stringUnit": { "state": "translated", "value": "Lumiere fragen" } },
+        "hi": { "stringUnit": { "state": "translated", "value": "Lumiere से पूछें" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "Lumiereに聞く" } },
+        "ko": { "stringUnit": { "state": "translated", "value": "Lumiere에게 묻기" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Perguntar ao Lumiere" } },
+        "ru": { "stringUnit": { "state": "translated", "value": "Спросить Lumiere" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "询问 Lumiere" } },
+        "zh-Hant": { "stringUnit": { "state": "translated", "value": "詢問 Lumiere" } }
+      }
+    },
+    "watch.response.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Thinking…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Pensando…" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Réflexion…" } },
+        "de": { "stringUnit": { "state": "translated", "value": "Denke nach…" } },
+        "hi": { "stringUnit": { "state": "translated", "value": "सोच रहा है…" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "考え中…" } },
+        "ko": { "stringUnit": { "state": "translated", "value": "생각 중…" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Pensando…" } },
+        "ru": { "stringUnit": { "state": "translated", "value": "Думаю…" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "思考中…" } },
+        "zh-Hant": { "stringUnit": { "state": "translated", "value": "思考中…" } }
+      }
+    },
+    "watch.response.error": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Couldn't get a response. Try again from your iPhone." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudo obtener una respuesta. Inténtalo de nuevo desde tu iPhone." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Impossible d'obtenir une réponse. Réessayez depuis votre iPhone." } },
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Antwort erhalten. Versuche es erneut auf deinem iPhone." } },
+        "hi": { "stringUnit": { "state": "translated", "value": "प्रतिक्रिया प्राप्त नहीं हो सकी। अपने iPhone से पुनः प्रयास करें।" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "応答を取得できませんでした。iPhoneからもう一度お試しください。" } },
+        "ko": { "stringUnit": { "state": "translated", "value": "응답을 받지 못했습니다. iPhone에서 다시 시도하세요." } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Não foi possível obter uma resposta. Tente novamente pelo seu iPhone." } },
+        "ru": { "stringUnit": { "state": "translated", "value": "Не удалось получить ответ. Попробуйте снова с вашего iPhone." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "无法获取回复。请在 iPhone 上重试。" } },
+        "zh-Hant": { "stringUnit": { "state": "translated", "value": "無法取得回覆。請在 iPhone 上重試。" } }
+      }
+    },
+    "watch.response.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Done" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Listo" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Terminé" } },
+        "de": { "stringUnit": { "state": "translated", "value": "Fertig" } },
+        "hi": { "stringUnit": { "state": "translated", "value": "पूर्ण" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "完了" } },
+        "ko": { "stringUnit": { "state": "translated", "value": "완료" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Concluído" } },
+        "ru": { "stringUnit": { "state": "translated", "value": "Готово" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "完成" } },
+        "zh-Hant": { "stringUnit": { "state": "translated", "value": "完成" } }
+      }
+    },
+    "watch.complication.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Lumiere" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Lumiere" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Lumiere" } },
+        "de": { "stringUnit": { "state": "translated", "value": "Lumiere" } },
+        "hi": { "stringUnit": { "state": "translated", "value": "Lumiere" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "Lumiere" } },
+        "ko": { "stringUnit": { "state": "translated", "value": "Lumiere" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Lumiere" } },
+        "ru": { "stringUnit": { "state": "translated", "value": "Lumiere" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Lumiere" } },
+        "zh-Hant": { "stringUnit": { "state": "translated", "value": "Lumiere" } }
+      }
+    }
+  },
+  "version": "1.0"
+}

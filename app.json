@@ -103,7 +103,8 @@
             "android:launchMode": "singleTask"
           }
         }
-      ]
+      ],
+      "./modules/watch-connectivity/plugin/withWatchApp"
     ],
     "extra": {
       "eas": {
