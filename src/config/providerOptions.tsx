@@ -1,5 +1,4 @@
 import React from 'react'
-import { Platform } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import AppleIcon from '../../assets/provider-apple.svg'
@@ -14,6 +13,7 @@ import OpenAIIcon from '../../assets/provider-openai.svg'
 import OpenClawIcon from '../../assets/provider-openclaw.svg'
 import OpenRouterIcon from '../../assets/provider-openrouter.svg'
 import { ProviderType } from '../services/providers'
+import { isAndroid, isIOS } from '../utils/platform'
 
 const ICON_SIZE = 20
 
@@ -53,7 +53,7 @@ export function getAllProviderOptions(color: string) {
     },
     { value: 'openrouter', label: 'OpenRouter', icon: getProviderIcon('openrouter', color) },
     { value: 'gemini', label: 'Gemini', icon: getProviderIcon('gemini', color) },
-    ...(Platform.OS === 'ios'
+    ...(isIOS
       ? [
           {
             value: 'apple' as ProviderType,
@@ -62,7 +62,7 @@ export function getAllProviderOptions(color: string) {
           },
         ]
       : []),
-    ...(Platform.OS === 'android'
+    ...(isAndroid
       ? [
           {
             value: 'gemini-nano' as ProviderType,
@@ -110,7 +110,7 @@ export function getBasicProviderOptions(color: string) {
       label: 'Gemini',
       icon: getProviderIcon('gemini', color),
     },
-    ...(Platform.OS === 'ios'
+    ...(isIOS
       ? [
           {
             value: 'apple' as ProviderType,
@@ -119,7 +119,7 @@ export function getBasicProviderOptions(color: string) {
           },
         ]
       : []),
-    ...(Platform.OS === 'android'
+    ...(isAndroid
       ? [
           {
             value: 'gemini-nano' as ProviderType,

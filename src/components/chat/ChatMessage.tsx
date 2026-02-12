@@ -4,7 +4,6 @@ import { useAtom, useSetAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   Image,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -35,6 +34,7 @@ import {
 import { Theme, useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 import { logger } from '../../utils/logger'
+import { webStyle } from '../../utils/platform'
 import { processXmlTags } from '../../utils/xmlTagProcessor'
 import { LinkPreview } from './LinkPreview'
 
@@ -552,7 +552,7 @@ const createStyles = (theme: Theme) =>
       maxWidth: '100%',
       backgroundColor: theme.colors.message.user,
       borderBottomRightRadius: theme.borderRadius.sm,
-      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
+      ...webStyle({ userSelect: 'text' as const }),
     },
     userBubbleWrapper: {
       maxWidth: '100%',
@@ -568,7 +568,7 @@ const createStyles = (theme: Theme) =>
     userGradientBubble: {
       paddingHorizontal: theme.spacing.lg,
       paddingVertical: theme.spacing.sm + 2,
-      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
+      ...webStyle({ userSelect: 'text' as const }),
     },
     agentBubble: {
       width: '100%',
@@ -576,7 +576,7 @@ const createStyles = (theme: Theme) =>
       borderRadius: 0,
       paddingHorizontal: 0,
       overflow: 'hidden' as const,
-      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
+      ...webStyle({ userSelect: 'text' as const }),
     },
     intentActions: {
       flexDirection: 'row',
@@ -649,7 +649,7 @@ const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
       fontSize: theme.typography.fontSize.base,
       lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
       flexShrink: 1,
-      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
+      ...webStyle({ userSelect: 'text' as const }),
     },
     text: {
       color: textColor,

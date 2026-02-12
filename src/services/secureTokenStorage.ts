@@ -1,6 +1,5 @@
-import { Platform } from 'react-native'
-
 import { logger } from '../utils/logger'
+import { isWeb } from '../utils/platform'
 
 const TOKEN_PREFIX = 'server_token_'
 const tokenLogger = logger.create('SecureToken')
@@ -11,7 +10,7 @@ const tokenLogger = logger.create('SecureToken')
  * @param token - The authentication token
  */
 export async function setServerToken(serverId: string, token: string): Promise<void> {
-  if (Platform.OS === 'web') {
+  if (isWeb) {
     try {
       localStorage.setItem(`${TOKEN_PREFIX}${serverId}`, token)
     } catch (error) {
@@ -37,7 +36,7 @@ export async function setServerToken(serverId: string, token: string): Promise<v
  * @returns The token or null if not found
  */
 export async function getServerToken(serverId: string): Promise<string | null> {
-  if (Platform.OS === 'web') {
+  if (isWeb) {
     try {
       return localStorage.getItem(`${TOKEN_PREFIX}${serverId}`)
     } catch (error) {
@@ -64,7 +63,7 @@ export async function getServerToken(serverId: string): Promise<string | null> {
  * @param serverId - The server's UUID
  */
 export async function deleteServerToken(serverId: string): Promise<void> {
-  if (Platform.OS === 'web') {
+  if (isWeb) {
     try {
       localStorage.removeItem(`${TOKEN_PREFIX}${serverId}`)
     } catch (error) {

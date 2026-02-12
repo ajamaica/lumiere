@@ -1,16 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  AppState,
-  AppStateStatus,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { AppState, AppStateStatus, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../theme'
+import { isWeb } from '../utils/platform'
 
 interface BiometricLockScreenProps {
   onUnlock: () => void
@@ -23,7 +16,7 @@ export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
   const appState = useRef(AppState.currentState)
 
   const authenticate = useCallback(async () => {
-    if (Platform.OS === 'web') {
+    if (isWeb) {
       onUnlock()
       return
     }
@@ -41,7 +34,7 @@ export function BiometricLockScreen({ onUnlock }: BiometricLockScreenProps) {
   }, [onUnlock, t])
 
   useEffect(() => {
-    if (Platform.OS === 'web') {
+    if (isWeb) {
       onUnlock()
       return
     }
