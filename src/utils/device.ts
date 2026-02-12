@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Dimensions, Platform, ScaledSize } from 'react-native'
+import { Dimensions, ScaledSize } from 'react-native'
+
+import { isAndroid, isIOS, isWeb } from './platform'
 
 const TABLET_MIN_WIDTH = 768
 
@@ -9,7 +11,7 @@ const TABLET_MIN_WIDTH = 768
 export function isTablet(): boolean {
   const { width, height } = Dimensions.get('window')
   // On web, use viewport width directly since the browser window isn't rotated
-  if (Platform.OS === 'web') {
+  if (isWeb) {
     return width >= TABLET_MIN_WIDTH
   }
   const minDimension = Math.min(width, height)
@@ -20,7 +22,7 @@ export function isTablet(): boolean {
  * Check if the device is an iPad
  */
 export function isIPad(): boolean {
-  return Platform.OS === 'ios' && isTablet()
+  return isIOS && isTablet()
 }
 
 /**
@@ -28,7 +30,7 @@ export function isIPad(): boolean {
  * Foldable devices typically have unusual aspect ratios when unfolded
  */
 export function isFoldable(): boolean {
-  if (Platform.OS !== 'android') return false
+  if (!isAndroid) return false
 
   const { width, height } = Dimensions.get('window')
   const aspectRatio = Math.max(width, height) / Math.min(width, height)
@@ -103,7 +105,7 @@ export function useDeviceType(): DeviceType {
         const aspectRatio = Math.max(width, height) / minDimension
 
         // Check for foldable first
-        if (Platform.OS === 'android') {
+        if (isAndroid) {
           const isUnfoldedSize = minDimension >= TABLET_MIN_WIDTH
           const isFoldableAspectRatio = aspectRatio >= 1.1 && aspectRatio <= 1.6
           if (isUnfoldedSize && isFoldableAspectRatio) {
@@ -114,7 +116,7 @@ export function useDeviceType(): DeviceType {
 
         // Fall back to tablet or phone
         // On web, use width directly since browser windows aren't rotated
-        const effectiveSize = Platform.OS === 'web' ? width : minDimension
+        const effectiveSize = isWeb ? width : minDimension
         setDeviceType(effectiveSize >= TABLET_MIN_WIDTH ? 'tablet' : 'phone')
       },
     )

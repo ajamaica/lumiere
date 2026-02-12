@@ -2,12 +2,13 @@ import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
+import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
 import { currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { keyboardAvoidingBehavior } from '../src/utils/platform'
 
 export default function EditSessionScreen() {
   const { theme } = useTheme()
@@ -88,10 +89,7 @@ export default function EditSessionScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('sessions.editSession')} showBack />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
+      <KeyboardAvoidingView behavior={keyboardAvoidingBehavior} style={styles.keyboardView}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"

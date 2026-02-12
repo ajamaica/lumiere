@@ -5,16 +5,7 @@ import { useAtom, useSetAtom } from 'jotai'
 import { RESET } from 'jotai/utils'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  Alert,
-  Linking,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Alert, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ScreenHeader, Section, SettingRow } from '../src/components/ui'
@@ -34,6 +25,7 @@ import {
 } from '../src/store'
 import { useTheme } from '../src/theme'
 import { colorThemes } from '../src/theme/colors'
+import { isWeb } from '../src/utils/platform'
 
 export default function SettingsScreen() {
   const { theme, colorTheme } = useTheme()
@@ -52,7 +44,7 @@ export default function SettingsScreen() {
   )
 
   const handleBiometricToggle = async (value: boolean) => {
-    if (Platform.OS === 'web') {
+    if (isWeb) {
       Alert.alert(t('settings.biometric.unavailable'), t('settings.biometric.unavailableMessage'))
       return
     }

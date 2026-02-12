@@ -8,7 +8,6 @@ import {
   Image,
   ImageStyle,
   Modal,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -24,6 +23,7 @@ import { ProviderType } from '../../services/providers/types'
 import { Theme, useTheme } from '../../theme'
 import { compressImageToJpeg } from '../../utils/compressImage'
 import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
+import { isWeb } from '../../utils/platform'
 import { MessageAttachment } from './ChatMessage'
 
 interface ChatInputProps {
@@ -228,7 +228,7 @@ export function ChatInput({
           </Pressable>
         </Pressable>
       </Modal>
-      {isDragging && Platform.OS === 'web' && (
+      {isDragging && isWeb && (
         <Modal visible transparent animationType="fade">
           <View style={styles.dropOverlay}>
             <View style={styles.dropOverlayContent}>

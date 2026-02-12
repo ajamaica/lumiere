@@ -1,14 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { KeyboardAvoidingView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { LumiereLogo } from '../components/illustrations/LumiereLogo'
@@ -17,6 +10,7 @@ import { DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
 import { currentSessionKeyAtom, onboardingCompletedAtom, serverSessionsAtom } from '../store'
 import { useTheme } from '../theme'
+import { keyboardAvoidingBehavior } from '../utils/platform'
 
 export function OnboardingScreen() {
   const { theme } = useTheme()
@@ -95,10 +89,7 @@ export function OnboardingScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
+      <KeyboardAvoidingView behavior={keyboardAvoidingBehavior} style={styles.keyboardView}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"

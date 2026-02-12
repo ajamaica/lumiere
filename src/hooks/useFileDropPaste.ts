@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Platform } from 'react-native'
 
 import { MessageAttachment } from '../components/chat/ChatMessage'
 import { compressImageToJpeg } from '../utils/compressImage'
+import { isWeb } from '../utils/platform'
 
 /**
  * Read a web File object and convert it to a MessageAttachment.
@@ -85,7 +85,7 @@ export function useFileDropPaste({ onFiles, enabled = true }: UseFileDropPasteOp
   )
 
   useEffect(() => {
-    if (Platform.OS !== 'web' || !enabled) return
+    if (!isWeb || !enabled) return
 
     const handlePaste = (e: Event) => {
       const clipboardEvent = e as ClipboardEvent
