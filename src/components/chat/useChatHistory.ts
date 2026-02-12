@@ -5,7 +5,6 @@ import { useActiveWebsite } from '../../hooks/useActiveWebsite'
 import { useAutoLabel } from '../../hooks/useAutoLabel'
 import { useChatProvider } from '../../hooks/useChatProvider'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
-import { useWorkflowContext } from '../../hooks/useWorkflowContext'
 import { ProviderConfig, readCachedHistory } from '../../services/providers'
 import {
   clearMessagesAtom,
@@ -66,8 +65,6 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
   const { connected, connecting, error, health, capabilities, retry, sendMessage, getChatHistory } =
     useChatProvider(providerConfig)
 
-  const { isActive: isWorkflowActive, prependContext } = useWorkflowContext()
-
   const activeWebsite = useActiveWebsite()
 
   const sessionSystemMessage = sessionContextMap[currentSessionKey]?.systemMessage
@@ -92,7 +89,6 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     onSendStart: () => {
       shouldAutoScrollRef.current = true
     },
-    contextTransform: isWorkflowActive ? prependContext : undefined,
     systemMessage: effectiveSystemMessage,
   })
 
@@ -303,9 +299,6 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     handleSend,
     isAgentResponding,
     queueCount,
-
-    // Workflow
-    isWorkflowActive,
 
     // Scroll tracking refs
     hasScrolledOnLoadRef,

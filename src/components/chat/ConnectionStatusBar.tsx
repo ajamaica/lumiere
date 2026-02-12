@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -35,7 +34,6 @@ interface ConnectionStatusBarProps {
   retry: () => void
   isAgentResponding: boolean
   isMoltProvider: boolean
-  isWorkflowActive: boolean
   onOpenSettings: () => void
   onOpenAgentPicker: () => void
   allMessages: Message[]
@@ -51,7 +49,6 @@ export function ConnectionStatusBar({
   retry,
   isAgentResponding,
   isMoltProvider,
-  isWorkflowActive,
   onOpenSettings,
   onOpenAgentPicker,
   allMessages,
@@ -60,7 +57,6 @@ export function ConnectionStatusBar({
 }: ConnectionStatusBarProps) {
   const { theme } = useTheme()
   const { t } = useTranslation()
-  const router = useRouter()
   const glassAvailable = isLiquidGlassAvailable()
   const deviceType = useDeviceType()
   const foldState = useFoldState()
@@ -260,18 +256,6 @@ export function ConnectionStatusBar({
               >
                 <ActionButtonContainer {...actionButtonProps}>
                   <Ionicons name="people" size={20} color={theme.colors.primary} />
-                </ActionButtonContainer>
-              </TouchableOpacity>
-            )}
-            {isWorkflowActive && (
-              <TouchableOpacity
-                onPress={() => router.push('/workflow')}
-                activeOpacity={0.7}
-                accessibilityRole="button"
-                accessibilityLabel={t('workflow.title')}
-              >
-                <ActionButtonContainer {...actionButtonProps}>
-                  <Ionicons name="folder-open" size={20} color={theme.colors.primary} />
                 </ActionButtonContainer>
               </TouchableOpacity>
             )}
