@@ -330,6 +330,7 @@
     "analyzeError": "미션 분석에 실패했습니다. 다시 시도해 주세요.",
     "planReady": "미션 계획 준비 완료",
     "planDescription": "아래의 하위 작업을 검토하세요. 시작하기 전에 제목을 편집할 수 있습니다.",
+    "refinedPromptLabel": "개선된 설명",
     "titlePlaceholder": "미션 제목",
     "launchMission": "미션 시작",
     "startMission": "미션 시작",

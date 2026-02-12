@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -20,7 +19,6 @@ import { Button, Card, GradientButton, ScreenHeader, Text } from '../src/compone
 import { useMissions } from '../src/hooks/useMissions'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import { sessionContextAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
 
@@ -36,6 +34,7 @@ interface PlanSubtask {
 
 interface ParsedPlan {
   title: string
+  refinedPrompt: string
   subtasks: PlanSubtask[]
 }
 
@@ -45,7 +44,7 @@ function clampTitle(title: string): string {
   return trimmed.slice(0, MAX_TITLE_LENGTH - 1).trimEnd() + '…'
 }
 
-function tryParsePlan(text: string): ParsedPlan | null {
+function tryParsePlan(text: string, originalPrompt: string): ParsedPlan | null {
   // Try to extract JSON from the response
   const jsonMatch = text.match(/\{[\s\S]*"title"[\s\S]*"subtasks"[\s\S]*\}/)
   if (jsonMatch) {
@@ -54,6 +53,7 @@ function tryParsePlan(text: string): ParsedPlan | null {
       if (parsed.title && Array.isArray(parsed.subtasks)) {
         return {
           title: clampTitle(parsed.title),
+          refinedPrompt: parsed.refinedPrompt || originalPrompt,
           subtasks: parsed.subtasks.map((s: { id?: string; title?: string }, i: number) => ({
             id: s.id || `subtask-${i + 1}`,
             title: s.title || `Step ${i + 1}`,
@@ -73,6 +73,7 @@ function tryParsePlan(text: string): ParsedPlan | null {
   if (subtaskLines.length > 0) {
     return {
       title: clampTitle(titleLine?.replace(/^#+\s*/, '').trim() || 'Mission'),
+      refinedPrompt: originalPrompt,
       subtasks: subtaskLines.map((l, i) => ({
         id: `subtask-${i + 1}`,
         title: l.replace(/^\d+[.)]\s*/, '').trim(),
@@ -109,7 +110,6 @@ export default function CreateMissionScreen() {
   const { t } = useTranslation()
   const { getProviderConfig, currentServerId } = useServers()
   const { createMission, setActiveMissionId, updateMissionStatus } = useMissions()
-  const [, setSessionContexts] = useAtom(sessionContextAtom)
 
   const [prompt, setPrompt] = useState('')
   const [phase, setPhase] = useState<'input' | 'analyzing' | 'review'>('input')
@@ -145,10 +145,11 @@ export default function CreateMissionScreen() {
       const planPrompt = `You are Mission Commander — a task planner that decomposes user requests into actionable steps.
 
 Analyze the request below and return ONLY a valid JSON object (no markdown, no extra text):
-{"title": "<concise title, max ${MAX_TITLE_LENGTH} chars>", "subtasks": [{"id": "subtask-1", "title": "First step"}, {"id": "subtask-2", "title": "Second step"}]}
+{"title": "<concise title, max ${MAX_TITLE_LENGTH} chars>", "refinedPrompt": "<improved, clear version of the user request>", "subtasks": [{"id": "subtask-1", "title": "First step"}, {"id": "subtask-2", "title": "Second step"}]}
 
 Rules:
 - Title MUST be ${MAX_TITLE_LENGTH} characters or fewer. It should be a short, descriptive label.
+- refinedPrompt: Rewrite the user's request to be clearer, more specific, and well-structured. Fix grammar and add detail where helpful, but preserve the original intent.
 - Create 3-8 subtasks. Each should be a single, clear action.
 - Use sequential IDs: subtask-1, subtask-2, etc.
 
@@ -169,7 +170,7 @@ User request: ${prompt.trim()}`
         },
       )
 
-      const parsed = tryParsePlan(responseText)
+      const parsed = tryParsePlan(responseText, prompt.trim())
       if (parsed && parsed.subtasks.length > 0) {
         setPlan(parsed)
         setPhase('review')
@@ -177,6 +178,7 @@ User request: ${prompt.trim()}`
         // Fallback: create a simple single-step plan
         setPlan({
           title: clampTitle(prompt.trim()),
+          refinedPrompt: prompt.trim(),
           subtasks: [{ id: 'subtask-1', title: prompt.trim() }],
         })
         setPhase('review')
@@ -191,7 +193,8 @@ User request: ${prompt.trim()}`
   const handleStartMission = useCallback(() => {
     if (!plan || plan.subtasks.length === 0) return
 
-    const systemMessage = buildMissionSystemMessage(plan.title, prompt.trim(), plan.subtasks)
+    const missionPrompt = plan.refinedPrompt || prompt.trim()
+    const systemMessage = buildMissionSystemMessage(plan.title, missionPrompt, plan.subtasks)
 
     if (!systemMessage.trim()) {
       Alert.alert(t('common.error'), t('missions.systemMessageEmpty'))
@@ -200,32 +203,17 @@ User request: ${prompt.trim()}`
 
     const mission = createMission({
       title: plan.title,
-      prompt: prompt.trim(),
+      prompt: missionPrompt,
       systemMessage,
       subtasks: plan.subtasks,
     })
-
-    // Set the system message for this mission's session
-    setSessionContexts((prev) => ({
-      ...prev,
-      [mission.sessionKey]: { systemMessage },
-    }))
 
     // Start the mission
     updateMissionStatus(mission.id, 'in_progress')
     setActiveMissionId(mission.id)
 
     router.replace('/mission-detail')
-  }, [
-    plan,
-    prompt,
-    createMission,
-    setSessionContexts,
-    updateMissionStatus,
-    setActiveMissionId,
-    router,
-    t,
-  ])
+  }, [plan, prompt, createMission, updateMissionStatus, setActiveMissionId, router, t])
 
   const styles = StyleSheet.create({
     container: {
@@ -285,6 +273,18 @@ User request: ${prompt.trim()}`
       borderWidth: 1,
       borderColor: theme.colors.border,
       marginBottom: theme.spacing.lg,
+    },
+    refinedPromptInput: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.md,
+      padding: theme.spacing.md,
+      color: theme.colors.text.primary,
+      fontSize: 14,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      marginBottom: theme.spacing.lg,
+      minHeight: 80,
+      textAlignVertical: 'top',
     },
     buttonRow: {
       flexDirection: 'row',
@@ -375,6 +375,18 @@ User request: ${prompt.trim()}`
                 placeholder={t('missions.titlePlaceholder')}
                 placeholderTextColor={theme.colors.text.tertiary}
                 maxLength={MAX_TITLE_LENGTH}
+              />
+
+              <Text variant="caption" color="secondary" style={{ marginBottom: theme.spacing.xs }}>
+                {t('missions.refinedPromptLabel')}
+              </Text>
+              <TextInput
+                style={styles.refinedPromptInput}
+                value={plan.refinedPrompt}
+                onChangeText={(text) => setPlan({ ...plan, refinedPrompt: text })}
+                placeholder={t('missions.promptPlaceholder')}
+                placeholderTextColor={theme.colors.text.tertiary}
+                multiline
               />
 
               <Card style={{ marginBottom: theme.spacing.lg }}>
