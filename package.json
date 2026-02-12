@@ -102,11 +102,6 @@
     "typescript": "~5.9.2"
   },
   "private": true,
-  "pnpm": {
-    "patchedDependencies": {
-      "react-native@0.81.5": "patches/react-native@0.81.5.patch"
-    }
-  },
   "expo": {
     "autolinking": {
       "nativeModulesDir": "./modules"
