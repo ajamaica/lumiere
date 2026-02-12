@@ -72,9 +72,11 @@ export default function MissionDetailScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
-  // Reset stopped guard when mission changes
+  // Reset per-mission refs when switching to a different mission
   useEffect(() => {
     stoppedRef.current = false
+    systemMessageSentRef.current = false
+    streamingTextRef.current = ''
   }, [activeMission?.id])
 
   // Auto-start mission on first load if in_progress and no messages
