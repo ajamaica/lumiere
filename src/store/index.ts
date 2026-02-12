@@ -11,9 +11,6 @@ export type {
   SessionContextMap,
   TriggerConfig,
   TriggersDict,
-  WorkflowConfig,
-  WorkflowConfigMap,
-  WorkflowFile,
 } from './types'
 
 // ─── Storage & store access ──────────────────────────────
@@ -29,7 +26,6 @@ export {
   serverSessionsAtom,
   sessionAliasesAtom,
   sessionContextAtom,
-  workflowConfigAtom,
 } from './sessionAtoms'
 
 // ─── Server atoms ────────────────────────────────────────

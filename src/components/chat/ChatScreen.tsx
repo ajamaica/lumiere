@@ -87,7 +87,6 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     handleSend,
     isAgentResponding,
     queueCount,
-    isWorkflowActive,
     hasScrolledOnLoadRef,
     shouldAutoScrollRef,
     messages,
@@ -272,7 +271,6 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
         retry={retry}
         isAgentResponding={isAgentResponding}
         isMoltProvider={isMoltProvider}
-        isWorkflowActive={isWorkflowActive}
         onOpenSettings={handleOpenSettings}
         onOpenAgentPicker={() => setIsAgentPickerOpen(true)}
         allMessages={allMessages}
