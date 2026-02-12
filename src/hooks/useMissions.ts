@@ -8,17 +8,14 @@ function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8)
 }
 
-/**
- * Helper to safely resolve the prev value from atomWithStorage.
- * At runtime the value is always resolved, but the type includes Promise<T>.
- */
-function resolvePrev(prev: MissionsDict | Promise<MissionsDict>): MissionsDict {
-  return prev as MissionsDict
-}
-
 export function useMissions() {
-  const [missions, setMissions] = useAtom(missionsAtom)
-  const [activeMissionId, setActiveMissionId] = useAtom(activeMissionIdAtom)
+  const [rawMissions, setMissions] = useAtom(missionsAtom)
+  const [rawActiveMissionId, setActiveMissionId] = useAtom(activeMissionIdAtom)
+
+  // unwrap() guarantees synchronous values, but TypeScript still infers
+  // the union type. Cast to the concrete types for safe property access.
+  const missions = useMemo(() => (rawMissions ?? {}) as MissionsDict, [rawMissions])
+  const activeMissionId = (rawActiveMissionId ?? null) as string | null
 
   const missionList = useMemo(
     () => Object.values(missions).sort((a, b) => b.updatedAt - a.updatedAt),
@@ -58,10 +55,7 @@ export function useMissions() {
         updatedAt: now,
       }
 
-      setMissions((raw) => {
-        const prev = resolvePrev(raw)
-        return { ...prev, [id]: mission }
-      })
+      setMissions((prev) => ({ ...(prev as MissionsDict), [id]: mission }))
       setActiveMissionId(id)
       return mission
     },
@@ -70,12 +64,12 @@ export function useMissions() {
 
   const updateMissionStatus = useCallback(
     (missionId: string, status: MissionStatus, extra?: Partial<Mission>) => {
-      setMissions((raw) => {
-        const prev = resolvePrev(raw)
-        const existing = prev[missionId]
-        if (!existing) return prev
+      setMissions((prev) => {
+        const dict = prev as MissionsDict
+        const existing = dict[missionId]
+        if (!existing) return dict
         return {
-          ...prev,
+          ...dict,
           [missionId]: {
             ...existing,
             status,
@@ -90,12 +84,12 @@ export function useMissions() {
 
   const updateSubtaskStatus = useCallback(
     (missionId: string, subtaskId: string, status: MissionStatus, result?: string) => {
-      setMissions((raw) => {
-        const prev = resolvePrev(raw)
-        const existing = prev[missionId]
-        if (!existing) return prev
+      setMissions((prev) => {
+        const dict = prev as MissionsDict
+        const existing = dict[missionId]
+        if (!existing) return dict
         return {
-          ...prev,
+          ...dict,
           [missionId]: {
             ...existing,
             updatedAt: Date.now(),
@@ -111,12 +105,12 @@ export function useMissions() {
 
   const addMissionSkill = useCallback(
     (missionId: string, skillName: string) => {
-      setMissions((raw) => {
-        const prev = resolvePrev(raw)
-        const existing = prev[missionId]
-        if (!existing || existing.skills.includes(skillName)) return prev
+      setMissions((prev) => {
+        const dict = prev as MissionsDict
+        const existing = dict[missionId]
+        if (!existing || existing.skills.includes(skillName)) return dict
         return {
-          ...prev,
+          ...dict,
           [missionId]: {
             ...existing,
             updatedAt: Date.now(),
@@ -130,9 +124,8 @@ export function useMissions() {
 
   const deleteMission = useCallback(
     (missionId: string) => {
-      setMissions((raw) => {
-        const prev = resolvePrev(raw)
-        const next = { ...prev }
+      setMissions((prev) => {
+        const next = { ...(prev as MissionsDict) }
         delete next[missionId]
         return next
       })
