@@ -286,7 +286,10 @@
     "refresh": "Aktualisieren",
     "logsSection": "Protokolle",
     "logsDescription": "Aktuelle Protokolleinträge des Gateways.",
-    "noLogs": "Keine Protokolleinträge gefunden"
+    "noLogs": "Keine Protokolleinträge gefunden",
+    "connectionError": "Verbindungsfehler",
+    "fetchError": "Protokolle konnten nicht geladen werden",
+    "connecting": "Verbindung zum Gateway wird hergestellt..."
   },
   "extension": {
     "openFullscreen": "In neuem Tab öffnen",

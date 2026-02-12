@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -14,6 +14,26 @@ import { logger } from '../src/utils/logger'
 
 const logsLogger = logger.create('GatewayLogs')
 
+/**
+ * Extract log entries from a gateway response payload.
+ * Handles multiple response shapes: { logs: [...] }, { entries: [...] },
+ * or a bare array.
+ */
+function extractLogs(response: unknown): GatewayLogEntry[] {
+  if (!response) return []
+
+  if (Array.isArray(response)) return response as GatewayLogEntry[]
+
+  if (typeof response === 'object') {
+    const obj = response as Record<string, unknown>
+    if (Array.isArray(obj.logs)) return obj.logs as GatewayLogEntry[]
+    if (Array.isArray(obj.entries)) return obj.entries as GatewayLogEntry[]
+    if (Array.isArray(obj.items)) return obj.items as GatewayLogEntry[]
+  }
+
+  return []
+}
+
 export default function GatewayLogsScreen() {
   const { theme } = useTheme()
   const router = useRouter()
@@ -24,6 +44,7 @@ export default function GatewayLogsScreen() {
   const [logs, setLogs] = useState<GatewayLogEntry[]>([])
   const [filterLevel, setFilterLevel] = useState<'debug' | 'info' | 'warn' | 'error' | null>(null)
   const [loading, setLoading] = useState(false)
+  const [fetchError, setFetchError] = useState<string | null>(null)
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -33,7 +54,14 @@ export default function GatewayLogsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connected, connect, getLogs } = useMoltGateway({
+  const {
+    connected,
+    connecting,
+    error: connectionError,
+    connect,
+    disconnect,
+    getLogs,
+  } = useMoltGateway({
     url: config?.url || '',
     token: config?.token || '',
   })
@@ -42,32 +70,40 @@ export default function GatewayLogsScreen() {
     if (config) {
       connect()
     }
+    return () => {
+      disconnect()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
-  useEffect(() => {
-    if (connected) {
-      fetchLogs()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected])
-
-  const fetchLogs = async () => {
+  const fetchLogs = useCallback(async () => {
+    if (!connected) return
     setLoading(true)
+    setFetchError(null)
     try {
       const response = await getLogs({
         limit: 100,
         level: filterLevel ?? undefined,
       })
-      if (response?.logs) {
-        setLogs(response.logs)
+      const entries = extractLogs(response)
+      setLogs(entries)
+      if (entries.length === 0) {
+        logsLogger.info('getLogs returned 0 entries', { response })
       }
     } catch (err) {
+      const message = err instanceof Error ? err.message : String(err)
+      setFetchError(message)
       logsLogger.logError('Failed to fetch gateway logs', err)
     } finally {
       setLoading(false)
     }
-  }
+  }, [connected, getLogs, filterLevel])
+
+  useEffect(() => {
+    if (connected) {
+      fetchLogs()
+    }
+  }, [connected, fetchLogs])
 
   const handleRefresh = async () => {
     await fetchLogs()
@@ -76,13 +112,6 @@ export default function GatewayLogsScreen() {
   const handleFilterChange = (level: 'debug' | 'info' | 'warn' | 'error' | null) => {
     setFilterLevel(level)
   }
-
-  useEffect(() => {
-    if (connected) {
-      fetchLogs()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterLevel])
 
   const getLevelColor = (level: string) => {
     switch (level) {
@@ -266,7 +295,23 @@ export default function GatewayLogsScreen() {
             {t('gatewayLogs.logsDescription')}
           </Text>
 
-          {logs.length === 0 ? (
+          {(connectionError || fetchError) && (
+            <Card style={{ marginBottom: theme.spacing.md }}>
+              <Text variant="bodySmall" style={{ color: theme.colors.status.error }}>
+                {connectionError
+                  ? `${t('gatewayLogs.connectionError')}: ${connectionError}`
+                  : `${t('gatewayLogs.fetchError')}: ${fetchError}`}
+              </Text>
+            </Card>
+          )}
+
+          {connecting && !connected && logs.length === 0 && (
+            <Text color="secondary" center>
+              {t('gatewayLogs.connecting')}
+            </Text>
+          )}
+
+          {!connecting && !connectionError && !fetchError && logs.length === 0 ? (
             <Text color="secondary" center>
               {t('gatewayLogs.noLogs')}
             </Text>

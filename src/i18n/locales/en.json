@@ -286,7 +286,10 @@
     "refresh": "Refresh",
     "logsSection": "Logs",
     "logsDescription": "Recent log entries from the gateway.",
-    "noLogs": "No log entries found"
+    "noLogs": "No log entries found",
+    "connectionError": "Connection error",
+    "fetchError": "Failed to load logs",
+    "connecting": "Connecting to gateway..."
   },
   "extension": {
     "openFullscreen": "Open in new tab",

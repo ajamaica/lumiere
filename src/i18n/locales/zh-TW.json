@@ -286,7 +286,10 @@
     "refresh": "重新整理",
     "logsSection": "日誌",
     "logsDescription": "閘道的最近日誌條目。",
-    "noLogs": "未找到日誌條目"
+    "noLogs": "未找到日誌條目",
+    "connectionError": "連線錯誤",
+    "fetchError": "載入日誌失敗",
+    "connecting": "正在連線至閘道..."
   },
   "extension": {
     "openFullscreen": "在新分頁中開啟",
