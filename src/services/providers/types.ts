@@ -35,6 +35,9 @@ export interface SendMessageParams {
   message: string
   sessionKey: string
   attachments?: ProviderAttachment[]
+  /** Optional system message injected as hidden context for the session.
+   *  Each provider uses its native mechanism (e.g. system role, system_instruction). */
+  systemMessage?: string
 }
 
 export interface ProviderAttachment {

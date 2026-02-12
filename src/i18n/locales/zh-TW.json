@@ -159,7 +159,10 @@
     "displayName": "顯示名稱",
     "sessionKey": "工作階段金鑰",
     "sessionNotFound": "找不到工作階段",
-    "sessionKeyRequired": "工作階段金鑰為必填"
+    "sessionKeyRequired": "工作階段金鑰為必填",
+    "systemMessage": "系統訊息",
+    "systemMessageHint": "隨每則訊息傳送的隱藏指令。在聊天中不可見。",
+    "systemMessagePlaceholder": "例如：你是一個有用的程式設計助手..."
   },
   "favorites": {
     "title": "收藏",
@@ -286,7 +289,10 @@
     "refresh": "重新整理",
     "logsSection": "日誌",
     "logsDescription": "閘道的最近日誌條目。",
-    "noLogs": "未找到日誌條目"
+    "noLogs": "未找到日誌條目",
+    "connectionError": "連線錯誤",
+    "fetchError": "載入日誌失敗",
+    "connecting": "正在連線至閘道..."
   },
   "extension": {
     "openFullscreen": "在新分頁中開啟",

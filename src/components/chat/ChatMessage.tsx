@@ -4,7 +4,6 @@ import { useAtom, useSetAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   Image,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -32,9 +31,10 @@ import {
   favoritesAtom,
   sessionAliasesAtom,
 } from '../../store'
-import { useTheme } from '../../theme'
+import { Theme, useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
 import { logger } from '../../utils/logger'
+import { webStyle } from '../../utils/platform'
 import { processXmlTags } from '../../utils/xmlTagProcessor'
 import { LinkPreview } from './LinkPreview'
 
@@ -531,32 +531,6 @@ export function ChatMessage({ message }: ChatMessageProps) {
   )
 }
 
-interface Theme {
-  colors: {
-    background: string
-    surface: string
-    border: string
-    text: { primary: string; secondary: string; tertiary: string; inverse: string }
-    primary: string
-    message: {
-      user: string
-      agent: string
-      userText: string
-      agentText: string
-    }
-    status: { success: string; error: string; warning: string }
-  }
-  spacing: { xs: number; sm: number; md: number; lg: number }
-  borderRadius: { xs: number; sm: number; md: number; xxl: number }
-  typography: {
-    fontSize: { xs: number; sm: number; base: number; lg: number; xl: number }
-    lineHeight: { normal: number }
-    fontWeight: { medium: '500'; semibold: '600'; bold: '700' }
-    fontFamily: { monospace: string }
-  }
-  isDark: boolean
-}
-
 const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
@@ -578,7 +552,7 @@ const createStyles = (theme: Theme) =>
       maxWidth: '100%',
       backgroundColor: theme.colors.message.user,
       borderBottomRightRadius: theme.borderRadius.sm,
-      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
+      ...webStyle({ userSelect: 'text' as const }),
     },
     userBubbleWrapper: {
       maxWidth: '100%',
@@ -594,7 +568,7 @@ const createStyles = (theme: Theme) =>
     userGradientBubble: {
       paddingHorizontal: theme.spacing.lg,
       paddingVertical: theme.spacing.sm + 2,
-      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
+      ...webStyle({ userSelect: 'text' as const }),
     },
     agentBubble: {
       width: '100%',
@@ -602,7 +576,7 @@ const createStyles = (theme: Theme) =>
       borderRadius: 0,
       paddingHorizontal: 0,
       overflow: 'hidden' as const,
-      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
+      ...webStyle({ userSelect: 'text' as const }),
     },
     intentActions: {
       flexDirection: 'row',
@@ -675,7 +649,7 @@ const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
       fontSize: theme.typography.fontSize.base,
       lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
       flexShrink: 1,
-      ...(Platform.OS === 'web' ? { userSelect: 'text' as const } : {}),
+      ...webStyle({ userSelect: 'text' as const }),
     },
     text: {
       color: textColor,

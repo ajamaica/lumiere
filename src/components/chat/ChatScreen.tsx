@@ -35,8 +35,9 @@ import {
   currentSessionKeyAtom,
   pendingShareTextAtom,
   pendingTriggerMessageAtom,
+  sessionContextAtom,
 } from '../../store'
-import { useTheme } from '../../theme'
+import { Theme, useTheme } from '../../theme'
 import {
   useContentContainerStyle,
   useDeviceType,
@@ -85,6 +86,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [pendingTriggerMessage, setPendingTriggerMessage] = useAtom(pendingTriggerMessageAtom)
   const [pendingShareText, setPendingShareText] = useAtom(pendingShareTextAtom)
+  const [sessionContextMap] = useAtom(sessionContextAtom)
   const [isAgentPickerOpen, setIsAgentPickerOpen] = useState(false)
   const isMoltProvider = providerConfig.type === 'molt'
   const flatListRef = useRef<FlashListRef<Message>>(null)
@@ -181,8 +183,8 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   // Track whether we pre-populated from local cache so we can skip the loader
   const hasCacheRef = useRef(false)
 
-  // Detect server switches and reset refs without touching visual state,
-  // so old messages stay visible until new data arrives.
+  // Detect server switches and clear chat so stale messages from the
+  // previous server are never shown while the new history loads.
   const prevServerIdRef = useRef(providerConfig.serverId)
   useEffect(() => {
     if (prevServerIdRef.current !== providerConfig.serverId) {
@@ -190,7 +192,9 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       hasCacheRef.current = false
       hasScrolledOnLoadRef.current = false
       shouldAutoScrollRef.current = true
+      setMessages([])
       setCurrentAgentMessage('')
+      setIsLoadingHistory(true)
     }
   }, [providerConfig.serverId])
 
@@ -198,6 +202,8 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     useChatProvider(providerConfig)
 
   const { isActive: isWorkflowActive, prependContext } = useWorkflowContext()
+
+  const sessionSystemMessage = sessionContextMap[currentSessionKey]?.systemMessage
 
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
     sendMessage,
@@ -212,6 +218,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       shouldAutoScrollRef.current = true
     },
     contextTransform: isWorkflowActive ? prependContext : undefined,
+    systemMessage: sessionSystemMessage,
   })
 
   // Convert raw history messages into UI Message objects
@@ -778,24 +785,6 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       )}
     </SafeAreaView>
   )
-}
-
-interface Theme {
-  colors: {
-    background: string
-    surface: string
-    border: string
-    text: { primary: string; secondary: string; tertiary: string; inverse: string }
-    primary: string
-    status: { success: string; error: string; warning: string }
-  }
-  spacing: { xs: number; sm: number; md: number; lg: number; xl: number }
-  borderRadius: { sm: number; md: number; xxl: number }
-  typography: {
-    fontSize: { xs: number; sm: number; base: number }
-    fontWeight: { semibold: '600' }
-  }
-  isDark: boolean
 }
 
 const createStyles = (

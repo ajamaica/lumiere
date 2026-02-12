@@ -232,14 +232,21 @@ export class GeminiChatProvider implements ChatProvider {
         resolve()
       }
 
-      xhr.send(
-        JSON.stringify({
-          contents: messages,
-          generationConfig: {
-            maxOutputTokens: API_CONFIG.GEMINI_MAX_TOKENS,
-          },
-        }),
-      )
+      // Build request body, including system_instruction if provided
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const requestBody: Record<string, any> = {
+        contents: messages,
+        generationConfig: {
+          maxOutputTokens: API_CONFIG.GEMINI_MAX_TOKENS,
+        },
+      }
+      if (params.systemMessage) {
+        requestBody.system_instruction = {
+          parts: [{ text: params.systemMessage }],
+        }
+      }
+
+      xhr.send(JSON.stringify(requestBody))
     })
   }
 

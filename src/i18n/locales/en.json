@@ -159,7 +159,10 @@
     "displayName": "Display Name",
     "sessionKey": "Session Key",
     "sessionNotFound": "Session not found",
-    "sessionKeyRequired": "Session key is required"
+    "sessionKeyRequired": "Session key is required",
+    "systemMessage": "System Message",
+    "systemMessageHint": "Hidden instructions sent with every message. Not visible in chat.",
+    "systemMessagePlaceholder": "e.g. You are a helpful coding assistant..."
   },
   "favorites": {
     "title": "Favorites",
@@ -286,7 +289,10 @@
     "refresh": "Refresh",
     "logsSection": "Logs",
     "logsDescription": "Recent log entries from the gateway.",
-    "noLogs": "No log entries found"
+    "noLogs": "No log entries found",
+    "connectionError": "Connection error",
+    "fetchError": "Failed to load logs",
+    "connecting": "Connecting to gateway..."
   },
   "extension": {
     "openFullscreen": "Open in new tab",

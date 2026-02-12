@@ -159,7 +159,10 @@
     "displayName": "表示名",
     "sessionKey": "セッションキー",
     "sessionNotFound": "セッションが見つかりません",
-    "sessionKeyRequired": "セッションキーは必須です"
+    "sessionKeyRequired": "セッションキーは必須です",
+    "systemMessage": "システムメッセージ",
+    "systemMessageHint": "すべてのメッセージと一緒に送信される非表示の指示。チャットには表示されません。",
+    "systemMessagePlaceholder": "例: あなたは親切なコーディングアシスタントです..."
   },
   "favorites": {
     "title": "お気に入り",
@@ -286,7 +289,10 @@
     "refresh": "更新",
     "logsSection": "ログ",
     "logsDescription": "ゲートウェイからの最近のログエントリ。",
-    "noLogs": "ログエントリが見つかりません"
+    "noLogs": "ログエントリが見つかりません",
+    "connectionError": "接続エラー",
+    "fetchError": "ログの読み込みに失敗しました",
+    "connecting": "ゲートウェイに接続中..."
   },
   "extension": {
     "openFullscreen": "新しいタブで開く",

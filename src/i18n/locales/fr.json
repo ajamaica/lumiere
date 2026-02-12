@@ -159,7 +159,10 @@
     "displayName": "Nom d'affichage",
     "sessionKey": "Clé de session",
     "sessionNotFound": "Session introuvable",
-    "sessionKeyRequired": "La clé de session est obligatoire"
+    "sessionKeyRequired": "La clé de session est obligatoire",
+    "systemMessage": "Message système",
+    "systemMessageHint": "Instructions cachées envoyées avec chaque message. Non visibles dans le chat.",
+    "systemMessagePlaceholder": "ex. Tu es un assistant de programmation utile..."
   },
   "favorites": {
     "title": "Favoris",
@@ -286,7 +289,10 @@
     "refresh": "Actualiser",
     "logsSection": "Journaux",
     "logsDescription": "Entrées de journal récentes du gateway.",
-    "noLogs": "Aucune entrée de journal trouvée"
+    "noLogs": "Aucune entrée de journal trouvée",
+    "connectionError": "Erreur de connexion",
+    "fetchError": "Échec du chargement des journaux",
+    "connecting": "Connexion au gateway..."
   },
   "extension": {
     "openFullscreen": "Ouvrir dans un nouvel onglet",

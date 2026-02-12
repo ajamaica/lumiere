@@ -5,7 +5,6 @@ import {
   ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -26,6 +25,7 @@ import { useClaudeModels } from '../src/hooks/useClaudeModels'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
+import { keyboardAvoidingBehavior } from '../src/utils/platform'
 
 export default function EditServerScreen() {
   const { theme } = useTheme()
@@ -185,10 +185,7 @@ export default function EditServerScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title="Edit Server" showBack />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
+      <KeyboardAvoidingView behavior={keyboardAvoidingBehavior} style={styles.keyboardView}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"

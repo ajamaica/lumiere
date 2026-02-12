@@ -1,6 +1,5 @@
 import { type PrimitiveAtom, useAtom } from 'jotai'
 import { useCallback, useEffect, useMemo } from 'react'
-import { Platform } from 'react-native'
 
 import { ProviderConfig } from '../services/providers'
 import { deleteServerToken, getServerToken, setServerToken } from '../services/secureTokenStorage'
@@ -13,6 +12,7 @@ import {
   serversAtom,
   ServersDict,
 } from '../store'
+import { isWeb } from '../utils/platform'
 
 // Both atoms hold ServersDict — cast to a common type so the conditional
 // expression satisfies useAtom's overload without collapsing to `never`.
@@ -42,8 +42,6 @@ export interface UseServersResult {
 }
 
 export function useServers(): UseServersResult {
-  const isWeb = Platform.OS === 'web'
-
   // On web, use the password-encrypted secure atom.
   // On native, use the normal AsyncStorage-backed atom.
   const [servers, setServers] = useAtom(isWeb ? webAtom : nativeAtom)
@@ -54,7 +52,7 @@ export function useServers(): UseServersResult {
   useEffect(() => {
     if (!isWeb || !hydrated) return
     persistSecureServers(servers)
-  }, [servers, isWeb, hydrated])
+  }, [servers, hydrated])
 
   // Derived state
   const currentServer = useMemo(() => servers[currentServerId] || null, [servers, currentServerId])

@@ -71,8 +71,13 @@ export class MoltChatProvider implements ChatProvider {
     const sessionParts = params.sessionKey.split(':')
     const agentId = sessionParts.length >= 2 ? sessionParts[1] : agentConfig.defaultAgentId
 
+    // Prepend system message as context for Molt gateway
+    const message = params.systemMessage
+      ? `[System: ${params.systemMessage}]\n\n${params.message}`
+      : params.message
+
     const agentParams = {
-      message: params.message,
+      message,
       idempotencyKey: generateIdempotencyKey(),
       agentId,
       sessionKey: params.sessionKey,

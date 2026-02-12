@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next'
 import {
   Alert,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -29,6 +28,7 @@ import {
   serverSessionsAtom,
 } from '../store'
 import { useTheme } from '../theme'
+import { keyboardAvoidingBehavior } from '../utils/platform'
 
 interface BackupData {
   version: number
@@ -401,10 +401,7 @@ export function SetupScreen() {
       {/* Background gradient */}
       <LinearGradient colors={gradientColors} locations={[0, 0.7, 1]} style={styles.gradient} />
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
+      <KeyboardAvoidingView behavior={keyboardAvoidingBehavior} style={styles.keyboardView}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"

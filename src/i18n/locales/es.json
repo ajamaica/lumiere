@@ -159,7 +159,10 @@
     "displayName": "Nombre para Mostrar",
     "sessionKey": "Clave de Sesión",
     "sessionNotFound": "Sesión no encontrada",
-    "sessionKeyRequired": "La clave de sesión es obligatoria"
+    "sessionKeyRequired": "La clave de sesión es obligatoria",
+    "systemMessage": "Mensaje del sistema",
+    "systemMessageHint": "Instrucciones ocultas enviadas con cada mensaje. No visibles en el chat.",
+    "systemMessagePlaceholder": "ej. Eres un asistente de programación útil..."
   },
   "favorites": {
     "title": "Favoritos",
@@ -286,7 +289,10 @@
     "refresh": "Actualizar",
     "logsSection": "Registros",
     "logsDescription": "Entradas de registro recientes del gateway.",
-    "noLogs": "No se encontraron entradas de registro"
+    "noLogs": "No se encontraron entradas de registro",
+    "connectionError": "Error de conexión",
+    "fetchError": "Error al cargar los registros",
+    "connecting": "Conectando al gateway..."
   },
   "extension": {
     "openFullscreen": "Abrir en pestaña nueva",

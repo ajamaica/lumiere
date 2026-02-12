@@ -159,7 +159,10 @@
     "displayName": "प्रदर्शन नाम",
     "sessionKey": "सत्र कुंजी",
     "sessionNotFound": "सत्र नहीं मिला",
-    "sessionKeyRequired": "सत्र कुंजी आवश्यक है"
+    "sessionKeyRequired": "सत्र कुंजी आवश्यक है",
+    "systemMessage": "सिस्टम संदेश",
+    "systemMessageHint": "हर संदेश के साथ भेजे जाने वाले छिपे निर्देश। चैट में दिखाई नहीं देते।",
+    "systemMessagePlaceholder": "उदा. आप एक सहायक कोडिंग असिस्टेंट हैं..."
   },
   "favorites": {
     "title": "पसंदीदा",
@@ -286,7 +289,10 @@
     "refresh": "रीफ्रेश",
     "logsSection": "लॉग",
     "logsDescription": "गेटवे से हाल की लॉग प्रविष्टियाँ।",
-    "noLogs": "कोई लॉग प्रविष्टि नहीं मिली"
+    "noLogs": "कोई लॉग प्रविष्टि नहीं मिली",
+    "connectionError": "कनेक्शन त्रुटि",
+    "fetchError": "लॉग लोड करने में विफल",
+    "connecting": "गेटवे से कनेक्ट हो रहा है..."
   },
   "extension": {
     "openFullscreen": "नए टैब में खोलें",

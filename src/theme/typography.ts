@@ -1,4 +1,4 @@
-import { Platform } from 'react-native'
+import { monospaceFontFamily } from '../utils/platform'
 
 export const typography = {
   fontSize: {
@@ -26,7 +26,7 @@ export const typography = {
 
   fontFamily: {
     regular: 'System',
-    monospace: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+    monospace: monospaceFontFamily,
   },
 }
 

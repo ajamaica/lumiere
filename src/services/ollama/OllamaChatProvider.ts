@@ -119,9 +119,14 @@ export class OllamaChatProvider implements ChatProvider {
     this.abortController = new AbortController()
 
     try {
+      // Prepend system message if provided
+      const apiMessages: OllamaMessage[] = params.systemMessage
+        ? [{ role: 'system', content: params.systemMessage }, ...messages]
+        : messages
+
       const response = await this.client.chat({
         model: this.model,
-        messages,
+        messages: apiMessages,
         stream: false,
       })
 

@@ -159,7 +159,10 @@
     "displayName": "Anzeigename",
     "sessionKey": "Sitzungsschlüssel",
     "sessionNotFound": "Sitzung nicht gefunden",
-    "sessionKeyRequired": "Sitzungsschlüssel ist erforderlich"
+    "sessionKeyRequired": "Sitzungsschlüssel ist erforderlich",
+    "systemMessage": "Systemnachricht",
+    "systemMessageHint": "Versteckte Anweisungen, die mit jeder Nachricht gesendet werden. Im Chat nicht sichtbar.",
+    "systemMessagePlaceholder": "z.B. Du bist ein hilfreicher Programmierassistent..."
   },
   "favorites": {
     "title": "Favoriten",
@@ -286,7 +289,10 @@
     "refresh": "Aktualisieren",
     "logsSection": "Protokolle",
     "logsDescription": "Aktuelle Protokolleinträge des Gateways.",
-    "noLogs": "Keine Protokolleinträge gefunden"
+    "noLogs": "Keine Protokolleinträge gefunden",
+    "connectionError": "Verbindungsfehler",
+    "fetchError": "Protokolle konnten nicht geladen werden",
+    "connecting": "Verbindung zum Gateway wird hergestellt..."
   },
   "extension": {
     "openFullscreen": "In neuem Tab öffnen",

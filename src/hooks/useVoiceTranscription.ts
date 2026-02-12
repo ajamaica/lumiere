@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Platform } from 'react-native'
+
+import { isNative } from '../utils/platform'
 
 type TranscriptionStatus = 'idle' | 'requesting' | 'recording' | 'error'
 
@@ -21,7 +22,7 @@ export function useVoiceTranscription(): UseVoiceTranscriptionResult {
   >(null)
 
   useEffect(() => {
-    if (Platform.OS !== 'ios' && Platform.OS !== 'android') return
+    if (!isNative) return
 
     let mounted = true
 
@@ -45,7 +46,7 @@ export function useVoiceTranscription(): UseVoiceTranscriptionResult {
 
   useEffect(() => {
     const mod = moduleRef.current
-    if (!mod || (Platform.OS !== 'ios' && Platform.OS !== 'android')) return
+    if (!mod || !isNative) return
 
     const transcriptionSub = mod.addTranscriptionListener((event) => {
       setTranscribedText(event.text)

@@ -247,11 +247,17 @@ export class OpenAIChatProvider implements ChatProvider {
         resolve()
       }
 
+      // Build API messages, prepending system message if provided
+      const apiMessages = messages.map(this.formatMessageForApi)
+      if (params.systemMessage) {
+        apiMessages.unshift({ role: 'system', content: params.systemMessage })
+      }
+
       xhr.send(
         JSON.stringify({
           model: this.model,
           max_tokens: API_CONFIG.OPENAI_MAX_TOKENS,
-          messages: messages.map(this.formatMessageForApi),
+          messages: apiMessages,
           stream: true,
         }),
       )

@@ -1,8 +1,9 @@
 import * as WebBrowser from 'expo-web-browser'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 
-import { useTheme } from '../../theme'
+import { Theme, useTheme } from '../../theme'
+import { webStyle } from '../../utils/platform'
 import { UrlMetadata } from '../../utils/urlMetadata'
 
 interface LinkPreviewProps {
@@ -74,24 +75,6 @@ export function LinkPreview({ metadata }: LinkPreviewProps) {
   )
 }
 
-interface Theme {
-  colors: {
-    background: string
-    surface: string
-    border: string
-    text: { primary: string; secondary: string; tertiary: string }
-    primary: string
-    message: { agentText: string }
-  }
-  spacing: { xs: number; sm: number; md: number }
-  borderRadius: { sm: number; md: number }
-  typography: {
-    fontSize: { xs: number; sm: number; base: number }
-    fontWeight: { medium: '500'; semibold: '600' }
-  }
-  isDark: boolean
-}
-
 const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
@@ -102,7 +85,7 @@ const createStyles = (theme: Theme) =>
       backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)',
       overflow: 'hidden',
       marginTop: theme.spacing.sm,
-      ...(Platform.OS === 'web' ? { cursor: 'pointer' as const } : {}),
+      ...webStyle({ cursor: 'pointer' as const }),
     },
     pressed: {
       opacity: 0.7,

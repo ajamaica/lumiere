@@ -1,7 +1,7 @@
 import { ImageManipulator, SaveFormat } from 'expo-image-manipulator'
-import { Platform } from 'react-native'
 
 import { logger } from './logger'
+import { isWeb } from './platform'
 
 const imageLogger = logger.create('ImageCompression')
 
@@ -24,7 +24,7 @@ interface CompressedImage {
  * On web it draws onto an off-screen canvas and exports as JPEG.
  */
 export async function compressImageToJpeg(uri: string): Promise<CompressedImage> {
-  if (Platform.OS === 'web') {
+  if (isWeb) {
     return compressOnWeb(uri)
   }
   return compressOnNative(uri)

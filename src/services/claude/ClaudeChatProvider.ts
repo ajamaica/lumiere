@@ -291,14 +291,19 @@ export class ClaudeChatProvider implements ChatProvider {
         resolve()
       }
 
-      xhr.send(
-        JSON.stringify({
-          model: this.model,
-          max_tokens: API_CONFIG.CLAUDE_MAX_TOKENS,
-          messages: messages.map(this.formatMessageForApi),
-          stream: true,
-        }),
-      )
+      // Build the request body, including optional system message
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const requestBody: Record<string, any> = {
+        model: this.model,
+        max_tokens: API_CONFIG.CLAUDE_MAX_TOKENS,
+        messages: messages.map(this.formatMessageForApi),
+        stream: true,
+      }
+      if (params.systemMessage) {
+        requestBody.system = params.systemMessage
+      }
+
+      xhr.send(JSON.stringify(requestBody))
     })
   }
 

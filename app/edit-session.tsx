@@ -2,12 +2,13 @@ import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
+import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
-import { currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
+import { currentSessionKeyAtom, sessionAliasesAtom, sessionContextAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { keyboardAvoidingBehavior } from '../src/utils/platform'
 
 export default function EditSessionScreen() {
   const { theme } = useTheme()
@@ -16,12 +17,15 @@ export default function EditSessionScreen() {
   const { key } = useLocalSearchParams<{ key: string }>()
   const [sessionAliases, setSessionAliases] = useAtom(sessionAliasesAtom)
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
+  const [sessionContextMap, setSessionContextMap] = useAtom(sessionContextAtom)
 
   const existingAlias = key ? sessionAliases[key] : undefined
   const defaultName = key ? key.split(':').pop() || key : ''
+  const existingSystemMessage = key ? (sessionContextMap[key]?.systemMessage ?? '') : ''
 
   const [name, setName] = useState(existingAlias ?? defaultName)
   const [sessionKey, setSessionKey] = useState(key ?? '')
+  const [systemMessage, setSystemMessage] = useState(existingSystemMessage)
 
   if (!key) {
     return (
@@ -56,6 +60,24 @@ export default function EditSessionScreen() {
     }
     setSessionAliases(newAliases)
 
+    // Update session context (system message)
+    const newContextMap = { ...sessionContextMap }
+    const trimmedSystemMessage = systemMessage.trim()
+    if (trimmedSystemMessage) {
+      // If the key changed, remove old context entry
+      if (sessionKey !== key) {
+        delete newContextMap[key]
+      }
+      newContextMap[sessionKey] = { systemMessage: trimmedSystemMessage }
+    } else {
+      // Remove context if system message is empty
+      delete newContextMap[key]
+      if (sessionKey !== key) {
+        delete newContextMap[sessionKey]
+      }
+    }
+    setSessionContextMap(newContextMap)
+
     // If the key changed and this was the active session, update it
     if (sessionKey !== key && currentSessionKey === key) {
       setCurrentSessionKey(sessionKey)
@@ -88,10 +110,7 @@ export default function EditSessionScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('sessions.editSession')} showBack />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
+      <KeyboardAvoidingView behavior={keyboardAvoidingBehavior} style={styles.keyboardView}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
@@ -115,6 +134,22 @@ export default function EditSessionScreen() {
               placeholder="agent:main:session-name"
               autoCapitalize="none"
               autoCorrect={false}
+            />
+          </View>
+
+          <View style={styles.formRow}>
+            <TextInput
+              label={t('sessions.systemMessage')}
+              hint={t('sessions.systemMessageHint')}
+              value={systemMessage}
+              onChangeText={setSystemMessage}
+              placeholder={t('sessions.systemMessagePlaceholder')}
+              multiline
+              numberOfLines={4}
+              textAlignVertical="top"
+              style={{ minHeight: 100 }}
+              autoCapitalize="sentences"
+              autoCorrect
             />
           </View>
 

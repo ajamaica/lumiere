@@ -159,7 +159,10 @@
     "displayName": "Отображаемое имя",
     "sessionKey": "Ключ сессии",
     "sessionNotFound": "Сессия не найдена",
-    "sessionKeyRequired": "Ключ сессии обязателен"
+    "sessionKeyRequired": "Ключ сессии обязателен",
+    "systemMessage": "Системное сообщение",
+    "systemMessageHint": "Скрытые инструкции, отправляемые с каждым сообщением. Не видны в чате.",
+    "systemMessagePlaceholder": "напр. Ты полезный помощник по программированию..."
   },
   "favorites": {
     "title": "Избранное",
@@ -286,7 +289,10 @@
     "refresh": "Обновить",
     "logsSection": "Журналы",
     "logsDescription": "Последние записи журнала шлюза.",
-    "noLogs": "Записей в журнале не найдено"
+    "noLogs": "Записей в журнале не найдено",
+    "connectionError": "Ошибка подключения",
+    "fetchError": "Не удалось загрузить журналы",
+    "connecting": "Подключение к шлюзу..."
   },
   "extension": {
     "openFullscreen": "Открыть в новой вкладке",

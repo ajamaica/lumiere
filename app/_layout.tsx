@@ -4,7 +4,7 @@ import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { AppState, AppStateStatus, Platform, View } from 'react-native'
+import { AppState, AppStateStatus, View } from 'react-native'
 
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { PasswordLockScreen } from '../src/components/PasswordLockScreen'
@@ -29,13 +29,14 @@ import {
 } from '../src/store'
 import { ThemeProvider, useTheme } from '../src/theme'
 import { KeyboardProvider } from '../src/utils/KeyboardProvider'
+import { isWeb } from '../src/utils/platform'
 
 SplashScreen.preventAutoHideAsync()
 
 // Load Ionicons font on web via CSS @font-face.
 // The font file lives in public/fonts/ and is copied to dist/fonts/ during export.
 // This avoids the broken bundled path through pnpm's node_modules that Cloudflare Pages can't serve.
-if (Platform.OS === 'web' && typeof document !== 'undefined') {
+if (isWeb && typeof document !== 'undefined') {
   const style = document.createElement('style')
   style.textContent = `
     @font-face {
@@ -107,7 +108,7 @@ function AppContent() {
 
   // Web password lock state — only used on web
   const [webPasswordUnlocked, setWebPasswordUnlocked] = useState(() => {
-    if (Platform.OS !== 'web') return true
+    if (!isWeb) return true
     return hasSessionCryptoKey()
   })
   // Track whether encrypted data has been loaded into the atom.
@@ -119,7 +120,7 @@ function AppContent() {
   // session key is available.  This covers page reloads where the key
   // survives in sessionStorage but the in-memory atom resets to {}.
   useEffect(() => {
-    if (Platform.OS !== 'web') return
+    if (!isWeb) return
     let cancelled = false
     const restore = async () => {
       const key = await getSessionCryptoKey()
@@ -200,9 +201,7 @@ function AppContent() {
   //    configured previously OR when this is the first session after
   //    onboarding (password not yet created).
   const needsWebPasswordLock =
-    Platform.OS === 'web' &&
-    !webPasswordUnlocked &&
-    (isPasswordConfigured() || !hasSessionCryptoKey())
+    isWeb && !webPasswordUnlocked && (isPasswordConfigured() || !hasSessionCryptoKey())
   if (needsWebPasswordLock) {
     return (
       <View style={backgroundStyle}>
@@ -214,7 +213,7 @@ function AppContent() {
   // 3. Wait for encrypted data to hydrate before rendering the app.
   //    Without this, useServers mounts with an empty atom and the
   //    auto-persist effect can overwrite localStorage with {}.
-  if (Platform.OS === 'web' && !secureHydrated) {
+  if (isWeb && !secureHydrated) {
     return <View style={backgroundStyle} />
   }
 
