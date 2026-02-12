@@ -159,7 +159,10 @@
     "displayName": "표시 이름",
     "sessionKey": "세션 키",
     "sessionNotFound": "세션을 찾을 수 없음",
-    "sessionKeyRequired": "세션 키가 필요합니다"
+    "sessionKeyRequired": "세션 키가 필요합니다",
+    "systemMessage": "시스템 메시지",
+    "systemMessageHint": "모든 메시지와 함께 전송되는 숨겨진 지침입니다. 채팅에 표시되지 않습니다.",
+    "systemMessagePlaceholder": "예: 당신은 유용한 코딩 어시스턴트입니다..."
   },
   "favorites": {
     "title": "즐겨찾기",

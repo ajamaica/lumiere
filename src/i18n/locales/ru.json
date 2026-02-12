@@ -159,7 +159,10 @@
     "displayName": "Отображаемое имя",
     "sessionKey": "Ключ сессии",
     "sessionNotFound": "Сессия не найдена",
-    "sessionKeyRequired": "Ключ сессии обязателен"
+    "sessionKeyRequired": "Ключ сессии обязателен",
+    "systemMessage": "Системное сообщение",
+    "systemMessageHint": "Скрытые инструкции, отправляемые с каждым сообщением. Не видны в чате.",
+    "systemMessagePlaceholder": "напр. Ты полезный помощник по программированию..."
   },
   "favorites": {
     "title": "Избранное",

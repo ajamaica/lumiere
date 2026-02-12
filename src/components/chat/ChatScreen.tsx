@@ -35,6 +35,7 @@ import {
   currentSessionKeyAtom,
   pendingShareTextAtom,
   pendingTriggerMessageAtom,
+  sessionContextAtom,
 } from '../../store'
 import { Theme, useTheme } from '../../theme'
 import {
@@ -85,6 +86,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [pendingTriggerMessage, setPendingTriggerMessage] = useAtom(pendingTriggerMessageAtom)
   const [pendingShareText, setPendingShareText] = useAtom(pendingShareTextAtom)
+  const [sessionContextMap] = useAtom(sessionContextAtom)
   const [isAgentPickerOpen, setIsAgentPickerOpen] = useState(false)
   const isMoltProvider = providerConfig.type === 'molt'
   const flatListRef = useRef<FlashListRef<Message>>(null)
@@ -201,6 +203,8 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
 
   const { isActive: isWorkflowActive, prependContext } = useWorkflowContext()
 
+  const sessionSystemMessage = sessionContextMap[currentSessionKey]?.systemMessage
+
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
     sendMessage,
     currentSessionKey,
@@ -214,6 +218,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       shouldAutoScrollRef.current = true
     },
     contextTransform: isWorkflowActive ? prependContext : undefined,
+    systemMessage: sessionSystemMessage,
   })
 
   // Convert raw history messages into UI Message objects

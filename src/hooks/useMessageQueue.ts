@@ -40,6 +40,8 @@ interface UseMessageQueueProps {
   /** Optional async transform applied to the message text before sending to the provider.
    *  The original (untransformed) text is shown in the UI. */
   contextTransform?: (text: string) => Promise<string>
+  /** Optional system message injected as hidden context with every provider call. */
+  systemMessage?: string
 }
 
 export function useMessageQueue({
@@ -50,6 +52,7 @@ export function useMessageQueue({
   onAgentMessageComplete,
   onSendStart,
   contextTransform,
+  systemMessage,
 }: UseMessageQueueProps) {
   const [messageQueue, setMessageQueue] = useAtom(messageQueueAtom)
   const [isAgentResponding, setIsAgentResponding] = useState(false)
@@ -120,6 +123,7 @@ export function useMessageQueue({
             message: messageForProvider,
             sessionKey: currentSessionKey,
             attachments: providerAttachments,
+            systemMessage: systemMessage || undefined,
           },
           (event: ChatProviderEvent) => {
             if (event.type === 'delta' && event.delta) {
@@ -152,6 +156,7 @@ export function useMessageQueue({
       onAgentMessageComplete,
       onSendStart,
       contextTransform,
+      systemMessage,
     ],
   )
 

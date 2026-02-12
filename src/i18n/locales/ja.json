@@ -159,7 +159,10 @@
     "displayName": "表示名",
     "sessionKey": "セッションキー",
     "sessionNotFound": "セッションが見つかりません",
-    "sessionKeyRequired": "セッションキーは必須です"
+    "sessionKeyRequired": "セッションキーは必須です",
+    "systemMessage": "システムメッセージ",
+    "systemMessageHint": "すべてのメッセージと一緒に送信される非表示の指示。チャットには表示されません。",
+    "systemMessagePlaceholder": "例: あなたは親切なコーディングアシスタントです..."
   },
   "favorites": {
     "title": "お気に入り",

@@ -126,7 +126,7 @@ export class AppleChatProvider implements ChatProvider {
 
     onEvent({ type: 'lifecycle', phase: 'start' })
 
-    const systemPrompt = 'You are a helpful assistant.'
+    const systemPrompt = params.systemMessage || 'You are a helpful assistant.'
     const messagesJson = JSON.stringify(messages)
 
     try {
