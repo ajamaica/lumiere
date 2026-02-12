@@ -28,6 +28,7 @@ export const GatewayMethods = {
   CHAT_ABORT: 'chat.abort',
   SESSIONS_LIST: 'sessions.list',
   SESSIONS_RESET: 'sessions.reset',
+  SESSIONS_DELETE: 'sessions.delete',
   CRON_STATUS: 'cron.status',
   CRON_LIST: 'cron.list',
   CRON_UPDATE: 'cron.update',
