@@ -9,7 +9,6 @@ import { AppState, AppStateStatus, View } from 'react-native'
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { PasswordLockScreen } from '../src/components/PasswordLockScreen'
 import { ErrorBoundary } from '../src/components/ui'
-import { useAndroidShortcuts } from '../src/hooks/useAndroidShortcuts'
 import { useAppleShortcuts } from '../src/hooks/useAppleShortcuts'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useICloudSync } from '../src/hooks/useICloudSync'
@@ -105,7 +104,6 @@ function AppContent() {
   useNotifications()
   useQuickActions()
   useAppleShortcuts()
-  useAndroidShortcuts()
   useShareExtension()
   useLanguage() // Initialize language sync
   useICloudSync() // Initialize iCloud sync (iOS only)
