@@ -88,10 +88,12 @@ function withAppClipTarget(config) {
 
     // --- Add the App Clip target ---
 
-    // Add the target as an application on-demand-install-capable
+    // The xcode library does not recognise 'app_clip' as a product type,
+    // so we create a regular 'application' target first and then patch
+    // the productType to the App Clip variant.
     const appClipTarget = project.addTarget(
       APP_CLIP_TARGET_NAME,
-      'app_clip',
+      'application',
       APP_CLIP_TARGET_NAME,
       appClipBundleId,
     )
@@ -100,6 +102,10 @@ function withAppClipTarget(config) {
       console.warn('[withAppClip] Failed to create App Clip target')
       return mod
     }
+
+    // Convert the regular application target into an App Clip target
+    appClipTarget.pbxNativeTarget.productType =
+      '"com.apple.product-type.application.on-demand-install-capable"'
 
     // --- Configure build settings ---
 
