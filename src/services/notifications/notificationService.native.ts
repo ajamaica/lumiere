@@ -4,6 +4,7 @@ import * as TaskManager from 'expo-task-manager'
 
 import {
   backgroundNotificationsEnabledAtom,
+  chatBubblesEnabledAtom,
   currentSessionKeyAtom,
   getStore,
   notificationLastCheckAtom,
@@ -11,6 +12,7 @@ import {
   serversAtom,
   serverSessionsAtom,
 } from '../../store'
+import { isAndroid } from '../../utils/platform'
 import { getServerToken } from '../secureTokenStorage'
 
 export const BACKGROUND_FETCH_TASK = 'background-server-check'
@@ -170,15 +172,22 @@ export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTa
         const result = await checkServerForNewMessages(server.url, token, sessionKey, serverId)
 
         if (result.hasNew) {
-          await Notifications.scheduleNotificationAsync({
-            content: {
-              title: server.name ?? 'Lumiere',
-              body: result.preview ?? 'You have a new message',
-              data: { serverId, sessionKey },
-              sound: 'default',
-            },
-            trigger: null, // fire immediately
-          })
+          const title = server.name ?? 'Lumiere'
+          const body = result.preview ?? 'You have a new message'
+
+          // Use Android Bubbles API when enabled
+          if (isAndroid && (await shouldUseBubbles())) {
+            try {
+              // eslint-disable-next-line @typescript-eslint/no-require-imports
+              const { showBubble } = require('../../../modules/android-bubbles')
+              await showBubble(title, body, serverId, sessionKey)
+            } catch {
+              // Fall back to regular notification if bubbles fail
+              await scheduleRegularNotification(title, body, serverId, sessionKey)
+            }
+          } else {
+            await scheduleRegularNotification(title, body, serverId, sessionKey)
+          }
         }
       }
     }
@@ -216,6 +225,60 @@ export async function unregisterBackgroundFetch(): Promise<void> {
   const isRegistered = await TaskManager.isTaskRegisteredAsync(BACKGROUND_FETCH_TASK)
   if (isRegistered) {
     await BackgroundTask.unregisterTaskAsync(BACKGROUND_FETCH_TASK)
+  }
+}
+
+/**
+ * Check if we should use the Android Bubbles API for notifications.
+ */
+async function shouldUseBubbles(): Promise<boolean> {
+  try {
+    const store = getStore()
+    const bubblesEnabled = await resolveAtom(store.get(chatBubblesEnabledAtom))
+    if (!bubblesEnabled) return false
+
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { isAvailable } = require('../../../modules/android-bubbles')
+    return isAvailable()
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Schedule a regular (non-bubble) notification.
+ */
+async function scheduleRegularNotification(
+  title: string,
+  body: string,
+  serverId: string,
+  sessionKey: string,
+): Promise<void> {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title,
+      body,
+      data: { serverId, sessionKey },
+      sound: 'default',
+    },
+    trigger: null, // fire immediately
+  })
+}
+
+/**
+ * Initialize the Android Bubbles notification channel if supported.
+ * Should be called during app startup.
+ */
+export async function initBubbleChannel(): Promise<void> {
+  if (!isAndroid) return
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { createChannel, isAvailable } = require('../../../modules/android-bubbles')
+    if (isAvailable()) {
+      await createChannel()
+    }
+  } catch {
+    // Silently fail — module may not be available
   }
 }
 

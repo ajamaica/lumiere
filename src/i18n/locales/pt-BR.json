@@ -50,7 +50,9 @@
     "restoreServers": "Restaurar Servidores",
     "contribute": "Contribuir",
     "skills": "Habilidades",
-    "gatewayLogs": "Logs do Gateway"
+    "gatewayLogs": "Logs do Gateway",
+    "chatBubbles": "Bolhas de Chat",
+    "chatBubblesDescription": "Mostrar bolhas flutuantes de chat para novas mensagens (Android 11+)"
   },
   "home": {
     "connectionError": "Erro de Conexão",

@@ -50,7 +50,9 @@
     "restoreServers": "サーバーを復元",
     "contribute": "コントリビュート",
     "skills": "スキル",
-    "gatewayLogs": "ゲートウェイログ"
+    "gatewayLogs": "ゲートウェイログ",
+    "chatBubbles": "チャットバブル",
+    "chatBubblesDescription": "新しいメッセージのフローティングチャットバブルを表示（Android 11以上）"
   },
   "home": {
     "connectionError": "接続エラー",

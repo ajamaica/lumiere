@@ -50,7 +50,9 @@
     "restoreServers": "सर्वर रिस्टोर",
     "contribute": "योगदान करें",
     "skills": "कौशल",
-    "gatewayLogs": "गेटवे लॉग"
+    "gatewayLogs": "गेटवे लॉग",
+    "chatBubbles": "चैट बबल्स",
+    "chatBubblesDescription": "नए संदेशों के लिए फ़्लोटिंग चैट बबल्स दिखाएं (Android 11+)"
   },
   "home": {
     "connectionError": "कनेक्शन त्रुटि",

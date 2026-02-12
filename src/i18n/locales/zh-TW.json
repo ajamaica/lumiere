@@ -50,7 +50,9 @@
     "restoreServers": "還原伺服器",
     "contribute": "貢獻",
     "skills": "技能",
-    "gatewayLogs": "閘道日誌"
+    "gatewayLogs": "閘道日誌",
+    "chatBubbles": "聊天氣泡",
+    "chatBubblesDescription": "為新訊息顯示浮動聊天氣泡（Android 11+）"
   },
   "home": {
     "connectionError": "連線錯誤",

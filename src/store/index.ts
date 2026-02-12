@@ -59,6 +59,7 @@ export { favoritesAtom, triggersAtom } from './userDataAtoms'
 export {
   backgroundFetchIntervalAtom,
   backgroundNotificationsEnabledAtom,
+  chatBubblesEnabledAtom,
   notificationLastCheckAtom,
 } from './notificationAtoms'
 

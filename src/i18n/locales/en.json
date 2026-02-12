@@ -50,7 +50,9 @@
     "backupServers": "Backup Servers",
     "restoreServers": "Restore Servers",
     "contribute": "Contribute",
-    "gatewayLogs": "Gateway Logs"
+    "gatewayLogs": "Gateway Logs",
+    "chatBubbles": "Chat Bubbles",
+    "chatBubblesDescription": "Show floating chat bubbles for new messages (Android 11+)"
   },
   "home": {
     "connectionError": "Connection Error",

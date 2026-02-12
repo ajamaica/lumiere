@@ -50,7 +50,9 @@
     "restoreServers": "서버 복원",
     "contribute": "기여하기",
     "skills": "스킬",
-    "gatewayLogs": "게이트웨이 로그"
+    "gatewayLogs": "게이트웨이 로그",
+    "chatBubbles": "채팅 버블",
+    "chatBubblesDescription": "새 메시지에 대한 플로팅 채팅 버블 표시 (Android 11+)"
   },
   "home": {
     "connectionError": "연결 오류",

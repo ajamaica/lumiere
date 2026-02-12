@@ -10,6 +10,9 @@ export const backgroundNotificationsEnabledAtom = atomWithStorage<boolean>(
   storage,
 )
 
+/** Whether Android chat bubbles are enabled (off by default, Android 11+ only) */
+export const chatBubblesEnabledAtom = atomWithStorage<boolean>('chatBubblesEnabled', false, storage)
+
 /** Interval in minutes for background fetch checks (default 15 min) */
 export const backgroundFetchIntervalAtom = atomWithStorage<number>(
   'backgroundFetchInterval',

@@ -24,3 +24,7 @@ export function configureNotificationHandler(): void {
 export async function requestNotificationPermissions(): Promise<boolean> {
   return false
 }
+
+export async function initBubbleChannel(): Promise<void> {
+  // No-op on web
+}

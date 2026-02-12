@@ -18,6 +18,7 @@ import { clearAllPasswordData } from '../src/services/webCrypto'
 import {
   backgroundNotificationsEnabledAtom,
   biometricLockEnabledAtom,
+  chatBubblesEnabledAtom,
   clearSessionCryptoKey,
   currentServerIdAtom,
   onboardingCompletedAtom,
@@ -29,7 +30,7 @@ import {
 } from '../src/store'
 import { useTheme } from '../src/theme'
 import { colorThemes } from '../src/theme/colors'
-import { isWeb } from '../src/utils/platform'
+import { isAndroid, isWeb } from '../src/utils/platform'
 
 export default function SettingsScreen() {
   const { theme, colorTheme } = useTheme()
@@ -48,6 +49,7 @@ export default function SettingsScreen() {
   const [backgroundNotificationsEnabled, setBackgroundNotificationsEnabled] = useAtom(
     backgroundNotificationsEnabledAtom,
   )
+  const [chatBubblesEnabled, setChatBubblesEnabled] = useAtom(chatBubblesEnabledAtom)
 
   const handleBiometricToggle = async (value: boolean) => {
     if (isWeb) {
@@ -259,6 +261,15 @@ export default function SettingsScreen() {
             switchValue={backgroundNotificationsEnabled}
             onSwitchChange={setBackgroundNotificationsEnabled}
           />
+          {isAndroid && (
+            <SettingRow
+              icon="chatbubbles-outline"
+              label={t('settings.chatBubbles')}
+              subtitle={t('settings.chatBubblesDescription')}
+              switchValue={chatBubblesEnabled}
+              onSwitchChange={setChatBubblesEnabled}
+            />
+          )}
           <SettingRow
             icon="language-outline"
             label={t('settings.language')}

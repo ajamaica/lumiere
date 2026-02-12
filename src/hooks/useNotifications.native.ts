@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react'
 
 import {
   configureNotificationHandler,
+  initBubbleChannel,
   registerBackgroundFetch,
   requestNotificationPermissions,
   unregisterBackgroundFetch,
@@ -30,9 +31,10 @@ export function useNotifications() {
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const responseListener = useRef<Notifications.EventSubscription | null>(null)
 
-  // Configure how foreground notifications are displayed
+  // Configure how foreground notifications are displayed and set up bubble channel
   useEffect(() => {
     configureNotificationHandler()
+    initBubbleChannel()
   }, [])
 
   // Register or unregister background fetch based on the setting

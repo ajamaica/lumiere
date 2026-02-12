@@ -50,7 +50,9 @@
     "restoreServers": "Server wiederherstellen",
     "contribute": "Mitwirken",
     "skills": "Fähigkeiten",
-    "gatewayLogs": "Gateway-Protokolle"
+    "gatewayLogs": "Gateway-Protokolle",
+    "chatBubbles": "Chat-Blasen",
+    "chatBubblesDescription": "Schwebende Chat-Blasen für neue Nachrichten anzeigen (Android 11+)"
   },
   "home": {
     "connectionError": "Verbindungsfehler",

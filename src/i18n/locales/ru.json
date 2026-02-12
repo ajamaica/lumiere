@@ -50,7 +50,9 @@
     "restoreServers": "Восстановление серверов",
     "contribute": "Внести вклад",
     "skills": "Навыки",
-    "gatewayLogs": "Журналы шлюза"
+    "gatewayLogs": "Журналы шлюза",
+    "chatBubbles": "Всплывающие чаты",
+    "chatBubblesDescription": "Показывать плавающие пузырьки чата для новых сообщений (Android 11+)"
   },
   "home": {
     "connectionError": "Ошибка подключения",
