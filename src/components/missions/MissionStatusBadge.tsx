@@ -12,6 +12,8 @@ const STATUS_VARIANT: Record<MissionStatus, BadgeVariant> = {
   idle: 'warning',
   completed: 'success',
   error: 'error',
+  stopped: 'default',
+  archived: 'default',
 }
 
 interface MissionStatusBadgeProps extends Omit<BadgeProps, 'label' | 'variant'> {
@@ -27,6 +29,8 @@ export function MissionStatusBadge({ status, ...props }: MissionStatusBadgeProps
     idle: t('missions.status.idle'),
     completed: t('missions.status.completed'),
     error: t('missions.status.error'),
+    stopped: t('missions.status.stopped'),
+    archived: t('missions.status.archived'),
   }
 
   return <Badge label={LABELS[status]} variant={STATUS_VARIANT[status]} {...props} />

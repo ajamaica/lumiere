@@ -316,6 +316,11 @@
     "openClawOnlyDescription": "連接到 OpenClaw 伺服器以使用任務控制中心。",
     "empty": "尚無任務",
     "emptyDescription": "建立一個任務以開始目標導向的任務執行。",
+    "emptyArchived": "沒有已封存的任務",
+    "emptyArchivedDescription": "已封存的任務將顯示在這裡。",
+    "filterAll": "全部",
+    "filterActive": "進行中",
+    "filterArchived": "已封存",
     "createMission": "建立任務",
     "newMission": "新建任務",
     "promptPlaceholder": "詳細描述您的任務...",
@@ -330,6 +335,10 @@
     "startMission": "開始任務",
     "abortMission": "中止任務",
     "abortConfirm": "確定要中止此任務嗎？進度將會遺失。",
+    "stopMission": "停止任務",
+    "stopConfirm": "確定要停止此任務嗎？您可以稍後將其封存。",
+    "archiveMission": "封存任務",
+    "archiveConfirm": "確定要封存此任務嗎？它將被移至封存列表。",
     "retryMission": "重試任務",
     "deleteMission": "刪除任務",
     "deleteConfirm": "確定要刪除「{{title}}」嗎？此操作無法復原。",
@@ -355,7 +364,9 @@
       "in_progress": "進行中",
       "idle": "等待輸入",
       "completed": "已完成",
-      "error": "錯誤"
+      "error": "錯誤",
+      "stopped": "已停止",
+      "archived": "已封存"
     }
   }
 }

@@ -1,6 +1,13 @@
 // ─── Mission types ───────────────────────────────────────
 
-export type MissionStatus = 'pending' | 'in_progress' | 'idle' | 'completed' | 'error'
+export type MissionStatus =
+  | 'pending'
+  | 'in_progress'
+  | 'idle'
+  | 'completed'
+  | 'error'
+  | 'stopped'
+  | 'archived'
 
 export interface MissionSubtask {
   id: string

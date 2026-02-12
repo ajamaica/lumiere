@@ -316,6 +316,11 @@
     "openClawOnlyDescription": "Connectez-vous à un serveur OpenClaw pour utiliser le Centre de Missions.",
     "empty": "Aucune mission pour le moment",
     "emptyDescription": "Créez une mission pour commencer l'exécution de tâches orientée objectifs.",
+    "emptyArchived": "Aucune mission archivée",
+    "emptyArchivedDescription": "Les missions archivées apparaîtront ici.",
+    "filterAll": "Toutes",
+    "filterActive": "Actives",
+    "filterArchived": "Archivées",
     "createMission": "Créer une Mission",
     "newMission": "Nouvelle Mission",
     "promptPlaceholder": "Décrivez votre mission en détail...",
@@ -330,6 +335,10 @@
     "startMission": "Démarrer la Mission",
     "abortMission": "Abandonner la Mission",
     "abortConfirm": "Êtes-vous sûr de vouloir abandonner cette mission ? La progression sera perdue.",
+    "stopMission": "Arrêter la Mission",
+    "stopConfirm": "Êtes-vous sûr de vouloir arrêter cette mission ? Vous pourrez l'archiver plus tard.",
+    "archiveMission": "Archiver la Mission",
+    "archiveConfirm": "Êtes-vous sûr de vouloir archiver cette mission ? Elle sera déplacée dans la liste des archives.",
     "retryMission": "Réessayer la Mission",
     "deleteMission": "Supprimer la Mission",
     "deleteConfirm": "Êtes-vous sûr de vouloir supprimer \"{{title}}\" ? Cette action est irréversible.",
@@ -355,7 +364,9 @@
       "in_progress": "En cours",
       "idle": "En attente de réponse",
       "completed": "Terminée",
-      "error": "Erreur"
+      "error": "Erreur",
+      "stopped": "Arrêtée",
+      "archived": "Archivée"
     }
   }
 }

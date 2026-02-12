@@ -133,6 +133,47 @@ export function useMissions() {
     [setMissions],
   )
 
+  const stopMission = useCallback(
+    (missionId: string) => {
+      setMissions((prev) => {
+        const dict = prev as MissionsDict
+        const existing = dict[missionId]
+        if (!existing) return dict
+        return {
+          ...dict,
+          [missionId]: {
+            ...existing,
+            status: 'stopped' as const,
+            updatedAt: Date.now(),
+          },
+        }
+      })
+    },
+    [setMissions],
+  )
+
+  const archiveMission = useCallback(
+    (missionId: string) => {
+      setMissions((prev) => {
+        const dict = prev as MissionsDict
+        const existing = dict[missionId]
+        if (!existing) return dict
+        return {
+          ...dict,
+          [missionId]: {
+            ...existing,
+            status: 'archived' as const,
+            updatedAt: Date.now(),
+          },
+        }
+      })
+      if (activeMissionId === missionId) {
+        setActiveMissionId(null)
+      }
+    },
+    [setMissions, activeMissionId, setActiveMissionId],
+  )
+
   const deleteMission = useCallback(
     (missionId: string) => {
       setMissions((prev) => {
@@ -157,6 +198,8 @@ export function useMissions() {
     updateMissionStatus,
     updateSubtaskStatus,
     addMissionSkill,
+    stopMission,
+    archiveMission,
     deleteMission,
   }
 }

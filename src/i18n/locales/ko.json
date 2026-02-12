@@ -316,6 +316,11 @@
     "openClawOnlyDescription": "미션 컨트롤을 사용하려면 OpenClaw 서버에 연결하세요.",
     "empty": "아직 미션이 없습니다",
     "emptyDescription": "목표 지향 작업 실행을 시작하려면 미션을 생성하세요.",
+    "emptyArchived": "보관된 미션이 없습니다",
+    "emptyArchivedDescription": "보관된 미션이 여기에 표시됩니다.",
+    "filterAll": "전체",
+    "filterActive": "활성",
+    "filterArchived": "보관됨",
     "createMission": "미션 생성",
     "newMission": "새 미션",
     "promptPlaceholder": "미션을 자세히 설명하세요...",
@@ -330,6 +335,10 @@
     "startMission": "미션 시작",
     "abortMission": "미션 중단",
     "abortConfirm": "이 미션을 중단하시겠습니까? 진행 상황이 손실됩니다.",
+    "stopMission": "미션 중지",
+    "stopConfirm": "이 미션을 중지하시겠습니까? 나중에 보관할 수 있습니다.",
+    "archiveMission": "미션 보관",
+    "archiveConfirm": "이 미션을 보관하시겠습니까? 보관 목록으로 이동됩니다.",
     "retryMission": "미션 재시도",
     "deleteMission": "미션 삭제",
     "deleteConfirm": "\"{{title}}\"을(를) 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
@@ -355,7 +364,9 @@
       "in_progress": "진행 중",
       "idle": "입력 대기 중",
       "completed": "완료",
-      "error": "오류"
+      "error": "오류",
+      "stopped": "중지됨",
+      "archived": "보관됨"
     }
   }
 }

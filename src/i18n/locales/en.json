@@ -316,6 +316,11 @@
     "openClawOnlyDescription": "Connect to an OpenClaw server to use Mission Control.",
     "empty": "No missions yet",
     "emptyDescription": "Create a mission to get started with goal-oriented task execution.",
+    "emptyArchived": "No archived missions",
+    "emptyArchivedDescription": "Archived missions will appear here.",
+    "filterAll": "All",
+    "filterActive": "Active",
+    "filterArchived": "Archived",
     "createMission": "Create Mission",
     "newMission": "New Mission",
     "promptPlaceholder": "Describe your mission in detail...",
@@ -330,6 +335,10 @@
     "startMission": "Start Mission",
     "abortMission": "Abort Mission",
     "abortConfirm": "Are you sure you want to abort this mission? Progress will be lost.",
+    "stopMission": "Stop Mission",
+    "stopConfirm": "Are you sure you want to stop this mission? You can archive it later.",
+    "archiveMission": "Archive Mission",
+    "archiveConfirm": "Are you sure you want to archive this mission? It will be moved to the archived list.",
     "retryMission": "Retry Mission",
     "deleteMission": "Delete Mission",
     "deleteConfirm": "Are you sure you want to delete \"{{title}}\"? This cannot be undone.",
@@ -355,7 +364,9 @@
       "in_progress": "In Progress",
       "idle": "Waiting for Input",
       "completed": "Completed",
-      "error": "Error"
+      "error": "Error",
+      "stopped": "Stopped",
+      "archived": "Archived"
     }
   }
 }

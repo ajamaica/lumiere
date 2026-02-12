@@ -316,6 +316,11 @@
     "openClawOnlyDescription": "ミッションコントロールを使用するには、OpenClawサーバーに接続してください。",
     "empty": "ミッションはまだありません",
     "emptyDescription": "目標指向のタスク実行を始めるにはミッションを作成してください。",
+    "emptyArchived": "アーカイブされたミッションはありません",
+    "emptyArchivedDescription": "アーカイブされたミッションはここに表示されます。",
+    "filterAll": "すべて",
+    "filterActive": "アクティブ",
+    "filterArchived": "アーカイブ",
     "createMission": "ミッションを作成",
     "newMission": "新しいミッション",
     "promptPlaceholder": "ミッションを詳しく説明してください...",
@@ -330,6 +335,10 @@
     "startMission": "ミッションを始める",
     "abortMission": "ミッションを中止",
     "abortConfirm": "このミッションを中止してもよろしいですか？進行状況は失われます。",
+    "stopMission": "ミッションを停止",
+    "stopConfirm": "このミッションを停止してもよろしいですか？後でアーカイブできます。",
+    "archiveMission": "ミッションをアーカイブ",
+    "archiveConfirm": "このミッションをアーカイブしてもよろしいですか？アーカイブリストに移動されます。",
     "retryMission": "ミッションを再試行",
     "deleteMission": "ミッションを削除",
     "deleteConfirm": "「{{title}}」を削除してもよろしいですか？この操作は取り消せません。",
@@ -355,7 +364,9 @@
       "in_progress": "進行中",
       "idle": "入力待ち",
       "completed": "完了",
-      "error": "エラー"
+      "error": "エラー",
+      "stopped": "停止",
+      "archived": "アーカイブ済み"
     }
   }
 }

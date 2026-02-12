@@ -316,6 +316,11 @@
     "openClawOnlyDescription": "连接到 OpenClaw 服务器以使用任务控制中心。",
     "empty": "暂无任务",
     "emptyDescription": "创建一个任务以开始目标导向的任务执行。",
+    "emptyArchived": "没有已归档的任务",
+    "emptyArchivedDescription": "已归档的任务将显示在这里。",
+    "filterAll": "全部",
+    "filterActive": "进行中",
+    "filterArchived": "已归档",
     "createMission": "创建任务",
     "newMission": "新建任务",
     "promptPlaceholder": "详细描述您的任务...",
@@ -330,6 +335,10 @@
     "startMission": "开始任务",
     "abortMission": "中止任务",
     "abortConfirm": "确定要中止此任务吗？进度将会丢失。",
+    "stopMission": "停止任务",
+    "stopConfirm": "确定要停止此任务吗？您可以稍后将其归档。",
+    "archiveMission": "归档任务",
+    "archiveConfirm": "确定要归档此任务吗？它将被移至归档列表。",
     "retryMission": "重试任务",
     "deleteMission": "删除任务",
     "deleteConfirm": "确定要删除「{{title}}」吗？此操作无法撤销。",
@@ -355,7 +364,9 @@
       "in_progress": "进行中",
       "idle": "等待输入",
       "completed": "已完成",
-      "error": "错误"
+      "error": "错误",
+      "stopped": "已停止",
+      "archived": "已归档"
     }
   }
 }

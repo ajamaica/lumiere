@@ -23,6 +23,10 @@ export function SubtaskTimeline({ subtasks }: SubtaskTimelineProps) {
         return 'alert-circle'
       case 'idle':
         return 'pause-circle'
+      case 'stopped':
+        return 'stop-circle'
+      case 'archived':
+        return 'archive'
       default:
         return 'ellipse-outline'
     }
@@ -38,6 +42,9 @@ export function SubtaskTimeline({ subtasks }: SubtaskTimelineProps) {
         return theme.colors.status.error
       case 'idle':
         return theme.colors.status.warning
+      case 'stopped':
+      case 'archived':
+        return theme.colors.text.tertiary
       default:
         return theme.colors.text.tertiary
     }

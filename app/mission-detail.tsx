@@ -33,7 +33,14 @@ export default function MissionDetailScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { t } = useTranslation()
-  const { activeMission, updateMissionStatus, updateSubtaskStatus, addMissionSkill } = useMissions()
+  const {
+    activeMission,
+    updateMissionStatus,
+    updateSubtaskStatus,
+    addMissionSkill,
+    stopMission,
+    archiveMission,
+  } = useMissions()
   const { getProviderConfig, currentServerId } = useServers()
   const { parseChunk, resetBuffer } = useMissionEventParser()
 
@@ -251,22 +258,33 @@ export default function MissionDetailScreen() {
     [handleSendToAgent],
   )
 
-  const handleAbort = useCallback(() => {
+  const handleStop = useCallback(() => {
     if (!activeMission) return
-    Alert.alert(t('missions.abortMission'), t('missions.abortConfirm'), [
+    Alert.alert(t('missions.stopMission'), t('missions.stopConfirm'), [
       { text: t('common.cancel'), style: 'cancel' },
       {
-        text: t('missions.abortMission'),
+        text: t('missions.stopMission'),
         style: 'destructive',
         onPress: () => {
-          updateMissionStatus(activeMission.id, 'error', {
-            errorMessage: 'Mission aborted by user',
-          })
+          stopMission(activeMission.id)
+        },
+      },
+    ])
+  }, [activeMission, stopMission, t])
+
+  const handleArchive = useCallback(() => {
+    if (!activeMission) return
+    Alert.alert(t('missions.archiveMission'), t('missions.archiveConfirm'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('missions.archiveMission'),
+        onPress: () => {
+          archiveMission(activeMission.id)
           router.back()
         },
       },
     ])
-  }, [activeMission, updateMissionStatus, router, t])
+  }, [activeMission, archiveMission, router, t])
 
   const styles = useMemo(
     () =>
@@ -361,6 +379,10 @@ export default function MissionDetailScreen() {
   }
 
   const isActive = activeMission.status === 'in_progress' || activeMission.status === 'idle'
+  const canArchive =
+    activeMission.status === 'completed' ||
+    activeMission.status === 'stopped' ||
+    activeMission.status === 'error'
 
   return (
     <SafeAreaView style={styles.container}>
@@ -371,10 +393,18 @@ export default function MissionDetailScreen() {
           isActive ? (
             <TouchableOpacity
               style={styles.abortButton}
-              onPress={handleAbort}
-              accessibilityLabel={t('missions.abortMission')}
+              onPress={handleStop}
+              accessibilityLabel={t('missions.stopMission')}
             >
               <Ionicons name="stop-circle-outline" size={20} color={theme.colors.status.error} />
+            </TouchableOpacity>
+          ) : canArchive ? (
+            <TouchableOpacity
+              style={styles.abortButton}
+              onPress={handleArchive}
+              accessibilityLabel={t('missions.archiveMission')}
+            >
+              <Ionicons name="archive-outline" size={20} color={theme.colors.text.secondary} />
             </TouchableOpacity>
           ) : undefined
         }

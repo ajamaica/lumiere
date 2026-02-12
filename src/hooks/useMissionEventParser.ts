@@ -96,6 +96,8 @@ export function stripMissionMarkers(text: string): string {
  * Derive the overall mission status from its subtasks.
  */
 export function deriveMissionStatus(mission: Mission): MissionStatus {
+  if (mission.status === 'archived') return 'archived'
+  if (mission.status === 'stopped') return 'stopped'
   if (mission.status === 'error') return 'error'
   if (mission.status === 'idle') return 'idle'
 
