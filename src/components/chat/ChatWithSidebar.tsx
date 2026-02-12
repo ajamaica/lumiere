@@ -5,7 +5,7 @@ import { DEFAULT_SESSION_KEY } from '../../constants'
 import { useServers } from '../../hooks/useServers'
 import { useMoltGateway } from '../../services/molt'
 import { ProviderConfig } from '../../services/providers'
-import { currentSessionKeyAtom, sessionAliasesAtom } from '../../store'
+import { createSessionKey, currentSessionKeyAtom, sessionAliasesAtom } from '../../store'
 import { logger } from '../../utils/logger'
 import { SessionSidebar } from '../layout/SessionSidebar'
 import { SidebarLayout } from '../layout/SidebarLayout'
@@ -125,7 +125,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   }, [supportsServerSessions, currentSessionKey, setCurrentSessionKey])
 
   const handleNewSession = () => {
-    const newSessionKey = `agent:main:${Date.now()}`
+    const newSessionKey = createSessionKey('main', `${Date.now()}`)
     setCurrentSessionKey(newSessionKey)
     // Reload sessions list
     loadSessions()

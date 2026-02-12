@@ -1,3 +1,4 @@
+// ─── Types ───────────────────────────────────────────────
 export type {
   FavoriteItem,
   NotificationLastCheckMap,
@@ -12,36 +13,58 @@ export type {
   WorkflowConfig,
   WorkflowConfigMap,
   WorkflowFile,
-} from './atoms'
+} from './types'
+
+// ─── Storage & store access ──────────────────────────────
+export { getStore, jotaiStorage } from './storage'
+
+// ─── Session atoms & utilities ───────────────────────────
+export type { SessionKeyParts } from './sessionAtoms'
 export {
-  backgroundFetchIntervalAtom,
-  backgroundNotificationsEnabledAtom,
-  biometricLockEnabledAtom,
-  clearMessagesAtom,
-  colorThemeAtom,
+  createSessionKey,
   currentAgentIdAtom,
-  currentServerIdAtom,
   currentSessionKeyAtom,
-  favoritesAtom,
-  gatewayConnectedAtom,
-  gatewayConnectingAtom,
-  gatewayErrorAtom,
-  getStore,
-  jotaiStorage,
-  languageAtom,
-  messageQueueAtom,
-  notificationLastCheckAtom,
-  onboardingCompletedAtom,
-  pendingShareTextAtom,
-  pendingTriggerMessageAtom,
-  serversAtom,
+  parseSessionKey,
   serverSessionsAtom,
   sessionAliasesAtom,
   sessionContextAtom,
-  themeModeAtom,
-  triggersAtom,
   workflowConfigAtom,
-} from './atoms'
+} from './sessionAtoms'
+
+// ─── Server atoms ────────────────────────────────────────
+export { currentServerIdAtom, serversAtom } from './serverAtoms'
+
+// ─── UI atoms ────────────────────────────────────────────
+export {
+  biometricLockEnabledAtom,
+  colorThemeAtom,
+  languageAtom,
+  onboardingCompletedAtom,
+  themeModeAtom,
+} from './uiAtoms'
+
+// ─── Gateway atoms ───────────────────────────────────────
+export { gatewayConnectedAtom, gatewayConnectingAtom, gatewayErrorAtom } from './gatewayAtoms'
+
+// ─── Messaging atoms ─────────────────────────────────────
+export {
+  clearMessagesAtom,
+  messageQueueAtom,
+  pendingShareTextAtom,
+  pendingTriggerMessageAtom,
+} from './messagingAtoms'
+
+// ─── User data atoms ─────────────────────────────────────
+export { favoritesAtom, triggersAtom } from './userDataAtoms'
+
+// ─── Notification atoms ──────────────────────────────────
+export {
+  backgroundFetchIntervalAtom,
+  backgroundNotificationsEnabledAtom,
+  notificationLastCheckAtom,
+} from './notificationAtoms'
+
+// ─── Secure store (web only) ─────────────────────────────
 export {
   clearSessionCryptoKey,
   getSessionCryptoKey,
