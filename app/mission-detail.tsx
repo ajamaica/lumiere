@@ -13,8 +13,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import Markdown from 'react-native-markdown-display'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { createMarkdownStyles } from '../src/components/chat/ChatMessage.styles'
+import { useMarkdownRules } from '../src/components/chat/useMarkdownRules'
 import { MissionConclusionCard } from '../src/components/missions/MissionConclusionCard'
 import { MissionStatusBadge } from '../src/components/missions/MissionStatusBadge'
 import { SubtaskTimeline } from '../src/components/missions/SubtaskTimeline'
@@ -43,6 +46,9 @@ export default function MissionDetailScreen() {
   const { activeMission, updateMissionStatus, updateSubtaskStatus, addMissionSkill } = useMissions()
   const { getProviderConfig, currentServerId } = useServers()
   const { parseChunk, resetBuffer } = useMissionEventParser()
+  const { markdownRules, handleLinkPress } = useMarkdownRules()
+  const userMarkdownStyles = useMemo(() => createMarkdownStyles(theme, true), [theme])
+  const assistantMarkdownStyles = useMemo(() => createMarkdownStyles(theme, false), [theme])
 
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -185,7 +191,7 @@ export default function MissionDetailScreen() {
 
       // Validate system message exists before the very first request
       if (!systemMessageSentRef.current && !activeMission.systemMessage?.trim()) {
-        missionLogger.logError('Cannot start mission: system message is empty')
+        missionLogger.logError('Cannot start mission', 'system message is empty')
         updateMissionStatus(activeMission.id, 'error', {
           errorMessage: 'Mission system message is empty. Please recreate the mission.',
         })
@@ -530,17 +536,17 @@ export default function MissionDetailScreen() {
                     msg.role === 'user' ? styles.userBubble : styles.assistantBubble,
                   ]}
                 >
-                  <Text
-                    variant="body"
-                    style={{
-                      color:
-                        msg.role === 'user'
-                          ? theme.colors.message.userText
-                          : theme.colors.message.agentText,
+                  <Markdown
+                    style={msg.role === 'user' ? userMarkdownStyles : assistantMarkdownStyles}
+                    onLinkPress={(url: string) => {
+                      handleLinkPress(url)
+                      return false
                     }}
+                    mergeStyle={true}
+                    rules={markdownRules}
                   >
                     {msg.text}
-                  </Text>
+                  </Markdown>
                 </View>
               ))}
               {isStreaming && (

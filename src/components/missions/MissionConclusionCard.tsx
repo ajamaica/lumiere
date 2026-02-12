@@ -1,9 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
+import Markdown from 'react-native-markdown-display'
 
 import { useTheme } from '../../theme'
+import { createMarkdownStyles } from '../chat/ChatMessage.styles'
+import { useMarkdownRules } from '../chat/useMarkdownRules'
 import { Card, Text } from '../ui'
 
 interface MissionConclusionCardProps {
@@ -13,6 +16,8 @@ interface MissionConclusionCardProps {
 export function MissionConclusionCard({ conclusion }: MissionConclusionCardProps) {
   const { theme } = useTheme()
   const { t } = useTranslation()
+  const { markdownRules, handleLinkPress } = useMarkdownRules()
+  const markdownStyles = useMemo(() => createMarkdownStyles(theme, false), [theme])
 
   const styles = StyleSheet.create({
     header: {
@@ -41,9 +46,17 @@ export function MissionConclusionCard({ conclusion }: MissionConclusionCardProps
           {t('missions.conclusion')}
         </Text>
       </View>
-      <Text variant="body" style={{ color: theme.colors.text.primary }}>
+      <Markdown
+        style={markdownStyles}
+        onLinkPress={(url: string) => {
+          handleLinkPress(url)
+          return false
+        }}
+        mergeStyle={true}
+        rules={markdownRules}
+      >
         {conclusion}
-      </Text>
+      </Markdown>
     </Card>
   )
 }
