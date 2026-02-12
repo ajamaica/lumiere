@@ -63,7 +63,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
       // Default fallback UI
       return (
-        <View style={styles.container}>
+        <View
+          style={styles.container}
+          accessible={true}
+          accessibilityRole="alert"
+          accessibilityLabel="Something went wrong. An unexpected error occurred. Please try again."
+        >
           <Text variant="heading2" style={styles.title}>
             Something went wrong
           </Text>

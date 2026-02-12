@@ -304,5 +304,23 @@
   "extension": {
     "openFullscreen": "नए टैब में खोलें",
     "openSidebar": "साइडबार में खोलें"
+  },
+  "accessibility": {
+    "scrollToBottom": "नीचे स्क्रॉल करें",
+    "scrollToBottomHint": "सबसे हाल के संदेश तक स्क्रॉल करता है",
+    "searchMessages": "संदेश खोजें",
+    "agentIsThinking": "एजेंट सोच रहा है",
+    "copyMessage": "संदेश कॉपी करें",
+    "copied": "कॉपी किया गया",
+    "addToFavorites": "पसंदीदा में जोड़ें",
+    "removeFromFavorites": "पसंदीदा से हटाएं",
+    "messageFromYou": "आप",
+    "messageFromAssistant": "सहायक",
+    "attachmentLabel": "अनुलग्नक {{index}}",
+    "sessionMenu": "सत्र मेनू",
+    "addAttachment": "अनुलग्नक जोड़ें",
+    "startVoiceInput": "वॉइस इनपुट शुरू करें",
+    "sendMessage": "संदेश भेजें",
+    "messagesQueued": "{{count}} संदेश कतार में"
   }
 }

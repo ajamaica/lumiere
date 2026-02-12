@@ -304,5 +304,23 @@
   "extension": {
     "openFullscreen": "In neuem Tab öffnen",
     "openSidebar": "In Seitenleiste öffnen"
+  },
+  "accessibility": {
+    "scrollToBottom": "Nach unten scrollen",
+    "scrollToBottomHint": "Scrollt zur neuesten Nachricht",
+    "searchMessages": "Nachrichten durchsuchen",
+    "agentIsThinking": "Agent denkt nach",
+    "copyMessage": "Nachricht kopieren",
+    "copied": "Kopiert",
+    "addToFavorites": "Zu Favoriten hinzufügen",
+    "removeFromFavorites": "Aus Favoriten entfernen",
+    "messageFromYou": "Du",
+    "messageFromAssistant": "Assistent",
+    "attachmentLabel": "Anhang {{index}}",
+    "sessionMenu": "Sitzungsmenü",
+    "addAttachment": "Anhang hinzufügen",
+    "startVoiceInput": "Spracheingabe starten",
+    "sendMessage": "Nachricht senden",
+    "messagesQueued": "{{count}} Nachricht(en) in Warteschlange"
   }
 }

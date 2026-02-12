@@ -174,7 +174,7 @@ export function ChatInput({
                     onPress={onOpenSessionMenu}
                     disabled={disabled}
                     accessibilityRole="button"
-                    accessibilityLabel="Session menu"
+                    accessibilityLabel={t('accessibility.sessionMenu')}
                     accessibilityState={{ disabled }}
                   >
                     <Ionicons name="ellipsis-vertical" size={24} color={menuButtonColor} />
@@ -186,7 +186,7 @@ export function ChatInput({
                     onPress={() => attach.setShowMenu(true)}
                     disabled={disabled}
                     accessibilityRole="button"
-                    accessibilityLabel="Add attachment"
+                    accessibilityLabel={t('accessibility.addAttachment')}
                     accessibilityState={{ disabled }}
                   >
                     <Ionicons
@@ -201,7 +201,7 @@ export function ChatInput({
                   {queueCount > 0 && (
                     <View
                       style={styles.queueBadge}
-                      accessibilityLabel={`${queueCount} message${queueCount !== 1 ? 's' : ''} queued`}
+                      accessibilityLabel={t('accessibility.messagesQueued', { count: queueCount })}
                     >
                       <Text style={styles.queueText}>{queueCount}</Text>
                     </View>
@@ -212,7 +212,7 @@ export function ChatInput({
                       onPress={handleMicPress}
                       disabled={disabled}
                       accessibilityRole="button"
-                      accessibilityLabel="Start voice input"
+                      accessibilityLabel={t('accessibility.startVoiceInput')}
                       accessibilityState={{ disabled }}
                     >
                       <Ionicons
@@ -232,7 +232,7 @@ export function ChatInput({
                       onPress={handleSend}
                       disabled={!hasContent || disabled}
                       accessibilityRole="button"
-                      accessibilityLabel="Send message"
+                      accessibilityLabel={t('accessibility.sendMessage')}
                       accessibilityState={{ disabled: !hasContent || disabled }}
                     >
                       <Ionicons

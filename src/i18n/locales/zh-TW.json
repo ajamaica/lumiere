@@ -304,5 +304,23 @@
   "extension": {
     "openFullscreen": "在新分頁中開啟",
     "openSidebar": "在側邊欄中開啟"
+  },
+  "accessibility": {
+    "scrollToBottom": "捲動到底部",
+    "scrollToBottomHint": "捲動到最新訊息",
+    "searchMessages": "搜尋訊息",
+    "agentIsThinking": "助手正在思考",
+    "copyMessage": "複製訊息",
+    "copied": "已複製",
+    "addToFavorites": "加入收藏",
+    "removeFromFavorites": "從收藏中移除",
+    "messageFromYou": "你",
+    "messageFromAssistant": "助手",
+    "attachmentLabel": "附件 {{index}}",
+    "sessionMenu": "工作階段選單",
+    "addAttachment": "新增附件",
+    "startVoiceInput": "開始語音輸入",
+    "sendMessage": "傳送訊息",
+    "messagesQueued": "{{count}} 則訊息排隊中"
   }
 }

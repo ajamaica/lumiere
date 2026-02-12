@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import Animated, {
   Easing,
@@ -10,6 +11,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated'
 
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { useTheme } from '../../theme'
 
 const DOT_SIZE = 8
@@ -18,12 +20,13 @@ const BOUNCE_HEIGHT = -6
 const ANIMATION_DURATION = 300
 const STAGGER_DELAY = 150
 
-function Dot({ index }: { index: number }) {
+function Dot({ index, reducedMotion }: { index: number; reducedMotion: boolean }) {
   const { theme } = useTheme()
   const translateY = useSharedValue(0)
-  const opacity = useSharedValue(0.4)
+  const opacity = useSharedValue(reducedMotion ? 1 : 0.4)
 
   useEffect(() => {
+    if (reducedMotion) return
     const delay = index * STAGGER_DELAY
     translateY.value = withDelay(
       delay,
@@ -50,7 +53,7 @@ function Dot({ index }: { index: number }) {
         false,
       ),
     )
-  }, [index, translateY, opacity])
+  }, [index, translateY, opacity, reducedMotion])
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: translateY.value }],
@@ -65,10 +68,18 @@ function Dot({ index }: { index: number }) {
 }
 
 export function ThinkingIndicator() {
+  const { t } = useTranslation()
+  const reducedMotion = useReducedMotion()
   return (
-    <View style={styles.container} accessibilityLabel="Agent is thinking" accessibilityRole="text">
+    <View
+      style={styles.container}
+      accessible={true}
+      accessibilityLabel={t('accessibility.agentIsThinking')}
+      accessibilityRole="text"
+      accessibilityLiveRegion="polite"
+    >
       {Array.from({ length: DOT_COUNT }, (_, i) => (
-        <Dot key={i} index={i} />
+        <Dot key={i} index={i} reducedMotion={reducedMotion} />
       ))}
     </View>
   )

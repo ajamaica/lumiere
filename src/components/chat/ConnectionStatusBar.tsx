@@ -176,7 +176,12 @@ export function ConnectionStatusBar({
         </TouchableOpacity>
       )}
       {showSettingsButton && (
-        <TouchableOpacity onPress={onOpenSettings} activeOpacity={0.7}>
+        <TouchableOpacity
+          onPress={onOpenSettings}
+          activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel={t('settings.title')}
+        >
           <ActionButtonContainer {...actionButtonProps}>
             <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
           </ActionButtonContainer>
@@ -187,7 +192,7 @@ export function ConnectionStatusBar({
 
   if (connecting) {
     return (
-      <View style={styles.statusBarContainer}>
+      <View style={styles.statusBarContainer} accessibilityLiveRegion="polite">
         <StatusBubbleContainer {...statusBubbleProps}>
           <ActivityIndicator size="small" color={theme.colors.primary} />
           <Text style={styles.statusText}>Connecting...</Text>
@@ -202,12 +207,17 @@ export function ConnectionStatusBar({
       ? { style: styles.statusBubble, glassEffectStyle: 'regular' as const }
       : { style: [styles.statusBubble, styles.statusBubbleFallback, styles.errorBubble] }
     return (
-      <View style={styles.statusBarContainer}>
+      <View style={styles.statusBarContainer} accessibilityLiveRegion="assertive">
         <StatusBubbleContainer {...errorBubbleProps}>
-          <Text style={styles.errorText} numberOfLines={1}>
+          <Text style={styles.errorText} numberOfLines={1} accessibilityRole="alert">
             Connection failed: {error}
           </Text>
-          <TouchableOpacity onPress={retry} style={styles.retryButton}>
+          <TouchableOpacity
+            onPress={retry}
+            style={styles.retryButton}
+            accessibilityRole="button"
+            accessibilityLabel={t('common.retry')}
+          >
             <Text style={styles.retryText}>Retry</Text>
           </TouchableOpacity>
         </StatusBubbleContainer>
@@ -242,20 +252,35 @@ export function ConnectionStatusBar({
           </StatusBubbleContainer>
           <View style={styles.statusActions}>
             {isMoltProvider && health?.agents && Object.keys(health.agents).length > 1 && (
-              <TouchableOpacity onPress={onOpenAgentPicker} activeOpacity={0.7}>
+              <TouchableOpacity
+                onPress={onOpenAgentPicker}
+                activeOpacity={0.7}
+                accessibilityRole="button"
+                accessibilityLabel={t('agents.selectAgent')}
+              >
                 <ActionButtonContainer {...actionButtonProps}>
                   <Ionicons name="people" size={20} color={theme.colors.primary} />
                 </ActionButtonContainer>
               </TouchableOpacity>
             )}
             {isWorkflowActive && (
-              <TouchableOpacity onPress={() => router.push('/workflow')} activeOpacity={0.7}>
+              <TouchableOpacity
+                onPress={() => router.push('/workflow')}
+                activeOpacity={0.7}
+                accessibilityRole="button"
+                accessibilityLabel={t('workflow.title')}
+              >
                 <ActionButtonContainer {...actionButtonProps}>
                   <Ionicons name="folder-open" size={20} color={theme.colors.primary} />
                 </ActionButtonContainer>
               </TouchableOpacity>
             )}
-            <TouchableOpacity onPress={handleToggleSearch} activeOpacity={0.7}>
+            <TouchableOpacity
+              onPress={handleToggleSearch}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel={isSearchOpen ? t('common.close') : 'Search messages'}
+            >
               <ActionButtonContainer {...actionButtonProps}>
                 <Ionicons name="search" size={22} color={theme.colors.text.secondary} />
               </ActionButtonContainer>
@@ -279,6 +304,7 @@ export function ConnectionStatusBar({
                   onChangeText={onSearchQueryChange}
                   autoCorrect={false}
                   returnKeyType="search"
+                  accessibilityLabel="Search messages"
                 />
                 {searchQuery.length > 0 && (
                   <Text style={styles.searchCount}>
@@ -289,7 +315,12 @@ export function ConnectionStatusBar({
                     }
                   </Text>
                 )}
-                <TouchableOpacity onPress={handleCloseSearch} hitSlop={8}>
+                <TouchableOpacity
+                  onPress={handleCloseSearch}
+                  hitSlop={8}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('common.close')}
+                >
                   <Ionicons name="close-circle" size={20} color={theme.colors.text.secondary} />
                 </TouchableOpacity>
               </Animated.View>
