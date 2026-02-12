@@ -15,7 +15,7 @@ import {
   readSessionIndex,
   SessionIndexEntry,
 } from '../src/services/providers'
-import { currentSessionKeyAtom, sessionAliasesAtom } from '../src/store'
+import { currentSessionKeyAtom, isMissionSession, sessionAliasesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 import { GlassView } from '../src/utils/glassEffect'
 import { logger } from '../src/utils/logger'
@@ -77,7 +77,7 @@ export default function SessionsScreen() {
     try {
       const sessionData = (await listSessions()) as { sessions?: Session[] }
       if (sessionData?.sessions && Array.isArray(sessionData.sessions)) {
-        setSessions(sessionData.sessions)
+        setSessions(sessionData.sessions.filter((s) => !isMissionSession(s.key)))
       }
     } catch (err) {
       sessionsLogger.logError('Failed to fetch sessions', err)
@@ -92,11 +92,13 @@ export default function SessionsScreen() {
 
     try {
       const entries: SessionIndexEntry[] = await readSessionIndex(config.serverId)
-      const localSessions: Session[] = entries.map((entry) => ({
-        key: entry.key,
-        messageCount: entry.messageCount,
-        lastActivity: entry.lastActivity,
-      }))
+      const localSessions: Session[] = entries
+        .filter((entry) => !isMissionSession(entry.key))
+        .map((entry) => ({
+          key: entry.key,
+          messageCount: entry.messageCount,
+          lastActivity: entry.lastActivity,
+        }))
       setSessions(localSessions)
     } catch (err) {
       sessionsLogger.logError('Failed to load local sessions', err)
@@ -120,6 +122,7 @@ export default function SessionsScreen() {
   }
 
   const handleSelectSession = (sessionKey: string) => {
+    if (isMissionSession(sessionKey)) return
     setCurrentSessionKey(sessionKey)
     router.back()
   }

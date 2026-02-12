@@ -31,6 +31,15 @@ export function parseSessionKey(key: string): SessionKeyParts {
   }
 }
 
+/**
+ * Returns true if the session key belongs to a mission (execution or planning).
+ * Mission sessions should be hidden from the regular chat session lists.
+ */
+export function isMissionSession(key: string): boolean {
+  const { sessionName } = parseSessionKey(key)
+  return sessionName.startsWith('mission-')
+}
+
 // ─── Session atoms ───────────────────────────────────────
 
 /** Current session key with persistent storage */

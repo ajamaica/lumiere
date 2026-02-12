@@ -5,7 +5,12 @@ import { DEFAULT_SESSION_KEY } from '../../constants'
 import { useServers } from '../../hooks/useServers'
 import { useMoltGateway } from '../../services/molt'
 import { ProviderConfig } from '../../services/providers'
-import { createSessionKey, currentSessionKeyAtom, sessionAliasesAtom } from '../../store'
+import {
+  createSessionKey,
+  currentSessionKeyAtom,
+  isMissionSession,
+  sessionAliasesAtom,
+} from '../../store'
 import { logger } from '../../utils/logger'
 import { SessionSidebar } from '../layout/SessionSidebar'
 import { SidebarLayout } from '../layout/SidebarLayout'
@@ -76,14 +81,16 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       const sessionData = (await listSessions()) as { sessions?: Session[] }
       if (loadId !== sessionLoadIdRef.current) return // stale response
       if (sessionData?.sessions && Array.isArray(sessionData.sessions)) {
-        setSessions(sessionData.sessions)
+        // Hide mission sessions from the regular chat list
+        const chatSessions = sessionData.sessions.filter((s) => !isMissionSession(s.key))
+        setSessions(chatSessions)
 
         // If no session is set for this server and sessions are available, use the first one
         if (
           (!serverSessionsRef.current[currentServerId] || !currentSessionKey) &&
-          sessionData.sessions.length > 0
+          chatSessions.length > 0
         ) {
-          setCurrentSessionKey(sessionData.sessions[0].key)
+          setCurrentSessionKey(chatSessions[0].key)
         }
       }
     } catch (err) {
@@ -132,6 +139,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   }
 
   const handleSelectSession = (sessionKey: string) => {
+    if (isMissionSession(sessionKey)) return
     setCurrentSessionKey(sessionKey)
   }
 

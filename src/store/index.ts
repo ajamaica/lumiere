@@ -23,6 +23,7 @@ export {
   createSessionKey,
   currentAgentIdAtom,
   currentSessionKeyAtom,
+  isMissionSession,
   parseSessionKey,
   serverSessionsAtom,
   sessionAliasesAtom,
