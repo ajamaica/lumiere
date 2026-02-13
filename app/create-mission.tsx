@@ -340,7 +340,7 @@ function GeneratingAnimation({ currentStep }: GeneratingAnimationProps) {
           const isActive = index === currentStep
           const isDone = index < currentStep
           const color = isDone
-            ? theme.colors.success || '#22C55E'
+            ? theme.colors.status.success
             : isActive
               ? theme.colors.primary
               : theme.colors.text.tertiary
@@ -358,11 +358,7 @@ function GeneratingAnimation({ currentStep }: GeneratingAnimationProps) {
                 {step}
               </Text>
               {isDone && (
-                <Ionicons
-                  name="checkmark-circle"
-                  size={16}
-                  color={theme.colors.success || '#22C55E'}
-                />
+                <Ionicons name="checkmark-circle" size={16} color={theme.colors.status.success} />
               )}
             </View>
           )
