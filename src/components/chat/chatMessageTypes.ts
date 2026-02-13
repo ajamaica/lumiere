@@ -6,11 +6,26 @@ export interface MessageAttachment {
   name?: string
 }
 
-export interface Message {
+export interface TextMessage {
   id: string
+  type?: 'text'
   text: string
   sender: 'user' | 'agent'
   timestamp: Date
   streaming?: boolean
   attachments?: MessageAttachment[]
 }
+
+export interface ToolEventMessage {
+  id: string
+  type: 'tool_event'
+  toolName: string
+  toolCallId: string
+  toolInput?: Record<string, unknown>
+  status: 'running' | 'completed' | 'error'
+  sender: 'agent'
+  timestamp: Date
+  text: string
+}
+
+export type Message = TextMessage | ToolEventMessage

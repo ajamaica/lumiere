@@ -371,6 +371,15 @@
       "error": "त्रुटि",
       "stopped": "रोका गया",
       "archived": "संग्रहित"
+    },
+    "toolEvent": "टूल इवेंट",
+    "toolEvents": {
+      "web_fetch": "वेब पेज लोड हो रहा है...",
+      "code_execution": "कोड चल रहा है...",
+      "file_read": "फ़ाइल पढ़ी जा रही है...",
+      "file_write": "फ़ाइल लिखी जा रही है...",
+      "search": "खोज जारी है...",
+      "default": "{{toolName}} चल रहा है..."
     }
   }
 }

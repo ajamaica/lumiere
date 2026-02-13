@@ -371,6 +371,15 @@
       "error": "Erreur",
       "stopped": "Arrêtée",
       "archived": "Archivée"
+    },
+    "toolEvent": "Événement d'outil",
+    "toolEvents": {
+      "web_fetch": "Chargement de la page web...",
+      "code_execution": "Exécution du code...",
+      "file_read": "Lecture du fichier...",
+      "file_write": "Écriture du fichier...",
+      "search": "Recherche en cours...",
+      "default": "Exécution de {{toolName}}..."
     }
   }
 }

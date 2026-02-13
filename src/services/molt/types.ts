@@ -205,6 +205,14 @@ export type AgentEvent = {
     phase?: 'start' | 'end'
     startedAt?: number
     endedAt?: number
+    /** Tool name for stream === 'tool' events (e.g. 'web_fetch', 'code_execution') */
+    toolName?: string
+    /** Tool input parameters (e.g. { url: '...' } for web_fetch) */
+    toolInput?: Record<string, unknown>
+    /** Status of the tool invocation */
+    toolStatus?: 'running' | 'completed' | 'error'
+    /** Unique ID correlating start/end events for the same tool call */
+    toolCallId?: string
   }
   runId: string
   seq: number

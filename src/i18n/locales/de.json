@@ -371,6 +371,15 @@
       "error": "Fehler",
       "stopped": "Gestoppt",
       "archived": "Archiviert"
+    },
+    "toolEvent": "Tool-Ereignis",
+    "toolEvents": {
+      "web_fetch": "Webseite wird geladen...",
+      "code_execution": "Code wird ausgeführt...",
+      "file_read": "Datei wird gelesen...",
+      "file_write": "Datei wird geschrieben...",
+      "search": "Suche läuft...",
+      "default": "{{toolName}} wird ausgeführt..."
     }
   }
 }

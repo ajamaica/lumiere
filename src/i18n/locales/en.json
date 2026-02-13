@@ -371,6 +371,15 @@
       "error": "Error",
       "stopped": "Stopped",
       "archived": "Archived"
+    },
+    "toolEvent": "Tool event",
+    "toolEvents": {
+      "web_fetch": "Fetching web page...",
+      "code_execution": "Running code...",
+      "file_read": "Reading file...",
+      "file_write": "Writing file...",
+      "search": "Searching...",
+      "default": "Running {{toolName}}..."
     }
   }
 }

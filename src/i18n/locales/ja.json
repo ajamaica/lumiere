@@ -371,6 +371,15 @@
       "error": "エラー",
       "stopped": "停止",
       "archived": "アーカイブ済み"
+    },
+    "toolEvent": "ツールイベント",
+    "toolEvents": {
+      "web_fetch": "ウェブページを取得中...",
+      "code_execution": "コードを実行中...",
+      "file_read": "ファイルを読み込み中...",
+      "file_write": "ファイルを書き込み中...",
+      "search": "検索中...",
+      "default": "{{toolName}}を実行中..."
     }
   }
 }
