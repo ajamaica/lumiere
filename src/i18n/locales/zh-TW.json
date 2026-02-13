@@ -307,6 +307,8 @@
     "addAttachment": "新增附件",
     "startVoiceInput": "開始語音輸入",
     "sendMessage": "傳送訊息",
+    "speakMessage": "朗讀訊息",
+    "stopSpeaking": "停止朗讀",
     "messagesQueued": "{{count}} 則訊息排隊中"
   },
   "missions": {

@@ -307,6 +307,8 @@
     "addAttachment": "Añadir adjunto",
     "startVoiceInput": "Iniciar entrada de voz",
     "sendMessage": "Enviar mensaje",
+    "speakMessage": "Leer mensaje en voz alta",
+    "stopSpeaking": "Detener lectura",
     "messagesQueued": "{{count}} mensaje(s) en cola"
   },
   "missions": {

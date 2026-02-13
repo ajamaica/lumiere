@@ -307,6 +307,8 @@
     "addAttachment": "अनुलग्नक जोड़ें",
     "startVoiceInput": "वॉइस इनपुट शुरू करें",
     "sendMessage": "संदेश भेजें",
+    "speakMessage": "संदेश ज़ोर से पढ़ें",
+    "stopSpeaking": "पढ़ना बंद करें",
     "messagesQueued": "{{count}} संदेश कतार में"
   },
   "missions": {

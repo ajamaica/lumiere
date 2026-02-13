@@ -307,6 +307,8 @@
     "addAttachment": "Ajouter une pièce jointe",
     "startVoiceInput": "Démarrer la saisie vocale",
     "sendMessage": "Envoyer le message",
+    "speakMessage": "Lire le message à voix haute",
+    "stopSpeaking": "Arrêter la lecture",
     "messagesQueued": "{{count}} message(s) en attente"
   },
   "missions": {

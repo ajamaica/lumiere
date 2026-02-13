@@ -307,6 +307,8 @@
     "addAttachment": "첨부파일 추가",
     "startVoiceInput": "음성 입력 시작",
     "sendMessage": "메시지 보내기",
+    "speakMessage": "메시지 소리 내어 읽기",
+    "stopSpeaking": "읽기 중지",
     "messagesQueued": "{{count}}개의 메시지가 대기 중"
   },
   "missions": {
