@@ -18,6 +18,7 @@ export interface ProviderConfig {
   type: ProviderType
   url: string
   token: string // Molt requires token; Ollama may not
+  password?: string // Optional gateway password for Molt
   clientId?: string
   model?: string // Ollama model name (e.g., 'llama3', 'mistral')
   serverId?: string // Server UUID for cache isolation

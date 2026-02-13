@@ -99,6 +99,9 @@
     },
     "openaiCompatibleDescription": "कस्टम बेस URL निर्दिष्ट करके किसी भी OpenAI-संगत API से कनेक्ट करें।",
     "appleDescription": "CoreML के माध्यम से पूरी तरह से डिवाइस पर AI चलाने के लिए Apple Foundation Models का उपयोग करता है। iOS 26+ और Apple Intelligence सपोर्ट आवश्यक है।",
+    "gatewayPassword": "गेटवे पासवर्ड (वैकल्पिक)",
+    "gatewayPasswordKeep": "गेटवे पासवर्ड (वर्तमान रखने के लिए खाली छोड़ें)",
+    "gatewayPasswordPlaceholder": "गेटवे पासवर्ड दर्ज करें",
     "errors": {
       "urlRequired": "URL आवश्यक है",
       "tokenRequired": "टोकन आवश्यक है",

@@ -99,6 +99,9 @@
     },
     "openaiCompatibleDescription": "Conecte-se a qualquer API compatível com OpenAI especificando uma URL base personalizada.",
     "appleDescription": "Usa Apple Foundation Models para executar IA totalmente no dispositivo via CoreML. Requer iOS 26+ com suporte a Apple Intelligence.",
+    "gatewayPassword": "Senha do gateway (opcional)",
+    "gatewayPasswordKeep": "Senha do gateway (deixe em branco para manter a atual)",
+    "gatewayPasswordPlaceholder": "Digite a senha do gateway",
     "errors": {
       "urlRequired": "URL é obrigatória",
       "tokenRequired": "Token é obrigatório",

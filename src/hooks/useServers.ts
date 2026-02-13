@@ -2,7 +2,14 @@ import { type PrimitiveAtom, useAtom } from 'jotai'
 import { useCallback, useEffect, useMemo } from 'react'
 
 import { ProviderConfig } from '../services/providers'
-import { deleteServerToken, getServerToken, setServerToken } from '../services/secureTokenStorage'
+import {
+  deleteServerPassword,
+  deleteServerToken,
+  getServerPassword,
+  getServerToken,
+  setServerPassword,
+  setServerToken,
+} from '../services/secureTokenStorage'
 import {
   currentServerIdAtom,
   persistSecureServers,
@@ -27,11 +34,16 @@ export interface UseServersResult {
   serversList: ServerConfig[]
 
   // Mutations
-  addServer: (config: Omit<ServerConfig, 'id' | 'createdAt'>, token: string) => Promise<string>
+  addServer: (
+    config: Omit<ServerConfig, 'id' | 'createdAt'>,
+    token: string,
+    password?: string,
+  ) => Promise<string>
   updateServer: (
     id: string,
     updates: Partial<Omit<ServerConfig, 'id' | 'createdAt'>>,
     token?: string,
+    password?: string,
   ) => Promise<void>
   removeServer: (id: string) => Promise<void>
   switchToServer: (id: string) => void
@@ -64,7 +76,7 @@ export function useServers(): UseServersResult {
 
   // Add server with auto-generated UUID and name
   const addServer = useCallback(
-    async (config: Omit<ServerConfig, 'id' | 'createdAt'>, token: string) => {
+    async (config: Omit<ServerConfig, 'id' | 'createdAt'>, token: string, password?: string) => {
       const id = generateUUID()
       const serverCount = Object.keys(servers).length
       const newServer: ServerConfig = {
@@ -76,6 +88,11 @@ export function useServers(): UseServersResult {
 
       // Store token securely in keychain
       await setServerToken(id, token)
+
+      // Store password securely if provided
+      if (password) {
+        await setServerPassword(id, password)
+      }
 
       setServers({ ...servers, [id]: newServer })
 
@@ -96,12 +113,18 @@ export function useServers(): UseServersResult {
       id: string,
       updates: Partial<Omit<ServerConfig, 'id' | 'createdAt'>>,
       token?: string,
+      password?: string,
     ) => {
       if (!servers[id]) return
 
       // Update token in keychain if provided
       if (token !== undefined) {
         await setServerToken(id, token)
+      }
+
+      // Update password in keychain if provided
+      if (password !== undefined) {
+        await setServerPassword(id, password)
       }
 
       setServers({
@@ -117,8 +140,9 @@ export function useServers(): UseServersResult {
     async (id: string) => {
       if (!servers[id]) return
 
-      // Delete token from keychain
+      // Delete token and password from keychain
       await deleteServerToken(id)
+      await deleteServerPassword(id)
 
       const newServers = { ...servers }
       delete newServers[id]
@@ -155,10 +179,12 @@ export function useServers(): UseServersResult {
       currentServer.providerType !== 'apple'
     )
       return null
+    const password = await getServerPassword(currentServer.id)
     return {
       type: currentServer.providerType || 'molt',
       url: currentServer.url,
       token: token || '',
+      password: password || undefined,
       clientId: currentServer.clientId,
       model: currentServer.model,
       serverId: currentServer.id,
@@ -178,10 +204,12 @@ export function useServers(): UseServersResult {
         server.providerType !== 'apple'
       )
         return null
+      const password = await getServerPassword(id)
       return {
         type: server.providerType || 'molt',
         url: server.url,
         token: token || '',
+        password: password || undefined,
         clientId: server.clientId,
         model: server.model,
         serverId: id,

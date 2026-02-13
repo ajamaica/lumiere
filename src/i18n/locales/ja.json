@@ -99,6 +99,9 @@
     },
     "openaiCompatibleDescription": "カスタムベースURLを指定して、OpenAI互換のAPIに接続します。",
     "appleDescription": "Apple Foundation Modelsを使用して、CoreML経由でAIを完全にデバイス上で実行します。Apple Intelligenceに対応したiOS 26以降が必要です。",
+    "gatewayPassword": "ゲートウェイパスワード（任意）",
+    "gatewayPasswordKeep": "ゲートウェイパスワード（現在のものを保持する場合は空白）",
+    "gatewayPasswordPlaceholder": "ゲートウェイパスワードを入力",
     "errors": {
       "urlRequired": "URLは必須です",
       "tokenRequired": "トークンは必須です",

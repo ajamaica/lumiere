@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   ActivityIndicator,
   Alert,
@@ -29,6 +30,7 @@ import { keyboardAvoidingBehavior } from '../src/utils/platform'
 
 export default function EditServerScreen() {
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const router = useRouter()
   const { id } = useLocalSearchParams<{ id: string }>()
   const { servers, updateServer, removeServer } = useServers()
@@ -39,6 +41,7 @@ export default function EditServerScreen() {
   const [name, setName] = useState(server?.name ?? '')
   const [url, setUrl] = useState(server?.url ?? '')
   const [token, setToken] = useState('')
+  const [password, setPassword] = useState('')
   const [clientId, setClientId] = useState(server?.clientId || 'lumiere-mobile')
   const [providerType, setProviderType] = useState<ProviderType>(server?.providerType || 'molt')
   const [model, setModel] = useState(server?.model ?? '')
@@ -96,6 +99,7 @@ export default function EditServerScreen() {
         model: model.trim() || undefined,
       },
       token.trim() || undefined,
+      password.trim() || undefined,
     )
 
     router.back()
@@ -260,6 +264,17 @@ export default function EditServerScreen() {
                   label="Token (leave blank to keep current)"
                   value={token}
                   onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label={t('addServer.gatewayPasswordKeep')}
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholder={t('addServer.gatewayPasswordPlaceholder')}
                   secureTextEntry
                   autoCapitalize="none"
                   autoCorrect={false}
