@@ -14,9 +14,8 @@ import {
   pendingTriggerMessageAtom,
   sessionContextAtom,
 } from '../../store'
-import { compressImageToJpeg } from '../../utils/compressImage'
 import { logger } from '../../utils/logger'
-import { Message, MessageAttachment } from './ChatMessage'
+import { Message } from './ChatMessage'
 
 const chatHistoryLogger = logger.create('ChatHistory')
 
@@ -53,7 +52,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
   const [clearMessagesTrigger] = useAtom(clearMessagesAtom)
   const [pendingTriggerMessage, setPendingTriggerMessage] = useAtom(pendingTriggerMessageAtom)
   const [pendingShareText, setPendingShareText] = useAtom(pendingShareTextAtom)
-  const [pendingShareMedia, setPendingShareMedia] = useAtom(pendingShareMediaAtom)
+  const [pendingShareMedia] = useAtom(pendingShareMediaAtom)
   const [sessionContextMap] = useAtom(sessionContextAtom)
 
   const hasCacheRef = useRef(false)
@@ -191,70 +190,26 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     }
   }, [connected, isLoadingHistory, pendingTriggerMessage, setPendingTriggerMessage])
 
-  // Auto-send content shared from other apps via the share extension
+  // Auto-send text-only content shared from other apps via the share extension.
+  // When media files are present, ChatInput stages them as attachments so the
+  // user can add a message before sending.
   useEffect(() => {
-    if (connected && !isLoadingHistory && pendingShareText !== null) {
-      const timer = setTimeout(async () => {
-        let attachments: MessageAttachment[] | undefined
-        if (pendingShareMedia && pendingShareMedia.length > 0) {
-          const converted: MessageAttachment[] = []
-          for (const media of pendingShareMedia) {
-            if (media.mimeType.startsWith('image/')) {
-              try {
-                const compressed = await compressImageToJpeg(media.uri)
-                converted.push({
-                  type: 'image',
-                  uri: compressed.uri,
-                  base64: compressed.base64,
-                  mimeType: compressed.mimeType,
-                  name: media.fileName,
-                })
-              } catch {
-                // Fall back to uncompressed URI if compression fails
-                converted.push({
-                  type: 'image',
-                  uri: media.uri,
-                  mimeType: media.mimeType,
-                  name: media.fileName,
-                })
-              }
-            } else if (media.mimeType.startsWith('video/')) {
-              converted.push({
-                type: 'video',
-                uri: media.uri,
-                mimeType: media.mimeType,
-                name: media.fileName,
-              })
-            } else {
-              converted.push({
-                type: 'file',
-                uri: media.uri,
-                mimeType: media.mimeType,
-                name: media.fileName,
-              })
-            }
-          }
-          if (converted.length > 0) {
-            attachments = converted
-          }
-          setPendingShareMedia(null)
-        }
+    if (
+      connected &&
+      !isLoadingHistory &&
+      pendingShareText !== null &&
+      (!pendingShareMedia || pendingShareMedia.length === 0)
+    ) {
+      const timer = setTimeout(() => {
         const text = pendingShareText || ''
-        if (text || attachments) {
-          handleSendRef.current(text, attachments)
+        if (text) {
+          handleSendRef.current(text)
         }
         setPendingShareText(null)
       }, 150)
       return () => clearTimeout(timer)
     }
-  }, [
-    connected,
-    isLoadingHistory,
-    pendingShareText,
-    setPendingShareText,
-    pendingShareMedia,
-    setPendingShareMedia,
-  ])
+  }, [connected, isLoadingHistory, pendingShareText, setPendingShareText, pendingShareMedia])
 
   // Reveal list immediately when there are no history messages
   useEffect(() => {
