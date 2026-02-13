@@ -370,6 +370,7 @@ export class MoltGatewayClient {
   async sendAgentRequest(
     params: AgentParams,
     onEvent?: (event: AgentEvent) => void,
+    timeoutMs?: number,
   ): Promise<unknown> {
     let unsubscribe: (() => void) | null = null
 
@@ -388,7 +389,7 @@ export class MoltGatewayClient {
     }
 
     try {
-      return await this.request(GatewayMethods.AGENT, params)
+      return await this.request(GatewayMethods.AGENT, params, timeoutMs)
     } catch (err) {
       unsubscribe?.()
       throw err

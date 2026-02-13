@@ -48,7 +48,11 @@ export interface UseMoltGatewayResult {
     },
   ) => Promise<ChatSendResponse>
   chatAbort: (sessionKey: string, runId: string) => Promise<void>
-  sendAgentRequest: (params: AgentParams, onEvent?: (event: AgentEvent) => void) => Promise<unknown>
+  sendAgentRequest: (
+    params: AgentParams,
+    onEvent?: (event: AgentEvent) => void,
+    timeoutMs?: number,
+  ) => Promise<unknown>
   getChatHistory: (sessionKey: string, limit?: number) => Promise<unknown>
   resetSession: (sessionKey: string) => Promise<unknown>
   deleteSession: (sessionKey: string) => Promise<unknown>
@@ -230,11 +234,11 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
   )
 
   const sendAgentRequest = useCallback(
-    async (params: AgentParams, onEvent?: (event: AgentEvent) => void) => {
+    async (params: AgentParams, onEvent?: (event: AgentEvent) => void, timeoutMs?: number) => {
       if (!client) {
         throw new Error('Client not connected')
       }
-      return await client.sendAgentRequest(params, onEvent)
+      return await client.sendAgentRequest(params, onEvent, timeoutMs)
     },
     [client],
   )

@@ -433,6 +433,7 @@ export default function CreateMissionScreen() {
             responseText += event.data.delta
           }
         },
+        120_000, // 2 minute timeout for mission generation
       )
 
       // Mark the response as complete (the stream finished)
