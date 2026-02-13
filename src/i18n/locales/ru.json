@@ -350,6 +350,7 @@
     "subtasks": "Подзадачи",
     "progress": "{{completed}}/{{total}} выполнено",
     "conversation": "Диалог",
+    "conversationHistory": "История диалога",
     "waitingForInput": "Агенту необходим ваш ответ для продолжения.",
     "noMissionSelected": "Миссия не выбрана",
     "connectingGateway": "Подключение к шлюзу...",

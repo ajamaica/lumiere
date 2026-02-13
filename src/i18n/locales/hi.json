@@ -350,6 +350,7 @@
     "subtasks": "उप-कार्य",
     "progress": "{{completed}}/{{total}} पूर्ण",
     "conversation": "वार्तालाप",
+    "conversationHistory": "वार्तालाप इतिहास",
     "waitingForInput": "जारी रखने के लिए एजेंट को आपके इनपुट की आवश्यकता है।",
     "noMissionSelected": "कोई मिशन चयनित नहीं",
     "connectingGateway": "गेटवे से कनेक्ट हो रहा है...",

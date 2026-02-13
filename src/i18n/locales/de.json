@@ -350,6 +350,7 @@
     "subtasks": "Teilaufgaben",
     "progress": "{{completed}}/{{total}} abgeschlossen",
     "conversation": "Unterhaltung",
+    "conversationHistory": "Gesprächsverlauf",
     "waitingForInput": "Der Agent benötigt Ihre Eingabe, um fortzufahren.",
     "noMissionSelected": "Keine Mission ausgewählt",
     "connectingGateway": "Verbindung zum Gateway wird hergestellt...",

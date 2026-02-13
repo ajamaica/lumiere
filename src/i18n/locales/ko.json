@@ -350,6 +350,7 @@
     "subtasks": "하위 작업",
     "progress": "{{completed}}/{{total}} 완료",
     "conversation": "대화",
+    "conversationHistory": "대화 기록",
     "waitingForInput": "계속하려면 에이전트에 입력이 필요합니다.",
     "noMissionSelected": "선택된 미션 없음",
     "connectingGateway": "게이트웨이에 연결 중...",

@@ -27,10 +27,25 @@ import { useMissions } from '../src/hooks/useMissions'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import type { AgentEvent } from '../src/services/molt/types'
+import type { SerializedMessage } from '../src/store/missionTypes'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
 
 const missionLogger = logger.create('MissionDetail')
+
+function serializeMessages(messages: Message[]): SerializedMessage[] {
+  return messages.map((msg) => ({
+    ...msg,
+    timestamp: msg.timestamp.getTime(),
+  }))
+}
+
+function deserializeMessages(serialized: SerializedMessage[]): Message[] {
+  return serialized.map((msg) => ({
+    ...msg,
+    timestamp: new Date(msg.timestamp),
+  })) as Message[]
+}
 
 export default function MissionDetailScreen() {
   const { theme } = useTheme()
@@ -43,6 +58,8 @@ export default function MissionDetailScreen() {
     addMissionSkill,
     stopMission,
     archiveMission,
+    getMissionMessages,
+    saveMissionMessages,
   } = useMissions()
   const { getProviderConfig, currentServerId } = useServers()
   const { parseChunk, resetBuffer } = useMissionEventParser()
@@ -50,11 +67,13 @@ export default function MissionDetailScreen() {
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [isStreaming, setIsStreaming] = useState(false)
+  const [restoredHistory, setRestoredHistory] = useState(false)
   const scrollRef = useRef<ScrollView>(null)
   const streamingTextRef = useRef('')
   const systemMessageSentRef = useRef(false)
   const stoppedRef = useRef(false)
   const activeToolCallsRef = useRef<Map<string, string>>(new Map())
+  const hasRestoredRef = useRef(false)
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -81,21 +100,39 @@ export default function MissionDetailScreen() {
     stoppedRef.current = false
     systemMessageSentRef.current = false
     streamingTextRef.current = ''
+    hasRestoredRef.current = false
+    setRestoredHistory(false)
   }, [activeMission?.id])
 
-  // Auto-start mission on first load if in_progress and no messages
+  // Restore saved message history when opening a mission
+  useEffect(() => {
+    if (!activeMission || hasRestoredRef.current) return
+    hasRestoredRef.current = true
+
+    const saved = getMissionMessages(activeMission.id)
+    if (saved.length > 0) {
+      setMessages(deserializeMessages(saved))
+      setRestoredHistory(true)
+      // The system message was already sent in a previous session
+      systemMessageSentRef.current = true
+    }
+  }, [activeMission, getMissionMessages])
+
+  // Auto-start mission on first load if in_progress, no messages, and no saved history
   useEffect(() => {
     if (
       activeMission &&
       activeMission.status === 'in_progress' &&
       messages.length === 0 &&
+      !restoredHistory &&
       gateway.connected &&
-      !isStreaming
+      !isStreaming &&
+      hasRestoredRef.current
     ) {
       handleSendToAgent(`Begin executing this mission. Start with the first subtask.`, true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeMission?.id, gateway.connected])
+  }, [activeMission?.id, gateway.connected, restoredHistory])
 
   const handleAgentEvent = useCallback(
     (event: AgentEvent) => {
@@ -216,13 +253,18 @@ export default function MissionDetailScreen() {
       }
 
       if (event.data?.phase === 'end') {
-        // Mark last message as no longer streaming
+        // Mark last message as no longer streaming and persist
         setMessages((prev) => {
           const last = prev[prev.length - 1]
+          let updated = prev
           if (last && last.type !== 'tool_event' && last.streaming) {
-            return [...prev.slice(0, -1), { ...last, streaming: false }]
+            updated = [...prev.slice(0, -1), { ...last, streaming: false }]
           }
-          return prev
+          // Persist messages after phase completes
+          if (activeMission) {
+            saveMissionMessages(activeMission.id, serializeMessages(updated))
+          }
+          return updated
         })
         setIsStreaming(false)
         streamingTextRef.current = ''
@@ -237,6 +279,7 @@ export default function MissionDetailScreen() {
       updateMissionStatus,
       updateSubtaskStatus,
       addMissionSkill,
+      saveMissionMessages,
       t,
     ],
   )
@@ -255,15 +298,20 @@ export default function MissionDetailScreen() {
       }
 
       if (!isAutoStart) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: `msg-${Date.now()}`,
-            sender: 'user' as const,
-            text,
-            timestamp: new Date(),
-          },
-        ])
+        setMessages((prev) => {
+          const updated = [
+            ...prev,
+            {
+              id: `msg-${Date.now()}`,
+              sender: 'user' as const,
+              text,
+              timestamp: new Date(),
+            },
+          ]
+          // Persist user message immediately
+          saveMissionMessages(activeMission.id, serializeMessages(updated))
+          return updated
+        })
       }
 
       setIsStreaming(true)
@@ -299,7 +347,14 @@ export default function MissionDetailScreen() {
         })
       }
     },
-    [activeMission, gateway, resetBuffer, updateMissionStatus, handleAgentEvent],
+    [
+      activeMission,
+      gateway,
+      resetBuffer,
+      updateMissionStatus,
+      handleAgentEvent,
+      saveMissionMessages,
+    ],
   )
 
   const handleChatInputSend = useCallback(
@@ -320,13 +375,15 @@ export default function MissionDetailScreen() {
           // Guard: prevent event handler from overwriting the stopped status
           stoppedRef.current = true
 
-          // Finalize any in-flight streaming message
+          // Finalize any in-flight streaming message and persist
           setMessages((prev) => {
             const last = prev[prev.length - 1]
+            let updated = prev
             if (last && last.type !== 'tool_event' && last.streaming) {
-              return [...prev.slice(0, -1), { ...last, streaming: false }]
+              updated = [...prev.slice(0, -1), { ...last, streaming: false }]
             }
-            return prev
+            saveMissionMessages(activeMission.id, serializeMessages(updated))
+            return updated
           })
           setIsStreaming(false)
           streamingTextRef.current = ''
@@ -336,7 +393,7 @@ export default function MissionDetailScreen() {
         },
       },
     ])
-  }, [activeMission, stopMission, resetBuffer, t])
+  }, [activeMission, stopMission, saveMissionMessages, resetBuffer, t])
 
   const handleArchive = useCallback(() => {
     if (!activeMission) return
@@ -584,7 +641,7 @@ export default function MissionDetailScreen() {
                   color={theme.colors.text.secondary}
                 />
                 <Text variant="heading3" style={{ color: theme.colors.text.primary }}>
-                  {t('missions.conversation')}
+                  {restoredHistory ? t('missions.conversationHistory') : t('missions.conversation')}
                 </Text>
               </View>
               {messages.map((msg) =>

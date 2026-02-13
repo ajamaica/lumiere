@@ -350,6 +350,7 @@
     "subtasks": "Sous-tâches",
     "progress": "{{completed}}/{{total}} terminées",
     "conversation": "Conversation",
+    "conversationHistory": "Historique de conversation",
     "waitingForInput": "L'agent a besoin de votre réponse pour continuer.",
     "noMissionSelected": "Aucune mission sélectionnée",
     "connectingGateway": "Connexion au gateway...",
