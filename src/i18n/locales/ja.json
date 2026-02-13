@@ -350,6 +350,7 @@
     "subtasks": "サブタスク",
     "progress": "{{completed}}/{{total}} 完了",
     "conversation": "会話",
+    "conversationHistory": "会話履歴",
     "waitingForInput": "続行するにはエージェントがあなたの入力を必要としています。",
     "noMissionSelected": "ミッションが選択されていません",
     "connectingGateway": "ゲートウェイに接続中...",

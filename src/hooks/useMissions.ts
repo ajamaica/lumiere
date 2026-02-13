@@ -1,8 +1,15 @@
 import { useAtom } from 'jotai'
 import { useCallback, useMemo } from 'react'
 
-import { activeMissionIdAtom, missionsAtom } from '../store/missionAtoms'
-import type { Mission, MissionsDict, MissionStatus, MissionSubtask } from '../store/missionTypes'
+import { activeMissionIdAtom, missionMessagesAtom, missionsAtom } from '../store/missionAtoms'
+import type {
+  Mission,
+  MissionMessagesDict,
+  MissionsDict,
+  MissionStatus,
+  MissionSubtask,
+  SerializedMessage,
+} from '../store/missionTypes'
 
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8)
@@ -11,6 +18,7 @@ function generateId(): string {
 export function useMissions() {
   const [rawMissions, setMissions] = useAtom(missionsAtom)
   const [rawActiveMissionId, setActiveMissionId] = useAtom(activeMissionIdAtom)
+  const [rawMissionMessages, setMissionMessages] = useAtom(missionMessagesAtom)
 
   // unwrap() guarantees synchronous values, but TypeScript still infers
   // the union type. Cast to the concrete types and strip any null entries
@@ -182,11 +190,37 @@ export function useMissions() {
         delete next[missionId]
         return next
       })
+      // Also remove persisted messages for the deleted mission
+      setMissionMessages((prev) => {
+        const dict = prev as MissionMessagesDict
+        if (!dict[missionId]) return dict
+        const next = { ...dict }
+        delete next[missionId]
+        return next
+      })
       if (activeMissionId === missionId) {
         setActiveMissionId(null)
       }
     },
-    [setMissions, activeMissionId, setActiveMissionId],
+    [setMissions, setMissionMessages, activeMissionId, setActiveMissionId],
+  )
+
+  const getMissionMessages = useCallback(
+    (missionId: string): SerializedMessage[] => {
+      const dict = (rawMissionMessages ?? {}) as MissionMessagesDict
+      return dict[missionId] ?? []
+    },
+    [rawMissionMessages],
+  )
+
+  const saveMissionMessages = useCallback(
+    (missionId: string, messages: SerializedMessage[]) => {
+      setMissionMessages((prev) => {
+        const dict = prev as MissionMessagesDict
+        return { ...dict, [missionId]: messages }
+      })
+    },
+    [setMissionMessages],
   )
 
   return {
@@ -202,5 +236,7 @@ export function useMissions() {
     stopMission,
     archiveMission,
     deleteMission,
+    getMissionMessages,
+    saveMissionMessages,
   }
 }

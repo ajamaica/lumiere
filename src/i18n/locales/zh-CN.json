@@ -350,6 +350,7 @@
     "subtasks": "子任务",
     "progress": "{{completed}}/{{total}} 已完成",
     "conversation": "对话",
+    "conversationHistory": "对话历史",
     "waitingForInput": "代理需要您的输入才能继续。",
     "noMissionSelected": "未选择任务",
     "connectingGateway": "正在连接网关...",

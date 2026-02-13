@@ -350,6 +350,7 @@
     "subtasks": "子任務",
     "progress": "{{completed}}/{{total}} 已完成",
     "conversation": "對話",
+    "conversationHistory": "對話歷史",
     "waitingForInput": "代理需要您的輸入才能繼續。",
     "noMissionSelected": "未選擇任務",
     "connectingGateway": "正在連線至閘道...",
