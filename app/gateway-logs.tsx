@@ -19,21 +19,30 @@ const logsLogger = logger.create('GatewayLogs')
  * Handles multiple response shapes: { logs: [...] }, { entries: [...] },
  * { items: [...] }, { data: [...] }, { lines: [...] }, or a bare array.
  */
+function isValidLogEntry(value: unknown): value is GatewayLogEntry {
+  if (typeof value !== 'object' || value === null) return false
+  const obj = value as Record<string, unknown>
+  return (
+    typeof obj.level === 'string' && typeof obj.message === 'string' && typeof obj.ts === 'number'
+  )
+}
+
 function extractLogs(response: unknown): GatewayLogEntry[] {
   if (!response) return []
 
-  if (Array.isArray(response)) return response as GatewayLogEntry[]
+  let raw: unknown[] | undefined
 
-  if (typeof response === 'object') {
+  if (Array.isArray(response)) {
+    raw = response
+  } else if (typeof response === 'object') {
     const obj = response as Record<string, unknown>
-    if (Array.isArray(obj.logs)) return obj.logs as GatewayLogEntry[]
-    if (Array.isArray(obj.entries)) return obj.entries as GatewayLogEntry[]
-    if (Array.isArray(obj.items)) return obj.items as GatewayLogEntry[]
-    if (Array.isArray(obj.data)) return obj.data as GatewayLogEntry[]
-    if (Array.isArray(obj.lines)) return obj.lines as GatewayLogEntry[]
+    const candidate = obj.logs ?? obj.entries ?? obj.items ?? obj.data ?? obj.lines
+    if (Array.isArray(candidate)) {
+      raw = candidate
+    }
   }
 
-  return []
+  return raw ? raw.filter(isValidLogEntry) : []
 }
 
 export default function GatewayLogsScreen() {
@@ -319,22 +328,30 @@ export default function GatewayLogsScreen() {
             </Text>
           )}
 
-          {!connecting && !connectionError && !fetchError && filteredLogs.length === 0 ? (
-            <Text color="secondary" center>
-              {t('gatewayLogs.noLogs')}
-            </Text>
+          {filteredLogs.length === 0 ? (
+            !connecting && !connectionError && !fetchError ? (
+              <Text color="secondary" center>
+                {t('gatewayLogs.noLogs')}
+              </Text>
+            ) : null
           ) : (
             filteredLogs.map((entry, index) => (
               <Card key={`${entry.ts}-${index}`} style={styles.logEntry}>
                 <View style={styles.logHeader}>
-                  <Badge label={entry.level.toUpperCase()} variant={getLevelVariant(entry.level)} />
+                  <Badge
+                    label={(entry.level ?? 'info').toUpperCase()}
+                    variant={getLevelVariant(entry.level ?? 'info')}
+                  />
                   <Text variant="caption" color="tertiary">
                     {formatTimestamp(entry.ts)}
                   </Text>
                 </View>
                 <Text
                   variant="bodySmall"
-                  style={{ color: getLevelColor(entry.level), marginTop: theme.spacing.xs }}
+                  style={{
+                    color: getLevelColor(entry.level ?? 'info'),
+                    marginTop: theme.spacing.xs,
+                  }}
                 >
                   {entry.message}
                 </Text>
