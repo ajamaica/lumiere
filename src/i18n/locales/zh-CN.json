@@ -13,7 +13,8 @@
     "next": "下一步",
     "skip": "跳过",
     "confirm": "确认",
-    "active": "活跃"
+    "active": "活跃",
+    "beta": "测试版"
   },
   "settings": {
     "title": "设置",

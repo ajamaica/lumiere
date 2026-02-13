@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { Alert, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { ScreenHeader, Section, SettingRow } from '../src/components/ui'
+import { Badge, ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { getProviderIcon } from '../src/config/providerOptions'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
@@ -231,6 +231,7 @@ export default function SettingsScreen() {
             <SettingRow
               icon="rocket-outline"
               label={t('settings.missions')}
+              badge={<Badge label={t('common.beta')} variant="warning" />}
               onPress={() => router.push('/missions')}
             />
             <SettingRow

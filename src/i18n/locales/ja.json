@@ -13,7 +13,8 @@
     "next": "次へ",
     "skip": "スキップ",
     "confirm": "確認",
-    "active": "有効"
+    "active": "有効",
+    "beta": "ベータ"
   },
   "settings": {
     "title": "設定",
