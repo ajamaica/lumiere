@@ -412,10 +412,15 @@ export default function CreateMissionScreen() {
     responseCompleteRef.current = false
 
     try {
-      // Step 1: Improving the prompt
+      // Step 1: Reset the commander session to start fresh
       setGeneratingStep(0)
+      try {
+        await gateway.resetSession(COMMANDER_SESSION_KEY)
+      } catch {
+        // Session might not exist yet — that's fine
+      }
 
-      const userMessage = `User request:\n\n${prompt.trim()}`
+      const planPrompt = `${MISSION_SYSTEM_PROMPT}\n\n---\n\nUser request:\n\n${prompt.trim()}`
 
       let responseText = ''
 
@@ -424,7 +429,7 @@ export default function CreateMissionScreen() {
 
       await gateway.sendAgentRequest(
         {
-          message: `${MISSION_SYSTEM_PROMPT}\n\n---\n\n${userMessage}`,
+          message: planPrompt,
           idempotencyKey: `mission-plan-${Date.now()}`,
           sessionKey: COMMANDER_SESSION_KEY,
         },
@@ -466,8 +471,9 @@ export default function CreateMissionScreen() {
         setPhase('review')
       }
     } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : String(err)
       missionLogger.logError('Failed to generate mission', err)
-      Alert.alert(t('common.error'), t('missions.analyzeError'))
+      Alert.alert(t('common.error'), `${t('missions.analyzeError')}\n\n${errorMsg}`)
       setPhase('input')
     }
   }, [prompt, gateway, t])
