@@ -33,7 +33,7 @@ jobs:
           xcodebuild -workspace ios/lumiere.xcworkspace \
             -scheme lumiere \
             -sdk iphonesimulator \
-            -configuration Debug \
+            -configuration Release \
             -derivedDataPath build \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             build
@@ -82,13 +82,13 @@ jobs:
         run: npx expo prebuild --platform android --clean
 
       - name: Build Android APK
-        run: cd android && ./gradlew assembleDebug
+        run: cd android && ./gradlew assembleRelease
 
       - name: Run Maestro Cloud tests (Android)
         uses: mobile-dev-inc/action-maestro-cloud@v2
         with:
           api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
           project-id: proj_01kh9j5fz6ev1apmcjb0wgp387
-          app-file: android/app/build/outputs/apk/debug/app-debug.apk
+          app-file: android/app/build/outputs/apk/release/app-release.apk
           workspace: .maestro
           android-api-level: 34
