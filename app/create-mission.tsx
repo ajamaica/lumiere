@@ -484,16 +484,16 @@ User request: ${prompt.trim()}`
               </View>
 
               <Text variant="body" color="secondary" style={{ marginBottom: theme.spacing.lg }}>
-                {plan.description || t('missions.planDescription')}
+                {t('missions.planDescription')}
               </Text>
 
               <TextInput
                 style={styles.titleInput}
                 value={plan.title}
-                onChangeText={(text) => setPlan({ ...plan, title: text })}
                 placeholder={t('missions.titlePlaceholder')}
                 placeholderTextColor={theme.colors.text.tertiary}
                 maxLength={MAX_TITLE_LENGTH}
+                editable={false}
               />
 
               <Text variant="caption" color="secondary" style={{ marginBottom: theme.spacing.xs }}>
@@ -502,10 +502,10 @@ User request: ${prompt.trim()}`
               <TextInput
                 style={styles.refinedPromptInput}
                 value={plan.refinedPrompt}
-                onChangeText={(text) => setPlan({ ...plan, refinedPrompt: text })}
                 placeholder={t('missions.promptPlaceholder')}
                 placeholderTextColor={theme.colors.text.tertiary}
                 multiline
+                editable={false}
               />
 
               <Card style={{ marginBottom: theme.spacing.lg }}>
