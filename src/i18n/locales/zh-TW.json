@@ -13,7 +13,8 @@
     "next": "下一步",
     "skip": "略過",
     "confirm": "確認",
-    "active": "活躍"
+    "active": "活躍",
+    "beta": "測試版"
   },
   "settings": {
     "title": "設定",

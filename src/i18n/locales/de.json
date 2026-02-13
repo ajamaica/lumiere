@@ -13,7 +13,8 @@
     "next": "Weiter",
     "skip": "Überspringen",
     "confirm": "Bestätigen",
-    "active": "Aktiv"
+    "active": "Aktiv",
+    "beta": "Beta"
   },
   "settings": {
     "title": "Einstellungen",

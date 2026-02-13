@@ -23,6 +23,8 @@ export interface SettingRowProps {
   showDivider?: boolean
   /** Custom label text color override */
   labelColor?: string
+  /** Optional badge element rendered next to the label */
+  badge?: React.ReactNode
 }
 
 export function SettingRow({
@@ -38,6 +40,7 @@ export function SettingRow({
   subtitle,
   showDivider = true,
   labelColor,
+  badge,
 }: SettingRowProps) {
   const { theme } = useTheme()
 
@@ -64,6 +67,11 @@ export function SettingRow({
     },
     labelContainer: {
       flex: 1,
+    },
+    labelRow: {
+      flexDirection: 'row' as const,
+      alignItems: 'center' as const,
+      gap: theme.spacing.sm,
     },
     label: {
       fontSize: theme.typography.fontSize.base,
@@ -93,7 +101,10 @@ export function SettingRow({
       )}
       <View style={styles.content}>
         <View style={styles.labelContainer}>
-          <Text style={styles.label}>{label}</Text>
+          <View style={styles.labelRow}>
+            <Text style={styles.label}>{label}</Text>
+            {badge}
+          </View>
           {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
         </View>
         {value && <Text style={styles.value}>{value}</Text>}
