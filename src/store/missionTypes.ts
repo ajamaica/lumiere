@@ -12,6 +12,7 @@ export type MissionStatus =
 export interface MissionSubtask {
   id: string
   title: string
+  description?: string
   status: MissionStatus
   result?: string
 }
