@@ -85,8 +85,11 @@ export class MoltChatProvider implements ChatProvider {
       ? `[System: ${params.systemMessage}]\n\n${params.message}`
       : params.message
 
-    // Subscribe to agent events for streaming before sending
+    // Subscribe to agent events for streaming before sending.
+    // Filter by sessionKey so that events from other sessions are ignored.
     const unsubscribe = this.client.onAgentEvent((event: AgentEvent) => {
+      if (event.sessionKey !== params.sessionKey) return
+
       if (event.stream === 'assistant' && event.data.delta) {
         onEvent({ type: 'delta', delta: event.data.delta })
       } else if (event.stream === 'lifecycle') {
