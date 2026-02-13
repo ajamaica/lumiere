@@ -17,7 +17,7 @@ const logsLogger = logger.create('GatewayLogs')
 /**
  * Extract log entries from a gateway response payload.
  * Handles multiple response shapes: { logs: [...] }, { entries: [...] },
- * or a bare array.
+ * { items: [...] }, { data: [...] }, { lines: [...] }, or a bare array.
  */
 function extractLogs(response: unknown): GatewayLogEntry[] {
   if (!response) return []
@@ -29,6 +29,8 @@ function extractLogs(response: unknown): GatewayLogEntry[] {
     if (Array.isArray(obj.logs)) return obj.logs as GatewayLogEntry[]
     if (Array.isArray(obj.entries)) return obj.entries as GatewayLogEntry[]
     if (Array.isArray(obj.items)) return obj.items as GatewayLogEntry[]
+    if (Array.isArray(obj.data)) return obj.data as GatewayLogEntry[]
+    if (Array.isArray(obj.lines)) return obj.lines as GatewayLogEntry[]
   }
 
   return []
@@ -82,12 +84,17 @@ export default function GatewayLogsScreen() {
     setFetchError(null)
     try {
       const response = await getLogs({
-        limit: 100,
+        limit: 500,
+        maxBytes: 250_000,
       })
+      logsLogger.info('getLogs raw response', { response })
       const entries = extractLogs(response)
       setLogs(entries)
       if (entries.length === 0) {
-        logsLogger.info('getLogs returned 0 entries', { response })
+        logsLogger.info('getLogs returned 0 entries — raw payload keys:', {
+          keys: response ? Object.keys(response as object) : 'null/undefined',
+          response,
+        })
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err)

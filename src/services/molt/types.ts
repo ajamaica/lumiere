@@ -259,13 +259,20 @@ export interface GatewayLogEntry {
 }
 
 export interface GatewayLogsParams {
+  /** Maximum number of log entries to return. */
   limit?: number
-  before?: number
+  /** Maximum response size in bytes. */
+  maxBytes?: number
+  /** Pagination cursor returned by a previous logs.tail response. */
+  cursor?: number
+  /** Filter by log level. */
   level?: 'debug' | 'info' | 'warn' | 'error'
 }
 
 export interface GatewayLogsResponse {
   logs: GatewayLogEntry[]
+  /** Cursor for fetching the next page of logs. */
+  cursor?: number
 }
 
 // ─── Event Listener Types ───────────────────────────────────────────────────────
