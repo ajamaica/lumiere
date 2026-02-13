@@ -330,6 +330,7 @@
     "analyzeError": "ミッションの分析に失敗しました。もう一度お試しください。",
     "planReady": "ミッションプラン準備完了",
     "planDescription": "以下のサブタスクを確認してください。開始前にタイトルを編集できます。",
+    "refinedPromptLabel": "改善された説明",
     "titlePlaceholder": "ミッションタイトル",
     "launchMission": "ミッションを開始",
     "startMission": "ミッションを始める",

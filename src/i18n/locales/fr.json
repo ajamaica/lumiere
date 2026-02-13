@@ -330,6 +330,7 @@
     "analyzeError": "Échec de l'analyse de votre mission. Veuillez réessayer.",
     "planReady": "Plan de Mission Prêt",
     "planDescription": "Examinez les sous-tâches ci-dessous. Vous pouvez modifier le titre avant de commencer.",
+    "refinedPromptLabel": "Description affinée",
     "titlePlaceholder": "Titre de la mission",
     "launchMission": "Lancer la Mission",
     "startMission": "Démarrer la Mission",
