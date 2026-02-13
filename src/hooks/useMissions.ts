@@ -43,7 +43,7 @@ export function useMissions() {
       title: string
       prompt: string
       systemMessage: string
-      subtasks: Pick<MissionSubtask, 'title'>[]
+      subtasks: Pick<MissionSubtask, 'title' | 'description'>[]
     }): Mission => {
       const id = generateId()
       const sessionKey = `agent:main:mission-${id}`
@@ -59,6 +59,7 @@ export function useMissions() {
         subtasks: params.subtasks.map((s, i) => ({
           id: `subtask-${i + 1}`,
           title: s.title,
+          ...(s.description && { description: s.description }),
           status: 'pending' as const,
         })),
         skills: [],

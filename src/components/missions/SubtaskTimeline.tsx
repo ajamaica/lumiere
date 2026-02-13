@@ -72,6 +72,9 @@ export function SubtaskTimeline({ subtasks }: SubtaskTimelineProps) {
       paddingLeft: theme.spacing.sm,
       paddingBottom: theme.spacing.md,
     },
+    description: {
+      marginTop: 2,
+    },
     result: {
       marginTop: theme.spacing.xs,
     },
@@ -100,6 +103,11 @@ export function SubtaskTimeline({ subtasks }: SubtaskTimelineProps) {
               >
                 {subtask.title}
               </Text>
+              {subtask.description && (
+                <Text variant="caption" color="tertiary" style={styles.description}>
+                  {subtask.description}
+                </Text>
+              )}
               {subtask.result && (
                 <Text variant="caption" color="secondary" style={styles.result}>
                   {subtask.result}
