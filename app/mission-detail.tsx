@@ -69,6 +69,7 @@ export default function MissionDetailScreen() {
   const [isStreaming, setIsStreaming] = useState(false)
   const [restoredHistory, setRestoredHistory] = useState(false)
   const scrollRef = useRef<ScrollView>(null)
+  const shouldAutoScrollRef = useRef(true)
   const streamingTextRef = useRef('')
   const systemMessageSentRef = useRef(false)
   const stoppedRef = useRef(false)
@@ -547,7 +548,19 @@ export default function MissionDetailScreen() {
         <ScrollView
           ref={scrollRef}
           contentContainerStyle={styles.scrollContent}
-          onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: true })}
+          scrollEventThrottle={16}
+          onScroll={(event) => {
+            const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
+            const threshold = layoutMeasurement.height * 0.3
+            const isNearBottom =
+              contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
+            shouldAutoScrollRef.current = isNearBottom
+          }}
+          onContentSizeChange={() => {
+            if (shouldAutoScrollRef.current) {
+              scrollRef.current?.scrollToEnd({ animated: true })
+            }
+          }}
         >
           {/* Mission header */}
           <View style={styles.missionHeader}>
