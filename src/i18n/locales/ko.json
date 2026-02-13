@@ -371,6 +371,15 @@
       "error": "오류",
       "stopped": "중지됨",
       "archived": "보관됨"
+    },
+    "toolEvent": "도구 이벤트",
+    "toolEvents": {
+      "web_fetch": "웹 페이지를 가져오는 중...",
+      "code_execution": "코드 실행 중...",
+      "file_read": "파일 읽는 중...",
+      "file_write": "파일 쓰는 중...",
+      "search": "검색 중...",
+      "default": "{{toolName}} 실행 중..."
     }
   }
 }

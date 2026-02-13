@@ -371,6 +371,15 @@
       "error": "错误",
       "stopped": "已停止",
       "archived": "已归档"
+    },
+    "toolEvent": "工具事件",
+    "toolEvents": {
+      "web_fetch": "正在获取网页...",
+      "code_execution": "正在执行代码...",
+      "file_read": "正在读取文件...",
+      "file_write": "正在写入文件...",
+      "search": "正在搜索...",
+      "default": "正在执行 {{toolName}}..."
     }
   }
 }

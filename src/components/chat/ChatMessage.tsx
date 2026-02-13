@@ -28,11 +28,11 @@ import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../util
 import { logger } from '../../utils/logger'
 import { processXmlTags } from '../../utils/xmlTagProcessor'
 import { createMarkdownStyles, createStyles } from './ChatMessage.styles'
-import { Message, MessageAttachment } from './chatMessageTypes'
+import type { Message, MessageAttachment, TextMessage } from './chatMessageTypes'
 import { LinkPreview } from './LinkPreview'
 import { useMarkdownRules } from './useMarkdownRules'
 
-export type { Message, MessageAttachment }
+export type { Message, MessageAttachment, TextMessage }
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient)
 
@@ -70,6 +70,10 @@ export function ChatMessage({ message }: { message: Message }) {
   const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const isUser = message.sender === 'user'
+  // Narrow union: ToolEventMessage never reaches ChatMessage, but TS needs help
+  const isTextMsg = message.type !== 'tool_event'
+  const streaming = isTextMsg ? message.streaming : false
+  const attachments = isTextMsg ? message.attachments : undefined
   const [copied, setCopied] = useState(false)
   const [intentCopied, setIntentCopied] = useState(false)
   const [favorites, setFavorites] = useAtom(favoritesAtom)
@@ -175,13 +179,13 @@ export function ChatMessage({ message }: { message: Message }) {
   }, [message.text, intents])
 
   // Fetch URL embed previews for agent messages
-  const { metadata: urlPreviews } = useUrlMetadata(message.text, !!message.streaming, isUser)
+  const { metadata: urlPreviews } = useUrlMetadata(message.text, !!streaming, isUser)
 
   const renderAttachments = () => {
-    if (!message.attachments || message.attachments.length === 0) return null
+    if (!attachments || attachments.length === 0) return null
     return (
       <View style={styles.attachmentContainer}>
-        {message.attachments.map((attachment, index) => (
+        {attachments.map((attachment: MessageAttachment, index: number) => (
           <Image
             key={index}
             source={{ uri: attachment.uri }}
@@ -229,7 +233,7 @@ export function ChatMessage({ message }: { message: Message }) {
     <Animated.View style={[styles.bubble, styles.agentBubble, animatedContainerStyle]}>
       {renderAttachments()}
       {renderMarkdown()}
-      {message.streaming && (
+      {streaming && (
         <Text style={styles.streamingIndicator} selectable={true}>
           ...
         </Text>
@@ -253,7 +257,7 @@ export function ChatMessage({ message }: { message: Message }) {
       accessibilityLiveRegion={!isUser ? 'polite' : 'none'}
     >
       {isUser ? renderUserBubble() : renderAgentBubble()}
-      {!message.streaming && intents.length > 0 && (
+      {!streaming && intents.length > 0 && (
         <View style={styles.intentActions}>
           {intents.map((intent, index) => {
             const isCopyIntent = intent.action === 'copyToClipboard'
@@ -279,7 +283,7 @@ export function ChatMessage({ message }: { message: Message }) {
           })}
         </View>
       )}
-      {!message.streaming && (
+      {!streaming && (
         <View style={styles.actionButtons}>
           {!isUser && (
             <TouchableOpacity

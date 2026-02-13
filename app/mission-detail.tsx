@@ -14,8 +14,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ChatInput } from '../src/components/chat/ChatInput'
-import { ChatMessage, Message } from '../src/components/chat/ChatMessage'
+import { ChatMessage, Message, TextMessage } from '../src/components/chat/ChatMessage'
+import type { ToolEventMessage } from '../src/components/chat/chatMessageTypes'
 import { ThinkingIndicator } from '../src/components/chat/ThinkingIndicator'
+import { ToolEventBubble } from '../src/components/chat/ToolEventBubble'
 import { MissionConclusionCard } from '../src/components/missions/MissionConclusionCard'
 import { MissionStatusBadge } from '../src/components/missions/MissionStatusBadge'
 import { SubtaskTimeline } from '../src/components/missions/SubtaskTimeline'
@@ -52,6 +54,7 @@ export default function MissionDetailScreen() {
   const streamingTextRef = useRef('')
   const systemMessageSentRef = useRef(false)
   const stoppedRef = useRef(false)
+  const activeToolCallsRef = useRef<Map<string, string>>(new Map())
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -101,28 +104,61 @@ export default function MissionDetailScreen() {
       // If the mission was stopped, still consume events but skip status updates
       const isStopped = stoppedRef.current
 
+      // Handle tool stream events
+      if (event.stream === 'tool' && event.data?.toolName) {
+        const toolCallId = event.data.toolCallId ?? `tool-${event.seq}`
+        const toolStatus = event.data.toolStatus ?? 'running'
+
+        setMessages((prev) => {
+          const existingMsgId = activeToolCallsRef.current.get(toolCallId)
+
+          if (existingMsgId) {
+            return prev.map((msg): Message => {
+              if (msg.id === existingMsgId && msg.type === 'tool_event') {
+                return { ...msg, status: toolStatus }
+              }
+              return msg
+            })
+          }
+
+          const msgId = `tool-${toolCallId}-${Date.now()}`
+          activeToolCallsRef.current.set(toolCallId, msgId)
+          const toolMsg: ToolEventMessage = {
+            id: msgId,
+            type: 'tool_event',
+            toolName: event.data.toolName!,
+            toolCallId,
+            toolInput: event.data.toolInput,
+            status: toolStatus,
+            sender: 'agent',
+            timestamp: new Date(event.ts),
+            text: '',
+          }
+          return [...prev, toolMsg]
+        })
+        return
+      }
+
       if (event.data?.delta) {
         streamingTextRef.current += event.data.delta
 
         // Update the last assistant message in-place (even if stopped, so user sees what was received)
         setMessages((prev) => {
           const last = prev[prev.length - 1]
-          if (last && last.sender === 'agent') {
+          if (last && last.sender === 'agent' && last.type !== 'tool_event') {
             return [
               ...prev.slice(0, -1),
               { ...last, text: streamingTextRef.current, streaming: !isStopped },
             ]
           }
-          return [
-            ...prev,
-            {
-              id: `msg-${Date.now()}`,
-              sender: 'agent' as const,
-              text: streamingTextRef.current,
-              timestamp: new Date(),
-              streaming: !isStopped,
-            },
-          ]
+          const textMsg: TextMessage = {
+            id: `msg-${Date.now()}`,
+            sender: 'agent',
+            text: streamingTextRef.current,
+            timestamp: new Date(),
+            streaming: !isStopped,
+          }
+          return [...prev, textMsg]
         })
 
         // Skip marker processing when stopped — don't let markers overwrite the stopped status
@@ -183,13 +219,14 @@ export default function MissionDetailScreen() {
         // Mark last message as no longer streaming
         setMessages((prev) => {
           const last = prev[prev.length - 1]
-          if (last && last.streaming) {
+          if (last && last.type !== 'tool_event' && last.streaming) {
             return [...prev.slice(0, -1), { ...last, streaming: false }]
           }
           return prev
         })
         setIsStreaming(false)
         streamingTextRef.current = ''
+        activeToolCallsRef.current.clear()
         resetBuffer()
       }
     },
@@ -286,7 +323,7 @@ export default function MissionDetailScreen() {
           // Finalize any in-flight streaming message
           setMessages((prev) => {
             const last = prev[prev.length - 1]
-            if (last && last.streaming) {
+            if (last && last.type !== 'tool_event' && last.streaming) {
               return [...prev.slice(0, -1), { ...last, streaming: false }]
             }
             return prev
@@ -550,14 +587,18 @@ export default function MissionDetailScreen() {
                   {t('missions.conversation')}
                 </Text>
               </View>
-              {messages.map((msg) => (
-                <ChatMessage
-                  key={msg.id}
-                  message={
-                    msg.sender === 'agent' ? { ...msg, text: stripMissionMarkers(msg.text) } : msg
-                  }
-                />
-              ))}
+              {messages.map((msg) =>
+                msg.type === 'tool_event' ? (
+                  <ToolEventBubble key={msg.id} message={msg} />
+                ) : (
+                  <ChatMessage
+                    key={msg.id}
+                    message={
+                      msg.sender === 'agent' ? { ...msg, text: stripMissionMarkers(msg.text) } : msg
+                    }
+                  />
+                ),
+              )}
               {isStreaming &&
                 (messages.length === 0 ||
                   messages[messages.length - 1]?.sender !== 'agent' ||
