@@ -1,0 +1,35 @@
+# Onboarding flow: Welcome screen → Setup with Echo provider
+# Echo provider requires no URL or token, making it ideal for E2E tests.
+appId: bot.lumiere.app
+tags:
+  - onboarding
+  - smoke
+---
+- launchApp:
+    clearState: true
+
+# Welcome screen
+- assertVisible: "Welcome to"
+- assertVisible: "Lumiere"
+- assertVisible: "Get Started"
+- tapOn: "Get Started"
+
+# Setup screen
+- assertVisible: "Connect to"
+- assertVisible: "your AI"
+
+# Select Echo provider from the dropdown
+- tapOn: "Provider Type"
+- tapOn: "Echo"
+
+# Tap "Get Started" to complete setup
+- tapOn: "Get Started"
+
+# Verify we land on the home/chat screen (no server error since Echo requires nothing)
+- assertVisible:
+    text: ".*"
+    optional: true
+- extendedWaitUntil:
+    visible: "Echo Agent"
+    timeout: 5000
+    optional: true

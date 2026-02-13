@@ -1,0 +1,94 @@
+name: Maestro E2E Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  maestro-cloud-ios:
+    name: Maestro Cloud (iOS)
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Prebuild iOS
+        run: npx expo prebuild --platform ios --clean
+
+      - name: Build iOS app
+        run: |
+          xcodebuild -workspace ios/lumiere.xcworkspace \
+            -scheme lumiere \
+            -sdk iphonesimulator \
+            -configuration Debug \
+            -derivedDataPath build \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            build
+
+      - name: Create .app zip for Maestro Cloud
+        run: |
+          APP_PATH=$(find build -name "*.app" -type d | head -1)
+          cd "$(dirname "$APP_PATH")" && zip -r "$GITHUB_WORKSPACE/lumiere.zip" "$(basename "$APP_PATH")"
+
+      - name: Run Maestro Cloud tests (iOS)
+        uses: mobile-dev-inc/action-maestro-cloud@v2
+        with:
+          api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+          project-id: proj_01kh9j5fz6ev1apmcjb0wgp387
+          app-file: lumiere.zip
+          workspace: .maestro
+
+  maestro-cloud-android:
+    name: Maestro Cloud (Android)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Prebuild Android
+        run: npx expo prebuild --platform android --clean
+
+      - name: Build Android APK
+        run: cd android && ./gradlew assembleDebug
+
+      - name: Run Maestro Cloud tests (Android)
+        uses: mobile-dev-inc/action-maestro-cloud@v2
+        with:
+          api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+          project-id: proj_01kh9j5fz6ev1apmcjb0wgp387
+          app-file: android/app/build/outputs/apk/debug/app-debug.apk
+          workspace: .maestro
+          android-api-level: 34

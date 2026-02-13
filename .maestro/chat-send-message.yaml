@@ -1,0 +1,21 @@
+# Chat: send a message using the Echo provider and verify the echoed response
+appId: bot.lumiere.app
+tags:
+  - chat
+  - smoke
+---
+- runFlow: onboarding-echo.yaml
+
+# The chat input should be visible after onboarding
+- assertVisible: "Message"
+
+# Type a message and send it
+- tapOn: "Message"
+- inputText: "Hello from Maestro"
+- tapOn:
+    id: "send-button"
+
+# Echo provider echoes back the same message — wait for it
+- extendedWaitUntil:
+    visible: "Hello from Maestro"
+    timeout: 5000

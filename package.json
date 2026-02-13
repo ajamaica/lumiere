@@ -17,7 +17,10 @@
     "sauce:upload": "./.saucelabs/upload-app.sh",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "maestro:test": "maestro test .maestro/",
+    "maestro:test:ios": "maestro test .maestro/",
+    "maestro:test:android": "maestro test .maestro/"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
