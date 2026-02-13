@@ -307,6 +307,8 @@
     "addAttachment": "添付ファイルを追加",
     "startVoiceInput": "音声入力を開始",
     "sendMessage": "メッセージを送信",
+    "speakMessage": "メッセージを読み上げる",
+    "stopSpeaking": "読み上げを停止",
     "messagesQueued": "{{count}}件のメッセージがキューに入っています"
   },
   "missions": {

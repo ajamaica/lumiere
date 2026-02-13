@@ -307,6 +307,8 @@
     "addAttachment": "Anhang hinzufügen",
     "startVoiceInput": "Spracheingabe starten",
     "sendMessage": "Nachricht senden",
+    "speakMessage": "Nachricht vorlesen",
+    "stopSpeaking": "Vorlesen beenden",
     "messagesQueued": "{{count}} Nachricht(en) in Warteschlange"
   },
   "missions": {

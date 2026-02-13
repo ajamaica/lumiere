@@ -15,6 +15,7 @@ import Animated, {
 } from 'react-native-reanimated'
 
 import { useReducedMotion } from '../../hooks/useReducedMotion'
+import { useSpeech } from '../../hooks/useSpeech'
 import { useUrlMetadata } from '../../hooks/useUrlMetadata'
 import { copyToClipboard, executeIntent } from '../../services/intents'
 import {
@@ -81,6 +82,8 @@ export function ChatMessage({ message }: { message: Message }) {
   const setSessionAliases = useSetAtom(sessionAliasesAtom)
   const setClearMessages = useSetAtom(clearMessagesAtom)
 
+  const { status: speechStatus, speak, stop: stopSpeech } = useSpeech()
+
   // Animation values
   const fadeIn = useSharedValue(0)
   const shimmerProgress = useSharedValue(0)
@@ -135,6 +138,16 @@ export function ChatMessage({ message }: { message: Message }) {
       ])
     }
   }, [isFavorited, favorites, setFavorites, message])
+
+  const isSpeaking = speechStatus === 'speaking'
+
+  const handleSpeechToggle = useCallback(() => {
+    if (isSpeaking) {
+      stopSpeech()
+    } else {
+      speak(processXmlTags(message.text))
+    }
+  }, [isSpeaking, stopSpeech, speak, message.text])
 
   const styles = useMemo(() => createStyles(theme), [theme])
   const markdownStyles = useMemo(() => createMarkdownStyles(theme, isUser), [theme, isUser])
@@ -316,6 +329,20 @@ export function ChatMessage({ message }: { message: Message }) {
               name={isFavorited ? 'heart' : 'heart-outline'}
               size={18}
               color={isFavorited ? theme.colors.primary : theme.colors.text.secondary}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={handleSpeechToggle}
+            accessibilityRole="button"
+            accessibilityLabel={
+              isSpeaking ? t('accessibility.stopSpeaking') : t('accessibility.speakMessage')
+            }
+          >
+            <Ionicons
+              name={isSpeaking ? 'pause-circle-outline' : 'play-circle-outline'}
+              size={18}
+              color={isSpeaking ? theme.colors.primary : theme.colors.text.secondary}
             />
           </TouchableOpacity>
         </View>

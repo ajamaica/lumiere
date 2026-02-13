@@ -307,6 +307,8 @@
     "addAttachment": "Добавить вложение",
     "startVoiceInput": "Начать голосовой ввод",
     "sendMessage": "Отправить сообщение",
+    "speakMessage": "Прочитать сообщение вслух",
+    "stopSpeaking": "Остановить чтение",
     "messagesQueued": "{{count}} сообщение(й) в очереди"
   },
   "missions": {
