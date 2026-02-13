@@ -27,6 +27,39 @@ function isValidLogEntry(value: unknown): value is GatewayLogEntry {
   )
 }
 
+/**
+ * Try to convert a tslog-style raw log line into a GatewayLogEntry.
+ * tslog lines have: { "0": "{subsystem}", "1": "message", "_meta": { logLevelName, date, ... }, "time": "ISO" }
+ */
+function parseTslogEntry(obj: Record<string, unknown>): GatewayLogEntry | null {
+  const meta = obj._meta as Record<string, unknown> | undefined
+  if (!meta) return null
+
+  const levelName = meta.logLevelName
+  if (typeof levelName !== 'string') return null
+
+  const level = levelName.toLowerCase() as GatewayLogEntry['level']
+  const message = typeof obj['1'] === 'string' ? obj['1'] : ''
+  if (!message) return null
+
+  const dateStr = (meta.date as string) || (obj.time as string)
+  const ts = dateStr ? new Date(dateStr).getTime() : 0
+  if (!ts || isNaN(ts)) return null
+
+  // Extract source from field "0" (often JSON like '{"subsystem":"agent/embedded"}')
+  let source: string | undefined
+  if (typeof obj['0'] === 'string') {
+    try {
+      const parsed = JSON.parse(obj['0'])
+      source = parsed.subsystem || undefined
+    } catch {
+      source = obj['0'] || undefined
+    }
+  }
+
+  return { ts, level, message, source, meta: meta as Record<string, unknown> }
+}
+
 function extractLogs(response: unknown): GatewayLogEntry[] {
   if (!response) return []
 
@@ -42,7 +75,42 @@ function extractLogs(response: unknown): GatewayLogEntry[] {
     }
   }
 
-  return raw ? raw.filter(isValidLogEntry) : []
+  if (!raw) return []
+
+  const entries: GatewayLogEntry[] = []
+  for (const item of raw) {
+    // If the item is already a valid GatewayLogEntry, use it directly
+    if (isValidLogEntry(item)) {
+      entries.push(item)
+      continue
+    }
+
+    // If the item is a JSON string, try to parse it
+    let parsed: unknown = item
+    if (typeof item === 'string') {
+      try {
+        parsed = JSON.parse(item)
+      } catch {
+        continue
+      }
+    }
+
+    // Check if the parsed result is a valid log entry
+    if (isValidLogEntry(parsed)) {
+      entries.push(parsed)
+      continue
+    }
+
+    // Try to convert from tslog format
+    if (typeof parsed === 'object' && parsed !== null) {
+      const converted = parseTslogEntry(parsed as Record<string, unknown>)
+      if (converted) {
+        entries.push(converted)
+      }
+    }
+  }
+
+  return entries
 }
 
 export default function GatewayLogsScreen() {
