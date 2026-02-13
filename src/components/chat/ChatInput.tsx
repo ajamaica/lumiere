@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useCallback, useMemo, useState } from 'react'
+import { useAtom } from 'jotai'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
@@ -8,7 +9,9 @@ import { useFileDropPaste } from '../../hooks/useFileDropPaste'
 import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useVoiceTranscription } from '../../hooks/useVoiceTranscription'
 import { ProviderType } from '../../services/providers/types'
+import { pendingShareMediaAtom, pendingShareTextAtom } from '../../store'
 import { Theme, useTheme } from '../../theme'
+import { compressImageToJpeg } from '../../utils/compressImage'
 import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
 import { isWeb } from '../../utils/platform'
 import { AttachmentMenu } from './AttachmentMenu'
@@ -49,6 +52,68 @@ export function ChatInput({
     onFiles: attach.handleFilesReceived,
     enabled: attach.dropPasteEnabled,
   })
+
+  // Stage shared media from the share intent as attachments so the user can
+  // add a message before sending.
+  const [pendingShareMedia, setPendingShareMedia] = useAtom(pendingShareMediaAtom)
+  const [pendingShareText, setPendingShareText] = useAtom(pendingShareTextAtom)
+  const handleFilesReceived = attach.handleFilesReceived
+
+  useEffect(() => {
+    if (!pendingShareMedia || pendingShareMedia.length === 0) return
+    ;(async () => {
+      const converted: MessageAttachment[] = []
+      for (const media of pendingShareMedia) {
+        if (media.mimeType.startsWith('image/')) {
+          try {
+            const compressed = await compressImageToJpeg(media.uri)
+            converted.push({
+              type: 'image',
+              uri: compressed.uri,
+              base64: compressed.base64,
+              mimeType: compressed.mimeType,
+              name: media.fileName,
+            })
+          } catch {
+            converted.push({
+              type: 'image',
+              uri: media.uri,
+              mimeType: media.mimeType,
+              name: media.fileName,
+            })
+          }
+        } else if (media.mimeType.startsWith('video/')) {
+          converted.push({
+            type: 'video',
+            uri: media.uri,
+            mimeType: media.mimeType,
+            name: media.fileName,
+          })
+        } else {
+          converted.push({
+            type: 'file',
+            uri: media.uri,
+            mimeType: media.mimeType,
+            name: media.fileName,
+          })
+        }
+      }
+      if (converted.length > 0) {
+        handleFilesReceived(converted)
+      }
+      if (pendingShareText) {
+        setText(pendingShareText)
+      }
+      setPendingShareMedia(null)
+      setPendingShareText(null)
+    })()
+  }, [
+    pendingShareMedia,
+    pendingShareText,
+    handleFilesReceived,
+    setPendingShareMedia,
+    setPendingShareText,
+  ])
 
   const handleSend = () => {
     if ((text.trim() || attach.attachments.length > 0) && !disabled) {
