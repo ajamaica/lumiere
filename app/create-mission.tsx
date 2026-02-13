@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Alert,
@@ -381,7 +381,6 @@ export default function CreateMissionScreen() {
   const [phase, setPhase] = useState<'input' | 'generating' | 'review'>('input')
   const [plan, setPlan] = useState<ParsedPlan | null>(null)
   const [generatingStep, setGeneratingStep] = useState(0)
-  const responseCompleteRef = useRef(false)
 
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
 
@@ -409,8 +408,6 @@ export default function CreateMissionScreen() {
     if (!prompt.trim()) return
     setPhase('generating')
     setGeneratingStep(0)
-    responseCompleteRef.current = false
-
     try {
       // Step 1: Reset the commander session to start fresh
       setGeneratingStep(0)
@@ -427,22 +424,38 @@ export default function CreateMissionScreen() {
       // Step 2: Generating the plan via master-commander session
       setGeneratingStep(1)
 
-      await gateway.sendAgentRequest(
-        {
-          message: planPrompt,
-          idempotencyKey: `mission-plan-${Date.now()}`,
-          sessionKey: COMMANDER_SESSION_KEY,
-        },
-        (event) => {
-          if (event.data?.delta) {
-            responseText += event.data.delta
-          }
-        },
-        120_000, // 2 minute timeout for mission generation
-      )
+      // sendAgentRequest resolves when the server acknowledges the request,
+      // but the actual content streams in via events after that. We need to
+      // wait for the lifecycle 'end' event to know the full response is ready.
+      await new Promise<void>((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          reject(new Error('Mission generation timed out'))
+        }, 120_000)
 
-      // Mark the response as complete (the stream finished)
-      responseCompleteRef.current = true
+        gateway
+          .sendAgentRequest(
+            {
+              message: planPrompt,
+              idempotencyKey: `mission-plan-${Date.now()}`,
+              sessionKey: COMMANDER_SESSION_KEY,
+            },
+            (event) => {
+              if (event.data?.delta) {
+                responseText += event.data.delta
+              }
+              // Resolve once the stream is fully complete
+              if (event.stream === 'lifecycle' && event.data?.phase === 'end') {
+                clearTimeout(timeout)
+                resolve()
+              }
+            },
+            120_000,
+          )
+          .catch((err) => {
+            clearTimeout(timeout)
+            reject(err)
+          })
+      })
 
       // Step 3: Validating the response
       setGeneratingStep(2)
