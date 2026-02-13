@@ -157,7 +157,7 @@ export default function SettingsScreen() {
         <Section
           title={t('settings.servers')}
           right={
-            <TouchableOpacity onPress={() => router.push('/add-server')}>
+            <TouchableOpacity testID="add-server-button" onPress={() => router.push('/add-server')}>
               <Ionicons name="add-circle-outline" size={20} color={theme.colors.primary} />
             </TouchableOpacity>
           }

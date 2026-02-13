@@ -173,6 +173,7 @@ export function ConnectionStatusBar({
       )}
       {showSettingsButton && (
         <TouchableOpacity
+          testID="settings-button"
           onPress={onOpenSettings}
           activeOpacity={0.7}
           accessibilityRole="button"

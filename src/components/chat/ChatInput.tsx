@@ -288,6 +288,7 @@ export function ChatInput({
                     </TouchableOpacity>
                   ) : (
                     <TouchableOpacity
+                      testID="send-button"
                       style={[
                         styles.sendButton,
                         hasContent && !disabled
