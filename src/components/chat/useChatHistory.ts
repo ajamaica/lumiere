@@ -2,7 +2,6 @@ import { useAtom } from 'jotai'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useActiveWebsite } from '../../hooks/useActiveWebsite'
-import { useAutoLabel } from '../../hooks/useAutoLabel'
 import { useChatProvider } from '../../hooks/useChatProvider'
 import { useMessageQueue } from '../../hooks/useMessageQueue'
 import { ProviderConfig, readCachedHistory } from '../../services/providers'
@@ -59,8 +58,6 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
   const hasScrolledOnLoadRef = useRef(false)
   const shouldAutoScrollRef = useRef(true)
 
-  const { tryGenerateLabel } = useAutoLabel(currentSessionKey)
-
   const { connected, connecting, error, health, capabilities, retry, sendMessage, getChatHistory } =
     useChatProvider(providerConfig)
 
@@ -90,13 +87,6 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     },
     systemMessage: effectiveSystemMessage,
   })
-
-  // Auto-label: generate a session label after the first user–agent exchange
-  useEffect(() => {
-    if (messages.length === 2 && messages[0].sender === 'user' && messages[1].sender === 'agent') {
-      tryGenerateLabel(messages[0].text)
-    }
-  }, [messages, tryGenerateLabel])
 
   // Detect server switches and clear stale messages
   const prevServerIdRef = useRef(providerConfig.serverId)
