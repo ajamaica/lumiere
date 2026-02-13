@@ -74,6 +74,7 @@ export default function MissionDetailScreen() {
   const stoppedRef = useRef(false)
   const activeToolCallsRef = useRef<Map<string, string>>(new Map())
   const hasRestoredRef = useRef(false)
+  const autoStartSentRef = useRef(false)
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -101,6 +102,7 @@ export default function MissionDetailScreen() {
     systemMessageSentRef.current = false
     streamingTextRef.current = ''
     hasRestoredRef.current = false
+    autoStartSentRef.current = false
     setRestoredHistory(false)
   }, [activeMission?.id])
 
@@ -115,6 +117,8 @@ export default function MissionDetailScreen() {
       setRestoredHistory(true)
       // The system message was already sent in a previous session
       systemMessageSentRef.current = true
+      // Mission was already started — prevent auto-start from re-sending
+      autoStartSentRef.current = true
     }
   }, [activeMission, getMissionMessages])
 
@@ -127,8 +131,10 @@ export default function MissionDetailScreen() {
       !restoredHistory &&
       gateway.connected &&
       !isStreaming &&
-      hasRestoredRef.current
+      hasRestoredRef.current &&
+      !autoStartSentRef.current
     ) {
+      autoStartSentRef.current = true
       handleSendToAgent(`Begin executing this mission. Start with the first subtask.`, true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
