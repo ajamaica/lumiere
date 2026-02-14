@@ -66,7 +66,7 @@ export {
 } from './notificationAtoms'
 
 // ─── Mission atoms ──────────────────────────────────────
-export { activeMissionIdAtom, missionsAtom } from './missionAtoms'
+export { activeMissionIdAtom, missionMessagesAtom, missionsAtom } from './missionAtoms'
 
 // ─── Secure store (web only) ─────────────────────────────
 export {

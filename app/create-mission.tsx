@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { SubtaskTimeline } from '../src/components/missions/SubtaskTimeline'
 import { Button, Card, GradientButton, ScreenHeader, Text } from '../src/components/ui'
-import { useMissions } from '../src/hooks/useMissions'
+import { useMissionActions } from '../src/hooks/useMissionActions'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { useTheme } from '../src/theme'
@@ -166,7 +166,7 @@ export default function CreateMissionScreen() {
   const router = useRouter()
   const { t } = useTranslation()
   const { getProviderConfig, currentServerId } = useServers()
-  const { createMission, setActiveMissionId, updateMissionStatus } = useMissions()
+  const { createMission, setActiveMissionId, updateMissionStatus } = useMissionActions()
 
   const [prompt, setPrompt] = useState('')
   const [phase, setPhase] = useState<'input' | 'analyzing' | 'review'>('input')
