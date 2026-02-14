@@ -1,227 +1,30 @@
-import { useAtom } from 'jotai'
-import { useCallback, useMemo } from 'react'
+import { useMissionActions } from './useMissionActions'
+import { useMissionList } from './useMissionList'
+import { useMissionMessages } from './useMissionMessages'
 
-import { activeMissionIdAtom, missionMessagesAtom, missionsAtom } from '../store/missionAtoms'
-import type {
-  Mission,
-  MissionMessagesDict,
-  MissionsDict,
-  MissionStatus,
-  MissionSubtask,
-  SerializedMessage,
-} from '../store/missionTypes'
-
-function generateId(): string {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8)
-}
-
+/**
+ * Backward-compatible facade that composes the three focused hooks.
+ *
+ * @deprecated Prefer importing the focused hooks directly:
+ *   - `useMissionList()`              — mission data (read-only)
+ *   - `useMissionActions()`           — mutation operations
+ *   - `useMissionMessages(missionId)` — message persistence
+ */
 export function useMissions() {
-  const [rawMissions, setMissions] = useAtom(missionsAtom)
-  const [rawActiveMissionId, setActiveMissionId] = useAtom(activeMissionIdAtom)
-  const [rawMissionMessages, setMissionMessages] = useAtom(missionMessagesAtom)
+  const { missions, missionList, activeMission, activeMissionId, setActiveMissionId } =
+    useMissionList()
 
-  // unwrap() guarantees synchronous values, but TypeScript still infers
-  // the union type. Cast to the concrete types and strip any null entries
-  // that may linger in storage after deletions.
-  const missions = useMemo(() => {
-    const raw = (rawMissions ?? {}) as MissionsDict
-    const clean: MissionsDict = {}
-    for (const [k, v] of Object.entries(raw)) {
-      if (v != null && typeof v.updatedAt === 'number') clean[k] = v
-    }
-    return clean
-  }, [rawMissions])
-  const activeMissionId = (rawActiveMissionId ?? null) as string | null
+  const {
+    createMission,
+    updateMissionStatus,
+    updateSubtaskStatus,
+    addMissionSkill,
+    stopMission,
+    archiveMission,
+    deleteMission,
+  } = useMissionActions()
 
-  const missionList = useMemo(
-    () =>
-      Object.values(missions)
-        .filter((m): m is Mission => m != null && typeof m.updatedAt === 'number')
-        .sort((a, b) => b.updatedAt - a.updatedAt),
-    [missions],
-  )
-
-  const activeMission = useMemo(
-    () => (activeMissionId ? (missions[activeMissionId] ?? null) : null),
-    [missions, activeMissionId],
-  )
-
-  const createMission = useCallback(
-    (params: {
-      title: string
-      prompt: string
-      systemMessage: string
-      subtasks: Pick<MissionSubtask, 'title' | 'description'>[]
-    }): Mission => {
-      const id = generateId()
-      const sessionKey = `agent:main:mission-${id}`
-      const now = Date.now()
-
-      const mission: Mission = {
-        id,
-        title: params.title,
-        prompt: params.prompt,
-        systemMessage: params.systemMessage,
-        sessionKey,
-        status: 'pending',
-        subtasks: params.subtasks.map((s, i) => ({
-          id: `subtask-${i + 1}`,
-          title: s.title,
-          ...(s.description && { description: s.description }),
-          status: 'pending' as const,
-        })),
-        skills: [],
-        createdAt: now,
-        updatedAt: now,
-      }
-
-      setMissions((prev) => ({ ...(prev as MissionsDict), [id]: mission }))
-      setActiveMissionId(id)
-      return mission
-    },
-    [setMissions, setActiveMissionId],
-  )
-
-  const updateMissionStatus = useCallback(
-    (missionId: string, status: MissionStatus, extra?: Partial<Mission>) => {
-      setMissions((prev) => {
-        const dict = prev as MissionsDict
-        const existing = dict[missionId]
-        if (!existing) return dict
-        return {
-          ...dict,
-          [missionId]: {
-            ...existing,
-            status,
-            updatedAt: Date.now(),
-            ...extra,
-          },
-        }
-      })
-    },
-    [setMissions],
-  )
-
-  const updateSubtaskStatus = useCallback(
-    (missionId: string, subtaskId: string, status: MissionStatus, result?: string) => {
-      setMissions((prev) => {
-        const dict = prev as MissionsDict
-        const existing = dict[missionId]
-        if (!existing) return dict
-        return {
-          ...dict,
-          [missionId]: {
-            ...existing,
-            updatedAt: Date.now(),
-            subtasks: existing.subtasks.map((s: MissionSubtask) =>
-              s.id === subtaskId ? { ...s, status, ...(result !== undefined && { result }) } : s,
-            ),
-          },
-        }
-      })
-    },
-    [setMissions],
-  )
-
-  const addMissionSkill = useCallback(
-    (missionId: string, skillName: string) => {
-      setMissions((prev) => {
-        const dict = prev as MissionsDict
-        const existing = dict[missionId]
-        if (!existing || existing.skills.includes(skillName)) return dict
-        return {
-          ...dict,
-          [missionId]: {
-            ...existing,
-            updatedAt: Date.now(),
-            skills: [...existing.skills, skillName],
-          },
-        }
-      })
-    },
-    [setMissions],
-  )
-
-  const stopMission = useCallback(
-    (missionId: string) => {
-      setMissions((prev) => {
-        const dict = prev as MissionsDict
-        const existing = dict[missionId]
-        if (!existing) return dict
-        return {
-          ...dict,
-          [missionId]: {
-            ...existing,
-            status: 'stopped' as const,
-            updatedAt: Date.now(),
-          },
-        }
-      })
-    },
-    [setMissions],
-  )
-
-  const archiveMission = useCallback(
-    (missionId: string) => {
-      setMissions((prev) => {
-        const dict = prev as MissionsDict
-        const existing = dict[missionId]
-        if (!existing) return dict
-        return {
-          ...dict,
-          [missionId]: {
-            ...existing,
-            status: 'archived' as const,
-            updatedAt: Date.now(),
-          },
-        }
-      })
-      if (activeMissionId === missionId) {
-        setActiveMissionId(null)
-      }
-    },
-    [setMissions, activeMissionId, setActiveMissionId],
-  )
-
-  const deleteMission = useCallback(
-    (missionId: string) => {
-      setMissions((prev) => {
-        const next = { ...(prev as MissionsDict) }
-        delete next[missionId]
-        return next
-      })
-      // Also remove persisted messages for the deleted mission
-      setMissionMessages((prev) => {
-        const dict = prev as MissionMessagesDict
-        if (!dict[missionId]) return dict
-        const next = { ...dict }
-        delete next[missionId]
-        return next
-      })
-      if (activeMissionId === missionId) {
-        setActiveMissionId(null)
-      }
-    },
-    [setMissions, setMissionMessages, activeMissionId, setActiveMissionId],
-  )
-
-  const getMissionMessages = useCallback(
-    (missionId: string): SerializedMessage[] => {
-      const dict = (rawMissionMessages ?? {}) as MissionMessagesDict
-      return dict[missionId] ?? []
-    },
-    [rawMissionMessages],
-  )
-
-  const saveMissionMessages = useCallback(
-    (missionId: string, messages: SerializedMessage[]) => {
-      setMissionMessages((prev) => {
-        const dict = prev as MissionMessagesDict
-        return { ...dict, [missionId]: messages }
-      })
-    },
-    [setMissionMessages],
-  )
+  const { getMissionMessages, saveMissionMessages } = useMissionMessages(activeMissionId)
 
   return {
     missions,

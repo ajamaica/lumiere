@@ -22,8 +22,10 @@ import { MissionConclusionCard } from '../src/components/missions/MissionConclus
 import { MissionStatusBadge } from '../src/components/missions/MissionStatusBadge'
 import { SubtaskTimeline } from '../src/components/missions/SubtaskTimeline'
 import { Button, Card, ScreenHeader, Text } from '../src/components/ui'
+import { useMissionActions } from '../src/hooks/useMissionActions'
 import { stripMissionMarkers, useMissionEventParser } from '../src/hooks/useMissionEventParser'
-import { useMissions } from '../src/hooks/useMissions'
+import { useMissionList } from '../src/hooks/useMissionList'
+import { useMissionMessages } from '../src/hooks/useMissionMessages'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import type { AgentEvent } from '../src/services/molt/types'
@@ -51,16 +53,10 @@ export default function MissionDetailScreen() {
   const { theme } = useTheme()
   const router = useRouter()
   const { t } = useTranslation()
-  const {
-    activeMission,
-    updateMissionStatus,
-    updateSubtaskStatus,
-    addMissionSkill,
-    stopMission,
-    archiveMission,
-    getMissionMessages,
-    saveMissionMessages,
-  } = useMissions()
+  const { activeMission } = useMissionList()
+  const { updateMissionStatus, updateSubtaskStatus, addMissionSkill, stopMission, archiveMission } =
+    useMissionActions()
+  const { getMissionMessages, saveMissionMessages } = useMissionMessages(activeMission?.id ?? null)
   const { getProviderConfig, currentServerId } = useServers()
   const { parseChunk, resetBuffer } = useMissionEventParser()
 

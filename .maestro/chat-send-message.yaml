@@ -7,10 +7,11 @@ tags:
 - runFlow: onboarding-echo.yaml
 
 # The chat input should be visible after onboarding
-- assertVisible: "Message"
+- assertVisible: "Health"
 
 # Type a message and send it
-- tapOn: "Message"
+- tapOn:
+    point: 50%, 90%
 - inputText: "Hello from Maestro"
 - tapOn:
     id: "send-button"

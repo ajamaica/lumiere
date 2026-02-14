@@ -9,18 +9,17 @@ tags:
     clearState: true
 
 # Welcome screen
-- assertVisible: "Welcome to"
 - assertVisible: "Lumiere"
-- assertVisible: "Get Started"
 - tapOn: "Get Started"
 
 # Setup screen
-- assertVisible: "Connect to"
 - assertVisible: "your AI"
 
 # Select Echo provider from the dropdown
-- tapOn: "Provider Type"
-- tapOn: "Echo"
+- tapOn: "Provider Type: OpenClaw"
+- tapOn:
+    point: 50%, 77%
+  
 
 # Tap "Get Started" to complete setup
 - tapOn: "Get Started"

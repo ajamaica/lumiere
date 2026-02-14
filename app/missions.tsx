@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { MissionCard } from '../src/components/missions/MissionCard'
 import { Button, GradientButton, ScreenHeader, Text } from '../src/components/ui'
-import { useMissions } from '../src/hooks/useMissions'
+import { useMissionList } from '../src/hooks/useMissionList'
 import { useServers } from '../src/hooks/useServers'
 import { useTheme } from '../src/theme'
 
@@ -18,7 +18,7 @@ export default function MissionsScreen() {
   const router = useRouter()
   const { t } = useTranslation()
   const { currentServer } = useServers()
-  const { missionList, setActiveMissionId } = useMissions()
+  const { missionList, setActiveMissionId } = useMissionList()
   const [filter, setFilter] = useState<MissionFilter>('all')
 
   const filteredMissions = useMemo(() => {
