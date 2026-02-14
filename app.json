@@ -89,6 +89,7 @@
       "react-native-compressor",
       "expo-background-task",
       "expo-quick-actions",
+      "./plugins/with-watch-app",
       [
         "expo-share-intent",
         {
