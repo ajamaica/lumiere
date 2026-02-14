@@ -1,11 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
+import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Alert,
-  KeyboardAvoidingView,
-  Platform,
+  Animated,
+  Easing,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -13,11 +14,6 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { ChatInput } from '../src/components/chat/ChatInput'
-import { ChatMessage, Message, TextMessage } from '../src/components/chat/ChatMessage'
-import type { ToolEventMessage } from '../src/components/chat/chatMessageTypes'
-import { ThinkingIndicator } from '../src/components/chat/ThinkingIndicator'
-import { ToolEventBubble } from '../src/components/chat/ToolEventBubble'
 import { MissionConclusionCard } from '../src/components/missions/MissionConclusionCard'
 import { MissionStatusBadge } from '../src/components/missions/MissionStatusBadge'
 import { SubtaskTimeline } from '../src/components/missions/SubtaskTimeline'
@@ -27,25 +23,11 @@ import { useMissions } from '../src/hooks/useMissions'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import type { AgentEvent } from '../src/services/molt/types'
-import type { SerializedMessage } from '../src/store/missionTypes'
+import { currentSessionKeyAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
 
 const missionLogger = logger.create('MissionDetail')
-
-function serializeMessages(messages: Message[]): SerializedMessage[] {
-  return messages.map((msg) => ({
-    ...msg,
-    timestamp: msg.timestamp.getTime(),
-  }))
-}
-
-function deserializeMessages(serialized: SerializedMessage[]): Message[] {
-  return serialized.map((msg) => ({
-    ...msg,
-    timestamp: new Date(msg.timestamp),
-  })) as Message[]
-}
 
 export default function MissionDetailScreen() {
   const { theme } = useTheme()
@@ -58,24 +40,20 @@ export default function MissionDetailScreen() {
     addMissionSkill,
     stopMission,
     archiveMission,
-    getMissionMessages,
-    saveMissionMessages,
   } = useMissions()
   const { getProviderConfig, currentServerId } = useServers()
   const { parseChunk, resetBuffer } = useMissionEventParser()
+  const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
 
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
-  const [messages, setMessages] = useState<Message[]>([])
   const [isStreaming, setIsStreaming] = useState(false)
-  const [restoredHistory, setRestoredHistory] = useState(false)
-  const scrollRef = useRef<ScrollView>(null)
-  const shouldAutoScrollRef = useRef(true)
+  const [historyChecked, setHistoryChecked] = useState(false)
   const streamingTextRef = useRef('')
   const systemMessageSentRef = useRef(false)
   const stoppedRef = useRef(false)
-  const activeToolCallsRef = useRef<Map<string, string>>(new Map())
-  const hasRestoredRef = useRef(false)
+  const hasCheckedRef = useRef(false)
   const autoStartSentRef = useRef(false)
+  const pulseAnim = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -102,110 +80,97 @@ export default function MissionDetailScreen() {
     stoppedRef.current = false
     systemMessageSentRef.current = false
     streamingTextRef.current = ''
-    hasRestoredRef.current = false
+    hasCheckedRef.current = false
     autoStartSentRef.current = false
-    setRestoredHistory(false)
+    setHistoryChecked(false)
+    setIsStreaming(false)
   }, [activeMission?.id])
 
-  // Restore saved message history when opening a mission
+  // Check whether this mission already has server history (to decide auto-start)
   useEffect(() => {
-    if (!activeMission || hasRestoredRef.current) return
-    hasRestoredRef.current = true
+    if (!activeMission || !gateway.connected || hasCheckedRef.current) return
+    hasCheckedRef.current = true
 
-    const saved = getMissionMessages(activeMission.id)
-    if (saved.length > 0) {
-      setMessages(deserializeMessages(saved))
-      setRestoredHistory(true)
-      // The system message was already sent in a previous session
-      systemMessageSentRef.current = true
-      // Mission was already started — prevent auto-start from re-sending
-      autoStartSentRef.current = true
+    const checkHistory = async () => {
+      try {
+        const response = (await gateway.getChatHistory(activeMission.sessionKey, 1)) as
+          | {
+              messages?: Array<{
+                role: string
+                content: Array<{ type: string; text?: string }>
+                timestamp: number
+              }>
+            }
+          | undefined
+
+        if (response?.messages && response.messages.length > 0) {
+          // Session already has history — system message was already sent
+          systemMessageSentRef.current = true
+          autoStartSentRef.current = true
+        }
+      } catch (err) {
+        missionLogger.logError('Failed to check mission history', err)
+      } finally {
+        setHistoryChecked(true)
+      }
     }
-  }, [activeMission, getMissionMessages])
 
-  // Auto-start mission on first load if in_progress, no messages, and no saved history
+    checkHistory()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeMission?.id, gateway.connected])
+
+  // Auto-start mission on first load if in_progress and no existing history
   useEffect(() => {
     if (
       activeMission &&
       activeMission.status === 'in_progress' &&
-      messages.length === 0 &&
-      !restoredHistory &&
+      historyChecked &&
       gateway.connected &&
       !isStreaming &&
-      hasRestoredRef.current &&
       !autoStartSentRef.current
     ) {
       autoStartSentRef.current = true
-      handleSendToAgent(`Begin executing this mission. Start with the first subtask.`, true)
+      handleSendToAgent('Begin executing this mission. Start with the first subtask.', true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeMission?.id, gateway.connected, restoredHistory])
+  }, [activeMission?.id, gateway.connected, historyChecked])
+
+  // Blue glow pulse animation when streaming
+  useEffect(() => {
+    if (isStreaming) {
+      const animation = Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {
+            toValue: 1,
+            duration: 1200,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: false,
+          }),
+          Animated.timing(pulseAnim, {
+            toValue: 0,
+            duration: 1200,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: false,
+          }),
+        ]),
+      )
+      animation.start()
+      return () => animation.stop()
+    } else {
+      pulseAnim.setValue(0)
+    }
+  }, [isStreaming, pulseAnim])
 
   const handleAgentEvent = useCallback(
     (event: AgentEvent) => {
       if (!activeMission) return
 
-      // If the mission was stopped, still consume events but skip status updates
       const isStopped = stoppedRef.current
-
-      // Handle tool stream events
-      if (event.stream === 'tool' && event.data?.toolName) {
-        const toolCallId = event.data.toolCallId ?? `tool-${event.seq}`
-        const toolStatus = event.data.toolStatus ?? 'running'
-
-        setMessages((prev) => {
-          const existingMsgId = activeToolCallsRef.current.get(toolCallId)
-
-          if (existingMsgId) {
-            return prev.map((msg): Message => {
-              if (msg.id === existingMsgId && msg.type === 'tool_event') {
-                return { ...msg, status: toolStatus }
-              }
-              return msg
-            })
-          }
-
-          const msgId = `tool-${toolCallId}-${Date.now()}`
-          activeToolCallsRef.current.set(toolCallId, msgId)
-          const toolMsg: ToolEventMessage = {
-            id: msgId,
-            type: 'tool_event',
-            toolName: event.data.toolName!,
-            toolCallId,
-            toolInput: event.data.toolInput,
-            status: toolStatus,
-            sender: 'agent',
-            timestamp: new Date(event.ts),
-            text: '',
-          }
-          return [...prev, toolMsg]
-        })
-        return
-      }
 
       if (event.data?.delta) {
         streamingTextRef.current += event.data.delta
 
-        // Update the last assistant message in-place (even if stopped, so user sees what was received)
-        setMessages((prev) => {
-          const last = prev[prev.length - 1]
-          if (last && last.sender === 'agent' && last.type !== 'tool_event') {
-            return [
-              ...prev.slice(0, -1),
-              { ...last, text: streamingTextRef.current, streaming: !isStopped },
-            ]
-          }
-          const textMsg: TextMessage = {
-            id: `msg-${Date.now()}`,
-            sender: 'agent',
-            text: streamingTextRef.current,
-            timestamp: new Date(),
-            streaming: !isStopped,
-          }
-          return [...prev, textMsg]
-        })
-
-        // Skip marker processing when stopped — don't let markers overwrite the stopped status
+        // Parse markers to update mission/subtask status
         if (!isStopped) {
           const updates = parseChunk(event.data.delta)
           for (const update of updates) {
@@ -213,7 +178,6 @@ export default function MissionDetailScreen() {
               case 'subtask_complete':
                 if (update.subtaskId) {
                   updateSubtaskStatus(activeMission.id, update.subtaskId, 'completed')
-                  // Move next subtask to in_progress
                   const currentIdx = activeMission.subtasks.findIndex(
                     (s) => s.id === update.subtaskId,
                   )
@@ -260,22 +224,8 @@ export default function MissionDetailScreen() {
       }
 
       if (event.data?.phase === 'end') {
-        // Mark last message as no longer streaming and persist
-        setMessages((prev) => {
-          const last = prev[prev.length - 1]
-          let updated = prev
-          if (last && last.type !== 'tool_event' && last.streaming) {
-            updated = [...prev.slice(0, -1), { ...last, streaming: false }]
-          }
-          // Persist messages after phase completes
-          if (activeMission) {
-            saveMissionMessages(activeMission.id, serializeMessages(updated))
-          }
-          return updated
-        })
         setIsStreaming(false)
         streamingTextRef.current = ''
-        activeToolCallsRef.current.clear()
         resetBuffer()
       }
     },
@@ -286,10 +236,28 @@ export default function MissionDetailScreen() {
       updateMissionStatus,
       updateSubtaskStatus,
       addMissionSkill,
-      saveMissionMessages,
       t,
     ],
   )
+
+  // Listen for agent events on this mission's session from any source
+  useEffect(() => {
+    if (!gateway.client || !activeMission) return
+
+    const unsubscribe = gateway.client.onAgentEvent((event: AgentEvent) => {
+      if (event.sessionKey !== activeMission.sessionKey) return
+
+      // Track streaming state from external messages (e.g. sent from the chat screen)
+      if (event.data?.phase === 'start') {
+        setIsStreaming(true)
+        streamingTextRef.current = ''
+      }
+
+      handleAgentEvent(event)
+    })
+
+    return unsubscribe
+  }, [gateway.client, activeMission, handleAgentEvent])
 
   const handleSendToAgent = useCallback(
     async (text: string, isAutoStart = false) => {
@@ -304,29 +272,15 @@ export default function MissionDetailScreen() {
         return
       }
 
-      if (!isAutoStart) {
-        setMessages((prev) => {
-          const updated = [
-            ...prev,
-            {
-              id: `msg-${Date.now()}`,
-              sender: 'user' as const,
-              text,
-              timestamp: new Date(),
-            },
-          ]
-          // Persist user message immediately
-          saveMissionMessages(activeMission.id, serializeMessages(updated))
-          return updated
-        })
-      }
-
       setIsStreaming(true)
       streamingTextRef.current = ''
       resetBuffer()
 
       // Ensure mission is in_progress when user responds
-      if (activeMission.status === 'idle') {
+      if (
+        activeMission.status === 'idle' ||
+        (isAutoStart && activeMission.status === 'in_progress')
+      ) {
         updateMissionStatus(activeMission.id, 'in_progress')
       }
 
@@ -354,22 +308,14 @@ export default function MissionDetailScreen() {
         })
       }
     },
-    [
-      activeMission,
-      gateway,
-      resetBuffer,
-      updateMissionStatus,
-      handleAgentEvent,
-      saveMissionMessages,
-    ],
+    [activeMission, gateway, resetBuffer, updateMissionStatus, handleAgentEvent],
   )
 
-  const handleChatInputSend = useCallback(
-    (text: string) => {
-      handleSendToAgent(text)
-    },
-    [handleSendToAgent],
-  )
+  const handleOpenConversation = useCallback(() => {
+    if (!activeMission) return
+    setCurrentSessionKey(activeMission.sessionKey)
+    router.push('/')
+  }, [activeMission, setCurrentSessionKey, router])
 
   const handleStop = useCallback(() => {
     if (!activeMission) return
@@ -379,28 +325,15 @@ export default function MissionDetailScreen() {
         text: t('missions.stopMission'),
         style: 'destructive',
         onPress: () => {
-          // Guard: prevent event handler from overwriting the stopped status
           stoppedRef.current = true
-
-          // Finalize any in-flight streaming message and persist
-          setMessages((prev) => {
-            const last = prev[prev.length - 1]
-            let updated = prev
-            if (last && last.type !== 'tool_event' && last.streaming) {
-              updated = [...prev.slice(0, -1), { ...last, streaming: false }]
-            }
-            saveMissionMessages(activeMission.id, serializeMessages(updated))
-            return updated
-          })
           setIsStreaming(false)
           streamingTextRef.current = ''
           resetBuffer()
-
           stopMission(activeMission.id)
         },
       },
     ])
-  }, [activeMission, stopMission, saveMissionMessages, resetBuffer, t])
+  }, [activeMission, stopMission, resetBuffer, t])
 
   const handleArchive = useCallback(() => {
     if (!activeMission) return
@@ -415,6 +348,11 @@ export default function MissionDetailScreen() {
       },
     ])
   }, [activeMission, archiveMission, router, t])
+
+  const glowOpacity = pulseAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.3, 1],
+  })
 
   const styles = useMemo(
     () =>
@@ -442,15 +380,6 @@ export default function MissionDetailScreen() {
         },
         subtasksCard: {
           marginBottom: theme.spacing.lg,
-        },
-        chatSection: {
-          marginBottom: theme.spacing.lg,
-        },
-        chatHeader: {
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: theme.spacing.sm,
-          marginBottom: theme.spacing.md,
         },
         errorCard: {
           backgroundColor: theme.colors.status.error + '15',
@@ -484,9 +413,18 @@ export default function MissionDetailScreen() {
           borderWidth: 1,
           borderColor: theme.colors.status.warning + '30',
         },
-        thinkingContainer: {
-          paddingVertical: theme.spacing.sm,
-          paddingHorizontal: theme.spacing.md,
+        conversationButton: {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: theme.spacing.sm,
+          paddingVertical: theme.spacing.md,
+          paddingHorizontal: theme.spacing.lg,
+          borderRadius: theme.borderRadius.lg,
+          borderWidth: 2,
+          borderColor: theme.colors.text.tertiary + '40',
+          backgroundColor: theme.colors.background,
+          marginBottom: theme.spacing.lg,
         },
       }),
     [theme],
@@ -547,151 +485,126 @@ export default function MissionDetailScreen() {
         }
       />
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={{ flex: 1 }}
-      >
-        <ScrollView
-          ref={scrollRef}
-          contentContainerStyle={styles.scrollContent}
-          scrollEventThrottle={16}
-          onScroll={(event) => {
-            const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
-            const threshold = layoutMeasurement.height * 0.3
-            const isNearBottom =
-              contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
-            shouldAutoScrollRef.current = isNearBottom
-          }}
-          onContentSizeChange={() => {
-            if (shouldAutoScrollRef.current) {
-              scrollRef.current?.scrollToEnd({ animated: true })
-            }
-          }}
-        >
-          {/* Mission header */}
-          <View style={styles.missionHeader}>
-            <View style={styles.titleRow}>
-              <View style={styles.titleWrap}>
-                <Text
-                  variant="heading2"
-                  numberOfLines={2}
-                  style={{ color: theme.colors.text.primary }}
-                >
-                  {activeMission.title}
-                </Text>
-              </View>
-              <MissionStatusBadge status={activeMission.status} />
-            </View>
-            <Text variant="bodySmall" color="secondary">
-              {activeMission.prompt}
-            </Text>
-            <Text
-              variant="caption"
-              color="tertiary"
-              style={{ marginTop: theme.spacing.xs, fontFamily: 'monospace', fontSize: 11 }}
-            >
-              {activeMission.sessionKey}
-            </Text>
-          </View>
-
-          {/* Subtask progress */}
-          <Card style={styles.subtasksCard}>
-            <Text
-              variant="heading3"
-              style={{
-                color: theme.colors.text.primary,
-                marginBottom: theme.spacing.md,
-              }}
-            >
-              {t('missions.subtasks')}
-            </Text>
-            <SubtaskTimeline subtasks={activeMission.subtasks} />
-          </Card>
-
-          {/* Error state */}
-          {activeMission.status === 'error' && (
-            <View style={styles.errorCard}>
-              <View style={styles.errorRow}>
-                <Ionicons name="alert-circle" size={20} color={theme.colors.status.error} />
-                <Text variant="heading3" style={{ color: theme.colors.status.error }}>
-                  {t('missions.missionError')}
-                </Text>
-              </View>
-              {activeMission.errorMessage && (
-                <Text variant="body" style={{ color: theme.colors.text.primary }}>
-                  {activeMission.errorMessage}
-                </Text>
-              )}
-              <Button
-                title={t('missions.retryMission')}
-                onPress={() => {
-                  updateMissionStatus(activeMission.id, 'in_progress', {
-                    errorMessage: undefined,
-                  })
-                  handleSendToAgent('Please retry the last step that failed.')
-                }}
-                style={{ marginTop: theme.spacing.md }}
-              />
-            </View>
-          )}
-
-          {/* Completion state */}
-          {activeMission.status === 'completed' && activeMission.conclusion && (
-            <MissionConclusionCard conclusion={activeMission.conclusion} />
-          )}
-
-          {/* Idle state indicator */}
-          {activeMission.status === 'idle' && (
-            <View style={styles.idleIndicator}>
-              <Ionicons name="chatbubble-ellipses" size={20} color={theme.colors.status.warning} />
-              <Text variant="body" style={{ color: theme.colors.text.primary, flex: 1 }}>
-                {t('missions.waitingForInput')}
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Mission header */}
+        <View style={styles.missionHeader}>
+          <View style={styles.titleRow}>
+            <View style={styles.titleWrap}>
+              <Text
+                variant="heading2"
+                numberOfLines={2}
+                style={{ color: theme.colors.text.primary }}
+              >
+                {activeMission.title}
               </Text>
             </View>
-          )}
+            <MissionStatusBadge status={activeMission.status} />
+          </View>
+          <Text variant="bodySmall" color="secondary">
+            {activeMission.prompt}
+          </Text>
+        </View>
 
-          {/* Chat messages */}
-          {(messages.length > 0 || isStreaming) && (
-            <View style={styles.chatSection}>
-              <View style={styles.chatHeader}>
-                <Ionicons
-                  name="chatbubbles-outline"
-                  size={18}
-                  color={theme.colors.text.secondary}
-                />
-                <Text variant="heading3" style={{ color: theme.colors.text.primary }}>
-                  {restoredHistory ? t('missions.conversationHistory') : t('missions.conversation')}
-                </Text>
-              </View>
-              {messages.map((msg) =>
-                msg.type === 'tool_event' ? (
-                  <ToolEventBubble key={msg.id} message={msg} />
-                ) : (
-                  <ChatMessage
-                    key={msg.id}
-                    message={
-                      msg.sender === 'agent' ? { ...msg, text: stripMissionMarkers(msg.text) } : msg
-                    }
-                  />
-                ),
-              )}
-              {isStreaming &&
-                (messages.length === 0 ||
-                  messages[messages.length - 1]?.sender !== 'agent' ||
-                  !messages[messages.length - 1]?.text) && (
-                  <View style={styles.thinkingContainer}>
-                    <ThinkingIndicator />
-                  </View>
-                )}
+        {/* Subtask progress */}
+        <Card style={styles.subtasksCard}>
+          <Text
+            variant="heading3"
+            style={{
+              color: theme.colors.text.primary,
+              marginBottom: theme.spacing.md,
+            }}
+          >
+            {t('missions.subtasks')}
+          </Text>
+          <SubtaskTimeline subtasks={activeMission.subtasks} />
+        </Card>
+
+        {/* Conversation button */}
+        <TouchableOpacity onPress={handleOpenConversation} activeOpacity={0.7}>
+          <Animated.View
+            style={[
+              styles.conversationButton,
+              isStreaming && {
+                borderColor: pulseAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: ['rgba(59,130,246,0.3)', 'rgba(59,130,246,1)'],
+                }),
+                shadowColor: '#3B82F6',
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: glowOpacity,
+                shadowRadius: 12,
+                elevation: 8,
+              },
+            ]}
+          >
+            <Ionicons
+              name="chatbubbles"
+              size={20}
+              color={isStreaming ? '#3B82F6' : theme.colors.text.secondary}
+            />
+            <Text
+              variant="heading3"
+              style={{ color: isStreaming ? '#3B82F6' : theme.colors.text.primary }}
+            >
+              {t('missions.conversation')}
+            </Text>
+            {isStreaming && (
+              <Animated.View
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: 4,
+                  backgroundColor: '#3B82F6',
+                  opacity: glowOpacity,
+                  marginLeft: theme.spacing.xs,
+                }}
+              />
+            )}
+          </Animated.View>
+        </TouchableOpacity>
+
+        {/* Error state */}
+        {activeMission.status === 'error' && (
+          <View style={styles.errorCard}>
+            <View style={styles.errorRow}>
+              <Ionicons name="alert-circle" size={20} color={theme.colors.status.error} />
+              <Text variant="heading3" style={{ color: theme.colors.status.error }}>
+                {t('missions.missionError')}
+              </Text>
             </View>
-          )}
-        </ScrollView>
-
-        {/* Input bar */}
-        {isActive && (
-          <ChatInput onSend={handleChatInputSend} disabled={isStreaming} providerType="molt" />
+            {activeMission.errorMessage && (
+              <Text variant="body" style={{ color: theme.colors.text.primary }}>
+                {activeMission.errorMessage}
+              </Text>
+            )}
+            <Button
+              title={t('missions.retryMission')}
+              onPress={() => {
+                updateMissionStatus(activeMission.id, 'in_progress', {
+                  errorMessage: undefined,
+                })
+                handleSendToAgent('Please retry the last step that failed.')
+              }}
+              style={{ marginTop: theme.spacing.md }}
+            />
+          </View>
         )}
-      </KeyboardAvoidingView>
+
+        {/* Completion state */}
+        {activeMission.status === 'completed' && activeMission.conclusion && (
+          <MissionConclusionCard conclusion={activeMission.conclusion} />
+        )}
+
+        {/* Idle state indicator */}
+        {activeMission.status === 'idle' && (
+          <View style={styles.idleIndicator}>
+            <Ionicons name="chatbubble-ellipses" size={20} color={theme.colors.status.warning} />
+            <Text variant="body" style={{ color: theme.colors.text.primary, flex: 1 }}>
+              {t('missions.waitingForInput')}
+            </Text>
+          </View>
+        )}
+      </ScrollView>
     </SafeAreaView>
   )
 }
