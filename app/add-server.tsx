@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -19,6 +20,7 @@ import { keyboardAvoidingBehavior } from '../src/utils/platform'
 
 export default function AddServerScreen() {
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const router = useRouter()
   const { addServer } = useServers()
   const providerOptions = getAllProviderOptions(theme.colors.text.primary)
@@ -26,6 +28,7 @@ export default function AddServerScreen() {
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')
   const [token, setToken] = useState('')
+  const [password, setPassword] = useState('')
   const [clientId, setClientId] = useState('lumiere-mobile')
   const [providerType, setProviderType] = useState<ProviderType>('molt')
   const [model, setModel] = useState('')
@@ -49,6 +52,7 @@ export default function AddServerScreen() {
           providerType: 'molt',
         },
         token.trim(),
+        password.trim() || undefined,
       )
     } else if (providerType === 'ollama' && url.trim()) {
       await addServer(
@@ -264,6 +268,17 @@ export default function AddServerScreen() {
                   label="Token"
                   value={token}
                   onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label={t('addServer.gatewayPassword')}
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholder={t('addServer.gatewayPasswordPlaceholder')}
                   secureTextEntry
                   autoCapitalize="none"
                   autoCorrect={false}

@@ -99,6 +99,9 @@
     },
     "openaiCompatibleDescription": "透過指定自訂基礎 URL 連接到任何 OpenAI 相容的 API。",
     "appleDescription": "使用 Apple Foundation Models 透過 CoreML 在裝置上完全本機執行 AI。需要 iOS 26+ 並支援 Apple Intelligence。",
+    "gatewayPassword": "閘道密碼（選填）",
+    "gatewayPasswordKeep": "閘道密碼（留空以保留目前密碼）",
+    "gatewayPasswordPlaceholder": "輸入閘道密碼",
     "errors": {
       "urlRequired": "URL 為必填欄位",
       "tokenRequired": "權杖為必填欄位",

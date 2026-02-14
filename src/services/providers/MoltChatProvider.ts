@@ -33,6 +33,7 @@ export class MoltChatProvider implements ChatProvider {
     this.client = new MoltGatewayClient({
       url: config.url,
       token: config.token,
+      password: config.password,
       clientId: config.clientId,
     })
   }

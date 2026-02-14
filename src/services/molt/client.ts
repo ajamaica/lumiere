@@ -436,13 +436,18 @@ export class MoltGatewayClient {
   }
 
   private async performHandshake(): Promise<ConnectResponse> {
+    const auth: { token?: string; password?: string } = {
+      token: this.config.token,
+    }
+    if (this.config.password) {
+      auth.password = this.config.password
+    }
+
     const params = {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,
-      auth: {
-        token: this.config.token,
-      },
+      auth,
     }
 
     // Use a dedicated handshake request with its own timeout

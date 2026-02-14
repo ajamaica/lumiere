@@ -99,6 +99,9 @@
     },
     "openaiCompatibleDescription": "Подключитесь к любому API, совместимому с OpenAI, указав пользовательский базовый URL.",
     "appleDescription": "Использует Apple Foundation Models для запуска ИИ полностью на устройстве через CoreML. Требуется iOS 26+ с поддержкой Apple Intelligence.",
+    "gatewayPassword": "Пароль шлюза (необязательно)",
+    "gatewayPasswordKeep": "Пароль шлюза (оставьте пустым, чтобы сохранить текущий)",
+    "gatewayPasswordPlaceholder": "Введите пароль шлюза",
     "errors": {
       "urlRequired": "URL обязателен",
       "tokenRequired": "Токен обязателен",

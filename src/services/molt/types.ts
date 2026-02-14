@@ -7,6 +7,7 @@ export type ConnectionState = 'disconnected' | 'connecting' | 'connected' | 'rec
 export interface MoltConfig {
   url: string
   token: string
+  password?: string
   clientId?: string
   /** Auto-reconnect on unexpected close (default true) */
   autoReconnect?: boolean
