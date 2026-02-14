@@ -72,7 +72,11 @@
     "video": "Видео",
     "attachFile": "Прикрепить файл",
     "file": "Файл",
-    "removeAttachment": "Удалить вложение {{number}}"
+    "removeAttachment": "Удалить вложение {{number}}",
+    "fileTransfer": {
+      "openFile": "Открыть {{name}}",
+      "tapToSave": "Нажмите, чтобы сохранить или поделиться"
+    }
   },
   "addServer": {
     "title": "Добавить сервер",

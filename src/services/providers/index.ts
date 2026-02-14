@@ -20,5 +20,6 @@ export type {
   ProviderCapabilities,
   ProviderConfig,
   ProviderType,
+  ReceivedFileAttachment,
   SendMessageParams,
 } from './types'

@@ -199,6 +199,15 @@ export interface AgentParams {
   attachments?: Attachment[]
 }
 
+/** File attachment sent back from the gateway within an agent event. */
+export interface AgentFileAttachment {
+  type: string
+  mimeType: string
+  fileName: string
+  /** base64-encoded file content */
+  content: string
+}
+
 export type AgentEvent = {
   data: {
     delta?: string
@@ -214,11 +223,18 @@ export type AgentEvent = {
     toolStatus?: 'running' | 'completed' | 'error'
     /** Unique ID correlating start/end events for the same tool call */
     toolCallId?: string
+    /** File attachments returned by the agent (stream === 'file') */
+    attachments?: AgentFileAttachment[]
+    /** Single file attachment fields (stream === 'file') */
+    fileName?: string
+    mimeType?: string
+    /** base64-encoded file content */
+    content?: string
   }
   runId: string
   seq: number
   sessionKey: string
-  stream: 'assistant' | 'lifecycle' | 'tool'
+  stream: 'assistant' | 'lifecycle' | 'tool' | 'file'
   ts: number
 }
 

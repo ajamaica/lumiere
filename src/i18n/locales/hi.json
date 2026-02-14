@@ -72,7 +72,11 @@
     "video": "वीडियो",
     "attachFile": "फ़ाइल संलग्न करें",
     "file": "फ़ाइल",
-    "removeAttachment": "अनुलग्नक {{number}} हटाएं"
+    "removeAttachment": "अनुलग्नक {{number}} हटाएं",
+    "fileTransfer": {
+      "openFile": "{{name}} खोलें",
+      "tapToSave": "सहेजने या साझा करने के लिए टैप करें"
+    }
   },
   "addServer": {
     "title": "सर्वर जोड़ें",

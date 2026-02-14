@@ -72,7 +72,11 @@
     "video": "동영상",
     "attachFile": "파일 첨부",
     "file": "파일",
-    "removeAttachment": "첨부파일 {{number}} 삭제"
+    "removeAttachment": "첨부파일 {{number}} 삭제",
+    "fileTransfer": {
+      "openFile": "{{name}} 열기",
+      "tapToSave": "탭하여 저장 또는 공유"
+    }
   },
   "addServer": {
     "title": "서버 추가",

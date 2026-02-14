@@ -72,7 +72,11 @@
     "video": "影片",
     "attachFile": "附加檔案",
     "file": "檔案",
-    "removeAttachment": "移除附件 {{number}}"
+    "removeAttachment": "移除附件 {{number}}",
+    "fileTransfer": {
+      "openFile": "開啟 {{name}}",
+      "tapToSave": "點擊儲存或分享"
+    }
   },
   "addServer": {
     "title": "新增伺服器",

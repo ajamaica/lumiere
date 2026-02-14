@@ -24,8 +24,17 @@ export interface ProviderConfig {
   serverId?: string // Server UUID for cache isolation
 }
 
+/** A file attachment received from the server during an agent response. */
+export interface ReceivedFileAttachment {
+  type: string
+  mimeType: string
+  fileName: string
+  /** base64-encoded file content */
+  content: string
+}
+
 export interface ChatProviderEvent {
-  type: 'delta' | 'lifecycle' | 'tool_event'
+  type: 'delta' | 'lifecycle' | 'tool_event' | 'file_attachment'
   /** Incremental text chunk (for type === 'delta') */
   delta?: string
   /** Lifecycle phase (for type === 'lifecycle') */
@@ -38,6 +47,8 @@ export interface ChatProviderEvent {
   toolInput?: Record<string, unknown>
   /** Tool execution status (for type === 'tool_event') */
   toolStatus?: 'running' | 'completed' | 'error'
+  /** File attachments transferred back from the agent (for type === 'file_attachment') */
+  fileAttachments?: ReceivedFileAttachment[]
 }
 
 export interface SendMessageParams {

@@ -110,6 +110,34 @@ export const createStyles = (theme: Theme) =>
       height: 200,
       borderRadius: theme.borderRadius.md,
     },
+    fileCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
+      borderRadius: theme.borderRadius.md,
+      borderWidth: 1,
+      borderColor: theme.isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.1)',
+      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)',
+      gap: theme.spacing.sm,
+      maxWidth: 260,
+    },
+    fileCardIcon: {
+      opacity: 0.7,
+    },
+    fileCardInfo: {
+      flex: 1,
+    },
+    fileCardName: {
+      fontSize: theme.typography.fontSize.sm,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.text.primary,
+    },
+    fileCardAction: {
+      fontSize: theme.typography.fontSize.xs,
+      color: theme.colors.primary,
+      marginTop: 2,
+    },
   })
 
 export const createMarkdownStyles = (theme: Theme, isUser: boolean) => {

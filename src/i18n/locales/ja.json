@@ -72,7 +72,11 @@
     "video": "動画",
     "attachFile": "ファイルを添付",
     "file": "ファイル",
-    "removeAttachment": "添付ファイル{{number}}を削除"
+    "removeAttachment": "添付ファイル{{number}}を削除",
+    "fileTransfer": {
+      "openFile": "{{name}}を開く",
+      "tapToSave": "タップして保存または共有"
+    }
   },
   "addServer": {
     "title": "サーバーを追加",

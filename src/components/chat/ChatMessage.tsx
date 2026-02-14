@@ -26,6 +26,7 @@ import {
 } from '../../store'
 import { useTheme } from '../../theme'
 import { ChatIntent, extractIntents, intentIcon, stripIntents } from '../../utils/chatIntents'
+import { shareFile } from '../../utils/fileTransfer'
 import { logger } from '../../utils/logger'
 import { processXmlTags } from '../../utils/xmlTagProcessor'
 import { createMarkdownStyles, createStyles } from './ChatMessage.styles'
@@ -195,20 +196,60 @@ export function ChatMessage({ message }: { message: Message }) {
   // Fetch URL embed previews for agent messages
   const { metadata: urlPreviews } = useUrlMetadata(message.text, !!streaming, isUser)
 
+  const handleShareFile = useCallback(async (uri: string) => {
+    try {
+      await shareFile(uri)
+    } catch (err) {
+      chatLogger.logError('Failed to share file', err)
+    }
+  }, [])
+
   const renderAttachments = () => {
     if (!attachments || attachments.length === 0) return null
     return (
       <View style={styles.attachmentContainer}>
-        {attachments.map((attachment: MessageAttachment, index: number) => (
-          <Image
-            key={index}
-            source={{ uri: attachment.uri }}
-            style={styles.attachmentImage}
-            resizeMode="cover"
-            accessibilityLabel={t('accessibility.attachmentLabel', { index: index + 1 })}
-            accessibilityRole="image"
-          />
-        ))}
+        {attachments.map((attachment: MessageAttachment, index: number) => {
+          if (attachment.type === 'image') {
+            return (
+              <Image
+                key={index}
+                source={{ uri: attachment.uri }}
+                style={styles.attachmentImage}
+                resizeMode="cover"
+                accessibilityLabel={t('accessibility.attachmentLabel', { index: index + 1 })}
+                accessibilityRole="image"
+              />
+            )
+          }
+
+          // Non-image file card with share/save action
+          return (
+            <TouchableOpacity
+              key={index}
+              style={styles.fileCard}
+              onPress={() => handleShareFile(attachment.uri)}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel={t('chat.fileTransfer.openFile', {
+                name: attachment.name || t('chat.file'),
+              })}
+            >
+              <Ionicons
+                name="document-outline"
+                size={24}
+                color={theme.colors.text.secondary}
+                style={styles.fileCardIcon}
+              />
+              <View style={styles.fileCardInfo}>
+                <Text style={styles.fileCardName} numberOfLines={1}>
+                  {attachment.name || t('chat.file')}
+                </Text>
+                <Text style={styles.fileCardAction}>{t('chat.fileTransfer.tapToSave')}</Text>
+              </View>
+              <Ionicons name="share-outline" size={18} color={theme.colors.primary} />
+            </TouchableOpacity>
+          )
+        })}
       </View>
     )
   }

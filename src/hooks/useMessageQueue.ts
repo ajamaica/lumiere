@@ -4,8 +4,10 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { MessageAttachment } from '../components/chat/ChatMessage'
 import type { Message } from '../components/chat/chatMessageTypes'
 import { ChatProviderEvent, SendMessageParams as ProviderSendParams } from '../services/providers'
+import type { ReceivedFileAttachment } from '../services/providers/types'
 import { messageQueueAtom, showToolEventsInChatAtom } from '../store'
 import { toProviderAttachments } from '../utils/attachments'
+import { isImageMimeType, saveReceivedFiles } from '../utils/fileTransfer'
 import { generateId } from '../utils/generateId'
 import { logger } from '../utils/logger'
 
@@ -67,6 +69,7 @@ export function useMessageQueue({
       onSendStart?.()
 
       let accumulatedText = ''
+      const receivedFiles: ReceivedFileAttachment[] = []
 
       // Convert MessageAttachments to the provider-agnostic format
       const providerAttachments = attachments?.length
@@ -87,16 +90,37 @@ export function useMessageQueue({
             if (event.type === 'delta' && event.delta) {
               accumulatedText += event.delta
               onAgentMessageUpdate(accumulatedText)
+            } else if (event.type === 'file_attachment' && event.fileAttachments) {
+              receivedFiles.push(...event.fileAttachments)
             } else if (event.type === 'lifecycle' && event.phase === 'end') {
-              const agentMessage: Message = {
-                id: generateId('msg'),
-                text: accumulatedText,
-                sender: 'agent',
-                timestamp: new Date(),
+              // Save received files then build the final agent message
+              const finalize = async () => {
+                let agentAttachments: MessageAttachment[] | undefined
+                if (receivedFiles.length > 0) {
+                  const uris = await saveReceivedFiles(receivedFiles)
+                  agentAttachments = uris.map((uri, i) => ({
+                    type: isImageMimeType(receivedFiles[i].mimeType)
+                      ? ('image' as const)
+                      : ('file' as const),
+                    uri,
+                    mimeType: receivedFiles[i].mimeType,
+                    name: receivedFiles[i].fileName,
+                  }))
+                }
+
+                const agentMessage: Message = {
+                  id: generateId('msg'),
+                  text: accumulatedText,
+                  sender: 'agent',
+                  timestamp: new Date(),
+                  attachments: agentAttachments,
+                }
+                onAgentMessageComplete(agentMessage)
+                setIsAgentResponding(false)
+                accumulatedText = ''
+                receivedFiles.length = 0
               }
-              onAgentMessageComplete(agentMessage)
-              setIsAgentResponding(false)
-              accumulatedText = ''
+              finalize().catch((err) => queueLogger.logError('Failed to save received files', err))
             } else if (event.type === 'tool_event' && event.toolName && showToolEventsRef.current) {
               onMessageAdd({
                 id: generateId('tool'),

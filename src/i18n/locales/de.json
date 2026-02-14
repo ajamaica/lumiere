@@ -72,7 +72,11 @@
     "video": "Video",
     "attachFile": "Datei anhängen",
     "file": "Datei",
-    "removeAttachment": "Anhang {{number}} entfernen"
+    "removeAttachment": "Anhang {{number}} entfernen",
+    "fileTransfer": {
+      "openFile": "{{name}} öffnen",
+      "tapToSave": "Tippen zum Speichern oder Teilen"
+    }
   },
   "addServer": {
     "title": "Server hinzufügen",

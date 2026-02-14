@@ -1,5 +1,10 @@
 import { MoltGatewayClient } from '../molt/client'
-import { AgentEvent, ChatAttachmentPayload, ConnectionState } from '../molt/types'
+import {
+  AgentEvent,
+  AgentFileAttachment,
+  ChatAttachmentPayload,
+  ConnectionState,
+} from '../molt/types'
 import {
   ChatHistoryResponse,
   ChatProvider,
@@ -7,6 +12,7 @@ import {
   HealthStatus,
   ProviderCapabilities,
   ProviderConfig,
+  ReceivedFileAttachment,
   SendMessageParams,
 } from './types'
 
@@ -106,6 +112,11 @@ export class MoltChatProvider implements ChatProvider {
           toolInput: event.data.toolInput,
           toolStatus: event.data.toolStatus,
         })
+      } else if (event.stream === 'file') {
+        const files = extractFileAttachments(event.data)
+        if (files.length > 0) {
+          onEvent({ type: 'file_attachment', fileAttachments: files })
+        }
       }
     })
 
@@ -141,4 +152,35 @@ export class MoltChatProvider implements ChatProvider {
   getMoltClient(): MoltGatewayClient {
     return this.client
   }
+}
+
+/**
+ * Extract file attachments from a 'file' stream event.
+ * The gateway may send files as an `attachments` array or as
+ * individual top-level fields (fileName, mimeType, content).
+ */
+function extractFileAttachments(data: AgentEvent['data']): ReceivedFileAttachment[] {
+  // Batch format: data.attachments[]
+  if (data.attachments && data.attachments.length > 0) {
+    return data.attachments.map((a: AgentFileAttachment) => ({
+      type: a.type,
+      mimeType: a.mimeType,
+      fileName: a.fileName,
+      content: a.content,
+    }))
+  }
+
+  // Single-file format: data.fileName + data.content
+  if (data.fileName && data.content) {
+    return [
+      {
+        type: data.mimeType?.startsWith('image/') ? 'image' : 'document',
+        mimeType: data.mimeType || 'application/octet-stream',
+        fileName: data.fileName,
+        content: data.content,
+      },
+    ]
+  }
+
+  return []
 }
