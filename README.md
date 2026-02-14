@@ -5,7 +5,7 @@
 <h1 align="center">Lumiere</h1>
 
 <p align="center">
-  A React Native mobile client for interacting with AI agents. Supports multiple providers including OpenClaw, Claude, Ollama, and Apple Intelligence.
+  A React Native mobile client for interacting with AI agents. Supports 12+ providers including OpenClaw, Claude, OpenRouter, OpenAI, Gemini, Ollama, and Apple Intelligence.
 </p>
 
 <p align="center">
@@ -25,23 +25,27 @@
 
 ### Core
 
-- **Multi-provider support** — Connect to OpenClaw, Claude, Ollama, Apple Intelligence, or Echo Server
-- **Multi-server management** — Configure and switch between multiple AI servers
+- **Multi-provider support** — Connect to 12+ AI providers including OpenClaw, Claude, OpenRouter, OpenAI, Gemini, Ollama, Apple Intelligence, and more
+- **Multi-server management** — Configure, switch between, and backup/restore multiple AI servers
 - **Real-time streaming** — Streamed AI responses with markdown rendering
-- **Image attachments** — Attach images to chat messages (provider-dependent)
+- **Image attachments** — Attach images, documents, and other files to chat messages (provider-dependent)
 - **Message queue** — Queue messages while the agent is responding
 - **Slash commands** — 38 built-in commands with autocomplete
+- **Missions** _(Beta)_ — Multi-step AI-driven task planning with subtask execution and streaming progress
+- **Skills** — Teach agents custom capabilities via skill packs (OpenClaw)
 
 ### Voice & Input
 
 - **Voice transcription** — Dictate messages using native iOS speech recognition
 - **Recording overlay** — Visual feedback with real-time transcription preview
+- **Text-to-speech** — Play/pause TTS on any message
 
 ### Personalization
 
 - **Color themes** — 8 color palettes (Default, Pink, Green, Red, Blue, Purple, Orange, Glass)
 - **Light & dark modes** — System-aware theming with manual override
 - **Session aliases** — Custom display names for chat sessions
+- **11 languages** — English, Spanish, French, German, Hindi, Japanese, Korean, Portuguese (BR), Russian, Simplified Chinese, Traditional Chinese
 
 ### Automation
 
@@ -53,30 +57,64 @@
 ### Security
 
 - **Face ID / Touch ID** — Biometric authentication on app launch and resume
-- **Secure storage** — API keys and tokens stored securely
+- **Secure storage** — API keys and tokens stored in the device keychain
 
 ### Platform
 
-- **iPad support** — Responsive layouts with form sheet modals on tablet
+- **iOS & Android** — Full mobile support
+- **iPad** — Responsive layouts with form sheet modals on tablet
+- **Web** — Browser support via Metro bundler
+- **Desktop** — Electron app builds
+- **Chrome Extension** — Browser extension build
 - **Deep linking** — Open screens and execute triggers via `lumiere://` URLs
 
 ## AI Providers
 
-| Provider               | Type     | Chat | Images | Sessions | History | Scheduler |
-| ---------------------- | -------- | :--: | :----: | :------: | :-----: | :-------: |
-| **OpenClaw**           | `molt`   |  ✅  |   ✅   |    ✅    |   ✅    |    ✅     |
-| **Claude**             | `claude` |  ✅  |   ✅   |    —     |    —    |     —     |
-| **Ollama**             | `ollama` |  ✅  |   —    |    —     |    —    |     —     |
-| **Apple Intelligence** | `apple`  |  ✅  |   —    |    —     |    —    |     —     |
-| **Echo Server**        | `echo`   |  ✅  |   —    |    —     |    —    |     —     |
+| Provider               | Type                | Chat | Images | Sessions | History | Scheduler | Skills |
+| ---------------------- | ------------------- | :--: | :----: | :------: | :-----: | :-------: | :----: |
+| **OpenClaw**           | `molt`              |  ✅  |   ✅   |    ✅    |   ✅    |    ✅     |   ✅   |
+| **Claude**             | `claude`            |  ✅  |   ✅   |    —     |    —    |     —     |   —    |
+| **OpenRouter**         | `openrouter`        |  ✅  |   ✅   |    —     |    —    |     —     |   —    |
+| **OpenAI**             | `openai`            |  ✅  |   ✅   |    —     |    —    |     —     |   —    |
+| **OpenAI Compatible**  | `openai-compatible` |  ✅  |   ✅   |    —     |    —    |     —     |   —    |
+| **Gemini**             | `gemini`            |  ✅  |   ✅   |    —     |    —    |     —     |   —    |
+| **Gemini Nano**        | `gemini-nano`       |  ✅  |   —    |    —     |    —    |     —     |   —    |
+| **Kimi**               | `kimi`              |  ✅  |   ✅   |    —     |    —    |     —     |   —    |
+| **Ollama**             | `ollama`            |  ✅  |   —    |    —     |    —    |     —     |   —    |
+| **Apple Intelligence** | `apple`             |  ✅  |   —    |    —     |    —    |     —     |   —    |
+| **Echo Server**        | `echo`              |  ✅  |   —    |    —     |    —    |     —     |   —    |
 
 ### OpenClaw (Molt Gateway)
 
-Full-featured provider with WebSocket streaming, server-side sessions, chat history persistence, and cron job scheduling. Requires a running Molt Gateway instance.
+Full-featured provider with WebSocket streaming, server-side sessions, chat history persistence, cron job scheduling, and skill support. Requires a running Molt Gateway instance.
 
 ### Claude (Anthropic API)
 
 Direct integration with Anthropic's Messages API. Supports streaming responses and image attachments. Requires an Anthropic API key.
+
+### OpenRouter
+
+Access hundreds of models from multiple providers through a single API. Supports streaming and image attachments. Requires an OpenRouter API key.
+
+### OpenAI
+
+Direct integration with OpenAI's Chat Completions API. Supports streaming and image attachments. Requires an OpenAI API key.
+
+### OpenAI Compatible
+
+Connect to any provider that implements the OpenAI-compatible API format (e.g., LM Studio, vLLM, Together AI).
+
+### Gemini
+
+Google's Gemini models with streaming and image support. Requires a Google AI API key.
+
+### Gemini Nano
+
+On-device AI using Google's Gemini Nano model. Android only. No external server needed.
+
+### Kimi
+
+Moonshot AI's Kimi models with streaming and image support. Requires a Kimi API key.
 
 ### Ollama
 
@@ -92,39 +130,51 @@ Testing provider that echoes messages back. Useful for development and debugging
 
 ## Screens
 
-| Screen            | File                    | Description                                                                                                           |
-| ----------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| **Chat**          | `app/index.tsx`         | Main chat interface with streaming responses, markdown rendering, voice input, slash commands, and message favoriting |
-| **Settings**      | `app/settings.tsx`      | App configuration including appearance, security, notifications, and account management                               |
-| **Servers**       | `app/servers.tsx`       | View, switch, and manage configured AI servers                                                                        |
-| **Add Server**    | `app/add-server.tsx`    | Configure a new server with provider-specific fields                                                                  |
-| **Edit Server**   | `app/edit-server.tsx`   | Modify or delete existing server configuration                                                                        |
-| **Sessions**      | `app/sessions.tsx`      | Create, switch, and reset chat sessions (OpenClaw)                                                                    |
-| **Edit Session**  | `app/edit-session.tsx`  | Rename sessions with custom aliases                                                                                   |
-| **Overview**      | `app/overview.tsx`      | Gateway monitoring dashboard with health status (OpenClaw)                                                            |
-| **Scheduler**     | `app/scheduler.tsx`     | Cron job management (OpenClaw)                                                                                        |
-| **Favorites**     | `app/favorites.tsx`     | Saved messages viewer                                                                                                 |
-| **Triggers**      | `app/triggers.tsx`      | Create and manage auto-send deep links                                                                                |
-| **Colors**        | `app/colors.tsx`        | Color theme selection                                                                                                 |
-| **Ollama Models** | `app/ollama-models.tsx` | Model selection for Ollama provider                                                                                   |
-| **Gallery**       | `app/gallery.tsx`       | Component showcase for development                                                                                    |
+| Screen              | File                      | Description                                                                                                           |
+| ------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Chat**            | `app/index.tsx`           | Main chat interface with streaming responses, markdown rendering, voice input, slash commands, and message favoriting |
+| **Settings**        | `app/settings.tsx`        | App configuration including appearance, security, notifications, and account management                               |
+| **Servers**         | `app/servers.tsx`         | View, switch, and manage configured AI servers                                                                        |
+| **Add Server**      | `app/add-server.tsx`      | Configure a new server with provider-specific fields                                                                  |
+| **Edit Server**     | `app/edit-server.tsx`     | Modify or delete existing server configuration                                                                        |
+| **Backup Servers**  | `app/backup-servers.tsx`  | Export server configurations for backup                                                                               |
+| **Restore Servers** | `app/restore-servers.tsx` | Import server configurations from backup                                                                              |
+| **Sessions**        | `app/sessions.tsx`        | Create, switch, and reset chat sessions (OpenClaw)                                                                    |
+| **Edit Session**    | `app/edit-session.tsx`    | Rename sessions with custom aliases                                                                                   |
+| **Missions**        | `app/missions.tsx`        | View and manage multi-step AI missions (Beta)                                                                         |
+| **Create Mission**  | `app/create-mission.tsx`  | Create a new mission with goals and parameters                                                                        |
+| **Mission Detail**  | `app/mission-detail.tsx`  | View mission progress, subtasks, and streaming results                                                                |
+| **Skills**          | `app/skills.tsx`          | Browse and install agent skill packs (OpenClaw)                                                                       |
+| **Overview**        | `app/overview.tsx`        | Gateway monitoring dashboard with health status (OpenClaw)                                                            |
+| **Gateway Logs**    | `app/gateway-logs.tsx`    | View gateway log output (OpenClaw)                                                                                    |
+| **Scheduler**       | `app/scheduler.tsx`       | Cron job management (OpenClaw)                                                                                        |
+| **Favorites**       | `app/favorites.tsx`       | Saved messages viewer                                                                                                 |
+| **Triggers**        | `app/triggers.tsx`        | Create and manage auto-send deep links                                                                                |
+| **Colors**          | `app/colors.tsx`          | Color theme selection                                                                                                 |
+| **Language**        | `app/language.tsx`        | Language selection (11 languages)                                                                                     |
+| **Ollama Models**   | `app/ollama-models.tsx`   | Model selection for Ollama provider                                                                                   |
+| **Gallery**         | `app/gallery.tsx`         | Component showcase for development                                                                                    |
 
 ### Navigation Flow
 
 ```
-RootLayout (ThemeProvider + KeyboardProvider)
+RootLayout (ThemeProvider + KeyboardProvider + i18n)
 ├── OnboardingScreen (if first launch)
 ├── BiometricLockScreen (if Face ID enabled)
 └── Stack Navigator
     ├── Chat (index)
     ├── Settings
     ├── Servers / Add Server / Edit Server
+    ├── Backup Servers / Restore Servers
     ├── Sessions / Edit Session
-    ├── Overview (OpenClaw)
+    ├── Missions / Create Mission / Mission Detail
+    ├── Skills
+    ├── Overview / Gateway Logs (OpenClaw)
     ├── Scheduler (OpenClaw)
     ├── Favorites
     ├── Triggers
     ├── Colors
+    ├── Language
     ├── Ollama Models (Ollama)
     └── Gallery
 ```
@@ -163,12 +213,18 @@ pnpm start
 
 1. Open the app and tap the settings gear icon
 2. Tap the + button next to "Servers"
-3. Select a provider type (OpenClaw, Claude, Ollama, Apple Intelligence, or Echo)
+3. Select a provider type
 4. Fill in the required fields:
    - **OpenClaw**: Name, WebSocket URL, Token, Client ID
    - **Claude**: Name, API Key
+   - **OpenRouter**: Name, API Key
+   - **OpenAI**: Name, API Key
+   - **OpenAI Compatible**: Name, Server URL, API Key
+   - **Gemini**: Name, API Key
+   - **Kimi**: Name, API Key
    - **Ollama**: Name, Server URL (default: `http://localhost:11434`)
    - **Apple Intelligence**: Name only (on-device)
+   - **Gemini Nano**: Name only (on-device, Android)
    - **Echo**: Name only (for testing)
 5. Tap "Add Server"
 
@@ -182,11 +238,13 @@ Open screens directly using `lumiere://` URLs:
 | `lumiere://settings`                   | Settings           |
 | `lumiere://servers`                    | Server management  |
 | `lumiere://sessions`                   | Session management |
+| `lumiere://missions`                   | Missions           |
 | `lumiere://overview`                   | Gateway overview   |
 | `lumiere://scheduler`                  | Cron scheduler     |
 | `lumiere://favorites`                  | Favorites          |
 | `lumiere://triggers`                   | Triggers           |
 | `lumiere://colors`                     | Color themes       |
+| `lumiere://language`                   | Language selection |
 | `lumiere://trigger/autotrigger/{slug}` | Execute a trigger  |
 
 ## Architecture
@@ -199,31 +257,46 @@ app/                    Expo Router file-based routes
 src/
 ├── components/
 │   ├── chat/           Chat UI (ChatScreen, ChatInput, ChatMessage)
+│   ├── missions/       Mission planning and detail UI
+│   ├── layout/         Layout wrappers
 │   └── ui/             Reusable components (Button, Card, Badge, etc.)
 ├── screens/            Onboarding and lock screens
 ├── services/
 │   ├── molt/           OpenClaw WebSocket client
 │   ├── claude/         Claude/Anthropic API client
+│   ├── openrouter/     OpenRouter SDK client
+│   ├── openai/         OpenAI API client
+│   ├── gemini/         Google Gemini API client
+│   ├── kimi/           Kimi API client
 │   ├── ollama/         Ollama HTTP client
 │   ├── apple-intelligence/  Apple Foundation Models wrapper
 │   └── echo/           Echo test provider
-├── modules/
-│   ├── speech-transcription/  Native iOS speech recognition
-│   └── apple-intelligence/    Native Apple Foundation Models
-├── hooks/              Custom hooks (useServers, useVoiceTranscription, etc.)
+├── hooks/              Custom hooks (useServers, useChatProvider, useVoiceTranscription, etc.)
 ├── store/              Jotai atoms with AsyncStorage persistence
+├── i18n/               Internationalization (11 languages)
 ├── theme/              Theme system (colors, typography, spacing)
-└── utils/              Utilities (device detection, etc.)
+└── utils/              Utilities (device detection, encryption, etc.)
+
+modules/
+├── speech-transcription/    Native iOS speech recognition
+├── apple-intelligence/      Native Apple Foundation Models (iOS 18+)
+├── apple-shortcuts/         Apple Shortcuts integration
+└── gemini-nano/             Android native Gemini Nano
+
+desktop/                Electron app configuration
+chrome-extension/       Chrome extension build
+fastlane/               iOS/Android build automation
 ```
 
-**Key dependencies:** React Native 0.81, Expo 54, Expo Router 6, Jotai (state), React Native Reanimated (animations).
+**Key dependencies:** React Native 0.81, Expo 54, Expo Router 6, Jotai (state), React Native Reanimated (animations), react-i18next (i18n).
 
 ## Platform-Specific Features
 
-### iOS Only
+### iOS
 
 - Voice transcription via native Speech Recognition
 - Apple Intelligence provider (iOS 18+)
+- Apple Shortcuts integration
 - 3D Touch quick actions
 - Glass effect input styling
 
@@ -232,6 +305,19 @@ src/
 - Form sheet modals instead of full-screen
 - Responsive layouts
 - Landscape orientation support
+
+### Android
+
+- Gemini Nano on-device AI
+- Quick actions / app shortcuts
+
+### Web
+
+- Full browser support via Metro bundler
+
+### Desktop
+
+- Electron app builds
 
 ## Contributing
 
