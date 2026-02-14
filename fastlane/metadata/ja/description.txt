@@ -2,7 +2,7 @@ Lumiereは、お気に入りのAIモデルをすべてひとつにまとめた�
 
 あらゆるAIに接続
 • Claude、ChatGPT、Google Gemini、OpenRouter、Ollamaなど多数のプロバイダーに対応
-• Apple Intelligence（iOS 18以降）やGemini NanoによるオンデバイスAIを活用
+• Apple Intelligence（iOS 18以降）によるオンデバイスAIを活用
 • モデルやサーバーを瞬時に切り替え
 • わかりやすいサーバー設定で複数のAIバックエンドを簡単に管理
 

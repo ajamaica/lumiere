@@ -2,7 +2,7 @@ Lumiere 是一款統一的 AI 聊天用戶端，將您喜愛的所有 AI 模型�
 
 連接任何 AI
 • 與 Claude、ChatGPT、Google Gemini、OpenRouter、Ollama 等供應商對話
-• 透過 Apple Intelligence（iOS 18+）或 Gemini Nano 使用裝置端 AI
+• 透過 Apple Intelligence（iOS 18+）使用裝置端 AI
 • 在不同模型與伺服器之間即時切換
 • 輕鬆配置並管理多個 AI 後端
 
