@@ -30,7 +30,14 @@ const withWatchApp = (config) => {
 
     // --- Project navigator group ---
     const watchGroup = proj.addPbxGroup(
-      ['LumiereWatchApp.swift', 'ContentView.swift', 'Assets.xcassets', 'Info.plist'],
+      [
+        'LumiereWatchApp.swift',
+        'ContentView.swift',
+        'WatchSessionManager.swift',
+        'ServerListView.swift',
+        'Assets.xcassets',
+        'Info.plist',
+      ],
       WATCH_TARGET_NAME,
       WATCH_TARGET_NAME,
     )
@@ -74,6 +81,8 @@ const withWatchApp = (config) => {
       files: [
         createBuildFile('LumiereWatchApp.swift', 'Sources'),
         createBuildFile('ContentView.swift', 'Sources'),
+        createBuildFile('WatchSessionManager.swift', 'Sources'),
+        createBuildFile('ServerListView.swift', 'Sources'),
       ],
       runOnlyForDeploymentPostprocessing: 0,
     }

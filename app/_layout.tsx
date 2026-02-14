@@ -15,6 +15,7 @@ import { useLanguage } from '../src/hooks/useLanguage'
 import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
 import { useShareExtension } from '../src/hooks/useShareIntent'
+import { useWatchSync } from '../src/hooks/useWatchSync'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { isPasswordConfigured } from '../src/services/webCrypto'
 import {
@@ -105,6 +106,7 @@ function AppContent() {
   useAppleShortcuts()
   useShareExtension()
   useLanguage() // Initialize language sync
+  useWatchSync() // Sync servers to Apple Watch
 
   // Web password lock state — only used on web
   const [webPasswordUnlocked, setWebPasswordUnlocked] = useState(() => {
