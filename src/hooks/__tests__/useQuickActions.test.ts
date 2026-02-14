@@ -81,9 +81,9 @@ function setupHook(
   })
   ;(useCallback as jest.Mock).mockImplementation((fn: (...args: unknown[]) => unknown) => fn)
 
-  // Set initial if provided
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(QuickActions as any).initial = overrides.initial ?? undefined
+  // Set initial if provided — alias to bypass no-import-assign on the mocked module
+  const qa: { initial?: QuickActions.Action } = QuickActions
+  qa.initial = overrides.initial ?? undefined
 
   // eslint-disable-next-line react-hooks/rules-of-hooks -- test helper that drives hooks imperatively
   useQuickActions()

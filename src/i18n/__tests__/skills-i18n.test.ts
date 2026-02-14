@@ -12,14 +12,17 @@ import zhTW from '../locales/zh-TW.json'
 
 type NestedRecord = { [key: string]: string | NestedRecord }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
 /** Recursively extract all leaf keys from a nested object using dot notation. */
-function getKeys(obj: NestedRecord, prefix = ''): string[] {
+function getKeys(obj: Record<string, unknown>, prefix = ''): string[] {
   const keys: string[] = []
-  for (const key of Object.keys(obj)) {
+  for (const [key, value] of Object.entries(obj)) {
     const fullKey = prefix ? `${prefix}.${key}` : key
-    const value = obj[key]
-    if (typeof value === 'object' && value !== null) {
-      keys.push(...getKeys(value as NestedRecord, fullKey))
+    if (isRecord(value)) {
+      keys.push(...getKeys(value, fullKey))
     } else {
       keys.push(fullKey)
     }
@@ -27,21 +30,21 @@ function getKeys(obj: NestedRecord, prefix = ''): string[] {
   return keys.sort()
 }
 
-const locales: Record<string, NestedRecord> = {
-  en: en as unknown as NestedRecord,
-  es: es as unknown as NestedRecord,
-  fr: fr as unknown as NestedRecord,
-  de: de as unknown as NestedRecord,
-  hi: hi as unknown as NestedRecord,
-  ja: ja as unknown as NestedRecord,
-  ko: ko as unknown as NestedRecord,
-  'pt-BR': ptBR as unknown as NestedRecord,
-  ru: ru as unknown as NestedRecord,
-  'zh-CN': zhCN as unknown as NestedRecord,
-  'zh-TW': zhTW as unknown as NestedRecord,
+const locales: Record<string, Record<string, unknown>> = {
+  en,
+  es,
+  fr,
+  de,
+  hi,
+  ja,
+  ko,
+  'pt-BR': ptBR,
+  ru,
+  'zh-CN': zhCN,
+  'zh-TW': zhTW,
 }
 
-const enKeys = getKeys(en as unknown as NestedRecord)
+const enKeys = getKeys(en)
 
 // All skills-related keys from en.json
 const skillsKeys = enKeys.filter((key) => key.startsWith('skills.'))

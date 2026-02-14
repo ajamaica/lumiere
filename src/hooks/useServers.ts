@@ -1,4 +1,5 @@
-import { type PrimitiveAtom, useAtom } from 'jotai'
+import { useAtom } from 'jotai'
+import { unwrap } from 'jotai/utils'
 import { useCallback, useEffect, useMemo } from 'react'
 
 import { ProviderConfig } from '../services/providers'
@@ -21,10 +22,10 @@ import {
 } from '../store'
 import { isWeb } from '../utils/platform'
 
-// Both atoms hold ServersDict — cast to a common type so the conditional
-// expression satisfies useAtom's overload without collapsing to `never`.
-const webAtom = secureServersAtom as PrimitiveAtom<ServersDict>
-const nativeAtom = serversAtom as unknown as PrimitiveAtom<ServersDict>
+// Both atoms hold ServersDict — unwrap the async-storage atom so both
+// branches share the same synchronous PrimitiveAtom<ServersDict> type.
+const webAtom = secureServersAtom
+const nativeAtom = unwrap(serversAtom, (prev) => prev ?? ({} as ServersDict))
 
 export interface UseServersResult {
   // State

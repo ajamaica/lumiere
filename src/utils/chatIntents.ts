@@ -7,6 +7,11 @@
  * Example URL: lumiere://intent/openApp?package=com.example.app&mode=debug
  */
 
+import type { Ionicons } from '@expo/vector-icons'
+import type { ComponentProps } from 'react'
+
+export type IoniconsName = ComponentProps<typeof Ionicons>['name']
+
 export interface ChatIntent {
   /** The raw URL as it appeared in the message */
   raw: string
@@ -32,7 +37,7 @@ const ALLOWED_ACTIONS = new Set([
 ])
 
 /** Map action names to Ionicons icon names */
-const ACTION_ICONS: Record<string, string> = {
+const ACTION_ICONS: Record<string, IoniconsName> = {
   openApp: 'open-outline',
   playMedia: 'play-circle-outline',
   navigate: 'compass-outline',
@@ -45,7 +50,7 @@ const ACTION_ICONS: Record<string, string> = {
 }
 
 /** Returns the Ionicons name for a given action, with a fallback. */
-export function intentIcon(action: string): string {
+export function intentIcon(action: string): IoniconsName {
   return ACTION_ICONS[action] ?? 'open-outline'
 }
 

@@ -67,7 +67,7 @@ export class MoltGatewayClient {
   private intentionalClose = false
 
   // Keepalive tick monitoring
-  private tickTimer: ReturnType<typeof setTimeout> | null = null
+  private tickTimer: ReturnType<typeof setInterval> | null = null
   private tickIntervalMs = 15_000
   private lastTickReceived = 0
   private missedTickThreshold = 3
@@ -712,12 +712,12 @@ export class MoltGatewayClient {
         )
         this.ws?.close(4000, 'Tick timeout')
       }
-    }, checkInterval) as unknown as ReturnType<typeof setTimeout>
+    }, checkInterval)
   }
 
   private clearTickTimer(): void {
     if (this.tickTimer) {
-      clearInterval(this.tickTimer as unknown as number)
+      clearInterval(this.tickTimer)
       this.tickTimer = null
     }
   }
