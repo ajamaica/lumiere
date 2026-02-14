@@ -2,33 +2,54 @@ import * as BackgroundTask from 'expo-background-task'
 import * as Notifications from 'expo-notifications'
 import * as TaskManager from 'expo-task-manager'
 
+import { CACHE_CONFIG } from '../../constants'
 import {
   backgroundNotificationsEnabledAtom,
   currentSessionKeyAtom,
   getStore,
-  notificationLastCheckAtom,
-  type NotificationLastCheckMap,
+  jotaiStorage,
   serversAtom,
   serverSessionsAtom,
 } from '../../store'
+import { buildCacheKey, readCachedHistory, readSessionIndex } from '../providers/CachedChatProvider'
+import type { ChatHistoryMessage } from '../providers/types'
 import { getServerToken } from '../secureTokenStorage'
 
 export const BACKGROUND_FETCH_TASK = 'background-server-check'
 
-async function getLastCheckMap(): Promise<NotificationLastCheckMap> {
-  const raw = getStore().get(notificationLastCheckAtom)
-  // Handle hydration: atomWithStorage may return a Promise during initial load
-  return raw instanceof Promise ? await raw : raw
-}
+/**
+ * Write messages to the local chat cache for a given server and session.
+ * Merges new messages with existing cached messages, deduplicating by timestamp,
+ * and trims to the configured maximum.
+ */
+async function updateCachedMessages(
+  serverId: string,
+  sessionKey: string,
+  serverMessages: ChatHistoryMessage[],
+): Promise<void> {
+  try {
+    const existing = await readCachedHistory(serverId, sessionKey)
+    const lastCachedTimestamp =
+      existing.length > 0 ? Math.max(...existing.map((m) => m.timestamp)) : 0
 
-async function setLastCheck(serverSessionKey: string, timestamp: number): Promise<void> {
-  const map = await getLastCheckMap()
-  getStore().set(notificationLastCheckAtom, { ...map, [serverSessionKey]: timestamp })
+    // Only append messages newer than what we already have
+    const newMessages = serverMessages.filter((m) => m.timestamp > lastCachedTimestamp)
+
+    if (newMessages.length === 0) return
+
+    const merged = [...existing, ...newMessages]
+    const trimmed = merged.slice(-CACHE_CONFIG.MAX_CACHED_MESSAGES)
+    const cacheKey = buildCacheKey(serverId, sessionKey)
+    await jotaiStorage.setItem(cacheKey, trimmed)
+  } catch {
+    // Silently ignore cache write errors in background
+  }
 }
 
 /**
- * Perform an HTTP health + chat history check against a server.
- * Returns the latest assistant message if it arrived after our last check.
+ * Check a server session for new assistant messages by comparing the server's
+ * chat history against the locally cached history. This avoids relying on
+ * separate timestamp tracking — the cache itself is the source of truth.
  */
 async function checkServerForNewMessages(
   serverUrl: string,
@@ -36,13 +57,11 @@ async function checkServerForNewMessages(
   sessionKey: string,
   serverId: string,
 ): Promise<{ hasNew: boolean; preview?: string; serverName?: string }> {
-  const serverSessionKey = `${serverId}:${sessionKey}`
-  const lastCheckMap = await getLastCheckMap()
-  const lastCheck = lastCheckMap[serverSessionKey] ?? Date.now()
-
   try {
-    // Use the HTTP REST endpoint to check for new messages.
-    // Molt gateways expose POST /api/rpc for JSON-RPC style calls.
+    // Read locally cached history to determine what we've already seen
+    const cachedMessages = await readCachedHistory(serverId, sessionKey)
+
+    // Fetch the latest messages from the server
     const response = await fetch(`${httpUrl(serverUrl)}/api/rpc`, {
       method: 'POST',
       headers: {
@@ -58,31 +77,38 @@ async function checkServerForNewMessages(
     if (!response.ok) return { hasNew: false }
 
     const data = (await response.json()) as {
-      messages?: Array<{
-        role: string
-        content: Array<{ type: string; text?: string }>
-        timestamp: number
-      }>
+      messages?: ChatHistoryMessage[]
     }
 
-    const messages = data.messages ?? []
-    // Find newest assistant message
-    const assistantMessages = messages.filter(
-      (m) => m.role === 'assistant' && m.timestamp > lastCheck,
+    const serverMessages = data.messages ?? []
+
+    // If cache is empty this is the first check — establish a baseline
+    // by caching the current server state without sending notifications.
+    if (cachedMessages.length === 0) {
+      if (serverMessages.length > 0) {
+        await updateCachedMessages(serverId, sessionKey, serverMessages)
+      }
+      return { hasNew: false }
+    }
+
+    // Determine the most recent cached message timestamp
+    const lastCachedTimestamp = Math.max(...cachedMessages.map((m) => m.timestamp))
+
+    // Find assistant messages from the server that are newer than the cache
+    const newAssistantMessages = serverMessages.filter(
+      (m) => m.role === 'assistant' && m.timestamp > lastCachedTimestamp,
     )
 
-    if (assistantMessages.length > 0) {
-      const latest = assistantMessages[assistantMessages.length - 1]
+    if (newAssistantMessages.length > 0) {
+      const latest = newAssistantMessages[newAssistantMessages.length - 1]
       const text =
         latest.content?.find((c) => c.type === 'text')?.text?.slice(0, 100) ?? 'New message'
 
-      // Update the last check to now
-      await setLastCheck(serverSessionKey, Date.now())
+      // Update the cache with new messages from the server
+      await updateCachedMessages(serverId, sessionKey, serverMessages)
       return { hasNew: true, preview: text }
     }
 
-    // No new messages — still update the checkpoint
-    await setLastCheck(serverSessionKey, Date.now())
     return { hasNew: false }
   } catch {
     // Network error in background — silently ignore
@@ -106,12 +132,14 @@ async function resolveAtom<T>(value: T | Promise<T>): Promise<T> {
 
 /**
  * Fetch all session keys for a Molt server via the HTTP RPC endpoint.
- * Falls back to the provided default session key on failure.
+ * Falls back to the locally cached session index, then to the provided
+ * default session key on failure.
  */
 async function listServerSessions(
   serverUrl: string,
   token: string,
   fallbackSessionKey: string,
+  serverId: string,
 ): Promise<string[]> {
   try {
     const response = await fetch(`${httpUrl(serverUrl)}/api/rpc`, {
@@ -123,7 +151,7 @@ async function listServerSessions(
       body: JSON.stringify({ method: 'sessions.list' }),
     })
 
-    if (!response.ok) return [fallbackSessionKey]
+    if (!response.ok) throw new Error('sessions.list failed')
 
     const data = (await response.json()) as {
       sessions?: Array<{ key: string }>
@@ -132,6 +160,11 @@ async function listServerSessions(
     const keys = data.sessions?.map((s) => s.key).filter(Boolean)
     return keys && keys.length > 0 ? keys : [fallbackSessionKey]
   } catch {
+    // Fall back to the locally cached session index
+    const cachedSessions = await readSessionIndex(serverId)
+    if (cachedSessions.length > 0) {
+      return cachedSessions.map((s) => s.key)
+    }
     return [fallbackSessionKey]
   }
 }
@@ -139,7 +172,8 @@ async function listServerSessions(
 /**
  * The background task that runs periodically. It reads server configs from
  * Jotai store, checks Molt servers for new assistant messages across all
- * sessions, and fires a local notification per new message.
+ * sessions by comparing server state against the local chat cache, and fires
+ * a local notification per new message.
  */
 export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTaskResult> {
   try {
@@ -164,7 +198,7 @@ export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTa
       if (!token) continue
 
       const fallbackSessionKey = sessions[serverId] ?? defaultSession
-      const sessionKeys = await listServerSessions(server.url, token, fallbackSessionKey)
+      const sessionKeys = await listServerSessions(server.url, token, fallbackSessionKey, serverId)
 
       for (const sessionKey of sessionKeys) {
         const result = await checkServerForNewMessages(server.url, token, sessionKey, serverId)

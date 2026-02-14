@@ -2,7 +2,6 @@
 export type { Mission, MissionsDict, MissionStatus, MissionSubtask } from './missionTypes'
 export type {
   FavoriteItem,
-  NotificationLastCheckMap,
   PendingShareMedia,
   ServerConfig,
   ServersDict,
@@ -62,7 +61,6 @@ export { favoritesAtom, triggersAtom } from './userDataAtoms'
 export {
   backgroundFetchIntervalAtom,
   backgroundNotificationsEnabledAtom,
-  notificationLastCheckAtom,
 } from './notificationAtoms'
 
 // ─── Mission atoms ──────────────────────────────────────

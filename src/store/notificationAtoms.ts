@@ -1,7 +1,6 @@
 import { atomWithStorage } from 'jotai/utils'
 
 import { storage } from './storage'
-import type { NotificationLastCheckMap } from './types'
 
 /** Whether background notifications are enabled (off by default) */
 export const backgroundNotificationsEnabledAtom = atomWithStorage<boolean>(
@@ -14,12 +13,5 @@ export const backgroundNotificationsEnabledAtom = atomWithStorage<boolean>(
 export const backgroundFetchIntervalAtom = atomWithStorage<number>(
   'backgroundFetchInterval',
   15,
-  storage,
-)
-
-/** Last notification check timestamps keyed by serverSessionKey */
-export const notificationLastCheckAtom = atomWithStorage<NotificationLastCheckMap>(
-  'notifications_last_check',
-  {},
   storage,
 )

@@ -175,13 +175,14 @@ Users can configure multiple servers and switch between them. The `currentServer
 
 ## Notification Settings
 
-Background notification settings stored in atoms:
+Background notification settings stored in atoms. The background task uses the
+local chat cache (managed by `CachedChatProvider`) as the source of truth for
+detecting new messages — no separate timestamp tracking is needed.
 
 | Atom                                 | Type      | Default | Description                        |
 | ------------------------------------ | --------- | ------- | ---------------------------------- |
 | `backgroundNotificationsEnabledAtom` | `boolean` | `false` | Enable background fetch            |
 | `backgroundFetchIntervalAtom`        | `number`  | `900`   | Fetch interval in seconds (15 min) |
-| `notificationLastCheckAtom`          | `number`  | `0`     | Timestamp of last check            |
 
 ## Metro Bundler Configuration
 

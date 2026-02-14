@@ -62,9 +62,3 @@ export interface PendingShareMedia {
   mimeType: string
   fileName?: string
 }
-
-// ─── Notification types ──────────────────────────────────
-
-export interface NotificationLastCheckMap {
-  [serverSessionKey: string]: number
-}
