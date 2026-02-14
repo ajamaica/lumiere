@@ -53,7 +53,6 @@
     "skills": "Habilidades",
     "gatewayLogs": "Registros del Gateway",
     "missions": "Misiones",
-    "activity": "Actividad",
     "showToolEventsInChat": "Mostrar eventos de herramientas en el chat"
   },
   "home": {
@@ -389,35 +388,6 @@
       "file_write": "Escribiendo archivo...",
       "search": "Buscando...",
       "default": "Ejecutando {{toolName}}..."
-    }
-  },
-  "activity": {
-    "title": "Actividad",
-    "subtitle": "Flujo de eventos del agente en tiempo real.",
-    "openClawOnlyDescription": "El feed de actividad solo está disponible para servidores OpenClaw.",
-    "filterAll": "Todos",
-    "filterLifecycle": "Ciclo de vida",
-    "filterTools": "Herramientas",
-    "filterAssistant": "Asistente",
-    "pause": "Pausar",
-    "resume": "Reanudar",
-    "clear": "Limpiar",
-    "pausedMessage": "Feed pausado — no se están capturando nuevos eventos.",
-    "eventsSection": "Eventos",
-    "eventsDescription": "Eventos del agente en vivo desde el gateway.",
-    "connectionError": "Error de conexión",
-    "connecting": "Conectando al gateway...",
-    "noEvents": "Sin eventos aún. Los eventos aparecerán aquí cuando el agente esté activo.",
-    "session": "Sesión",
-    "events": {
-      "agentStarted": "Ejecución del agente iniciada",
-      "agentFinished": "Ejecución del agente finalizada",
-      "lifecycle": "Evento de ciclo de vida",
-      "toolRunning": "Ejecutando {{toolName}}...",
-      "toolCompleted": "{{toolName}} completado",
-      "toolError": "{{toolName}} falló",
-      "unknownTool": "herramienta desconocida",
-      "assistantTyping": "El asistente está escribiendo..."
     }
   }
 }

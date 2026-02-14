@@ -53,7 +53,6 @@
     "skills": "スキル",
     "gatewayLogs": "ゲートウェイログ",
     "missions": "ミッション",
-    "activity": "アクティビティ",
     "showToolEventsInChat": "チャットにツールイベントを表示"
   },
   "home": {
@@ -389,35 +388,6 @@
       "file_write": "ファイルを書き込み中...",
       "search": "検索中...",
       "default": "{{toolName}}を実行中..."
-    }
-  },
-  "activity": {
-    "title": "アクティビティ",
-    "subtitle": "リアルタイムのエージェントイベントストリーム。",
-    "openClawOnlyDescription": "アクティビティフィードはOpenClawサーバーでのみ利用可能です。",
-    "filterAll": "すべて",
-    "filterLifecycle": "ライフサイクル",
-    "filterTools": "ツール",
-    "filterAssistant": "アシスタント",
-    "pause": "一時停止",
-    "resume": "再開",
-    "clear": "クリア",
-    "pausedMessage": "フィード一時停止中 — 新しいイベントはキャプチャされません。",
-    "eventsSection": "イベント",
-    "eventsDescription": "ゲートウェイからのライブエージェントイベント。",
-    "connectionError": "接続エラー",
-    "connecting": "ゲートウェイに接続中...",
-    "noEvents": "イベントはまだありません。エージェントがアクティブになるとイベントがここに表示されます。",
-    "session": "セッション",
-    "events": {
-      "agentStarted": "エージェントの実行が開始されました",
-      "agentFinished": "エージェントの実行が完了しました",
-      "lifecycle": "ライフサイクルイベント",
-      "toolRunning": "{{toolName}}を実行中...",
-      "toolCompleted": "{{toolName}}が完了しました",
-      "toolError": "{{toolName}}が失敗しました",
-      "unknownTool": "不明なツール",
-      "assistantTyping": "アシスタントが入力中..."
     }
   }
 }

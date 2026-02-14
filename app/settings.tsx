@@ -237,11 +237,6 @@ export default function SettingsScreen() {
               onPress={() => router.push('/missions')}
             />
             <SettingRow
-              icon="pulse-outline"
-              label={t('settings.activity')}
-              onPress={() => router.push('/activity')}
-            />
-            <SettingRow
               icon="document-text-outline"
               label={t('settings.gatewayLogs')}
               onPress={() => router.push('/gateway-logs')}

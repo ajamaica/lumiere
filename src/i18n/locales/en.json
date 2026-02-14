@@ -53,7 +53,6 @@
     "contribute": "Contribute",
     "gatewayLogs": "Gateway Logs",
     "missions": "Missions",
-    "activity": "Activity",
     "showToolEventsInChat": "Show Tool Events in Chat"
   },
   "home": {
@@ -389,35 +388,6 @@
       "file_write": "Writing file...",
       "search": "Searching...",
       "default": "Running {{toolName}}..."
-    }
-  },
-  "activity": {
-    "title": "Activity",
-    "subtitle": "Real-time agent event stream.",
-    "openClawOnlyDescription": "Activity feed is only available for OpenClaw servers.",
-    "filterAll": "All",
-    "filterLifecycle": "Lifecycle",
-    "filterTools": "Tools",
-    "filterAssistant": "Assistant",
-    "pause": "Pause",
-    "resume": "Resume",
-    "clear": "Clear",
-    "pausedMessage": "Feed paused — new events are not being captured.",
-    "eventsSection": "Events",
-    "eventsDescription": "Live agent events from the gateway.",
-    "connectionError": "Connection error",
-    "connecting": "Connecting to gateway...",
-    "noEvents": "No events yet. Events will appear here when the agent is active.",
-    "session": "Session",
-    "events": {
-      "agentStarted": "Agent run started",
-      "agentFinished": "Agent run finished",
-      "lifecycle": "Lifecycle event",
-      "toolRunning": "Running {{toolName}}...",
-      "toolCompleted": "{{toolName}} completed",
-      "toolError": "{{toolName}} failed",
-      "unknownTool": "unknown tool",
-      "assistantTyping": "Assistant is typing..."
     }
   }
 }

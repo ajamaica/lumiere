@@ -53,7 +53,6 @@
     "skills": "कौशल",
     "gatewayLogs": "गेटवे लॉग",
     "missions": "मिशन",
-    "activity": "गतिविधि",
     "showToolEventsInChat": "चैट में टूल इवेंट दिखाएं"
   },
   "home": {
@@ -389,35 +388,6 @@
       "file_write": "फ़ाइल लिखी जा रही है...",
       "search": "खोज जारी है...",
       "default": "{{toolName}} चल रहा है..."
-    }
-  },
-  "activity": {
-    "title": "गतिविधि",
-    "subtitle": "रियल-टाइम एजेंट इवेंट स्ट्रीम।",
-    "openClawOnlyDescription": "गतिविधि फीड केवल OpenClaw सर्वर के लिए उपलब्ध है।",
-    "filterAll": "सभी",
-    "filterLifecycle": "जीवनचक्र",
-    "filterTools": "उपकरण",
-    "filterAssistant": "सहायक",
-    "pause": "रोकें",
-    "resume": "फिर शुरू करें",
-    "clear": "साफ करें",
-    "pausedMessage": "फीड रुका हुआ है — नए इवेंट कैप्चर नहीं हो रहे।",
-    "eventsSection": "इवेंट",
-    "eventsDescription": "गेटवे से लाइव एजेंट इवेंट।",
-    "connectionError": "कनेक्शन त्रुटि",
-    "connecting": "गेटवे से कनेक्ट हो रहा है...",
-    "noEvents": "अभी तक कोई इवेंट नहीं। एजेंट सक्रिय होने पर इवेंट यहां दिखाई देंगे।",
-    "session": "सत्र",
-    "events": {
-      "agentStarted": "एजेंट रन शुरू हुआ",
-      "agentFinished": "एजेंट रन समाप्त हुआ",
-      "lifecycle": "जीवनचक्र इवेंट",
-      "toolRunning": "{{toolName}} चल रहा है...",
-      "toolCompleted": "{{toolName}} पूर्ण",
-      "toolError": "{{toolName}} विफल",
-      "unknownTool": "अज्ञात उपकरण",
-      "assistantTyping": "सहायक टाइप कर रहा है..."
     }
   }
 }
