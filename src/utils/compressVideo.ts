@@ -20,7 +20,11 @@ export async function compressVideo(
 ): Promise<CompressedVideo> {
   try {
     videoLogger.info('Starting video compression')
-    const compressedUri = await Video.compress(uri, { compressionMethod: 'auto', maxSize: 480 }, onProgress)
+    const compressedUri = await Video.compress(
+      uri,
+      { compressionMethod: 'auto', maxSize: 480 },
+      onProgress,
+    )
     videoLogger.info('Video compression complete')
     return { uri: compressedUri }
   } catch (err) {
