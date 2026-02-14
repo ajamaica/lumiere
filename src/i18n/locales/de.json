@@ -175,7 +175,16 @@
     "sessionKeyRequired": "Sitzungsschlüssel ist erforderlich",
     "systemMessage": "Systemnachricht",
     "systemMessageHint": "Versteckte Anweisungen, die mit jeder Nachricht gesendet werden. Im Chat nicht sichtbar.",
-    "systemMessagePlaceholder": "z.B. Du bist ein hilfreicher Programmierassistent..."
+    "systemMessagePlaceholder": "z.B. Du bist ein hilfreicher Programmierassistent...",
+    "variablesLabel": "Tippen, um eine Variable einzufügen:",
+    "variables": {
+      "date": "Datum",
+      "time": "Uhrzeit",
+      "datetime": "Datum und Uhrzeit",
+      "day": "Wochentag",
+      "language": "Sprache",
+      "platform": "Plattform"
+    }
   },
   "favorites": {
     "title": "Favoriten",

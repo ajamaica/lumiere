@@ -175,7 +175,16 @@
     "sessionKeyRequired": "セッションキーは必須です",
     "systemMessage": "システムメッセージ",
     "systemMessageHint": "すべてのメッセージと一緒に送信される非表示の指示。チャットには表示されません。",
-    "systemMessagePlaceholder": "例: あなたは親切なコーディングアシスタントです..."
+    "systemMessagePlaceholder": "例: あなたは親切なコーディングアシスタントです...",
+    "variablesLabel": "タップして変数を挿入:",
+    "variables": {
+      "date": "日付",
+      "time": "時刻",
+      "datetime": "日時",
+      "day": "曜日",
+      "language": "言語",
+      "platform": "プラットフォーム"
+    }
   },
   "favorites": {
     "title": "お気に入り",

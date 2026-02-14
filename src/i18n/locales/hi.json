@@ -175,7 +175,16 @@
     "sessionKeyRequired": "सत्र कुंजी आवश्यक है",
     "systemMessage": "सिस्टम संदेश",
     "systemMessageHint": "हर संदेश के साथ भेजे जाने वाले छिपे निर्देश। चैट में दिखाई नहीं देते।",
-    "systemMessagePlaceholder": "उदा. आप एक सहायक कोडिंग असिस्टेंट हैं..."
+    "systemMessagePlaceholder": "उदा. आप एक सहायक कोडिंग असिस्टेंट हैं...",
+    "variablesLabel": "वेरिएबल डालने के लिए टैप करें:",
+    "variables": {
+      "date": "तारीख",
+      "time": "समय",
+      "datetime": "तारीख और समय",
+      "day": "सप्ताह का दिन",
+      "language": "भाषा",
+      "platform": "प्लेटफ़ॉर्म"
+    }
   },
   "favorites": {
     "title": "पसंदीदा",

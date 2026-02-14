@@ -15,7 +15,10 @@ export interface TextInputProps extends RNTextInputProps {
   error?: string
 }
 
-export function TextInput({ label, hint, error, style, ...props }: TextInputProps) {
+export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(function TextInput(
+  { label, hint, error, style, ...props },
+  ref,
+) {
   const { theme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -54,6 +57,7 @@ export function TextInput({ label, hint, error, style, ...props }: TextInputProp
     <View style={styles.container} accessible={false}>
       {label && <Text style={styles.label}>{label}</Text>}
       <RNTextInput
+        ref={ref}
         style={[styles.input, style]}
         placeholderTextColor={theme.colors.text.tertiary}
         accessibilityLabel={label}
@@ -70,4 +74,4 @@ export function TextInput({ label, hint, error, style, ...props }: TextInputProp
       ) : null}
     </View>
   )
-}
+})

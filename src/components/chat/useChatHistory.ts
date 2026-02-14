@@ -14,6 +14,7 @@ import {
   sessionContextAtom,
 } from '../../store'
 import { logger } from '../../utils/logger'
+import { resolveSystemMessageVariables } from '../../utils/systemMessageVariables'
 import { Message } from './ChatMessage'
 
 const chatHistoryLogger = logger.create('ChatHistory')
@@ -65,12 +66,14 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
 
   const sessionSystemMessage = sessionContextMap[currentSessionKey]?.systemMessage
 
-  // Combine the user-configured system message with the active website context
+  // Combine the user-configured system message with the active website context,
+  // then resolve any {{variable}} placeholders to their current runtime values.
   const effectiveSystemMessage = useMemo(() => {
     const parts: string[] = []
     if (sessionSystemMessage) parts.push(sessionSystemMessage)
     if (activeWebsite) parts.push(`The user is currently browsing: ${activeWebsite}`)
-    return parts.length > 0 ? parts.join('\n\n') : undefined
+    if (parts.length === 0) return undefined
+    return resolveSystemMessageVariables(parts.join('\n\n'))
   }, [sessionSystemMessage, activeWebsite])
 
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
