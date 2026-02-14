@@ -52,7 +52,8 @@
     "contribute": "贡献",
     "skills": "技能",
     "gatewayLogs": "网关日志",
-    "missions": "任务"
+    "missions": "任务",
+    "activity": "活动"
   },
   "home": {
     "connectionError": "连接错误",
@@ -387,6 +388,35 @@
       "file_write": "正在写入文件...",
       "search": "正在搜索...",
       "default": "正在执行 {{toolName}}..."
+    }
+  },
+  "activity": {
+    "title": "活动",
+    "subtitle": "实时代理事件流。",
+    "openClawOnlyDescription": "活动动态仅适用于 OpenClaw 服务器。",
+    "filterAll": "全部",
+    "filterLifecycle": "生命周期",
+    "filterTools": "工具",
+    "filterAssistant": "助手",
+    "pause": "暂停",
+    "resume": "继续",
+    "clear": "清除",
+    "pausedMessage": "动态已暂停 — 新事件未被捕获。",
+    "eventsSection": "事件",
+    "eventsDescription": "来自网关的实时代理事件。",
+    "connectionError": "连接错误",
+    "connecting": "正在连接网关...",
+    "noEvents": "暂无事件。代理活跃时事件将显示在这里。",
+    "session": "会话",
+    "events": {
+      "agentStarted": "代理运行已开始",
+      "agentFinished": "代理运行已完成",
+      "lifecycle": "生命周期事件",
+      "toolRunning": "正在执行 {{toolName}}...",
+      "toolCompleted": "{{toolName}} 已完成",
+      "toolError": "{{toolName}} 失败",
+      "unknownTool": "未知工具",
+      "assistantTyping": "助手正在输入..."
     }
   }
 }

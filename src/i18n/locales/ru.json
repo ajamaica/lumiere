@@ -52,7 +52,8 @@
     "contribute": "Внести вклад",
     "skills": "Навыки",
     "gatewayLogs": "Журналы шлюза",
-    "missions": "Миссии"
+    "missions": "Миссии",
+    "activity": "Активность"
   },
   "home": {
     "connectionError": "Ошибка подключения",
@@ -387,6 +388,35 @@
       "file_write": "Запись файла...",
       "search": "Поиск...",
       "default": "Выполнение {{toolName}}..."
+    }
+  },
+  "activity": {
+    "title": "Активность",
+    "subtitle": "Поток событий агента в реальном времени.",
+    "openClawOnlyDescription": "Лента активности доступна только для серверов OpenClaw.",
+    "filterAll": "Все",
+    "filterLifecycle": "Жизненный цикл",
+    "filterTools": "Инструменты",
+    "filterAssistant": "Ассистент",
+    "pause": "Пауза",
+    "resume": "Продолжить",
+    "clear": "Очистить",
+    "pausedMessage": "Лента приостановлена — новые события не фиксируются.",
+    "eventsSection": "События",
+    "eventsDescription": "События агента в реальном времени от шлюза.",
+    "connectionError": "Ошибка подключения",
+    "connecting": "Подключение к шлюзу...",
+    "noEvents": "Событий пока нет. События появятся здесь, когда агент будет активен.",
+    "session": "Сессия",
+    "events": {
+      "agentStarted": "Запуск агента начат",
+      "agentFinished": "Запуск агента завершён",
+      "lifecycle": "Событие жизненного цикла",
+      "toolRunning": "Выполнение {{toolName}}...",
+      "toolCompleted": "{{toolName}} завершён",
+      "toolError": "{{toolName}} не удалось",
+      "unknownTool": "неизвестный инструмент",
+      "assistantTyping": "Ассистент печатает..."
     }
   }
 }
