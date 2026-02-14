@@ -9,14 +9,70 @@ import { Text } from '../ui'
 import type { ToolEventMessage } from './chatMessageTypes'
 
 const TOOL_ICONS: Record<string, string> = {
+  // Web tools
   web_fetch: 'globe-outline',
-  code_execution: 'code-slash-outline',
+  web_search: 'search-outline',
+  // File system tools
+  grep: 'search-outline',
+  find: 'folder-open-outline',
+  ls: 'folder-outline',
   file_read: 'document-text-outline',
   file_write: 'create-outline',
+  apply_patch: 'git-merge-outline',
+  // Execution tools
+  exec: 'terminal-outline',
+  code_execution: 'code-slash-outline',
+  process: 'cog-outline',
+  // Browser & UI tools
+  browser: 'browsers-outline',
+  canvas: 'easel-outline',
+  // Infrastructure tools
+  nodes: 'git-network-outline',
+  cron: 'timer-outline',
+  // Session tools
+  sessions_list: 'list-outline',
+  sessions_history: 'time-outline',
+  sessions_send: 'send-outline',
+  sessions_spawn: 'git-branch-outline',
+  // Memory tools
+  memory_search: 'library-outline',
+  memory_get: 'bookmark-outline',
+  // Legacy / generic
   search: 'search-outline',
 }
 
 const DEFAULT_ICON = 'build-outline'
+
+/** Keys to look for in toolInput to display as a detail subtitle, in priority order per tool. */
+const TOOL_DETAIL_KEYS: Record<string, string[]> = {
+  web_fetch: ['url'],
+  web_search: ['query'],
+  grep: ['pattern', 'query'],
+  find: ['pattern', 'glob', 'path'],
+  ls: ['path'],
+  exec: ['command', 'cmd'],
+  code_execution: ['code', 'command'],
+  file_read: ['path', 'file'],
+  file_write: ['path', 'file'],
+  apply_patch: ['path', 'file'],
+  browser: ['action', 'url'],
+  sessions_send: ['target', 'session'],
+  sessions_spawn: ['target', 'agent'],
+  memory_search: ['query'],
+  memory_get: ['key', 'id'],
+}
+
+function getToolDetail(toolName: string, toolInput?: Record<string, unknown>): string | undefined {
+  if (!toolInput) return undefined
+  const keys = TOOL_DETAIL_KEYS[toolName]
+  if (keys) {
+    for (const key of keys) {
+      const value = toolInput[key]
+      if (typeof value === 'string' && value.length > 0) return value
+    }
+  }
+  return undefined
+}
 
 interface ToolEventBubbleProps {
   message: ToolEventMessage
@@ -33,6 +89,8 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
     defaultValue: t('missions.toolEvents.default', { toolName: message.toolName }),
     ...(message.toolInput ?? {}),
   })
+
+  const detail = getToolDetail(message.toolName, message.toolInput)
 
   const isRunning = message.status === 'running'
   const isError = message.status === 'error'
@@ -55,9 +113,16 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
         size={16}
         color={theme.colors.text.secondary}
       />
-      <Text variant="caption" style={styles.description} numberOfLines={1}>
-        {description}
-      </Text>
+      <View style={styles.textContainer}>
+        <Text variant="caption" style={styles.description} numberOfLines={1}>
+          {description}
+        </Text>
+        {detail ? (
+          <Text variant="caption" style={styles.detail} numberOfLines={1}>
+            {detail}
+          </Text>
+        ) : null}
+      </View>
       <View style={styles.statusContainer}>
         {isRunning ? (
           <ActivityIndicator size="small" color={theme.colors.text.secondary} />
@@ -87,9 +152,16 @@ const createStyles = (theme: Theme) =>
       borderWidth: 1,
       borderColor: theme.isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.05)',
     },
-    description: {
+    textContainer: {
       flex: 1,
+    },
+    description: {
       color: theme.colors.text.secondary,
+    },
+    detail: {
+      color: theme.colors.text.secondary,
+      opacity: 0.7,
+      fontSize: 11,
     },
     statusContainer: {
       width: 20,
