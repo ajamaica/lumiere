@@ -15,8 +15,12 @@ import {
   HealthStatus,
   MoltConfig,
   SendMessageParams,
+  SessionsSpawnParams,
+  SessionsSpawnResponse,
   Skill,
   SkillsListResponse,
+  SubagentEvent,
+  SubagentsListResponse,
   TeachSkillParams,
   UpdateSkillParams,
 } from './types'
@@ -65,6 +69,10 @@ export interface UseMoltGatewayResult {
   removeSkill: (name: string) => Promise<unknown>
   updateSkill: (params: UpdateSkillParams) => Promise<Skill>
   getLogs: (params?: GatewayLogsParams) => Promise<GatewayLogsResponse>
+  spawnSubagent: (params: SessionsSpawnParams) => Promise<SessionsSpawnResponse>
+  listSubagents: (sessionKey?: string) => Promise<SubagentsListResponse>
+  stopSubagent: (runId: string) => Promise<void>
+  onSubagentEvent: (callback: (event: SubagentEvent) => void) => () => void
 }
 
 /** Derive boolean flags from the ConnectionState enum. */
@@ -387,6 +395,46 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     [client],
   )
 
+  const spawnSubagent = useCallback(
+    async (params: SessionsSpawnParams) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.spawnSubagent(params)
+    },
+    [client],
+  )
+
+  const listSubagents = useCallback(
+    async (sessionKey?: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.listSubagents(sessionKey)
+    },
+    [client],
+  )
+
+  const stopSubagent = useCallback(
+    async (runId: string) => {
+      if (!client) {
+        throw new Error('Client not connected')
+      }
+      return await client.stopSubagent(runId)
+    },
+    [client],
+  )
+
+  const onSubagentEvent = useCallback(
+    (callback: (event: SubagentEvent) => void) => {
+      if (!client) {
+        return () => {}
+      }
+      return client.onSubagentEvent(callback)
+    },
+    [client],
+  )
+
   useEffect(() => {
     return () => {
       if (clientRef.current) {
@@ -428,5 +476,9 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     removeSkill,
     updateSkill,
     getLogs,
+    spawnSubagent,
+    listSubagents,
+    stopSubagent,
+    onSubagentEvent,
   }
 }

@@ -2,7 +2,7 @@ import { useSetAtom } from 'jotai'
 import { useCallback } from 'react'
 
 import { activeMissionIdAtom, missionMessagesAtom, missionsAtom } from '../store'
-import type { Mission, MissionStatus, MissionSubtask } from '../store/missionTypes'
+import type { Mission, MissionStatus, MissionSubtask, SubtaskSubagent } from '../store/missionTypes'
 import { generateId } from '../utils/generateId'
 
 /**
@@ -93,6 +93,64 @@ export function useMissionActions() {
     [setMissions],
   )
 
+  /** Track a newly spawned sub-agent against a specific subtask. */
+  const addSubagentToSubtask = useCallback(
+    (missionId: string, subtaskId: string, subagent: SubtaskSubagent) => {
+      setMissions((prev) => {
+        const existing = prev[missionId]
+        if (!existing) return prev
+        return {
+          ...prev,
+          [missionId]: {
+            ...existing,
+            updatedAt: Date.now(),
+            subtasks: existing.subtasks.map((s) => {
+              if (s.id !== subtaskId) return s
+              const current = s.subagents ?? []
+              // Don't add if already tracked
+              if (current.some((sa) => sa.runId === subagent.runId)) return s
+              return { ...s, subagents: [...current, subagent] }
+            }),
+          },
+        }
+      })
+    },
+    [setMissions],
+  )
+
+  /** Update the status/result of a sub-agent run. */
+  const updateSubagentStatus = useCallback(
+    (missionId: string, runId: string, status: SubtaskSubagent['status'], result?: string) => {
+      setMissions((prev) => {
+        const existing = prev[missionId]
+        if (!existing) return prev
+        return {
+          ...prev,
+          [missionId]: {
+            ...existing,
+            updatedAt: Date.now(),
+            subtasks: existing.subtasks.map((s) => {
+              if (!s.subagents?.some((sa) => sa.runId === runId)) return s
+              return {
+                ...s,
+                subagents: s.subagents!.map((sa) => {
+                  if (sa.runId !== runId) return sa
+                  return {
+                    ...sa,
+                    status,
+                    ...(result !== undefined && { result }),
+                    ...(status !== 'running' && { completedAt: Date.now() }),
+                  }
+                }),
+              }
+            }),
+          },
+        }
+      })
+    },
+    [setMissions],
+  )
+
   const addMissionSkill = useCallback(
     (missionId: string, skillName: string) => {
       setMissions((prev) => {
@@ -150,6 +208,8 @@ export function useMissionActions() {
     createMission,
     updateMissionStatus,
     updateSubtaskStatus,
+    addSubagentToSubtask,
+    updateSubagentStatus,
     addMissionSkill,
     stopMission,
     archiveMission,

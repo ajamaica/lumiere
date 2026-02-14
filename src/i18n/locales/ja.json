@@ -389,6 +389,14 @@
       "file_write": "ファイルを書き込み中...",
       "search": "検索中...",
       "default": "{{toolName}}を実行中..."
+    },
+    "subagents": {
+      "label": "サブエージェント",
+      "running": "実行中",
+      "completed": "完了",
+      "error": "エラー",
+      "spawned": "サブエージェントを起動しました",
+      "resultReceived": "サブエージェントの結果を受信しました"
     }
   }
 }

@@ -218,7 +218,7 @@ export type AgentEvent = {
   runId: string
   seq: number
   sessionKey: string
-  stream: 'assistant' | 'lifecycle' | 'tool'
+  stream: 'assistant' | 'lifecycle' | 'tool' | 'subagent'
   ts: number
 }
 
@@ -255,6 +255,61 @@ export interface ClawHubSkill {
   content: string
   author?: string
   installs?: number
+}
+
+// ─── Sub-agents ─────────────────────────────────────────────────────────────────
+
+/** Parameters for `sessions.spawn` — spawns a sub-agent run. */
+export interface SessionsSpawnParams {
+  /** Task description for the sub-agent. */
+  task: string
+  /** Optional model override (e.g. 'claude-haiku-4'). */
+  model?: string
+  /** Agent ID to spawn under (defaults to own agent). */
+  agentId?: string
+}
+
+/** Response from `sessions.spawn`. */
+export interface SessionsSpawnResponse {
+  status: 'accepted'
+  runId: string
+  childSessionKey: string
+}
+
+/** A single sub-agent run tracked by the client. */
+export interface SubagentRun {
+  runId: string
+  childSessionKey: string
+  task: string
+  status: 'running' | 'completed' | 'error'
+  /** Result text announced by the sub-agent when it finishes. */
+  result?: string
+  spawnedAt: number
+  completedAt?: number
+}
+
+/**
+ * Sub-agent stream event. Arrives on the `subagent` stream within AgentEvent
+ * when a sub-agent's lifecycle changes.
+ */
+export interface SubagentEvent {
+  runId: string
+  childSessionKey: string
+  phase: 'start' | 'end'
+  /** Natural-language result summary (present when phase === 'end'). */
+  result?: string
+  error?: string
+}
+
+/** Parameters for `subagents.list`. */
+export interface SubagentsListParams {
+  /** Filter by session key. If omitted, lists all sub-agents for the connection. */
+  sessionKey?: string
+}
+
+/** Response from `subagents.list`. */
+export interface SubagentsListResponse {
+  subagents: SubagentRun[]
 }
 
 // ─── Logs ───────────────────────────────────────────────────────────────────────
@@ -294,6 +349,7 @@ export type AgentEventCallback = (event: AgentEvent) => void
 
 export type GatewayEvent =
   | { event: 'agent'; payload: AgentEvent; seq?: number }
+  | { event: 'subagent'; payload: SubagentEvent; seq?: number }
   | { event: 'presence'; payload: unknown }
   | { event: 'tick'; payload: { timestamp: number } }
   | { event: 'shutdown'; payload: { restartIn?: number } }

@@ -158,7 +158,16 @@ RULES:
 - The final subtask is the conclusion — use it to synthesize all findings from previous subtasks into a comprehensive answer that directly addresses the original request. Mark with "[MISSION_COMPLETE]" after completing the conclusion.
 - If you encounter an unrecoverable error, explain it and mark with "[MISSION_ERROR:<reason>]".
 - Keep the user informed of progress at all times.
-- Be friendly, thorough, and proactive in completing each subtask.`
+- Be friendly, thorough, and proactive in completing each subtask.
+
+SUB-AGENTS:
+- When a subtask involves research, long-running tasks, or work that can run in parallel, spawn a sub-agent using the sessions_spawn tool.
+- Before spawning, announce it with "[SUBAGENT_SPAWN:<subtask-id>:<brief task description>]" so the user can see that a sub-agent is being dispatched.
+- Sub-agents run in isolated sessions and will report their results back automatically when finished.
+- You can spawn multiple sub-agents for different subtasks to parallelize work.
+- Wait for sub-agent results before marking the parent subtask as complete.
+- Sub-agents cannot spawn their own sub-agents (no nesting).
+- Prefer spawning sub-agents for independent research or data-gathering subtasks while you continue working on other steps.`
 }
 
 export default function CreateMissionScreen() {

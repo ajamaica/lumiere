@@ -389,6 +389,14 @@
       "file_write": "Datei wird geschrieben...",
       "search": "Suche läuft...",
       "default": "{{toolName}} wird ausgeführt..."
+    },
+    "subagents": {
+      "label": "Sub-Agent",
+      "running": "Läuft",
+      "completed": "Abgeschlossen",
+      "error": "Fehler",
+      "spawned": "Sub-Agent gestartet",
+      "resultReceived": "Sub-Agent-Ergebnis empfangen"
     }
   }
 }
