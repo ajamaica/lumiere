@@ -246,7 +246,7 @@ export default function MissionDetailScreen() {
                 break
               case 'mission_complete':
                 updateMissionStatus(activeMission.id, 'completed', {
-                  conclusion: streamingTextRef.current,
+                  conclusion: stripMissionMarkers(streamingTextRef.current),
                 })
                 break
               case 'mission_error':
