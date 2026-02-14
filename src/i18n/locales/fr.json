@@ -52,7 +52,8 @@
     "contribute": "Contribuer",
     "skills": "Compétences",
     "gatewayLogs": "Journaux du Gateway",
-    "missions": "Missions"
+    "missions": "Missions",
+    "showToolEventsInChat": "Afficher les événements d'outils dans le chat"
   },
   "home": {
     "connectionError": "Erreur de connexion",

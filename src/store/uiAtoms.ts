@@ -28,3 +28,10 @@ export const biometricLockEnabledAtom = atomWithStorage<boolean>(
   false,
   storage,
 )
+
+/** Whether to show tool activity events inline in the chat */
+export const showToolEventsInChatAtom = atomWithStorage<boolean>(
+  'showToolEventsInChat',
+  true,
+  storage,
+)

@@ -25,6 +25,7 @@ import {
   secureStoreHydratedAtom,
   serversAtom,
   serverSessionsAtom,
+  showToolEventsInChatAtom,
   triggersAtom,
 } from '../src/store'
 import { useTheme } from '../src/theme'
@@ -48,6 +49,7 @@ export default function SettingsScreen() {
   const [backgroundNotificationsEnabled, setBackgroundNotificationsEnabled] = useAtom(
     backgroundNotificationsEnabledAtom,
   )
+  const [showToolEventsInChat, setShowToolEventsInChat] = useAtom(showToolEventsInChatAtom)
 
   const handleBiometricToggle = async (value: boolean) => {
     if (isWeb) {
@@ -264,6 +266,12 @@ export default function SettingsScreen() {
             label={t('settings.notifications')}
             switchValue={backgroundNotificationsEnabled}
             onSwitchChange={setBackgroundNotificationsEnabled}
+          />
+          <SettingRow
+            icon="construct-outline"
+            label={t('settings.showToolEventsInChat')}
+            switchValue={showToolEventsInChat}
+            onSwitchChange={setShowToolEventsInChat}
           />
           <SettingRow
             icon="language-outline"

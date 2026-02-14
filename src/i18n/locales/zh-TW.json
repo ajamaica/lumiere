@@ -52,7 +52,8 @@
     "contribute": "貢獻",
     "skills": "技能",
     "gatewayLogs": "閘道日誌",
-    "missions": "任務"
+    "missions": "任務",
+    "showToolEventsInChat": "在聊天中顯示工具事件"
   },
   "home": {
     "connectionError": "連線錯誤",

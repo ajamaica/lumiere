@@ -52,7 +52,8 @@
     "contribute": "Внести вклад",
     "skills": "Навыки",
     "gatewayLogs": "Журналы шлюза",
-    "missions": "Миссии"
+    "missions": "Миссии",
+    "showToolEventsInChat": "Показывать события инструментов в чате"
   },
   "home": {
     "connectionError": "Ошибка подключения",

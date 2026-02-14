@@ -52,7 +52,8 @@
     "contribute": "Mitwirken",
     "skills": "Fähigkeiten",
     "gatewayLogs": "Gateway-Protokolle",
-    "missions": "Missionen"
+    "missions": "Missionen",
+    "showToolEventsInChat": "Tool-Ereignisse im Chat anzeigen"
   },
   "home": {
     "connectionError": "Verbindungsfehler",

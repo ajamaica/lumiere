@@ -52,7 +52,8 @@
     "contribute": "योगदान करें",
     "skills": "कौशल",
     "gatewayLogs": "गेटवे लॉग",
-    "missions": "मिशन"
+    "missions": "मिशन",
+    "showToolEventsInChat": "चैट में टूल इवेंट दिखाएं"
   },
   "home": {
     "connectionError": "कनेक्शन त्रुटि",

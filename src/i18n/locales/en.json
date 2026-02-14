@@ -52,7 +52,8 @@
     "restoreServers": "Restore Servers",
     "contribute": "Contribute",
     "gatewayLogs": "Gateway Logs",
-    "missions": "Missions"
+    "missions": "Missions",
+    "showToolEventsInChat": "Show Tool Events in Chat"
   },
   "home": {
     "connectionError": "Connection Error",
