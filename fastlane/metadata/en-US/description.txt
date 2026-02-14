@@ -2,7 +2,7 @@ Lumiere is a unified AI chat client that brings all your favorite AI models toge
 
 CONNECT TO ANY AI
 • Chat with Claude, ChatGPT, Google Gemini, OpenRouter, Ollama, and other providers
-• Use on-device AI with Apple Intelligence (iOS 18+) or Gemini Nano (Android)
+• Use on-device AI with Apple Intelligence (iOS 18+)
 • Switch between models and servers instantly
 • Manage multiple AI backends with easy server configuration
 

@@ -2,7 +2,7 @@ Lumiere는 여러분이 좋아하는 모든 AI 모델을 하나의 앱에 모아
 
 모든 AI에 연결
 - Claude, ChatGPT, Google Gemini, OpenRouter, Ollama 및 기타 제공자와 채팅
-- Apple Intelligence (iOS 18+) 또는 Gemini Nano (Android)로 온디바이스 AI 사용
+- Apple Intelligence (iOS 18+)로 온디바이스 AI 사용
 - 모델과 서버 간 즉시 전환
 - 간편한 서버 구성으로 여러 AI 백엔드 관리
 

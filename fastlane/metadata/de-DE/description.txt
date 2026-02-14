@@ -2,7 +2,7 @@ Lumiere ist ein einheitlicher KI-Chat-Client, der alle Ihre bevorzugten KI-Model
 
 VERBINDEN SIE SICH MIT JEDER KI
 - Chatten Sie mit Claude, ChatGPT, Google Gemini, OpenRouter, Ollama und anderen Anbietern
-- Nutzen Sie On-Device-KI mit Apple Intelligence (iOS 18+) oder Gemini Nano (Android)
+- Nutzen Sie On-Device-KI mit Apple Intelligence (iOS 18+)
 - Wechseln Sie sofort zwischen Modellen und Servern
 - Verwalten Sie mehrere KI-Backends mit einfacher Serverkonfiguration
 

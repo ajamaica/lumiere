@@ -2,7 +2,7 @@ Lumiere est un client de chat IA unifié qui rassemble tous vos modèles d'intel
 
 CONNECTEZ-VOUS À N'IMPORTE QUELLE IA
 • Discutez avec Claude, ChatGPT, Google Gemini, OpenRouter, Ollama et d'autres fournisseurs
-• Utilisez l'IA embarquée avec Apple Intelligence (iOS 18+) ou Gemini Nano (Android)
+• Utilisez l'IA embarquée avec Apple Intelligence (iOS 18+)
 • Basculez instantanément entre les modèles et les serveurs
 • Gérez plusieurs backends d'IA grâce à une configuration serveur simplifiée
 
