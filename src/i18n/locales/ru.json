@@ -53,7 +53,8 @@
     "skills": "Навыки",
     "gatewayLogs": "Журналы шлюза",
     "missions": "Миссии",
-    "activity": "Активность"
+    "activity": "Активность",
+    "showToolEventsInChat": "Показывать события инструментов в чате"
   },
   "home": {
     "connectionError": "Ошибка подключения",

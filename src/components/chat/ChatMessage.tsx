@@ -31,6 +31,7 @@ import { processXmlTags } from '../../utils/xmlTagProcessor'
 import { createMarkdownStyles, createStyles } from './ChatMessage.styles'
 import type { Message, MessageAttachment, TextMessage } from './chatMessageTypes'
 import { LinkPreview } from './LinkPreview'
+import { ToolEventBubble } from './ToolEventBubble'
 import { useMarkdownRules } from './useMarkdownRules'
 
 export type { Message, MessageAttachment, TextMessage }
@@ -260,6 +261,11 @@ export function ChatMessage({ message }: { message: Message }) {
       )}
     </Animated.View>
   )
+
+  // Render tool event messages with the compact ToolEventBubble
+  if (message.type === 'tool_event') {
+    return <ToolEventBubble message={message} />
+  }
 
   return (
     <View

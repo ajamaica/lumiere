@@ -53,7 +53,8 @@
     "skills": "Habilidades",
     "gatewayLogs": "Registros del Gateway",
     "missions": "Misiones",
-    "activity": "Actividad"
+    "activity": "Actividad",
+    "showToolEventsInChat": "Mostrar eventos de herramientas en el chat"
   },
   "home": {
     "connectionError": "Error de Conexión",

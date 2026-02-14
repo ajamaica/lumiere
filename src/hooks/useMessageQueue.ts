@@ -1,22 +1,15 @@
-import { useAtom } from 'jotai'
-import { useCallback, useEffect, useState } from 'react'
+import { useAtom, useAtomValue } from 'jotai'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { MessageAttachment } from '../components/chat/ChatMessage'
+import type { Message } from '../components/chat/chatMessageTypes'
 import { ChatProviderEvent, SendMessageParams as ProviderSendParams } from '../services/providers'
-import { messageQueueAtom } from '../store'
+import { messageQueueAtom, showToolEventsInChatAtom } from '../store'
 import { toProviderAttachments } from '../utils/attachments'
 import { generateId } from '../utils/generateId'
 import { logger } from '../utils/logger'
 
 const queueLogger = logger.create('MessageQueue')
-
-interface Message {
-  id: string
-  text: string
-  sender: 'user' | 'agent'
-  timestamp: Date
-  attachments?: MessageAttachment[]
-}
 
 interface QueuedMessage {
   text: string
@@ -52,6 +45,11 @@ export function useMessageQueue({
 }: UseMessageQueueProps) {
   const [messageQueue, setMessageQueue] = useAtom(messageQueueAtom)
   const [isAgentResponding, setIsAgentResponding] = useState(false)
+  const showToolEvents = useAtomValue(showToolEventsInChatAtom)
+  const showToolEventsRef = useRef(showToolEvents)
+  useEffect(() => {
+    showToolEventsRef.current = showToolEvents
+  }, [showToolEvents])
 
   const sendMessage = useCallback(
     async (text: string, attachments?: MessageAttachment[]) => {
@@ -99,6 +97,18 @@ export function useMessageQueue({
               onAgentMessageComplete(agentMessage)
               setIsAgentResponding(false)
               accumulatedText = ''
+            } else if (event.type === 'tool_event' && event.toolName && showToolEventsRef.current) {
+              onMessageAdd({
+                id: generateId('tool'),
+                type: 'tool_event',
+                toolName: event.toolName,
+                toolCallId: event.toolCallId || '',
+                toolInput: event.toolInput,
+                status: event.toolStatus || 'running',
+                sender: 'agent',
+                timestamp: new Date(),
+                text: event.toolName,
+              })
             }
           },
         )

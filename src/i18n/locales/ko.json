@@ -53,7 +53,8 @@
     "skills": "스킬",
     "gatewayLogs": "게이트웨이 로그",
     "missions": "미션",
-    "activity": "활동"
+    "activity": "활동",
+    "showToolEventsInChat": "채팅에서 도구 이벤트 표시"
   },
   "home": {
     "connectionError": "연결 오류",

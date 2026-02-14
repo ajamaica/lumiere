@@ -53,7 +53,8 @@
     "contribute": "Contribute",
     "gatewayLogs": "Gateway Logs",
     "missions": "Missions",
-    "activity": "Activity"
+    "activity": "Activity",
+    "showToolEventsInChat": "Show Tool Events in Chat"
   },
   "home": {
     "connectionError": "Connection Error",

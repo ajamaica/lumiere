@@ -25,11 +25,19 @@ export interface ProviderConfig {
 }
 
 export interface ChatProviderEvent {
-  type: 'delta' | 'lifecycle'
+  type: 'delta' | 'lifecycle' | 'tool_event'
   /** Incremental text chunk (for type === 'delta') */
   delta?: string
   /** Lifecycle phase (for type === 'lifecycle') */
   phase?: 'start' | 'end'
+  /** Tool name (for type === 'tool_event') */
+  toolName?: string
+  /** Tool call ID (for type === 'tool_event') */
+  toolCallId?: string
+  /** Tool input parameters (for type === 'tool_event') */
+  toolInput?: Record<string, unknown>
+  /** Tool execution status (for type === 'tool_event') */
+  toolStatus?: 'running' | 'completed' | 'error'
 }
 
 export interface SendMessageParams {

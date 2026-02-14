@@ -76,7 +76,20 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
   const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
     sendMessage,
     currentSessionKey,
-    onMessageAdd: (message) => setMessages((prev) => [...prev, message]),
+    onMessageAdd: (message) =>
+      setMessages((prev) => {
+        if (message.type === 'tool_event') {
+          const idx = prev.findIndex(
+            (m) => m.type === 'tool_event' && m.toolCallId === message.toolCallId,
+          )
+          if (idx >= 0) {
+            const updated = [...prev]
+            updated[idx] = message
+            return updated
+          }
+        }
+        return [...prev, message]
+      }),
     onAgentMessageUpdate: (text) => setCurrentAgentMessage(text),
     onAgentMessageComplete: (message) => {
       setMessages((prev) => [...prev, message])

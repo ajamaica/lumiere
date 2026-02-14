@@ -39,6 +39,7 @@ export {
   colorThemeAtom,
   languageAtom,
   onboardingCompletedAtom,
+  showToolEventsInChatAtom,
   themeModeAtom,
 } from './uiAtoms'
 
