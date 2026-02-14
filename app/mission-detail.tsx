@@ -29,6 +29,7 @@ import { useMissionMessages } from '../src/hooks/useMissionMessages'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import type { AgentEvent } from '../src/services/molt/types'
+import type { ChatHistoryMessage, ChatHistoryResponse } from '../src/services/providers/types'
 import type { SerializedMessage } from '../src/store/missionTypes'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
@@ -49,6 +50,60 @@ function deserializeMessages(serialized: SerializedMessage[]): Message[] {
   })) as Message[]
 }
 
+/**
+ * Extract all mission/subtask markers from a block of text.
+ * Returns the status update and completed subtask IDs.
+ */
+function extractMissionUpdatesFromText(text: string): {
+  status?: 'idle' | 'completed' | 'error'
+  conclusion?: string
+  errorMessage?: string
+  completedSubtaskIds: string[]
+} {
+  // Collect all completed subtask IDs
+  const completedSubtaskIds: string[] = []
+  const subtaskRegex = /\[SUBTASK_COMPLETE:([\w-]+)\]/g
+  subtaskRegex.lastIndex = 0
+  let subtaskMatch: RegExpExecArray | null
+  while ((subtaskMatch = subtaskRegex.exec(text)) !== null) {
+    completedSubtaskIds.push(subtaskMatch[1])
+  }
+
+  // Find the last status marker (last occurrence wins)
+  const statusMarkers = [
+    { regex: /\[MISSION_COMPLETE\]/g, status: 'completed' as const },
+    { regex: /\[MISSION_ERROR:([^\]]+)\]/g, status: 'error' as const },
+    { regex: /\[WAITING_INPUT\]/g, status: 'idle' as const },
+  ]
+
+  let lastMatch: { status: 'idle' | 'completed' | 'error'; index: number; reason?: string } | null =
+    null
+
+  for (const marker of statusMarkers) {
+    marker.regex.lastIndex = 0
+    let match: RegExpExecArray | null
+    while ((match = marker.regex.exec(text)) !== null) {
+      if (!lastMatch || match.index > lastMatch.index) {
+        lastMatch = {
+          status: marker.status,
+          index: match.index,
+          reason: match[1],
+        }
+      }
+    }
+  }
+
+  if (!lastMatch) return { completedSubtaskIds }
+
+  if (lastMatch.status === 'completed') {
+    return { status: 'completed', conclusion: stripMissionMarkers(text), completedSubtaskIds }
+  }
+  if (lastMatch.status === 'error') {
+    return { status: 'error', errorMessage: lastMatch.reason, completedSubtaskIds }
+  }
+  return { status: 'idle', completedSubtaskIds }
+}
+
 export default function MissionDetailScreen() {
   const { theme } = useTheme()
   const router = useRouter()
@@ -64,6 +119,7 @@ export default function MissionDetailScreen() {
   const [messages, setMessages] = useState<Message[]>([])
   const [isStreaming, setIsStreaming] = useState(false)
   const [restoredHistory, setRestoredHistory] = useState(false)
+  const [serverSyncDone, setServerSyncDone] = useState(false)
   const scrollRef = useRef<ScrollView>(null)
   const shouldAutoScrollRef = useRef(true)
   const streamingTextRef = useRef('')
@@ -71,6 +127,7 @@ export default function MissionDetailScreen() {
   const stoppedRef = useRef(false)
   const activeToolCallsRef = useRef<Map<string, string>>(new Map())
   const hasRestoredRef = useRef(false)
+  const hasSyncedServerRef = useRef(false)
   const autoStartSentRef = useRef(false)
 
   useEffect(() => {
@@ -99,8 +156,10 @@ export default function MissionDetailScreen() {
     systemMessageSentRef.current = false
     streamingTextRef.current = ''
     hasRestoredRef.current = false
+    hasSyncedServerRef.current = false
     autoStartSentRef.current = false
     setRestoredHistory(false)
+    setServerSyncDone(false)
   }, [activeMission?.id])
 
   // Restore saved message history when opening a mission
@@ -119,7 +178,75 @@ export default function MissionDetailScreen() {
     }
   }, [activeMission, getMissionMessages])
 
-  // Auto-start mission on first load if in_progress, no messages, and no saved history
+  // Sync mission/subtask status from server history once connected
+  useEffect(() => {
+    if (!activeMission || hasSyncedServerRef.current) return
+    if (!gateway.connected) return
+    if (!activeMission.sessionKey) {
+      // No server session — nothing to sync, unblock auto-start
+      setServerSyncDone(true)
+      return
+    }
+    hasSyncedServerRef.current = true
+
+    gateway
+      .getChatHistory(activeMission.sessionKey)
+      .then((result) => {
+        const response = result as ChatHistoryResponse | undefined
+        const serverMessages = response?.messages ?? []
+        if (serverMessages.length === 0) return
+
+        // Concatenate all assistant message text to find every marker
+        const allAssistantText = serverMessages
+          .filter((m: ChatHistoryMessage) => m.role === 'assistant')
+          .map((m: ChatHistoryMessage) => m.content.map((block) => block.text ?? '').join(''))
+          .join('\n')
+
+        const updates = extractMissionUpdatesFromText(allAssistantText)
+
+        // Mark completed subtasks
+        for (const subtaskId of updates.completedSubtaskIds) {
+          const subtask = activeMission.subtasks.find((s) => s.id === subtaskId)
+          if (subtask && subtask.status !== 'completed') {
+            updateSubtaskStatus(activeMission.id, subtaskId, 'completed')
+          }
+        }
+
+        // Advance the next pending subtask to in_progress if needed
+        if (updates.completedSubtaskIds.length > 0) {
+          const lastCompletedId =
+            updates.completedSubtaskIds[updates.completedSubtaskIds.length - 1]
+          const lastIdx = activeMission.subtasks.findIndex((s) => s.id === lastCompletedId)
+          if (lastIdx >= 0 && lastIdx < activeMission.subtasks.length - 1) {
+            const nextSubtask = activeMission.subtasks[lastIdx + 1]
+            if (nextSubtask.status === 'pending') {
+              updateSubtaskStatus(activeMission.id, nextSubtask.id, 'in_progress')
+            }
+          }
+        }
+
+        // Update mission status
+        if (updates.status && activeMission.status !== updates.status) {
+          missionLogger.info(
+            `Updating mission status from server history: ${activeMission.status} -> ${updates.status}`,
+          )
+          updateMissionStatus(activeMission.id, updates.status, {
+            conclusion: updates.conclusion,
+            errorMessage: updates.errorMessage,
+          })
+        }
+      })
+      .catch((err) => {
+        missionLogger.logError('Failed to fetch server history for status sync', err)
+      })
+      .finally(() => {
+        setServerSyncDone(true)
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeMission?.id, gateway.connected])
+
+  // Auto-start mission on first load if in_progress, no messages, and no saved history.
+  // Waits for server sync to finish so we don't re-trigger a prompt that already completed.
   useEffect(() => {
     if (
       activeMission &&
@@ -127,6 +254,7 @@ export default function MissionDetailScreen() {
       messages.length === 0 &&
       !restoredHistory &&
       gateway.connected &&
+      serverSyncDone &&
       !isStreaming &&
       hasRestoredRef.current &&
       !autoStartSentRef.current
@@ -135,7 +263,7 @@ export default function MissionDetailScreen() {
       handleSendToAgent(`Begin executing this mission. Start with the first subtask.`, true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeMission?.id, gateway.connected, restoredHistory])
+  }, [activeMission?.id, gateway.connected, restoredHistory, serverSyncDone])
 
   const handleAgentEvent = useCallback(
     (event: AgentEvent) => {
@@ -440,6 +568,7 @@ export default function MissionDetailScreen() {
           marginBottom: theme.spacing.lg,
         },
         chatSection: {
+          marginTop: theme.spacing.lg,
           marginBottom: theme.spacing.lg,
         },
         chatHeader: {
