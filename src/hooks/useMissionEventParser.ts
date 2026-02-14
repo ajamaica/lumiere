@@ -31,37 +31,51 @@ export function useMissionEventParser() {
     const text = bufferRef.current
 
     let match: RegExpExecArray | null
+    let lastMarkerEnd = -1
 
     // Reset lastIndex before each scan
     MARKERS.subtaskComplete.lastIndex = 0
     while ((match = MARKERS.subtaskComplete.exec(text)) !== null) {
       updates.push({ type: 'subtask_complete', subtaskId: match[1] })
+      const end = match.index + match[0].length
+      if (end > lastMarkerEnd) lastMarkerEnd = end
     }
 
     MARKERS.waitingInput.lastIndex = 0
-    if (MARKERS.waitingInput.test(text)) {
+    match = MARKERS.waitingInput.exec(text)
+    if (match) {
       updates.push({ type: 'waiting_input' })
+      const end = match.index + match[0].length
+      if (end > lastMarkerEnd) lastMarkerEnd = end
     }
 
     MARKERS.suggestSkill.lastIndex = 0
     while ((match = MARKERS.suggestSkill.exec(text)) !== null) {
       updates.push({ type: 'suggest_skill', skillName: match[1].trim() })
+      const end = match.index + match[0].length
+      if (end > lastMarkerEnd) lastMarkerEnd = end
     }
 
     MARKERS.missionComplete.lastIndex = 0
-    if (MARKERS.missionComplete.test(text)) {
+    match = MARKERS.missionComplete.exec(text)
+    if (match) {
       updates.push({ type: 'mission_complete' })
+      const end = match.index + match[0].length
+      if (end > lastMarkerEnd) lastMarkerEnd = end
     }
 
     MARKERS.missionError.lastIndex = 0
     match = MARKERS.missionError.exec(text)
     if (match) {
       updates.push({ type: 'mission_error', reason: match[1] })
+      const end = match.index + match[0].length
+      if (end > lastMarkerEnd) lastMarkerEnd = end
     }
 
-    // Only clear buffer when we found markers (they've been consumed)
-    if (updates.length > 0) {
-      bufferRef.current = ''
+    // Preserve text after the last consumed marker so partial markers
+    // split across chunks are not lost.
+    if (lastMarkerEnd >= 0) {
+      bufferRef.current = text.slice(lastMarkerEnd)
     }
 
     // Keep buffer from growing unbounded

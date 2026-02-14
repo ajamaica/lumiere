@@ -34,7 +34,7 @@ export function MissionCard({ mission, onPress }: MissionCardProps) {
   const totalCount = mission.subtasks.length
   const progressPct = totalCount > 0 ? completedCount / totalCount : 0
 
-  const timeAgo = useMemo(() => formatTimeAgo(mission.createdAt, t), [mission.createdAt, t])
+  const timeAgo = useMemo(() => formatTimeAgo(mission.updatedAt, t), [mission.updatedAt, t])
 
   const styles = StyleSheet.create({
     card: {
