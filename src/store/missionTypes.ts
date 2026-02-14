@@ -35,3 +35,31 @@ export interface Mission {
 export interface MissionsDict {
   [id: string]: Mission
 }
+
+// ─── Serializable message types for persistence ─────────────
+
+export interface SerializedTextMessage {
+  id: string
+  type?: 'text'
+  text: string
+  sender: 'user' | 'agent'
+  timestamp: number
+}
+
+export interface SerializedToolEventMessage {
+  id: string
+  type: 'tool_event'
+  toolName: string
+  toolCallId: string
+  toolInput?: Record<string, unknown>
+  status: 'running' | 'completed' | 'error'
+  sender: 'agent'
+  timestamp: number
+  text: string
+}
+
+export type SerializedMessage = SerializedTextMessage | SerializedToolEventMessage
+
+export interface MissionMessagesDict {
+  [missionId: string]: SerializedMessage[]
+}
