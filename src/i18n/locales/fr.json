@@ -72,7 +72,8 @@
     "video": "Vidéo",
     "attachFile": "Joindre un fichier",
     "file": "Fichier",
-    "removeAttachment": "Supprimer la pièce jointe {{number}}"
+    "removeAttachment": "Supprimer la pièce jointe {{number}}",
+    "compressing": "Compression..."
   },
   "addServer": {
     "title": "Ajouter un serveur",

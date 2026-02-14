@@ -72,7 +72,8 @@
     "video": "影片",
     "attachFile": "附加檔案",
     "file": "檔案",
-    "removeAttachment": "移除附件 {{number}}"
+    "removeAttachment": "移除附件 {{number}}",
+    "compressing": "壓縮中..."
   },
   "addServer": {
     "title": "新增伺服器",

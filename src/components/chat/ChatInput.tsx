@@ -2,7 +2,16 @@ import { Ionicons } from '@expo/vector-icons'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 import { useAttachments } from '../../hooks/useAttachments'
 import { useFileDropPaste } from '../../hooks/useFileDropPaste'
@@ -12,8 +21,9 @@ import { ProviderType } from '../../services/providers/types'
 import { pendingShareMediaAtom, pendingShareTextAtom } from '../../store'
 import { Theme, useTheme } from '../../theme'
 import { compressImageToJpeg } from '../../utils/compressImage'
+import { compressVideo } from '../../utils/compressVideo'
 import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
-import { isWeb } from '../../utils/platform'
+import { isNative, isWeb } from '../../utils/platform'
 import { AttachmentMenu } from './AttachmentMenu'
 import { AttachmentPreview } from './AttachmentPreview'
 import { MessageAttachment } from './ChatMessage'
@@ -83,9 +93,18 @@ export function ChatInput({
             })
           }
         } else if (media.mimeType.startsWith('video/')) {
+          let videoUri = media.uri
+          if (isNative) {
+            try {
+              const compressed = await compressVideo(videoUri)
+              videoUri = compressed.uri
+            } catch {
+              // Use original on failure
+            }
+          }
           converted.push({
             type: 'video',
-            uri: media.uri,
+            uri: videoUri,
             mimeType: media.mimeType,
             name: media.fileName,
           })
@@ -116,7 +135,7 @@ export function ChatInput({
   ])
 
   const handleSend = () => {
-    if ((text.trim() || attach.attachments.length > 0) && !disabled) {
+    if ((text.trim() || attach.attachments.length > 0) && !isBusy) {
       onSend(text.trim(), attach.attachments.length > 0 ? attach.attachments : undefined)
       setText('')
       attach.clearAttachments()
@@ -147,6 +166,7 @@ export function ChatInput({
   const menuButtonColor = disabled ? theme.colors.text.tertiary : theme.colors.text.secondary
   const hasContent = text.trim() || attach.attachments.length > 0
   const isRecording = voice.status === 'recording'
+  const isBusy = disabled || attach.compressing
   const showMic = !hasContent && voice.isAvailable
 
   const Container = glassAvailable ? GlassView : View
@@ -214,6 +234,16 @@ export function ChatInput({
           )}
           {!isRecording && (
             <>
+              {attach.compressing && (
+                <View style={styles.compressionBar}>
+                  <ActivityIndicator size="small" color={theme.colors.primary} />
+                  <Text style={styles.compressionText}>
+                    {t('chat.compressing')}
+                    {attach.compressionProgress > 0 &&
+                      ` ${Math.round(attach.compressionProgress * 100)}%`}
+                  </Text>
+                </View>
+              )}
               <AttachmentPreview
                 attachments={attach.attachments}
                 onRemove={attach.handleRemoveAttachment}
@@ -226,7 +256,7 @@ export function ChatInput({
                 placeholderTextColor={theme.colors.text.secondary}
                 multiline
                 maxLength={2000}
-                editable={!disabled}
+                editable={!isBusy}
                 onSubmitEditing={handleSend}
                 blurOnSubmit={false}
                 accessibilityLabel={t('chat.placeholder')}
@@ -275,15 +305,15 @@ export function ChatInput({
                     <TouchableOpacity
                       style={[styles.sendButton, styles.sendButtonInactive]}
                       onPress={handleMicPress}
-                      disabled={disabled}
+                      disabled={isBusy}
                       accessibilityRole="button"
                       accessibilityLabel={t('accessibility.startVoiceInput')}
-                      accessibilityState={{ disabled }}
+                      accessibilityState={{ disabled: isBusy }}
                     >
                       <Ionicons
                         name="mic"
                         size={22}
-                        color={disabled ? theme.colors.text.tertiary : theme.colors.text.secondary}
+                        color={isBusy ? theme.colors.text.tertiary : theme.colors.text.secondary}
                       />
                     </TouchableOpacity>
                   ) : (
@@ -291,21 +321,19 @@ export function ChatInput({
                       testID="send-button"
                       style={[
                         styles.sendButton,
-                        hasContent && !disabled
-                          ? styles.sendButtonActive
-                          : styles.sendButtonInactive,
+                        hasContent && !isBusy ? styles.sendButtonActive : styles.sendButtonInactive,
                       ]}
                       onPress={handleSend}
-                      disabled={!hasContent || disabled}
+                      disabled={!hasContent || isBusy}
                       accessibilityRole="button"
                       accessibilityLabel={t('accessibility.sendMessage')}
-                      accessibilityState={{ disabled: !hasContent || disabled }}
+                      accessibilityState={{ disabled: !hasContent || isBusy }}
                     >
                       <Ionicons
                         name="arrow-up"
                         size={22}
                         color={
-                          hasContent && !disabled
+                          hasContent && !isBusy
                             ? theme.colors.text.inverse
                             : theme.colors.text.tertiary
                         }
@@ -452,6 +480,17 @@ const createStyles = (theme: Theme, _glassAvailable: boolean) =>
     },
     dropOverlaySubtitle: {
       marginTop: theme.spacing.xs,
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.secondary,
+    },
+    compressionBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
+      gap: theme.spacing.sm,
+    },
+    compressionText: {
       fontSize: theme.typography.fontSize.sm,
       color: theme.colors.text.secondary,
     },

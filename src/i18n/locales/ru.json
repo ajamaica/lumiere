@@ -72,7 +72,8 @@
     "video": "Видео",
     "attachFile": "Прикрепить файл",
     "file": "Файл",
-    "removeAttachment": "Удалить вложение {{number}}"
+    "removeAttachment": "Удалить вложение {{number}}",
+    "compressing": "Сжатие..."
   },
   "addServer": {
     "title": "Добавить сервер",

@@ -72,7 +72,8 @@
     "video": "動画",
     "attachFile": "ファイルを添付",
     "file": "ファイル",
-    "removeAttachment": "添付ファイル{{number}}を削除"
+    "removeAttachment": "添付ファイル{{number}}を削除",
+    "compressing": "圧縮中..."
   },
   "addServer": {
     "title": "サーバーを追加",

@@ -86,6 +86,7 @@
           "color": "#ffffff"
         }
       ],
+      "react-native-compressor",
       "expo-background-task",
       "expo-quick-actions",
       [
