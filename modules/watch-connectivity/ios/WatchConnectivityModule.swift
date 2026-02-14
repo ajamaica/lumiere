@@ -24,7 +24,7 @@ public class WatchConnectivityModule: Module {
 
     /// Returns true when the paired watch has the companion app installed.
     Function("isWatchAppInstalled") { () -> Bool in
-      guard let s = self.session else { return false }
+      guard let s = self.session, s.activationState == .activated else { return false }
       return s.isWatchAppInstalled
     }
 
