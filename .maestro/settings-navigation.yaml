@@ -21,7 +21,6 @@ tags:
 - assertVisible: "Colors"
 - assertVisible: "Favorites"
 - assertVisible: "Triggers"
-- assertVisible: "Logout"
 - scrollUntilVisible:
     element: "Logout"
     direction: DOWN
