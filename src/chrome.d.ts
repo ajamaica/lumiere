@@ -35,10 +35,6 @@ interface ChromeExtensionAPI {
   sidePanel: ChromeSidePanel
 }
 
-declare global {
-  interface Window {
-    chrome?: ChromeExtensionAPI
-  }
+interface Window {
+  chrome?: ChromeExtensionAPI
 }
-
-export {}

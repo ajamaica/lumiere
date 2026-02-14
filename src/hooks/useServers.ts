@@ -1,5 +1,4 @@
 import { useAtom } from 'jotai'
-import { unwrap } from 'jotai/utils'
 import { useCallback, useEffect, useMemo } from 'react'
 
 import { ProviderConfig } from '../services/providers'
@@ -21,11 +20,6 @@ import {
   ServersDict,
 } from '../store'
 import { isWeb } from '../utils/platform'
-
-// Both atoms hold ServersDict — unwrap the async-storage atom so both
-// branches share the same synchronous PrimitiveAtom<ServersDict> type.
-const webAtom = secureServersAtom
-const nativeAtom = unwrap(serversAtom, (prev) => prev ?? ({} as ServersDict))
 
 export interface UseServersResult {
   // State
@@ -57,7 +51,29 @@ export interface UseServersResult {
 export function useServers(): UseServersResult {
   // On web, use the password-encrypted secure atom.
   // On native, use the normal AsyncStorage-backed atom.
-  const [servers, setServers] = useAtom(isWeb ? webAtom : nativeAtom)
+  // Both are subscribed but only the platform-appropriate one is active;
+  // the other holds its default empty value and never triggers updates.
+  const [secureServers, setSecureServers] = useAtom(secureServersAtom)
+  const [nativeServersRaw, setNativeServers] = useAtom(serversAtom)
+
+  // useAtom resolves async atoms via Suspense. Guard the Promise case
+  // for type safety (it won't occur at runtime after hydration).
+  const servers: ServersDict = useMemo(
+    () => (isWeb ? secureServers : nativeServersRaw instanceof Promise ? {} : nativeServersRaw),
+    [secureServers, nativeServersRaw],
+  )
+
+  const setServers = useCallback(
+    (value: ServersDict) => {
+      if (isWeb) {
+        setSecureServers(value)
+      } else {
+        setNativeServers(value)
+      }
+    },
+    [setSecureServers, setNativeServers],
+  )
+
   const [currentServerId, setCurrentServerId] = useAtom(currentServerIdAtom)
   const [hydrated] = useAtom(secureStoreHydratedAtom)
 
