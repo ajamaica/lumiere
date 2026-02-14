@@ -8,6 +8,7 @@ import { useMessageQueue } from '../useMessageQueue'
 
 jest.mock('jotai', () => ({
   useAtom: jest.fn(),
+  useAtomValue: jest.fn(() => true),
   atom: jest.fn((initial: unknown) => ({ init: initial })),
 }))
 
@@ -17,6 +18,7 @@ jest.mock('react', () => {
     ...actual,
     useCallback: jest.fn(actual.useCallback),
     useEffect: jest.fn(actual.useEffect),
+    useRef: jest.fn((initial: unknown) => ({ current: initial })),
     useState: jest.fn(actual.useState),
   }
 })
