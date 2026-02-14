@@ -14,11 +14,9 @@ import { useEffect, useState } from 'react'
 
 import { useExtensionDisplayMode } from './useExtensionDisplayMode.web'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getChrome(): any | null {
+function getChrome(): ChromeExtensionAPI | null {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const c = (window as any).chrome
+    const c = window.chrome
     if (c?.runtime?.id) return c
   } catch {
     // Not in an extension context
@@ -43,8 +41,12 @@ export function useActiveWebsite(): string | null {
     if (!c) return
 
     c.runtime.sendMessage({ action: 'get-active-tab-url' }).then(
-      (response: { url: string | null } | undefined) => {
-        setActiveUrl(response?.url ?? null)
+      (response) => {
+        const url =
+          response && typeof response === 'object' && 'url' in response
+            ? (response as { url: string | null }).url
+            : null
+        setActiveUrl(url)
       },
       () => {
         // Message failed — ignore
@@ -59,10 +61,9 @@ export function useActiveWebsite(): string | null {
     const c = getChrome()
     if (!c) return
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const listener = (message: any) => {
+    const listener = (message: Record<string, unknown>) => {
       if (message.action === 'active-tab-changed') {
-        setActiveUrl(message.url ?? null)
+        setActiveUrl(typeof message.url === 'string' ? message.url : null)
       }
     }
 

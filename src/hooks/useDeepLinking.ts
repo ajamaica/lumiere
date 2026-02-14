@@ -1,5 +1,5 @@
 import * as Linking from 'expo-linking'
-import { useRouter } from 'expo-router'
+import { type Href, useRouter } from 'expo-router'
 import { getDefaultStore, useAtomValue } from 'jotai'
 import { useCallback, useEffect, useRef } from 'react'
 
@@ -129,8 +129,7 @@ export function useDeepLinking(isLocked: boolean, onboardingCompleted = true) {
         return
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      router.push(result.route as any)
+      router.push(result.route as Href)
     },
     [router],
   )

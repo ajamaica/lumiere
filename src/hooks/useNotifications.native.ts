@@ -1,5 +1,5 @@
 import * as Notifications from 'expo-notifications'
-import { useRouter } from 'expo-router'
+import { type Href, useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import { useEffect, useRef } from 'react'
 
@@ -73,8 +73,7 @@ export function useNotifications() {
       }
 
       // Navigate to chat screen
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      router.replace('/' as any)
+      router.replace('/' as Href)
     })
 
     return () => {

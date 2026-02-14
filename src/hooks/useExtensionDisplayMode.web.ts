@@ -25,11 +25,9 @@ export interface ExtensionDisplayModeResult {
 /*  Chrome API helpers                                                 */
 /* ------------------------------------------------------------------ */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getChrome(): any | null {
+function getChrome(): ChromeExtensionAPI | null {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const c = (window as any).chrome
+    const c = window.chrome
     if (c?.runtime?.id) return c
   } catch {
     // Not in an extension context

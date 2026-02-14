@@ -291,7 +291,7 @@ export function ChatMessage({ message }: { message: Message }) {
                 accessibilityLabel={showCheck ? t('accessibility.copied') : intent.label}
               >
                 <Ionicons
-                  name={(showCheck ? 'checkmark' : intentIcon(intent.action)) as any}
+                  name={showCheck ? 'checkmark' : intentIcon(intent.action)}
                   size={16}
                   color={theme.colors.primary}
                   style={styles.intentButtonIcon}
