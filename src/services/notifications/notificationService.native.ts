@@ -2,54 +2,35 @@ import * as BackgroundTask from 'expo-background-task'
 import * as Notifications from 'expo-notifications'
 import * as TaskManager from 'expo-task-manager'
 
-import { CACHE_CONFIG } from '../../constants'
 import {
   backgroundNotificationsEnabledAtom,
   currentSessionKeyAtom,
+  type GatewayLastSeenMap,
+  gatewayLastSeenTimestampAtom,
   getStore,
-  jotaiStorage,
   serversAtom,
   serverSessionsAtom,
 } from '../../store'
-import { buildCacheKey, readCachedHistory, readSessionIndex } from '../providers/CachedChatProvider'
 import type { ChatHistoryMessage } from '../providers/types'
 import { getServerToken } from '../secureTokenStorage'
 
 export const BACKGROUND_FETCH_TASK = 'background-server-check'
 
-/**
- * Write messages to the local chat cache for a given server and session.
- * Merges new messages with existing cached messages, deduplicating by timestamp,
- * and trims to the configured maximum.
- */
-async function updateCachedMessages(
-  serverId: string,
-  sessionKey: string,
-  serverMessages: ChatHistoryMessage[],
-): Promise<void> {
-  try {
-    const existing = await readCachedHistory(serverId, sessionKey)
-    const lastCachedTimestamp =
-      existing.length > 0 ? Math.max(...existing.map((m) => m.timestamp)) : 0
+async function getLastSeenMap(): Promise<GatewayLastSeenMap> {
+  const raw = getStore().get(gatewayLastSeenTimestampAtom)
+  // Handle hydration: atomWithStorage may return a Promise during initial load
+  return raw instanceof Promise ? await raw : raw
+}
 
-    // Only append messages newer than what we already have
-    const newMessages = serverMessages.filter((m) => m.timestamp > lastCachedTimestamp)
-
-    if (newMessages.length === 0) return
-
-    const merged = [...existing, ...newMessages]
-    const trimmed = merged.slice(-CACHE_CONFIG.MAX_CACHED_MESSAGES)
-    const cacheKey = buildCacheKey(serverId, sessionKey)
-    await jotaiStorage.setItem(cacheKey, trimmed)
-  } catch {
-    // Silently ignore cache write errors in background
-  }
+async function setLastSeenTimestamp(serverSessionKey: string, timestamp: number): Promise<void> {
+  const map = await getLastSeenMap()
+  getStore().set(gatewayLastSeenTimestampAtom, { ...map, [serverSessionKey]: timestamp })
 }
 
 /**
- * Check a server session for new assistant messages by comparing the server's
- * chat history against the locally cached history. This avoids relying on
- * separate timestamp tracking — the cache itself is the source of truth.
+ * Check a server session for new assistant messages by fetching the gateway's
+ * chat history and comparing against the last message timestamp we recorded
+ * from a previous gateway history response.
  */
 async function checkServerForNewMessages(
   serverUrl: string,
@@ -57,11 +38,10 @@ async function checkServerForNewMessages(
   sessionKey: string,
   serverId: string,
 ): Promise<{ hasNew: boolean; preview?: string; serverName?: string }> {
-  try {
-    // Read locally cached history to determine what we've already seen
-    const cachedMessages = await readCachedHistory(serverId, sessionKey)
+  const serverSessionKey = `${serverId}:${sessionKey}`
 
-    // Fetch the latest messages from the server
+  try {
+    // Fetch the latest messages from the server gateway
     const response = await fetch(`${httpUrl(serverUrl)}/api/rpc`, {
       method: 'POST',
       headers: {
@@ -82,30 +62,34 @@ async function checkServerForNewMessages(
 
     const serverMessages = data.messages ?? []
 
-    // If cache is empty this is the first check — establish a baseline
-    // by caching the current server state without sending notifications.
-    if (cachedMessages.length === 0) {
-      if (serverMessages.length > 0) {
-        await updateCachedMessages(serverId, sessionKey, serverMessages)
-      }
+    if (serverMessages.length === 0) return { hasNew: false }
+
+    // Find the most recent message timestamp from the gateway response
+    const latestGatewayTimestamp = Math.max(...serverMessages.map((m) => m.timestamp))
+
+    // Retrieve what we last saw from this gateway session
+    const lastSeenMap = await getLastSeenMap()
+    const lastSeenTimestamp = lastSeenMap[serverSessionKey] ?? null
+
+    // First check for this session — record baseline without notifying
+    if (lastSeenTimestamp === null) {
+      await setLastSeenTimestamp(serverSessionKey, latestGatewayTimestamp)
       return { hasNew: false }
     }
 
-    // Determine the most recent cached message timestamp
-    const lastCachedTimestamp = Math.max(...cachedMessages.map((m) => m.timestamp))
-
-    // Find assistant messages from the server that are newer than the cache
+    // Find assistant messages from the gateway that are newer than last seen
     const newAssistantMessages = serverMessages.filter(
-      (m) => m.role === 'assistant' && m.timestamp > lastCachedTimestamp,
+      (m) => m.role === 'assistant' && m.timestamp > lastSeenTimestamp,
     )
+
+    // Always update the stored timestamp to the latest gateway value
+    await setLastSeenTimestamp(serverSessionKey, latestGatewayTimestamp)
 
     if (newAssistantMessages.length > 0) {
       const latest = newAssistantMessages[newAssistantMessages.length - 1]
       const text =
         latest.content?.find((c) => c.type === 'text')?.text?.slice(0, 100) ?? 'New message'
 
-      // Update the cache with new messages from the server
-      await updateCachedMessages(serverId, sessionKey, serverMessages)
       return { hasNew: true, preview: text }
     }
 
@@ -132,14 +116,12 @@ async function resolveAtom<T>(value: T | Promise<T>): Promise<T> {
 
 /**
  * Fetch all session keys for a Molt server via the HTTP RPC endpoint.
- * Falls back to the locally cached session index, then to the provided
- * default session key on failure.
+ * Falls back to the provided default session key on failure.
  */
 async function listServerSessions(
   serverUrl: string,
   token: string,
   fallbackSessionKey: string,
-  serverId: string,
 ): Promise<string[]> {
   try {
     const response = await fetch(`${httpUrl(serverUrl)}/api/rpc`, {
@@ -151,7 +133,7 @@ async function listServerSessions(
       body: JSON.stringify({ method: 'sessions.list' }),
     })
 
-    if (!response.ok) throw new Error('sessions.list failed')
+    if (!response.ok) return [fallbackSessionKey]
 
     const data = (await response.json()) as {
       sessions?: Array<{ key: string }>
@@ -160,20 +142,15 @@ async function listServerSessions(
     const keys = data.sessions?.map((s) => s.key).filter(Boolean)
     return keys && keys.length > 0 ? keys : [fallbackSessionKey]
   } catch {
-    // Fall back to the locally cached session index
-    const cachedSessions = await readSessionIndex(serverId)
-    if (cachedSessions.length > 0) {
-      return cachedSessions.map((s) => s.key)
-    }
     return [fallbackSessionKey]
   }
 }
 
 /**
  * The background task that runs periodically. It reads server configs from
- * Jotai store, checks Molt servers for new assistant messages across all
- * sessions by comparing server state against the local chat cache, and fires
- * a local notification per new message.
+ * Jotai store, fetches chat history from each Molt server gateway, compares
+ * against the last seen message timestamp, and fires a local notification
+ * when new assistant messages are found.
  */
 export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTaskResult> {
   try {
@@ -198,7 +175,7 @@ export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTa
       if (!token) continue
 
       const fallbackSessionKey = sessions[serverId] ?? defaultSession
-      const sessionKeys = await listServerSessions(server.url, token, fallbackSessionKey, serverId)
+      const sessionKeys = await listServerSessions(server.url, token, fallbackSessionKey)
 
       for (const sessionKey of sessionKeys) {
         const result = await checkServerForNewMessages(server.url, token, sessionKey, serverId)

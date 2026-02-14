@@ -175,14 +175,15 @@ Users can configure multiple servers and switch between them. The `currentServer
 
 ## Notification Settings
 
-Background notification settings stored in atoms. The background task uses the
-local chat cache (managed by `CachedChatProvider`) as the source of truth for
-detecting new messages — no separate timestamp tracking is needed.
+Background notification settings stored in atoms. The background task fetches
+chat history directly from the server gateway (`chat.history` RPC) and compares
+against the last seen message timestamp to detect new assistant messages.
 
-| Atom                                 | Type      | Default | Description                        |
-| ------------------------------------ | --------- | ------- | ---------------------------------- |
-| `backgroundNotificationsEnabledAtom` | `boolean` | `false` | Enable background fetch            |
-| `backgroundFetchIntervalAtom`        | `number`  | `900`   | Fetch interval in seconds (15 min) |
+| Atom                                 | Type      | Default | Description                                            |
+| ------------------------------------ | --------- | ------- | ------------------------------------------------------ |
+| `backgroundNotificationsEnabledAtom` | `boolean` | `false` | Enable background fetch                                |
+| `backgroundFetchIntervalAtom`        | `number`  | `900`   | Fetch interval in seconds (15 min)                     |
+| `gatewayLastSeenTimestampAtom`       | `object`  | `{}`    | Last seen message timestamp per server+session gateway |
 
 ## Metro Bundler Configuration
 
