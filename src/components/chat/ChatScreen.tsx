@@ -4,8 +4,8 @@ import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, Keyboard, Text, TouchableOpacity, View } from 'react-native'
-import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
+import { ActivityIndicator, Keyboard, Pressable, Text, View } from 'react-native'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ProviderConfig } from '../../services/providers'
@@ -54,8 +54,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const isMoltProvider = providerConfig.type === 'molt'
   const flatListRef = useRef<FlashListRef<Message>>(null)
-  const [showScrollButton, setShowScrollButton] = useState(false)
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
+  const isNearBottom = useSharedValue(true)
 
   // Device & layout
   const deviceType = useDeviceType()
@@ -124,22 +123,16 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     }
   })
 
-  // Track keyboard visibility and scroll to bottom when keyboard opens
+  // Scroll to bottom when keyboard opens
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setIsKeyboardVisible(true)
       setTimeout(() => {
         flatListRef.current?.scrollToEnd({ animated: true })
       }, 100)
     })
 
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setIsKeyboardVisible(false)
-    })
-
     return () => {
       keyboardDidShowListener.remove()
-      keyboardDidHideListener.remove()
     }
   }, [])
 
@@ -169,6 +162,21 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const filteredMessages = searchQuery
     ? allMessages.filter((m) => m.text.toLowerCase().includes(searchQuery.toLowerCase()))
     : allMessages
+
+  // Animate scroll-to-bottom button on the UI thread to avoid re-renders during scroll
+  const scrollButtonStyle = useAnimatedStyle(() => {
+    'worklet'
+    const isKeyboardUp = keyboardHeight.value < -10
+    const shouldShow = !isNearBottom.value && !isKeyboardUp
+    return {
+      opacity: withTiming(shouldShow ? 1 : 0, { duration: 150 }),
+      transform: [{ scale: withTiming(shouldShow ? 1 : 0.8, { duration: 150 }) }],
+    }
+  })
+
+  const handleScrollToBottom = useCallback(() => {
+    flatListRef.current?.scrollToEnd({ animated: true })
+  }, [])
 
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
@@ -208,12 +216,12 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             onScroll={(event) => {
               const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent
               const threshold = layoutMeasurement.height * 0.3
-              const isNearBottom =
+              const nearBottom =
                 contentOffset.y + layoutMeasurement.height >= contentSize.height - threshold
-              shouldAutoScrollRef.current = isNearBottom
-              setShowScrollButton(!isNearBottom)
+              shouldAutoScrollRef.current = nearBottom
+              isNearBottom.value = nearBottom
             }}
-            scrollEventThrottle={16}
+            scrollEventThrottle={1}
             ListEmptyComponent={
               isLoadingHistory ? (
                 <View style={styles.emptyContainer}>
@@ -232,25 +240,17 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             }
           />
         </Animated.View>
-        <TouchableOpacity
-          style={[
-            styles.scrollToBottomButton,
-            {
-              opacity: showScrollButton && !isKeyboardVisible ? 1 : 0,
-              pointerEvents:
-                showScrollButton && !isKeyboardVisible ? ('auto' as const) : ('none' as const),
-            },
-          ]}
-          onPress={() => {
-            flatListRef.current?.scrollToEnd({ animated: true })
-            setShowScrollButton(false)
-          }}
-          accessibilityRole="button"
-          accessibilityLabel={t('accessibility.scrollToBottom')}
-          accessibilityHint={t('accessibility.scrollToBottomHint')}
-        >
-          <Ionicons name="arrow-down" size={22} color={theme.colors.text.inverse} />
-        </TouchableOpacity>
+        <Animated.View style={[styles.scrollToBottomButton, scrollButtonStyle]}>
+          <Pressable
+            onPress={handleScrollToBottom}
+            accessibilityRole="button"
+            accessibilityLabel={t('accessibility.scrollToBottom')}
+            accessibilityHint={t('accessibility.scrollToBottomHint')}
+            style={styles.scrollToBottomTouchable}
+          >
+            <Ionicons name="arrow-down" size={22} color={theme.colors.text.inverse} />
+          </Pressable>
+        </Animated.View>
         <Animated.View style={inputContainerStyle} onLayout={handleInputLayout}>
           <ChatInput
             onSend={handleSend}
