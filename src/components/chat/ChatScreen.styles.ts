@@ -56,5 +56,12 @@ export const createChatScreenStyles = (
       elevation: 5,
       zIndex: 1000,
     },
+    scrollToBottomTouchable: {
+      width: 48,
+      height: 48,
+      borderRadius: 24,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
   })
 }
