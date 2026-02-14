@@ -7,10 +7,10 @@ import { isWeb } from './platform'
 const imageLogger = logger.create('ImageCompression')
 
 /** Maximum dimension (width or height) for compressed images. */
-const MAX_DIMENSION = 1536
+const MAX_DIMENSION = 800
 
 /** JPEG compression quality (0–1). */
-const JPEG_QUALITY = 0.8
+const JPEG_QUALITY = 0.4
 
 interface CompressedImage {
   uri: string
