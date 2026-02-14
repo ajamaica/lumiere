@@ -7,7 +7,7 @@ import { ChatProviderEvent, SendMessageParams as ProviderSendParams } from '../s
 import type { ReceivedFileAttachment } from '../services/providers/types'
 import { messageQueueAtom, showToolEventsInChatAtom } from '../store'
 import { toProviderAttachments } from '../utils/attachments'
-import { isImageMimeType, saveReceivedFiles } from '../utils/fileTransfer'
+import { isImageMimeType, saveReceivedFile } from '../utils/fileTransfer'
 import { generateId } from '../utils/generateId'
 import { logger } from '../utils/logger'
 
@@ -95,32 +95,47 @@ export function useMessageQueue({
             } else if (event.type === 'lifecycle' && event.phase === 'end') {
               // Save received files then build the final agent message
               const finalize = async () => {
-                let agentAttachments: MessageAttachment[] | undefined
-                if (receivedFiles.length > 0) {
-                  const uris = await saveReceivedFiles(receivedFiles)
-                  agentAttachments = uris.map((uri, i) => ({
-                    type: isImageMimeType(receivedFiles[i].mimeType)
-                      ? ('image' as const)
-                      : ('file' as const),
-                    uri,
-                    mimeType: receivedFiles[i].mimeType,
-                    name: receivedFiles[i].fileName,
-                  }))
-                }
+                try {
+                  let agentAttachments: MessageAttachment[] | undefined
+                  if (receivedFiles.length > 0) {
+                    const saved: MessageAttachment[] = []
+                    for (const file of receivedFiles) {
+                      try {
+                        const uri = saveReceivedFile(file)
+                        saved.push({
+                          type: isImageMimeType(file.mimeType)
+                            ? ('image' as const)
+                            : ('file' as const),
+                          uri,
+                          mimeType: file.mimeType,
+                          name: file.fileName,
+                        })
+                      } catch (err) {
+                        queueLogger.logError(`Failed to save file: ${file.fileName}`, err)
+                      }
+                    }
+                    if (saved.length > 0) {
+                      agentAttachments = saved
+                    }
+                  }
 
-                const agentMessage: Message = {
-                  id: generateId('msg'),
-                  text: accumulatedText,
-                  sender: 'agent',
-                  timestamp: new Date(),
-                  attachments: agentAttachments,
+                  const agentMessage: Message = {
+                    id: generateId('msg'),
+                    text: accumulatedText,
+                    sender: 'agent',
+                    timestamp: new Date(),
+                    attachments: agentAttachments,
+                  }
+                  onAgentMessageComplete(agentMessage)
+                } catch (err) {
+                  queueLogger.logError('Failed to finalize agent message', err)
+                } finally {
+                  setIsAgentResponding(false)
+                  accumulatedText = ''
+                  receivedFiles.length = 0
                 }
-                onAgentMessageComplete(agentMessage)
-                setIsAgentResponding(false)
-                accumulatedText = ''
-                receivedFiles.length = 0
               }
-              finalize().catch((err) => queueLogger.logError('Failed to save received files', err))
+              finalize()
             } else if (event.type === 'tool_event' && event.toolName && showToolEventsRef.current) {
               onMessageAdd({
                 id: generateId('tool'),
@@ -174,7 +189,7 @@ export function useMessageQueue({
       setMessageQueue((prev) => prev.slice(1))
       try {
         const queued: QueuedMessage = JSON.parse(nextRaw)
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+
         sendMessage(queued.text, queued.attachments)
       } catch {
         // Fallback for plain text queue items (backwards compat)
