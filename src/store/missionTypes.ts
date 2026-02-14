@@ -9,12 +9,25 @@ export type MissionStatus =
   | 'stopped'
   | 'archived'
 
+/** A sub-agent run spawned for a subtask. */
+export interface SubtaskSubagent {
+  runId: string
+  childSessionKey: string
+  task: string
+  status: 'running' | 'completed' | 'error'
+  result?: string
+  spawnedAt: number
+  completedAt?: number
+}
+
 export interface MissionSubtask {
   id: string
   title: string
   description?: string
   status: MissionStatus
   result?: string
+  /** Sub-agents spawned for this subtask. */
+  subagents?: SubtaskSubagent[]
 }
 
 export interface Mission {

@@ -406,6 +406,14 @@
       "file_write": "正在寫入檔案...",
       "search": "正在搜尋...",
       "default": "正在執行 {{toolName}}..."
+    },
+    "subagents": {
+      "label": "子代理",
+      "running": "執行中",
+      "completed": "已完成",
+      "error": "錯誤",
+      "spawned": "子代理已啟動",
+      "resultReceived": "子代理結果已收到"
     }
   }
 }

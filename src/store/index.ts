@@ -1,5 +1,11 @@
 // ─── Types ───────────────────────────────────────────────
-export type { Mission, MissionsDict, MissionStatus, MissionSubtask } from './missionTypes'
+export type {
+  Mission,
+  MissionsDict,
+  MissionStatus,
+  MissionSubtask,
+  SubtaskSubagent,
+} from './missionTypes'
 export type {
   FavoriteItem,
   NotificationLastCheckMap,

@@ -41,6 +41,9 @@ export const GatewayMethods = {
   SKILLS_UPDATE: 'skills.update',
   LOGS_TAIL: 'logs.tail',
   AGENT: 'agent',
+  SESSIONS_SPAWN: 'sessions.spawn',
+  SUBAGENTS_LIST: 'subagents.list',
+  SUBAGENTS_STOP: 'subagents.stop',
 } as const
 
 /** Well-known gateway event names. */
@@ -52,6 +55,7 @@ export const GatewayEvents = {
   SHUTDOWN: 'shutdown',
   HEALTH: 'health',
   SEQ_GAP: 'seq.gap',
+  SUBAGENT: 'subagent',
   CONNECT_CHALLENGE: 'connect.challenge',
   DEVICE_PAIR_REQUESTED: 'device.pair.requested',
   DEVICE_PAIR_RESOLVED: 'device.pair.resolved',

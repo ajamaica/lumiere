@@ -406,6 +406,14 @@
       "file_write": "파일 쓰는 중...",
       "search": "검색 중...",
       "default": "{{toolName}} 실행 중..."
+    },
+    "subagents": {
+      "label": "서브 에이전트",
+      "running": "실행 중",
+      "completed": "완료",
+      "error": "오류",
+      "spawned": "서브 에이전트 생성됨",
+      "resultReceived": "서브 에이전트 결과 수신됨"
     }
   }
 }

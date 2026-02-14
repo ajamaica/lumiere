@@ -406,6 +406,14 @@
       "file_write": "Escrevendo arquivo...",
       "search": "Pesquisando...",
       "default": "Executando {{toolName}}..."
+    },
+    "subagents": {
+      "label": "Sub-agente",
+      "running": "Executando",
+      "completed": "Concluído",
+      "error": "Erro",
+      "spawned": "Sub-agente iniciado",
+      "resultReceived": "Resultado do sub-agente recebido"
     }
   }
 }

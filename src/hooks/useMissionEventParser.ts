@@ -9,9 +9,12 @@ export interface MissionUpdate {
     | 'suggest_skill'
     | 'mission_complete'
     | 'mission_error'
+    | 'subagent_spawn'
   subtaskId?: string
   skillName?: string
   reason?: string
+  /** For subagent_spawn: the task description given to the sub-agent. */
+  subagentTask?: string
 }
 
 const MARKERS = {
@@ -20,6 +23,7 @@ const MARKERS = {
   suggestSkill: /\[SUGGEST_SKILL:([\w\s-]+)\]/g,
   missionComplete: /\[MISSION_COMPLETE\]/g,
   missionError: /\[MISSION_ERROR:([^\]]+)\]/g,
+  subagentSpawn: /\[SUBAGENT_SPAWN:([\w-]+):([^\]]+)\]/g,
 }
 
 export function useMissionEventParser() {
@@ -72,6 +76,13 @@ export function useMissionEventParser() {
       if (end > lastMarkerEnd) lastMarkerEnd = end
     }
 
+    MARKERS.subagentSpawn.lastIndex = 0
+    while ((match = MARKERS.subagentSpawn.exec(text)) !== null) {
+      updates.push({ type: 'subagent_spawn', subtaskId: match[1], subagentTask: match[2].trim() })
+      const end = match.index + match[0].length
+      if (end > lastMarkerEnd) lastMarkerEnd = end
+    }
+
     // Preserve text after the last consumed marker so partial markers
     // split across chunks are not lost.
     if (lastMarkerEnd >= 0) {
@@ -103,6 +114,7 @@ export function stripMissionMarkers(text: string): string {
     .replace(/\[SUGGEST_SKILL:[\w\s-]+\]/g, '')
     .replace(/\[MISSION_COMPLETE\]/g, '')
     .replace(/\[MISSION_ERROR:[^\]]+\]/g, '')
+    .replace(/\[SUBAGENT_SPAWN:[\w-]+:[^\]]+\]/g, '')
     .trim()
 }
 

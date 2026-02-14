@@ -28,9 +28,9 @@ import { useMissionList } from '../src/hooks/useMissionList'
 import { useMissionMessages } from '../src/hooks/useMissionMessages'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
-import type { AgentEvent } from '../src/services/molt/types'
+import type { AgentEvent, SubagentEvent } from '../src/services/molt/types'
 import type { ChatHistoryMessage, ChatHistoryResponse } from '../src/services/providers/types'
-import type { SerializedMessage } from '../src/store/missionTypes'
+import type { SerializedMessage, SubtaskSubagent } from '../src/store/missionTypes'
 import { useTheme } from '../src/theme'
 import { logger } from '../src/utils/logger'
 
@@ -109,8 +109,15 @@ export default function MissionDetailScreen() {
   const router = useRouter()
   const { t } = useTranslation()
   const { activeMission } = useMissionList()
-  const { updateMissionStatus, updateSubtaskStatus, addMissionSkill, stopMission, archiveMission } =
-    useMissionActions()
+  const {
+    updateMissionStatus,
+    updateSubtaskStatus,
+    addSubagentToSubtask,
+    updateSubagentStatus,
+    addMissionSkill,
+    stopMission,
+    archiveMission,
+  } = useMissionActions()
   const { getMissionMessages, saveMissionMessages } = useMissionMessages(activeMission?.id ?? null)
   const { getProviderConfig, currentServerId } = useServers()
   const { parseChunk, resetBuffer } = useMissionEventParser()
@@ -265,12 +272,45 @@ export default function MissionDetailScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeMission?.id, gateway.connected, restoredHistory, serverSyncDone])
 
+  // Subscribe to sub-agent lifecycle events from the gateway.
+  // When a sub-agent finishes (phase === 'end'), update its tracked status.
+  useEffect(() => {
+    if (!activeMission || !gateway.connected) return
+
+    const unsubscribe = gateway.onSubagentEvent((event: SubagentEvent) => {
+      if (stoppedRef.current) return
+
+      if (event.phase === 'end') {
+        const status = event.error ? 'error' : 'completed'
+        const result = event.result ?? event.error
+        updateSubagentStatus(activeMission.id, event.runId, status, result)
+        missionLogger.info(`Sub-agent ${event.runId} finished: ${status}`)
+      }
+    })
+
+    return unsubscribe
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeMission?.id, gateway.connected, updateSubagentStatus])
+
   const handleAgentEvent = useCallback(
     (event: AgentEvent) => {
       if (!activeMission) return
 
       // If the mission was stopped, still consume events but skip status updates
       const isStopped = stoppedRef.current
+
+      // Handle sub-agent stream events embedded in agent events
+      if (event.stream === 'subagent') {
+        if (!isStopped && event.data?.phase === 'end') {
+          const runId = event.data.toolCallId ?? event.runId
+          const status = event.data.toolStatus === 'error' ? 'error' : 'completed'
+          const result = event.data.text ?? event.data.delta
+          if (runId) {
+            updateSubagentStatus(activeMission.id, runId, status, result)
+          }
+        }
+        return
+      }
 
       // Handle tool stream events
       if (event.stream === 'tool' && event.data?.toolName) {
@@ -378,6 +418,25 @@ export default function MissionDetailScreen() {
                   errorMessage: update.reason,
                 })
                 break
+              case 'subagent_spawn':
+                if (update.subtaskId && update.subagentTask) {
+                  missionLogger.info(
+                    `Sub-agent spawn requested for ${update.subtaskId}: ${update.subagentTask}`,
+                  )
+                  // The actual spawn is done by the gateway's sessions_spawn tool call.
+                  // We track a placeholder here; the real runId arrives via the
+                  // subagent event or the tool result. We use a temporary ID that
+                  // will be reconciled when the subagent event arrives.
+                  const placeholderSubagent: SubtaskSubagent = {
+                    runId: `pending-${Date.now()}`,
+                    childSessionKey: '',
+                    task: update.subagentTask,
+                    status: 'running',
+                    spawnedAt: Date.now(),
+                  }
+                  addSubagentToSubtask(activeMission.id, update.subtaskId, placeholderSubagent)
+                }
+                break
             }
           }
         }
@@ -409,6 +468,8 @@ export default function MissionDetailScreen() {
       resetBuffer,
       updateMissionStatus,
       updateSubtaskStatus,
+      updateSubagentStatus,
+      addSubagentToSubtask,
       addMissionSkill,
       saveMissionMessages,
       t,

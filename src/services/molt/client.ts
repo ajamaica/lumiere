@@ -35,8 +35,12 @@ import {
   RequestFrame,
   ResponseFrame,
   SendMessageParams,
+  SessionsSpawnParams,
+  SessionsSpawnResponse,
   Skill,
   SkillsListResponse,
+  SubagentEvent,
+  SubagentsListResponse,
   TeachSkillParams,
   UpdateSkillParams,
 } from './types'
@@ -60,6 +64,7 @@ export class MoltGatewayClient {
   private eventListeners = new Map<string, Set<EventCallback>>()
   private connectionStateListeners = new Set<ConnectionStateCallback>()
   private agentEventListeners = new Set<AgentEventCallback>()
+  private subagentEventListeners = new Set<(event: SubagentEvent) => void>()
 
   // Reconnection
   private reconnectAttempt = 0
@@ -220,6 +225,12 @@ export class MoltGatewayClient {
     return () => this.agentEventListeners.delete(callback)
   }
 
+  /** Subscribe to sub-agent lifecycle events. Returns unsubscribe function. */
+  onSubagentEvent(callback: (event: SubagentEvent) => void): () => void {
+    this.subagentEventListeners.add(callback)
+    return () => this.subagentEventListeners.delete(callback)
+  }
+
   /**
    * Legacy API — subscribe to all raw event frames.
    * Prefer `on(eventName, cb)` or `onAgentEvent(cb)` for new code.
@@ -365,6 +376,28 @@ export class MoltGatewayClient {
 
   async getLogs(params?: GatewayLogsParams): Promise<GatewayLogsResponse> {
     return this.request<GatewayLogsResponse>(GatewayMethods.LOGS_TAIL, params)
+  }
+
+  /**
+   * Spawn a sub-agent run. Non-blocking — returns immediately with the run ID
+   * and child session key. The sub-agent announces its result back via a
+   * `subagent` event when finished.
+   */
+  async spawnSubagent(params: SessionsSpawnParams): Promise<SessionsSpawnResponse> {
+    return this.request<SessionsSpawnResponse>(GatewayMethods.SESSIONS_SPAWN, params)
+  }
+
+  /** List active sub-agent runs, optionally filtered by session key. */
+  async listSubagents(sessionKey?: string): Promise<SubagentsListResponse> {
+    return this.request<SubagentsListResponse>(
+      GatewayMethods.SUBAGENTS_LIST,
+      sessionKey ? { sessionKey } : undefined,
+    )
+  }
+
+  /** Stop a running sub-agent by its run ID. */
+  async stopSubagent(runId: string): Promise<void> {
+    await this.request(GatewayMethods.SUBAGENTS_STOP, { runId }, 10_000)
   }
 
   async sendAgentRequest(
@@ -579,6 +612,16 @@ export class MoltGatewayClient {
         this.agentEventListeners.forEach((cb) => {
           try {
             cb(payload as AgentEvent)
+          } catch {
+            // Isolate listener errors to prevent breaking event dispatch
+          }
+        })
+        break
+
+      case GatewayEvents.SUBAGENT:
+        this.subagentEventListeners.forEach((cb) => {
+          try {
+            cb(payload as SubagentEvent)
           } catch {
             // Isolate listener errors to prevent breaking event dispatch
           }
