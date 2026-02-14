@@ -1,4 +1,5 @@
-import { ImageManipulator, SaveFormat } from 'expo-image-manipulator'
+import { File as ExpoFile } from 'expo-file-system'
+import { Image } from 'react-native-compressor'
 
 import { logger } from './logger'
 import { isWeb } from './platform'
@@ -20,7 +21,7 @@ interface CompressedImage {
 /**
  * Compress an image and convert it to JPEG format.
  *
- * On native platforms this uses `expo-image-manipulator`.
+ * On native platforms this uses `react-native-compressor`.
  * On web it draws onto an off-screen canvas and exports as JPEG.
  */
 export async function compressImageToJpeg(uri: string): Promise<CompressedImage> {
@@ -31,51 +32,41 @@ export async function compressImageToJpeg(uri: string): Promise<CompressedImage>
 }
 
 // ---------------------------------------------------------------------------
-// Native implementation (iOS / Android)
+// Native implementation (iOS / Android) — react-native-compressor
 // ---------------------------------------------------------------------------
 
 async function compressOnNative(uri: string): Promise<CompressedImage> {
   try {
-    const context = ImageManipulator.manipulate(uri)
-    const imageRef = await context.renderAsync()
-
-    // Down-scale if either dimension exceeds the limit.
-    const { width, height } = imageRef
-    if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
-      const scale = MAX_DIMENSION / Math.max(width, height)
-      const resizeContext = ImageManipulator.manipulate(uri)
-      resizeContext.resize({
-        width: Math.round(width * scale),
-        height: Math.round(height * scale),
-      })
-      const resizedRef = await resizeContext.renderAsync()
-      const result = await resizedRef.saveAsync({
-        format: SaveFormat.JPEG,
-        compress: JPEG_QUALITY,
-        base64: true,
-      })
-      return {
-        uri: result.uri,
-        base64: result.base64 ?? '',
-        mimeType: 'image/jpeg',
-      }
-    }
-
-    // No resize needed — just convert format and compress.
-    const result = await imageRef.saveAsync({
-      format: SaveFormat.JPEG,
-      compress: JPEG_QUALITY,
-      base64: true,
+    const compressedUri = await Image.compress(uri, {
+      compressionMethod: 'manual',
+      maxWidth: MAX_DIMENSION,
+      maxHeight: MAX_DIMENSION,
+      quality: JPEG_QUALITY,
+      output: 'jpg',
     })
+
+    const base64 = await readFileAsBase64(compressedUri)
+
     return {
-      uri: result.uri,
-      base64: result.base64 ?? '',
+      uri: compressedUri,
+      base64,
       mimeType: 'image/jpeg',
     }
   } catch (err) {
     imageLogger.logError('Native image compression failed', err)
     throw err
   }
+}
+
+async function readFileAsBase64(uri: string): Promise<string> {
+  const file = new ExpoFile(uri)
+  const buffer = await file.arrayBuffer()
+  const bytes = new Uint8Array(buffer)
+  let binary = ''
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i])
+  }
+  return btoa(binary)
 }
 
 // ---------------------------------------------------------------------------
@@ -118,7 +109,7 @@ async function compressOnWeb(uri: string): Promise<CompressedImage> {
 
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
-    const img = new Image()
+    const img = new window.Image()
     img.onload = () => resolve(img)
     img.onerror = reject
     img.src = src

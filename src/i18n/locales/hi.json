@@ -72,7 +72,8 @@
     "video": "वीडियो",
     "attachFile": "फ़ाइल संलग्न करें",
     "file": "फ़ाइल",
-    "removeAttachment": "अनुलग्नक {{number}} हटाएं"
+    "removeAttachment": "अनुलग्नक {{number}} हटाएं",
+    "compressing": "संपीड़ित हो रहा है..."
   },
   "addServer": {
     "title": "सर्वर जोड़ें",

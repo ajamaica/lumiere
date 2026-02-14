@@ -4,7 +4,9 @@ import { useCallback, useState } from 'react'
 
 import { MessageAttachment } from '../components/chat/ChatMessage'
 import { compressImageToJpeg } from '../utils/compressImage'
+import { compressVideo } from '../utils/compressVideo'
 import { logger } from '../utils/logger'
+import { isWeb } from '../utils/platform'
 
 const attachmentLogger = logger.create('Attachments')
 
@@ -16,6 +18,8 @@ interface UseAttachmentsOptions {
 export function useAttachments({ disabled, supportsImageAttachments }: UseAttachmentsOptions) {
   const [attachments, setAttachments] = useState<MessageAttachment[]>([])
   const [showMenu, setShowMenu] = useState(false)
+  const [compressing, setCompressing] = useState(false)
+  const [compressionProgress, setCompressionProgress] = useState(0)
 
   const handleFilesReceived = useCallback((newAttachments: MessageAttachment[]) => {
     setAttachments((prev) => [...prev, ...newAttachments])
@@ -34,19 +38,28 @@ export function useAttachments({ disabled, supportsImageAttachments }: UseAttach
       })
 
       if (!result.canceled && result.assets.length > 0) {
-        const newAttachments: MessageAttachment[] = await Promise.all(
-          result.assets.map(async (asset) => {
+        setCompressing(true)
+        setCompressionProgress(0)
+        try {
+          const total = result.assets.length
+          const newAttachments: MessageAttachment[] = []
+          for (let i = 0; i < total; i++) {
+            const asset = result.assets[i]
             const compressed = await compressImageToJpeg(asset.uri)
-            return {
+            newAttachments.push({
               type: 'image' as const,
               uri: compressed.uri,
               base64: compressed.base64,
               mimeType: compressed.mimeType,
               name: asset.fileName ?? undefined,
-            }
-          }),
-        )
-        setAttachments((prev) => [...prev, ...newAttachments])
+            })
+            setCompressionProgress((i + 1) / total)
+          }
+          setAttachments((prev) => [...prev, ...newAttachments])
+        } finally {
+          setCompressing(false)
+          setCompressionProgress(0)
+        }
       }
     } catch (error) {
       attachmentLogger.error('Failed to pick image', error)
@@ -60,17 +73,41 @@ export function useAttachments({ disabled, supportsImageAttachments }: UseAttach
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ['videos'],
         allowsMultipleSelection: true,
-        quality: 0.8,
+        quality: 1,
       })
 
       if (!result.canceled && result.assets.length > 0) {
-        const newAttachments: MessageAttachment[] = result.assets.map((asset) => ({
-          type: 'video' as const,
-          uri: asset.uri,
-          mimeType: asset.mimeType ?? 'video/mp4',
-          name: asset.fileName ?? undefined,
-        }))
-        setAttachments((prev) => [...prev, ...newAttachments])
+        setCompressing(true)
+        setCompressionProgress(0)
+        try {
+          const total = result.assets.length
+          const newAttachments: MessageAttachment[] = []
+          for (let i = 0; i < total; i++) {
+            const asset = result.assets[i]
+            let uri = asset.uri
+            const mimeType = asset.mimeType ?? 'video/mp4'
+
+            // Compress videos on native platforms
+            if (!isWeb) {
+              const compressed = await compressVideo(uri, (progress) => {
+                setCompressionProgress((i + progress) / total)
+              })
+              uri = compressed.uri
+            }
+
+            newAttachments.push({
+              type: 'video' as const,
+              uri,
+              mimeType,
+              name: asset.fileName ?? undefined,
+            })
+            setCompressionProgress((i + 1) / total)
+          }
+          setAttachments((prev) => [...prev, ...newAttachments])
+        } finally {
+          setCompressing(false)
+          setCompressionProgress(0)
+        }
       }
     } catch (error) {
       attachmentLogger.error('Failed to pick video', error)
@@ -113,6 +150,8 @@ export function useAttachments({ disabled, supportsImageAttachments }: UseAttach
     attachments,
     showMenu,
     setShowMenu,
+    compressing,
+    compressionProgress,
     handleFilesReceived,
     handlePickImage,
     handlePickVideo,
