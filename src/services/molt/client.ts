@@ -44,6 +44,7 @@ import {
   TeachSkillParams,
   UpdateSkillParams,
 } from './types'
+import { toWebSocketUrl } from './url'
 
 const wsLogger = logger.create('WebSocket')
 
@@ -431,10 +432,7 @@ export class MoltGatewayClient {
   // ─── Private: WebSocket Lifecycle ──────────────────────────────────────────
 
   private openWebSocket(): void {
-    let url = this.config.url
-    if (!url.startsWith('wss://') && !url.startsWith('ws://')) {
-      url = `wss://${url}`
-    }
+    const url = toWebSocketUrl(this.config.url)
 
     try {
       this.ws = new WebSocket(url)

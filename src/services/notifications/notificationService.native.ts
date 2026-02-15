@@ -11,6 +11,7 @@ import {
   serversAtom,
   serverSessionsAtom,
 } from '../../store'
+import { toHttpUrl } from '../molt/url'
 import type { ChatHistoryMessage } from '../providers/types'
 import { getServerToken } from '../secureTokenStorage'
 
@@ -42,7 +43,7 @@ async function checkServerForNewMessages(
 
   try {
     // Fetch the latest messages from the server gateway
-    const response = await fetch(`${httpUrl(serverUrl)}/api/rpc`, {
+    const response = await fetch(`${toHttpUrl(serverUrl)}/api/rpc`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -101,13 +102,6 @@ async function checkServerForNewMessages(
 }
 
 /**
- * Convert a WebSocket URL (ws:// or wss://) to its HTTP equivalent.
- */
-function httpUrl(url: string): string {
-  return url.replace(/^ws(s?):\/\//, 'http$1://')
-}
-
-/**
  * Helper to resolve atom values that may be Promises during hydration.
  */
 async function resolveAtom<T>(value: T | Promise<T>): Promise<T> {
@@ -124,7 +118,7 @@ async function listServerSessions(
   fallbackSessionKey: string,
 ): Promise<string[]> {
   try {
-    const response = await fetch(`${httpUrl(serverUrl)}/api/rpc`, {
+    const response = await fetch(`${toHttpUrl(serverUrl)}/api/rpc`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
