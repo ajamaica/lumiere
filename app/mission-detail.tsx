@@ -237,6 +237,14 @@ export default function MissionDetailScreen() {
           missionLogger.info(
             `Updating mission status from server history: ${activeMission.status} -> ${updates.status}`,
           )
+          // Mark any remaining non-completed subtasks as completed when mission is done
+          if (updates.status === 'completed') {
+            for (const subtask of activeMission.subtasks) {
+              if (subtask.status !== 'completed') {
+                updateSubtaskStatus(activeMission.id, subtask.id, 'completed')
+              }
+            }
+          }
           updateMissionStatus(activeMission.id, updates.status, {
             conclusion: updates.conclusion,
             errorMessage: updates.errorMessage,
@@ -409,6 +417,12 @@ export default function MissionDetailScreen() {
                 }
                 break
               case 'mission_complete':
+                // Mark any remaining non-completed subtasks as completed
+                for (const subtask of activeMission.subtasks) {
+                  if (subtask.status !== 'completed') {
+                    updateSubtaskStatus(activeMission.id, subtask.id, 'completed')
+                  }
+                }
                 updateMissionStatus(activeMission.id, 'completed', {
                   conclusion: stripMissionMarkers(streamingTextRef.current),
                 })

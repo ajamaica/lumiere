@@ -30,8 +30,11 @@ export function MissionCard({ mission, onPress }: MissionCardProps) {
   const { theme } = useTheme()
   const { t } = useTranslation()
 
-  const completedCount = mission.subtasks.filter((s) => s.status === 'completed').length
   const totalCount = mission.subtasks.length
+  const isCompleted = mission.status === 'completed'
+  const completedCount = isCompleted
+    ? totalCount
+    : mission.subtasks.filter((s) => s.status === 'completed').length
   const progressPct = totalCount > 0 ? completedCount / totalCount : 0
 
   const timeAgo = useMemo(() => formatTimeAgo(mission.updatedAt, t), [mission.updatedAt, t])
@@ -70,7 +73,7 @@ export function MissionCard({ mission, onPress }: MissionCardProps) {
     },
     progressFill: {
       height: 4,
-      backgroundColor: theme.colors.primary,
+      backgroundColor: isCompleted ? theme.colors.status.success : theme.colors.primary,
       borderRadius: 2,
       width: `${progressPct * 100}%`,
     },
