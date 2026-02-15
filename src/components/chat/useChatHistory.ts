@@ -118,6 +118,22 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     }
   }, [providerConfig.serverId])
 
+  // Detect session switches and clear stale messages so old messages
+  // from the previous session don't flash before the new history loads.
+  const prevSessionKeyRef = useRef(currentSessionKey)
+  useEffect(() => {
+    if (prevSessionKeyRef.current !== currentSessionKey) {
+      prevSessionKeyRef.current = currentSessionKey
+      hasCacheRef.current = false
+      hasScrolledOnLoadRef.current = false
+      shouldAutoScrollRef.current = true
+      setMessages([])
+      setCurrentAgentMessage('')
+      setIsLoadingHistory(true)
+      setHistoryReady(false)
+    }
+  }, [currentSessionKey])
+
   // Pre-populate from local cache before the provider connects.
   useEffect(() => {
     let cancelled = false

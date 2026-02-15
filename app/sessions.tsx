@@ -26,7 +26,12 @@ import {
   SessionIndexEntry,
   writeSessionIndex,
 } from '../src/services/providers'
-import { currentSessionKeyAtom, isMissionSession, sessionAliasesAtom } from '../src/store'
+import {
+  createSessionKey,
+  currentSessionKeyAtom,
+  isMissionSession,
+  sessionAliasesAtom,
+} from '../src/store'
 import { jotaiStorage } from '../src/store/storage'
 import { useTheme } from '../src/theme'
 import { GlassView } from '../src/utils/glassEffect'
@@ -126,7 +131,7 @@ export default function SessionsScreen() {
   }, [loadMoltSessions, loadLocalSessions, isMoltProvider])
 
   const handleNewSession = () => {
-    const newSessionKey = `agent:main:${Date.now()}`
+    const newSessionKey = createSessionKey('main', `${Date.now()}`)
     setCurrentSessionKey(newSessionKey)
     router.back()
   }
@@ -220,7 +225,7 @@ export default function SessionsScreen() {
           await deleteSessionData(config?.serverId, sessionKey)
           setSessions((prev) => prev.filter((s) => s.key !== sessionKey))
           if (sessionKey === currentSessionKey) {
-            const newKey = `agent:main:${Date.now()}`
+            const newKey = createSessionKey('main', `${Date.now()}`)
             setCurrentSessionKey(newKey)
           }
         },
