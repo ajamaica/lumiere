@@ -14,6 +14,8 @@ import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
 import { backgroundCheckTask } from '../src/services/notifications'
 import { deleteServerToken } from '../src/services/secureTokenStorage'
+import { deleteInstanceToken } from '../src/services/thinklumiere/instanceToken'
+import { deleteSessionToken } from '../src/services/thinklumiere/sessionToken'
 import { clearAllPasswordData } from '../src/services/webCrypto'
 import {
   backgroundNotificationsEnabledAtom,
@@ -106,6 +108,9 @@ export default function SettingsScreen() {
             for (const server of serversList) {
               await deleteServerToken(server.id)
             }
+            // Delete ThinkLumiere tokens
+            await deleteSessionToken()
+            await deleteInstanceToken()
             // Clear the session crypto key from sessionStorage
             clearSessionCryptoKey()
             // Remove encrypted servers, password salt, and verification
