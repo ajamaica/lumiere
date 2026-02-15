@@ -7,6 +7,16 @@ export type {
   SubtaskSubagent,
 } from './missionTypes'
 export type {
+  AuthResponse,
+  Instance,
+  InstanceResponse,
+  InstanceStatus,
+  MobileApiError,
+  MobileUser,
+  SubscriptionResponse,
+  SubscriptionStatus,
+} from './mobileTypes'
+export type {
   FavoriteItem,
   GatewayLastSeenMap,
   PendingShareMedia,
@@ -77,6 +87,14 @@ export { activeMissionIdAtom, missionMessagesAtom, missionsAtom } from './missio
 // ─── Canvas atoms ───────────────────────────────────────
 export type { CanvasContent } from './canvasAtoms'
 export { canvasContentAtom, canvasVisibleAtom } from './canvasAtoms'
+
+// ─── Mobile atoms ───────────────────────────────────────
+export {
+  instanceAtom,
+  mobileAuthenticatedAtom,
+  mobileUserAtom,
+  subscriptionStatusAtom,
+} from './mobileAtoms'
 
 // ─── Secure store (web only) ─────────────────────────────
 export {
