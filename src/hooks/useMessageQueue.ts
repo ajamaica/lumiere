@@ -94,6 +94,17 @@ export function useMessageQueue({
             if (event.type === 'delta' && event.delta) {
               accumulatedText += event.delta
               onAgentMessageUpdate(accumulatedText)
+            } else if (event.type === 'lifecycle' && event.phase === 'start') {
+              if (showToolEventsRef.current) {
+                onMessageAdd({
+                  id: generateId('lc'),
+                  type: 'lifecycle_event',
+                  phase: 'start',
+                  sender: 'agent',
+                  timestamp: new Date(),
+                  text: 'start',
+                })
+              }
             } else if (event.type === 'lifecycle' && event.phase === 'end') {
               const agentMessage: Message = {
                 id: generateId('msg'),
@@ -104,6 +115,17 @@ export function useMessageQueue({
               onAgentMessageComplete(agentMessage)
               setIsAgentResponding(false)
               accumulatedText = ''
+
+              if (showToolEventsRef.current) {
+                onMessageAdd({
+                  id: generateId('lc'),
+                  type: 'lifecycle_event',
+                  phase: 'end',
+                  sender: 'agent',
+                  timestamp: new Date(),
+                  text: 'end',
+                })
+              }
             } else if (event.type === 'tool_event' && event.toolName) {
               // Extract canvas content from canvas tool events
               if (event.toolName === 'canvas' && event.toolInput) {

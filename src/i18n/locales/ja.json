@@ -73,7 +73,9 @@
     "attachFile": "ファイルを添付",
     "file": "ファイル",
     "removeAttachment": "添付ファイル{{number}}を削除",
-    "compressing": "圧縮中..."
+    "compressing": "圧縮中...",
+    "lifecycleStart": "思考中",
+    "lifecycleEnd": "完了"
   },
   "addServer": {
     "title": "サーバーを追加",

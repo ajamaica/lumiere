@@ -73,7 +73,9 @@
     "attachFile": "附加檔案",
     "file": "檔案",
     "removeAttachment": "移除附件 {{number}}",
-    "compressing": "壓縮中..."
+    "compressing": "壓縮中...",
+    "lifecycleStart": "思考中",
+    "lifecycleEnd": "完成"
   },
   "addServer": {
     "title": "新增伺服器",

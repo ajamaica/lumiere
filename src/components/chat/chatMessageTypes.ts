@@ -28,4 +28,13 @@ export interface ToolEventMessage {
   text: string
 }
 
-export type Message = TextMessage | ToolEventMessage
+export interface LifecycleEventMessage {
+  id: string
+  type: 'lifecycle_event'
+  phase: 'start' | 'end'
+  sender: 'agent'
+  timestamp: Date
+  text: string
+}
+
+export type Message = TextMessage | ToolEventMessage | LifecycleEventMessage

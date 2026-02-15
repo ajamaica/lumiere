@@ -73,7 +73,9 @@
     "attachFile": "Datei anhängen",
     "file": "Datei",
     "removeAttachment": "Anhang {{number}} entfernen",
-    "compressing": "Komprimierung..."
+    "compressing": "Komprimierung...",
+    "lifecycleStart": "Denkt nach",
+    "lifecycleEnd": "Fertig"
   },
   "addServer": {
     "title": "Server hinzufügen",

@@ -73,7 +73,9 @@
     "attachFile": "Прикрепить файл",
     "file": "Файл",
     "removeAttachment": "Удалить вложение {{number}}",
-    "compressing": "Сжатие..."
+    "compressing": "Сжатие...",
+    "lifecycleStart": "Думает",
+    "lifecycleEnd": "Готово"
   },
   "addServer": {
     "title": "Добавить сервер",
