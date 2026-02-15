@@ -273,11 +273,14 @@ export function useMarkdownRules() {
       ) => {
         const url = node.attributes?.href || ''
         return (
-          <Pressable key={node.key} onPress={() => handleLinkPress(url)}>
-            <Text style={styles.link} selectable={true}>
-              {children}
-            </Text>
-          </Pressable>
+          <Text
+            key={node.key}
+            style={styles.link}
+            selectable={true}
+            onPress={() => handleLinkPress(url)}
+          >
+            {children}
+          </Text>
         )
       },
       textgroup: (
