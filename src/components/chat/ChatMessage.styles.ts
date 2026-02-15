@@ -3,6 +3,51 @@ import { StyleSheet } from 'react-native'
 import { Theme } from '../../theme'
 import { webStyle } from '../../utils/platform'
 
+export const createCodeBlockStyles = (theme: Theme) =>
+  StyleSheet.create({
+    codeBlockContainer: {
+      borderRadius: theme.borderRadius.lg,
+      overflow: 'hidden',
+      backgroundColor: theme.isDark ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.06)',
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: theme.isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+    },
+    codeBlockHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.xs + 2,
+      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.04)',
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: theme.isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+    },
+    codeBlockLanguage: {
+      fontSize: theme.typography.fontSize.xs,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.text.tertiary,
+      textTransform: 'uppercase',
+      letterSpacing: 0.5,
+    },
+    copyButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.xs,
+      paddingHorizontal: theme.spacing.sm,
+      paddingVertical: theme.spacing.xs,
+      borderRadius: theme.borderRadius.sm,
+      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.04)',
+    },
+    copyButtonText: {
+      fontSize: theme.typography.fontSize.xs,
+      color: theme.colors.text.tertiary,
+      fontWeight: theme.typography.fontWeight.medium,
+    },
+    codeBlockScrollView: {
+      flexGrow: 0,
+    },
+  })
+
 export const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
@@ -168,37 +213,31 @@ export const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
         : theme.isDark
           ? 'rgba(255, 255, 255, 0.1)'
           : 'rgba(0, 0, 0, 0.1)',
-      color: textColor,
-      paddingHorizontal: theme.spacing.xs,
+      color: isUser ? textColor : theme.isDark ? '#E8ECEF' : '#374151',
+      paddingHorizontal: theme.spacing.xs + 2,
       paddingVertical: 2,
-      borderRadius: theme.borderRadius.xs,
-      fontFamily: 'Courier',
+      borderRadius: theme.borderRadius.sm,
+      fontFamily: theme.typography.fontFamily.monospace,
       fontSize: theme.typography.fontSize.sm,
     },
     fence: {
-      backgroundColor: isUser
-        ? 'rgba(0, 0, 0, 0.15)'
-        : theme.isDark
-          ? 'rgba(255, 255, 255, 0.1)'
-          : 'rgba(0, 0, 0, 0.1)',
-      color: textColor,
+      backgroundColor: 'transparent',
+      color: isUser ? textColor : theme.isDark ? '#D4D9DE' : '#1F2937',
       padding: theme.spacing.md,
-      borderRadius: theme.borderRadius.md,
-      fontFamily: 'Courier',
+      borderRadius: 0,
+      fontFamily: theme.typography.fontFamily.monospace,
       fontSize: theme.typography.fontSize.sm,
+      lineHeight: theme.typography.fontSize.sm * theme.typography.lineHeight.relaxed,
       marginVertical: theme.spacing.sm,
     },
     code_block: {
-      backgroundColor: isUser
-        ? 'rgba(0, 0, 0, 0.15)'
-        : theme.isDark
-          ? 'rgba(255, 255, 255, 0.1)'
-          : 'rgba(0, 0, 0, 0.1)',
-      color: textColor,
+      backgroundColor: 'transparent',
+      color: isUser ? textColor : theme.isDark ? '#D4D9DE' : '#1F2937',
       padding: theme.spacing.md,
-      borderRadius: theme.borderRadius.md,
-      fontFamily: 'Courier',
+      borderRadius: 0,
+      fontFamily: theme.typography.fontFamily.monospace,
       fontSize: theme.typography.fontSize.sm,
+      lineHeight: theme.typography.fontSize.sm * theme.typography.lineHeight.relaxed,
       marginVertical: theme.spacing.sm,
     },
     blockquote: {
