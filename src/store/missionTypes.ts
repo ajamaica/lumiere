@@ -71,7 +71,19 @@ export interface SerializedToolEventMessage {
   text: string
 }
 
-export type SerializedMessage = SerializedTextMessage | SerializedToolEventMessage
+export interface SerializedLifecycleEventMessage {
+  id: string
+  type: 'lifecycle_event'
+  phase: 'start' | 'end'
+  sender: 'agent'
+  timestamp: number
+  text: string
+}
+
+export type SerializedMessage =
+  | SerializedTextMessage
+  | SerializedToolEventMessage
+  | SerializedLifecycleEventMessage
 
 export interface MissionMessagesDict {
   [missionId: string]: SerializedMessage[]
