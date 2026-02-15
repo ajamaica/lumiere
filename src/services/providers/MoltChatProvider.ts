@@ -98,14 +98,16 @@ export class MoltChatProvider implements ChatProvider {
         if (event.data.phase === 'end') {
           unsubscribe()
         }
-      } else if (event.stream === 'tool') {
-        onEvent({
-          type: 'tool_event',
-          toolName: event.data.toolName,
-          toolCallId: event.data.toolCallId,
-          toolInput: event.data.toolInput,
-          toolStatus: event.data.toolStatus,
-        })
+      } else if (event.stream === 'tool' || event.stream === 'subagent') {
+        if (event.data.toolName) {
+          onEvent({
+            type: 'tool_event',
+            toolName: event.data.toolName,
+            toolCallId: event.data.toolCallId,
+            toolInput: event.data.toolInput,
+            toolStatus: event.data.toolStatus,
+          })
+        }
       }
     })
 
