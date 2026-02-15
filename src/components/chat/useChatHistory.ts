@@ -81,7 +81,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     currentSessionKey,
     onMessageAdd: (message) =>
       setMessages((prev) => {
-        if (message.type === 'tool_event') {
+        if (message.type === 'tool_event' && message.toolCallId) {
           const idx = prev.findIndex(
             (m) => m.type === 'tool_event' && m.toolCallId === message.toolCallId,
           )

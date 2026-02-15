@@ -126,9 +126,11 @@ export function useMessageQueue({
                   text: 'end',
                 })
               }
-            } else if (event.type === 'tool_event' && event.toolName) {
+            } else if (event.type === 'tool_event') {
+              const toolName = event.toolName || 'unknown'
+
               // Extract canvas content from canvas tool events
-              if (event.toolName === 'canvas' && event.toolInput) {
+              if (toolName === 'canvas' && event.toolInput) {
                 const html = event.toolInput.html as string | undefined
                 if (html && typeof html === 'string') {
                   setCanvasContent({
@@ -143,16 +145,17 @@ export function useMessageQueue({
               }
 
               if (showToolEventsRef.current) {
+                const toolCallId = event.toolCallId || generateId('tc')
                 onMessageAdd({
                   id: generateId('tool'),
                   type: 'tool_event',
-                  toolName: event.toolName,
-                  toolCallId: event.toolCallId || '',
+                  toolName,
+                  toolCallId,
                   toolInput: event.toolInput,
                   status: event.toolStatus || 'running',
                   sender: 'agent',
                   timestamp: new Date(),
-                  text: event.toolName,
+                  text: toolName,
                 })
               }
             }
