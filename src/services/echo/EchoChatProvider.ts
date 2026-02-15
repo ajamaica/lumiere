@@ -20,7 +20,7 @@ export class EchoChatProvider implements ChatProvider {
     chat: true,
     imageAttachments: false,
     fileAttachments: false,
-    serverSessions: false,
+    serverSessions: true,
     persistentHistory: false,
     scheduler: false,
     gatewaySnapshot: false,
@@ -32,6 +32,8 @@ export class EchoChatProvider implements ChatProvider {
 
   // In-memory conversation history keyed by session
   private sessions: Map<string, { role: 'user' | 'assistant'; content: string }[]> = new Map()
+  // Session metadata keyed by session key
+  private sessionMeta: Map<string, { lastActivity: number }> = new Map()
 
   constructor(_config: ProviderConfig) {
     // Echo provider doesn't need any config
@@ -69,8 +71,13 @@ export class EchoChatProvider implements ChatProvider {
   ): { role: 'user' | 'assistant'; content: string }[] {
     if (!this.sessions.has(sessionKey)) {
       this.sessions.set(sessionKey, [])
+      this.sessionMeta.set(sessionKey, { lastActivity: Date.now() })
     }
     return this.sessions.get(sessionKey)!
+  }
+
+  private touchSession(sessionKey: string): void {
+    this.sessionMeta.set(sessionKey, { lastActivity: Date.now() })
   }
 
   async sendMessage(
@@ -92,6 +99,7 @@ export class EchoChatProvider implements ChatProvider {
     onEvent({ type: 'delta', delta: echoResponse })
 
     messages.push({ role: 'assistant', content: echoResponse })
+    this.touchSession(params.sessionKey)
 
     onEvent({ type: 'lifecycle', phase: 'end' })
   }
@@ -111,14 +119,18 @@ export class EchoChatProvider implements ChatProvider {
 
   async resetSession(sessionKey: string): Promise<void> {
     this.sessions.delete(sessionKey)
+    this.sessionMeta.delete(sessionKey)
   }
 
   async listSessions(): Promise<unknown> {
     return {
-      sessions: Array.from(this.sessions.keys()).map((key) => ({
-        key,
-        messageCount: this.sessions.get(key)?.length ?? 0,
-      })),
+      sessions: Array.from(this.sessions.keys())
+        .map((key) => ({
+          key,
+          messageCount: this.sessions.get(key)?.length ?? 0,
+          lastActivity: this.sessionMeta.get(key)?.lastActivity ?? Date.now(),
+        }))
+        .sort((a, b) => b.lastActivity - a.lastActivity),
     }
   }
 

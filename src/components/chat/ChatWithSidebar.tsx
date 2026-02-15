@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { DEFAULT_SESSION_KEY } from '../../constants'
 import { useServers } from '../../hooks/useServers'
 import { useMoltGateway } from '../../services/molt'
-import { ProviderConfig } from '../../services/providers'
+import { ProviderConfig, readSessionIndex } from '../../services/providers'
 import {
   createSessionKey,
   currentSessionKeyAtom,
@@ -38,8 +38,9 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   // Track last session per server
   const serverSessionsRef = useRef<Record<string, string>>({})
 
-  // Only molt provider supports server-side sessions
-  const supportsServerSessions = providerConfig?.type === 'molt'
+  const isMoltProvider = providerConfig?.type === 'molt'
+  // Providers that support session management (server-side or locally managed)
+  const supportsServerSessions = isMoltProvider || providerConfig?.type === 'echo'
 
   const { connected, connect, disconnect, listSessions } = useMoltGateway({
     url: providerConfig?.url || '',
@@ -47,54 +48,77 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   })
 
   useEffect(() => {
-    // Only connect to gateway if provider supports server sessions
-    if (providerConfig && supportsServerSessions) {
+    // Only connect to gateway for Molt providers (WebSocket-based sessions)
+    if (providerConfig && isMoltProvider) {
       connect()
     }
     return () => {
       disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [providerConfig, supportsServerSessions, currentServerId])
+  }, [providerConfig, isMoltProvider, currentServerId])
 
   const loadSessions = useCallback(async () => {
     // Increment load ID so any in-flight request from a previous server
     // is discarded when it resolves.
     const loadId = ++sessionLoadIdRef.current
 
-    // For non-molt providers, just show current session
+    // For providers without session support, just show current session
     if (!supportsServerSessions) {
       setSessions([{ key: currentSessionKey }])
       setLoadingSessions(false)
       return
     }
 
-    // When disconnected (e.g. during a server switch), show a loader
-    // instead of resetting to a fallback.
-    if (!connected) {
+    // Molt: load sessions from WebSocket gateway
+    if (isMoltProvider) {
+      // When disconnected (e.g. during a server switch), show a loader
+      // instead of resetting to a fallback.
+      if (!connected) {
+        setLoadingSessions(true)
+        return
+      }
+
       setLoadingSessions(true)
+      try {
+        const sessionData = (await listSessions()) as { sessions?: Session[] }
+        if (loadId !== sessionLoadIdRef.current) return // stale response
+        if (sessionData?.sessions && Array.isArray(sessionData.sessions)) {
+          // Hide mission sessions from the regular chat list
+          const chatSessions = sessionData.sessions.filter((s) => !isMissionSession(s.key))
+          setSessions(chatSessions)
+
+          // Only auto-select a session if the current one isn't in the server's session list
+          const currentKeyInSessions =
+            currentSessionKey && chatSessions.some((s) => s.key === currentSessionKey)
+          if (!currentKeyInSessions && chatSessions.length > 0) {
+            setCurrentSessionKey(chatSessions[0].key)
+          }
+        }
+      } catch (err) {
+        chatSidebarLogger.logError('Failed to fetch sessions', err)
+        // Fallback to showing current session
+        setSessions([{ key: currentSessionKey }])
+      } finally {
+        if (loadId === sessionLoadIdRef.current) {
+          setLoadingSessions(false)
+        }
+      }
       return
     }
 
+    // Non-Molt providers with session support (e.g. echo): load from local index
     setLoadingSessions(true)
     try {
-      const sessionData = (await listSessions()) as { sessions?: Session[] }
-      if (loadId !== sessionLoadIdRef.current) return // stale response
-      if (sessionData?.sessions && Array.isArray(sessionData.sessions)) {
-        // Hide mission sessions from the regular chat list
-        const chatSessions = sessionData.sessions.filter((s) => !isMissionSession(s.key))
-        setSessions(chatSessions)
-
-        // Only auto-select a session if the current one isn't in the server's session list
-        const currentKeyInSessions =
-          currentSessionKey && chatSessions.some((s) => s.key === currentSessionKey)
-        if (!currentKeyInSessions && chatSessions.length > 0) {
-          setCurrentSessionKey(chatSessions[0].key)
-        }
-      }
+      const entries = await readSessionIndex(providerConfig?.serverId)
+      if (loadId !== sessionLoadIdRef.current) return
+      const chatSessions: Session[] = entries
+        .filter((e) => !isMissionSession(e.key))
+        .sort((a, b) => b.lastActivity - a.lastActivity)
+        .map((e) => ({ key: e.key, messageCount: e.messageCount, lastActivity: e.lastActivity }))
+      setSessions(chatSessions)
     } catch (err) {
-      chatSidebarLogger.logError('Failed to fetch sessions', err)
-      // Fallback to showing current session
+      chatSidebarLogger.logError('Failed to load local sessions', err)
       setSessions([{ key: currentSessionKey }])
     } finally {
       if (loadId === sessionLoadIdRef.current) {
@@ -104,7 +128,9 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   }, [
     connected,
     listSessions,
+    isMoltProvider,
     supportsServerSessions,
+    providerConfig?.serverId,
     currentSessionKey,
     currentServerId,
     setCurrentSessionKey,
@@ -123,7 +149,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     }
   }, [currentServerId, currentSessionKey])
 
-  // Initialize session for non-molt servers
+  // Initialize session for providers without session support
   useEffect(() => {
     if (!supportsServerSessions && currentSessionKey !== DEFAULT_SESSION_KEY) {
       setCurrentSessionKey(DEFAULT_SESSION_KEY)
@@ -153,12 +179,12 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       if (lastSession) {
         // Restore previous session for this server
         setCurrentSessionKey(lastSession)
-      } else if (server?.providerType === 'molt') {
-        // For molt servers without a saved session, clear the key so loadSessions picks the first one
-        // Use a temporary placeholder to avoid the tracking effect saving the old session
+      } else if (server?.providerType === 'molt' || server?.providerType === 'echo') {
+        // For providers with session support without a saved session,
+        // clear the key so loadSessions picks the first one
         setCurrentSessionKey('')
       } else {
-        // For non-molt servers, use consistent "main" session
+        // For providers without session support, use consistent "main" session
         setCurrentSessionKey(DEFAULT_SESSION_KEY)
       }
     }
