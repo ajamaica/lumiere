@@ -150,8 +150,9 @@ export function SetupScreen() {
       if (result.canceled) return
 
       const asset = result.assets[0]
-      const file = new ExpoFile(asset.uri)
-      const content = await file.text()
+      // On web, ExpoFile can't read blob URIs from DocumentPicker.
+      // Use the browser File object (asset.file) when available.
+      const content = asset.file ? await asset.file.text() : await new ExpoFile(asset.uri).text()
       const data = JSON.parse(content) as BackupData
 
       if (!data.version || !Array.isArray(data.servers)) {
