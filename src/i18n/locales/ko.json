@@ -330,7 +330,8 @@
     "sendMessage": "메시지 보내기",
     "speakMessage": "메시지 소리 내어 읽기",
     "stopSpeaking": "읽기 중지",
-    "messagesQueued": "{{count}}개의 메시지가 대기 중"
+    "messagesQueued": "{{count}}개의 메시지가 대기 중",
+    "messageInputHint": "여기에 메시지를 입력하세요"
   },
   "missions": {
     "title": "미션 컨트롤",

@@ -330,7 +330,8 @@
     "sendMessage": "Envoyer le message",
     "speakMessage": "Lire le message à voix haute",
     "stopSpeaking": "Arrêter la lecture",
-    "messagesQueued": "{{count}} message(s) en attente"
+    "messagesQueued": "{{count}} message(s) en attente",
+    "messageInputHint": "Tapez votre message ici"
   },
   "missions": {
     "title": "Centre de Missions",

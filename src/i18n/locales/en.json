@@ -330,7 +330,8 @@
     "sendMessage": "Send message",
     "speakMessage": "Read message aloud",
     "stopSpeaking": "Stop reading",
-    "messagesQueued": "{{count}} message(s) queued"
+    "messagesQueued": "{{count}} message(s) queued",
+    "messageInputHint": "Type your message here"
   },
   "missions": {
     "title": "Mission Control",

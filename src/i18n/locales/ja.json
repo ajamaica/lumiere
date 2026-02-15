@@ -330,7 +330,8 @@
     "sendMessage": "メッセージを送信",
     "speakMessage": "メッセージを読み上げる",
     "stopSpeaking": "読み上げを停止",
-    "messagesQueued": "{{count}}件のメッセージがキューに入っています"
+    "messagesQueued": "{{count}}件のメッセージがキューに入っています",
+    "messageInputHint": "ここにメッセージを入力"
   },
   "missions": {
     "title": "ミッションコントロール",
