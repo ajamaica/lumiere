@@ -12,14 +12,16 @@ import { Badge, ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { getProviderIcon } from '../src/config/providerOptions'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
-import { backgroundCheckTask } from '../src/services/notifications'
+import { backgroundCheckTask, unregisterBackgroundFetch } from '../src/services/notifications'
 import { deleteServerToken } from '../src/services/secureTokenStorage'
 import { clearAllPasswordData } from '../src/services/webCrypto'
 import {
+  backgroundFetchIntervalAtom,
   backgroundNotificationsEnabledAtom,
   biometricLockEnabledAtom,
   clearSessionCryptoKey,
   currentServerIdAtom,
+  gatewayLastSeenTimestampAtom,
   onboardingCompletedAtom,
   secureServersAtom,
   secureStoreHydratedAtom,
@@ -50,6 +52,8 @@ export default function SettingsScreen() {
     backgroundNotificationsEnabledAtom,
   )
   const [showToolEventsInChat, setShowToolEventsInChat] = useAtom(showToolEventsInChatAtom)
+  const setBackgroundFetchInterval = useSetAtom(backgroundFetchIntervalAtom)
+  const setGatewayLastSeenTimestamp = useSetAtom(gatewayLastSeenTimestampAtom)
 
   const handleBiometricToggle = async (value: boolean) => {
     if (isWeb) {
@@ -99,6 +103,9 @@ export default function SettingsScreen() {
         text: t('settings.logout'),
         style: 'destructive',
         onPress: async () => {
+          // Unregister the background task before clearing state
+          await unregisterBackgroundFetch()
+
           // On web, clean up encrypted localStorage and session storage
           // that the native atom RESET doesn't cover.
           if (isWeb) {
@@ -122,6 +129,9 @@ export default function SettingsScreen() {
           setOnboardingCompleted(RESET)
           setTriggers(RESET)
           setBiometricLockEnabled(RESET)
+          setBackgroundNotificationsEnabled(RESET)
+          setBackgroundFetchInterval(RESET)
+          setGatewayLastSeenTimestamp(RESET)
         },
       },
     ])

@@ -37,12 +37,16 @@ export function useNotifications() {
 
   // Register or unregister background fetch based on the setting
   useEffect(() => {
+    let cancelled = false
+
     if (enabled) {
       ;(async () => {
         try {
           // Unregister first to avoid duplicate registrations when interval changes
           await unregisterBackgroundFetch()
+          if (cancelled) return
           const granted = await requestNotificationPermissions()
+          if (cancelled) return
           if (granted) {
             await registerBackgroundFetch(interval)
           }
@@ -54,6 +58,10 @@ export function useNotifications() {
       unregisterBackgroundFetch().catch((error) => {
         console.error('[useNotifications] Failed to unregister background task:', error)
       })
+    }
+
+    return () => {
+      cancelled = true
     }
   }, [enabled, interval])
 
