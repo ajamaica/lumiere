@@ -23,7 +23,7 @@ describe('EchoChatProvider', () => {
       const provider = createProvider()
       expect(provider.capabilities.chat).toBe(true)
       expect(provider.capabilities.imageAttachments).toBe(false)
-      expect(provider.capabilities.serverSessions).toBe(false)
+      expect(provider.capabilities.serverSessions).toBe(true)
       expect(provider.capabilities.persistentHistory).toBe(false)
       expect(provider.capabilities.scheduler).toBe(false)
       expect(provider.capabilities.gatewaySnapshot).toBe(false)
@@ -164,7 +164,7 @@ describe('EchoChatProvider', () => {
   })
 
   describe('listSessions', () => {
-    it('lists all active sessions', async () => {
+    it('lists all active sessions with metadata', async () => {
       const provider = createProvider()
       const p1 = provider.sendMessage({ message: 'a', sessionKey: 'session-1' }, () => {})
       jest.advanceTimersByTime(2000)
@@ -174,11 +174,50 @@ describe('EchoChatProvider', () => {
       await p2
 
       const result = (await provider.listSessions()) as {
-        sessions: { key: string; messageCount: number }[]
+        sessions: { key: string; messageCount: number; lastActivity: number }[]
       }
       expect(result.sessions).toHaveLength(2)
       expect(result.sessions.map((s) => s.key)).toContain('session-1')
       expect(result.sessions.map((s) => s.key)).toContain('session-2')
+      // Each session should have lastActivity metadata
+      result.sessions.forEach((s) => {
+        expect(s.lastActivity).toEqual(expect.any(Number))
+        expect(s.messageCount).toBeGreaterThan(0)
+      })
+    })
+
+    it('returns sessions sorted by lastActivity descending', async () => {
+      const provider = createProvider()
+
+      const p1 = provider.sendMessage({ message: 'a', sessionKey: 'session-old' }, () => {})
+      jest.advanceTimersByTime(2000)
+      await p1
+
+      // Advance time so session-new has a later lastActivity
+      jest.advanceTimersByTime(5000)
+
+      const p2 = provider.sendMessage({ message: 'b', sessionKey: 'session-new' }, () => {})
+      jest.advanceTimersByTime(2000)
+      await p2
+
+      const result = (await provider.listSessions()) as {
+        sessions: { key: string; lastActivity: number }[]
+      }
+      expect(result.sessions[0].key).toBe('session-new')
+      expect(result.sessions[1].key).toBe('session-old')
+    })
+
+    it('removes session metadata on reset', async () => {
+      const provider = createProvider()
+      const p = provider.sendMessage({ message: 'a', sessionKey: 'session-1' }, () => {})
+      jest.advanceTimersByTime(2000)
+      await p
+
+      await provider.resetSession('session-1')
+      const result = (await provider.listSessions()) as {
+        sessions: { key: string }[]
+      }
+      expect(result.sessions).toHaveLength(0)
     })
   })
 
