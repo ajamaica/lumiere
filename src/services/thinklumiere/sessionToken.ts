@@ -2,10 +2,10 @@ import { logger } from '../../utils/logger'
 import { isWeb } from '../../utils/platform'
 
 const SESSION_TOKEN_KEY = 'lumiere_session_token'
-const log = logger.create('MobileSession')
+const log = logger.create('ThinkLumiereSession')
 
 /**
- * Store the mobile API session token securely.
+ * Store the ThinkLumiere API session token securely.
  * Native: Expo SecureStore (Keychain/Keystore)
  * Web: localStorage (fallback)
  */
@@ -30,7 +30,7 @@ export async function setSessionToken(token: string): Promise<void> {
 }
 
 /**
- * Retrieve the mobile API session token.
+ * Retrieve the ThinkLumiere API session token.
  * @returns The token or null if not found
  */
 export async function getSessionToken(): Promise<string | null> {
@@ -55,7 +55,7 @@ export async function getSessionToken(): Promise<string | null> {
 }
 
 /**
- * Delete the mobile API session token.
+ * Delete the ThinkLumiere API session token.
  */
 export async function deleteSessionToken(): Promise<void> {
   if (isWeb) {

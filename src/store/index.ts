@@ -11,11 +11,11 @@ export type {
   Instance,
   InstanceResponse,
   InstanceStatus,
-  MobileApiError,
-  MobileUser,
   SubscriptionResponse,
   SubscriptionStatus,
-} from './mobileTypes'
+  ThinkLumiereApiError,
+  ThinkLumiereUser,
+} from './thinklumiereTypes'
 export type {
   FavoriteItem,
   GatewayLastSeenMap,
@@ -88,13 +88,13 @@ export { activeMissionIdAtom, missionMessagesAtom, missionsAtom } from './missio
 export type { CanvasContent } from './canvasAtoms'
 export { canvasContentAtom, canvasVisibleAtom } from './canvasAtoms'
 
-// ─── Mobile atoms ───────────────────────────────────────
+// ─── ThinkLumiere atoms ─────────────────────────────────
 export {
   instanceAtom,
-  mobileAuthenticatedAtom,
-  mobileUserAtom,
   subscriptionStatusAtom,
-} from './mobileAtoms'
+  thinklumiereAuthenticatedAtom,
+  thinklumiereUserAtom,
+} from './thinklumiereAtoms'
 
 // ─── Secure store (web only) ─────────────────────────────
 export {

@@ -1,21 +1,21 @@
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { mobileApi, MobileApiRequestError } from '../services/mobile/api'
+import { thinkLumiereApi, ThinkLumiereApiRequestError } from '../services/thinklumiere/api'
 import {
   deleteSessionToken,
   getSessionToken,
   setSessionToken,
-} from '../services/mobile/sessionToken'
-import { mobileAuthenticatedAtom, mobileUserAtom } from '../store/mobileAtoms'
-import type { MobileUser } from '../store/mobileTypes'
+} from '../services/thinklumiere/sessionToken'
+import { thinklumiereAuthenticatedAtom, thinklumiereUserAtom } from '../store/thinklumiereAtoms'
+import type { ThinkLumiereUser } from '../store/thinklumiereTypes'
 import { logger } from '../utils/logger'
 
 const log = logger.create('useAuth')
 
 export interface UseAuthResult {
   /** The currently signed-in user, or null */
-  user: MobileUser | null
+  user: ThinkLumiereUser | null
   /** Whether the session token has been loaded and is valid */
   authenticated: boolean
   /** Whether an auth operation (sign-in, restore) is in progress */
@@ -29,8 +29,8 @@ export interface UseAuthResult {
 }
 
 export function useAuth(): UseAuthResult {
-  const [user, setUser] = useAtom(mobileUserAtom)
-  const [authenticated, setAuthenticated] = useAtom(mobileAuthenticatedAtom)
+  const [user, setUser] = useAtom(thinklumiereUserAtom)
+  const [authenticated, setAuthenticated] = useAtom(thinklumiereAuthenticatedAtom)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const restoredRef = useRef(false)
@@ -44,7 +44,7 @@ export function useAuth(): UseAuthResult {
       try {
         const token = await getSessionToken()
         if (token) {
-          mobileApi.setSessionToken(token)
+          thinkLumiereApi.setSessionToken(token)
           setAuthenticated(true)
           log.debug('Session restored')
         }
@@ -64,25 +64,25 @@ export function useAuth(): UseAuthResult {
       setError(null)
 
       try {
-        const response = await mobileApi.signInWithGoogle(googleIdToken)
+        const response = await thinkLumiereApi.signInWithGoogle(googleIdToken)
 
         // Store the session token securely
         await setSessionToken(response.session_token)
-        mobileApi.setSessionToken(response.session_token)
+        thinkLumiereApi.setSessionToken(response.session_token)
 
-        const mobileUser: MobileUser = {
+        const tlUser: ThinkLumiereUser = {
           userId: response.user_id,
           email: response.email,
           name: response.name,
           picture: response.picture,
         }
 
-        setUser(mobileUser)
+        setUser(tlUser)
         setAuthenticated(true)
         log.info('Signed in successfully')
       } catch (err) {
         const message =
-          err instanceof MobileApiRequestError
+          err instanceof ThinkLumiereApiRequestError
             ? err.message
             : 'Failed to sign in. Please try again.'
         setError(message)
@@ -98,7 +98,7 @@ export function useAuth(): UseAuthResult {
   const signOut = useCallback(async () => {
     try {
       await deleteSessionToken()
-      mobileApi.setSessionToken(null)
+      thinkLumiereApi.setSessionToken(null)
       setUser(null)
       setAuthenticated(false)
       setError(null)

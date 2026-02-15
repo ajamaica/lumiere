@@ -1,6 +1,6 @@
-// ─── Mobile API types ───────────────────────────────────
+// ─── ThinkLumiere API types ─────────────────────────────
 
-export interface MobileUser {
+export interface ThinkLumiereUser {
   userId: string
   email: string
   name: string
@@ -49,6 +49,6 @@ export interface InstanceResponse {
   token: string
 }
 
-export interface MobileApiError {
+export interface ThinkLumiereApiError {
   detail: string
 }

@@ -1,16 +1,16 @@
 import type {
   AuthResponse,
   InstanceResponse,
-  MobileApiError,
   SubscriptionResponse,
-} from '../../store/mobileTypes'
+  ThinkLumiereApiError,
+} from '../../store/thinklumiereTypes'
 import { logger } from '../../utils/logger'
 
-const log = logger.create('MobileAPI')
+const log = logger.create('ThinkLumiereAPI')
 
 const BASE_URL = 'https://thinklumiere.com/api/mobile'
 
-export class MobileApiClient {
+export class ThinkLumiereApiClient {
   private sessionToken: string | null = null
 
   setSessionToken(token: string | null) {
@@ -43,11 +43,11 @@ export class MobileApiClient {
     })
 
     if (!response.ok) {
-      const error: MobileApiError = await response.json().catch(() => ({
+      const error: ThinkLumiereApiError = await response.json().catch(() => ({
         detail: `HTTP ${response.status}`,
       }))
       log.error(`${options.method || 'GET'} ${path} failed: ${response.status}`, error.detail)
-      const err = new MobileApiRequestError(error.detail, response.status)
+      const err = new ThinkLumiereApiRequestError(error.detail, response.status)
       throw err
     }
 
@@ -107,13 +107,13 @@ export class MobileApiClient {
   }
 }
 
-export class MobileApiRequestError extends Error {
+export class ThinkLumiereApiRequestError extends Error {
   constructor(
     message: string,
     public readonly statusCode: number,
   ) {
     super(message)
-    this.name = 'MobileApiRequestError'
+    this.name = 'ThinkLumiereApiRequestError'
   }
 
   get isUnauthorized(): boolean {
@@ -130,4 +130,4 @@ export class MobileApiRequestError extends Error {
 }
 
 /** Singleton API client instance shared across hooks */
-export const mobileApi = new MobileApiClient()
+export const thinkLumiereApi = new ThinkLumiereApiClient()

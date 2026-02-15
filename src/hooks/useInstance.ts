@@ -1,9 +1,9 @@
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { mobileApi, MobileApiRequestError } from '../services/mobile/api'
-import { instanceAtom } from '../store/mobileAtoms'
-import type { Instance, InstanceResponse } from '../store/mobileTypes'
+import { thinkLumiereApi, ThinkLumiereApiRequestError } from '../services/thinklumiere/api'
+import { instanceAtom } from '../store/thinklumiereAtoms'
+import type { Instance, InstanceResponse } from '../store/thinklumiereTypes'
 import { logger } from '../utils/logger'
 
 const log = logger.create('useInstance')
@@ -63,14 +63,14 @@ export function useInstance(): UseInstanceResult {
     setError(null)
 
     try {
-      const response = await mobileApi.createInstance()
+      const response = await thinkLumiereApi.createInstance()
       const inst = mapInstanceResponse(response)
       setInstance(inst)
       log.info('Instance created', { instanceId: inst.instanceId, status: inst.status })
       return inst
     } catch (err) {
       const message =
-        err instanceof MobileApiRequestError
+        err instanceof ThinkLumiereApiRequestError
           ? err.message
           : 'Failed to create instance. Please try again.'
       setError(message)
@@ -85,12 +85,12 @@ export function useInstance(): UseInstanceResult {
     if (!instance) return
 
     try {
-      const response = await mobileApi.getInstance(instance.instanceId)
+      const response = await thinkLumiereApi.getInstance(instance.instanceId)
       const updated = mapInstanceResponse(response)
       setInstance(updated)
       log.debug('Instance refreshed', { status: updated.status })
     } catch (err) {
-      if (err instanceof MobileApiRequestError && err.isNotFound) {
+      if (err instanceof ThinkLumiereApiRequestError && err.isNotFound) {
         setInstance(null)
         log.info('Instance no longer exists')
         return
@@ -104,7 +104,7 @@ export function useInstance(): UseInstanceResult {
     setError(null)
 
     try {
-      const responses = await mobileApi.listInstances()
+      const responses = await thinkLumiereApi.listInstances()
       if (responses.length > 0) {
         const inst = mapInstanceResponse(responses[0])
         setInstance(inst)
@@ -115,7 +115,7 @@ export function useInstance(): UseInstanceResult {
       }
     } catch (err) {
       const message =
-        err instanceof MobileApiRequestError ? err.message : 'Failed to fetch instances.'
+        err instanceof ThinkLumiereApiRequestError ? err.message : 'Failed to fetch instances.'
       setError(message)
       log.logError('Instance fetch failed', err)
     } finally {
@@ -144,7 +144,7 @@ export function useInstance(): UseInstanceResult {
           return
         }
 
-        const response = await mobileApi.getInstance(instance.instanceId)
+        const response = await thinkLumiereApi.getInstance(instance.instanceId)
         const updated = mapInstanceResponse(response)
         setInstance(updated)
 
@@ -155,7 +155,7 @@ export function useInstance(): UseInstanceResult {
         }
       } catch (err) {
         log.logError('Polling error', err)
-        if (err instanceof MobileApiRequestError && err.isNotFound) {
+        if (err instanceof ThinkLumiereApiRequestError && err.isNotFound) {
           setInstance(null)
           stopPolling()
         }

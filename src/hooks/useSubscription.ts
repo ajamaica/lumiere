@@ -1,9 +1,9 @@
 import { useAtom } from 'jotai'
 import { useCallback, useState } from 'react'
 
-import { mobileApi, MobileApiRequestError } from '../services/mobile/api'
-import { subscriptionStatusAtom } from '../store/mobileAtoms'
-import type { SubscriptionStatus } from '../store/mobileTypes'
+import { thinkLumiereApi, ThinkLumiereApiRequestError } from '../services/thinklumiere/api'
+import { subscriptionStatusAtom } from '../store/thinklumiereAtoms'
+import type { SubscriptionStatus } from '../store/thinklumiereTypes'
 import { logger } from '../utils/logger'
 
 const log = logger.create('useSubscription')
@@ -50,14 +50,14 @@ export function useSubscription(): UseSubscriptionResult {
       setError(null)
 
       try {
-        const response = await mobileApi.verifyAppleSubscription(params)
+        const response = await thinkLumiereApi.verifyAppleSubscription(params)
         const status = mapSubscriptionResponse(response)
         setSubscription(status)
         log.info('Subscription verified', { active: status.hasActiveSubscription })
         return status
       } catch (err) {
         const message =
-          err instanceof MobileApiRequestError
+          err instanceof ThinkLumiereApiRequestError
             ? err.message
             : 'Failed to verify subscription. Please try again.'
         setError(message)
@@ -75,14 +75,16 @@ export function useSubscription(): UseSubscriptionResult {
     setError(null)
 
     try {
-      const response = await mobileApi.getSubscriptionStatus()
+      const response = await thinkLumiereApi.getSubscriptionStatus()
       const status = mapSubscriptionResponse(response)
       setSubscription(status)
       log.debug('Subscription status checked', { active: status.hasActiveSubscription })
       return status
     } catch (err) {
       const message =
-        err instanceof MobileApiRequestError ? err.message : 'Failed to check subscription status.'
+        err instanceof ThinkLumiereApiRequestError
+          ? err.message
+          : 'Failed to check subscription status.'
       setError(message)
       log.logError('Subscription status check failed', err)
       throw err
