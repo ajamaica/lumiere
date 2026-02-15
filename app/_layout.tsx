@@ -200,8 +200,15 @@ function AppContent() {
   // 2. Web password lock — shown after setup when a password has been
   //    configured previously OR when this is the first session after
   //    onboarding (password not yet created).
+  //    The `!hasSessionCryptoKey()` OR-branch catches the case where the
+  //    user logged out: logout clears the crypto key but the local
+  //    `webPasswordUnlocked` state stays true because the component
+  //    never unmounts. Checking the key directly ensures we re-show
+  //    the password screen after logout + re-onboarding.
   const needsWebPasswordLock =
-    isWeb && !webPasswordUnlocked && (isPasswordConfigured() || !hasSessionCryptoKey())
+    isWeb &&
+    (!webPasswordUnlocked || !hasSessionCryptoKey()) &&
+    (isPasswordConfigured() || !hasSessionCryptoKey())
   if (needsWebPasswordLock) {
     return (
       <View style={backgroundStyle}>
