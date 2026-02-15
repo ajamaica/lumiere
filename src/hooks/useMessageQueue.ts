@@ -66,10 +66,14 @@ export function useMessageQueue({
             sessionKey: currentSessionKey,
           },
           (event: AgentEvent) => {
+            console.log('[useMessageQueue] Event received:', JSON.stringify(event))
+            
             if (event.stream === 'assistant' && event.data.delta) {
+              console.log('[useMessageQueue] Delta received:', event.data.delta)
               accumulatedText += event.data.delta
               onAgentMessageUpdate(accumulatedText)
             } else if (event.stream === 'lifecycle' && event.data.phase === 'end') {
+              console.log('[useMessageQueue] Lifecycle end, accumulated text:', accumulatedText)
               const agentMessage: Message = {
                 id: `msg-${Date.now()}`,
                 text: accumulatedText,
@@ -79,6 +83,8 @@ export function useMessageQueue({
               onAgentMessageComplete(agentMessage)
               setIsAgentResponding(false)
               accumulatedText = ''
+            } else {
+              console.log('[useMessageQueue] Unhandled event stream:', event.stream, 'data:', event.data)
             }
           },
         )
