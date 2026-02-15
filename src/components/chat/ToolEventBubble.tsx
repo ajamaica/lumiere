@@ -1,8 +1,10 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useMemo } from 'react'
+import { useAtomValue, useSetAtom } from 'jotai'
+import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from 'react-native'
 
+import { canvasContentAtom, canvasVisibleAtom } from '../../store'
 import { useTheme } from '../../theme'
 import { Theme } from '../../theme/themes'
 import { Text } from '../ui'
@@ -56,6 +58,7 @@ const TOOL_DETAIL_KEYS: Record<string, string[]> = {
   file_write: ['path', 'file'],
   apply_patch: ['path', 'file'],
   browser: ['action', 'url'],
+  canvas: ['action', 'title'],
   sessions_send: ['target', 'session'],
   sessions_spawn: ['target', 'agent'],
   memory_search: ['query'],
@@ -82,6 +85,8 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
   const { theme } = useTheme()
   const { t } = useTranslation()
   const styles = useMemo(() => createStyles(theme), [theme])
+  const canvasContent = useAtomValue(canvasContentAtom)
+  const setCanvasVisible = useSetAtom(canvasVisibleAtom)
 
   const iconName = TOOL_ICONS[message.toolName] ?? DEFAULT_ICON
 
@@ -101,17 +106,21 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
       ? theme.colors.text.secondary
       : theme.colors.status.success
 
-  return (
-    <View
-      style={styles.container}
-      accessible={true}
-      accessibilityLabel={`${t('missions.toolEvent')}: ${description}`}
-      accessibilityRole="text"
-    >
+  const isCanvas = message.toolName === 'canvas'
+  const canvasHasContent = isCanvas && canvasContent !== null
+
+  const handlePress = useCallback(() => {
+    if (canvasHasContent) {
+      setCanvasVisible(true)
+    }
+  }, [canvasHasContent, setCanvasVisible])
+
+  const content = (
+    <>
       <Ionicons
         name={iconName as keyof typeof Ionicons.glyphMap}
         size={16}
-        color={theme.colors.text.secondary}
+        color={isCanvas && canvasHasContent ? theme.colors.primary : theme.colors.text.secondary}
       />
       <View style={styles.textContainer}>
         <Text variant="caption" style={styles.description} numberOfLines={1}>
@@ -123,6 +132,7 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
           </Text>
         ) : null}
       </View>
+      {canvasHasContent && <Ionicons name="open-outline" size={14} color={theme.colors.primary} />}
       <View style={styles.statusContainer}>
         {isRunning ? (
           <ActivityIndicator size="small" color={theme.colors.text.secondary} />
@@ -134,6 +144,32 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
           />
         )}
       </View>
+    </>
+  )
+
+  if (canvasHasContent) {
+    return (
+      <TouchableOpacity
+        style={[styles.container, styles.canvasContainer]}
+        onPress={handlePress}
+        activeOpacity={0.7}
+        accessible={true}
+        accessibilityLabel={`${t('missions.toolEvent')}: ${description}. ${t('canvas.tapToOpen')}`}
+        accessibilityRole="button"
+      >
+        {content}
+      </TouchableOpacity>
+    )
+  }
+
+  return (
+    <View
+      style={styles.container}
+      accessible={true}
+      accessibilityLabel={`${t('missions.toolEvent')}: ${description}`}
+      accessibilityRole="text"
+    >
+      {content}
     </View>
   )
 }
@@ -151,6 +187,10 @@ const createStyles = (theme: Theme) =>
       borderRadius: theme.borderRadius.md,
       borderWidth: 1,
       borderColor: theme.isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.05)',
+    },
+    canvasContainer: {
+      borderColor: theme.isDark ? `${theme.colors.primary}33` : `${theme.colors.primary}22`,
+      backgroundColor: theme.isDark ? `${theme.colors.primary}0D` : `${theme.colors.primary}08`,
     },
     textContainer: {
       flex: 1,

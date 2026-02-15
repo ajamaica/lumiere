@@ -24,6 +24,7 @@ import {
 } from '../../utils/device'
 import { useReanimatedKeyboardAnimation } from '../../utils/keyboardAnimation'
 import { AgentPicker } from './AgentPicker'
+import { CanvasViewer } from './CanvasViewer'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
 import { createChatScreenStyles } from './ChatScreen.styles'
@@ -286,6 +287,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
           onSelectAgent={handleSelectAgent}
         />
       )}
+      <CanvasViewer />
     </SafeAreaView>
   )
 }

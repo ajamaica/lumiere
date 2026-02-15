@@ -1,10 +1,15 @@
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { MessageAttachment } from '../components/chat/ChatMessage'
 import type { Message } from '../components/chat/chatMessageTypes'
 import { ChatProviderEvent, SendMessageParams as ProviderSendParams } from '../services/providers'
-import { messageQueueAtom, showToolEventsInChatAtom } from '../store'
+import {
+  canvasContentAtom,
+  canvasVisibleAtom,
+  messageQueueAtom,
+  showToolEventsInChatAtom,
+} from '../store'
 import { toProviderAttachments } from '../utils/attachments'
 import { generateId } from '../utils/generateId'
 import { logger } from '../utils/logger'
@@ -46,6 +51,8 @@ export function useMessageQueue({
   const [messageQueue, setMessageQueue] = useAtom(messageQueueAtom)
   const [isAgentResponding, setIsAgentResponding] = useState(false)
   const showToolEvents = useAtomValue(showToolEventsInChatAtom)
+  const setCanvasContent = useSetAtom(canvasContentAtom)
+  const setCanvasVisible = useSetAtom(canvasVisibleAtom)
   const showToolEventsRef = useRef(showToolEvents)
   useEffect(() => {
     showToolEventsRef.current = showToolEvents
@@ -97,18 +104,35 @@ export function useMessageQueue({
               onAgentMessageComplete(agentMessage)
               setIsAgentResponding(false)
               accumulatedText = ''
-            } else if (event.type === 'tool_event' && event.toolName && showToolEventsRef.current) {
-              onMessageAdd({
-                id: generateId('tool'),
-                type: 'tool_event',
-                toolName: event.toolName,
-                toolCallId: event.toolCallId || '',
-                toolInput: event.toolInput,
-                status: event.toolStatus || 'running',
-                sender: 'agent',
-                timestamp: new Date(),
-                text: event.toolName,
-              })
+            } else if (event.type === 'tool_event' && event.toolName) {
+              // Extract canvas content from canvas tool events
+              if (event.toolName === 'canvas' && event.toolInput) {
+                const html = event.toolInput.html as string | undefined
+                if (html && typeof html === 'string') {
+                  setCanvasContent({
+                    html,
+                    title: (event.toolInput.title as string) || undefined,
+                    updatedAt: Date.now(),
+                  })
+                  if (event.toolStatus === 'completed') {
+                    setCanvasVisible(true)
+                  }
+                }
+              }
+
+              if (showToolEventsRef.current) {
+                onMessageAdd({
+                  id: generateId('tool'),
+                  type: 'tool_event',
+                  toolName: event.toolName,
+                  toolCallId: event.toolCallId || '',
+                  toolInput: event.toolInput,
+                  status: event.toolStatus || 'running',
+                  sender: 'agent',
+                  timestamp: new Date(),
+                  text: event.toolName,
+                })
+              }
             }
           },
         )
@@ -127,6 +151,8 @@ export function useMessageQueue({
       onSendStart,
       contextTransform,
       systemMessage,
+      setCanvasContent,
+      setCanvasVisible,
     ],
   )
 
