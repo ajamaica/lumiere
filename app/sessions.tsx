@@ -19,12 +19,15 @@ import {
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import {
+  buildCacheKey,
   deleteSessionData,
   ProviderConfig,
   readSessionIndex,
   SessionIndexEntry,
+  writeSessionIndex,
 } from '../src/services/providers'
 import { currentSessionKeyAtom, isMissionSession, sessionAliasesAtom } from '../src/store'
+import { jotaiStorage } from '../src/store/storage'
 import { useTheme } from '../src/theme'
 import { GlassView } from '../src/utils/glassEffect'
 import { logger } from '../src/utils/logger'
@@ -70,7 +73,6 @@ export default function SessionsScreen() {
     if (config && isMoltProvider) {
       connect()
     } else if (config) {
-      // For non-Molt providers, load sessions from the local index
       setLoading(false)
     }
     return () => {
@@ -79,7 +81,6 @@ export default function SessionsScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config, isMoltProvider])
 
-  // Load sessions from Molt gateway (server-side sessions)
   const loadMoltSessions = useCallback(async () => {
     if (!connected || !isMoltProvider) return
 
@@ -95,7 +96,6 @@ export default function SessionsScreen() {
     }
   }, [connected, listSessions, isMoltProvider])
 
-  // Load sessions from local session index (for non-Molt providers)
   const loadLocalSessions = useCallback(async () => {
     if (!config || isMoltProvider) return
 
@@ -170,10 +170,18 @@ export default function SessionsScreen() {
         text: t('sessions.reset'),
         style: 'destructive',
         onPress: async () => {
-          // Clear cached messages for the current session
-          await deleteSessionData(config?.serverId, currentSessionKey)
+          // Clear only the cached messages, keep the session in the index
+          const cacheKey = buildCacheKey(config?.serverId, currentSessionKey)
+          await jotaiStorage.removeItem(cacheKey)
 
-          // Update session list to reflect cleared message count
+          // Update the session index entry to reflect 0 messages
+          const entries = await readSessionIndex(config?.serverId)
+          const updated = entries.map((e) =>
+            e.key === currentSessionKey ? { ...e, messageCount: 0, lastActivity: Date.now() } : e,
+          )
+          await writeSessionIndex(config?.serverId, updated)
+
+          // Update local state
           setSessions((prev) =>
             prev.map((s) =>
               s.key === currentSessionKey ? { ...s, messageCount: 0, lastActivity: Date.now() } : s,
@@ -192,7 +200,6 @@ export default function SessionsScreen() {
         text: t('common.delete'),
         style: 'destructive',
         onPress: async () => {
-          // Delete from the remote Molt server if this is a Molt provider
           if (isMoltProvider && connected) {
             try {
               await deleteSession(sessionKey)
@@ -220,39 +227,26 @@ export default function SessionsScreen() {
       backgroundColor: theme.colors.background,
     },
     scrollContent: {
+      flexGrow: 1,
       paddingHorizontal: theme.spacing.lg,
-      paddingBottom: theme.spacing.xxxl,
+      paddingBottom: theme.spacing.lg,
     },
     spacer: {
       height: theme.spacing.xl,
     },
 
-    // Current session card
+    // Current session row
     currentSessionCard: {
       backgroundColor: theme.colors.surface,
       borderRadius: theme.borderRadius.xl,
-      padding: theme.spacing.lg,
+      paddingVertical: theme.spacing.md,
+      paddingLeft: theme.spacing.lg,
+      paddingRight: theme.spacing.sm,
       borderWidth: 1,
       borderColor: theme.colors.primary + '30',
-    },
-    currentSessionHeader: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between',
-    },
-    currentSessionInfo: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: theme.spacing.md,
-    },
-    currentSessionIconContainer: {
-      width: 44,
-      height: 44,
-      borderRadius: 22,
-      backgroundColor: theme.colors.primary + '15',
-      alignItems: 'center',
-      justifyContent: 'center',
+      gap: theme.spacing.sm,
     },
     currentSessionTextGroup: {
       flex: 1,
@@ -264,33 +258,7 @@ export default function SessionsScreen() {
     },
     currentSessionActions: {
       flexDirection: 'row',
-      marginTop: theme.spacing.lg,
-      gap: theme.spacing.sm,
-    },
-    actionButtonRow: {
-      flex: 1,
-      flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'center',
-      gap: theme.spacing.sm,
-      paddingVertical: theme.spacing.sm + 2,
-      paddingHorizontal: theme.spacing.md,
-      borderRadius: theme.borderRadius.lg,
-      backgroundColor: theme.colors.background,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-    },
-    actionButtonDanger: {
-      borderColor: theme.colors.status.error + '30',
-      backgroundColor: theme.colors.status.error + '08',
-    },
-    actionButtonText: {
-      fontSize: theme.typography.fontSize.sm,
-      fontWeight: theme.typography.fontWeight.medium,
-      color: theme.colors.text.primary,
-    },
-    actionButtonTextDanger: {
-      color: theme.colors.status.error,
     },
 
     // Session list items
@@ -333,6 +301,15 @@ export default function SessionsScreen() {
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: theme.spacing.sm,
+    },
+
+    // Bottom button
+    bottomButtonContainer: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.md,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      borderTopColor: theme.colors.divider,
+      backgroundColor: theme.colors.background,
     },
 
     // Context menu
@@ -415,63 +392,39 @@ export default function SessionsScreen() {
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('sessions.title')} showClose />
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Current session card */}
+        {/* Current session - compact single row: name + badge + edit + reset */}
         <Section title={t('sessions.currentSession')}>
           <View style={styles.currentSessionCard}>
-            <View style={styles.currentSessionHeader}>
-              <View style={styles.currentSessionInfo}>
-                <View style={styles.currentSessionIconContainer}>
-                  <Ionicons name="chatbubble" size={20} color={theme.colors.primary} />
-                </View>
-                <View style={styles.currentSessionTextGroup}>
-                  <View style={styles.currentSessionNameRow}>
-                    <Text variant="label" numberOfLines={1} style={{ flex: 1 }}>
-                      {formatSessionKey(currentSessionKey)}
-                    </Text>
-                    <Badge label={t('common.active')} variant="success" />
-                  </View>
-                  {currentSessionData?.messageCount !== undefined && (
-                    <Text variant="caption" style={{ marginTop: 2 }}>
-                      {t('sessions.messagesCount', { count: currentSessionData.messageCount })}
-                      {currentSessionData.lastActivity
-                        ? ` · ${formatRelativeTime(currentSessionData.lastActivity)}`
-                        : ''}
-                    </Text>
-                  )}
-                </View>
+            <View style={styles.currentSessionTextGroup}>
+              <View style={styles.currentSessionNameRow}>
+                <Text variant="label" numberOfLines={1} style={{ flex: 1 }}>
+                  {formatSessionKey(currentSessionKey)}
+                </Text>
+                <Badge label={t('common.active')} variant="success" />
               </View>
+              {currentSessionData?.messageCount !== undefined && (
+                <Text variant="caption" style={{ marginTop: 2 }}>
+                  {t('sessions.messagesCount', { count: currentSessionData.messageCount })}
+                  {currentSessionData.lastActivity
+                    ? ` · ${formatRelativeTime(currentSessionData.lastActivity)}`
+                    : ''}
+                </Text>
+              )}
+            </View>
+            <View style={styles.currentSessionActions}>
               <IconButton
                 icon="pencil-outline"
                 size="sm"
                 onPress={() => handleEditSession(currentSessionKey)}
                 accessibilityLabel={t('sessions.editSession')}
               />
-            </View>
-
-            <View style={styles.currentSessionActions}>
-              <TouchableOpacity
-                style={styles.actionButtonRow}
-                onPress={handleNewSession}
-                activeOpacity={0.7}
-                accessibilityRole="button"
-                accessibilityLabel={t('sessions.newSession')}
-              >
-                <Ionicons name="add-circle-outline" size={18} color={theme.colors.primary} />
-                <Text style={styles.actionButtonText}>{t('sessions.newSession')}</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.actionButtonRow, styles.actionButtonDanger]}
+              <IconButton
+                icon="refresh-outline"
+                size="sm"
+                color={theme.colors.status.error}
                 onPress={handleResetSession}
-                activeOpacity={0.7}
-                accessibilityRole="button"
                 accessibilityLabel={t('sessions.resetSession')}
-              >
-                <Ionicons name="refresh-outline" size={18} color={theme.colors.status.error} />
-                <Text style={[styles.actionButtonText, styles.actionButtonTextDanger]}>
-                  {t('sessions.reset')}
-                </Text>
-              </TouchableOpacity>
+              />
             </View>
           </View>
         </Section>
@@ -549,6 +502,15 @@ export default function SessionsScreen() {
           )}
         </Section>
       </ScrollView>
+
+      {/* New Session button stuck at the bottom */}
+      <View style={styles.bottomButtonContainer}>
+        <Button
+          title={t('sessions.newSession')}
+          onPress={handleNewSession}
+          icon={<Ionicons name="add" size={20} color={theme.colors.text.inverse} />}
+        />
+      </View>
 
       {/* Long-press context menu */}
       <Modal
