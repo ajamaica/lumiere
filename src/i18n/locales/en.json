@@ -424,5 +424,11 @@
       "spawned": "Sub-agent spawned",
       "resultReceived": "Sub-agent result received"
     }
+  },
+  "canvas": {
+    "title": "Canvas",
+    "close": "Close canvas",
+    "clear": "Clear canvas",
+    "tapToOpen": "Tap to view canvas"
   }
 }

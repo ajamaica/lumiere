@@ -9,6 +9,7 @@ import { useMessageQueue } from '../useMessageQueue'
 jest.mock('jotai', () => ({
   useAtom: jest.fn(),
   useAtomValue: jest.fn(() => true),
+  useSetAtom: jest.fn(() => jest.fn()),
   atom: jest.fn((initial: unknown) => ({ init: initial })),
 }))
 

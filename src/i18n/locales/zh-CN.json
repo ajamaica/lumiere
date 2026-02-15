@@ -424,5 +424,11 @@
       "spawned": "子代理已启动",
       "resultReceived": "子代理结果已收到"
     }
+  },
+  "canvas": {
+    "title": "画布",
+    "close": "关闭画布",
+    "clear": "清除画布",
+    "tapToOpen": "点击查看画布"
   }
 }

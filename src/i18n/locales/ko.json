@@ -424,5 +424,11 @@
       "spawned": "서브 에이전트 생성됨",
       "resultReceived": "서브 에이전트 결과 수신됨"
     }
+  },
+  "canvas": {
+    "title": "캔버스",
+    "close": "캔버스 닫기",
+    "clear": "캔버스 지우기",
+    "tapToOpen": "탭하여 캔버스 보기"
   }
 }

@@ -74,6 +74,10 @@ export {
 // ─── Mission atoms ──────────────────────────────────────
 export { activeMissionIdAtom, missionMessagesAtom, missionsAtom } from './missionAtoms'
 
+// ─── Canvas atoms ───────────────────────────────────────
+export type { CanvasContent } from './canvasAtoms'
+export { canvasContentAtom, canvasVisibleAtom } from './canvasAtoms'
+
 // ─── Secure store (web only) ─────────────────────────────
 export {
   clearSessionCryptoKey,

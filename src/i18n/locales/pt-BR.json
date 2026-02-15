@@ -424,5 +424,11 @@
       "spawned": "Sub-agente iniciado",
       "resultReceived": "Resultado do sub-agente recebido"
     }
+  },
+  "canvas": {
+    "title": "Canvas",
+    "close": "Fechar canvas",
+    "clear": "Limpar canvas",
+    "tapToOpen": "Toque para ver o canvas"
   }
 }
