@@ -1,14 +1,96 @@
-import React, { useMemo } from 'react'
+import { Ionicons } from '@expo/vector-icons'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, ScrollView, Text, TextStyle, View, ViewStyle } from 'react-native'
 
-import { openBrowser } from '../../services/intents'
+import { copyToClipboard, openBrowser } from '../../services/intents'
 import { useTheme } from '../../theme'
 import { logger } from '../../utils/logger'
+import { createCodeBlockStyles } from './ChatMessage.styles'
 
 const chatLogger = logger.create('ChatMessage')
 
+// Map common language identifiers to display labels
+const languageLabels: Record<string, string> = {
+  js: 'JavaScript',
+  jsx: 'JSX',
+  ts: 'TypeScript',
+  tsx: 'TSX',
+  py: 'Python',
+  rb: 'Ruby',
+  rs: 'Rust',
+  go: 'Go',
+  java: 'Java',
+  kt: 'Kotlin',
+  swift: 'Swift',
+  cs: 'C#',
+  cpp: 'C++',
+  c: 'C',
+  sh: 'Shell',
+  bash: 'Bash',
+  zsh: 'Zsh',
+  html: 'HTML',
+  css: 'CSS',
+  scss: 'SCSS',
+  json: 'JSON',
+  yaml: 'YAML',
+  yml: 'YAML',
+  xml: 'XML',
+  sql: 'SQL',
+  md: 'Markdown',
+  markdown: 'Markdown',
+  php: 'PHP',
+  dart: 'Dart',
+  r: 'R',
+  lua: 'Lua',
+  vim: 'Vim',
+  dockerfile: 'Dockerfile',
+  graphql: 'GraphQL',
+  toml: 'TOML',
+  ini: 'INI',
+  diff: 'Diff',
+  plaintext: 'Text',
+  text: 'Text',
+  txt: 'Text',
+}
+
+function getLanguageLabel(sourceInfo?: string): string | null {
+  if (!sourceInfo) return null
+  const lang = sourceInfo.trim().toLowerCase()
+  if (!lang) return null
+  return languageLabels[lang] || lang.charAt(0).toUpperCase() + lang.slice(1)
+}
+
+function CodeBlockCopyButton({ content }: { content: string }) {
+  const { theme } = useTheme()
+  const [copied, setCopied] = useState(false)
+  const codeStyles = useMemo(() => createCodeBlockStyles(theme), [theme])
+
+  const handleCopy = useCallback(async () => {
+    await copyToClipboard(content)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }, [content])
+
+  return (
+    <Pressable
+      onPress={handleCopy}
+      style={codeStyles.copyButton}
+      accessibilityRole="button"
+      accessibilityLabel={copied ? 'Copied' : 'Copy code'}
+    >
+      <Ionicons
+        name={copied ? 'checkmark' : 'copy-outline'}
+        size={14}
+        color={theme.colors.text.tertiary}
+      />
+      <Text style={codeStyles.copyButtonText}>{copied ? 'Copied!' : 'Copy'}</Text>
+    </Pressable>
+  )
+}
+
 export function useMarkdownRules() {
   const { theme } = useTheme()
+  const codeStyles = useMemo(() => createCodeBlockStyles(theme), [theme])
 
   const handleLinkPress = React.useCallback(
     async (url: string) => {
@@ -75,43 +157,84 @@ export function useMarkdownRules() {
         </Text>
       ),
       fence: (
-        node: { key: string; content: string },
+        node: { key: string; content: string; sourceInfo?: string },
         _children: unknown,
         _parent: unknown,
         styles: { fence: TextStyle },
-      ) => (
-        <ScrollView
-          key={node.key}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{
-            marginVertical: (styles.fence as Record<string, number>).marginVertical ?? 0,
-          }}
-        >
-          <Text style={[styles.fence, { marginVertical: 0 }]} selectable={true}>
-            {node.content}
-          </Text>
-        </ScrollView>
-      ),
+      ) => {
+        const language = getLanguageLabel(node.sourceInfo)
+        const content =
+          typeof node.content === 'string' && node.content.endsWith('\n')
+            ? node.content.slice(0, -1)
+            : node.content
+        return (
+          <View
+            key={node.key}
+            style={[
+              codeStyles.codeBlockContainer,
+              {
+                marginVertical: (styles.fence as Record<string, number>).marginVertical ?? 0,
+              },
+            ]}
+          >
+            <View style={codeStyles.codeBlockHeader}>
+              <Text style={codeStyles.codeBlockLanguage}>{language || 'Code'}</Text>
+              <CodeBlockCopyButton content={content} />
+            </View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={codeStyles.codeBlockScrollView}
+            >
+              <Text
+                style={[styles.fence, { marginVertical: 0, borderRadius: 0 }]}
+                selectable={true}
+              >
+                {content}
+              </Text>
+            </ScrollView>
+          </View>
+        )
+      },
       code_block: (
         node: { key: string; content: string },
         _children: unknown,
         _parent: unknown,
         styles: { code_block: TextStyle },
-      ) => (
-        <ScrollView
-          key={node.key}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{
-            marginVertical: (styles.code_block as Record<string, number>).marginVertical ?? 0,
-          }}
-        >
-          <Text style={[styles.code_block, { marginVertical: 0 }]} selectable={true}>
-            {node.content}
-          </Text>
-        </ScrollView>
-      ),
+      ) => {
+        const content =
+          typeof node.content === 'string' && node.content.endsWith('\n')
+            ? node.content.slice(0, -1)
+            : node.content
+        return (
+          <View
+            key={node.key}
+            style={[
+              codeStyles.codeBlockContainer,
+              {
+                marginVertical: (styles.code_block as Record<string, number>).marginVertical ?? 0,
+              },
+            ]}
+          >
+            <View style={codeStyles.codeBlockHeader}>
+              <Text style={codeStyles.codeBlockLanguage}>Code</Text>
+              <CodeBlockCopyButton content={content} />
+            </View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={codeStyles.codeBlockScrollView}
+            >
+              <Text
+                style={[styles.code_block, { marginVertical: 0, borderRadius: 0 }]}
+                selectable={true}
+              >
+                {content}
+              </Text>
+            </ScrollView>
+          </View>
+        )
+      },
       heading1: (
         node: { key: string },
         children: React.ReactNode,
@@ -190,7 +313,7 @@ export function useMarkdownRules() {
         </View>
       ),
     }),
-    [handleLinkPress],
+    [handleLinkPress, codeStyles],
   )
 
   return { markdownRules, handleLinkPress }
