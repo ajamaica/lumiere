@@ -88,10 +88,17 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
           const chatSessions = sessionData.sessions.filter((s) => !isMissionSession(s.key))
           setSessions(chatSessions)
 
-          // Only auto-select a session if the current one isn't in the server's session list
+          // Only auto-select a session if there's no current key or it's the
+          // default key that doesn't exist on this server. Don't override a
+          // freshly-created session key that hasn't been persisted to the
+          // server yet (sessions are created implicitly on first message).
           const currentKeyInSessions =
             currentSessionKey && chatSessions.some((s) => s.key === currentSessionKey)
-          if (!currentKeyInSessions && chatSessions.length > 0) {
+          if (
+            !currentKeyInSessions &&
+            chatSessions.length > 0 &&
+            (!currentSessionKey || currentSessionKey === DEFAULT_SESSION_KEY)
+          ) {
             setCurrentSessionKey(chatSessions[0].key)
           }
         }
