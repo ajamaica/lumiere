@@ -2,6 +2,11 @@ import { useAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { thinkLumiereApi, ThinkLumiereApiRequestError } from '../services/thinklumiere/api'
+import {
+  deleteInstanceToken,
+  getInstanceToken,
+  setInstanceToken,
+} from '../services/thinklumiere/instanceToken'
 import { instanceAtom } from '../store/thinklumiereAtoms'
 import type { Instance, InstanceResponse } from '../store/thinklumiereTypes'
 import { logger } from '../utils/logger'
@@ -16,7 +21,6 @@ function mapInstanceResponse(response: InstanceResponse): Instance {
     name: response.name,
     status: response.status,
     url: response.url,
-    token: response.token,
   }
 }
 
@@ -35,7 +39,9 @@ export interface UseInstanceResult {
   refreshInstance: () => Promise<void>
   /** Fetch all instances and update state with the first one */
   fetchInstances: () => Promise<void>
-  /** Start polling for instance status until it becomes "running" or "error" */
+  /** Retrieve the instance token from secure storage */
+  getToken: () => Promise<string | null>
+  /** Start polling for instance status until it reaches a terminal state ("running", "error", or "stopped") */
   startPolling: () => void
   /** Stop polling */
   stopPolling: () => void
@@ -47,6 +53,12 @@ export function useInstance(): UseInstanceResult {
   const [polling, setPolling] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const latestInstanceRef = useRef<Instance | null>(instance)
+
+  // Keep the ref in sync with the latest instance value
+  useEffect(() => {
+    latestInstanceRef.current = instance
+  }, [instance])
 
   // Clean up polling on unmount
   useEffect(() => {
@@ -66,6 +78,7 @@ export function useInstance(): UseInstanceResult {
       const response = await thinkLumiereApi.createInstance()
       const inst = mapInstanceResponse(response)
       setInstance(inst)
+      await setInstanceToken(response.token)
       log.info('Instance created', { instanceId: inst.instanceId, status: inst.status })
       return inst
     } catch (err) {
@@ -88,10 +101,12 @@ export function useInstance(): UseInstanceResult {
       const response = await thinkLumiereApi.getInstance(instance.instanceId)
       const updated = mapInstanceResponse(response)
       setInstance(updated)
+      await setInstanceToken(response.token)
       log.debug('Instance refreshed', { status: updated.status })
     } catch (err) {
       if (err instanceof ThinkLumiereApiRequestError && err.isNotFound) {
         setInstance(null)
+        await deleteInstanceToken()
         log.info('Instance no longer exists')
         return
       }
@@ -108,9 +123,11 @@ export function useInstance(): UseInstanceResult {
       if (responses.length > 0) {
         const inst = mapInstanceResponse(responses[0])
         setInstance(inst)
+        await setInstanceToken(responses[0].token)
         log.debug('Instances fetched', { count: responses.length, status: inst.status })
       } else {
         setInstance(null)
+        await deleteInstanceToken()
         log.debug('No instances found')
       }
     } catch (err) {
@@ -122,6 +139,10 @@ export function useInstance(): UseInstanceResult {
       setLoading(false)
     }
   }, [setInstance])
+
+  const getToken = useCallback(async (): Promise<string | null> => {
+    return getInstanceToken()
+  }, [])
 
   const stopPolling = useCallback(() => {
     if (pollingRef.current) {
@@ -139,17 +160,23 @@ export function useInstance(): UseInstanceResult {
 
     pollingRef.current = setInterval(async () => {
       try {
-        if (!instance) {
+        const current = latestInstanceRef.current
+        if (!current) {
           stopPolling()
           return
         }
 
-        const response = await thinkLumiereApi.getInstance(instance.instanceId)
+        const response = await thinkLumiereApi.getInstance(current.instanceId)
         const updated = mapInstanceResponse(response)
         setInstance(updated)
+        await setInstanceToken(response.token)
 
         // Stop polling once instance reaches a terminal status
-        if (updated.status === 'running' || updated.status === 'error') {
+        if (
+          updated.status === 'running' ||
+          updated.status === 'error' ||
+          updated.status === 'stopped'
+        ) {
           stopPolling()
           log.info('Polling complete', { status: updated.status })
         }
@@ -157,11 +184,12 @@ export function useInstance(): UseInstanceResult {
         log.logError('Polling error', err)
         if (err instanceof ThinkLumiereApiRequestError && err.isNotFound) {
           setInstance(null)
+          await deleteInstanceToken()
           stopPolling()
         }
       }
     }, POLL_INTERVAL_MS)
-  }, [instance, setInstance, stopPolling])
+  }, [setInstance, stopPolling])
 
   return {
     instance,
@@ -171,6 +199,7 @@ export function useInstance(): UseInstanceResult {
     createInstance,
     refreshInstance,
     fetchInstances,
+    getToken,
     startPolling,
     stopPolling,
   }

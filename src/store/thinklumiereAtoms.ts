@@ -24,11 +24,7 @@ export const subscriptionStatusAtom = atomWithStorage<SubscriptionStatus>(
 )
 
 /** User's server instance (persisted across restarts) */
-export const instanceAtom = atomWithStorage<Instance | null>(
-  'thinklumiereInstance',
-  null,
-  storage,
-)
+export const instanceAtom = atomWithStorage<Instance | null>('thinklumiereInstance', null, storage)
 
 /** Whether the ThinkLumiere session token is loaded and valid (transient) */
 export const thinklumiereAuthenticatedAtom = atom(false)

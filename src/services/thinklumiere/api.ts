@@ -9,6 +9,7 @@ import { logger } from '../../utils/logger'
 const log = logger.create('ThinkLumiereAPI')
 
 const BASE_URL = 'https://thinklumiere.com/api/mobile'
+const REQUEST_TIMEOUT_MS = 15_000
 
 export class ThinkLumiereApiClient {
   private sessionToken: string | null = null
@@ -37,10 +38,25 @@ export class ThinkLumiereApiClient {
 
     log.debug(`${options.method || 'GET'} ${path}`)
 
-    const response = await fetch(url, {
-      ...options,
-      headers,
-    })
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+
+    let response: Response
+    try {
+      response = await fetch(url, {
+        ...options,
+        headers,
+        signal: controller.signal,
+      })
+    } catch (err) {
+      clearTimeout(timeout)
+      if (err instanceof DOMException && err.name === 'AbortError') {
+        throw new ThinkLumiereApiRequestError('Request timed out', 0)
+      }
+      throw err
+    } finally {
+      clearTimeout(timeout)
+    }
 
     if (!response.ok) {
       const error: ThinkLumiereApiError = await response.json().catch(() => ({

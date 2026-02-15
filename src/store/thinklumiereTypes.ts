@@ -21,7 +21,6 @@ export interface Instance {
   name: string
   status: InstanceStatus
   url: string
-  token: string
 }
 
 // ─── API response types ─────────────────────────────────
