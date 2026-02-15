@@ -164,9 +164,32 @@ export type AgentEvent = {
   ts: number
 }
 
+// Node pairing
+export interface NodePairingRequest {
+  id?: string
+  name?: string
+}
+
+export interface NodePairingResponse {
+  requestId: string
+  status: 'pending' | 'approved' | 'rejected' | 'expired'
+  deviceId?: string
+  deviceName?: string
+}
+
+export interface PairedNode {
+  id: string
+  name?: string
+  deviceId?: string
+  pairedAt?: number
+  lastSeen?: number
+}
+
 // Event types
 export type GatewayEvent =
   | { event: 'agent'; payload: AgentEvent; seq?: number }
   | { event: 'presence'; payload: unknown }
   | { event: 'tick'; payload: { timestamp: number } }
   | { event: 'shutdown'; payload: { restartIn?: number } }
+  | { event: 'node.pair.requested'; payload: unknown }
+  | { event: 'node.pair.resolved'; payload: unknown }

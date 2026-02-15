@@ -200,6 +200,14 @@ export class MoltGatewayClient {
     return await this.request('cron.runs', { name: jobName })
   }
 
+  async requestNodePairing(deviceInfo?: { id?: string; name?: string }): Promise<unknown> {
+    return await this.request('node.pair.request', deviceInfo)
+  }
+
+  async listPairedNodes(): Promise<unknown> {
+    return await this.request('node.pair.list')
+  }
+
   async sendAgentRequest(
     params: AgentParams,
     onEvent?: (event: AgentEvent) => void,

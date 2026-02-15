@@ -6,6 +6,7 @@ import { Alert, SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 
 import { Button, ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
+import { useNodePairing } from '../src/hooks/useNodePairing'
 import { onboardingCompletedAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 
@@ -13,6 +14,7 @@ export default function SettingsScreen() {
   const { theme, themeMode, setThemeMode } = useTheme()
   const router = useRouter()
   const { currentServer, serversList } = useServers()
+  const { requestPairing, isPaired, isLoading, pairingStatus } = useNodePairing()
   const setOnboardingCompleted = useSetAtom(onboardingCompletedAtom)
 
   const getThemeLabel = () => {
@@ -33,6 +35,23 @@ export default function SettingsScreen() {
     const currentIndex = modes.indexOf(themeMode)
     const nextIndex = (currentIndex + 1) % modes.length
     setThemeMode(modes[nextIndex])
+  }
+
+  const handlePairAsNode = async () => {
+    try {
+      await requestPairing()
+      Alert.alert(
+        'Pairing Requested',
+        'A pairing request has been sent to the gateway. Please approve it using:\n\nclawdbot nodes approve',
+        [{ text: 'OK' }],
+      )
+    } catch (error) {
+      Alert.alert(
+        'Pairing Failed',
+        error instanceof Error ? error.message : 'Failed to request pairing',
+        [{ text: 'OK' }],
+      )
+    }
   }
 
   const handleLogout = () => {
@@ -92,9 +111,31 @@ export default function SettingsScreen() {
           />
         </Section>
 
+        <Section title="Node Pairing">
+          <SettingRow
+            label="Pairing Status"
+            value={
+              isPaired
+                ? '✅ Paired'
+                : pairingStatus?.status === 'pending'
+                  ? '⏳ Pending'
+                  : '❌ Not Paired'
+            }
+          />
+          {!isPaired && (
+            <Button
+              title={isLoading ? 'Requesting...' : 'Pair as Node'}
+              onPress={handlePairAsNode}
+              disabled={isLoading || pairingStatus?.status === 'pending'}
+              size="lg"
+            />
+          )}
+        </Section>
+
         <Section title="Control">
           <SettingRow label="Overview" onPress={() => router.push('/overview')} />
           <SettingRow label="Cron Jobs" onPress={() => router.push('/scheduler')} />
+          <SettingRow label="Canvas Viewer" onPress={() => router.push('/canvas')} />
         </Section>
 
         <Section title="Developer">
