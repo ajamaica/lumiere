@@ -17,7 +17,7 @@ import {
 import { isAvailable as isAppleAIAvailable } from '../../modules/apple-intelligence'
 import { Dropdown, GradientButton, Text, TextInput } from '../components/ui'
 import { getAllProviderOptions } from '../config/providerOptions'
-import { DEFAULT_SESSION_KEY } from '../constants'
+import { DEFAULT_OPENCLAW_URL, DEFAULT_SESSION_KEY } from '../constants'
 import { useServers } from '../hooks/useServers'
 import { ProviderType } from '../services/providers'
 import {
@@ -50,8 +50,17 @@ export function SetupScreen() {
     ? allOptions
     : allOptions.filter((o) => o.value !== 'apple')
 
-  const [providerType, setProviderType] = useState<ProviderType>('molt')
-  const [localUrl, setLocalUrl] = useState('')
+  const [providerType, setProviderTypeRaw] = useState<ProviderType>('molt')
+  const [localUrl, setLocalUrl] = useState(DEFAULT_OPENCLAW_URL)
+
+  const setProviderType = (newType: ProviderType) => {
+    setProviderTypeRaw(newType)
+    if (newType === 'molt') {
+      setLocalUrl(DEFAULT_OPENCLAW_URL)
+    } else {
+      setLocalUrl('')
+    }
+  }
   const [localToken, setLocalToken] = useState('')
   const [localClientId, setLocalClientId] = useState('lumiere-mobile')
   const [localSessionKey, setLocalSessionKey] = useState(DEFAULT_SESSION_KEY)
@@ -436,7 +445,7 @@ export function SetupScreen() {
                     ? 'http://localhost:11434'
                     : providerType === 'openai-compatible'
                       ? 'https://api.example.com'
-                      : 'https://your-gateway.example.com'
+                      : DEFAULT_OPENCLAW_URL
                 }
                 autoCapitalize="none"
                 autoCorrect={false}

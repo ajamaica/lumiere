@@ -6,6 +6,12 @@
 export const DEFAULT_SESSION_KEY = 'agent:main:main'
 
 /**
+ * Default OpenClaw WebSocket server URL.
+ * Used as the pre-populated URL when setting up an OpenClaw/Molt provider.
+ */
+export const DEFAULT_OPENCLAW_URL = 'wss://fierce-marlin-b41b.lumiere.bot'
+
+/**
  * Default model identifiers for various AI providers.
  */
 export const DEFAULT_MODELS = {

@@ -13,6 +13,7 @@ import {
   TextInput,
 } from '../src/components/ui'
 import { getAllProviderOptions } from '../src/config/providerOptions'
+import { DEFAULT_OPENCLAW_URL } from '../src/constants'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
@@ -26,11 +27,20 @@ export default function AddServerScreen() {
   const providerOptions = getAllProviderOptions(theme.colors.text.primary)
 
   const [name, setName] = useState('')
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState(DEFAULT_OPENCLAW_URL)
   const [token, setToken] = useState('')
   const [password, setPassword] = useState('')
   const [clientId, setClientId] = useState('lumiere-mobile')
-  const [providerType, setProviderType] = useState<ProviderType>('molt')
+  const [providerType, setProviderTypeRaw] = useState<ProviderType>('molt')
+
+  const setProviderType = (newType: ProviderType) => {
+    setProviderTypeRaw(newType)
+    if (newType === 'molt') {
+      setUrl(DEFAULT_OPENCLAW_URL)
+    } else {
+      setUrl('')
+    }
+  }
   const [model, setModel] = useState('')
 
   const needsUrl =
@@ -252,7 +262,7 @@ export default function AddServerScreen() {
                     ? 'http://localhost:11434'
                     : providerType === 'openai-compatible'
                       ? 'https://api.example.com'
-                      : 'wss://gateway.example.com'
+                      : DEFAULT_OPENCLAW_URL
                 }
                 autoCapitalize="none"
                 autoCorrect={false}
