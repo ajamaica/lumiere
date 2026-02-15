@@ -85,11 +85,10 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
         const chatSessions = sessionData.sessions.filter((s) => !isMissionSession(s.key))
         setSessions(chatSessions)
 
-        // If no session is set for this server and sessions are available, use the first one
-        if (
-          (!serverSessionsRef.current[currentServerId] || !currentSessionKey) &&
-          chatSessions.length > 0
-        ) {
+        // Only auto-select a session if the current one isn't in the server's session list
+        const currentKeyInSessions =
+          currentSessionKey && chatSessions.some((s) => s.key === currentSessionKey)
+        if (!currentKeyInSessions && chatSessions.length > 0) {
           setCurrentSessionKey(chatSessions[0].key)
         }
       }
