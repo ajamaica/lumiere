@@ -73,7 +73,9 @@
     "attachFile": "Joindre un fichier",
     "file": "Fichier",
     "removeAttachment": "Supprimer la pièce jointe {{number}}",
-    "compressing": "Compression..."
+    "compressing": "Compression...",
+    "lifecycleStart": "Réflexion",
+    "lifecycleEnd": "Terminé"
   },
   "addServer": {
     "title": "Ajouter un serveur",

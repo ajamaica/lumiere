@@ -163,12 +163,18 @@ describe('useMessageQueue', () => {
 
       await result.handleSend('Hello')
 
-      // Should have added a user message
-      expect(mocks.onMessageAdd).toHaveBeenCalledTimes(1)
+      // Should have added a user message + lifecycle start + lifecycle end
+      expect(mocks.onMessageAdd).toHaveBeenCalledTimes(3)
       const userMsg = mocks.onMessageAdd.mock.calls[0][0]
       expect(userMsg.text).toBe('Hello')
       expect(userMsg.sender).toBe('user')
       expect(userMsg.id).toMatch(/^msg-/)
+
+      // Lifecycle events
+      expect(mocks.onMessageAdd.mock.calls[1][0].type).toBe('lifecycle_event')
+      expect(mocks.onMessageAdd.mock.calls[1][0].phase).toBe('start')
+      expect(mocks.onMessageAdd.mock.calls[2][0].type).toBe('lifecycle_event')
+      expect(mocks.onMessageAdd.mock.calls[2][0].phase).toBe('end')
 
       // Should have called onSendStart
       expect(mocks.onSendStart).toHaveBeenCalledTimes(1)

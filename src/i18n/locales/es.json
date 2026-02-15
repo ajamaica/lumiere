@@ -73,7 +73,9 @@
     "attachFile": "Adjuntar archivo",
     "file": "Archivo",
     "removeAttachment": "Eliminar adjunto {{number}}",
-    "compressing": "Comprimiendo..."
+    "compressing": "Comprimiendo...",
+    "lifecycleStart": "Pensando",
+    "lifecycleEnd": "Listo"
   },
   "addServer": {
     "title": "Añadir Servidor",

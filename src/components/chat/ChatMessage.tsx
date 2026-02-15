@@ -30,6 +30,7 @@ import { logger } from '../../utils/logger'
 import { processXmlTags } from '../../utils/xmlTagProcessor'
 import { createMarkdownStyles, createStyles } from './ChatMessage.styles'
 import type { Message, MessageAttachment, TextMessage } from './chatMessageTypes'
+import { LifecycleEventBubble } from './LifecycleEventBubble'
 import { LinkPreview } from './LinkPreview'
 import { ToolEventBubble } from './ToolEventBubble'
 import { useMarkdownRules } from './useMarkdownRules'
@@ -72,8 +73,8 @@ export function ChatMessage({ message }: { message: Message }) {
   const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const isUser = message.sender === 'user'
-  // Narrow union: ToolEventMessage never reaches ChatMessage, but TS needs help
-  const isTextMsg = message.type !== 'tool_event'
+  // Narrow union: non-text message types are handled by early returns below
+  const isTextMsg = message.type === undefined || message.type === 'text'
   const streaming = isTextMsg ? message.streaming : false
   const attachments = isTextMsg ? message.attachments : undefined
   const [copied, setCopied] = useState(false)
@@ -267,6 +268,11 @@ export function ChatMessage({ message }: { message: Message }) {
   // Render tool event messages with the compact ToolEventBubble
   if (message.type === 'tool_event') {
     return <ToolEventBubble message={message} />
+  }
+
+  // Render lifecycle event markers (start/end dividers)
+  if (message.type === 'lifecycle_event') {
+    return <LifecycleEventBubble message={message} />
   }
 
   return (

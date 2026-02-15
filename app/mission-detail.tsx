@@ -361,7 +361,12 @@ export default function MissionDetailScreen() {
         // Update the last assistant message in-place (even if stopped, so user sees what was received)
         setMessages((prev) => {
           const last = prev[prev.length - 1]
-          if (last && last.sender === 'agent' && last.type !== 'tool_event') {
+          if (
+            last &&
+            last.sender === 'agent' &&
+            last.type !== 'tool_event' &&
+            last.type !== 'lifecycle_event'
+          ) {
             return [
               ...prev.slice(0, -1),
               { ...last, text: streamingTextRef.current, streaming: !isStopped },
@@ -461,7 +466,12 @@ export default function MissionDetailScreen() {
         setMessages((prev) => {
           const last = prev[prev.length - 1]
           let updated = prev
-          if (last && last.type !== 'tool_event' && last.streaming) {
+          if (
+            last &&
+            last.type !== 'tool_event' &&
+            last.type !== 'lifecycle_event' &&
+            last.streaming
+          ) {
             updated = [...prev.slice(0, -1), { ...last, streaming: false }]
           }
           // Persist messages after phase completes
@@ -585,7 +595,12 @@ export default function MissionDetailScreen() {
           setMessages((prev) => {
             const last = prev[prev.length - 1]
             let updated = prev
-            if (last && last.type !== 'tool_event' && last.streaming) {
+            if (
+              last &&
+              last.type !== 'tool_event' &&
+              last.type !== 'lifecycle_event' &&
+              last.streaming
+            ) {
               updated = [...prev.slice(0, -1), { ...last, streaming: false }]
             }
             saveMissionMessages(activeMission.id, serializeMessages(updated))
