@@ -186,14 +186,16 @@ export function ChatMessage({ message }: { message: Message }) {
   )
 
   // Strip XML tags, intent URLs from displayed text, then linkify
-  const processedText = useMemo(() => {
+  const visibleText = useMemo(() => {
     let text = processXmlTags(message.text)
     text = intents.length > 0 ? stripIntents(text) : text
-    return linkifyText(text)
+    return text
   }, [message.text, intents])
 
-  // Fetch URL embed previews for agent messages
-  const { metadata: urlPreviews } = useUrlMetadata(message.text, !!streaming, isUser)
+  const processedText = useMemo(() => linkifyText(visibleText), [visibleText])
+
+  // Fetch URL embed previews only for visible (non-hidden) content
+  const { metadata: urlPreviews } = useUrlMetadata(visibleText, !!streaming, isUser)
 
   const renderAttachments = () => {
     if (!attachments || attachments.length === 0) return null
