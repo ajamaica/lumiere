@@ -15,6 +15,9 @@ const TOOL_ICONS: Record<string, string> = {
   web_fetch: 'globe-outline',
   web_search: 'search-outline',
   // File system tools
+  read: 'document-text-outline',
+  write: 'create-outline',
+  edit: 'pencil-outline',
   grep: 'search-outline',
   find: 'folder-open-outline',
   ls: 'folder-outline',
@@ -31,14 +34,21 @@ const TOOL_ICONS: Record<string, string> = {
   // Infrastructure tools
   nodes: 'git-network-outline',
   cron: 'timer-outline',
+  gateway: 'server-outline',
   // Session tools
   sessions_list: 'list-outline',
   sessions_history: 'time-outline',
   sessions_send: 'send-outline',
   sessions_spawn: 'git-branch-outline',
+  agents_list: 'people-outline',
+  session_status: 'analytics-outline',
   // Memory tools
   memory_search: 'library-outline',
   memory_get: 'bookmark-outline',
+  // Messaging & media tools
+  message: 'chatbubble-outline',
+  image: 'image-outline',
+  tts: 'volume-high-outline',
   // Legacy / generic
   search: 'search-outline',
 }
@@ -54,6 +64,9 @@ const TOOL_DETAIL_KEYS: Record<string, string[]> = {
   ls: ['path'],
   exec: ['command', 'cmd'],
   code_execution: ['code', 'command'],
+  read: ['path', 'file'],
+  write: ['path', 'file'],
+  edit: ['path', 'file'],
   file_read: ['path', 'file'],
   file_write: ['path', 'file'],
   apply_patch: ['path', 'file'],
@@ -61,8 +74,13 @@ const TOOL_DETAIL_KEYS: Record<string, string[]> = {
   canvas: ['action', 'title'],
   sessions_send: ['target', 'session'],
   sessions_spawn: ['target', 'agent'],
+  agents_list: ['filter'],
   memory_search: ['query'],
   memory_get: ['key', 'id'],
+  message: ['target', 'channel', 'text'],
+  image: ['url', 'path'],
+  tts: ['text'],
+  gateway: ['action'],
 }
 
 function getToolDetail(toolName: string, toolInput?: Record<string, unknown>): string | undefined {
