@@ -330,7 +330,8 @@
     "sendMessage": "Enviar mensaje",
     "speakMessage": "Leer mensaje en voz alta",
     "stopSpeaking": "Detener lectura",
-    "messagesQueued": "{{count}} mensaje(s) en cola"
+    "messagesQueued": "{{count}} mensaje(s) en cola",
+    "messageInputHint": "Escribe tu mensaje aquí"
   },
   "missions": {
     "title": "Centro de Misiones",
