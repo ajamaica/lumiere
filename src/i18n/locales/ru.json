@@ -330,7 +330,8 @@
     "sendMessage": "Отправить сообщение",
     "speakMessage": "Прочитать сообщение вслух",
     "stopSpeaking": "Остановить чтение",
-    "messagesQueued": "{{count}} сообщение(й) в очереди"
+    "messagesQueued": "{{count}} сообщение(й) в очереди",
+    "messageInputHint": "Введите ваше сообщение здесь"
   },
   "missions": {
     "title": "Центр миссий",

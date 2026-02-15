@@ -330,7 +330,8 @@
     "sendMessage": "Nachricht senden",
     "speakMessage": "Nachricht vorlesen",
     "stopSpeaking": "Vorlesen beenden",
-    "messagesQueued": "{{count}} Nachricht(en) in Warteschlange"
+    "messagesQueued": "{{count}} Nachricht(en) in Warteschlange",
+    "messageInputHint": "Geben Sie hier Ihre Nachricht ein"
   },
   "missions": {
     "title": "Missionszentrale",

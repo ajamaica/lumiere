@@ -330,7 +330,8 @@
     "sendMessage": "Enviar mensagem",
     "speakMessage": "Ler mensagem em voz alta",
     "stopSpeaking": "Parar leitura",
-    "messagesQueued": "{{count}} mensagem(ns) na fila"
+    "messagesQueued": "{{count}} mensagem(ns) na fila",
+    "messageInputHint": "Digite sua mensagem aqui"
   },
   "missions": {
     "title": "Central de Missões",
