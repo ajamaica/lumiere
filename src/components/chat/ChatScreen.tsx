@@ -222,7 +222,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
               shouldAutoScrollRef.current = nearBottom
               isNearBottom.value = nearBottom
             }}
-            scrollEventThrottle={1}
+            scrollEventThrottle={16}
             ListEmptyComponent={
               isLoadingHistory ? (
                 <View style={styles.emptyContainer}>
