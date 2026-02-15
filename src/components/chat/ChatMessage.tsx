@@ -68,7 +68,7 @@ const linkifyText = (text: string): string => {
   return protectedText
 }
 
-export function ChatMessage({ message }: { message: Message }) {
+function ChatMessageComponent({ message }: { message: Message }) {
   const { theme } = useTheme()
   const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
@@ -367,3 +367,7 @@ export function ChatMessage({ message }: { message: Message }) {
     </View>
   )
 }
+
+// Memoize ChatMessage to prevent re-renders when message object hasn't changed
+// This is critical for scroll performance with large message lists
+export const ChatMessage = React.memo(ChatMessageComponent)
