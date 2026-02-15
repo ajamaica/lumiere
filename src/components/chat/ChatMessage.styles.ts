@@ -53,6 +53,7 @@ export const createStyles = (theme: Theme) =>
     container: {
       marginVertical: theme.spacing.xs,
       marginHorizontal: theme.spacing.md,
+      ...webStyle({ userSelect: 'text' as const }),
     },
     userContainer: {
       alignItems: 'flex-end',
@@ -81,6 +82,7 @@ export const createStyles = (theme: Theme) =>
       shadowOpacity: 0.2,
       shadowRadius: 8,
       elevation: 4,
+      ...webStyle({ userSelect: 'text' as const }),
     },
     userGradientBubble: {
       paddingHorizontal: theme.spacing.lg,
@@ -92,7 +94,6 @@ export const createStyles = (theme: Theme) =>
       backgroundColor: 'transparent',
       borderRadius: 0,
       paddingHorizontal: 0,
-      overflow: 'hidden' as const,
       ...webStyle({ userSelect: 'text' as const }),
     },
     intentActions: {
