@@ -64,10 +64,11 @@ export default function SessionsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connected, connect, disconnect, listSessions, deleteSession } = useMoltGateway({
-    url: config?.url || '',
-    token: config?.token || '',
-  })
+  const { connected, connect, disconnect, listSessions, deleteSession, resetSession } =
+    useMoltGateway({
+      url: config?.url || '',
+      token: config?.token || '',
+    })
 
   useEffect(() => {
     if (config && isMoltProvider) {
@@ -170,6 +171,15 @@ export default function SessionsScreen() {
         text: t('sessions.reset'),
         style: 'destructive',
         onPress: async () => {
+          // Reset the server-side session if connected to a Molt provider
+          if (isMoltProvider && connected) {
+            try {
+              await resetSession(currentSessionKey)
+            } catch (err) {
+              sessionsLogger.logError('Failed to reset remote session', err)
+            }
+          }
+
           // Clear only the cached messages, keep the session in the index
           const cacheKey = buildCacheKey(config?.serverId, currentSessionKey)
           await jotaiStorage.removeItem(cacheKey)
