@@ -175,7 +175,16 @@
     "sessionKeyRequired": "工作階段金鑰為必填",
     "systemMessage": "系統訊息",
     "systemMessageHint": "隨每則訊息傳送的隱藏指令。在聊天中不可見。",
-    "systemMessagePlaceholder": "例如：你是一個有用的程式設計助手..."
+    "systemMessagePlaceholder": "例如：你是一個有用的程式設計助手...",
+    "variablesLabel": "點擊插入變數：",
+    "variables": {
+      "date": "日期",
+      "time": "時間",
+      "datetime": "日期和時間",
+      "day": "星期",
+      "language": "語言",
+      "platform": "平台"
+    }
   },
   "favorites": {
     "title": "收藏",

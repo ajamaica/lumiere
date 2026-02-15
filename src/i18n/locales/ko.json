@@ -175,7 +175,16 @@
     "sessionKeyRequired": "세션 키가 필요합니다",
     "systemMessage": "시스템 메시지",
     "systemMessageHint": "모든 메시지와 함께 전송되는 숨겨진 지침입니다. 채팅에 표시되지 않습니다.",
-    "systemMessagePlaceholder": "예: 당신은 유용한 코딩 어시스턴트입니다..."
+    "systemMessagePlaceholder": "예: 당신은 유용한 코딩 어시스턴트입니다...",
+    "variablesLabel": "탭하여 변수 삽입:",
+    "variables": {
+      "date": "날짜",
+      "time": "시간",
+      "datetime": "날짜 및 시간",
+      "day": "요일",
+      "language": "언어",
+      "platform": "플랫폼"
+    }
   },
   "favorites": {
     "title": "즐겨찾기",

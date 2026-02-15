@@ -175,7 +175,16 @@
     "sessionKeyRequired": "会话密钥为必填项",
     "systemMessage": "系统消息",
     "systemMessageHint": "随每条消息发送的隐藏指令。在聊天中不可见。",
-    "systemMessagePlaceholder": "例如：你是一个有用的编程助手..."
+    "systemMessagePlaceholder": "例如：你是一个有用的编程助手...",
+    "variablesLabel": "点击插入变量：",
+    "variables": {
+      "date": "日期",
+      "time": "时间",
+      "datetime": "日期和时间",
+      "day": "星期",
+      "language": "语言",
+      "platform": "平台"
+    }
   },
   "favorites": {
     "title": "收藏",

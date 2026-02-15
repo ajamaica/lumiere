@@ -1,14 +1,23 @@
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
-import React, { useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native'
+import {
+  Alert,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  TextInput as RNTextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
 import { currentSessionKeyAtom, sessionAliasesAtom, sessionContextAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 import { keyboardAvoidingBehavior } from '../src/utils/platform'
+import { SYSTEM_MESSAGE_VARIABLES } from '../src/utils/systemMessageVariables'
 
 export default function EditSessionScreen() {
   const { theme } = useTheme()
@@ -26,6 +35,22 @@ export default function EditSessionScreen() {
   const [name, setName] = useState(existingAlias ?? defaultName)
   const [sessionKey, setSessionKey] = useState(key ?? '')
   const [systemMessage, setSystemMessage] = useState(existingSystemMessage)
+  const systemMessageInputRef = useRef<RNTextInput>(null)
+  const cursorPositionRef = useRef<number>(systemMessage.length)
+
+  const insertVariable = useCallback(
+    (variableName: string) => {
+      const token = `{{${variableName}}}`
+      const pos = cursorPositionRef.current
+      const before = systemMessage.slice(0, pos)
+      const after = systemMessage.slice(pos)
+      const updated = before + token + after
+      setSystemMessage(updated)
+      cursorPositionRef.current = pos + token.length
+      systemMessageInputRef.current?.focus()
+    },
+    [systemMessage],
+  )
 
   if (!key) {
     return (
@@ -100,6 +125,17 @@ export default function EditSessionScreen() {
     formRow: {
       marginBottom: theme.spacing.md,
     },
+    variableChips: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: theme.spacing.xs,
+    },
+    chip: {
+      borderRadius: theme.borderRadius.xxl,
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.xs,
+      borderWidth: 1,
+    },
     buttonRow: {
       flexDirection: 'row',
       gap: theme.spacing.sm,
@@ -139,10 +175,14 @@ export default function EditSessionScreen() {
 
           <View style={styles.formRow}>
             <TextInput
+              ref={systemMessageInputRef}
               label={t('sessions.systemMessage')}
               hint={t('sessions.systemMessageHint')}
               value={systemMessage}
               onChangeText={setSystemMessage}
+              onSelectionChange={(e) => {
+                cursorPositionRef.current = e.nativeEvent.selection.end
+              }}
               placeholder={t('sessions.systemMessagePlaceholder')}
               multiline
               numberOfLines={4}
@@ -151,6 +191,43 @@ export default function EditSessionScreen() {
               autoCapitalize="sentences"
               autoCorrect
             />
+            <Text
+              style={{
+                fontSize: theme.typography.fontSize.sm,
+                color: theme.colors.text.secondary,
+                marginBottom: theme.spacing.xs,
+              }}
+            >
+              {t('sessions.variablesLabel')}
+            </Text>
+            <View style={styles.variableChips}>
+              {SYSTEM_MESSAGE_VARIABLES.map((v) => (
+                <TouchableOpacity
+                  key={v.name}
+                  style={[
+                    styles.chip,
+                    {
+                      backgroundColor: theme.colors.primary + '18',
+                      borderColor: theme.colors.primary + '40',
+                    },
+                  ]}
+                  onPress={() => insertVariable(v.name)}
+                  accessibilityRole="button"
+                  accessibilityLabel={t(v.labelKey)}
+                >
+                  <Text
+                    style={{
+                      fontSize: theme.typography.fontSize.xs,
+                      color: theme.colors.primary,
+                      fontFamily: theme.typography.fontFamily.monospace,
+                      fontWeight: theme.typography.fontWeight.semibold,
+                    }}
+                  >
+                    {`{{${v.name}}}`}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
 
           <View style={styles.buttonRow}>

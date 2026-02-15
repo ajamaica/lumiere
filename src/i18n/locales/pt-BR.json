@@ -175,7 +175,16 @@
     "sessionKeyRequired": "A chave da sessão é obrigatória",
     "systemMessage": "Mensagem do sistema",
     "systemMessageHint": "Instruções ocultas enviadas com cada mensagem. Não visíveis no chat.",
-    "systemMessagePlaceholder": "ex. Você é um assistente de programação útil..."
+    "systemMessagePlaceholder": "ex. Você é um assistente de programação útil...",
+    "variablesLabel": "Toque para inserir uma variável:",
+    "variables": {
+      "date": "Data",
+      "time": "Hora",
+      "datetime": "Data e hora",
+      "day": "Dia da semana",
+      "language": "Idioma",
+      "platform": "Plataforma"
+    }
   },
   "favorites": {
     "title": "Favoritos",

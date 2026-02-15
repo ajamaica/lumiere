@@ -175,7 +175,16 @@
     "sessionKeyRequired": "Session key is required",
     "systemMessage": "System Message",
     "systemMessageHint": "Hidden instructions sent with every message. Not visible in chat.",
-    "systemMessagePlaceholder": "e.g. You are a helpful coding assistant..."
+    "systemMessagePlaceholder": "e.g. You are a helpful coding assistant...",
+    "variablesLabel": "Tap to insert a variable:",
+    "variables": {
+      "date": "Date",
+      "time": "Time",
+      "datetime": "Date & Time",
+      "day": "Day of week",
+      "language": "Language",
+      "platform": "Platform"
+    }
   },
   "favorites": {
     "title": "Favorites",

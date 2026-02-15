@@ -175,7 +175,16 @@
     "sessionKeyRequired": "Ключ сессии обязателен",
     "systemMessage": "Системное сообщение",
     "systemMessageHint": "Скрытые инструкции, отправляемые с каждым сообщением. Не видны в чате.",
-    "systemMessagePlaceholder": "напр. Ты полезный помощник по программированию..."
+    "systemMessagePlaceholder": "напр. Ты полезный помощник по программированию...",
+    "variablesLabel": "Нажмите, чтобы вставить переменную:",
+    "variables": {
+      "date": "Дата",
+      "time": "Время",
+      "datetime": "Дата и время",
+      "day": "День недели",
+      "language": "Язык",
+      "platform": "Платформа"
+    }
   },
   "favorites": {
     "title": "Избранное",
