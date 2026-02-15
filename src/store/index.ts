@@ -7,6 +7,16 @@ export type {
   SubtaskSubagent,
 } from './missionTypes'
 export type {
+  AuthResponse,
+  Instance,
+  InstanceResponse,
+  InstanceStatus,
+  SubscriptionResponse,
+  SubscriptionStatus,
+  ThinkLumiereApiError,
+  ThinkLumiereUser,
+} from './thinklumiereTypes'
+export type {
   FavoriteItem,
   GatewayLastSeenMap,
   PendingShareMedia,
@@ -77,6 +87,14 @@ export { activeMissionIdAtom, missionMessagesAtom, missionsAtom } from './missio
 // ─── Canvas atoms ───────────────────────────────────────
 export type { CanvasContent } from './canvasAtoms'
 export { canvasContentAtom, canvasVisibleAtom } from './canvasAtoms'
+
+// ─── ThinkLumiere atoms ─────────────────────────────────
+export {
+  instanceAtom,
+  subscriptionStatusAtom,
+  thinklumiereAuthenticatedAtom,
+  thinklumiereUserAtom,
+} from './thinklumiereAtoms'
 
 // ─── Secure store (web only) ─────────────────────────────
 export {
