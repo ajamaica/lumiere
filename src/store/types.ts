@@ -55,16 +55,17 @@ export interface TriggersDict {
   [slug: string]: TriggerConfig
 }
 
+// ─── Notification types ──────────────────────────────────
+
+/** Tracks the last message timestamp seen from each server gateway session */
+export interface GatewayLastSeenMap {
+  [serverSessionKey: string]: number
+}
+
 // ─── Messaging types ────────────────────────────────────
 
 export interface PendingShareMedia {
   uri: string
   mimeType: string
   fileName?: string
-}
-
-// ─── Notification types ──────────────────────────────────
-
-export interface NotificationLastCheckMap {
-  [serverSessionKey: string]: number
 }

@@ -5,30 +5,32 @@ import * as TaskManager from 'expo-task-manager'
 import {
   backgroundNotificationsEnabledAtom,
   currentSessionKeyAtom,
+  type GatewayLastSeenMap,
+  gatewayLastSeenTimestampAtom,
   getStore,
-  notificationLastCheckAtom,
-  type NotificationLastCheckMap,
   serversAtom,
   serverSessionsAtom,
 } from '../../store'
+import type { ChatHistoryMessage } from '../providers/types'
 import { getServerToken } from '../secureTokenStorage'
 
 export const BACKGROUND_FETCH_TASK = 'background-server-check'
 
-async function getLastCheckMap(): Promise<NotificationLastCheckMap> {
-  const raw = getStore().get(notificationLastCheckAtom)
+async function getLastSeenMap(): Promise<GatewayLastSeenMap> {
+  const raw = getStore().get(gatewayLastSeenTimestampAtom)
   // Handle hydration: atomWithStorage may return a Promise during initial load
   return raw instanceof Promise ? await raw : raw
 }
 
-async function setLastCheck(serverSessionKey: string, timestamp: number): Promise<void> {
-  const map = await getLastCheckMap()
-  getStore().set(notificationLastCheckAtom, { ...map, [serverSessionKey]: timestamp })
+async function setLastSeenTimestamp(serverSessionKey: string, timestamp: number): Promise<void> {
+  const map = await getLastSeenMap()
+  getStore().set(gatewayLastSeenTimestampAtom, { ...map, [serverSessionKey]: timestamp })
 }
 
 /**
- * Perform an HTTP health + chat history check against a server.
- * Returns the latest assistant message if it arrived after our last check.
+ * Check a server session for new assistant messages by fetching the gateway's
+ * chat history and comparing against the last message timestamp we recorded
+ * from a previous gateway history response.
  */
 async function checkServerForNewMessages(
   serverUrl: string,
@@ -37,12 +39,9 @@ async function checkServerForNewMessages(
   serverId: string,
 ): Promise<{ hasNew: boolean; preview?: string; serverName?: string }> {
   const serverSessionKey = `${serverId}:${sessionKey}`
-  const lastCheckMap = await getLastCheckMap()
-  const lastCheck = lastCheckMap[serverSessionKey] ?? Date.now()
 
   try {
-    // Use the HTTP REST endpoint to check for new messages.
-    // Molt gateways expose POST /api/rpc for JSON-RPC style calls.
+    // Fetch the latest messages from the server gateway
     const response = await fetch(`${httpUrl(serverUrl)}/api/rpc`, {
       method: 'POST',
       headers: {
@@ -58,31 +57,42 @@ async function checkServerForNewMessages(
     if (!response.ok) return { hasNew: false }
 
     const data = (await response.json()) as {
-      messages?: Array<{
-        role: string
-        content: Array<{ type: string; text?: string }>
-        timestamp: number
-      }>
+      messages?: ChatHistoryMessage[]
     }
 
-    const messages = data.messages ?? []
-    // Find newest assistant message
-    const assistantMessages = messages.filter(
-      (m) => m.role === 'assistant' && m.timestamp > lastCheck,
+    const serverMessages = data.messages ?? []
+
+    if (serverMessages.length === 0) return { hasNew: false }
+
+    // Find the most recent message timestamp from the gateway response
+    const latestGatewayTimestamp = Math.max(...serverMessages.map((m) => m.timestamp))
+
+    // Retrieve what we last saw from this gateway session
+    const lastSeenMap = await getLastSeenMap()
+    const lastSeenTimestamp = lastSeenMap[serverSessionKey] ?? null
+
+    // First check for this session — record baseline without notifying
+    if (lastSeenTimestamp === null) {
+      await setLastSeenTimestamp(serverSessionKey, latestGatewayTimestamp)
+      return { hasNew: false }
+    }
+
+    // Find assistant messages from the gateway that are newer than last seen
+    const newAssistantMessages = serverMessages.filter(
+      (m) => m.role === 'assistant' && m.timestamp > lastSeenTimestamp,
     )
 
-    if (assistantMessages.length > 0) {
-      const latest = assistantMessages[assistantMessages.length - 1]
+    // Always update the stored timestamp to the latest gateway value
+    await setLastSeenTimestamp(serverSessionKey, latestGatewayTimestamp)
+
+    if (newAssistantMessages.length > 0) {
+      const latest = newAssistantMessages[newAssistantMessages.length - 1]
       const text =
         latest.content?.find((c) => c.type === 'text')?.text?.slice(0, 100) ?? 'New message'
 
-      // Update the last check to now
-      await setLastCheck(serverSessionKey, Date.now())
       return { hasNew: true, preview: text }
     }
 
-    // No new messages — still update the checkpoint
-    await setLastCheck(serverSessionKey, Date.now())
     return { hasNew: false }
   } catch {
     // Network error in background — silently ignore
@@ -138,8 +148,9 @@ async function listServerSessions(
 
 /**
  * The background task that runs periodically. It reads server configs from
- * Jotai store, checks Molt servers for new assistant messages across all
- * sessions, and fires a local notification per new message.
+ * Jotai store, fetches chat history from each Molt server gateway, compares
+ * against the last seen message timestamp, and fires a local notification
+ * when new assistant messages are found.
  */
 export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTaskResult> {
   try {

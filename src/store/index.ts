@@ -8,7 +8,7 @@ export type {
 } from './missionTypes'
 export type {
   FavoriteItem,
-  NotificationLastCheckMap,
+  GatewayLastSeenMap,
   PendingShareMedia,
   ServerConfig,
   ServersDict,
@@ -68,7 +68,7 @@ export { favoritesAtom, triggersAtom } from './userDataAtoms'
 export {
   backgroundFetchIntervalAtom,
   backgroundNotificationsEnabledAtom,
-  notificationLastCheckAtom,
+  gatewayLastSeenTimestampAtom,
 } from './notificationAtoms'
 
 // ─── Mission atoms ──────────────────────────────────────
