@@ -6,16 +6,28 @@ import { useTranslation } from 'react-i18next'
 import { Alert, Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Button, ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
+import {
+  Badge,
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  ScreenHeader,
+  Section,
+  Text,
+} from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import {
+  buildCacheKey,
   deleteSessionData,
   ProviderConfig,
   readSessionIndex,
   SessionIndexEntry,
+  writeSessionIndex,
 } from '../src/services/providers'
 import { currentSessionKeyAtom, isMissionSession, sessionAliasesAtom } from '../src/store'
+import { jotaiStorage } from '../src/store/storage'
 import { useTheme } from '../src/theme'
 import { GlassView } from '../src/utils/glassEffect'
 import { logger } from '../src/utils/logger'
@@ -61,7 +73,6 @@ export default function SessionsScreen() {
     if (config && isMoltProvider) {
       connect()
     } else if (config) {
-      // For non-Molt providers, load sessions from the local index
       setLoading(false)
     }
     return () => {
@@ -70,7 +81,6 @@ export default function SessionsScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config, isMoltProvider])
 
-  // Load sessions from Molt gateway (server-side sessions)
   const loadMoltSessions = useCallback(async () => {
     if (!connected || !isMoltProvider) return
 
@@ -86,7 +96,6 @@ export default function SessionsScreen() {
     }
   }, [connected, listSessions, isMoltProvider])
 
-  // Load sessions from local session index (for non-Molt providers)
   const loadLocalSessions = useCallback(async () => {
     if (!config || isMoltProvider) return
 
@@ -133,12 +142,54 @@ export default function SessionsScreen() {
     return parts[parts.length - 1] || key
   }
 
+  const formatRelativeTime = (timestamp: number) => {
+    const now = Date.now()
+    const diff = now - timestamp
+    const minutes = Math.floor(diff / 60000)
+    const hours = Math.floor(diff / 3600000)
+    const days = Math.floor(diff / 86400000)
+
+    if (minutes < 1) return t('sessions.justNow')
+    if (minutes < 60) return t('sessions.minutesAgo', { count: minutes })
+    if (hours < 24) return t('sessions.hoursAgo', { count: hours })
+    return t('sessions.daysAgo', { count: days })
+  }
+
   const handleEditSession = (sessionKey: string) => {
     router.push({ pathname: '/edit-session', params: { key: sessionKey } })
   }
 
   const handleLongPressSession = (sessionKey: string) => {
     setMenuSessionKey(sessionKey)
+  }
+
+  const handleResetSession = () => {
+    Alert.alert(t('sessions.resetConfirmTitle'), t('sessions.resetConfirmMessage'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('sessions.reset'),
+        style: 'destructive',
+        onPress: async () => {
+          // Clear only the cached messages, keep the session in the index
+          const cacheKey = buildCacheKey(config?.serverId, currentSessionKey)
+          await jotaiStorage.removeItem(cacheKey)
+
+          // Update the session index entry to reflect 0 messages
+          const entries = await readSessionIndex(config?.serverId)
+          const updated = entries.map((e) =>
+            e.key === currentSessionKey ? { ...e, messageCount: 0, lastActivity: Date.now() } : e,
+          )
+          await writeSessionIndex(config?.serverId, updated)
+
+          // Update local state
+          setSessions((prev) =>
+            prev.map((s) =>
+              s.key === currentSessionKey ? { ...s, messageCount: 0, lastActivity: Date.now() } : s,
+            ),
+          )
+        },
+      },
+    ])
   }
 
   const handleDeleteSession = (sessionKey: string) => {
@@ -149,7 +200,6 @@ export default function SessionsScreen() {
         text: t('common.delete'),
         style: 'destructive',
         onPress: async () => {
-          // Delete from the remote Molt server if this is a Molt provider
           if (isMoltProvider && connected) {
             try {
               await deleteSession(sessionKey)
@@ -168,51 +218,101 @@ export default function SessionsScreen() {
     ])
   }
 
+  const currentSessionData = sessions.find((s) => s.key === currentSessionKey)
+  const otherSessions = sessions.filter((s) => s.key !== currentSessionKey)
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
     scrollContent: {
+      flexGrow: 1,
       paddingHorizontal: theme.spacing.lg,
-      paddingBottom: theme.spacing.xxxl,
+      paddingBottom: theme.spacing.lg,
     },
     spacer: {
-      height: theme.spacing.lg,
+      height: theme.spacing.xl,
     },
-    actionButton: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: theme.spacing.md,
-      backgroundColor: theme.colors.background,
-      borderRadius: theme.borderRadius.md,
-      marginBottom: theme.spacing.sm,
+
+    // Current session row
+    currentSessionCard: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.xl,
+      paddingVertical: theme.spacing.md,
+      paddingLeft: theme.spacing.lg,
+      paddingRight: theme.spacing.sm,
       borderWidth: 1,
-      borderColor: theme.colors.border,
+      borderColor: theme.colors.primary + '30',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.sm,
     },
-    actionIcon: {
-      marginRight: theme.spacing.sm,
-    },
-    actionText: {
-      fontSize: theme.typography.fontSize.sm,
-      color: theme.colors.text.primary,
+    currentSessionTextGroup: {
       flex: 1,
-      fontWeight: theme.typography.fontWeight.medium,
     },
-    sessionRow: {
+    currentSessionNameRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.sm,
+    },
+    currentSessionActions: {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    sessionContent: {
+
+    // Session list items
+    sessionItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: theme.spacing.md,
+      paddingHorizontal: theme.spacing.md,
+      gap: theme.spacing.md,
+    },
+    sessionItemIconContainer: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: theme.colors.surfaceVariant,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    sessionItemContent: {
       flex: 1,
     },
-    sessionActions: {
+    sessionItemMeta: {
       flexDirection: 'row',
-      gap: theme.spacing.xs,
+      alignItems: 'center',
+      gap: theme.spacing.sm,
+      marginTop: 2,
     },
-    sessionActionButton: {
-      padding: theme.spacing.xs,
+
+    // Empty state
+    emptyContainer: {
+      alignItems: 'center',
+      paddingVertical: theme.spacing.xxxl,
+      gap: theme.spacing.md,
     },
+    emptyIconContainer: {
+      width: 64,
+      height: 64,
+      borderRadius: 32,
+      backgroundColor: theme.colors.surfaceVariant,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: theme.spacing.sm,
+    },
+
+    // Bottom button
+    bottomButtonContainer: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.md,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      borderTopColor: theme.colors.divider,
+      backgroundColor: theme.colors.background,
+    },
+
+    // Context menu
     menuOverlay: {
       flex: 1,
       justifyContent: 'center',
@@ -221,12 +321,12 @@ export default function SessionsScreen() {
     },
     menuContainer: {
       width: '75%',
-      borderRadius: theme.borderRadius.lg,
+      borderRadius: theme.borderRadius.xl,
       overflow: 'hidden',
     },
     menuGlass: {
       backgroundColor: theme.colors.surface,
-      borderRadius: theme.borderRadius.lg,
+      borderRadius: theme.borderRadius.xl,
       paddingVertical: theme.spacing.sm,
     },
     menuHeader: {
@@ -270,21 +370,19 @@ export default function SessionsScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <ScreenHeader title={t('sessions.title')} showClose />
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: theme.spacing.lg,
-          }}
-        >
-          <Text variant="heading2" style={{ marginBottom: theme.spacing.md }}>
-            {t('sessions.noServerConfigured')}
-          </Text>
-          <Text color="secondary" center style={{ marginBottom: theme.spacing.xl }}>
+        <View style={styles.emptyContainer}>
+          <View style={styles.emptyIconContainer}>
+            <Ionicons name="server-outline" size={28} color={theme.colors.text.tertiary} />
+          </View>
+          <Text variant="heading3">{t('sessions.noServerConfigured')}</Text>
+          <Text color="secondary" center style={{ paddingHorizontal: theme.spacing.xl }}>
             {t('sessions.noServerMessage')}
           </Text>
-          <Button title={t('sessions.goToSettings')} onPress={() => router.push('/settings')} />
+          <Button
+            title={t('sessions.goToSettings')}
+            onPress={() => router.push('/settings')}
+            style={{ marginTop: theme.spacing.sm }}
+          />
         </View>
       </SafeAreaView>
     )
@@ -294,74 +392,125 @@ export default function SessionsScreen() {
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('sessions.title')} showClose />
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Current session info at top */}
-        <Section>
-          <SettingRow
-            icon="chatbubble-outline"
-            label={formatSessionKey(currentSessionKey)}
-            subtitle={t('sessions.currentSession')}
-            onPress={() => handleEditSession(currentSessionKey)}
-            showDivider={false}
-          />
+        {/* Current session - compact single row: name + badge + edit + reset */}
+        <Section title={t('sessions.currentSession')}>
+          <View style={styles.currentSessionCard}>
+            <View style={styles.currentSessionTextGroup}>
+              <View style={styles.currentSessionNameRow}>
+                <Text variant="label" numberOfLines={1} style={{ flex: 1 }}>
+                  {formatSessionKey(currentSessionKey)}
+                </Text>
+                <Badge label={t('common.active')} variant="success" />
+              </View>
+              {currentSessionData?.messageCount !== undefined && (
+                <Text variant="caption" style={{ marginTop: 2 }}>
+                  {t('sessions.messagesCount', { count: currentSessionData.messageCount })}
+                  {currentSessionData.lastActivity
+                    ? ` · ${formatRelativeTime(currentSessionData.lastActivity)}`
+                    : ''}
+                </Text>
+              )}
+            </View>
+            <View style={styles.currentSessionActions}>
+              <IconButton
+                icon="pencil-outline"
+                size="sm"
+                onPress={() => handleEditSession(currentSessionKey)}
+                accessibilityLabel={t('sessions.editSession')}
+              />
+              <IconButton
+                icon="refresh-outline"
+                size="sm"
+                color={theme.colors.status.error}
+                onPress={handleResetSession}
+                accessibilityLabel={t('sessions.resetSession')}
+              />
+            </View>
+          </View>
         </Section>
 
         <View style={styles.spacer} />
 
-        {/* Actions group */}
-        <Section title={t('sessions.actions')}>
-          <TouchableOpacity style={styles.actionButton} onPress={handleNewSession}>
-            <Ionicons
-              name="add-circle"
-              size={22}
-              color={theme.colors.primary}
-              style={styles.actionIcon}
-            />
-            <Text style={styles.actionText}>{t('sessions.newSession')}</Text>
-          </TouchableOpacity>
-        </Section>
-
-        {/* Available sessions */}
-        <Section title={t('sessions.availableSessions')} showDivider>
+        {/* Other sessions */}
+        <Section title={t('sessions.availableSessions')}>
           {loading ? (
-            <SettingRow
-              icon="hourglass-outline"
-              label={t('sessions.loadingSessions')}
-              showDivider={false}
-            />
-          ) : sessions.length > 0 ? (
-            sessions.map((session, index) => {
-              const isActive = session.key === currentSessionKey
-              return (
-                <View key={session.key} style={styles.sessionRow}>
-                  <View style={styles.sessionContent}>
-                    <SettingRow
-                      icon={isActive ? 'checkmark-circle' : 'radio-button-off-outline'}
-                      iconColor={isActive ? theme.colors.primary : undefined}
-                      label={formatSessionKey(session.key)}
-                      subtitle={
-                        session.messageCount !== undefined
-                          ? t('sessions.messagesCount', { count: session.messageCount })
-                          : undefined
-                      }
-                      value={isActive ? t('common.active') : undefined}
-                      onPress={() => handleSelectSession(session.key)}
-                      onLongPress={() => handleLongPressSession(session.key)}
-                      showDivider={index < sessions.length - 1}
-                    />
-                  </View>
-                </View>
-              )
-            })
+            <Card>
+              <View style={{ alignItems: 'center', paddingVertical: theme.spacing.xl }}>
+                <Text color="secondary">{t('sessions.loadingSessions')}</Text>
+              </View>
+            </Card>
+          ) : otherSessions.length > 0 ? (
+            <Card padded={false}>
+              {otherSessions.map((session, index) => (
+                <React.Fragment key={session.key}>
+                  <TouchableOpacity
+                    style={styles.sessionItem}
+                    onPress={() => handleSelectSession(session.key)}
+                    onLongPress={() => handleLongPressSession(session.key)}
+                    activeOpacity={0.6}
+                    accessibilityRole="button"
+                    accessibilityLabel={formatSessionKey(session.key)}
+                  >
+                    <View style={styles.sessionItemIconContainer}>
+                      <Ionicons
+                        name="chatbubble-outline"
+                        size={18}
+                        color={theme.colors.text.secondary}
+                      />
+                    </View>
+                    <View style={styles.sessionItemContent}>
+                      <Text variant="bodySmall" semibold numberOfLines={1}>
+                        {formatSessionKey(session.key)}
+                      </Text>
+                      <View style={styles.sessionItemMeta}>
+                        {session.messageCount !== undefined && (
+                          <Text variant="caption">
+                            {t('sessions.messagesCount', { count: session.messageCount })}
+                          </Text>
+                        )}
+                        {session.lastActivity && (
+                          <>
+                            {session.messageCount !== undefined && (
+                              <Text variant="caption" color="tertiary">
+                                ·
+                              </Text>
+                            )}
+                            <Text variant="caption">
+                              {formatRelativeTime(session.lastActivity)}
+                            </Text>
+                          </>
+                        )}
+                      </View>
+                    </View>
+                    <Ionicons name="chevron-forward" size={16} color={theme.colors.text.tertiary} />
+                  </TouchableOpacity>
+                  {index < otherSessions.length - 1 && (
+                    <Divider style={{ marginHorizontal: theme.spacing.md }} />
+                  )}
+                </React.Fragment>
+              ))}
+            </Card>
           ) : (
-            <SettingRow
-              icon="albums-outline"
-              label={t('sessions.noSessions')}
-              subtitle={t('sessions.noSessionsMessage')}
-              showDivider={false}
-            />
+            <View style={styles.emptyContainer}>
+              <View style={styles.emptyIconContainer}>
+                <Ionicons name="chatbubbles-outline" size={28} color={theme.colors.text.tertiary} />
+              </View>
+              <Text variant="bodySmall" color="secondary" center>
+                {t('sessions.noSessionsMessage')}
+              </Text>
+            </View>
           )}
         </Section>
       </ScrollView>
+
+      {/* New Session button stuck at the bottom */}
+      <View style={styles.bottomButtonContainer}>
+        <Button
+          title={t('sessions.newSession')}
+          onPress={handleNewSession}
+          icon={<Ionicons name="add" size={20} color={theme.colors.text.inverse} />}
+        />
+      </View>
 
       {/* Long-press context menu */}
       <Modal
@@ -382,6 +531,27 @@ export default function SessionsScreen() {
                   {menuSessionKey ? formatSessionKey(menuSessionKey) : ''}
                 </Text>
               </View>
+
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => {
+                  const key = menuSessionKey
+                  setMenuSessionKey(null)
+                  if (key) handleSelectSession(key)
+                }}
+              >
+                <Ionicons
+                  name="chatbubble-outline"
+                  size={20}
+                  color={theme.colors.primary}
+                  style={styles.menuItemIcon}
+                />
+                <Text style={[styles.menuItemText, { color: theme.colors.primary }]}>
+                  {t('sessions.switchToSession')}
+                </Text>
+              </TouchableOpacity>
+
+              <View style={styles.menuDivider} />
 
               <TouchableOpacity
                 style={styles.menuItem}

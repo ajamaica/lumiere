@@ -6,6 +6,7 @@ export {
   deleteSessionData,
   readCachedHistory,
   readSessionIndex,
+  writeSessionIndex,
 } from './CachedChatProvider'
 export { createChatProvider } from './createProvider'
 export { MoltChatProvider } from './MoltChatProvider'
