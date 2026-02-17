@@ -491,11 +491,27 @@ export class MoltGatewayClient {
     }
   }
 
+  /**
+   * Two-phase handshake:
+   * 1. Try connecting without device identity (works for servers that don't require it).
+   * 2. If the server rejects with a device-related error, wait for the challenge
+   *    event, sign it, and retry with full device identity.
+   *
+   * A challenge listener is kept alive across both phases so the event isn't missed.
+   */
   private async performHandshake(): Promise<ConnectResponse> {
-    // Step 1: Wait for the connect.challenge event from the server
-    const challenge = await this.waitForChallenge()
+    // Eagerly listen for a connect.challenge event — the server sends it
+    // right after WebSocket open if device auth is required.
+    let receivedChallenge: { nonce: string; timestamp?: number } | null = null
+    let challengeResolve: ((c: { nonce: string; timestamp?: number }) => void) | null = null
+    const challengePromise = new Promise<{ nonce: string; timestamp?: number }>((resolve) => {
+      challengeResolve = resolve
+    })
+    const challengeUnsub = this.on(GatewayEvents.CONNECT_CHALLENGE, (payload) => {
+      receivedChallenge = payload as { nonce: string; timestamp?: number }
+      challengeResolve?.(receivedChallenge)
+    })
 
-    // Step 2: Build connect params with signed device identity
     const auth: { token?: string; password?: string } = {
       token: this.config.token,
     }
@@ -506,7 +522,7 @@ export class MoltGatewayClient {
     const role = 'operator'
     const scopes = ['operator.admin']
 
-    const params: Record<string, unknown> = {
+    const baseParams: Record<string, unknown> = {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,
@@ -515,37 +531,78 @@ export class MoltGatewayClient {
       scopes,
     }
 
+    // Phase 1: Connect without device identity
+    try {
+      const response = await this.sendConnectRequest(baseParams)
+      challengeUnsub()
+      return response
+    } catch (err) {
+      // If no device identity provider configured, we can't retry with device auth
+      if (!this.deviceIdentityProvider) {
+        challengeUnsub()
+        throw err
+      }
+
+      // Only retry for device-related errors
+      const isDeviceError =
+        err instanceof GatewayError &&
+        (err.code === 'DEVICE_IDENTITY_REQUIRED' ||
+          err.message.toLowerCase().includes('device identity'))
+      if (!isDeviceError) {
+        challengeUnsub()
+        throw err
+      }
+    }
+
+    // Phase 2: Server requires device identity — get the challenge
+    // The challenge event usually arrives before the error response (TCP ordering),
+    // but we handle both cases: already received or still pending.
+    const challenge =
+      receivedChallenge ||
+      (await Promise.race([
+        challengePromise,
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('Timed out waiting for connect.challenge')), 10_000),
+        ),
+      ]))
+    challengeUnsub()
+
     // Sign the challenge with Ed25519 device keypair
-    if (this.deviceIdentityProvider) {
-      const identity = await this.deviceIdentityProvider()
-      const signedAt = Date.now()
+    const identity = await this.deviceIdentityProvider!()
+    const signedAt = Date.now()
 
-      // Build the pipe-delimited payload that the server reconstructs for verification:
-      // v2|deviceId|clientId|clientMode|role|scopes|signedAtMs|token|nonce
-      const authPayload = [
-        'v2',
-        identity.id,
-        clientConfig.id,
-        clientConfig.mode,
-        role,
-        scopes.join(','),
-        signedAt.toString(),
-        this.config.token,
-        challenge.nonce,
-      ].join('|')
+    // Build the pipe-delimited payload that the server reconstructs for verification:
+    // v2|deviceId|clientId|clientMode|role|scopes|signedAtMs|token|nonce
+    const authPayload = [
+      'v2',
+      identity.id,
+      clientConfig.id,
+      clientConfig.mode,
+      role,
+      scopes.join(','),
+      signedAt.toString(),
+      this.config.token,
+      challenge.nonce,
+    ].join('|')
 
-      const signature = await identity.sign(authPayload)
+    const signature = await identity.sign(authPayload)
 
-      params.device = {
+    const paramsWithDevice: Record<string, unknown> = {
+      ...baseParams,
+      device: {
         id: identity.id,
         publicKey: identity.publicKey,
         signature,
         signedAt,
         nonce: challenge.nonce,
-      }
+      },
     }
 
-    // Step 3: Send the connect request with signed device identity
+    return this.sendConnectRequest(paramsWithDevice)
+  }
+
+  /** Send a `connect` request frame and wait for the response. */
+  private sendConnectRequest(params: Record<string, unknown>): Promise<ConnectResponse> {
     return new Promise<ConnectResponse>((resolve, reject) => {
       if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
         reject(new Error('WebSocket not open for handshake'))
@@ -581,25 +638,6 @@ export class MoltGatewayClient {
       }
 
       this.sendFrame(frame)
-    })
-  }
-
-  /**
-   * Wait for the `connect.challenge` event from the gateway.
-   * Returns the challenge payload containing the nonce to sign.
-   */
-  private waitForChallenge(): Promise<{ nonce: string; timestamp?: number }> {
-    return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => {
-        unsub()
-        reject(new Error('Timed out waiting for connect.challenge'))
-      }, 10_000)
-
-      const unsub = this.on(GatewayEvents.CONNECT_CHALLENGE, (payload) => {
-        clearTimeout(timer)
-        unsub()
-        resolve(payload as { nonce: string; timestamp?: number })
-      })
     })
   }
 
