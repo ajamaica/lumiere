@@ -92,7 +92,10 @@ function base64Decode(b64: string): Uint8Array {
 // ─── SHA-256 hashing ──────────────────────────────────────────────────────────
 
 async function sha256Hex(data: Uint8Array): Promise<string> {
-  const hashBuffer = await Crypto.digest(Crypto.CryptoDigestAlgorithm.SHA256, data)
+  const hashBuffer = await Crypto.digest(
+    Crypto.CryptoDigestAlgorithm.SHA256,
+    data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength) as ArrayBuffer,
+  )
   // Crypto.digest returns ArrayBuffer — convert to hex string
   const hashArray = new Uint8Array(hashBuffer)
   return Array.from(hashArray)
