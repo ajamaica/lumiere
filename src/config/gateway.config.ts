@@ -1,10 +1,12 @@
+import { Platform } from 'react-native'
+
 import { DEFAULT_SESSION_KEY } from '../constants'
 
 export const clientConfig = {
-  id: 'cli',
-  mode: 'cli',
-  version: '1.0.0',
-  platform: 'ios',
+  id: 'lumiere',
+  mode: 'mobile',
+  version: '1.1.0',
+  platform: Platform.OS,
 } as const
 
 export const protocolConfig = {

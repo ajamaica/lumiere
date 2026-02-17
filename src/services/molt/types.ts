@@ -85,13 +85,33 @@ export interface PendingRequest {
 
 // ─── Connect ────────────────────────────────────────────────────────────────────
 
+/**
+ * Challenge payload sent by the gateway as a `connect.challenge` event
+ * immediately after the WebSocket connection opens. The client must echo
+ * the nonce back in its `connect` request to prove liveness.
+ */
+export interface ConnectChallenge {
+  /** Unique nonce the client must echo back in the connect request. */
+  nonce: string
+  /** Server timestamp when the challenge was issued. */
+  ts: number
+}
+
 export interface ConnectParams {
   minProtocol: number
   maxProtocol: number
+  client: {
+    id: string
+    mode: string
+    version: string
+    platform: string
+  }
   role?: string
   device?: {
     id: string
     name?: string
+    /** Nonce echoed from the connect.challenge event. */
+    nonce?: string
   }
   caps?: string[]
   auth?: {
@@ -99,6 +119,7 @@ export interface ConnectParams {
     password?: string
   }
   locale?: string
+  userAgent?: string
 }
 
 export interface GatewaySnapshot {

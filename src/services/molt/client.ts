@@ -19,6 +19,7 @@ import {
   AgentParams,
   ChatAttachmentPayload,
   ChatSendResponse,
+  ConnectChallenge,
   ConnectionState,
   ConnectionStateCallback,
   ConnectResponse,
@@ -128,6 +129,7 @@ export class MoltGatewayClient {
 
   disconnect(): void {
     this.intentionalClose = true
+    this.challengeListener = null
     this.clearReconnectTimer()
     this.clearTickTimer()
 
@@ -442,8 +444,12 @@ export class MoltGatewayClient {
     }
 
     this.ws.onopen = () => {
-      wsLogger.info('WebSocket connected')
-      this.performHandshake()
+      wsLogger.info('WebSocket connected, waiting for connect.challenge…')
+      // The gateway sends a connect.challenge event after the WebSocket opens.
+      // We wait for it before performing the handshake. A timeout ensures we
+      // don't hang if the server never sends the challenge.
+      this.waitForChallenge()
+        .then((challenge) => this.performHandshake(challenge))
         .then((response) => {
           this.handleHelloOk(response)
         })
@@ -466,7 +472,34 @@ export class MoltGatewayClient {
     }
   }
 
-  private async performHandshake(): Promise<ConnectResponse> {
+  /**
+   * Wait for the gateway to send a `connect.challenge` event containing a
+   * nonce and timestamp. The client must echo the nonce back in its connect
+   * request to prove liveness. Times out after 10 seconds.
+   */
+  private waitForChallenge(): Promise<ConnectChallenge> {
+    return new Promise<ConnectChallenge>((resolve, reject) => {
+      const timer = setTimeout(() => {
+        this.challengeListener = null
+        reject(new Error('Timed out waiting for connect.challenge'))
+      }, 10_000)
+
+      this.challengeListener = (challenge: ConnectChallenge) => {
+        clearTimeout(timer)
+        this.challengeListener = null
+        wsLogger.info('Received connect.challenge', { nonce: challenge.nonce })
+        resolve(challenge)
+      }
+    })
+  }
+
+  /**
+   * Callback set by `waitForChallenge()`. When the message handler receives
+   * a `connect.challenge` event it invokes this to unblock the handshake.
+   */
+  private challengeListener: ((challenge: ConnectChallenge) => void) | null = null
+
+  private async performHandshake(challenge: ConnectChallenge): Promise<ConnectResponse> {
     const auth: { token?: string; password?: string } = {
       token: this.config.token,
     }
@@ -478,6 +511,12 @@ export class MoltGatewayClient {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,
+      role: 'operator',
+      device: {
+        id: this.config.clientId ?? 'lumiere-mobile',
+        nonce: challenge.nonce,
+      },
+      caps: [],
       auth,
     }
 
@@ -602,6 +641,12 @@ export class MoltGatewayClient {
     }
 
     switch (event) {
+      case GatewayEvents.CONNECT_CHALLENGE:
+        if (this.challengeListener) {
+          this.challengeListener(payload as ConnectChallenge)
+        }
+        break
+
       case GatewayEvents.TICK:
         this.handleTick()
         break
