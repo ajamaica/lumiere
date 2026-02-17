@@ -107,9 +107,16 @@ export interface ConnectParams {
     platform: string
   }
   role?: string
+  scopes?: string[]
   device?: {
     id: string
     name?: string
+    /** Base64url-encoded raw 32-byte Ed25519 public key. */
+    publicKey?: string
+    /** Base64url-encoded Ed25519 signature of the auth payload. */
+    signature?: string
+    /** Timestamp (ms) when the payload was signed. */
+    signedAt?: number
     /** Nonce echoed from the connect.challenge event. */
     nonce?: string
   }

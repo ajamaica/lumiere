@@ -13,6 +13,7 @@ import {
   protocolConfig,
 } from '../../config/gateway.config'
 import { logger } from '../../utils/logger'
+import { buildSignedDevice, getDeviceIdentity } from './deviceIdentity'
 import {
   AgentEvent,
   AgentEventCallback,
@@ -507,15 +508,28 @@ export class MoltGatewayClient {
       auth.password = this.config.password
     }
 
+    const role = 'operator'
+    const scopes = ['operator.admin']
+
+    // Build a cryptographically signed device identity payload
+    const identity = await getDeviceIdentity()
+    const device = await buildSignedDevice({
+      identity,
+      clientId: clientConfig.id,
+      clientMode: clientConfig.mode,
+      role,
+      scopes,
+      token: this.config.token,
+      nonce: challenge.nonce,
+    })
+
     const params = {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,
-      role: 'operator',
-      device: {
-        id: this.config.clientId ?? 'lumiere-mobile',
-        nonce: challenge.nonce,
-      },
+      role,
+      scopes,
+      device,
       caps: [],
       auth,
     }

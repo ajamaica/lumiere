@@ -3,8 +3,8 @@ import { agentConfig, clientConfig, protocolConfig } from '../gateway.config'
 describe('clientConfig', () => {
   it('has the expected shape', () => {
     expect(clientConfig).toEqual({
-      id: 'lumiere',
-      mode: 'mobile',
+      id: 'openclaw-ios',
+      mode: 'webchat',
       version: '1.1.0',
       platform: 'ios',
     })
