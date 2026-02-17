@@ -11,10 +11,21 @@
  */
 
 import * as Crypto from 'expo-crypto'
+import { getRandomBytes } from 'expo-crypto'
 import nacl from 'tweetnacl'
 
 import { logger } from '../../utils/logger'
 import { isWeb } from '../../utils/platform'
+
+// ─── PRNG setup ──────────────────────────────────────────────────────────────
+// React Native doesn't provide crypto.getRandomValues. Tell tweetnacl to
+// use expo-crypto's secure random source instead.
+nacl.setPRNG((x: Uint8Array, n: number) => {
+  const randomBytes = getRandomBytes(n)
+  for (let i = 0; i < n; i++) {
+    x[i] = randomBytes[i]
+  }
+})
 
 const identityLogger = logger.create('DeviceIdentity')
 
