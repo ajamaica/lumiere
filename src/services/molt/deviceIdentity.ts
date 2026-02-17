@@ -92,10 +92,12 @@ function base64Decode(b64: string): Uint8Array {
 // ─── SHA-256 hashing ──────────────────────────────────────────────────────────
 
 async function sha256Hex(data: Uint8Array): Promise<string> {
-  // expo-crypto's digest works with ArrayBuffer
-  const hash = await Crypto.digest(Crypto.CryptoDigestAlgorithm.SHA256, data)
-  // expo-crypto returns a hex string
-  return hash
+  const hashBuffer = await Crypto.digest(Crypto.CryptoDigestAlgorithm.SHA256, data)
+  // Crypto.digest returns ArrayBuffer — convert to hex string
+  const hashArray = new Uint8Array(hashBuffer)
+  return Array.from(hashArray)
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('')
 }
 
 // ─── Secure storage abstraction ───────────────────────────────────────────────
