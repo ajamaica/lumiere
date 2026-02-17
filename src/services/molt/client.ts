@@ -534,8 +534,16 @@ export class MoltGatewayClient {
     // Phase 1: Connect without device identity
     try {
       const response = await this.sendConnectRequest(baseParams)
-      challengeUnsub()
-      return response
+
+      // If the server accepted but also sent a challenge, the connection has
+      // limited permissions (e.g. operator.read). Re-connect with full device
+      // identity to upgrade to operator.admin.
+      if (!receivedChallenge || !this.deviceIdentityProvider) {
+        challengeUnsub()
+        return response
+      }
+
+      wsLogger.info('Challenge received — upgrading connection with device identity')
     } catch (err) {
       // If no device identity provider configured, we can't retry with device auth
       if (!this.deviceIdentityProvider) {
@@ -544,11 +552,11 @@ export class MoltGatewayClient {
       }
 
       // Only retry for device-related errors
-      const isDeviceError =
+      const needsDeviceAuth =
         err instanceof GatewayError &&
         (err.code === 'DEVICE_IDENTITY_REQUIRED' ||
           err.message.toLowerCase().includes('device identity'))
-      if (!isDeviceError) {
+      if (!needsDeviceAuth) {
         challengeUnsub()
         throw err
       }
