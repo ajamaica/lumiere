@@ -440,6 +440,7 @@
     "tapToOpen": "Tippen, um Canvas anzuzeigen"
   },
   "connection": {
-    "awaitingApproval": "Warten auf Admin-Genehmigung..."
+    "awaitingApproval": "Warte auf Genehmigung",
+    "awaitingApprovalHint": "Genehmige dieses Gerät auf deinem Server"
   }
 }

@@ -440,6 +440,7 @@
     "tapToOpen": "Appuyez pour voir le canvas"
   },
   "connection": {
-    "awaitingApproval": "En attente d'approbation de l'administrateur..."
+    "awaitingApproval": "En attente d'approbation",
+    "awaitingApprovalHint": "Approuvez cet appareil sur votre serveur"
   }
 }

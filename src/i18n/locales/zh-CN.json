@@ -440,6 +440,7 @@
     "tapToOpen": "点击查看画布"
   },
   "connection": {
-    "awaitingApproval": "等待管理员审批..."
+    "awaitingApproval": "等待批准",
+    "awaitingApprovalHint": "请在服务器上批准此设备"
   }
 }

@@ -440,6 +440,7 @@
     "tapToOpen": "कैनवास देखने के लिए टैप करें"
   },
   "connection": {
-    "awaitingApproval": "व्यवस्थापक की स्वीकृति की प्रतीक्षा..."
+    "awaitingApproval": "स्वीकृति की प्रतीक्षा",
+    "awaitingApprovalHint": "अपने सर्वर पर इस डिवाइस को स्वीकृत करें"
   }
 }

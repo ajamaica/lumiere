@@ -440,6 +440,7 @@
     "tapToOpen": "탭하여 캔버스 보기"
   },
   "connection": {
-    "awaitingApproval": "관리자 승인 대기 중..."
+    "awaitingApproval": "승인 대기 중",
+    "awaitingApprovalHint": "서버에서 이 기기를 승인하세요"
   }
 }

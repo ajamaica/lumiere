@@ -440,6 +440,7 @@
     "tapToOpen": "タップしてキャンバスを表示"
   },
   "connection": {
-    "awaitingApproval": "管理者の承認を待っています..."
+    "awaitingApproval": "承認待ち",
+    "awaitingApprovalHint": "サーバーでこのデバイスを承認してください"
   }
 }

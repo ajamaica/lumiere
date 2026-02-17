@@ -440,6 +440,7 @@
     "tapToOpen": "Нажмите для просмотра холста"
   },
   "connection": {
-    "awaitingApproval": "Ожидание одобрения администратора..."
+    "awaitingApproval": "Ожидание одобрения",
+    "awaitingApprovalHint": "Одобрите это устройство на вашем сервере"
   }
 }

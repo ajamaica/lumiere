@@ -190,14 +190,30 @@ export function ConnectionStatusBar({
     </>
   )
 
+  if (connecting && awaitingApproval) {
+    const approvalBubbleProps = glassAvailable
+      ? { style: styles.approvalBubble, glassEffectStyle: 'regular' as const }
+      : { style: [styles.approvalBubble, styles.approvalBubbleFallback] }
+    return (
+      <View style={styles.statusBarContainer} accessibilityLiveRegion="polite">
+        <StatusBubbleContainer {...approvalBubbleProps}>
+          <Ionicons name="shield-checkmark-outline" size={18} color={theme.colors.status.warning} />
+          <View style={styles.approvalTextContainer}>
+            <Text style={styles.approvalTitle}>{t('connection.awaitingApproval')}</Text>
+            <Text style={styles.approvalSubtitle}>{t('connection.awaitingApprovalHint')}</Text>
+          </View>
+        </StatusBubbleContainer>
+        <View style={styles.statusActions}>{renderExtensionButtons()}</View>
+      </View>
+    )
+  }
+
   if (connecting) {
     return (
       <View style={styles.statusBarContainer} accessibilityLiveRegion="polite">
         <StatusBubbleContainer {...statusBubbleProps}>
           <ActivityIndicator size="small" color={theme.colors.primary} />
-          <Text style={styles.statusText}>
-            {awaitingApproval ? t('connection.awaitingApproval') : 'Connecting...'}
-          </Text>
+          <Text style={styles.statusText}>Connecting...</Text>
         </StatusBubbleContainer>
         <View style={styles.statusActions}>{renderExtensionButtons()}</View>
       </View>
@@ -418,6 +434,34 @@ const createStatusBarStyles = (
       fontSize: theme.typography.fontSize.xs,
       color: theme.colors.text.secondary,
       marginRight: theme.spacing.sm,
+    },
+    approvalBubble: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.md + 2,
+      paddingVertical: theme.spacing.sm + 4,
+      borderRadius: theme.borderRadius.xxl,
+      alignSelf: 'flex-start',
+      marginRight: theme.spacing.md,
+      flexShrink: 1,
+      overflow: 'hidden',
+    },
+    approvalBubbleFallback: {
+      backgroundColor: theme.isDark ? '#2A2410' : '#FFF8E1',
+    },
+    approvalTextContainer: {
+      marginLeft: theme.spacing.sm,
+      flexShrink: 1,
+    },
+    approvalTitle: {
+      fontSize: theme.typography.fontSize.sm,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.status.warning,
+    },
+    approvalSubtitle: {
+      fontSize: theme.typography.fontSize.xs,
+      color: theme.colors.text.secondary,
+      marginTop: 1,
     },
     errorBubble: {
       backgroundColor: theme.isDark ? '#3A1B1B' : '#FFEBEE',
