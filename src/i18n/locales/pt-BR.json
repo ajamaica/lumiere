@@ -438,5 +438,8 @@
     "close": "Fechar canvas",
     "clear": "Limpar canvas",
     "tapToOpen": "Toque para ver o canvas"
+  },
+  "connection": {
+    "awaitingApproval": "Aguardando aprovação do administrador..."
   }
 }

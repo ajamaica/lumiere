@@ -438,5 +438,8 @@
     "close": "キャンバスを閉じる",
     "clear": "キャンバスをクリア",
     "tapToOpen": "タップしてキャンバスを表示"
+  },
+  "connection": {
+    "awaitingApproval": "管理者の承認を待っています..."
   }
 }

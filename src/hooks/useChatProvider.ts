@@ -1,3 +1,4 @@
+import { useSetAtom } from 'jotai'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import {
@@ -10,6 +11,7 @@ import {
   ProviderConfig,
   SendMessageParams,
 } from '../services/providers'
+import { gatewayAwaitingApprovalAtom } from '../store'
 import { logger } from '../utils/logger'
 
 const providerLogger = logger.create('ChatProvider')
@@ -55,6 +57,7 @@ function configKey(config: ProviderConfig): string {
  * is created and connected.
  */
 export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
+  const setAwaitingApproval = useSetAtom(gatewayAwaitingApprovalAtom)
   const [connected, setConnected] = useState(false)
   const [connecting, setConnecting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -93,16 +96,19 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
         providerRef.current = provider
         setCapabilities(provider.capabilities)
 
-        unsubConnectionState = provider.onConnectionStateChange((isConnected, isReconnecting) => {
-          if (cancelled) return
-          setConnected(isConnected)
-          setConnecting(isReconnecting)
-          if (isReconnecting) {
-            setError('Reconnecting...')
-          } else if (isConnected) {
-            setError(null)
-          }
-        })
+        unsubConnectionState = provider.onConnectionStateChange(
+          (isConnected, isReconnecting, isAwaitingApproval) => {
+            if (cancelled) return
+            setConnected(isConnected)
+            setConnecting(isReconnecting || (isAwaitingApproval ?? false))
+            setAwaitingApproval(isAwaitingApproval ?? false)
+            if (isReconnecting) {
+              setError('Reconnecting...')
+            } else if (isConnected) {
+              setError(null)
+            }
+          },
+        )
 
         await provider.connect()
 
@@ -145,6 +151,7 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
       }
       setConnected(false)
       setConnecting(false)
+      setAwaitingApproval(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key, retryCount])

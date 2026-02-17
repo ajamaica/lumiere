@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
+import { useAtomValue } from 'jotai'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -20,6 +21,7 @@ import Animated, {
 } from 'react-native-reanimated'
 
 import { useExtensionDisplayMode } from '../../hooks/useExtensionDisplayMode'
+import { gatewayAwaitingApprovalAtom } from '../../store'
 import { Theme, useTheme } from '../../theme'
 import { useDeviceType, useFoldState } from '../../utils/device'
 import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
@@ -67,6 +69,7 @@ export function ConnectionStatusBar({
     openSidebar,
   } = useExtensionDisplayMode()
 
+  const awaitingApproval = useAtomValue(gatewayAwaitingApprovalAtom)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const searchInputRef = useRef<TextInput>(null)
 
@@ -192,7 +195,9 @@ export function ConnectionStatusBar({
       <View style={styles.statusBarContainer} accessibilityLiveRegion="polite">
         <StatusBubbleContainer {...statusBubbleProps}>
           <ActivityIndicator size="small" color={theme.colors.primary} />
-          <Text style={styles.statusText}>Connecting...</Text>
+          <Text style={styles.statusText}>
+            {awaitingApproval ? t('connection.awaitingApproval') : 'Connecting...'}
+          </Text>
         </StatusBubbleContainer>
         <View style={styles.statusActions}>{renderExtensionButtons()}</View>
       </View>

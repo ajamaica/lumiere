@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { logger } from '../../utils/logger'
+import { getDeviceId, getDevicePublicKey, signPayload } from '../deviceIdentity'
 import { MoltGatewayClient } from './client'
 import {
   AgentEvent,
@@ -110,6 +111,13 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     try {
       const newClient = new MoltGatewayClient(config)
       clientRef.current = newClient
+
+      // Set device identity provider for challenge-response handshake
+      newClient.setDeviceIdentityProvider(async () => {
+        const id = await getDeviceId()
+        const publicKey = await getDevicePublicKey()
+        return { id, publicKey, sign: signPayload }
+      })
 
       const response = await newClient.connect()
       gatewayLogger.info('Connected to Molt Gateway', response)

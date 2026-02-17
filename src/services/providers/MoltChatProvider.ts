@@ -1,3 +1,4 @@
+import { getDeviceId, getDevicePublicKey, signPayload } from '../deviceIdentity'
 import { MoltGatewayClient } from '../molt/client'
 import { AgentEvent, ChatAttachmentPayload, ConnectionState } from '../molt/types'
 import {
@@ -39,6 +40,11 @@ export class MoltChatProvider implements ChatProvider {
   }
 
   async connect(): Promise<void> {
+    this.client.setDeviceIdentityProvider(async () => {
+      const id = await getDeviceId()
+      const publicKey = await getDevicePublicKey()
+      return { id, publicKey, sign: signPayload }
+    })
     await this.client.connect()
   }
 
@@ -56,10 +62,10 @@ export class MoltChatProvider implements ChatProvider {
    * by the ChatProvider interface.
    */
   onConnectionStateChange(
-    listener: (connected: boolean, reconnecting: boolean) => void,
+    listener: (connected: boolean, reconnecting: boolean, awaitingApproval?: boolean) => void,
   ): () => void {
     return this.client.onConnectionStateChange((state: ConnectionState) => {
-      listener(state === 'connected', state === 'reconnecting')
+      listener(state === 'connected', state === 'reconnecting', state === 'awaiting_approval')
     })
   }
 

@@ -85,6 +85,16 @@ export class MoltGatewayClient {
   private connectPromiseResolve: ((value: ConnectResponse) => void) | null = null
   private connectPromiseReject: ((reason: Error) => void) | null = null
   private connectResponse: ConnectResponse | null = null
+  private handshakeTimerId: ReturnType<typeof setTimeout> | null = null
+
+  // Device identity provider for challenge-response handshake
+  private deviceIdentityProvider:
+    | (() => Promise<{
+        id: string
+        publicKey: string
+        sign: (payload: string) => Promise<string>
+      }>)
+    | null = null
 
   constructor(config: MoltConfig) {
     this.config = {
@@ -107,6 +117,21 @@ export class MoltGatewayClient {
 
   get serverInfo(): ConnectResponse | null {
     return this.connectResponse
+  }
+
+  /**
+   * Set a device identity provider for challenge-response handshake.
+   * The provider returns the device id, publicKey, and a sign function
+   * that will be called with the full auth payload string.
+   */
+  setDeviceIdentityProvider(
+    provider: () => Promise<{
+      id: string
+      publicKey: string
+      sign: (payload: string) => Promise<string>
+    }>,
+  ): void {
+    this.deviceIdentityProvider = provider
   }
 
   // ─── Connection Lifecycle ───────────────────────────────────────────────────
@@ -467,6 +492,10 @@ export class MoltGatewayClient {
   }
 
   private async performHandshake(): Promise<ConnectResponse> {
+    // Step 1: Wait for the connect.challenge event from the server
+    const challenge = await this.waitForChallenge()
+
+    // Step 2: Build connect params with signed device identity
     const auth: { token?: string; password?: string } = {
       token: this.config.token,
     }
@@ -474,14 +503,49 @@ export class MoltGatewayClient {
       auth.password = this.config.password
     }
 
-    const params = {
+    const role = 'operator'
+    const scopes = ['operator.admin']
+
+    const params: Record<string, unknown> = {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,
       auth,
+      role,
+      scopes,
     }
 
-    // Use a dedicated handshake request with its own timeout
+    // Sign the challenge with Ed25519 device keypair
+    if (this.deviceIdentityProvider) {
+      const identity = await this.deviceIdentityProvider()
+      const signedAt = Date.now()
+
+      // Build the pipe-delimited payload that the server reconstructs for verification:
+      // v2|deviceId|clientId|clientMode|role|scopes|signedAtMs|token|nonce
+      const authPayload = [
+        'v2',
+        identity.id,
+        clientConfig.id,
+        clientConfig.mode,
+        role,
+        scopes.join(','),
+        signedAt.toString(),
+        this.config.token,
+        challenge.nonce,
+      ].join('|')
+
+      const signature = await identity.sign(authPayload)
+
+      params.device = {
+        id: identity.id,
+        publicKey: identity.publicKey,
+        signature,
+        signedAt,
+        nonce: challenge.nonce,
+      }
+    }
+
+    // Step 3: Send the connect request with signed device identity
     return new Promise<ConnectResponse>((resolve, reject) => {
       if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
         reject(new Error('WebSocket not open for handshake'))
@@ -490,15 +554,23 @@ export class MoltGatewayClient {
 
       const id = this.nextRequestId()
 
-      const timer = setTimeout(() => {
+      this.handshakeTimerId = setTimeout(() => {
+        // Don't timeout while awaiting admin approval
+        if (this._connectionState === 'awaiting_approval') return
         this.pendingRequests.delete(id)
         reject(new Error('Connect handshake timed out'))
       }, 10_000)
 
       this.pendingRequests.set(id, {
-        resolve: (payload) => resolve(payload as ConnectResponse),
-        reject,
-        timer,
+        resolve: (payload) => {
+          this.clearHandshakeTimer()
+          resolve(payload as ConnectResponse)
+        },
+        reject: (err) => {
+          this.clearHandshakeTimer()
+          reject(err)
+        },
+        timer: this.handshakeTimerId,
       })
 
       const frame: RequestFrame = {
@@ -510,6 +582,32 @@ export class MoltGatewayClient {
 
       this.sendFrame(frame)
     })
+  }
+
+  /**
+   * Wait for the `connect.challenge` event from the gateway.
+   * Returns the challenge payload containing the nonce to sign.
+   */
+  private waitForChallenge(): Promise<{ nonce: string; timestamp?: number }> {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        unsub()
+        reject(new Error('Timed out waiting for connect.challenge'))
+      }, 10_000)
+
+      const unsub = this.on(GatewayEvents.CONNECT_CHALLENGE, (payload) => {
+        clearTimeout(timer)
+        unsub()
+        resolve(payload as { nonce: string; timestamp?: number })
+      })
+    })
+  }
+
+  private clearHandshakeTimer(): void {
+    if (this.handshakeTimerId) {
+      clearTimeout(this.handshakeTimerId)
+      this.handshakeTimerId = null
+    }
   }
 
   private handleHelloOk(response: ConnectResponse): void {
@@ -628,6 +726,16 @@ export class MoltGatewayClient {
 
       case GatewayEvents.SHUTDOWN:
         wsLogger.info('Gateway shutdown event received')
+        break
+
+      case GatewayEvents.DEVICE_PAIR_REQUESTED:
+        wsLogger.info('Device pairing requested — awaiting admin approval')
+        this.setConnectionState('awaiting_approval')
+        break
+
+      case GatewayEvents.DEVICE_PAIR_RESOLVED:
+        wsLogger.info('Device pairing resolved')
+        // The handshake response will follow and transition to 'connected'
         break
 
       default:

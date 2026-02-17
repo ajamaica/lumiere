@@ -438,5 +438,8 @@
     "close": "關閉畫布",
     "clear": "清除畫布",
     "tapToOpen": "點擊查看畫布"
+  },
+  "connection": {
+    "awaitingApproval": "等待管理員審核..."
   }
 }

@@ -2,13 +2,26 @@
 
 // ─── Connection ─────────────────────────────────────────────────────────────────
 
-export type ConnectionState = 'disconnected' | 'connecting' | 'connected' | 'reconnecting'
+export type ConnectionState =
+  | 'disconnected'
+  | 'connecting'
+  | 'connected'
+  | 'reconnecting'
+  | 'awaiting_approval'
 
 export interface MoltConfig {
   url: string
   token: string
   password?: string
   clientId?: string
+  /** Device identity for pairing */
+  device?: {
+    id: string
+    publicKey: string
+    signature: string
+    signedAt: number
+    nonce: string
+  }
   /** Auto-reconnect on unexpected close (default true) */
   autoReconnect?: boolean
   /** Default request timeout in ms (default 15 000) */
@@ -92,6 +105,8 @@ export interface ConnectParams {
   device?: {
     id: string
     name?: string
+    publicKey: string
+    si: string
   }
   caps?: string[]
   auth?: {

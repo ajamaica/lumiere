@@ -60,7 +60,12 @@ export {
 } from './uiAtoms'
 
 // ─── Gateway atoms ───────────────────────────────────────
-export { gatewayConnectedAtom, gatewayConnectingAtom, gatewayErrorAtom } from './gatewayAtoms'
+export {
+  gatewayAwaitingApprovalAtom,
+  gatewayConnectedAtom,
+  gatewayConnectingAtom,
+  gatewayErrorAtom,
+} from './gatewayAtoms'
 
 // ─── Messaging atoms ─────────────────────────────────────
 export {

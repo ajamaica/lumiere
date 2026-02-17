@@ -438,5 +438,8 @@
     "close": "캔버스 닫기",
     "clear": "캔버스 지우기",
     "tapToOpen": "탭하여 캔버스 보기"
+  },
+  "connection": {
+    "awaitingApproval": "관리자 승인 대기 중..."
   }
 }
