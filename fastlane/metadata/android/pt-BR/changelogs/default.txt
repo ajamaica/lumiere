@@ -1,8 +1,15 @@
-• Lançamento inicial
-• Conecte-se ao Claude, ChatGPT, Gemini, Ollama e mais
-• 8 temas de cores com modo claro e escuro
-• Entrada por voz e reconhecimento de fala
-• Autenticação biométrica
-• Gatilhos de deep link e automação
-• Suporte a múltiplas sessões
-• Disponível em 11 idiomas
+Novidades 1.1.0:
+
+• Suporte para web e extensão Chrome
+• Provedor compatível com OpenAI
+• Gerenciamento de sessões — editar, redefinir, excluir
+• Compartilhamento de outros apps
+• Modo fluxo de trabalho para chat com documentos
+• Troca de agente para OpenClaw/Molt
+• Busca de habilidades ClawHub
+• Bloqueio por senha para web
+• Importação de backup
+• Raciocínio da IA
+• Integração simplificada
+• 11 idiomas
+• Correções e melhorias
