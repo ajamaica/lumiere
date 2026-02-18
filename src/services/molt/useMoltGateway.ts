@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { logger } from '../../utils/logger'
 import { MoltGatewayClient } from './client'
@@ -86,6 +86,15 @@ function deriveStateFlags(state: ConnectionState) {
   }
 }
 
+/**
+ * Require a connected client, throwing a descriptive error if null.
+ * Used as a guard before every RPC call.
+ */
+function requireClient(client: MoltGatewayClient | null): MoltGatewayClient {
+  if (!client) throw new Error('Client not connected')
+  return client
+}
+
 export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
   const [client, setClient] = useState<MoltGatewayClient | null>(null)
   const [connected, setConnected] = useState(false)
@@ -169,7 +178,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
   const disconnect = useCallback(() => {
     connectingRef.current = false
     if (clientRef.current) {
-      clientRef.current.disconnect()
+      clientRef.current.destroy()
       clientRef.current = null
     }
     setClient(null)
@@ -201,254 +210,60 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
   }, [connect])
 
   const refreshHealth = useCallback(async () => {
-    if (!client) {
-      throw new Error('Client not connected')
-    }
-    const healthStatus = await client.getHealth()
+    const healthStatus = await requireClient(client).getHealth()
     setHealth(healthStatus)
   }, [client])
 
-  const sendMessage = useCallback(
-    async (params: SendMessageParams) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.sendMessage(params)
-    },
-    [client],
-  )
-
-  const chatSend = useCallback(
-    async (
-      sessionKey: string,
-      message: string,
-      options?: {
-        thinking?: string
-        attachments?: ChatAttachmentPayload[]
-        idempotencyKey?: string
-        timeoutMs?: number
-      },
-    ) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.chatSend(sessionKey, message, options)
-    },
-    [client],
-  )
-
-  const chatAbort = useCallback(
-    async (sessionKey: string, runId: string) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.chatAbort(sessionKey, runId)
-    },
-    [client],
-  )
-
-  const sendAgentRequest = useCallback(
-    async (params: AgentParams, onEvent?: (event: AgentEvent) => void) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.sendAgentRequest(params, onEvent)
-    },
-    [client],
-  )
-
-  const getChatHistory = useCallback(
-    async (sessionKey: string, limit?: number) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.getChatHistory(sessionKey, limit)
-    },
-    [client],
-  )
-
-  const resetSession = useCallback(
-    async (sessionKey: string) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.resetSession(sessionKey)
-    },
-    [client],
-  )
-
-  const deleteSession = useCallback(
-    async (sessionKey: string) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.deleteSession(sessionKey)
-    },
-    [client],
-  )
-
-  const listSessions = useCallback(async () => {
-    if (!client) {
-      return null
-    }
-    return await client.listSessions()
-  }, [client])
-
-  const getSchedulerStatus = useCallback(async () => {
-    if (!client) {
-      throw new Error('Client not connected')
-    }
-    return await client.getSchedulerStatus()
-  }, [client])
-
-  const listCronJobs = useCallback(async () => {
-    if (!client) {
-      throw new Error('Client not connected')
-    }
-    return await client.listCronJobs()
-  }, [client])
-
-  const disableCronJob = useCallback(
-    async (jobId: string) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.disableCronJob(jobId)
-    },
-    [client],
-  )
-
-  const enableCronJob = useCallback(
-    async (jobId: string) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.enableCronJob(jobId)
-    },
-    [client],
-  )
-
-  const runCronJob = useCallback(
-    async (jobId: string, mode?: 'force' | 'due') => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.runCronJob(jobId, mode)
-    },
-    [client],
-  )
-
-  const removeCronJob = useCallback(
-    async (jobId: string) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.removeCronJob(jobId)
-    },
-    [client],
-  )
-
-  const getCronJobRuns = useCallback(
-    async (jobId: string) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.getCronJobRuns(jobId)
-    },
-    [client],
-  )
-
-  const teachSkill = useCallback(
-    async (params: TeachSkillParams) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.teachSkill(params)
-    },
-    [client],
-  )
-
-  const listSkills = useCallback(async () => {
-    if (!client) {
-      throw new Error('Client not connected')
-    }
-    return await client.listSkills()
-  }, [client])
-
-  const removeSkill = useCallback(
-    async (name: string) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.removeSkill(name)
-    },
-    [client],
-  )
-
-  const updateSkill = useCallback(
-    async (params: UpdateSkillParams) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.updateSkill(params)
-    },
-    [client],
-  )
-
-  const getLogs = useCallback(
-    async (params?: GatewayLogsParams) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.getLogs(params)
-    },
-    [client],
-  )
-
-  const spawnSubagent = useCallback(
-    async (params: SessionsSpawnParams) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.spawnSubagent(params)
-    },
-    [client],
-  )
-
-  const listSubagents = useCallback(
-    async (sessionKey?: string) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.listSubagents(sessionKey)
-    },
-    [client],
-  )
-
-  const stopSubagent = useCallback(
-    async (runId: string) => {
-      if (!client) {
-        throw new Error('Client not connected')
-      }
-      return await client.stopSubagent(runId)
-    },
-    [client],
-  )
-
-  const onSubagentEvent = useCallback(
-    (callback: (event: SubagentEvent) => void) => {
-      if (!client) {
-        return () => {}
-      }
-      return client.onSubagentEvent(callback)
-    },
+  // Derive all RPC method wrappers from the current client instance.
+  // Each wrapper guards against a null client then delegates directly.
+  const rpcMethods = useMemo(
+    () => ({
+      sendMessage: (params: SendMessageParams) => requireClient(client).sendMessage(params),
+      chatSend: (
+        sessionKey: string,
+        message: string,
+        options?: {
+          thinking?: string
+          attachments?: ChatAttachmentPayload[]
+          idempotencyKey?: string
+          timeoutMs?: number
+        },
+      ) => requireClient(client).chatSend(sessionKey, message, options),
+      chatAbort: (sessionKey: string, runId: string) =>
+        requireClient(client).chatAbort(sessionKey, runId),
+      sendAgentRequest: (params: AgentParams, onEvent?: (event: AgentEvent) => void) =>
+        requireClient(client).sendAgentRequest(params, onEvent),
+      getChatHistory: (sessionKey: string, limit?: number) =>
+        requireClient(client).getChatHistory(sessionKey, limit),
+      resetSession: (sessionKey: string) => requireClient(client).resetSession(sessionKey),
+      deleteSession: (sessionKey: string) => requireClient(client).deleteSession(sessionKey),
+      listSessions: () => requireClient(client).listSessions(),
+      getSchedulerStatus: () => requireClient(client).getSchedulerStatus(),
+      listCronJobs: () => requireClient(client).listCronJobs(),
+      disableCronJob: (jobId: string) => requireClient(client).disableCronJob(jobId),
+      enableCronJob: (jobId: string) => requireClient(client).enableCronJob(jobId),
+      runCronJob: (jobId: string, mode?: 'force' | 'due') =>
+        requireClient(client).runCronJob(jobId, mode),
+      removeCronJob: (jobId: string) => requireClient(client).removeCronJob(jobId),
+      getCronJobRuns: (jobId: string) => requireClient(client).getCronJobRuns(jobId),
+      teachSkill: (params: TeachSkillParams) => requireClient(client).teachSkill(params),
+      listSkills: () => requireClient(client).listSkills(),
+      removeSkill: (name: string) => requireClient(client).removeSkill(name),
+      updateSkill: (params: UpdateSkillParams) => requireClient(client).updateSkill(params),
+      getLogs: (params?: GatewayLogsParams) => requireClient(client).getLogs(params),
+      spawnSubagent: (params: SessionsSpawnParams) => requireClient(client).spawnSubagent(params),
+      listSubagents: (sessionKey?: string) => requireClient(client).listSubagents(sessionKey),
+      stopSubagent: (runId: string) => requireClient(client).stopSubagent(runId),
+      onSubagentEvent: (callback: (event: SubagentEvent) => void) =>
+        client ? client.onSubagentEvent(callback) : () => {},
+    }),
     [client],
   )
 
   useEffect(() => {
     return () => {
       if (clientRef.current) {
-        clientRef.current.disconnect()
+        clientRef.current.destroy()
       }
     }
   }, [])
@@ -467,29 +282,6 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     disconnect,
     retryConnection,
     refreshHealth,
-    sendMessage,
-    chatSend,
-    chatAbort,
-    sendAgentRequest,
-    getChatHistory,
-    resetSession,
-    deleteSession,
-    listSessions,
-    getSchedulerStatus,
-    listCronJobs,
-    disableCronJob,
-    enableCronJob,
-    runCronJob,
-    removeCronJob,
-    getCronJobRuns,
-    teachSkill,
-    listSkills,
-    removeSkill,
-    updateSkill,
-    getLogs,
-    spawnSubagent,
-    listSubagents,
-    stopSubagent,
-    onSubagentEvent,
+    ...rpcMethods,
   }
 }

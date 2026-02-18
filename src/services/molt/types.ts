@@ -16,6 +16,8 @@ export interface MoltConfig {
   clientId?: string
   /** Auto-reconnect on unexpected close (default true) */
   autoReconnect?: boolean
+  /** Maximum number of reconnect attempts before giving up (default unlimited). */
+  maxReconnectAttempts?: number
   /** Default request timeout in ms (default 15 000) */
   defaultTimeoutMs?: number
 }
