@@ -5,7 +5,7 @@ describe('clientConfig', () => {
     expect(clientConfig).toEqual({
       id: 'openclaw-ios',
       mode: 'webchat',
-      version: '1.1.0',
+      version: '1.2.0',
       platform: 'ios',
     })
   })

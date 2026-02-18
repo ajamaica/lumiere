@@ -17,7 +17,7 @@ function resolveClientId(): string {
 export const clientConfig = {
   id: resolveClientId(),
   mode: 'webchat' as const,
-  version: '1.1.0',
+  version: '1.2.0',
   platform: Platform.OS,
 }
 
