@@ -29,12 +29,22 @@ interface OpenRouterImagePart {
   }
 }
 
+interface OpenRouterToolCallDelta {
+  index: number
+  id?: string
+  function?: {
+    name?: string
+    arguments?: string
+  }
+}
+
 interface OpenRouterStreamChunk {
   id: string
   choices: Array<{
     delta: {
       content?: string
       role?: string
+      tool_calls?: OpenRouterToolCallDelta[]
     }
     finish_reason: string | null
   }>
@@ -191,6 +201,9 @@ export class OpenRouterChatProvider implements ChatProvider {
       let fullResponse = ''
       let lastIndex = 0
 
+      // Tool call accumulation state: index -> { id, name, arguments }
+      const activeToolCalls = new Map<number, { id: string; name: string; arguments: string }>()
+
       const sessionId = toSessionId(params.sessionKey)
 
       xhr.open('POST', `${this.baseUrl}/api/v1/chat/completions`)
@@ -208,7 +221,28 @@ export class OpenRouterChatProvider implements ChatProvider {
         for (const line of lines) {
           if (line.startsWith('data: ')) {
             const data = line.slice(6).trim()
-            if (data === '[DONE]') continue
+            if (data === '[DONE]') {
+              // Finalize any remaining tool calls
+              for (const [, tc] of activeToolCalls) {
+                let toolInput: Record<string, unknown> | undefined
+                if (tc.arguments) {
+                  try {
+                    toolInput = JSON.parse(tc.arguments)
+                  } catch {
+                    // Arguments may be malformed
+                  }
+                }
+                onEvent({
+                  type: 'tool_event',
+                  toolName: tc.name,
+                  toolCallId: tc.id,
+                  toolInput,
+                  toolStatus: 'completed',
+                })
+              }
+              activeToolCalls.clear()
+              continue
+            }
 
             try {
               const chunk: OpenRouterStreamChunk = JSON.parse(data)
@@ -219,7 +253,55 @@ export class OpenRouterChatProvider implements ChatProvider {
                 return
               }
 
-              const delta = chunk.choices?.[0]?.delta?.content
+              const choice = chunk.choices?.[0]
+
+              // Handle tool call deltas
+              if (choice?.delta?.tool_calls) {
+                for (const tc of choice.delta.tool_calls) {
+                  const existing = activeToolCalls.get(tc.index)
+                  if (!existing && tc.id && tc.function?.name) {
+                    // New tool call starting
+                    activeToolCalls.set(tc.index, {
+                      id: tc.id,
+                      name: tc.function.name,
+                      arguments: tc.function.arguments || '',
+                    })
+                    onEvent({
+                      type: 'tool_event',
+                      toolName: tc.function.name,
+                      toolCallId: tc.id,
+                      toolStatus: 'running',
+                    })
+                  } else if (existing && tc.function?.arguments) {
+                    // Accumulate arguments
+                    existing.arguments += tc.function.arguments
+                  }
+                }
+              }
+
+              // Handle finish_reason for tool calls
+              if (choice?.finish_reason === 'tool_calls' || choice?.finish_reason === 'stop') {
+                for (const [, tc] of activeToolCalls) {
+                  let toolInput: Record<string, unknown> | undefined
+                  if (tc.arguments) {
+                    try {
+                      toolInput = JSON.parse(tc.arguments)
+                    } catch {
+                      // Arguments may be malformed
+                    }
+                  }
+                  onEvent({
+                    type: 'tool_event',
+                    toolName: tc.name,
+                    toolCallId: tc.id,
+                    toolInput,
+                    toolStatus: 'completed',
+                  })
+                }
+                activeToolCalls.clear()
+              }
+
+              const delta = choice?.delta?.content
               if (delta) {
                 fullResponse += delta
                 onEvent({ type: 'delta', delta })

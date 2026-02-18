@@ -28,13 +28,17 @@ interface ClaudeContentBlock {
 
 interface ClaudeStreamEvent {
   type: string
+  index?: number
   delta?: {
     type: string
     text?: string
+    partial_json?: string
   }
   content_block?: {
     type: string
     text?: string
+    id?: string
+    name?: string
   }
   message?: {
     id: string
@@ -232,6 +236,11 @@ export class ClaudeChatProvider implements ChatProvider {
       let fullResponse = ''
       let lastIndex = 0
 
+      // Tool call accumulation state
+      let currentToolCallId: string | null = null
+      let currentToolName: string | null = null
+      let accumulatedToolInput = ''
+
       xhr.open('POST', `${this.baseUrl}/v1/messages`)
       xhr.setRequestHeader('Content-Type', 'application/json')
       xhr.setRequestHeader('x-api-key', this.apiKey)
@@ -250,7 +259,47 @@ export class ClaudeChatProvider implements ChatProvider {
             try {
               const event: ClaudeStreamEvent = JSON.parse(data)
 
-              if (event.type === 'content_block_delta' && event.delta?.text) {
+              if (
+                event.type === 'content_block_start' &&
+                event.content_block?.type === 'tool_use'
+              ) {
+                currentToolCallId = event.content_block.id || null
+                currentToolName = event.content_block.name || null
+                accumulatedToolInput = ''
+                if (currentToolName) {
+                  onEvent({
+                    type: 'tool_event',
+                    toolName: currentToolName,
+                    toolCallId: currentToolCallId || undefined,
+                    toolStatus: 'running',
+                  })
+                }
+              } else if (
+                event.type === 'content_block_delta' &&
+                event.delta?.type === 'input_json_delta' &&
+                event.delta.partial_json
+              ) {
+                accumulatedToolInput += event.delta.partial_json
+              } else if (event.type === 'content_block_stop' && currentToolCallId) {
+                let toolInput: Record<string, unknown> | undefined
+                if (accumulatedToolInput) {
+                  try {
+                    toolInput = JSON.parse(accumulatedToolInput)
+                  } catch {
+                    // Input may be malformed; still emit the completed event
+                  }
+                }
+                onEvent({
+                  type: 'tool_event',
+                  toolName: currentToolName || 'unknown',
+                  toolCallId: currentToolCallId,
+                  toolInput,
+                  toolStatus: 'completed',
+                })
+                currentToolCallId = null
+                currentToolName = null
+                accumulatedToolInput = ''
+              } else if (event.type === 'content_block_delta' && event.delta?.text) {
                 fullResponse += event.delta.text
                 onEvent({ type: 'delta', delta: event.delta.text })
               } else if (event.type === 'error') {
