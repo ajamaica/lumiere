@@ -58,6 +58,10 @@ export const GatewayMethods = {
   SESSIONS_SPAWN: 'sessions.spawn',
   SUBAGENTS_LIST: 'subagents.list',
   SUBAGENTS_STOP: 'subagents.stop',
+  CONFIG_GET: 'config.get',
+  CONFIG_PATCH: 'config.patch',
+  SKILLS_STATUS: 'skills.status',
+  CRON_GET: 'cron.get',
 } as const
 
 /** Well-known gateway event names. */

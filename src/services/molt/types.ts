@@ -374,6 +374,162 @@ export interface GatewayLogsResponse {
   cursor?: number
 }
 
+// ─── Server Config ──────────────────────────────────────────────────────────────
+
+/** Full server configuration returned by `config.get`. */
+export interface ServerConfig {
+  agents?: {
+    list?: Record<string, AgentConfig>
+    defaults?: AgentDefaults
+  }
+  tools?: ToolsConfig
+  channels?: Record<string, ChannelConfig>
+  [key: string]: unknown
+}
+
+export interface AgentConfig {
+  model?: string | { primary?: string; [key: string]: unknown }
+  workspace?: string
+  thinking?: string
+  timeout?: number
+  identity?: {
+    name?: string
+    emoji?: string
+    avatar?: string
+    theme?: string
+  }
+  [key: string]: unknown
+}
+
+export interface AgentDefaults {
+  model?: string
+  thinking?: string
+  verbose?: string
+  elevated?: string
+  timezone?: string
+  timeFormat?: string
+  maxTokens?: number
+  timeout?: number
+  concurrency?: number
+  maxMediaSize?: number
+  workspace?: string
+  compaction?: string
+  humanDelay?: string
+  [key: string]: unknown
+}
+
+export interface ToolsConfig {
+  profile?: string
+  webSearch?: boolean
+  webFetch?: boolean
+  webSearchMaxResults?: number
+  webFetchMaxSize?: number
+  codeExecution?: boolean
+  executionHost?: string
+  elevated?: string
+  memoryBackend?: string
+  citations?: boolean
+  memorySearch?: boolean
+  [key: string]: unknown
+}
+
+export interface ChannelConfig {
+  enabled?: boolean
+  dmPolicy?: string
+  groupPolicy?: string
+  historyLimit?: number
+  [key: string]: unknown
+}
+
+export interface ConfigGetResponse {
+  config: ServerConfig
+  hash: string
+}
+
+export interface ConfigPatchParams {
+  patch: string
+  baseHash: string
+}
+
+// ─── Agents ─────────────────────────────────────────────────────────────────────
+
+export interface AgentIdentity {
+  name?: string
+  emoji?: string
+  avatar?: string
+  theme?: string
+}
+
+export interface AgentInfo {
+  id: string
+  model?: string
+  workspace?: string
+  thinking?: string
+  timeout?: number
+  identity?: AgentIdentity
+  sessionCount?: number
+  isStreaming?: boolean
+  activeTools?: string[]
+}
+
+// ─── Enhanced Skill Types ───────────────────────────────────────────────────────
+
+export interface InstalledSkill {
+  name: string
+  key?: string
+  description?: string
+  emoji?: string
+  enabled?: boolean
+  eligible?: boolean
+  source?: string
+  bundled?: boolean
+  alwaysActive?: boolean
+  homepage?: string
+  triggers?: string[]
+  filePath?: string
+  requirements?: {
+    binaries?: SkillRequirement[]
+    envVars?: SkillRequirement[]
+    config?: SkillRequirement[]
+    os?: SkillRequirement[]
+  }
+  installDeps?: SkillInstallDep[]
+}
+
+export interface SkillRequirement {
+  name: string
+  satisfied: boolean
+}
+
+export interface SkillInstallDep {
+  label: string
+  kind: string
+}
+
+export interface SkillsStatusResponse {
+  skills: InstalledSkill[]
+}
+
+// ─── Enhanced Cron Job Types ────────────────────────────────────────────────────
+
+export interface CronJobDetail {
+  id: string
+  name: string
+  description?: string
+  enabled: boolean
+  schedule?: string
+  nextRun?: string
+  content?: string
+  agentId?: string
+  sessionTarget?: string
+  wakeMode?: string
+  state?: {
+    nextRunAtMs?: number
+    lastRunAtMs?: number
+    tags?: string[]
+  }
+}
+
 // ─── Event Listener Types ───────────────────────────────────────────────────────
 
 export type EventCallback = (payload: unknown) => void

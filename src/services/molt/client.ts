@@ -20,10 +20,13 @@ import {
   AgentParams,
   ChatAttachmentPayload,
   ChatSendResponse,
+  ConfigGetResponse,
+  ConfigPatchParams,
   ConnectChallenge,
   ConnectionState,
   ConnectionStateCallback,
   ConnectResponse,
+  CronJobDetail,
   EventCallback,
   EventFrame,
   GatewayError,
@@ -41,6 +44,7 @@ import {
   SessionsSpawnResponse,
   Skill,
   SkillsListResponse,
+  SkillsStatusResponse,
   SubagentEvent,
   SubagentsListResponse,
   TeachSkillParams,
@@ -410,6 +414,30 @@ export class MoltGatewayClient {
   async stopSubagent(runId: string): Promise<void> {
     await this.request(GatewayMethods.SUBAGENTS_STOP, { runId }, 10_000)
   }
+
+  // ─── Config Methods ──────────────────────────────────────────────────────────
+
+  async getServerConfig(): Promise<ConfigGetResponse> {
+    return this.request<ConfigGetResponse>(GatewayMethods.CONFIG_GET, undefined, 30_000)
+  }
+
+  async patchServerConfig(params: ConfigPatchParams): Promise<unknown> {
+    return this.request(GatewayMethods.CONFIG_PATCH, params, 30_000)
+  }
+
+  // ─── Enhanced Skills Methods ────────────────────────────────────────────────
+
+  async getSkillsStatus(): Promise<SkillsStatusResponse> {
+    return this.request<SkillsStatusResponse>(GatewayMethods.SKILLS_STATUS)
+  }
+
+  // ─── Enhanced Cron Methods ──────────────────────────────────────────────────
+
+  async getCronJobDetail(jobId: string): Promise<CronJobDetail | null> {
+    return this.request<CronJobDetail | null>(GatewayMethods.CRON_GET, { jobId })
+  }
+
+  // ─── Agent Request ──────────────────────────────────────────────────────────
 
   async sendAgentRequest(
     params: AgentParams,

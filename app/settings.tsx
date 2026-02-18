@@ -226,6 +226,16 @@ export default function SettingsScreen() {
               onPress={() => router.push('/overview')}
             />
             <SettingRow
+              icon="people-outline"
+              label={t('settings.agents')}
+              onPress={() => router.push('/agents')}
+            />
+            <SettingRow
+              icon="settings-outline"
+              label={t('settings.serverConfiguration')}
+              onPress={() => router.push('/server-config')}
+            />
+            <SettingRow
               icon="time-outline"
               label={t('settings.cronJobs')}
               onPress={() => router.push('/scheduler')}

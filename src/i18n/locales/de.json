@@ -53,7 +53,9 @@
     "skills": "Fähigkeiten",
     "gatewayLogs": "Gateway-Protokolle",
     "missions": "Missionen",
-    "showToolEventsInChat": "Tool-Ereignisse im Chat anzeigen"
+    "showToolEventsInChat": "Tool-Ereignisse im Chat anzeigen",
+    "agents": "Agenten",
+    "serverConfiguration": "Serverkonfiguration"
   },
   "home": {
     "connectionError": "Verbindungsfehler",
@@ -443,5 +445,90 @@
     "close": "Canvas schließen",
     "clear": "Canvas leeren",
     "tapToOpen": "Tippen, um Canvas anzuzeigen"
+  },
+  "agentManagement": {
+    "title": "Agenten",
+    "subtitle": "Verwalten und überwachen Sie Ihre KI-Agenten.",
+    "openClawOnly": "Nur OpenClaw",
+    "openClawOnlyDescription": "Die Agentenverwaltung ist nur für OpenClaw-Server verfügbar.",
+    "agentCount": "{{count}} Agent(en)",
+    "loading": "Agenten werden geladen...",
+    "noAgents": "Keine Agenten mit diesem Server verbunden.",
+    "createAgent": "Agent erstellen",
+    "agentDetail": "Agentendetails",
+    "profile": "Profil",
+    "configuration": "Konfiguration",
+    "agentName": "Agentenname",
+    "agentNamePlaceholder": "z.B. researcher",
+    "workspace": "Arbeitsbereich",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "Absoluter Pfad auf dem Server, in dem dieser Agent arbeitet.",
+    "model": "Modell",
+    "modelPlaceholder": "z.B. claude-sonnet-4-5",
+    "emoji": "Emoji",
+    "thinking": "Denkmodus",
+    "timeout": "Zeitüberschreitung",
+    "status": "Status",
+    "dangerZone": "Gefahrenzone",
+    "deleteAgent": "Agent löschen",
+    "deleteConfirm": "Möchten Sie den Agenten \"{{name}}\" wirklich löschen? Dies kann nicht rückgängig gemacht werden.",
+    "createSuccess": "Agent \"{{name}}\" erfolgreich erstellt. Der Server wird neu gestartet.",
+    "createError": "Agent konnte nicht erstellt werden.",
+    "saveError": "Änderungen konnten nicht gespeichert werden.",
+    "deleteSuccess": "Agent erfolgreich gelöscht. Der Server wird neu gestartet.",
+    "deleteError": "Agent konnte nicht gelöscht werden.",
+    "errors": {
+      "nameWorkspaceRequired": "Agentenname und Arbeitsbereich sind erforderlich."
+    }
+  },
+  "serverConfig": {
+    "title": "Serverkonfiguration",
+    "subtitle": "Gateway-Servereinstellungen bearbeiten.",
+    "openClawOnly": "Nur OpenClaw",
+    "openClawOnlyDescription": "Die Serverkonfiguration ist nur für OpenClaw-Server verfügbar.",
+    "loadingConfig": "Konfiguration wird geladen...",
+    "fetchError": "Serverkonfiguration konnte nicht geladen werden.",
+    "saveSuccess": "Konfiguration gespeichert. Der Server wird neu gestartet.",
+    "saveError": "Konfiguration konnte nicht gespeichert werden.",
+    "discard": "Verwerfen",
+    "saveAndRestart": "Speichern und Neustarten",
+    "tabs": {
+      "agentDefaults": "Agenten-Standardwerte",
+      "toolsMemory": "Tools und Speicher",
+      "channels": "Kanäle"
+    },
+    "agentDefaults": {
+      "section": "Standard-Agenteneinstellungen",
+      "model": "Standardmodell",
+      "thinking": "Denkstufe",
+      "verbose": "Ausführlicher Modus",
+      "elevated": "Erhöhter Zugriff",
+      "compaction": "Kompaktierung",
+      "resources": "Ressourcenlimits",
+      "maxTokens": "Maximale Tokens",
+      "timeout": "Zeitüberschreitung (ms)",
+      "concurrency": "Parallelität"
+    },
+    "toolsMemory": {
+      "toolsSection": "Tools",
+      "memorySection": "Speicher",
+      "profile": "Tool-Profil",
+      "webSearch": "Websuche",
+      "webFetch": "Web-Abruf",
+      "codeExecution": "Code-Ausführung",
+      "elevatedAccess": "Erhöhter Tool-Zugriff",
+      "backend": "Speicher-Backend",
+      "citations": "Zitate",
+      "memorySearch": "Speichersuche"
+    },
+    "channels": {
+      "section": "Kommunikationskanäle",
+      "noChannels": "Keine Kanäle auf diesem Server konfiguriert.",
+      "enabled": "Aktiviert",
+      "disabled": "Deaktiviert",
+      "dmPolicy": "DM-Richtlinie",
+      "groupPolicy": "Gruppenrichtlinie",
+      "historyLimit": "Verlaufslimit"
+    }
   }
 }

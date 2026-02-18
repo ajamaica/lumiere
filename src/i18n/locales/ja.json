@@ -53,7 +53,9 @@
     "skills": "スキル",
     "gatewayLogs": "ゲートウェイログ",
     "missions": "ミッション",
-    "showToolEventsInChat": "チャットにツールイベントを表示"
+    "showToolEventsInChat": "チャットにツールイベントを表示",
+    "agents": "エージェント",
+    "serverConfiguration": "サーバー設定"
   },
   "home": {
     "connectionError": "接続エラー",
@@ -443,5 +445,90 @@
     "close": "キャンバスを閉じる",
     "clear": "キャンバスをクリア",
     "tapToOpen": "タップしてキャンバスを表示"
+  },
+  "agentManagement": {
+    "title": "エージェント",
+    "subtitle": "AIエージェントを管理・監視します。",
+    "openClawOnly": "OpenClaw専用",
+    "openClawOnlyDescription": "エージェント管理はOpenClawサーバーでのみ利用可能です。",
+    "agentCount": "{{count}}個のエージェント",
+    "loading": "エージェントを読み込み中...",
+    "noAgents": "このサーバーに接続されているエージェントはありません。",
+    "createAgent": "エージェントを作成",
+    "agentDetail": "エージェント詳細",
+    "profile": "プロフィール",
+    "configuration": "設定",
+    "agentName": "エージェント名",
+    "agentNamePlaceholder": "例: researcher",
+    "workspace": "ワークスペース",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "このエージェントが動作するサーバー上の絶対パス。",
+    "model": "モデル",
+    "modelPlaceholder": "例: claude-sonnet-4-5",
+    "emoji": "絵文字",
+    "thinking": "思考",
+    "timeout": "タイムアウト",
+    "status": "ステータス",
+    "dangerZone": "危険ゾーン",
+    "deleteAgent": "エージェントを削除",
+    "deleteConfirm": "エージェント「{{name}}」を削除してもよろしいですか？この操作は取り消せません。",
+    "createSuccess": "エージェント「{{name}}」が正常に作成されました。サーバーが再起動します。",
+    "createError": "エージェントの作成に失敗しました。",
+    "saveError": "変更の保存に失敗しました。",
+    "deleteSuccess": "エージェントが正常に削除されました。サーバーが再起動します。",
+    "deleteError": "エージェントの削除に失敗しました。",
+    "errors": {
+      "nameWorkspaceRequired": "エージェント名とワークスペースは必須です。"
+    }
+  },
+  "serverConfig": {
+    "title": "サーバー設定",
+    "subtitle": "ゲートウェイサーバーの設定を編集します。",
+    "openClawOnly": "OpenClaw専用",
+    "openClawOnlyDescription": "サーバー設定はOpenClawサーバーでのみ利用可能です。",
+    "loadingConfig": "設定を読み込み中...",
+    "fetchError": "サーバー設定の読み込みに失敗しました。",
+    "saveSuccess": "設定が保存されました。サーバーが再起動します。",
+    "saveError": "設定の保存に失敗しました。",
+    "discard": "破棄",
+    "saveAndRestart": "保存して再起動",
+    "tabs": {
+      "agentDefaults": "エージェントのデフォルト",
+      "toolsMemory": "ツールとメモリ",
+      "channels": "チャンネル"
+    },
+    "agentDefaults": {
+      "section": "デフォルトエージェント設定",
+      "model": "デフォルトモデル",
+      "thinking": "思考レベル",
+      "verbose": "詳細モード",
+      "elevated": "昇格アクセス",
+      "compaction": "コンパクション",
+      "resources": "リソース制限",
+      "maxTokens": "最大トークン数",
+      "timeout": "タイムアウト (ms)",
+      "concurrency": "同時実行数"
+    },
+    "toolsMemory": {
+      "toolsSection": "ツール",
+      "memorySection": "メモリ",
+      "profile": "ツールプロフィール",
+      "webSearch": "ウェブ検索",
+      "webFetch": "ウェブ取得",
+      "codeExecution": "コード実行",
+      "elevatedAccess": "昇格ツールアクセス",
+      "backend": "メモリバックエンド",
+      "citations": "引用",
+      "memorySearch": "メモリ検索"
+    },
+    "channels": {
+      "section": "通信チャンネル",
+      "noChannels": "このサーバーにチャンネルが設定されていません。",
+      "enabled": "有効",
+      "disabled": "無効",
+      "dmPolicy": "DMポリシー",
+      "groupPolicy": "グループポリシー",
+      "historyLimit": "履歴制限"
+    }
   }
 }

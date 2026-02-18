@@ -53,7 +53,9 @@
     "skills": "技能",
     "gatewayLogs": "网关日志",
     "missions": "任务",
-    "showToolEventsInChat": "在聊天中显示工具事件"
+    "showToolEventsInChat": "在聊天中显示工具事件",
+    "agents": "代理",
+    "serverConfiguration": "服务器配置"
   },
   "home": {
     "connectionError": "连接错误",
@@ -443,5 +445,90 @@
     "close": "关闭画布",
     "clear": "清除画布",
     "tapToOpen": "点击查看画布"
+  },
+  "agentManagement": {
+    "title": "代理",
+    "subtitle": "管理和监控您的 AI 代理。",
+    "openClawOnly": "仅限 OpenClaw",
+    "openClawOnlyDescription": "代理管理仅适用于 OpenClaw 服务器。",
+    "agentCount": "{{count}} 个代理",
+    "loading": "正在加载代理...",
+    "noAgents": "此服务器没有连接的代理。",
+    "createAgent": "创建代理",
+    "agentDetail": "代理详情",
+    "profile": "资料",
+    "configuration": "配置",
+    "agentName": "代理名称",
+    "agentNamePlaceholder": "例如 researcher",
+    "workspace": "工作空间",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "此代理运行所在的服务器绝对路径。",
+    "model": "模型",
+    "modelPlaceholder": "例如 claude-sonnet-4-5",
+    "emoji": "表情符号",
+    "thinking": "思考",
+    "timeout": "超时",
+    "status": "状态",
+    "dangerZone": "危险区域",
+    "deleteAgent": "删除代理",
+    "deleteConfirm": "确定要删除代理「{{name}}」吗？此操作无法撤销。",
+    "createSuccess": "代理「{{name}}」创建成功。服务器将重新启动。",
+    "createError": "创建代理失败。",
+    "saveError": "保存更改失败。",
+    "deleteSuccess": "代理删除成功。服务器将重新启动。",
+    "deleteError": "删除代理失败。",
+    "errors": {
+      "nameWorkspaceRequired": "代理名称和工作空间为必填项。"
+    }
+  },
+  "serverConfig": {
+    "title": "服务器配置",
+    "subtitle": "编辑网关服务器设置。",
+    "openClawOnly": "仅限 OpenClaw",
+    "openClawOnlyDescription": "服务器配置仅适用于 OpenClaw 服务器。",
+    "loadingConfig": "正在加载配置...",
+    "fetchError": "加载服务器配置失败。",
+    "saveSuccess": "配置已保存。服务器将重新启动。",
+    "saveError": "保存配置失败。",
+    "discard": "放弃",
+    "saveAndRestart": "保存并重启",
+    "tabs": {
+      "agentDefaults": "代理默认值",
+      "toolsMemory": "工具与记忆",
+      "channels": "频道"
+    },
+    "agentDefaults": {
+      "section": "默认代理设置",
+      "model": "默认模型",
+      "thinking": "思考级别",
+      "verbose": "详细模式",
+      "elevated": "提升权限",
+      "compaction": "压缩",
+      "resources": "资源限制",
+      "maxTokens": "最大令牌数",
+      "timeout": "超时 (ms)",
+      "concurrency": "并发数"
+    },
+    "toolsMemory": {
+      "toolsSection": "工具",
+      "memorySection": "记忆",
+      "profile": "工具配置",
+      "webSearch": "网页搜索",
+      "webFetch": "网页获取",
+      "codeExecution": "代码执行",
+      "elevatedAccess": "工具提升权限",
+      "backend": "记忆后端",
+      "citations": "引用",
+      "memorySearch": "记忆搜索"
+    },
+    "channels": {
+      "section": "通信频道",
+      "noChannels": "此服务器未配置任何频道。",
+      "enabled": "已启用",
+      "disabled": "已禁用",
+      "dmPolicy": "私信策略",
+      "groupPolicy": "群组策略",
+      "historyLimit": "历史记录限制"
+    }
   }
 }
