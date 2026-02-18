@@ -2,14 +2,12 @@ import { agentConfig, clientConfig, protocolConfig, roleConfig } from '../gatewa
 
 describe('clientConfig', () => {
   it('has the expected shape', () => {
-    expect(clientConfig).toMatchObject({
+    expect(clientConfig).toEqual({
       id: 'lumiere',
       displayName: 'Lumiere',
       mode: 'ui',
       version: '1.0.0',
     })
-    expect(clientConfig.platform).toBeDefined()
-    expect(clientConfig.instanceId).toBeDefined()
   })
 })
 

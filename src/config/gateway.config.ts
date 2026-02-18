@@ -1,15 +1,10 @@
-import { Platform } from 'react-native'
-
 import { DEFAULT_SESSION_KEY } from '../constants'
-import { generateId } from '../utils/generateId'
 
 export const clientConfig = {
   id: 'lumiere',
   displayName: 'Lumiere',
   mode: 'ui',
   version: '1.0.0',
-  platform: Platform.OS,
-  instanceId: generateId('inst'),
 } as const
 
 export const protocolConfig = {

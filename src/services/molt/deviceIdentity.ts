@@ -5,14 +5,13 @@
  * The device ID is the SHA-256 hex digest of the raw 32-byte public key.
  * Challenge payloads are signed with the private key for server verification.
  *
- * Uses `@noble/curves` for Ed25519 signing (pure JS, no Node.js deps) and
- * `expo-crypto` for SHA-256 hashing and random bytes (native on all platforms).
+ * All heavy imports (`@noble/curves`, `expo-crypto`) are lazy-loaded via
+ * dynamic `require()` inside async functions so this module can be imported
+ * at the top level without crashing on startup.
  * Persistence is handled via AsyncStorage.
  */
 
-import { ed25519 } from '@noble/curves/ed25519'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import * as Crypto from 'expo-crypto'
 
 import { logger } from '../../utils/logger'
 
@@ -66,6 +65,30 @@ function bytesToHex(bytes: Uint8Array): string {
     .join('')
 }
 
+// ─── Lazy crypto loaders ────────────────────────────────────────────────────────
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let _ed25519: any = null
+function getEd25519() {
+  if (!_ed25519) {
+    // Lazy require so the ESM module is only resolved when actually needed
+    // (during handshake), not at app startup.
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    _ed25519 = require('@noble/curves/ed25519').ed25519
+  }
+  return _ed25519
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let _Crypto: any = null
+function getCrypto() {
+  if (!_Crypto) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    _Crypto = require('expo-crypto')
+  }
+  return _Crypto
+}
+
 // ─── Identity lifecycle ─────────────────────────────────────────────────────────
 
 let _cached: DeviceIdentity | null = null
@@ -108,17 +131,19 @@ export async function getDeviceIdentity(): Promise<DeviceIdentity> {
     identityLogger.error('Failed to load device identity, regenerating')
   }
 
-  // Generate a fresh Ed25519 keypair
-  const privateKey = new Uint8Array(Crypto.getRandomBytes(32))
-  const publicKey = ed25519.getPublicKey(privateKey)
+  // Generate a fresh Ed25519 keypair (lazy-loaded)
+  const ed = getEd25519()
+  const Crypto = getCrypto()
 
-  // SHA-256 the raw public key to derive the device ID
-  const hashHex = await Crypto.digestAsync(
+  const privateKey = new Uint8Array(Crypto.getRandomBytes(32))
+  const publicKey = ed.getPublicKey(privateKey) as Uint8Array
+
+  // SHA-256 the raw public key hex to derive the device ID
+  const deviceId: string = await Crypto.digestStringAsync(
     Crypto.CryptoDigestAlgorithm.SHA256,
     bytesToHex(publicKey),
     { encoding: Crypto.CryptoEncoding.HEX },
   )
-  const deviceId = hashHex
   const publicKeyBase64Url = base64UrlEncode(publicKey)
   const privateKeyBase64 = toBase64(privateKey)
 
@@ -165,6 +190,7 @@ export async function buildDevicePayload(
   nonce?: string,
 ): Promise<DevicePayload> {
   const identity = await getDeviceIdentity()
+  const ed = getEd25519()
   const privateKey = fromBase64(identity.privateKeyBase64)
   const signedAtMs = Date.now()
 
@@ -185,7 +211,7 @@ export async function buildDevicePayload(
 
   const payload = parts.join('|')
   const messageBytes = new TextEncoder().encode(payload)
-  const signatureBytes = ed25519.sign(messageBytes, privateKey)
+  const signatureBytes = ed.sign(messageBytes, privateKey) as Uint8Array
 
   return {
     id: identity.deviceId,

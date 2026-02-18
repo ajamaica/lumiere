@@ -6,6 +6,8 @@
  * keepalive tick monitoring, and typed RPC methods.
  */
 
+import { Platform } from 'react-native'
+
 import {
   clientConfig,
   GatewayEvents,
@@ -551,9 +553,8 @@ export class MoltGatewayClient {
         id: clientConfig.id,
         displayName: clientConfig.displayName,
         version: clientConfig.version,
-        platform: clientConfig.platform,
+        platform: Platform.OS,
         mode: clientConfig.mode,
-        instanceId: clientConfig.instanceId,
       },
       auth,
       role: roleConfig.role,
