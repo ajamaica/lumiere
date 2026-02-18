@@ -437,7 +437,16 @@
       "completed": "Completado",
       "error": "Error",
       "spawned": "Sub-agente generado",
-      "resultReceived": "Resultado del sub-agente recibido"
+      "resultReceived": "Resultado del sub-agente recibido",
+      "personalities": {
+        "general": "General",
+        "philosophical": "Filosófico",
+        "engineering": "Ingeniería",
+        "creative": "Creativo",
+        "scientific": "Científico",
+        "critical": "Crítico",
+        "strategic": "Estratégico"
+      }
     }
   },
   "canvas": {

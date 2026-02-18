@@ -9,6 +9,27 @@ export type MissionStatus =
   | 'stopped'
   | 'archived'
 
+/** Personality lens a sub-agent adopts when reasoning about its task. */
+export type SubagentPersonality =
+  | 'general'
+  | 'philosophical'
+  | 'engineering'
+  | 'creative'
+  | 'scientific'
+  | 'critical'
+  | 'strategic'
+
+/** Ordered list of all available sub-agent personalities. */
+export const SUBAGENT_PERSONALITIES: SubagentPersonality[] = [
+  'general',
+  'philosophical',
+  'engineering',
+  'creative',
+  'scientific',
+  'critical',
+  'strategic',
+]
+
 /** A sub-agent run spawned for a subtask. */
 export interface SubtaskSubagent {
   runId: string
@@ -16,6 +37,8 @@ export interface SubtaskSubagent {
   task: string
   status: 'running' | 'completed' | 'error'
   result?: string
+  /** Personality lens the sub-agent was spawned with. */
+  personality?: SubagentPersonality
   spawnedAt: number
   completedAt?: number
 }

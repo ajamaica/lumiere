@@ -437,7 +437,16 @@
       "completed": "完了",
       "error": "エラー",
       "spawned": "サブエージェントを起動しました",
-      "resultReceived": "サブエージェントの結果を受信しました"
+      "resultReceived": "サブエージェントの結果を受信しました",
+      "personalities": {
+        "general": "汎用",
+        "philosophical": "哲学的",
+        "engineering": "エンジニアリング",
+        "creative": "クリエイティブ",
+        "scientific": "科学的",
+        "critical": "批判的",
+        "strategic": "戦略的"
+      }
     }
   },
   "canvas": {

@@ -437,7 +437,16 @@
       "completed": "완료",
       "error": "오류",
       "spawned": "서브 에이전트 생성됨",
-      "resultReceived": "서브 에이전트 결과 수신됨"
+      "resultReceived": "서브 에이전트 결과 수신됨",
+      "personalities": {
+        "general": "일반",
+        "philosophical": "철학적",
+        "engineering": "엔지니어링",
+        "creative": "창의적",
+        "scientific": "과학적",
+        "critical": "비판적",
+        "strategic": "전략적"
+      }
     }
   },
   "canvas": {

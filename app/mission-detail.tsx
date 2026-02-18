@@ -440,7 +440,7 @@ export default function MissionDetailScreen() {
               case 'subagent_spawn':
                 if (update.subtaskId && update.subagentTask) {
                   missionLogger.info(
-                    `Sub-agent spawn requested for ${update.subtaskId}: ${update.subagentTask}`,
+                    `Sub-agent spawn requested for ${update.subtaskId} [${update.subagentPersonality ?? 'general'}]: ${update.subagentTask}`,
                   )
                   // The actual spawn is done by the gateway's sessions_spawn tool call.
                   // We track a placeholder here; the real runId arrives via the
@@ -451,6 +451,7 @@ export default function MissionDetailScreen() {
                     childSessionKey: '',
                     task: update.subagentTask,
                     status: 'running',
+                    personality: update.subagentPersonality,
                     spawnedAt: Date.now(),
                   }
                   addSubagentToSubtask(activeMission.id, update.subtaskId, placeholderSubagent)
