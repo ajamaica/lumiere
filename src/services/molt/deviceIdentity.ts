@@ -92,11 +92,10 @@ function base64Decode(b64: string): Uint8Array {
 // ─── SHA-256 hashing ──────────────────────────────────────────────────────────
 
 async function sha256Hex(data: Uint8Array): Promise<string> {
-  const hashBuffer = await Crypto.digest(
-    Crypto.CryptoDigestAlgorithm.SHA256,
-    data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength) as ArrayBuffer,
-  )
-  // Crypto.digest returns ArrayBuffer — convert to hex string
+  // expo-crypto's native module expects a standalone TypedArray, not a slice
+  // or a view over a SharedArrayBuffer. Copy into a fresh Uint8Array.
+  const copy = new Uint8Array(data)
+  const hashBuffer = await Crypto.digest(Crypto.CryptoDigestAlgorithm.SHA256, copy)
   const hashArray = new Uint8Array(hashBuffer)
   return Array.from(hashArray)
     .map((b) => b.toString(16).padStart(2, '0'))
