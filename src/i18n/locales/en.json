@@ -53,7 +53,9 @@
     "contribute": "Contribute",
     "gatewayLogs": "Gateway Logs",
     "missions": "Missions",
-    "showToolEventsInChat": "Show Tool Events in Chat"
+    "showToolEventsInChat": "Show Tool Events in Chat",
+    "agents": "Agents",
+    "serverConfiguration": "Server Configuration"
   },
   "home": {
     "connectionError": "Connection Error",
@@ -441,5 +443,90 @@
     "close": "Close canvas",
     "clear": "Clear canvas",
     "tapToOpen": "Tap to view canvas"
+  },
+  "agentManagement": {
+    "title": "Agents",
+    "subtitle": "Manage and monitor your AI agents.",
+    "openClawOnly": "OpenClaw Only",
+    "openClawOnlyDescription": "Agent management is only available for OpenClaw servers.",
+    "agentCount": "{{count}} agent(s)",
+    "loading": "Loading agents...",
+    "noAgents": "No agents connected to this server.",
+    "createAgent": "Create Agent",
+    "agentDetail": "Agent Detail",
+    "profile": "Profile",
+    "configuration": "Configuration",
+    "agentName": "Agent Name",
+    "agentNamePlaceholder": "e.g. researcher",
+    "workspace": "Workspace",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "Absolute path on the server where this agent operates.",
+    "model": "Model",
+    "modelPlaceholder": "e.g. claude-sonnet-4-5",
+    "emoji": "Emoji",
+    "thinking": "Thinking",
+    "timeout": "Timeout",
+    "status": "Status",
+    "dangerZone": "Danger Zone",
+    "deleteAgent": "Delete Agent",
+    "deleteConfirm": "Are you sure you want to delete agent \"{{name}}\"? This cannot be undone.",
+    "createSuccess": "Agent \"{{name}}\" created successfully. The server will restart.",
+    "createError": "Failed to create agent.",
+    "saveError": "Failed to save changes.",
+    "deleteSuccess": "Agent deleted successfully. The server will restart.",
+    "deleteError": "Failed to delete agent.",
+    "errors": {
+      "nameWorkspaceRequired": "Agent name and workspace are required."
+    }
+  },
+  "serverConfig": {
+    "title": "Server Configuration",
+    "subtitle": "Edit gateway server settings.",
+    "openClawOnly": "OpenClaw Only",
+    "openClawOnlyDescription": "Server configuration is only available for OpenClaw servers.",
+    "loadingConfig": "Loading configuration...",
+    "fetchError": "Failed to load server configuration.",
+    "saveSuccess": "Configuration saved. The server will restart.",
+    "saveError": "Failed to save configuration.",
+    "discard": "Discard",
+    "saveAndRestart": "Save & Restart",
+    "tabs": {
+      "agentDefaults": "Agent Defaults",
+      "toolsMemory": "Tools & Memory",
+      "channels": "Channels"
+    },
+    "agentDefaults": {
+      "section": "Default Agent Settings",
+      "model": "Default Model",
+      "thinking": "Thinking Level",
+      "verbose": "Verbose Mode",
+      "elevated": "Elevated Access",
+      "compaction": "Compaction",
+      "resources": "Resource Limits",
+      "maxTokens": "Max Tokens",
+      "timeout": "Timeout (ms)",
+      "concurrency": "Concurrency"
+    },
+    "toolsMemory": {
+      "toolsSection": "Tools",
+      "memorySection": "Memory",
+      "profile": "Tool Profile",
+      "webSearch": "Web Search",
+      "webFetch": "Web Fetch",
+      "codeExecution": "Code Execution",
+      "elevatedAccess": "Elevated Tool Access",
+      "backend": "Memory Backend",
+      "citations": "Citations",
+      "memorySearch": "Memory Search"
+    },
+    "channels": {
+      "section": "Communication Channels",
+      "noChannels": "No channels configured on this server.",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "dmPolicy": "DM Policy",
+      "groupPolicy": "Group Policy",
+      "historyLimit": "History Limit"
+    }
   }
 }

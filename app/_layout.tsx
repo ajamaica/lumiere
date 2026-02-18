@@ -260,6 +260,8 @@ function AppContent() {
       <Stack.Screen name="missions" options={modalOptions} />
       <Stack.Screen name="create-mission" options={modalOptions} />
       <Stack.Screen name="mission-detail" options={modalOptions} />
+      <Stack.Screen name="agents" options={modalOptions} />
+      <Stack.Screen name="server-config" options={modalOptions} />
     </Stack>
   )
 }

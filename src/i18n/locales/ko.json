@@ -53,7 +53,9 @@
     "skills": "스킬",
     "gatewayLogs": "게이트웨이 로그",
     "missions": "미션",
-    "showToolEventsInChat": "채팅에서 도구 이벤트 표시"
+    "showToolEventsInChat": "채팅에서 도구 이벤트 표시",
+    "agents": "에이전트",
+    "serverConfiguration": "서버 구성"
   },
   "home": {
     "connectionError": "연결 오류",
@@ -441,5 +443,90 @@
     "close": "캔버스 닫기",
     "clear": "캔버스 지우기",
     "tapToOpen": "탭하여 캔버스 보기"
+  },
+  "agentManagement": {
+    "title": "에이전트",
+    "subtitle": "AI 에이전트를 관리하고 모니터링합니다.",
+    "openClawOnly": "OpenClaw 전용",
+    "openClawOnlyDescription": "에이전트 관리는 OpenClaw 서버에서만 사용할 수 있습니다.",
+    "agentCount": "{{count}}개의 에이전트",
+    "loading": "에이전트 로딩 중...",
+    "noAgents": "이 서버에 연결된 에이전트가 없습니다.",
+    "createAgent": "에이전트 생성",
+    "agentDetail": "에이전트 상세",
+    "profile": "프로필",
+    "configuration": "구성",
+    "agentName": "에이전트 이름",
+    "agentNamePlaceholder": "예: researcher",
+    "workspace": "작업 공간",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "이 에이전트가 작동하는 서버의 절대 경로입니다.",
+    "model": "모델",
+    "modelPlaceholder": "예: claude-sonnet-4-5",
+    "emoji": "이모지",
+    "thinking": "사고",
+    "timeout": "시간 초과",
+    "status": "상태",
+    "dangerZone": "위험 영역",
+    "deleteAgent": "에이전트 삭제",
+    "deleteConfirm": "에이전트 \"{{name}}\"을(를) 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+    "createSuccess": "에이전트 \"{{name}}\"이(가) 성공적으로 생성되었습니다. 서버가 재시작됩니다.",
+    "createError": "에이전트 생성에 실패했습니다.",
+    "saveError": "변경사항 저장에 실패했습니다.",
+    "deleteSuccess": "에이전트가 성공적으로 삭제되었습니다. 서버가 재시작됩니다.",
+    "deleteError": "에이전트 삭제에 실패했습니다.",
+    "errors": {
+      "nameWorkspaceRequired": "에이전트 이름과 작업 공간은 필수입니다."
+    }
+  },
+  "serverConfig": {
+    "title": "서버 구성",
+    "subtitle": "게이트웨이 서버 설정을 편집합니다.",
+    "openClawOnly": "OpenClaw 전용",
+    "openClawOnlyDescription": "서버 구성은 OpenClaw 서버에서만 사용할 수 있습니다.",
+    "loadingConfig": "구성 로딩 중...",
+    "fetchError": "서버 구성을 불러오지 못했습니다.",
+    "saveSuccess": "구성이 저장되었습니다. 서버가 재시작됩니다.",
+    "saveError": "구성 저장에 실패했습니다.",
+    "discard": "취소",
+    "saveAndRestart": "저장 및 재시작",
+    "tabs": {
+      "agentDefaults": "에이전트 기본값",
+      "toolsMemory": "도구 및 메모리",
+      "channels": "채널"
+    },
+    "agentDefaults": {
+      "section": "기본 에이전트 설정",
+      "model": "기본 모델",
+      "thinking": "사고 수준",
+      "verbose": "상세 모드",
+      "elevated": "관리자 접근",
+      "compaction": "압축",
+      "resources": "리소스 제한",
+      "maxTokens": "최대 토큰",
+      "timeout": "시간 초과 (ms)",
+      "concurrency": "동시 실행 수"
+    },
+    "toolsMemory": {
+      "toolsSection": "도구",
+      "memorySection": "메모리",
+      "profile": "도구 프로필",
+      "webSearch": "웹 검색",
+      "webFetch": "웹 가져오기",
+      "codeExecution": "코드 실행",
+      "elevatedAccess": "관리자 도구 접근",
+      "backend": "메모리 백엔드",
+      "citations": "인용",
+      "memorySearch": "메모리 검색"
+    },
+    "channels": {
+      "section": "통신 채널",
+      "noChannels": "이 서버에 구성된 채널이 없습니다.",
+      "enabled": "활성화됨",
+      "disabled": "비활성화됨",
+      "dmPolicy": "DM 정책",
+      "groupPolicy": "그룹 정책",
+      "historyLimit": "기록 제한"
+    }
   }
 }

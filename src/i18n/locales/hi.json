@@ -53,7 +53,9 @@
     "skills": "कौशल",
     "gatewayLogs": "गेटवे लॉग",
     "missions": "मिशन",
-    "showToolEventsInChat": "चैट में टूल इवेंट दिखाएं"
+    "showToolEventsInChat": "चैट में टूल इवेंट दिखाएं",
+    "agents": "एजेंट",
+    "serverConfiguration": "सर्वर कॉन्फ़िगरेशन"
   },
   "home": {
     "connectionError": "कनेक्शन त्रुटि",
@@ -441,5 +443,90 @@
     "close": "कैनवास बंद करें",
     "clear": "कैनवास साफ़ करें",
     "tapToOpen": "कैनवास देखने के लिए टैप करें"
+  },
+  "agentManagement": {
+    "title": "एजेंट",
+    "subtitle": "अपने AI एजेंट प्रबंधित और मॉनिटर करें।",
+    "openClawOnly": "केवल OpenClaw",
+    "openClawOnlyDescription": "एजेंट प्रबंधन केवल OpenClaw सर्वर के लिए उपलब्ध है।",
+    "agentCount": "{{count}} एजेंट",
+    "loading": "एजेंट लोड हो रहे हैं...",
+    "noAgents": "इस सर्वर से कोई एजेंट कनेक्ट नहीं है।",
+    "createAgent": "एजेंट बनाएं",
+    "agentDetail": "एजेंट विवरण",
+    "profile": "प्रोफ़ाइल",
+    "configuration": "कॉन्फ़िगरेशन",
+    "agentName": "एजेंट का नाम",
+    "agentNamePlaceholder": "उदा. researcher",
+    "workspace": "कार्यक्षेत्र",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "सर्वर पर वह पूर्ण पथ जहां यह एजेंट संचालित होता है।",
+    "model": "मॉडल",
+    "modelPlaceholder": "उदा. claude-sonnet-4-5",
+    "emoji": "इमोजी",
+    "thinking": "चिंतन",
+    "timeout": "टाइमआउट",
+    "status": "स्थिति",
+    "dangerZone": "खतरनाक क्षेत्र",
+    "deleteAgent": "एजेंट हटाएं",
+    "deleteConfirm": "क्या आप वाकई एजेंट \"{{name}}\" को हटाना चाहते हैं? यह पूर्ववत नहीं किया जा सकता।",
+    "createSuccess": "एजेंट \"{{name}}\" सफलतापूर्वक बनाया गया। सर्वर पुनः आरंभ होगा।",
+    "createError": "एजेंट बनाने में विफल।",
+    "saveError": "परिवर्तन सहेजने में विफल।",
+    "deleteSuccess": "एजेंट सफलतापूर्वक हटाया गया। सर्वर पुनः आरंभ होगा।",
+    "deleteError": "एजेंट हटाने में विफल।",
+    "errors": {
+      "nameWorkspaceRequired": "एजेंट का नाम और कार्यक्षेत्र आवश्यक हैं।"
+    }
+  },
+  "serverConfig": {
+    "title": "सर्वर कॉन्फ़िगरेशन",
+    "subtitle": "गेटवे सर्वर सेटिंग्स संपादित करें।",
+    "openClawOnly": "केवल OpenClaw",
+    "openClawOnlyDescription": "सर्वर कॉन्फ़िगरेशन केवल OpenClaw सर्वर के लिए उपलब्ध है।",
+    "loadingConfig": "कॉन्फ़िगरेशन लोड हो रहा है...",
+    "fetchError": "सर्वर कॉन्फ़िगरेशन लोड करने में विफल।",
+    "saveSuccess": "कॉन्फ़िगरेशन सहेजा गया। सर्वर पुनः आरंभ होगा।",
+    "saveError": "कॉन्फ़िगरेशन सहेजने में विफल।",
+    "discard": "रद्द करें",
+    "saveAndRestart": "सहेजें और पुनः आरंभ करें",
+    "tabs": {
+      "agentDefaults": "एजेंट डिफ़ॉल्ट",
+      "toolsMemory": "टूल्स और मेमोरी",
+      "channels": "चैनल"
+    },
+    "agentDefaults": {
+      "section": "डिफ़ॉल्ट एजेंट सेटिंग्स",
+      "model": "डिफ़ॉल्ट मॉडल",
+      "thinking": "चिंतन स्तर",
+      "verbose": "विस्तृत मोड",
+      "elevated": "उन्नत पहुंच",
+      "compaction": "संकुचन",
+      "resources": "संसाधन सीमाएं",
+      "maxTokens": "अधिकतम टोकन",
+      "timeout": "टाइमआउट (ms)",
+      "concurrency": "समवर्तिता"
+    },
+    "toolsMemory": {
+      "toolsSection": "टूल्स",
+      "memorySection": "मेमोरी",
+      "profile": "टूल प्रोफ़ाइल",
+      "webSearch": "वेब खोज",
+      "webFetch": "वेब फ़ेच",
+      "codeExecution": "कोड निष्पादन",
+      "elevatedAccess": "उन्नत टूल पहुंच",
+      "backend": "मेमोरी बैकएंड",
+      "citations": "उद्धरण",
+      "memorySearch": "मेमोरी खोज"
+    },
+    "channels": {
+      "section": "संचार चैनल",
+      "noChannels": "इस सर्वर पर कोई चैनल कॉन्फ़िगर नहीं है।",
+      "enabled": "सक्षम",
+      "disabled": "अक्षम",
+      "dmPolicy": "DM नीति",
+      "groupPolicy": "समूह नीति",
+      "historyLimit": "इतिहास सीमा"
+    }
   }
 }

@@ -53,7 +53,9 @@
     "skills": "Навыки",
     "gatewayLogs": "Журналы шлюза",
     "missions": "Миссии",
-    "showToolEventsInChat": "Показывать события инструментов в чате"
+    "showToolEventsInChat": "Показывать события инструментов в чате",
+    "agents": "Агенты",
+    "serverConfiguration": "Конфигурация сервера"
   },
   "home": {
     "connectionError": "Ошибка подключения",
@@ -441,5 +443,90 @@
     "close": "Закрыть холст",
     "clear": "Очистить холст",
     "tapToOpen": "Нажмите для просмотра холста"
+  },
+  "agentManagement": {
+    "title": "Агенты",
+    "subtitle": "Управляйте и отслеживайте своих ИИ-агентов.",
+    "openClawOnly": "Только OpenClaw",
+    "openClawOnlyDescription": "Управление агентами доступно только для серверов OpenClaw.",
+    "agentCount": "{{count}} агент(ов)",
+    "loading": "Загрузка агентов...",
+    "noAgents": "К этому серверу не подключены агенты.",
+    "createAgent": "Создать агента",
+    "agentDetail": "Детали агента",
+    "profile": "Профиль",
+    "configuration": "Конфигурация",
+    "agentName": "Имя агента",
+    "agentNamePlaceholder": "напр. researcher",
+    "workspace": "Рабочая директория",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "Абсолютный путь на сервере, где работает этот агент.",
+    "model": "Модель",
+    "modelPlaceholder": "напр. claude-sonnet-4-5",
+    "emoji": "Эмодзи",
+    "thinking": "Мышление",
+    "timeout": "Тайм-аут",
+    "status": "Статус",
+    "dangerZone": "Опасная зона",
+    "deleteAgent": "Удалить агента",
+    "deleteConfirm": "Вы уверены, что хотите удалить агента \"{{name}}\"? Это действие нельзя отменить.",
+    "createSuccess": "Агент \"{{name}}\" успешно создан. Сервер будет перезапущен.",
+    "createError": "Не удалось создать агента.",
+    "saveError": "Не удалось сохранить изменения.",
+    "deleteSuccess": "Агент успешно удалён. Сервер будет перезапущен.",
+    "deleteError": "Не удалось удалить агента.",
+    "errors": {
+      "nameWorkspaceRequired": "Имя агента и рабочая директория обязательны."
+    }
+  },
+  "serverConfig": {
+    "title": "Конфигурация сервера",
+    "subtitle": "Редактирование настроек сервера шлюза.",
+    "openClawOnly": "Только OpenClaw",
+    "openClawOnlyDescription": "Конфигурация сервера доступна только для серверов OpenClaw.",
+    "loadingConfig": "Загрузка конфигурации...",
+    "fetchError": "Не удалось загрузить конфигурацию сервера.",
+    "saveSuccess": "Конфигурация сохранена. Сервер будет перезапущен.",
+    "saveError": "Не удалось сохранить конфигурацию.",
+    "discard": "Отменить",
+    "saveAndRestart": "Сохранить и перезапустить",
+    "tabs": {
+      "agentDefaults": "Параметры агента по умолчанию",
+      "toolsMemory": "Инструменты и память",
+      "channels": "Каналы"
+    },
+    "agentDefaults": {
+      "section": "Настройки агента по умолчанию",
+      "model": "Модель по умолчанию",
+      "thinking": "Уровень мышления",
+      "verbose": "Подробный режим",
+      "elevated": "Повышенный доступ",
+      "compaction": "Сжатие",
+      "resources": "Ограничения ресурсов",
+      "maxTokens": "Максимум токенов",
+      "timeout": "Тайм-аут (мс)",
+      "concurrency": "Параллелизм"
+    },
+    "toolsMemory": {
+      "toolsSection": "Инструменты",
+      "memorySection": "Память",
+      "profile": "Профиль инструментов",
+      "webSearch": "Веб-поиск",
+      "webFetch": "Загрузка веб-страниц",
+      "codeExecution": "Выполнение кода",
+      "elevatedAccess": "Повышенный доступ к инструментам",
+      "backend": "Бэкенд памяти",
+      "citations": "Цитаты",
+      "memorySearch": "Поиск в памяти"
+    },
+    "channels": {
+      "section": "Каналы связи",
+      "noChannels": "На этом сервере не настроены каналы.",
+      "enabled": "Включено",
+      "disabled": "Отключено",
+      "dmPolicy": "Политика ЛС",
+      "groupPolicy": "Групповая политика",
+      "historyLimit": "Лимит истории"
+    }
   }
 }

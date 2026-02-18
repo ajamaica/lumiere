@@ -53,7 +53,9 @@
     "skills": "技能",
     "gatewayLogs": "閘道日誌",
     "missions": "任務",
-    "showToolEventsInChat": "在聊天中顯示工具事件"
+    "showToolEventsInChat": "在聊天中顯示工具事件",
+    "agents": "代理",
+    "serverConfiguration": "伺服器設定"
   },
   "home": {
     "connectionError": "連線錯誤",
@@ -441,5 +443,90 @@
     "close": "關閉畫布",
     "clear": "清除畫布",
     "tapToOpen": "點擊查看畫布"
+  },
+  "agentManagement": {
+    "title": "代理",
+    "subtitle": "管理和監控您的 AI 代理。",
+    "openClawOnly": "僅限 OpenClaw",
+    "openClawOnlyDescription": "代理管理僅適用於 OpenClaw 伺服器。",
+    "agentCount": "{{count}} 個代理",
+    "loading": "正在載入代理...",
+    "noAgents": "此伺服器沒有連接的代理。",
+    "createAgent": "建立代理",
+    "agentDetail": "代理詳情",
+    "profile": "資料",
+    "configuration": "設定",
+    "agentName": "代理名稱",
+    "agentNamePlaceholder": "例如 researcher",
+    "workspace": "工作空間",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "此代理運作所在的伺服器絕對路徑。",
+    "model": "模型",
+    "modelPlaceholder": "例如 claude-sonnet-4-5",
+    "emoji": "表情符號",
+    "thinking": "思考",
+    "timeout": "逾時",
+    "status": "狀態",
+    "dangerZone": "危險區域",
+    "deleteAgent": "刪除代理",
+    "deleteConfirm": "確定要刪除代理「{{name}}」嗎？此操作無法復原。",
+    "createSuccess": "代理「{{name}}」建立成功。伺服器將重新啟動。",
+    "createError": "建立代理失敗。",
+    "saveError": "儲存變更失敗。",
+    "deleteSuccess": "代理刪除成功。伺服器將重新啟動。",
+    "deleteError": "刪除代理失敗。",
+    "errors": {
+      "nameWorkspaceRequired": "代理名稱和工作空間為必填欄位。"
+    }
+  },
+  "serverConfig": {
+    "title": "伺服器設定",
+    "subtitle": "編輯閘道伺服器設定。",
+    "openClawOnly": "僅限 OpenClaw",
+    "openClawOnlyDescription": "伺服器設定僅適用於 OpenClaw 伺服器。",
+    "loadingConfig": "正在載入設定...",
+    "fetchError": "載入伺服器設定失敗。",
+    "saveSuccess": "設定已儲存。伺服器將重新啟動。",
+    "saveError": "儲存設定失敗。",
+    "discard": "捨棄",
+    "saveAndRestart": "儲存並重新啟動",
+    "tabs": {
+      "agentDefaults": "代理預設值",
+      "toolsMemory": "工具與記憶",
+      "channels": "頻道"
+    },
+    "agentDefaults": {
+      "section": "預設代理設定",
+      "model": "預設模型",
+      "thinking": "思考層級",
+      "verbose": "詳細模式",
+      "elevated": "提升權限",
+      "compaction": "壓縮",
+      "resources": "資源限制",
+      "maxTokens": "最大權杖數",
+      "timeout": "逾時 (ms)",
+      "concurrency": "並行數"
+    },
+    "toolsMemory": {
+      "toolsSection": "工具",
+      "memorySection": "記憶",
+      "profile": "工具設定檔",
+      "webSearch": "網頁搜尋",
+      "webFetch": "網頁擷取",
+      "codeExecution": "程式碼執行",
+      "elevatedAccess": "工具提升權限",
+      "backend": "記憶後端",
+      "citations": "引用",
+      "memorySearch": "記憶搜尋"
+    },
+    "channels": {
+      "section": "通訊頻道",
+      "noChannels": "此伺服器未設定任何頻道。",
+      "enabled": "已啟用",
+      "disabled": "已停用",
+      "dmPolicy": "私訊政策",
+      "groupPolicy": "群組政策",
+      "historyLimit": "歷史紀錄限制"
+    }
   }
 }

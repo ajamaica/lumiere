@@ -53,7 +53,9 @@
     "skills": "Habilidades",
     "gatewayLogs": "Logs do Gateway",
     "missions": "Missões",
-    "showToolEventsInChat": "Mostrar eventos de ferramentas no chat"
+    "showToolEventsInChat": "Mostrar eventos de ferramentas no chat",
+    "agents": "Agentes",
+    "serverConfiguration": "Configuração do Servidor"
   },
   "home": {
     "connectionError": "Erro de Conexão",
@@ -441,5 +443,90 @@
     "close": "Fechar canvas",
     "clear": "Limpar canvas",
     "tapToOpen": "Toque para ver o canvas"
+  },
+  "agentManagement": {
+    "title": "Agentes",
+    "subtitle": "Gerencie e monitore seus agentes de IA.",
+    "openClawOnly": "Apenas OpenClaw",
+    "openClawOnlyDescription": "O gerenciamento de agentes está disponível apenas para servidores OpenClaw.",
+    "agentCount": "{{count}} agente(s)",
+    "loading": "Carregando agentes...",
+    "noAgents": "Nenhum agente conectado a este servidor.",
+    "createAgent": "Criar Agente",
+    "agentDetail": "Detalhes do Agente",
+    "profile": "Perfil",
+    "configuration": "Configuração",
+    "agentName": "Nome do Agente",
+    "agentNamePlaceholder": "ex. researcher",
+    "workspace": "Espaço de trabalho",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "Caminho absoluto no servidor onde este agente opera.",
+    "model": "Modelo",
+    "modelPlaceholder": "ex. claude-sonnet-4-5",
+    "emoji": "Emoji",
+    "thinking": "Pensamento",
+    "timeout": "Tempo limite",
+    "status": "Status",
+    "dangerZone": "Zona de Perigo",
+    "deleteAgent": "Excluir Agente",
+    "deleteConfirm": "Tem certeza de que deseja excluir o agente \"{{name}}\"? Esta ação não pode ser desfeita.",
+    "createSuccess": "Agente \"{{name}}\" criado com sucesso. O servidor será reiniciado.",
+    "createError": "Falha ao criar agente.",
+    "saveError": "Falha ao salvar alterações.",
+    "deleteSuccess": "Agente excluído com sucesso. O servidor será reiniciado.",
+    "deleteError": "Falha ao excluir agente.",
+    "errors": {
+      "nameWorkspaceRequired": "O nome do agente e o espaço de trabalho são obrigatórios."
+    }
+  },
+  "serverConfig": {
+    "title": "Configuração do Servidor",
+    "subtitle": "Edite as configurações do servidor gateway.",
+    "openClawOnly": "Apenas OpenClaw",
+    "openClawOnlyDescription": "A configuração do servidor está disponível apenas para servidores OpenClaw.",
+    "loadingConfig": "Carregando configuração...",
+    "fetchError": "Falha ao carregar a configuração do servidor.",
+    "saveSuccess": "Configuração salva. O servidor será reiniciado.",
+    "saveError": "Falha ao salvar a configuração.",
+    "discard": "Descartar",
+    "saveAndRestart": "Salvar e Reiniciar",
+    "tabs": {
+      "agentDefaults": "Padrões do Agente",
+      "toolsMemory": "Ferramentas e Memória",
+      "channels": "Canais"
+    },
+    "agentDefaults": {
+      "section": "Configurações Padrão do Agente",
+      "model": "Modelo Padrão",
+      "thinking": "Nível de Pensamento",
+      "verbose": "Modo Detalhado",
+      "elevated": "Acesso Elevado",
+      "compaction": "Compactação",
+      "resources": "Limites de Recursos",
+      "maxTokens": "Máximo de Tokens",
+      "timeout": "Tempo Limite (ms)",
+      "concurrency": "Concorrência"
+    },
+    "toolsMemory": {
+      "toolsSection": "Ferramentas",
+      "memorySection": "Memória",
+      "profile": "Perfil de Ferramentas",
+      "webSearch": "Pesquisa Web",
+      "webFetch": "Busca Web",
+      "codeExecution": "Execução de Código",
+      "elevatedAccess": "Acesso Elevado a Ferramentas",
+      "backend": "Backend de Memória",
+      "citations": "Citações",
+      "memorySearch": "Pesquisa de Memória"
+    },
+    "channels": {
+      "section": "Canais de Comunicação",
+      "noChannels": "Nenhum canal configurado neste servidor.",
+      "enabled": "Ativado",
+      "disabled": "Desativado",
+      "dmPolicy": "Política de DM",
+      "groupPolicy": "Política de Grupo",
+      "historyLimit": "Limite de Histórico"
+    }
   }
 }

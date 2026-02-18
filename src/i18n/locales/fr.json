@@ -53,7 +53,9 @@
     "skills": "Compétences",
     "gatewayLogs": "Journaux du Gateway",
     "missions": "Missions",
-    "showToolEventsInChat": "Afficher les événements d'outils dans le chat"
+    "showToolEventsInChat": "Afficher les événements d'outils dans le chat",
+    "agents": "Agents",
+    "serverConfiguration": "Configuration du Serveur"
   },
   "home": {
     "connectionError": "Erreur de connexion",
@@ -441,5 +443,90 @@
     "close": "Fermer le canvas",
     "clear": "Effacer le canvas",
     "tapToOpen": "Appuyez pour voir le canvas"
+  },
+  "agentManagement": {
+    "title": "Agents",
+    "subtitle": "Gérez et surveillez vos agents IA.",
+    "openClawOnly": "OpenClaw uniquement",
+    "openClawOnlyDescription": "La gestion des agents n'est disponible que pour les serveurs OpenClaw.",
+    "agentCount": "{{count}} agent(s)",
+    "loading": "Chargement des agents...",
+    "noAgents": "Aucun agent connecté à ce serveur.",
+    "createAgent": "Créer un Agent",
+    "agentDetail": "Détail de l'Agent",
+    "profile": "Profil",
+    "configuration": "Configuration",
+    "agentName": "Nom de l'Agent",
+    "agentNamePlaceholder": "ex. researcher",
+    "workspace": "Espace de travail",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "Chemin absolu sur le serveur où cet agent opère.",
+    "model": "Modèle",
+    "modelPlaceholder": "ex. claude-sonnet-4-5",
+    "emoji": "Emoji",
+    "thinking": "Réflexion",
+    "timeout": "Délai d'attente",
+    "status": "Statut",
+    "dangerZone": "Zone de Danger",
+    "deleteAgent": "Supprimer l'Agent",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer l'agent \"{{name}}\" ? Cette action est irréversible.",
+    "createSuccess": "Agent \"{{name}}\" créé avec succès. Le serveur va redémarrer.",
+    "createError": "Échec de la création de l'agent.",
+    "saveError": "Échec de l'enregistrement des modifications.",
+    "deleteSuccess": "Agent supprimé avec succès. Le serveur va redémarrer.",
+    "deleteError": "Échec de la suppression de l'agent.",
+    "errors": {
+      "nameWorkspaceRequired": "Le nom de l'agent et l'espace de travail sont obligatoires."
+    }
+  },
+  "serverConfig": {
+    "title": "Configuration du Serveur",
+    "subtitle": "Modifier les paramètres du serveur gateway.",
+    "openClawOnly": "OpenClaw uniquement",
+    "openClawOnlyDescription": "La configuration du serveur n'est disponible que pour les serveurs OpenClaw.",
+    "loadingConfig": "Chargement de la configuration...",
+    "fetchError": "Échec du chargement de la configuration du serveur.",
+    "saveSuccess": "Configuration enregistrée. Le serveur va redémarrer.",
+    "saveError": "Échec de l'enregistrement de la configuration.",
+    "discard": "Annuler",
+    "saveAndRestart": "Enregistrer et Redémarrer",
+    "tabs": {
+      "agentDefaults": "Paramètres par Défaut de l'Agent",
+      "toolsMemory": "Outils et Mémoire",
+      "channels": "Canaux"
+    },
+    "agentDefaults": {
+      "section": "Paramètres par Défaut de l'Agent",
+      "model": "Modèle par Défaut",
+      "thinking": "Niveau de Réflexion",
+      "verbose": "Mode Détaillé",
+      "elevated": "Accès Élevé",
+      "compaction": "Compaction",
+      "resources": "Limites de Ressources",
+      "maxTokens": "Tokens Maximum",
+      "timeout": "Délai d'attente (ms)",
+      "concurrency": "Concurrence"
+    },
+    "toolsMemory": {
+      "toolsSection": "Outils",
+      "memorySection": "Mémoire",
+      "profile": "Profil d'Outils",
+      "webSearch": "Recherche Web",
+      "webFetch": "Récupération Web",
+      "codeExecution": "Exécution de Code",
+      "elevatedAccess": "Accès Élevé aux Outils",
+      "backend": "Backend de Mémoire",
+      "citations": "Citations",
+      "memorySearch": "Recherche en Mémoire"
+    },
+    "channels": {
+      "section": "Canaux de Communication",
+      "noChannels": "Aucun canal configuré sur ce serveur.",
+      "enabled": "Activé",
+      "disabled": "Désactivé",
+      "dmPolicy": "Politique de MD",
+      "groupPolicy": "Politique de Groupe",
+      "historyLimit": "Limite d'Historique"
+    }
   }
 }

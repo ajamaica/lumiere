@@ -7,8 +7,11 @@ import {
   AgentParams,
   ChatAttachmentPayload,
   ChatSendResponse,
+  ConfigGetResponse,
+  ConfigPatchParams,
   ConnectionState,
   ConnectResponse,
+  CronJobDetail,
   GatewayLogsParams,
   GatewayLogsResponse,
   GatewaySnapshot,
@@ -19,6 +22,7 @@ import {
   SessionsSpawnResponse,
   Skill,
   SkillsListResponse,
+  SkillsStatusResponse,
   SubagentEvent,
   SubagentsListResponse,
   TeachSkillParams,
@@ -74,6 +78,10 @@ export interface UseMoltGatewayResult {
   listSubagents: (sessionKey?: string) => Promise<SubagentsListResponse>
   stopSubagent: (runId: string) => Promise<void>
   onSubagentEvent: (callback: (event: SubagentEvent) => void) => () => void
+  getServerConfig: () => Promise<ConfigGetResponse>
+  patchServerConfig: (params: ConfigPatchParams) => Promise<unknown>
+  getSkillsStatus: () => Promise<SkillsStatusResponse>
+  getCronJobDetail: (jobId: string) => Promise<CronJobDetail | null>
 }
 
 /** Derive boolean flags from the ConnectionState enum. */
@@ -256,6 +264,11 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       stopSubagent: (runId: string) => requireClient(client).stopSubagent(runId),
       onSubagentEvent: (callback: (event: SubagentEvent) => void) =>
         client ? client.onSubagentEvent(callback) : () => {},
+      getServerConfig: () => requireClient(client).getServerConfig(),
+      patchServerConfig: (params: ConfigPatchParams) =>
+        requireClient(client).patchServerConfig(params),
+      getSkillsStatus: () => requireClient(client).getSkillsStatus(),
+      getCronJobDetail: (jobId: string) => requireClient(client).getCronJobDetail(jobId),
     }),
     [client],
   )

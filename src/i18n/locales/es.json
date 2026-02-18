@@ -53,7 +53,9 @@
     "skills": "Habilidades",
     "gatewayLogs": "Registros del Gateway",
     "missions": "Misiones",
-    "showToolEventsInChat": "Mostrar eventos de herramientas en el chat"
+    "showToolEventsInChat": "Mostrar eventos de herramientas en el chat",
+    "agents": "Agentes",
+    "serverConfiguration": "Configuración del Servidor"
   },
   "home": {
     "connectionError": "Error de Conexión",
@@ -441,5 +443,90 @@
     "close": "Cerrar canvas",
     "clear": "Limpiar canvas",
     "tapToOpen": "Toca para ver el canvas"
+  },
+  "agentManagement": {
+    "title": "Agentes",
+    "subtitle": "Administra y monitorea tus agentes de IA.",
+    "openClawOnly": "Solo OpenClaw",
+    "openClawOnlyDescription": "La gestión de agentes solo está disponible para servidores OpenClaw.",
+    "agentCount": "{{count}} agente(s)",
+    "loading": "Cargando agentes...",
+    "noAgents": "No hay agentes conectados a este servidor.",
+    "createAgent": "Crear Agente",
+    "agentDetail": "Detalle del Agente",
+    "profile": "Perfil",
+    "configuration": "Configuración",
+    "agentName": "Nombre del Agente",
+    "agentNamePlaceholder": "ej. researcher",
+    "workspace": "Espacio de trabajo",
+    "workspacePlaceholder": "/path/to/workspace",
+    "workspaceHint": "Ruta absoluta en el servidor donde opera este agente.",
+    "model": "Modelo",
+    "modelPlaceholder": "ej. claude-sonnet-4-5",
+    "emoji": "Emoji",
+    "thinking": "Pensamiento",
+    "timeout": "Tiempo de espera",
+    "status": "Estado",
+    "dangerZone": "Zona de Peligro",
+    "deleteAgent": "Eliminar Agente",
+    "deleteConfirm": "¿Estás seguro de que deseas eliminar el agente \"{{name}}\"? Esta acción no se puede deshacer.",
+    "createSuccess": "Agente \"{{name}}\" creado exitosamente. El servidor se reiniciará.",
+    "createError": "Error al crear el agente.",
+    "saveError": "Error al guardar los cambios.",
+    "deleteSuccess": "Agente eliminado exitosamente. El servidor se reiniciará.",
+    "deleteError": "Error al eliminar el agente.",
+    "errors": {
+      "nameWorkspaceRequired": "El nombre del agente y el espacio de trabajo son obligatorios."
+    }
+  },
+  "serverConfig": {
+    "title": "Configuración del Servidor",
+    "subtitle": "Editar los ajustes del servidor gateway.",
+    "openClawOnly": "Solo OpenClaw",
+    "openClawOnlyDescription": "La configuración del servidor solo está disponible para servidores OpenClaw.",
+    "loadingConfig": "Cargando configuración...",
+    "fetchError": "Error al cargar la configuración del servidor.",
+    "saveSuccess": "Configuración guardada. El servidor se reiniciará.",
+    "saveError": "Error al guardar la configuración.",
+    "discard": "Descartar",
+    "saveAndRestart": "Guardar y Reiniciar",
+    "tabs": {
+      "agentDefaults": "Valores Predeterminados del Agente",
+      "toolsMemory": "Herramientas y Memoria",
+      "channels": "Canales"
+    },
+    "agentDefaults": {
+      "section": "Configuración Predeterminada del Agente",
+      "model": "Modelo Predeterminado",
+      "thinking": "Nivel de Pensamiento",
+      "verbose": "Modo Detallado",
+      "elevated": "Acceso Elevado",
+      "compaction": "Compactación",
+      "resources": "Límites de Recursos",
+      "maxTokens": "Tokens Máximos",
+      "timeout": "Tiempo de espera (ms)",
+      "concurrency": "Concurrencia"
+    },
+    "toolsMemory": {
+      "toolsSection": "Herramientas",
+      "memorySection": "Memoria",
+      "profile": "Perfil de Herramientas",
+      "webSearch": "Búsqueda Web",
+      "webFetch": "Obtención Web",
+      "codeExecution": "Ejecución de Código",
+      "elevatedAccess": "Acceso Elevado de Herramientas",
+      "backend": "Backend de Memoria",
+      "citations": "Citas",
+      "memorySearch": "Búsqueda en Memoria"
+    },
+    "channels": {
+      "section": "Canales de Comunicación",
+      "noChannels": "No hay canales configurados en este servidor.",
+      "enabled": "Habilitado",
+      "disabled": "Deshabilitado",
+      "dmPolicy": "Política de MD",
+      "groupPolicy": "Política de Grupo",
+      "historyLimit": "Límite de Historial"
+    }
   }
 }
