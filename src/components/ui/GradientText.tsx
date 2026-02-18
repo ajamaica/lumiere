@@ -27,8 +27,8 @@ export function GradientText({
 
   const presetColors: Record<GradientPreset, [ColorValue, ColorValue, ...ColorValue[]]> = {
     primary: [theme.colors.primary, theme.colors.primaryLight],
-    accent: ['#A855F7', '#22D3EE'], // Purple to cyan
-    hero: ['#22D3EE', '#A855F7', '#EC4899'], // Cyan to purple to pink
+    accent: ['#A855F7', theme.colors.primary], // Purple to primary
+    hero: [theme.colors.primary, '#A855F7', '#EC4899'], // Primary to purple to pink
     subtle: [theme.colors.text.primary, theme.colors.primary],
   }
 

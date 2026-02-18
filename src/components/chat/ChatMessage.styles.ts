@@ -214,7 +214,7 @@ export const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
         : theme.isDark
           ? 'rgba(255, 255, 255, 0.1)'
           : 'rgba(0, 0, 0, 0.1)',
-      color: isUser ? textColor : theme.isDark ? '#E8ECEF' : '#374151',
+      color: isUser ? textColor : theme.colors.text.primary,
       paddingHorizontal: theme.spacing.xs + 2,
       paddingVertical: 2,
       borderRadius: theme.borderRadius.sm,
@@ -223,7 +223,7 @@ export const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
     },
     fence: {
       backgroundColor: 'transparent',
-      color: isUser ? textColor : theme.isDark ? '#D4D9DE' : '#1F2937',
+      color: isUser ? textColor : theme.colors.text.primary,
       padding: theme.spacing.md,
       borderRadius: 0,
       fontFamily: theme.typography.fontFamily.monospace,
@@ -233,7 +233,7 @@ export const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
     },
     code_block: {
       backgroundColor: 'transparent',
-      color: isUser ? textColor : theme.isDark ? '#D4D9DE' : '#1F2937',
+      color: isUser ? textColor : theme.colors.text.primary,
       padding: theme.spacing.md,
       borderRadius: 0,
       fontFamily: theme.typography.fontFamily.monospace,
@@ -274,7 +274,7 @@ export const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
       marginRight: theme.spacing.sm,
     },
     link: {
-      color: isUser && !theme.isDark ? '#FFFFFF' : theme.colors.primary,
+      color: isUser && !theme.isDark ? theme.colors.text.inverse : theme.colors.primary,
       textDecorationLine: 'underline' as const,
       fontWeight: theme.typography.fontWeight.medium,
     },

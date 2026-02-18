@@ -10,7 +10,9 @@ import {
   Button,
   Card,
   Divider,
+  EmptyState,
   IconButton,
+  ModalOverlay,
   ScreenHeader,
   Section,
   SettingRow,
@@ -18,6 +20,7 @@ import {
   StatusDot,
   Text,
   TextInput,
+  useToast,
 } from '../ui'
 
 function TypographyShowcase() {
@@ -66,6 +69,7 @@ function TypographyShowcase() {
 }
 
 function ButtonShowcase() {
+  const { theme } = useTheme()
   return (
     <Section title="Buttons">
       <Card>
@@ -96,7 +100,9 @@ function ButtonShowcase() {
           <Button title="Loading..." loading />
           <Button
             title="With Icon"
-            icon={<Ionicons name="add-circle-outline" size={20} color="#FFF" />}
+            icon={
+              <Ionicons name="add-circle-outline" size={20} color={theme.colors.text.inverse} />
+            }
           />
         </View>
       </Card>
@@ -256,6 +262,7 @@ function SettingRowShowcase() {
 }
 
 function StatCardShowcase() {
+  const { theme } = useTheme()
   return (
     <Section title="Stat Cards">
       <View style={{ gap: 12 }}>
@@ -269,7 +276,7 @@ function StatCardShowcase() {
           value={12}
           description="Recent session keys tracked by the gateway."
         />
-        <StatCard label="STATUS" value="Connected" valueColor="#34C759" />
+        <StatCard label="STATUS" value="Connected" valueColor={theme.colors.status.success} />
       </View>
     </Section>
   )
@@ -283,6 +290,94 @@ function SectionShowcase() {
           Sections group related content with an uppercase title header. All the groups on this page
           use the Section component. Sections can also include a right-side element for actions.
         </Text>
+      </Card>
+    </Section>
+  )
+}
+
+function EmptyStateShowcase() {
+  return (
+    <Section title="Empty States">
+      <View style={{ gap: 12 }}>
+        <Card>
+          <EmptyState
+            icon="chatbubbles-outline"
+            title="No Messages"
+            description="Start a conversation to see messages here."
+            style={{ paddingVertical: 24 }}
+          />
+        </Card>
+        <Card>
+          <EmptyState
+            icon="rocket-outline"
+            title="No Missions"
+            description="Create a mission to get started."
+            action={{ title: 'Create Mission', onPress: () => {} }}
+            style={{ paddingVertical: 24 }}
+          />
+        </Card>
+      </View>
+    </Section>
+  )
+}
+
+function ModalOverlayShowcase() {
+  const [visible, setVisible] = useState(false)
+  return (
+    <Section title="Modal Overlay">
+      <Card>
+        <Text variant="bodySmall" color="secondary" style={{ marginBottom: 12 }}>
+          A reusable modal with backdrop, supports center and bottom positions.
+        </Text>
+        <Button title="Open Modal" variant="secondary" onPress={() => setVisible(true)} />
+        <ModalOverlay visible={visible} onClose={() => setVisible(false)} width="80%">
+          <View style={{ padding: 20, gap: 12 }}>
+            <Text variant="heading3">Modal Content</Text>
+            <Text variant="bodySmall" color="secondary">
+              Tap the backdrop or press back to close.
+            </Text>
+            <Button title="Close" variant="secondary" onPress={() => setVisible(false)} />
+          </View>
+        </ModalOverlay>
+      </Card>
+    </Section>
+  )
+}
+
+function ToastShowcase() {
+  const toast = useToast()
+  return (
+    <Section title="Toasts">
+      <Card>
+        <Text variant="bodySmall" color="secondary" style={{ marginBottom: 12 }}>
+          Non-blocking notifications for success, error, warning, and info messages.
+        </Text>
+        <View style={{ gap: 8 }}>
+          <Button
+            title="Success Toast"
+            variant="secondary"
+            size="sm"
+            onPress={() => toast.show('Operation completed successfully!', 'success')}
+          />
+          <Button
+            title="Error Toast"
+            variant="secondary"
+            size="sm"
+            onPress={() => toast.show('Something went wrong. Please try again.', 'error')}
+          />
+          <Button
+            title="Warning Toast"
+            variant="secondary"
+            size="sm"
+            onPress={() => toast.show('This action cannot be undone.', 'warning')}
+          />
+          <Button
+            title="Info Toast"
+            variant="secondary"
+            size="sm"
+            onPress={() => toast.show('New version available.', 'info')}
+          />
+        </View>
       </Card>
     </Section>
   )
@@ -341,6 +436,9 @@ export function ComponentGallery() {
         <ActionRowShowcase />
         <SettingRowShowcase />
         <StatCardShowcase />
+        <EmptyStateShowcase />
+        <ModalOverlayShowcase />
+        <ToastShowcase />
         <SectionShowcase />
         <DividerShowcase />
       </ScrollView>

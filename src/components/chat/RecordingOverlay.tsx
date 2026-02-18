@@ -65,7 +65,7 @@ const createStyles = (theme: Theme) =>
       width: 8,
       height: 8,
       borderRadius: 4,
-      backgroundColor: '#FF3B30',
+      backgroundColor: theme.colors.status.error,
     },
     label: {
       fontSize: theme.typography.fontSize.sm,

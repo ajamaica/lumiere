@@ -40,12 +40,21 @@ jest.mock('../../../theme', () => ({
     theme: {
       colors: {
         primary: '#22D3EE',
+        primaryLight: '#67E8F9',
+        primaryDark: '#0891B2',
         surface: '#0A1628',
         surfaceVariant: '#1E3A5F',
         border: '#1E3A5F',
         text: {
           primary: '#F0F4F8',
           secondary: '#8892A8',
+          inverse: '#FFFFFF',
+        },
+        status: {
+          success: '#10B981',
+          error: '#EF4444',
+          warning: '#F59E0B',
+          info: '#3B82F6',
         },
       },
       typography: {

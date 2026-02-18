@@ -46,7 +46,7 @@ export const createChatScreenStyles = (
       backgroundColor: theme.colors.primary,
       alignItems: 'center',
       justifyContent: 'center',
-      shadowColor: '#000',
+      shadowColor: theme.colors.shadow,
       shadowOffset: {
         width: 0,
         height: 2,

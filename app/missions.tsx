@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { MissionCard } from '../src/components/missions/MissionCard'
-import { Button, GradientButton, ScreenHeader, Text } from '../src/components/ui'
+import { EmptyState, GradientButton, ScreenHeader, Text } from '../src/components/ui'
 import { useMissionList } from '../src/hooks/useMissionList'
 import { useServers } from '../src/hooks/useServers'
 import { useTheme } from '../src/theme'
@@ -71,43 +71,22 @@ export default function MissionsScreen() {
       backgroundColor: theme.colors.primary,
       borderColor: theme.colors.primary,
     },
-    emptyState: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingVertical: theme.spacing.xxxl,
-      paddingHorizontal: theme.spacing.xl,
-    },
-    emptyIconCircle: {
-      width: 80,
-      height: 80,
-      borderRadius: 40,
-      backgroundColor: theme.colors.primary + '15',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: theme.spacing.lg,
-    },
   })
 
   if (currentServer?.providerType !== 'molt') {
     return (
       <SafeAreaView style={styles.container}>
         <ScreenHeader title={t('missions.title')} showBack />
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: theme.spacing.lg,
+        <EmptyState
+          icon="rocket-outline"
+          title={t('missions.openClawOnly')}
+          description={t('missions.openClawOnlyDescription')}
+          action={{
+            title: t('home.goToSettings'),
+            onPress: () => router.push('/settings'),
           }}
-        >
-          <Text variant="heading2" style={{ marginBottom: theme.spacing.md }}>
-            {t('missions.openClawOnly')}
-          </Text>
-          <Text color="secondary" center style={{ marginBottom: theme.spacing.xl }}>
-            {t('missions.openClawOnlyDescription')}
-          </Text>
-          <Button title={t('home.goToSettings')} onPress={() => router.push('/settings')} />
-        </View>
+          style={{ flex: 1 }}
+        />
       </SafeAreaView>
     )
   }
@@ -120,7 +99,7 @@ export default function MissionsScreen() {
         <GradientButton
           title={t('missions.createMission')}
           onPress={() => router.push('/create-mission')}
-          icon={<Ionicons name="rocket" size={18} color="#FFFFFF" />}
+          icon={<Ionicons name="rocket" size={18} color={theme.colors.text.inverse} />}
           style={{ marginBottom: theme.spacing.lg }}
         />
 
@@ -136,7 +115,7 @@ export default function MissionsScreen() {
               <Text
                 variant="caption"
                 style={{
-                  color: filter === f.key ? '#FFFFFF' : theme.colors.text.secondary,
+                  color: filter === f.key ? theme.colors.text.inverse : theme.colors.text.secondary,
                   fontWeight: filter === f.key ? '600' : '400',
                 }}
               >
@@ -147,27 +126,15 @@ export default function MissionsScreen() {
         </View>
 
         {filteredMissions.length === 0 ? (
-          <View style={styles.emptyState}>
-            <View style={styles.emptyIconCircle}>
-              <Ionicons
-                name={filter === 'archived' ? 'archive-outline' : 'rocket-outline'}
-                size={36}
-                color={theme.colors.primary}
-              />
-            </View>
-            <Text
-              variant="heading3"
-              center
-              style={{ marginBottom: theme.spacing.sm, color: theme.colors.text.primary }}
-            >
-              {filter === 'archived' ? t('missions.emptyArchived') : t('missions.empty')}
-            </Text>
-            <Text variant="body" color="secondary" center>
-              {filter === 'archived'
+          <EmptyState
+            icon={filter === 'archived' ? 'archive-outline' : 'rocket-outline'}
+            title={filter === 'archived' ? t('missions.emptyArchived') : t('missions.empty')}
+            description={
+              filter === 'archived'
                 ? t('missions.emptyArchivedDescription')
-                : t('missions.emptyDescription')}
-            </Text>
-          </View>
+                : t('missions.emptyDescription')
+            }
+          />
         ) : (
           filteredMissions.map((mission) => (
             <MissionCard

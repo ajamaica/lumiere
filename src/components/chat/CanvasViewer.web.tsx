@@ -68,7 +68,7 @@ export function CanvasViewer() {
                 height: '100%',
                 border: 'none',
                 borderRadius: 0,
-                backgroundColor: '#ffffff',
+                backgroundColor: theme.colors.surface,
               }}
               title={content.title || t('canvas.title')}
             />
