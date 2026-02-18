@@ -8,7 +8,7 @@ import { AppState, AppStateStatus, View } from 'react-native'
 
 import { BiometricLockScreen } from '../src/components/BiometricLockScreen'
 import { PasswordLockScreen } from '../src/components/PasswordLockScreen'
-import { ErrorBoundary } from '../src/components/ui'
+import { ErrorBoundary, ToastProvider } from '../src/components/ui'
 import { useAppleShortcuts } from '../src/hooks/useAppleShortcuts'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useLanguage } from '../src/hooks/useLanguage'
@@ -271,7 +271,9 @@ export default function RootLayout() {
     <KeyboardProvider>
       <ThemeProvider>
         <ErrorBoundary>
-          <AppContent />
+          <ToastProvider>
+            <AppContent />
+          </ToastProvider>
         </ErrorBoundary>
       </ThemeProvider>
     </KeyboardProvider>

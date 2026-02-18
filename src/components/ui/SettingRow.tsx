@@ -113,7 +113,7 @@ export function SettingRow({
             value={switchValue}
             onValueChange={onSwitchChange}
             trackColor={{ false: theme.colors.surfaceVariant, true: theme.colors.primary }}
-            thumbColor="#FFFFFF"
+            thumbColor={theme.colors.surface}
             accessibilityLabel={label}
             accessibilityRole="switch"
           />

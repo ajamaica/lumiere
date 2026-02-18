@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
@@ -11,7 +11,9 @@ import {
   Button,
   Card,
   Divider,
+  EmptyState,
   IconButton,
+  ModalOverlay,
   ScreenHeader,
   Section,
   Text,
@@ -305,22 +307,6 @@ export default function SessionsScreen() {
       marginTop: 2,
     },
 
-    // Empty state
-    emptyContainer: {
-      alignItems: 'center',
-      paddingVertical: theme.spacing.xxxl,
-      gap: theme.spacing.md,
-    },
-    emptyIconContainer: {
-      width: 64,
-      height: 64,
-      borderRadius: 32,
-      backgroundColor: theme.colors.surfaceVariant,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: theme.spacing.sm,
-    },
-
     // Bottom button
     bottomButtonContainer: {
       paddingHorizontal: theme.spacing.lg,
@@ -331,18 +317,6 @@ export default function SessionsScreen() {
     },
 
     // Context menu
-    menuOverlay: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    },
-    menuContainer: {
-      width: deviceType === 'phone' ? '75%' : '50%',
-      maxWidth: MAX_CONTENT_WIDTH,
-      borderRadius: theme.borderRadius.xl,
-      overflow: 'hidden',
-    },
     menuGlass: {
       backgroundColor: theme.colors.surface,
       borderRadius: theme.borderRadius.xl,
@@ -389,20 +363,15 @@ export default function SessionsScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <ScreenHeader title={t('sessions.title')} showClose />
-        <View style={styles.emptyContainer}>
-          <View style={styles.emptyIconContainer}>
-            <Ionicons name="server-outline" size={28} color={theme.colors.text.tertiary} />
-          </View>
-          <Text variant="heading3">{t('sessions.noServerConfigured')}</Text>
-          <Text color="secondary" center style={{ paddingHorizontal: theme.spacing.xl }}>
-            {t('sessions.noServerMessage')}
-          </Text>
-          <Button
-            title={t('sessions.goToSettings')}
-            onPress={() => router.push('/settings')}
-            style={{ marginTop: theme.spacing.sm }}
-          />
-        </View>
+        <EmptyState
+          icon="server-outline"
+          title={t('sessions.noServerConfigured')}
+          description={t('sessions.noServerMessage')}
+          action={{
+            title: t('sessions.goToSettings'),
+            onPress: () => router.push('/settings'),
+          }}
+        />
       </SafeAreaView>
     )
   }
@@ -510,14 +479,11 @@ export default function SessionsScreen() {
               ))}
             </Card>
           ) : (
-            <View style={styles.emptyContainer}>
-              <View style={styles.emptyIconContainer}>
-                <Ionicons name="chatbubbles-outline" size={28} color={theme.colors.text.tertiary} />
-              </View>
-              <Text variant="bodySmall" color="secondary" center>
-                {t('sessions.noSessionsMessage')}
-              </Text>
-            </View>
+            <EmptyState
+              icon="chatbubbles-outline"
+              title={t('sessions.noSessions')}
+              description={t('sessions.noSessionsMessage')}
+            />
           )}
         </Section>
       </ScrollView>
@@ -532,94 +498,82 @@ export default function SessionsScreen() {
       </View>
 
       {/* Long-press context menu */}
-      <Modal
+      <ModalOverlay
         visible={menuSessionKey !== null}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setMenuSessionKey(null)}
+        onClose={() => setMenuSessionKey(null)}
+        width={deviceType === 'phone' ? '75%' : '50%'}
       >
-        <TouchableOpacity
-          style={styles.menuOverlay}
-          activeOpacity={1}
-          onPress={() => setMenuSessionKey(null)}
-        >
-          <View style={styles.menuContainer}>
-            <GlassView style={styles.menuGlass}>
-              <View style={styles.menuHeader}>
-                <Text variant="heading3" numberOfLines={1}>
-                  {menuSessionKey ? formatSessionKey(menuSessionKey) : ''}
-                </Text>
-              </View>
-
-              <TouchableOpacity
-                style={styles.menuItem}
-                onPress={() => {
-                  const key = menuSessionKey
-                  setMenuSessionKey(null)
-                  if (key) handleSelectSession(key)
-                }}
-              >
-                <Ionicons
-                  name="chatbubble-outline"
-                  size={20}
-                  color={theme.colors.primary}
-                  style={styles.menuItemIcon}
-                />
-                <Text style={[styles.menuItemText, { color: theme.colors.primary }]}>
-                  {t('sessions.switchToSession')}
-                </Text>
-              </TouchableOpacity>
-
-              <View style={styles.menuDivider} />
-
-              <TouchableOpacity
-                style={styles.menuItem}
-                onPress={() => {
-                  const key = menuSessionKey
-                  setMenuSessionKey(null)
-                  if (key) handleEditSession(key)
-                }}
-              >
-                <Ionicons
-                  name="pencil-outline"
-                  size={20}
-                  color={theme.colors.text.primary}
-                  style={styles.menuItemIcon}
-                />
-                <Text style={styles.menuItemText}>{t('sessions.editSession')}</Text>
-              </TouchableOpacity>
-
-              <View style={styles.menuDivider} />
-
-              <TouchableOpacity
-                style={styles.menuItem}
-                onPress={() => {
-                  if (menuSessionKey) handleDeleteSession(menuSessionKey)
-                }}
-              >
-                <Ionicons
-                  name="trash-outline"
-                  size={20}
-                  color={theme.colors.status.error}
-                  style={styles.menuItemIcon}
-                />
-                <Text style={[styles.menuItemText, styles.menuItemDestructive]}>
-                  {t('sessions.deleteSession')}
-                </Text>
-              </TouchableOpacity>
-
-              <View style={styles.menuDivider} />
-
-              <TouchableOpacity
-                style={styles.menuCancelItem}
-                onPress={() => setMenuSessionKey(null)}
-              >
-                <Text style={styles.menuItemText}>{t('common.cancel')}</Text>
-              </TouchableOpacity>
-            </GlassView>
+        <GlassView style={styles.menuGlass}>
+          <View style={styles.menuHeader}>
+            <Text variant="heading3" numberOfLines={1}>
+              {menuSessionKey ? formatSessionKey(menuSessionKey) : ''}
+            </Text>
           </View>
-        </TouchableOpacity>
-      </Modal>
+
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => {
+              const key = menuSessionKey
+              setMenuSessionKey(null)
+              if (key) handleSelectSession(key)
+            }}
+          >
+            <Ionicons
+              name="chatbubble-outline"
+              size={20}
+              color={theme.colors.primary}
+              style={styles.menuItemIcon}
+            />
+            <Text style={[styles.menuItemText, { color: theme.colors.primary }]}>
+              {t('sessions.switchToSession')}
+            </Text>
+          </TouchableOpacity>
+
+          <View style={styles.menuDivider} />
+
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => {
+              const key = menuSessionKey
+              setMenuSessionKey(null)
+              if (key) handleEditSession(key)
+            }}
+          >
+            <Ionicons
+              name="pencil-outline"
+              size={20}
+              color={theme.colors.text.primary}
+              style={styles.menuItemIcon}
+            />
+            <Text style={styles.menuItemText}>{t('sessions.editSession')}</Text>
+          </TouchableOpacity>
+
+          <View style={styles.menuDivider} />
+
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => {
+              if (menuSessionKey) handleDeleteSession(menuSessionKey)
+            }}
+          >
+            <Ionicons
+              name="trash-outline"
+              size={20}
+              color={theme.colors.status.error}
+              style={styles.menuItemIcon}
+            />
+            <Text style={[styles.menuItemText, styles.menuItemDestructive]}>
+              {t('sessions.deleteSession')}
+            </Text>
+          </TouchableOpacity>
+
+          <View style={styles.menuDivider} />
+
+          <TouchableOpacity style={styles.menuCancelItem} onPress={() => setMenuSessionKey(null)}>
+            <Text style={styles.menuItemText}>{t('common.cancel')}</Text>
+          </TouchableOpacity>
+        </GlassView>
+      </ModalOverlay>
     </SafeAreaView>
   )
 }

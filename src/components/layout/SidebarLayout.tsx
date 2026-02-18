@@ -114,7 +114,7 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
       padding: 8,
       borderWidth: 1,
       borderColor: theme.colors.border,
-      shadowColor: '#000',
+      shadowColor: theme.colors.shadow,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,

@@ -434,7 +434,7 @@ const createStatusBarStyles = (
       marginRight: theme.spacing.sm,
     },
     approvalBubble: {
-      backgroundColor: theme.isDark ? '#3A2E1B' : '#FFF8E1',
+      backgroundColor: theme.colors.status.warning + (theme.isDark ? '30' : '20'),
     },
     approvalText: {
       fontSize: theme.typography.fontSize.sm,
@@ -443,7 +443,7 @@ const createStatusBarStyles = (
       flexShrink: 1,
     },
     errorBubble: {
-      backgroundColor: theme.isDark ? '#3A1B1B' : '#FFEBEE',
+      backgroundColor: theme.colors.status.error + (theme.isDark ? '30' : '20'),
     },
     statusText: {
       fontSize: theme.typography.fontSize.sm,

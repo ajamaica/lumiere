@@ -124,6 +124,6 @@ const createStyles = (theme: Theme) =>
     },
     webView: {
       flex: 1,
-      backgroundColor: '#ffffff',
+      backgroundColor: theme.colors.surface,
     },
   })

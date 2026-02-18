@@ -55,10 +55,18 @@ export function GradientButton({
   const scaleValue = useSharedValue(1)
 
   const presetColors: Record<GradientPreset, [ColorValue, ColorValue, ...ColorValue[]]> = {
-    primary: ['#22D3EE', '#06B6D4', '#0891B2'],
+    primary: [theme.colors.primaryLight, theme.colors.primary, theme.colors.primaryDark],
     accent: ['#A855F7', '#7C3AED', '#6D28D9'],
-    success: ['#10B981', '#059669', '#047857'],
-    warning: ['#F59E0B', '#D97706', '#B45309'],
+    success: [
+      theme.colors.status.success,
+      theme.colors.status.success + 'CC',
+      theme.colors.status.success + '99',
+    ],
+    warning: [
+      theme.colors.status.warning,
+      theme.colors.status.warning + 'CC',
+      theme.colors.status.warning + '99',
+    ],
   }
 
   const gradientColors = colors || presetColors[preset]
@@ -135,7 +143,7 @@ export function GradientButton({
     text: {
       fontSize: s.fontSize,
       fontWeight: theme.typography.fontWeight.semibold,
-      color: '#FFFFFF',
+      color: theme.colors.text.inverse,
     },
   })
 
@@ -163,7 +171,7 @@ export function GradientButton({
         style={[styles.gradient, animatedGradientStyle]}
       >
         {loading ? (
-          <ActivityIndicator size="small" color="#FFFFFF" />
+          <ActivityIndicator size="small" color={theme.colors.text.inverse} />
         ) : (
           <>
             {icon}
