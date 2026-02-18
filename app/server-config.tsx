@@ -18,6 +18,7 @@ import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { AgentDefaults, ChannelConfig, ServerConfig, ToolsConfig } from '../src/services/molt/types'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
 
 const configLogger = logger.create('ServerConfig')
@@ -163,6 +164,7 @@ function OptionPicker({
 
 export default function ServerConfigScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { t } = useTranslation()
   const { getProviderConfig, currentServerId, currentServer } = useServers()
@@ -416,7 +418,7 @@ export default function ServerConfigScreen() {
         ))}
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         {/* Agent Defaults Tab */}
         {activeTab === 'agent-defaults' && (
           <>

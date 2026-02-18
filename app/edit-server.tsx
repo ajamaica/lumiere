@@ -26,10 +26,12 @@ import { useClaudeModels } from '../src/hooks/useClaudeModels'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 import { keyboardAvoidingBehavior } from '../src/utils/platform'
 
 export default function EditServerScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const { t } = useTranslation()
   const router = useRouter()
   const { id } = useLocalSearchParams<{ id: string }>()
@@ -191,7 +193,7 @@ export default function EditServerScreen() {
       <ScreenHeader title="Edit Server" showBack />
       <KeyboardAvoidingView behavior={keyboardAvoidingBehavior} style={styles.keyboardView}>
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
+          contentContainerStyle={[styles.scrollContent, contentContainerStyle]}
           keyboardShouldPersistTaps="handled"
         >
           {providerOptions.length > 1 && (

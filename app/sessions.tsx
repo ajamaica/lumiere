@@ -34,6 +34,7 @@ import {
 } from '../src/store'
 import { jotaiStorage } from '../src/store/storage'
 import { useTheme } from '../src/theme'
+import { MAX_CONTENT_WIDTH, useContentContainerStyle, useDeviceType } from '../src/utils/device'
 import { GlassView } from '../src/utils/glassEffect'
 import { logger } from '../src/utils/logger'
 
@@ -47,6 +48,8 @@ interface Session {
 
 export default function SessionsScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
+  const deviceType = useDeviceType()
   const router = useRouter()
   const { t } = useTranslation()
   const { getProviderConfig, currentServerId } = useServers()
@@ -335,7 +338,8 @@ export default function SessionsScreen() {
       backgroundColor: 'rgba(0, 0, 0, 0.4)',
     },
     menuContainer: {
-      width: '75%',
+      width: deviceType === 'phone' ? '75%' : '50%',
+      maxWidth: MAX_CONTENT_WIDTH,
       borderRadius: theme.borderRadius.xl,
       overflow: 'hidden',
     },
@@ -406,7 +410,7 @@ export default function SessionsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('sessions.title')} showClose />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         {/* Current session - compact single row: name + badge + edit + reset */}
         <Section title={t('sessions.currentSession')}>
           <View style={styles.currentSessionCard}>

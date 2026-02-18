@@ -32,6 +32,7 @@ import type { AgentEvent, SubagentEvent } from '../src/services/molt/types'
 import type { ChatHistoryMessage, ChatHistoryResponse } from '../src/services/providers/types'
 import type { SerializedMessage, SubtaskSubagent } from '../src/store/missionTypes'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
 
 const missionLogger = logger.create('MissionDetail')
@@ -106,6 +107,7 @@ function extractMissionUpdatesFromText(text: string): {
 
 export default function MissionDetailScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { t } = useTranslation()
   const { activeMission } = useMissionList()
@@ -769,7 +771,7 @@ export default function MissionDetailScreen() {
       >
         <ScrollView
           ref={scrollRef}
-          contentContainerStyle={styles.scrollContent}
+          contentContainerStyle={[styles.scrollContent, contentContainerStyle]}
           scrollEventThrottle={16}
           onScroll={(event) => {
             const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent

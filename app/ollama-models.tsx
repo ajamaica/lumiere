@@ -9,6 +9,7 @@ import { ScreenHeader, Section, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { currentServerIdAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
 import { normalizeOllamaUrl } from '../src/utils/ollama'
 
@@ -39,6 +40,7 @@ function formatDate(dateStr: string): string {
 
 export default function OllamaModelsScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { currentServer, updateServer } = useServers()
   const [currentServerId] = useAtom(currentServerIdAtom)
@@ -162,7 +164,7 @@ export default function OllamaModelsScreen() {
     <SafeAreaView style={styles.container}>
       <ScreenHeader title="Models" showBack />
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <Section title={`Current: ${currentModel}`}>
           {loading ? (
             <View style={{ paddingVertical: theme.spacing.xl, alignItems: 'center' }}>

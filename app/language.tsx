@@ -7,9 +7,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScreenHeader, Section, Text } from '../src/components/ui'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 
 export default function LanguageScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const { t } = useTranslation()
   const { currentLanguage, setLanguage, supportedLanguages, languageNames } = useLanguage()
 
@@ -52,7 +54,7 @@ export default function LanguageScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('settings.language')} showBack />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <Section>
           {supportedLanguages.map((langCode, index) => {
             const isSelected = langCode === currentLanguage

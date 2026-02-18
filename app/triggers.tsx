@@ -2,13 +2,21 @@ import { Ionicons } from '@expo/vector-icons'
 import * as Clipboard from 'expo-clipboard'
 import { useAtom } from 'jotai'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Alert, Dimensions, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import { currentSessionKeyAtom, TriggerConfig, triggersAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle, useIsTablet } from '../src/utils/device'
 
 function generateSlug(): string {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
@@ -48,6 +56,8 @@ function getTriggerIcon(id: string): keyof typeof Ionicons.glyphMap {
 
 export default function TriggersScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
+  const isTablet = useIsTablet()
   const { currentServer, currentServerId } = useServers()
   const [triggers, setTriggers] = useAtom(triggersAtom)
   const [currentSessionKey] = useAtom(currentSessionKeyAtom)
@@ -60,8 +70,9 @@ export default function TriggersScreen() {
     [triggers],
   )
 
-  const screenWidth = Dimensions.get('window').width
-  const cardWidth = (screenWidth - SCREEN_PADDING * 2 - CARD_GAP) / 2
+  const { width: screenWidth } = useWindowDimensions()
+  const columns = isTablet ? 3 : 2
+  const cardWidth = (screenWidth - SCREEN_PADDING * 2 - CARD_GAP * (columns - 1)) / columns
 
   const handleCreate = useCallback(() => {
     if (!newMessage.trim()) {
@@ -279,7 +290,7 @@ export default function TriggersScreen() {
         }
       />
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         {/* Create trigger form */}
         {isCreating && (
           <View style={styles.createCard}>

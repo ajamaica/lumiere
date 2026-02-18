@@ -23,6 +23,7 @@ import {
   ConfigGetResponse,
 } from '../src/services/molt/types'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
 
 const agentsLogger = logger.create('Agents')
@@ -37,6 +38,7 @@ function resolveModel(model: AgentConfig['model']): string {
 
 export default function AgentsScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { t } = useTranslation()
   const { getProviderConfig, currentServerId, currentServer } = useServers()
@@ -427,7 +429,7 @@ export default function AgentsScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <ScreenHeader title={t('agentManagement.createAgent')} showBack onBack={handleBack} />
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
           <Section>
             <View style={styles.formField}>
               <Text variant="sectionTitle" style={{ marginBottom: theme.spacing.xs }}>
@@ -527,7 +529,7 @@ export default function AgentsScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <ScreenHeader title={t('agentManagement.agentDetail')} showBack onBack={handleBack} />
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
           {/* Profile */}
           <Section title={t('agentManagement.profile')}>
             <Card>
@@ -689,7 +691,7 @@ export default function AgentsScreen() {
         subtitle={t('agentManagement.subtitle')}
         showBack
       />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <View style={styles.headerRow}>
           <Text variant="bodySmall" color="secondary">
             {t('agentManagement.agentCount', { count: agents.length })}

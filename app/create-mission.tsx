@@ -21,6 +21,7 @@ import { useMissionActions } from '../src/hooks/useMissionActions'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
 
 const missionLogger = logger.create('Mission')
@@ -190,6 +191,7 @@ SUB-AGENTS:
 
 export default function CreateMissionScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { t } = useTranslation()
   const { getProviderConfig, currentServerId } = useServers()
@@ -447,7 +449,7 @@ User request: ${prompt.trim()}`
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{ flex: 1 }}
       >
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
           {phase === 'input' && (
             <>
               <Text variant="body" color="secondary" style={{ marginBottom: theme.spacing.md }}>

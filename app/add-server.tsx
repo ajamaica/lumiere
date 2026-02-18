@@ -16,10 +16,12 @@ import { getAllProviderOptions } from '../src/config/providerOptions'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 import { keyboardAvoidingBehavior } from '../src/utils/platform'
 
 export default function AddServerScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const { t } = useTranslation()
   const router = useRouter()
   const { addServer } = useServers()
@@ -180,7 +182,7 @@ export default function AddServerScreen() {
       <ScreenHeader title="Add Server" showBack />
       <KeyboardAvoidingView behavior={keyboardAvoidingBehavior} style={styles.keyboardView}>
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
+          contentContainerStyle={[styles.scrollContent, contentContainerStyle]}
           keyboardShouldPersistTaps="handled"
         >
           {providerOptions.length > 1 && (

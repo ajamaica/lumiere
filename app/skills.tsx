@@ -10,12 +10,14 @@ import { getClawHubSkillContent, searchClawHubSkills } from '../src/services/cla
 import { useMoltGateway } from '../src/services/molt'
 import { ClawHubSkill } from '../src/services/molt/types'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
 
 const skillsLogger = logger.create('Skills')
 
 export default function SkillsScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { t } = useTranslation()
   const { getProviderConfig, currentServerId, currentServer } = useServers()
@@ -181,7 +183,7 @@ export default function SkillsScreen() {
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('skills.title')} subtitle={t('skills.subtitle')} showBack />
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <Section title={t('skills.clawHub.title')}>
           <Text variant="bodySmall" color="secondary" style={{ marginBottom: theme.spacing.md }}>
             {t('skills.clawHub.description')}

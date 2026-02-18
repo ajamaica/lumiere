@@ -8,6 +8,7 @@ import { ScreenHeader, Section, SettingRow, Text } from '../src/components/ui'
 import { useTheme } from '../src/theme'
 import { ColorThemeKey, colorThemes } from '../src/theme/colors'
 import type { ThemeMode } from '../src/theme/themes'
+import { useContentContainerStyle } from '../src/utils/device'
 
 const COLOR_THEME_KEYS: ColorThemeKey[] = [
   'lumiere',
@@ -28,6 +29,7 @@ const THEME_MODES: { mode: ThemeMode; icon: keyof typeof Ionicons.glyphMap }[] =
 
 export default function ColorsScreen() {
   const { theme, themeMode, setThemeMode, colorTheme, setColorTheme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const { t } = useTranslation()
 
   const getSwatchColor = (key: ColorThemeKey): string => {
@@ -69,7 +71,7 @@ export default function ColorsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('settings.colors')} showBack />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <Section title={t('colors.appearance')}>
           {THEME_MODES.map((item, index) => (
             <SettingRow
