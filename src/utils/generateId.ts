@@ -2,8 +2,8 @@
  * Generates a unique ID for messages and other entities.
  *
  * Uses crypto.randomUUID() when available (React Native 0.80+),
- * with a fallback for older environments that combines timestamp
- * with random characters to avoid collision.
+ * with a fallback that uses crypto.getRandomValues() for
+ * cryptographically secure randomness.
  */
 export function generateId(prefix: string = 'id'): string {
   // Try crypto.randomUUID first (available in modern RN)
@@ -11,10 +11,12 @@ export function generateId(prefix: string = 'id'): string {
     return `${prefix}-${crypto.randomUUID()}`
   }
 
-  // Fallback: timestamp + random suffix
-  const timestamp = Date.now().toString(36)
-  const randomPart = Math.random().toString(36).substring(2, 10)
-  const extraRandom = Math.random().toString(36).substring(2, 6)
+  // Fallback: use crypto.getRandomValues (CSPRNG, not Math.random)
+  const bytes = new Uint8Array(16)
+  crypto.getRandomValues(bytes)
+  const hex = Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('')
 
-  return `${prefix}-${timestamp}-${randomPart}${extraRandom}`
+  return `${prefix}-${hex}`
 }
