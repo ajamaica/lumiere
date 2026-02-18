@@ -237,7 +237,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
         requireClient(client).getChatHistory(sessionKey, limit),
       resetSession: (sessionKey: string) => requireClient(client).resetSession(sessionKey),
       deleteSession: (sessionKey: string) => requireClient(client).deleteSession(sessionKey),
-      listSessions: () => (client ? client.listSessions() : Promise.resolve(null)),
+      listSessions: () => requireClient(client).listSessions(),
       getSchedulerStatus: () => requireClient(client).getSchedulerStatus(),
       listCronJobs: () => requireClient(client).listCronJobs(),
       disableCronJob: (jobId: string) => requireClient(client).disableCronJob(jobId),

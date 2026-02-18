@@ -774,6 +774,15 @@ export class MoltGatewayClient {
     const maxAttempts = this.config.maxReconnectAttempts
     if (maxAttempts != null && this.reconnectAttempt >= maxAttempts) {
       wsLogger.error(`Max reconnect attempts (${maxAttempts}) reached, giving up`)
+      if (this.connectPromiseReject) {
+        this.connectPromiseReject(
+          new Error(
+            `Max reconnect attempts (${maxAttempts}) reached after ${this.reconnectAttempt} attempts`,
+          ),
+        )
+        this.connectPromiseResolve = null
+        this.connectPromiseReject = null
+      }
       this.setConnectionState('disconnected')
       return
     }
