@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useAtom, useSetAtom } from 'jotai'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { Component, ErrorInfo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import Markdown from 'react-native-markdown-display'
@@ -40,6 +40,43 @@ export type { Message, MessageAttachment, TextMessage }
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient)
 
 const chatLogger = logger.create('ChatMessage')
+
+/**
+ * Error boundary that catches Markdown rendering failures and falls back
+ * to plain text display so the user always sees message content.
+ */
+class MarkdownErrorBoundary extends Component<
+  { children: React.ReactNode; fallback: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode; fallback: React.ReactNode }) {
+    super(props)
+    this.state = { hasError: false }
+  }
+
+  static getDerivedStateFromError(): { hasError: boolean } {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo): void {
+    chatLogger.logError('Markdown rendering failed, falling back to plain text', error)
+    chatLogger.debug('Component stack:', info.componentStack)
+  }
+
+  componentDidUpdate(prevProps: { children: React.ReactNode; fallback: React.ReactNode }): void {
+    // Reset error state when children change so re-renders get another chance
+    if (this.state.hasError && prevProps.fallback !== this.props.fallback) {
+      this.setState({ hasError: false })
+    }
+  }
+
+  render(): React.ReactNode {
+    if (this.state.hasError) {
+      return this.props.fallback
+    }
+    return this.props.children
+  }
+}
 
 // Convert plain URLs to markdown links
 const linkifyText = (text: string): string => {
@@ -216,18 +253,30 @@ function ChatMessageComponent({ message }: { message: Message }) {
     )
   }
 
+  const plainTextFallback = useMemo(
+    () => (
+      <Text style={markdownStyles.body} selectable={true}>
+        {processedText}
+      </Text>
+    ),
+    [markdownStyles, processedText],
+  )
+
   const renderMarkdown = () => (
-    <Markdown
-      style={markdownStyles}
-      onLinkPress={(url: string) => {
-        handleLinkPress(url)
-        return false
-      }}
-      mergeStyle={true}
-      rules={markdownRules}
-    >
-      {processedText}
-    </Markdown>
+    <MarkdownErrorBoundary fallback={plainTextFallback}>
+      <Markdown
+        key={message.id}
+        style={markdownStyles}
+        onLinkPress={(url: string) => {
+          handleLinkPress(url)
+          return false
+        }}
+        mergeStyle={true}
+        rules={markdownRules}
+      >
+        {processedText}
+      </Markdown>
+    </MarkdownErrorBoundary>
   )
 
   // User bubble with gradient
