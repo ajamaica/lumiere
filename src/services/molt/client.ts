@@ -13,12 +13,14 @@ import {
   protocolConfig,
 } from '../../config/gateway.config'
 import { logger } from '../../utils/logger'
+import { buildSignedDevice, getDeviceIdentity } from './deviceIdentity'
 import {
   AgentEvent,
   AgentEventCallback,
   AgentParams,
   ChatAttachmentPayload,
   ChatSendResponse,
+  ConnectChallenge,
   ConnectionState,
   ConnectionStateCallback,
   ConnectResponse,
@@ -128,6 +130,7 @@ export class MoltGatewayClient {
 
   disconnect(): void {
     this.intentionalClose = true
+    this.challengeListener = null
     this.clearReconnectTimer()
     this.clearTickTimer()
 
@@ -442,8 +445,12 @@ export class MoltGatewayClient {
     }
 
     this.ws.onopen = () => {
-      wsLogger.info('WebSocket connected')
-      this.performHandshake()
+      wsLogger.info('WebSocket connected, waiting for connect.challenge…')
+      // The gateway sends a connect.challenge event after the WebSocket opens.
+      // We wait for it before performing the handshake. A timeout ensures we
+      // don't hang if the server never sends the challenge.
+      this.waitForChallenge()
+        .then((challenge) => this.performHandshake(challenge))
         .then((response) => {
           this.handleHelloOk(response)
         })
@@ -466,7 +473,38 @@ export class MoltGatewayClient {
     }
   }
 
-  private async performHandshake(): Promise<ConnectResponse> {
+  /**
+   * Wait for the gateway to send a `connect.challenge` event containing a
+   * nonce and timestamp. The client must echo the nonce back in its connect
+   * request to prove liveness.
+   *
+   * If the gateway doesn't send a challenge within 5 seconds, the promise
+   * resolves with `null` so the client can fall back to v1 (no-nonce) signing.
+   */
+  private waitForChallenge(): Promise<ConnectChallenge | null> {
+    return new Promise<ConnectChallenge | null>((resolve) => {
+      const timer = setTimeout(() => {
+        this.challengeListener = null
+        wsLogger.info('No connect.challenge received, falling back to v1 handshake')
+        resolve(null)
+      }, 5_000)
+
+      this.challengeListener = (challenge: ConnectChallenge) => {
+        clearTimeout(timer)
+        this.challengeListener = null
+        wsLogger.info('Received connect.challenge', { nonce: challenge.nonce })
+        resolve(challenge)
+      }
+    })
+  }
+
+  /**
+   * Callback set by `waitForChallenge()`. When the message handler receives
+   * a `connect.challenge` event it invokes this to unblock the handshake.
+   */
+  private challengeListener: ((challenge: ConnectChallenge) => void) | null = null
+
+  private async performHandshake(challenge: ConnectChallenge | null): Promise<ConnectResponse> {
     const auth: { token?: string; password?: string } = {
       token: this.config.token,
     }
@@ -474,10 +512,31 @@ export class MoltGatewayClient {
       auth.password = this.config.password
     }
 
+    const role = 'operator'
+    const scopes = ['operator.admin']
+
+    // Build a cryptographically signed device identity payload.
+    // When a challenge was received (v2), include its nonce.
+    // Otherwise fall back to v1 signing (no nonce).
+    const identity = await getDeviceIdentity()
+    const device = await buildSignedDevice({
+      identity,
+      clientId: clientConfig.id,
+      clientMode: clientConfig.mode,
+      role,
+      scopes,
+      token: this.config.token,
+      nonce: challenge?.nonce,
+    })
+
     const params = {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,
+      role,
+      scopes,
+      device,
+      caps: [],
       auth,
     }
 
@@ -602,6 +661,12 @@ export class MoltGatewayClient {
     }
 
     switch (event) {
+      case GatewayEvents.CONNECT_CHALLENGE:
+        if (this.challengeListener) {
+          this.challengeListener(payload as ConnectChallenge)
+        }
+        break
+
       case GatewayEvents.TICK:
         this.handleTick()
         break
@@ -672,9 +737,13 @@ export class MoltGatewayClient {
       return
     }
 
+    // Detect pairing-required close (code 1008 or "pairing" in reason)
+    const isPairingRequired =
+      code === 1008 || /pairing/i.test(reason) || /pairing/i.test(String(code))
+
     // Auto-reconnect
     if (this.config.autoReconnect) {
-      this.setConnectionState('reconnecting')
+      this.setConnectionState(isPairingRequired ? 'awaitingApproval' : 'reconnecting')
       this.scheduleReconnect()
     } else {
       this.setConnectionState('disconnected')

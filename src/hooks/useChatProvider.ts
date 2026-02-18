@@ -29,6 +29,7 @@ const DEFAULT_CAPABILITIES: ProviderCapabilities = {
 export interface UseChatProviderResult {
   connected: boolean
   connecting: boolean
+  awaitingApproval: boolean
   error: string | null
   health: HealthStatus | null
   capabilities: ProviderCapabilities
@@ -57,6 +58,7 @@ function configKey(config: ProviderConfig): string {
 export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
   const [connected, setConnected] = useState(false)
   const [connecting, setConnecting] = useState(false)
+  const [awaitingApproval, setAwaitingApproval] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [health, setHealth] = useState<HealthStatus | null>(null)
   const [capabilities, setCapabilities] = useState<ProviderCapabilities>(DEFAULT_CAPABILITIES)
@@ -93,16 +95,21 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
         providerRef.current = provider
         setCapabilities(provider.capabilities)
 
-        unsubConnectionState = provider.onConnectionStateChange((isConnected, isReconnecting) => {
-          if (cancelled) return
-          setConnected(isConnected)
-          setConnecting(isReconnecting)
-          if (isReconnecting) {
-            setError('Reconnecting...')
-          } else if (isConnected) {
-            setError(null)
-          }
-        })
+        unsubConnectionState = provider.onConnectionStateChange(
+          (isConnected, isReconnecting, isPairingPending) => {
+            if (cancelled) return
+            setConnected(isConnected)
+            setConnecting(isReconnecting)
+            setAwaitingApproval(!!isPairingPending)
+            if (isPairingPending) {
+              setError(null)
+            } else if (isReconnecting) {
+              setError('Reconnecting...')
+            } else if (isConnected) {
+              setError(null)
+            }
+          },
+        )
 
         await provider.connect()
 
@@ -182,6 +189,7 @@ export function useChatProvider(config: ProviderConfig): UseChatProviderResult {
   return {
     connected,
     connecting,
+    awaitingApproval,
     error,
     health,
     capabilities,

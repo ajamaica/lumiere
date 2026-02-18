@@ -77,6 +77,9 @@
     "lifecycleStart": "생각 중",
     "lifecycleEnd": "완료"
   },
+  "connection": {
+    "awaitingApproval": "게이트웨이에서 이 기기를 승인해 주세요"
+  },
   "addServer": {
     "title": "서버 추가",
     "providerType": "제공자 유형",

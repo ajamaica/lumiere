@@ -2,7 +2,12 @@
 
 // ─── Connection ─────────────────────────────────────────────────────────────────
 
-export type ConnectionState = 'disconnected' | 'connecting' | 'connected' | 'reconnecting'
+export type ConnectionState =
+  | 'disconnected'
+  | 'connecting'
+  | 'connected'
+  | 'reconnecting'
+  | 'awaitingApproval'
 
 export interface MoltConfig {
   url: string
@@ -85,13 +90,40 @@ export interface PendingRequest {
 
 // ─── Connect ────────────────────────────────────────────────────────────────────
 
+/**
+ * Challenge payload sent by the gateway as a `connect.challenge` event
+ * immediately after the WebSocket connection opens. The client must echo
+ * the nonce back in its `connect` request to prove liveness.
+ */
+export interface ConnectChallenge {
+  /** Unique nonce the client must echo back in the connect request. */
+  nonce: string
+  /** Server timestamp when the challenge was issued. */
+  ts: number
+}
+
 export interface ConnectParams {
   minProtocol: number
   maxProtocol: number
+  client: {
+    id: string
+    mode: string
+    version: string
+    platform: string
+  }
   role?: string
+  scopes?: string[]
   device?: {
     id: string
     name?: string
+    /** Base64url-encoded raw 32-byte Ed25519 public key. */
+    publicKey?: string
+    /** Base64url-encoded Ed25519 signature of the auth payload. */
+    signature?: string
+    /** Timestamp (ms) when the payload was signed. */
+    signedAt?: number
+    /** Nonce echoed from the connect.challenge event. */
+    nonce?: string
   }
   caps?: string[]
   auth?: {
@@ -99,6 +131,7 @@ export interface ConnectParams {
     password?: string
   }
   locale?: string
+  userAgent?: string
 }
 
 export interface GatewaySnapshot {

@@ -77,6 +77,9 @@
     "lifecycleStart": "思考中",
     "lifecycleEnd": "完成"
   },
+  "connection": {
+    "awaitingApproval": "請在閘道器上批准此設備"
+  },
   "addServer": {
     "title": "新增伺服器",
     "providerType": "供應商類型",

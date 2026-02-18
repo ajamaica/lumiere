@@ -59,8 +59,17 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
   const hasScrolledOnLoadRef = useRef(false)
   const shouldAutoScrollRef = useRef(true)
 
-  const { connected, connecting, error, health, capabilities, retry, sendMessage, getChatHistory } =
-    useChatProvider(providerConfig)
+  const {
+    connected,
+    connecting,
+    awaitingApproval,
+    error,
+    health,
+    capabilities,
+    retry,
+    sendMessage,
+    getChatHistory,
+  } = useChatProvider(providerConfig)
 
   const activeWebsite = useActiveWebsite()
 
@@ -260,6 +269,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     // Connection state (pass-through from useChatProvider)
     connected,
     connecting,
+    awaitingApproval,
     error,
     health,
     capabilities,

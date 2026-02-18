@@ -76,6 +76,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
   const {
     connected,
     connecting,
+    awaitingApproval,
     error,
     health,
     capabilities,
@@ -267,6 +268,7 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
       <ConnectionStatusBar
         connecting={connecting}
         connected={connected}
+        awaitingApproval={awaitingApproval}
         error={error}
         health={health}
         retry={retry}

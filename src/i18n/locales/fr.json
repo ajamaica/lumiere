@@ -77,6 +77,9 @@
     "lifecycleStart": "Réflexion",
     "lifecycleEnd": "Terminé"
   },
+  "connection": {
+    "awaitingApproval": "Approuvez cet appareil sur votre passerelle"
+  },
   "addServer": {
     "title": "Ajouter un serveur",
     "providerType": "Type de fournisseur",

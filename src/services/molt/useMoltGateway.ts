@@ -32,6 +32,7 @@ export interface UseMoltGatewayResult {
   connected: boolean
   connecting: boolean
   reconnecting: boolean
+  awaitingApproval: boolean
   error: string | null
   health: HealthStatus | null
   snapshot: GatewaySnapshot | null
@@ -81,6 +82,7 @@ function deriveStateFlags(state: ConnectionState) {
     connected: state === 'connected',
     connecting: state === 'connecting',
     reconnecting: state === 'reconnecting',
+    awaitingApproval: state === 'awaitingApproval',
   }
 }
 
@@ -89,6 +91,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
   const [connected, setConnected] = useState(false)
   const [connecting, setConnecting] = useState(false)
   const [reconnecting, setReconnecting] = useState(false)
+  const [awaitingApproval, setAwaitingApproval] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [health, setHealth] = useState<HealthStatus | null>(null)
   const [snapshot, setSnapshot] = useState<GatewaySnapshot | null>(null)
@@ -111,26 +114,23 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       const newClient = new MoltGatewayClient(config)
       clientRef.current = newClient
 
-      const response = await newClient.connect()
-      gatewayLogger.info('Connected to Molt Gateway', response)
-
-      setClient(newClient)
-      setConnected(true)
-      setConnectResponse(response)
-      setSnapshot(response.snapshot || null)
-
-      // Subscribe to connection state changes
+      // Subscribe to connection state changes BEFORE connect() so we
+      // catch awaitingApproval during the initial handshake attempt.
       newClient.onConnectionStateChange((state: ConnectionState) => {
         const flags = deriveStateFlags(state)
         gatewayLogger.info(`Connection state: ${state}`)
         setConnected(flags.connected)
         setConnecting(flags.connecting)
         setReconnecting(flags.reconnecting)
+        setAwaitingApproval(flags.awaitingApproval)
 
-        if (flags.reconnecting) {
+        if (flags.awaitingApproval) {
+          setError(null)
+        } else if (flags.reconnecting) {
           setError('Reconnecting...')
         } else if (flags.connected) {
           setError(null)
+          setAwaitingApproval(false)
         }
       })
 
@@ -139,6 +139,15 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
         setConnected(false)
         setError('Gateway shutdown')
       })
+
+      const response = await newClient.connect()
+      gatewayLogger.info('Connected to Molt Gateway', response)
+
+      setClient(newClient)
+      setConnected(true)
+      setAwaitingApproval(false)
+      setConnectResponse(response)
+      setSnapshot(response.snapshot || null)
 
       // Fetch initial health status
       try {
@@ -167,6 +176,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     setConnected(false)
     setConnecting(false)
     setReconnecting(false)
+    setAwaitingApproval(false)
     setHealth(null)
     setSnapshot(null)
     setConnectResponse(null)
@@ -448,6 +458,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     connected,
     connecting,
     reconnecting,
+    awaitingApproval,
     error,
     health,
     snapshot,

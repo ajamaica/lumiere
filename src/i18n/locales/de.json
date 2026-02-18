@@ -77,6 +77,9 @@
     "lifecycleStart": "Denkt nach",
     "lifecycleEnd": "Fertig"
   },
+  "connection": {
+    "awaitingApproval": "Genehmigen Sie dieses Gerät auf Ihrem Gateway"
+  },
   "addServer": {
     "title": "Server hinzufügen",
     "providerType": "Anbietertyp",

@@ -1,11 +1,25 @@
+import { Platform } from 'react-native'
+
 import { DEFAULT_SESSION_KEY } from '../constants'
 
+/** Resolve the gateway-recognised client ID for this platform. */
+function resolveClientId(): string {
+  switch (Platform.OS) {
+    case 'ios':
+      return 'openclaw-ios'
+    case 'android':
+      return 'openclaw-android'
+    default:
+      return 'webchat'
+  }
+}
+
 export const clientConfig = {
-  id: 'cli',
-  mode: 'cli',
-  version: '1.0.0',
-  platform: 'ios',
-} as const
+  id: resolveClientId(),
+  mode: 'webchat' as const,
+  version: '1.1.0',
+  platform: Platform.OS,
+}
 
 export const protocolConfig = {
   minProtocol: 3,
