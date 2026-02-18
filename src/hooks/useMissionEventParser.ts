@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react'
 
-import type { Mission, MissionStatus } from '../store/missionTypes'
+import type { Mission, MissionStatus, SubagentPersonality } from '../store/missionTypes'
 
 export interface MissionUpdate {
   type:
@@ -15,6 +15,8 @@ export interface MissionUpdate {
   reason?: string
   /** For subagent_spawn: the task description given to the sub-agent. */
   subagentTask?: string
+  /** For subagent_spawn: the personality lens the sub-agent was spawned with. */
+  subagentPersonality?: SubagentPersonality
 }
 
 const MARKERS = {
@@ -23,7 +25,8 @@ const MARKERS = {
   suggestSkill: /\[SUGGEST_SKILL:([\w\s-]+)\]/g,
   missionComplete: /\[MISSION_COMPLETE\]/g,
   missionError: /\[MISSION_ERROR:([^\]]+)\]/g,
-  subagentSpawn: /\[SUBAGENT_SPAWN:([\w-]+):([^\]]+)\]/g,
+  subagentSpawn:
+    /\[SUBAGENT_SPAWN:([\w-]+):(?:(general|philosophical|engineering|creative|scientific|critical|strategic):)?([^\]]+)\]/g,
 }
 
 export function useMissionEventParser() {
@@ -78,7 +81,12 @@ export function useMissionEventParser() {
 
     MARKERS.subagentSpawn.lastIndex = 0
     while ((match = MARKERS.subagentSpawn.exec(text)) !== null) {
-      updates.push({ type: 'subagent_spawn', subtaskId: match[1], subagentTask: match[2].trim() })
+      updates.push({
+        type: 'subagent_spawn',
+        subtaskId: match[1],
+        subagentPersonality: (match[2] as SubagentPersonality) ?? undefined,
+        subagentTask: match[3].trim(),
+      })
       const end = match.index + match[0].length
       if (end > lastMarkerEnd) lastMarkerEnd = end
     }
@@ -114,7 +122,10 @@ export function stripMissionMarkers(text: string): string {
     .replace(/\[SUGGEST_SKILL:[\w\s-]+\]/g, '')
     .replace(/\[MISSION_COMPLETE\]/g, '')
     .replace(/\[MISSION_ERROR:[^\]]+\]/g, '')
-    .replace(/\[SUBAGENT_SPAWN:[\w-]+:[^\]]+\]/g, '')
+    .replace(
+      /\[SUBAGENT_SPAWN:[\w-]+:(?:(?:general|philosophical|engineering|creative|scientific|critical|strategic):)?[^\]]+\]/g,
+      '',
+    )
     .trim()
 }
 

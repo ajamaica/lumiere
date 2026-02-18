@@ -435,7 +435,16 @@
       "completed": "Завершено",
       "error": "Ошибка",
       "spawned": "Суб-агент запущен",
-      "resultReceived": "Результат суб-агента получен"
+      "resultReceived": "Результат суб-агента получен",
+      "personalities": {
+        "general": "Общий",
+        "philosophical": "Философский",
+        "engineering": "Инженерный",
+        "creative": "Творческий",
+        "scientific": "Научный",
+        "critical": "Критический",
+        "strategic": "Стратегический"
+      }
     }
   },
   "canvas": {

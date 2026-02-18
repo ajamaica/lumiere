@@ -3,10 +3,20 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
 
-import type { SubtaskSubagent } from '../../store/missionTypes'
+import type { SubagentPersonality, SubtaskSubagent } from '../../store/missionTypes'
 import { useTheme } from '../../theme'
 import { Theme } from '../../theme/themes'
 import { Text } from '../ui'
+
+const PERSONALITY_ICONS: Record<SubagentPersonality, keyof typeof Ionicons.glyphMap> = {
+  general: 'ellipse-outline',
+  philosophical: 'book-outline',
+  engineering: 'construct-outline',
+  creative: 'color-palette-outline',
+  scientific: 'flask-outline',
+  critical: 'shield-outline',
+  strategic: 'compass-outline',
+}
 
 interface SubagentBubbleProps {
   subagent: SubtaskSubagent
@@ -32,6 +42,10 @@ export function SubagentBubble({ subagent }: SubagentBubbleProps) {
       ? t('missions.subagents.error')
       : t('missions.subagents.completed')
 
+  const personality = subagent.personality ?? 'general'
+  const personalityIcon = PERSONALITY_ICONS[personality]
+  const personalityLabel = t(`missions.subagents.personalities.${personality}`)
+
   return (
     <View style={styles.container} accessible accessibilityRole="text">
       <View style={styles.headerRow}>
@@ -39,6 +53,12 @@ export function SubagentBubble({ subagent }: SubagentBubbleProps) {
         <Text variant="caption" style={styles.label}>
           {t('missions.subagents.label')}
         </Text>
+        <View style={styles.personalityBadge}>
+          <Ionicons name={personalityIcon} size={12} color={theme.colors.text.secondary} />
+          <Text variant="caption" style={styles.personalityText}>
+            {personalityLabel}
+          </Text>
+        </View>
         <View style={styles.statusContainer}>
           {isRunning ? (
             <ActivityIndicator size="small" color={theme.colors.text.secondary} />
@@ -86,7 +106,20 @@ const createStyles = (theme: Theme) =>
     label: {
       color: theme.colors.primary,
       fontWeight: '600',
+    },
+    personalityBadge: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 3,
+      backgroundColor: theme.isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)',
+      borderRadius: theme.borderRadius.sm,
+      paddingHorizontal: 6,
+      paddingVertical: 2,
       flex: 1,
+    },
+    personalityText: {
+      color: theme.colors.text.secondary,
+      fontSize: 11,
     },
     statusContainer: {
       flexDirection: 'row',

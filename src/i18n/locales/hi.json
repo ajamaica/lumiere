@@ -435,7 +435,16 @@
       "completed": "पूर्ण",
       "error": "त्रुटि",
       "spawned": "सब-एजेंट शुरू किया गया",
-      "resultReceived": "सब-एजेंट का परिणाम प्राप्त हुआ"
+      "resultReceived": "सब-एजेंट का परिणाम प्राप्त हुआ",
+      "personalities": {
+        "general": "सामान्य",
+        "philosophical": "दार्शनिक",
+        "engineering": "इंजीनियरिंग",
+        "creative": "रचनात्मक",
+        "scientific": "वैज्ञानिक",
+        "critical": "आलोचनात्मक",
+        "strategic": "रणनीतिक"
+      }
     }
   },
   "canvas": {

@@ -435,7 +435,16 @@
       "completed": "已完成",
       "error": "錯誤",
       "spawned": "子代理已啟動",
-      "resultReceived": "子代理結果已收到"
+      "resultReceived": "子代理結果已收到",
+      "personalities": {
+        "general": "通用",
+        "philosophical": "哲學",
+        "engineering": "工程",
+        "creative": "創意",
+        "scientific": "科學",
+        "critical": "批判",
+        "strategic": "策略"
+      }
     }
   },
   "canvas": {
