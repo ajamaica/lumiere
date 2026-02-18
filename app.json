@@ -31,7 +31,8 @@
           "UIInterfaceOrientationPortraitUpsideDown",
           "UIInterfaceOrientationLandscapeLeft",
           "UIInterfaceOrientationLandscapeRight"
-        ]
+        ],
+        "NSUserActivityTypes": ["bot.lumiere.app.openChat", "bot.lumiere.app.newChat"]
       }
     },
     "android": {
