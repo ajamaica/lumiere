@@ -217,7 +217,6 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
             data={filteredMessages}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ChatMessage message={item} />}
-            estimatedItemSize={100}
             contentContainerStyle={[styles.messageList, contentContainerStyle]}
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {
