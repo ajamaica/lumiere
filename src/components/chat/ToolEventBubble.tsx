@@ -139,12 +139,6 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
   const [expanded, setExpanded] = useState(false)
 
   const iconName = TOOL_ICONS[message.toolName] ?? DEFAULT_ICON
-
-  const description = t(`missions.toolEvents.${message.toolName}`, {
-    defaultValue: t('missions.toolEvents.default', { toolName: message.toolName }),
-    ...(message.toolInput ?? {}),
-  })
-
   const detail = getToolDetail(message.toolName, message.toolInput)
 
   const isRunning = message.status === 'running'
@@ -155,6 +149,12 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
     : isRunning
       ? theme.colors.text.secondary
       : theme.colors.status.success
+
+  const statusLabel = isRunning
+    ? t('missions.subagents.running')
+    : isError
+      ? t('missions.subagents.error')
+      : t('missions.subagents.completed')
 
   const isCanvas = message.toolName === 'canvas'
   const canvasHasContent = isCanvas && canvasContent !== null
@@ -188,25 +188,19 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
       onPress={handlePress}
       activeOpacity={hasInput || canvasHasContent ? 0.7 : 1}
       accessible={true}
-      accessibilityLabel={`${t('missions.toolEvent')}: ${description}${canvasHasContent ? `. ${t('canvas.tapToOpen')}` : ''}`}
+      accessibilityLabel={`${t('missions.toolEvent')}: ${message.toolName}${detail ? `, ${detail}` : ''}${canvasHasContent ? `. ${t('canvas.tapToOpen')}` : ''}`}
       accessibilityRole={hasInput || canvasHasContent ? 'button' : 'text'}
     >
+      {/* Row 1: Icon + Tool name + Status icon */}
       <View style={styles.headerRow}>
         <Ionicons
           name={iconName as keyof typeof Ionicons.glyphMap}
-          size={16}
+          size={18}
           color={isCanvas && canvasHasContent ? theme.colors.primary : theme.colors.text.secondary}
         />
-        <View style={styles.textContainer}>
-          <Text variant="caption" style={styles.description} numberOfLines={1}>
-            {description}
-          </Text>
-          {detail && !expanded ? (
-            <Text variant="caption" style={styles.detail} numberOfLines={1}>
-              {detail}
-            </Text>
-          ) : null}
-        </View>
+        <Text variant="body" style={styles.toolName} numberOfLines={1}>
+          {message.toolName}
+        </Text>
         {canvasHasContent && (
           <Ionicons name="open-outline" size={14} color={theme.colors.primary} />
         )}
@@ -217,18 +211,32 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
             color={theme.colors.text.secondary}
           />
         )}
-        <View style={styles.statusContainer}>
+        <View style={styles.statusIcon}>
           {isRunning ? (
             <ActivityIndicator size="small" color={theme.colors.text.secondary} />
           ) : (
             <Ionicons
               name={isError ? 'alert-circle' : 'checkmark-circle'}
-              size={14}
+              size={16}
               color={statusColor}
             />
           )}
         </View>
       </View>
+
+      {/* Row 2: Detail (URL, path, query, etc.) */}
+      {detail && !expanded ? (
+        <Text style={styles.detail} numberOfLines={1}>
+          {detail}
+        </Text>
+      ) : null}
+
+      {/* Row 3: Status text */}
+      <Text variant="caption" style={[styles.statusText, { color: statusColor }]}>
+        {statusLabel}
+      </Text>
+
+      {/* Expanded: full tool input JSON */}
       {expanded && formattedInput && (
         <View style={styles.inputContainer}>
           <Text style={styles.inputText}>{formattedInput}</Text>
@@ -241,16 +249,19 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
 const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
-      paddingVertical: theme.spacing.xs,
+      alignSelf: 'flex-start',
+      maxWidth: '80%',
+      paddingVertical: theme.spacing.sm,
       paddingHorizontal: theme.spacing.md,
-      marginVertical: 2,
-      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.03)',
-      borderRadius: theme.borderRadius.md,
+      marginVertical: theme.spacing.xs,
+      marginLeft: theme.spacing.lg,
+      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.04)',
+      borderRadius: theme.borderRadius.lg,
       borderWidth: 1,
-      borderColor: theme.isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.05)',
+      borderColor: theme.isDark ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.08)',
     },
     expandedContainer: {
-      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.04)',
+      backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)',
     },
     canvasContainer: {
       borderColor: theme.isDark ? `${theme.colors.primary}33` : `${theme.colors.primary}22`,
@@ -261,25 +272,29 @@ const createStyles = (theme: Theme) =>
       alignItems: 'center',
       gap: theme.spacing.sm,
     },
-    textContainer: {
+    toolName: {
       flex: 1,
+      color: theme.colors.text.primary,
+      fontWeight: '500',
+      fontSize: 14,
     },
-    description: {
-      color: theme.colors.text.secondary,
-    },
-    detail: {
-      color: theme.colors.text.secondary,
-      opacity: 0.7,
-      fontSize: 11,
-    },
-    statusContainer: {
+    statusIcon: {
       width: 20,
       height: 20,
       alignItems: 'center',
       justifyContent: 'center',
     },
-    inputContainer: {
+    detail: {
       marginTop: theme.spacing.xs,
+      color: theme.colors.text.secondary,
+      fontFamily: Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' }),
+      fontSize: 12,
+    },
+    statusText: {
+      marginTop: theme.spacing.xs,
+    },
+    inputContainer: {
+      marginTop: theme.spacing.sm,
       padding: theme.spacing.sm,
       backgroundColor: theme.isDark ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.05)',
       borderRadius: theme.borderRadius.sm,

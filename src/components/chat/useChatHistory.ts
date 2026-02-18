@@ -1,4 +1,4 @@
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useActiveWebsite } from '../../hooks/useActiveWebsite'
@@ -12,6 +12,7 @@ import {
   pendingShareTextAtom,
   pendingTriggerMessageAtom,
   sessionContextAtom,
+  showToolEventsInChatAtom,
 } from '../../store'
 import { logger } from '../../utils/logger'
 import { resolveSystemMessageVariables } from '../../utils/systemMessageVariables'
@@ -19,13 +20,41 @@ import { Message } from './ChatMessage'
 
 const chatHistoryLogger = logger.create('ChatHistory')
 
+/** Raw history entry from the gateway — extends the base shape with tool result fields. */
+interface RawHistoryMessage {
+  role: string
+  content: Array<{ type: string; text?: string }>
+  timestamp: number
+  toolName?: string
+  toolCallId?: string
+  isError?: boolean
+  details?: Record<string, unknown>
+}
+
 /** Convert raw history messages into UI Message objects */
-function historyToMessages(
-  msgs: { role: string; content: Array<{ type: string; text?: string }>; timestamp: number }[],
-): Message[] {
+function historyToMessages(msgs: RawHistoryMessage[], showToolEvents: boolean): Message[] {
   return msgs
-    .filter((msg) => msg.role === 'user' || msg.role === 'assistant')
+    .filter(
+      (msg) =>
+        msg.role === 'user' ||
+        msg.role === 'assistant' ||
+        (msg.role === 'toolResult' && showToolEvents),
+    )
     .map((msg, index) => {
+      if (msg.role === 'toolResult') {
+        return {
+          id: `history-tool-${msg.timestamp}-${index}`,
+          type: 'tool_event' as const,
+          toolName: msg.toolName || 'unknown',
+          toolCallId: msg.toolCallId || `history-tc-${index}`,
+          toolInput: msg.details,
+          status: msg.isError ? 'error' : ('completed' as const),
+          sender: 'agent' as const,
+          timestamp: new Date(msg.timestamp),
+          text: msg.toolName || 'unknown',
+        }
+      }
+
       const textContent = msg.content.find((c) => c.type === 'text')
       const text = textContent?.text || ''
       if (!text) return null
@@ -54,6 +83,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
   const [pendingShareText, setPendingShareText] = useAtom(pendingShareTextAtom)
   const [pendingShareMedia] = useAtom(pendingShareMediaAtom)
   const [sessionContextMap] = useAtom(sessionContextAtom)
+  const showToolEvents = useAtomValue(showToolEventsInChatAtom)
 
   const hasCacheRef = useRef(false)
   const hasScrolledOnLoadRef = useRef(false)
@@ -148,7 +178,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     let cancelled = false
     readCachedHistory(providerConfig.serverId, currentSessionKey, 100).then((cached) => {
       if (cancelled || cached.length === 0) return
-      const cachedMessages = historyToMessages(cached)
+      const cachedMessages = historyToMessages(cached as RawHistoryMessage[], showToolEvents)
       if (cachedMessages.length > 0) {
         hasCacheRef.current = true
         setMessages(cachedMessages)
@@ -174,7 +204,10 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
       chatHistoryLogger.info('Chat history loaded', historyResponse)
 
       if (historyResponse?.messages && Array.isArray(historyResponse.messages)) {
-        const historyMessages = historyToMessages(historyResponse.messages)
+        const historyMessages = historyToMessages(
+          historyResponse.messages as RawHistoryMessage[],
+          showToolEvents,
+        )
         setMessages(historyMessages)
         chatHistoryLogger.info(`Loaded ${historyMessages.length} messages from history`)
       } else {
@@ -185,7 +218,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     } finally {
       setIsLoadingHistory(false)
     }
-  }, [getChatHistory, currentSessionKey])
+  }, [getChatHistory, currentSessionKey, showToolEvents])
 
   useEffect(() => {
     if (connected) {
