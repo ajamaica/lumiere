@@ -1,8 +1,16 @@
-• Initial release
-• Connect to Claude, ChatGPT, Gemini, Ollama, and more
-• 8 color themes with light and dark mode
-• Voice input and speech recognition
-• Biometric authentication with Face ID and Touch ID
-• Deep link triggers and automation
-• Multi-session support
-• Available in 6 languages
+What's New in 1.1.0:
+
+• Web and Chrome extension support — use Lumiere in your browser
+• OpenAI-compatible provider — connect to any OpenAI-compatible API endpoint
+• Session management — edit, reset, delete, and switch between sessions
+• Share extension — send content from other apps directly to Lumiere
+• Workflow mode — document-grounded chat sessions
+• Agent switching for OpenClaw/Molt servers
+• ClawHub skill search in the skills marketplace
+• Gateway logs for OpenClaw/Molt servers
+• Password lock screen for web with encrypted storage
+• Backup import option during setup
+• AI reasoning and thinking display
+• Streamlined onboarding experience
+• 11 languages now supported
+• Bug fixes and performance improvements

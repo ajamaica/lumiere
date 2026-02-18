@@ -1,8 +1,15 @@
-• Initial release
-• Connect to Claude, ChatGPT, Gemini, Ollama, and more
-• 8 color themes with light and dark mode
-• Voice input and speech recognition
-• Biometric authentication
-• Deep link triggers and automation
-• Multi-session support
-• Available in 6 languages
+What's New in 1.1.0:
+
+• Web and Chrome extension support
+• OpenAI-compatible provider
+• Session management — edit, reset, delete, switch
+• Share extension for content from other apps
+• Workflow mode for document-grounded chat
+• Agent switching for OpenClaw/Molt
+• ClawHub skill search
+• Password lock for web
+• Backup import during setup
+• AI reasoning display
+• Streamlined onboarding
+• 11 languages supported
+• Bug fixes and improvements
