@@ -504,9 +504,7 @@ export class MoltGatewayClient {
    */
   private challengeListener: ((challenge: ConnectChallenge) => void) | null = null
 
-  private async performHandshake(
-    challenge: ConnectChallenge | null,
-  ): Promise<ConnectResponse> {
+  private async performHandshake(challenge: ConnectChallenge | null): Promise<ConnectResponse> {
     const auth: { token?: string; password?: string } = {
       token: this.config.token,
     }
