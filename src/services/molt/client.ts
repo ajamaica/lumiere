@@ -476,14 +476,18 @@ export class MoltGatewayClient {
   /**
    * Wait for the gateway to send a `connect.challenge` event containing a
    * nonce and timestamp. The client must echo the nonce back in its connect
-   * request to prove liveness. Times out after 10 seconds.
+   * request to prove liveness.
+   *
+   * If the gateway doesn't send a challenge within 5 seconds, the promise
+   * resolves with `null` so the client can fall back to v1 (no-nonce) signing.
    */
-  private waitForChallenge(): Promise<ConnectChallenge> {
-    return new Promise<ConnectChallenge>((resolve, reject) => {
+  private waitForChallenge(): Promise<ConnectChallenge | null> {
+    return new Promise<ConnectChallenge | null>((resolve) => {
       const timer = setTimeout(() => {
         this.challengeListener = null
-        reject(new Error('Timed out waiting for connect.challenge'))
-      }, 10_000)
+        wsLogger.info('No connect.challenge received, falling back to v1 handshake')
+        resolve(null)
+      }, 5_000)
 
       this.challengeListener = (challenge: ConnectChallenge) => {
         clearTimeout(timer)
@@ -500,7 +504,9 @@ export class MoltGatewayClient {
    */
   private challengeListener: ((challenge: ConnectChallenge) => void) | null = null
 
-  private async performHandshake(challenge: ConnectChallenge): Promise<ConnectResponse> {
+  private async performHandshake(
+    challenge: ConnectChallenge | null,
+  ): Promise<ConnectResponse> {
     const auth: { token?: string; password?: string } = {
       token: this.config.token,
     }
@@ -511,7 +517,9 @@ export class MoltGatewayClient {
     const role = 'operator'
     const scopes = ['operator.admin']
 
-    // Build a cryptographically signed device identity payload
+    // Build a cryptographically signed device identity payload.
+    // When a challenge was received (v2), include its nonce.
+    // Otherwise fall back to v1 signing (no nonce).
     const identity = await getDeviceIdentity()
     const device = await buildSignedDevice({
       identity,
@@ -520,7 +528,7 @@ export class MoltGatewayClient {
       role,
       scopes,
       token: this.config.token,
-      nonce: challenge.nonce,
+      nonce: challenge?.nonce,
     })
 
     const params = {

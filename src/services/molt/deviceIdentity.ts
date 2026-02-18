@@ -47,7 +47,7 @@ export interface DeviceAuthPayload {
   publicKey: string
   signature: string
   signedAt: number
-  nonce: string
+  nonce?: string
 }
 
 interface StoredIdentity {
@@ -262,6 +262,9 @@ export function signPayload(secretKey: Uint8Array, payload: string): string {
 
 /**
  * Build the full signed device object for the gateway `connect` request.
+ *
+ * When `nonce` is provided the payload uses the v2 format (with challenge).
+ * When omitted it falls back to v1 (no challenge / no nonce).
  */
 export async function buildSignedDevice(params: {
   identity: DeviceIdentity
@@ -270,7 +273,7 @@ export async function buildSignedDevice(params: {
   role: string
   scopes: string[]
   token?: string
-  nonce: string
+  nonce?: string
 }): Promise<DeviceAuthPayload> {
   const signedAt = Date.now()
 
@@ -287,11 +290,16 @@ export async function buildSignedDevice(params: {
 
   const signature = signPayload(params.identity.secretKey, payload)
 
-  return {
+  const device: DeviceAuthPayload = {
     id: params.identity.deviceId,
     publicKey: base64UrlEncode(params.identity.publicKey),
     signature,
     signedAt,
-    nonce: params.nonce,
   }
+
+  if (params.nonce) {
+    device.nonce = params.nonce
+  }
+
+  return device
 }
