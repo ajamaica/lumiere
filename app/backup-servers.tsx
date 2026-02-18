@@ -11,9 +11,11 @@ import { Button, ScreenHeader } from '../src/components/ui'
 import { getProviderIcon } from '../src/config/providerOptions'
 import { serversAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 
 export default function BackupServersScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const { t } = useTranslation()
   const [servers] = useAtom(serversAtom)
   const [exporting, setExporting] = useState(false)
@@ -121,7 +123,7 @@ export default function BackupServersScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('backupServers.title')} showBack />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <Text style={styles.description}>{t('backupServers.description')}</Text>
 
         {serversList.length === 0 ? (

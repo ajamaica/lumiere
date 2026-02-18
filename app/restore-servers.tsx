@@ -12,6 +12,7 @@ import { getProviderIcon } from '../src/config/providerOptions'
 import { ProviderType } from '../src/services/providers'
 import { ServerConfig, serversAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 
 interface BackupData {
   version: number
@@ -21,6 +22,7 @@ interface BackupData {
 
 export default function RestoreServersScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const { t } = useTranslation()
   const [servers, setServers] = useAtom(serversAtom)
   const [importedData, setImportedData] = useState<BackupData | null>(null)
@@ -214,7 +216,7 @@ export default function RestoreServersScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('restoreServers.title')} showBack />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <Text style={styles.description}>{t('restoreServers.description')}</Text>
 
         <TouchableOpacity

@@ -14,12 +14,14 @@ import { Button, Card, ScreenHeader, Section, StatCard, Text } from '../src/comp
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
 
 const overviewLogger = logger.create('Overview')
 
 export default function OverviewScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { getProviderConfig, currentServerId, currentServer } = useServers()
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
@@ -274,7 +276,7 @@ export default function OverviewScreen() {
     <SafeAreaView style={styles.container}>
       <ScreenHeader title="Overview" showBack />
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <Section
           title="Gateway Access"
           right={

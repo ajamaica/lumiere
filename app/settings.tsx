@@ -32,10 +32,12 @@ import {
 } from '../src/store'
 import { useTheme } from '../src/theme'
 import { colorThemes } from '../src/theme/colors'
+import { useContentContainerStyle } from '../src/utils/device'
 import { isWeb } from '../src/utils/platform'
 
 export default function SettingsScreen() {
   const { theme, colorTheme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { t } = useTranslation()
   const { currentLanguageName } = useLanguage()
@@ -159,7 +161,7 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('settings.title')} showClose />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         {/* Server list */}
         <Section
           title={t('settings.servers')}

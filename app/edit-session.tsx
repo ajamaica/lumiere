@@ -16,11 +16,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
 import { currentSessionKeyAtom, sessionAliasesAtom, sessionContextAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 import { keyboardAvoidingBehavior } from '../src/utils/platform'
 import { SYSTEM_MESSAGE_VARIABLES } from '../src/utils/systemMessageVariables'
 
 export default function EditSessionScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { t } = useTranslation()
   const { key } = useLocalSearchParams<{ key: string }>()
@@ -148,7 +150,7 @@ export default function EditSessionScreen() {
       <ScreenHeader title={t('sessions.editSession')} showBack />
       <KeyboardAvoidingView behavior={keyboardAvoidingBehavior} style={styles.keyboardView}>
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
+          contentContainerStyle={[styles.scrollContent, contentContainerStyle]}
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.formRow}>

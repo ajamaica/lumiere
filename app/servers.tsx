@@ -9,9 +9,11 @@ import { getBasicProviderOptions, getProviderIcon } from '../src/config/provider
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 
 export default function ServersScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { serversList, currentServerId, removeServer, switchToServer } = useServers()
 
@@ -91,7 +93,7 @@ export default function ServersScreen() {
     <SafeAreaView style={styles.container}>
       <ScreenHeader title="Servers" showBack />
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <Section title="Servers">
           {serversList.map((server) => {
             const isActive = server.id === currentServerId

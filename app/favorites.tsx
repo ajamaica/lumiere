@@ -7,9 +7,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScreenHeader } from '../src/components/ui'
 import { FavoriteItem, favoritesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 
 export default function FavoritesScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const [favorites, setFavorites] = useAtom(favoritesAtom)
 
   const handleRemove = (id: string) => {
@@ -107,7 +109,7 @@ export default function FavoritesScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title="Favorites" showBack />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         {favorites.length === 0 ? (
           <View style={styles.emptyContainer}>
             <Ionicons name="heart-outline" size={48} color={theme.colors.text.tertiary} />

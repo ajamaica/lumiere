@@ -10,11 +10,13 @@ import { Button, GradientButton, ScreenHeader, Text } from '../src/components/ui
 import { useMissionList } from '../src/hooks/useMissionList'
 import { useServers } from '../src/hooks/useServers'
 import { useTheme } from '../src/theme'
+import { useContentContainerStyle } from '../src/utils/device'
 
 type MissionFilter = 'all' | 'active' | 'archived'
 
 export default function MissionsScreen() {
   const { theme } = useTheme()
+  const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { t } = useTranslation()
   const { currentServer } = useServers()
@@ -114,7 +116,7 @@ export default function MissionsScreen() {
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('missions.title')} subtitle={t('missions.subtitle')} showBack />
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <GradientButton
           title={t('missions.createMission')}
           onPress={() => router.push('/create-mission')}
