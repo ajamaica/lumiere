@@ -5,13 +5,14 @@
  * The device ID is the SHA-256 hex digest of the raw 32-byte public key.
  * Challenge payloads are signed with the private key for server verification.
  *
- * Uses `tweetnacl` for Ed25519 operations (cross-platform, pure JS) and
- * the Web Crypto API for SHA-256 hashing (available in all modern runtimes).
+ * Uses `@noble/curves` for Ed25519 signing (pure JS, no Node.js deps) and
+ * `expo-crypto` for SHA-256 hashing and random bytes (native on all platforms).
  * Persistence is handled via AsyncStorage.
  */
 
+import { ed25519 } from '@noble/curves/ed25519'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import nacl from 'tweetnacl'
+import * as Crypto from 'expo-crypto'
 
 import { logger } from '../../utils/logger'
 
@@ -24,8 +25,8 @@ const STORAGE_KEY = 'openclaw_device_identity'
 export interface DeviceIdentity {
   deviceId: string
   publicKeyBase64Url: string
-  /** Raw 64-byte Ed25519 secret key (contains both private + public halves). */
-  secretKeyBase64: string
+  /** Raw 32-byte Ed25519 private key, base64-encoded. */
+  privateKeyBase64: string
 }
 
 export interface DevicePayload {
@@ -65,13 +66,6 @@ function bytesToHex(bytes: Uint8Array): string {
     .join('')
 }
 
-// ─── SHA-256 ────────────────────────────────────────────────────────────────────
-
-async function sha256Hex(data: Uint8Array): Promise<string> {
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-  return bytesToHex(new Uint8Array(hashBuffer))
-}
-
 // ─── Identity lifecycle ─────────────────────────────────────────────────────────
 
 let _cached: DeviceIdentity | null = null
@@ -93,18 +87,18 @@ export async function getDeviceIdentity(): Promise<DeviceIdentity> {
         version?: number
         deviceId?: string
         publicKeyBase64Url?: string
-        secretKeyBase64?: string
+        privateKeyBase64?: string
       }
       if (
         parsed.version === 1 &&
         parsed.deviceId &&
         parsed.publicKeyBase64Url &&
-        parsed.secretKeyBase64
+        parsed.privateKeyBase64
       ) {
         _cached = {
           deviceId: parsed.deviceId,
           publicKeyBase64Url: parsed.publicKeyBase64Url,
-          secretKeyBase64: parsed.secretKeyBase64,
+          privateKeyBase64: parsed.privateKeyBase64,
         }
         identityLogger.info('Device identity loaded from storage')
         return _cached
@@ -114,13 +108,21 @@ export async function getDeviceIdentity(): Promise<DeviceIdentity> {
     identityLogger.error('Failed to load device identity, regenerating')
   }
 
-  // Generate a fresh keypair
-  const keyPair = nacl.sign.keyPair()
-  const deviceId = await sha256Hex(keyPair.publicKey)
-  const publicKeyBase64Url = base64UrlEncode(keyPair.publicKey)
-  const secretKeyBase64 = toBase64(keyPair.secretKey)
+  // Generate a fresh Ed25519 keypair
+  const privateKey = new Uint8Array(Crypto.getRandomBytes(32))
+  const publicKey = ed25519.getPublicKey(privateKey)
 
-  const identity: DeviceIdentity = { deviceId, publicKeyBase64Url, secretKeyBase64 }
+  // SHA-256 the raw public key to derive the device ID
+  const hashHex = await Crypto.digestAsync(
+    Crypto.CryptoDigestAlgorithm.SHA256,
+    bytesToHex(publicKey),
+    { encoding: Crypto.CryptoEncoding.HEX },
+  )
+  const deviceId = hashHex
+  const publicKeyBase64Url = base64UrlEncode(publicKey)
+  const privateKeyBase64 = toBase64(privateKey)
+
+  const identity: DeviceIdentity = { deviceId, publicKeyBase64Url, privateKeyBase64 }
   _cached = identity
 
   // Persist
@@ -131,7 +133,7 @@ export async function getDeviceIdentity(): Promise<DeviceIdentity> {
         version: 1,
         deviceId,
         publicKeyBase64Url,
-        secretKeyBase64,
+        privateKeyBase64,
         createdAtMs: Date.now(),
       }),
     )
@@ -163,7 +165,7 @@ export async function buildDevicePayload(
   nonce?: string,
 ): Promise<DevicePayload> {
   const identity = await getDeviceIdentity()
-  const secretKey = fromBase64(identity.secretKeyBase64)
+  const privateKey = fromBase64(identity.privateKeyBase64)
   const signedAtMs = Date.now()
 
   const version = nonce ? 'v2' : 'v1'
@@ -183,7 +185,7 @@ export async function buildDevicePayload(
 
   const payload = parts.join('|')
   const messageBytes = new TextEncoder().encode(payload)
-  const signatureBytes = nacl.sign.detached(messageBytes, secretKey)
+  const signatureBytes = ed25519.sign(messageBytes, privateKey)
 
   return {
     id: identity.deviceId,
