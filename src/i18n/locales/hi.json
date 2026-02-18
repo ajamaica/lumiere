@@ -74,6 +74,8 @@
     "file": "फ़ाइल",
     "removeAttachment": "अनुलग्नक {{number}} हटाएं",
     "compressing": "संपीड़ित हो रहा है...",
+    "generatingSuggestions": "जवाब सोच रहा है...",
+    "useSuggestion": "भेजें: {{text}}",
     "lifecycleStart": "सोच रहा है",
     "lifecycleEnd": "पूर्ण"
   },

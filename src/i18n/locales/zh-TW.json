@@ -74,6 +74,8 @@
     "file": "檔案",
     "removeAttachment": "移除附件 {{number}}",
     "compressing": "壓縮中...",
+    "generatingSuggestions": "正在思考回覆...",
+    "useSuggestion": "傳送：{{text}}",
     "lifecycleStart": "思考中",
     "lifecycleEnd": "完成"
   },
