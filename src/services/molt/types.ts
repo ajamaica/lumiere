@@ -88,15 +88,26 @@ export interface PendingRequest {
 export interface ConnectParams {
   minProtocol: number
   maxProtocol: number
-  role?: string
-  device?: {
+  client: {
     id: string
-    name?: string
+    displayName?: string
+    version: string
+    platform: string
+    mode: string
+    instanceId?: string
   }
-  caps?: string[]
   auth?: {
     token?: string
     password?: string
+  }
+  role?: 'operator' | 'node'
+  scopes?: string[]
+  device?: {
+    id: string
+    publicKey: string
+    signature: string
+    signedAt: number
+    nonce?: string
   }
   locale?: string
 }

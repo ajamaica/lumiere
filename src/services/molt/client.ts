@@ -11,8 +11,10 @@ import {
   GatewayEvents,
   GatewayMethods,
   protocolConfig,
+  roleConfig,
 } from '../../config/gateway.config'
 import { logger } from '../../utils/logger'
+import { buildDevicePayload } from './deviceIdentity'
 import {
   AgentEvent,
   AgentEventCallback,
@@ -466,7 +468,75 @@ export class MoltGatewayClient {
     }
   }
 
+  /**
+   * Wait for a `connect.challenge` event from the gateway.
+   *
+   * The gateway may send a challenge with a nonce after the WebSocket opens.
+   * If no challenge arrives within `timeoutMs`, we fall back to v1 signing
+   * (no nonce) for compatibility with older gateways.
+   */
+  private waitForChallenge(timeoutMs = 3_000): Promise<string | undefined> {
+    return new Promise<string | undefined>((resolve) => {
+      if (!this.ws) {
+        resolve(undefined)
+        return
+      }
+
+      const ws = this.ws
+      let resolved = false
+
+      const onMessage = (event: MessageEvent) => {
+        if (resolved) return
+        try {
+          const frame = JSON.parse(event.data as string) as GatewayFrame
+          if (
+            (frame.type === 'event' || (frame as { type: string }).type === 'evt') &&
+            (frame as EventFrame).event === GatewayEvents.CONNECT_CHALLENGE
+          ) {
+            resolved = true
+            ws.removeEventListener('message', onMessage)
+            clearTimeout(timer)
+            const payload = (frame as EventFrame).payload as { nonce?: string } | undefined
+            resolve(payload?.nonce)
+            return
+          }
+        } catch {
+          // Ignore parse errors — will be handled by the main message handler
+        }
+      }
+
+      const timer = setTimeout(() => {
+        if (!resolved) {
+          resolved = true
+          ws.removeEventListener('message', onMessage)
+          wsLogger.info('No connect.challenge received, falling back to v1 signing')
+          resolve(undefined)
+        }
+      }, timeoutMs)
+
+      ws.addEventListener('message', onMessage)
+    })
+  }
+
   private async performHandshake(): Promise<ConnectResponse> {
+    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
+      throw new Error('WebSocket not open for handshake')
+    }
+
+    // Step 1: Wait for optional connect.challenge event from the gateway
+    const nonce = await this.waitForChallenge()
+
+    // Step 2: Build the signed device payload
+    const device = await buildDevicePayload(
+      clientConfig.id,
+      clientConfig.mode,
+      roleConfig.role,
+      [...roleConfig.scopes],
+      this.config.token || '',
+      nonce,
+    )
+
+    // Step 3: Assemble connect params
     const auth: { token?: string; password?: string } = {
       token: this.config.token,
     }
@@ -477,11 +547,21 @@ export class MoltGatewayClient {
     const params = {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
-      client: clientConfig,
+      client: {
+        id: clientConfig.id,
+        displayName: clientConfig.displayName,
+        version: clientConfig.version,
+        platform: clientConfig.platform,
+        mode: clientConfig.mode,
+        instanceId: clientConfig.instanceId,
+      },
       auth,
+      role: roleConfig.role,
+      scopes: [...roleConfig.scopes],
+      device,
     }
 
-    // Use a dedicated handshake request with its own timeout
+    // Step 4: Send the connect request and wait for the response
     return new Promise<ConnectResponse>((resolve, reject) => {
       if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
         reject(new Error('WebSocket not open for handshake'))
@@ -493,7 +573,7 @@ export class MoltGatewayClient {
       const timer = setTimeout(() => {
         this.pendingRequests.delete(id)
         reject(new Error('Connect handshake timed out'))
-      }, 10_000)
+      }, 15_000)
 
       this.pendingRequests.set(id, {
         resolve: (payload) => resolve(payload as ConnectResponse),

@@ -1,13 +1,15 @@
-import { agentConfig, clientConfig, protocolConfig } from '../gateway.config'
+import { agentConfig, clientConfig, protocolConfig, roleConfig } from '../gateway.config'
 
 describe('clientConfig', () => {
   it('has the expected shape', () => {
-    expect(clientConfig).toEqual({
-      id: 'cli',
-      mode: 'cli',
+    expect(clientConfig).toMatchObject({
+      id: 'lumiere',
+      displayName: 'Lumiere',
+      mode: 'ui',
       version: '1.0.0',
-      platform: 'ios',
     })
+    expect(clientConfig.platform).toBeDefined()
+    expect(clientConfig.instanceId).toBeDefined()
   })
 })
 
@@ -16,6 +18,13 @@ describe('protocolConfig', () => {
     expect(protocolConfig.minProtocol).toBe(3)
     expect(protocolConfig.maxProtocol).toBe(3)
     expect(protocolConfig.maxProtocol).toBeGreaterThanOrEqual(protocolConfig.minProtocol)
+  })
+})
+
+describe('roleConfig', () => {
+  it('has operator role with admin scope', () => {
+    expect(roleConfig.role).toBe('operator')
+    expect(roleConfig.scopes).toContain('operator.admin')
   })
 })
 
