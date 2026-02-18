@@ -74,6 +74,8 @@
     "file": "Файл",
     "removeAttachment": "Удалить вложение {{number}}",
     "compressing": "Сжатие...",
+    "generatingSuggestions": "Подбираю ответы...",
+    "useSuggestion": "Отправить: {{text}}",
     "lifecycleStart": "Думает",
     "lifecycleEnd": "Готово"
   },

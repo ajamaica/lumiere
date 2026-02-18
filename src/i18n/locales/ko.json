@@ -74,6 +74,8 @@
     "file": "파일",
     "removeAttachment": "첨부파일 {{number}} 삭제",
     "compressing": "압축 중...",
+    "generatingSuggestions": "답장을 생각하는 중...",
+    "useSuggestion": "보내기: {{text}}",
     "lifecycleStart": "생각 중",
     "lifecycleEnd": "완료"
   },

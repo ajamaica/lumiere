@@ -74,6 +74,8 @@
     "file": "Fichier",
     "removeAttachment": "Supprimer la pièce jointe {{number}}",
     "compressing": "Compression...",
+    "generatingSuggestions": "Réflexion en cours...",
+    "useSuggestion": "Envoyer : {{text}}",
     "lifecycleStart": "Réflexion",
     "lifecycleEnd": "Terminé"
   },

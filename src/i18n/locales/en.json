@@ -74,6 +74,8 @@
     "file": "File",
     "removeAttachment": "Remove attachment {{number}}",
     "compressing": "Compressing...",
+    "generatingSuggestions": "Thinking of replies...",
+    "useSuggestion": "Send: {{text}}",
     "lifecycleStart": "Thinking",
     "lifecycleEnd": "Done"
   },

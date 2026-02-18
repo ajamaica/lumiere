@@ -74,6 +74,8 @@
     "file": "Datei",
     "removeAttachment": "Anhang {{number}} entfernen",
     "compressing": "Komprimierung...",
+    "generatingSuggestions": "Antworten werden überlegt...",
+    "useSuggestion": "Senden: {{text}}",
     "lifecycleStart": "Denkt nach",
     "lifecycleEnd": "Fertig"
   },

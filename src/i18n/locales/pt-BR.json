@@ -74,6 +74,8 @@
     "file": "Arquivo",
     "removeAttachment": "Remover anexo {{number}}",
     "compressing": "Comprimindo...",
+    "generatingSuggestions": "Pensando em respostas...",
+    "useSuggestion": "Enviar: {{text}}",
     "lifecycleStart": "Pensando",
     "lifecycleEnd": "Concluído"
   },

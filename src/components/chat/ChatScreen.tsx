@@ -8,6 +8,7 @@ import { ActivityIndicator, Keyboard, Pressable, Text, View } from 'react-native
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { useResponseSuggestions } from '../../hooks/useResponseSuggestions'
 import { ProviderConfig } from '../../services/providers'
 import {
   createSessionKey,
@@ -29,6 +30,7 @@ import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
 import { createChatScreenStyles } from './ChatScreen.styles'
 import { ConnectionStatusBar } from './ConnectionStatusBar'
+import { SuggestionChips } from './SuggestionChips'
 import { useChatHistory } from './useChatHistory'
 
 interface ChatScreenProps {
@@ -92,6 +94,26 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     shouldAutoScrollRef,
     messages,
   } = useChatHistory({ providerConfig })
+
+  // AI response suggestions (Apple Intelligence only)
+  const {
+    suggestions: responseSuggestions,
+    isGenerating: isGeneratingSuggestions,
+    dismiss: dismissSuggestions,
+  } = useResponseSuggestions({
+    messages,
+    isAgentResponding,
+    providerType: providerConfig.type,
+    enabled: providerConfig.type === 'apple',
+  })
+
+  const handleSelectSuggestion = useCallback(
+    (text: string) => {
+      handleSend(text)
+      dismissSuggestions()
+    },
+    [handleSend, dismissSuggestions],
+  )
 
   // Keyboard animation
   const { height: keyboardHeight } = useReanimatedKeyboardAnimation()
@@ -254,6 +276,11 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
           </Pressable>
         </Animated.View>
         <Animated.View style={inputContainerStyle} onLayout={handleInputLayout}>
+          <SuggestionChips
+            suggestions={responseSuggestions}
+            onSelect={handleSelectSuggestion}
+            isLoading={isGeneratingSuggestions}
+          />
           <ChatInput
             onSend={handleSend}
             onOpenSessionMenu={deviceType === 'phone' ? handleOpenSessionMenu : undefined}
