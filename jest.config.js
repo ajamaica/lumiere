@@ -6,5 +6,6 @@ module.exports = {
     '@react-native-async-storage/async-storage':
       '@react-native-async-storage/async-storage/jest/async-storage-mock',
     '^@openrouter/sdk$': '<rootDir>/__mocks__/@openrouter/sdk.ts',
+    '^react-native-worklets$': '<rootDir>/__mocks__/react-native-worklets.js',
   },
 }
