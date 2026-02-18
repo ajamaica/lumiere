@@ -122,7 +122,9 @@ export interface ChatProvider {
   isConnected(): boolean
 
   /** Register a listener for connection state changes */
-  onConnectionStateChange(listener: (connected: boolean, reconnecting: boolean) => void): () => void
+  onConnectionStateChange(
+    listener: (connected: boolean, reconnecting: boolean, awaitingApproval?: boolean) => void,
+  ): () => void
 
   /** Send a chat message and receive streaming events */
   sendMessage(params: SendMessageParams, onEvent: (event: ChatProviderEvent) => void): Promise<void>

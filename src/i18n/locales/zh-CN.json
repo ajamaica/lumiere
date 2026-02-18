@@ -77,6 +77,9 @@
     "lifecycleStart": "思考中",
     "lifecycleEnd": "完成"
   },
+  "connection": {
+    "awaitingApproval": "请在网关上批准此设备"
+  },
   "addServer": {
     "title": "添加服务器",
     "providerType": "提供商类型",

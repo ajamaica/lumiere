@@ -77,6 +77,9 @@
     "lifecycleStart": "सोच रहा है",
     "lifecycleEnd": "पूर्ण"
   },
+  "connection": {
+    "awaitingApproval": "अपने गेटवे पर इस डिवाइस को स्वीकृत करें"
+  },
   "addServer": {
     "title": "सर्वर जोड़ें",
     "providerType": "प्रोवाइडर प्रकार",

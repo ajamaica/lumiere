@@ -77,6 +77,9 @@
     "lifecycleStart": "Pensando",
     "lifecycleEnd": "Concluído"
   },
+  "connection": {
+    "awaitingApproval": "Aprove este dispositivo no seu gateway"
+  },
   "addServer": {
     "title": "Adicionar Servidor",
     "providerType": "Tipo de Provedor",

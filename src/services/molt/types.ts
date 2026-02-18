@@ -2,7 +2,12 @@
 
 // ─── Connection ─────────────────────────────────────────────────────────────────
 
-export type ConnectionState = 'disconnected' | 'connecting' | 'connected' | 'reconnecting'
+export type ConnectionState =
+  | 'disconnected'
+  | 'connecting'
+  | 'connected'
+  | 'reconnecting'
+  | 'awaitingApproval'
 
 export interface MoltConfig {
   url: string

@@ -77,6 +77,9 @@
     "lifecycleStart": "Думает",
     "lifecycleEnd": "Готово"
   },
+  "connection": {
+    "awaitingApproval": "Подтвердите это устройство на вашем шлюзе"
+  },
   "addServer": {
     "title": "Добавить сервер",
     "providerType": "Тип провайдера",

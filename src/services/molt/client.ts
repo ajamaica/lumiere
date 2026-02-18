@@ -731,9 +731,13 @@ export class MoltGatewayClient {
       return
     }
 
+    // Detect pairing-required close (code 1008 or "pairing" in reason)
+    const isPairingRequired =
+      code === 1008 || /pairing/i.test(reason) || /pairing/i.test(String(code))
+
     // Auto-reconnect
     if (this.config.autoReconnect) {
-      this.setConnectionState('reconnecting')
+      this.setConnectionState(isPairingRequired ? 'awaitingApproval' : 'reconnecting')
       this.scheduleReconnect()
     } else {
       this.setConnectionState('disconnected')

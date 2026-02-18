@@ -77,6 +77,9 @@
     "lifecycleStart": "思考中",
     "lifecycleEnd": "完了"
   },
+  "connection": {
+    "awaitingApproval": "ゲートウェイでこのデバイスを承認してください"
+  },
   "addServer": {
     "title": "サーバーを追加",
     "providerType": "プロバイダーの種類",

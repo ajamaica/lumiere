@@ -29,6 +29,7 @@ import { ThinkingIndicator } from './ThinkingIndicator'
 interface ConnectionStatusBarProps {
   connecting: boolean
   connected: boolean
+  awaitingApproval: boolean
   error: string | null
   health: { agents?: Record<string, unknown> } | null
   retry: () => void
@@ -44,6 +45,7 @@ interface ConnectionStatusBarProps {
 export function ConnectionStatusBar({
   connecting,
   connected,
+  awaitingApproval,
   error,
   health,
   retry,
@@ -186,6 +188,23 @@ export function ConnectionStatusBar({
       )}
     </>
   )
+
+  if (awaitingApproval) {
+    const approvalBubbleProps = glassAvailable
+      ? { style: styles.statusBubble, glassEffectStyle: 'regular' as const }
+      : { style: [styles.statusBubble, styles.statusBubbleFallback, styles.approvalBubble] }
+    return (
+      <View style={styles.statusBarContainer} accessibilityLiveRegion="polite">
+        <StatusBubbleContainer {...approvalBubbleProps}>
+          <ActivityIndicator size="small" color={theme.colors.status.warning} />
+          <Text style={styles.approvalText} numberOfLines={2}>
+            {t('connection.awaitingApproval')}
+          </Text>
+        </StatusBubbleContainer>
+        <View style={styles.statusActions}>{renderExtensionButtons()}</View>
+      </View>
+    )
+  }
 
   if (connecting) {
     return (
@@ -413,6 +432,15 @@ const createStatusBarStyles = (
       fontSize: theme.typography.fontSize.xs,
       color: theme.colors.text.secondary,
       marginRight: theme.spacing.sm,
+    },
+    approvalBubble: {
+      backgroundColor: theme.isDark ? '#3A2E1B' : '#FFF8E1',
+    },
+    approvalText: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.status.warning,
+      marginLeft: theme.spacing.sm,
+      flexShrink: 1,
     },
     errorBubble: {
       backgroundColor: theme.isDark ? '#3A1B1B' : '#FFEBEE',

@@ -51,15 +51,15 @@ export class MoltChatProvider implements ChatProvider {
   }
 
   /**
-   * Adapts the new ConnectionState-based listener to the legacy
-   * (connected: boolean, reconnecting: boolean) signature expected
+   * Adapts the new ConnectionState-based listener to the
+   * (connected, reconnecting, awaitingApproval) signature expected
    * by the ChatProvider interface.
    */
   onConnectionStateChange(
-    listener: (connected: boolean, reconnecting: boolean) => void,
+    listener: (connected: boolean, reconnecting: boolean, awaitingApproval?: boolean) => void,
   ): () => void {
     return this.client.onConnectionStateChange((state: ConnectionState) => {
-      listener(state === 'connected', state === 'reconnecting')
+      listener(state === 'connected', state === 'reconnecting', state === 'awaitingApproval')
     })
   }
 
