@@ -154,6 +154,20 @@ export class MoltGatewayClient {
   }
 
   /**
+   * Disconnect and release all internal state. After calling `destroy()`
+   * the client instance must not be reused. Use this in cleanup paths
+   * (e.g. React effect teardown) to prevent listener leaks.
+   */
+  destroy(): void {
+    this.disconnect()
+    this.eventListeners.clear()
+    this.connectionStateListeners.clear()
+    this.agentEventListeners.clear()
+    this.subagentEventListeners.clear()
+    this._legacyListeners.clear()
+  }
+
+  /**
    * Manually retry after automatic reconnection was exhausted or after
    * an intentional disconnect. Resets internal counters and connects fresh.
    */
@@ -197,7 +211,13 @@ export class MoltGatewayClient {
         params,
       }
 
-      this.sendFrame(frame)
+      if (!this.sendFrame(frame)) {
+        // Frame could not be sent — fail immediately instead of waiting
+        // for the timeout to fire.
+        clearTimeout(timer)
+        this.pendingRequests.delete(id)
+        reject(new Error(`Failed to send request ${method}: WebSocket not writable`))
+      }
     })
   }
 
@@ -240,21 +260,8 @@ export class MoltGatewayClient {
    * Prefer `on(eventName, cb)` or `onAgentEvent(cb)` for new code.
    */
   addEventListener(listener: (event: EventFrame) => void): () => void {
-    const wrappedByEvent = new Map<string, EventCallback>()
-
-    // We register a meta-listener that forwards every event type.
-    const handler = (frame: EventFrame) => listener(frame)
-
-    // Store unsubscribers so we can clean up.
-    const internalUnsub = this.on('__legacy__', handler as EventCallback)
-
-    // The actual routing happens in handleEvent — we store the raw listener
-    // separately so we can call it from there.
     this._legacyListeners.add(listener)
-
     return () => {
-      internalUnsub()
-      wrappedByEvent.forEach((cb, evt) => this.off(evt, cb))
       this._legacyListeners.delete(listener)
     }
   }
@@ -411,7 +418,14 @@ export class MoltGatewayClient {
     let unsubscribe: (() => void) | null = null
 
     if (onEvent) {
+      // Filter events by sessionKey so concurrent agent requests on
+      // different sessions don't interfere with each other. Without this,
+      // a lifecycle "end" from any session would unsubscribe this listener.
+      const filterKey = params.sessionKey
+
       unsubscribe = this.onAgentEvent((agentEvent) => {
+        if (filterKey && agentEvent.sessionKey !== filterKey) return
+
         try {
           onEvent(agentEvent)
         } catch {
@@ -567,7 +581,11 @@ export class MoltGatewayClient {
         params,
       }
 
-      this.sendFrame(frame)
+      if (!this.sendFrame(frame)) {
+        clearTimeout(timer)
+        this.pendingRequests.delete(id)
+        reject(new Error('Failed to send connect handshake: WebSocket not writable'))
+      }
     })
   }
 
@@ -753,6 +771,13 @@ export class MoltGatewayClient {
   private scheduleReconnect(): void {
     this.clearReconnectTimer()
 
+    const maxAttempts = this.config.maxReconnectAttempts
+    if (maxAttempts != null && this.reconnectAttempt >= maxAttempts) {
+      wsLogger.error(`Max reconnect attempts (${maxAttempts}) reached, giving up`)
+      this.setConnectionState('disconnected')
+      return
+    }
+
     const baseDelay = 1_000
     const maxDelay = 30_000
     const delay = Math.min(baseDelay * Math.pow(2, this.reconnectAttempt), maxDelay)
@@ -834,12 +859,20 @@ export class MoltGatewayClient {
 
   // ─── Private: Helpers ──────────────────────────────────────────────────────
 
-  private sendFrame(frame: GatewayFrame): void {
-    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) return
+  /**
+   * Attempt to send a frame over the WebSocket.
+   * Returns `true` if the frame was handed off, `false` if the socket
+   * was not available or the send threw. Callers that care about
+   * delivery (e.g. `request()`) should reject the pending promise on
+   * `false` so it fails immediately instead of waiting for a timeout.
+   */
+  private sendFrame(frame: GatewayFrame): boolean {
+    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) return false
     try {
       this.ws.send(JSON.stringify(frame))
+      return true
     } catch {
-      // Ignore send errors — close handler will clean up
+      return false
     }
   }
 
