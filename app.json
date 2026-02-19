@@ -19,6 +19,7 @@
       },
       "supportsTablet": true,
       "bundleIdentifier": "bot.lumiere.app",
+      "appleTeamId": "N8R9NFD23H",
       "buildNumber": "3",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
