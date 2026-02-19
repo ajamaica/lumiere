@@ -1,16 +1,14 @@
-What's New in 1.1.0:
+What's New in 1.2.0:
 
-• Web and Chrome extension support — use Lumiere in your browser
-• OpenAI-compatible provider — connect to any OpenAI-compatible API endpoint
-• Session management — edit, reset, delete, and switch between sessions
-• Share extension — send content from other apps directly to Lumiere
-• Workflow mode — document-grounded chat sessions
-• Agent switching for OpenClaw/Molt servers
-• ClawHub skill search in the skills marketplace
-• Gateway logs for OpenClaw/Molt servers
-• Password lock screen for web with encrypted storage
-• Backup import option during setup
-• AI reasoning and thinking display
-• Streamlined onboarding experience
-• 11 languages now supported
-• Bug fixes and performance improvements
+• iOS home screen widget — quick access to Lumiere right from your home screen
+• Siri Suggestions support — Lumiere appears in Siri suggestions for faster access
+• Syntax highlighting and line numbers in code blocks for better readability
+• Tablet and foldable device support — optimized layouts across all screens
+• Plus menu with Camera, Photos, and Files options for easy attachments
+• HTTP retry/timeout, cache TTL, message retry, and full data export
+• Redesigned setup screen with polished onboarding visuals
+• Fixed iPad re-render issue when switching sessions
+• Fixed nested list rendering and raw markdown display in chat messages
+• Fixed tool events not displaying during real-time chat
+• Fixed skills card rendering in search results
+• Updated dependencies and performance improvements

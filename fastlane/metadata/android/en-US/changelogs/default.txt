@@ -1,15 +1,11 @@
-What's New in 1.1.0:
+What's New in 1.2.0:
 
-• Web and Chrome extension support
-• OpenAI-compatible provider
-• Session management — edit, reset, delete, switch
-• Share extension for content from other apps
-• Workflow mode for document-grounded chat
-• Agent switching for OpenClaw/Molt
-• ClawHub skill search
-• Password lock for web
-• Backup import during setup
-• AI reasoning display
-• Streamlined onboarding
-• 11 languages supported
-• Bug fixes and improvements
+• Syntax highlighting and line numbers in code blocks
+• Tablet and foldable device support across all screens
+• Plus menu with Camera, Photos, and Files options
+• HTTP retry/timeout, cache TTL, message retry, full data export
+• Redesigned setup screen with polished onboarding visuals
+• Fixed nested list rendering and raw markdown in chat
+• Fixed tool events during real-time chat
+• Fixed skills card rendering in search results
+• Updated dependencies and improvements

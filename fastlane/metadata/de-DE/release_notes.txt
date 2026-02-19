@@ -1,16 +1,14 @@
-Neu in Version 1.1.0:
+Neuigkeiten in 1.2.0:
 
-• Web- und Chrome-Erweiterung — Lumiere im Browser nutzen
-• OpenAI-kompatibler Anbieter — Verbindung zu jeder OpenAI-kompatiblen API
-• Sitzungsverwaltung — Sitzungen bearbeiten, zurücksetzen, löschen und wechseln
-• Teilen-Erweiterung — Inhalte aus anderen Apps direkt an Lumiere senden
-• Workflow-Modus — dokumentenbasierte Chat-Sitzungen
-• Agentenwechsel für OpenClaw/Molt-Server
-• ClawHub-Skill-Suche im Skill-Marktplatz
-• Gateway-Protokolle für OpenClaw/Molt-Server
-• Passwort-Sperrbildschirm für Web mit verschlüsseltem Speicher
-• Backup-Import bei der Einrichtung
-• Anzeige von KI-Reasoning und Denkprozessen
-• Vereinfachtes Onboarding-Erlebnis
-• 11 Sprachen verfügbar
-• Fehlerbehebungen und Leistungsverbesserungen
+• iOS-Startbildschirm-Widget — schneller Zugriff auf Lumiere direkt vom Startbildschirm
+• Siri-Vorschläge-Unterstützung — Lumiere erscheint in den Siri-Vorschlägen
+• Syntaxhervorhebung und Zeilennummern in Codeblöcken für bessere Lesbarkeit
+• Tablet- und Faltgeräte-Unterstützung — optimierte Layouts auf allen Bildschirmen
+• Plus-Menü mit Kamera-, Foto- und Dateioptionen zum einfachen Anhängen
+• HTTP-Retry/Timeout, Cache-TTL, Nachrichtenwiederholung und vollständiger Datenexport
+• Neugestalteter Einrichtungsbildschirm mit verfeinertem Onboarding-Design
+• Behebung des iPad-Neurender-Problems beim Sitzungswechsel
+• Behebung der Darstellung verschachtelter Listen und Rohmarkdown in Chat-Nachrichten
+• Behebung von nicht angezeigten Tool-Events während des Echtzeit-Chats
+• Behebung der Darstellung von Skill-Karten in Suchergebnissen
+• Aktualisierte Abhängigkeiten und Leistungsverbesserungen
