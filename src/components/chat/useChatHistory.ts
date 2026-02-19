@@ -158,12 +158,10 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     onAgentMessageComplete: (message) => {
       setMessages((prev) => [...prev, message])
       setCurrentAgentMessage('')
-      // Reload history after the agent finishes so that tool events
-      // (which the server only exposes via chat.history, not as real-time
-      // WebSocket events) are picked up and displayed inline.
-      if (showToolEvents) {
-        loadChatHistoryRef.current()
-      }
+      // Always reload history after the agent finishes so that server-side
+      // responses (slash commands, tool events) that are not fully streamed
+      // as real-time WebSocket deltas are picked up and displayed.
+      loadChatHistoryRef.current()
     },
     onSendStart: () => {
       shouldAutoScrollRef.current = true
