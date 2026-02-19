@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { useAtom } from 'jotai'
+import { useAtom, useSetAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -29,6 +29,7 @@ import {
   writeSessionIndex,
 } from '../src/services/providers'
 import {
+  agentConfigsAtom,
   createSessionKey,
   currentAgentIdAtom,
   currentSessionKeyAtom,
@@ -61,6 +62,7 @@ export default function SessionsScreen() {
   const [config, setConfig] = useState<ProviderConfig | null>(null)
 
   const [, setCurrentAgentId] = useAtom(currentAgentIdAtom)
+  const setGlobalAgentConfigs = useSetAtom(agentConfigsAtom)
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
   const [menuSessionKey, setMenuSessionKey] = useState<string | null>(null)
@@ -113,13 +115,14 @@ export default function SessionsScreen() {
         const response = await getServerConfig()
         if (response?.config?.agents?.list) {
           setAgentConfigs(response.config.agents.list)
+          setGlobalAgentConfigs(response.config.agents.list)
         }
       } catch (err) {
         sessionsLogger.logError('Failed to fetch agent configs', err)
       }
     }
     fetchAgentConfigs()
-  }, [connected, isMoltProvider, getServerConfig])
+  }, [connected, isMoltProvider, getServerConfig, setGlobalAgentConfigs])
 
   const loadMoltSessions = useCallback(async () => {
     if (!connected || !isMoltProvider) return
