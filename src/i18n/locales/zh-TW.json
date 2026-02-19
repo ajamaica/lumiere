@@ -14,7 +14,8 @@
     "skip": "略過",
     "confirm": "確認",
     "active": "活躍",
-    "beta": "測試版"
+    "beta": "測試版",
+    "clear": "清除"
   },
   "settings": {
     "title": "設定",
@@ -276,6 +277,15 @@
     "updated": "更新時間",
     "openClawOnly": "僅限 OpenClaw",
     "openClawOnlyDescription": "技能僅適用於 OpenClaw 伺服器。",
+    "installed": {
+      "title": "已安裝技能",
+      "description": "目前安裝在代理上的技能。",
+      "noSkills": "沒有已安裝的技能",
+      "enabled": "已啟用",
+      "disabled": "已停用",
+      "bundled": "內建",
+      "refresh": "重新整理"
+    },
     "clawHub": {
       "title": "ClawHub",
       "description": "在 ClawHub 搜尋社群技能並安裝到您的代理。",
@@ -464,6 +474,14 @@
     "navigating": "正在導航...",
     "evaluating": "正在執行腳本...",
     "snapshotting": "正在截取快照..."
+  },
+  "emojiPicker": {
+    "categories": {
+      "agents": "代理",
+      "people": "人物",
+      "animals": "動物",
+      "objects": "物品"
+    }
   },
   "agentManagement": {
     "title": "代理",

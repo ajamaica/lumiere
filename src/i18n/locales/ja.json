@@ -14,7 +14,8 @@
     "skip": "スキップ",
     "confirm": "確認",
     "active": "有効",
-    "beta": "ベータ"
+    "beta": "ベータ",
+    "clear": "クリア"
   },
   "settings": {
     "title": "設定",
@@ -276,6 +277,15 @@
     "updated": "更新日",
     "openClawOnly": "OpenClaw専用",
     "openClawOnlyDescription": "スキルはOpenClawサーバーでのみ利用可能です。",
+    "installed": {
+      "title": "インストール済みスキル",
+      "description": "エージェントに現在インストールされているスキル。",
+      "noSkills": "インストール済みのスキルはありません",
+      "enabled": "有効",
+      "disabled": "無効",
+      "bundled": "組み込み",
+      "refresh": "更新"
+    },
     "clawHub": {
       "title": "ClawHub",
       "description": "ClawHubでコミュニティスキルを検索し、エージェントにインストールします。",
@@ -464,6 +474,14 @@
     "navigating": "ナビゲーション中...",
     "evaluating": "スクリプトを実行中...",
     "snapshotting": "スナップショットを取得中..."
+  },
+  "emojiPicker": {
+    "categories": {
+      "agents": "エージェント",
+      "people": "人物",
+      "animals": "動物",
+      "objects": "オブジェクト"
+    }
   },
   "agentManagement": {
     "title": "エージェント",

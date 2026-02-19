@@ -13,7 +13,17 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Badge, Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
+import {
+  Badge,
+  Button,
+  Card,
+  Dropdown,
+  EmojiPicker,
+  ScreenHeader,
+  Section,
+  Text,
+} from '../src/components/ui'
+import { DEFAULT_MODELS } from '../src/constants'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import {
@@ -27,6 +37,16 @@ import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
 
 const agentsLogger = logger.create('Agents')
+
+const MODEL_OPTIONS = [
+  { value: '', label: 'Default' },
+  { value: DEFAULT_MODELS.CLAUDE, label: DEFAULT_MODELS.CLAUDE },
+  { value: DEFAULT_MODELS.OPENAI, label: DEFAULT_MODELS.OPENAI },
+  { value: DEFAULT_MODELS.GEMINI, label: DEFAULT_MODELS.GEMINI },
+  { value: DEFAULT_MODELS.OLLAMA, label: DEFAULT_MODELS.OLLAMA },
+  { value: DEFAULT_MODELS.OPENROUTER, label: DEFAULT_MODELS.OPENROUTER },
+  { value: DEFAULT_MODELS.KIMI, label: DEFAULT_MODELS.KIMI },
+]
 
 type ViewMode = 'dashboard' | 'detail' | 'create'
 
@@ -53,9 +73,27 @@ export default function AgentsScreen() {
   // Create agent form state
   const [newAgentName, setNewAgentName] = useState('')
   const [newAgentWorkspace, setNewAgentWorkspace] = useState('')
+  const [workspaceManuallyEdited, setWorkspaceManuallyEdited] = useState(false)
   const [newAgentModel, setNewAgentModel] = useState('')
   const [newAgentEmoji, setNewAgentEmoji] = useState('')
   const [creating, setCreating] = useState(false)
+
+  const handleNameChange = (name: string) => {
+    setNewAgentName(name)
+    if (!workspaceManuallyEdited) {
+      const pathSegment = name
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '_')
+        .replace(/[^a-z0-9_-]/g, '')
+      setNewAgentWorkspace(pathSegment ? `/home/${pathSegment}` : '')
+    }
+  }
+
+  const handleWorkspaceChange = (workspace: string) => {
+    setWorkspaceManuallyEdited(true)
+    setNewAgentWorkspace(workspace)
+  }
 
   // Detail edit state
   const [editingName, setEditingName] = useState(false)
@@ -205,6 +243,7 @@ export default function AgentsScreen() {
       Alert.alert(t('common.success'), t('agentManagement.createSuccess', { name: newAgentName }))
       setNewAgentName('')
       setNewAgentWorkspace('')
+      setWorkspaceManuallyEdited(false)
       setNewAgentModel('')
       setNewAgentEmoji('')
       setViewMode('dashboard')
@@ -438,7 +477,7 @@ export default function AgentsScreen() {
               <TextInput
                 style={styles.input}
                 value={newAgentName}
-                onChangeText={setNewAgentName}
+                onChangeText={handleNameChange}
                 placeholder={t('agentManagement.agentNamePlaceholder')}
                 placeholderTextColor={theme.colors.text.secondary}
                 autoCapitalize="none"
@@ -452,7 +491,7 @@ export default function AgentsScreen() {
               <TextInput
                 style={styles.input}
                 value={newAgentWorkspace}
-                onChangeText={setNewAgentWorkspace}
+                onChangeText={handleWorkspaceChange}
                 placeholder={t('agentManagement.workspacePlaceholder')}
                 placeholderTextColor={theme.colors.text.secondary}
                 autoCapitalize="none"
@@ -462,33 +501,18 @@ export default function AgentsScreen() {
               </Text>
             </View>
 
-            <View style={styles.formField}>
-              <Text variant="sectionTitle" style={{ marginBottom: theme.spacing.xs }}>
-                {t('agentManagement.model')}
-              </Text>
-              <TextInput
-                style={styles.input}
-                value={newAgentModel}
-                onChangeText={setNewAgentModel}
-                placeholder={t('agentManagement.modelPlaceholder')}
-                placeholderTextColor={theme.colors.text.secondary}
-                autoCapitalize="none"
-              />
-            </View>
+            <Dropdown
+              label={t('agentManagement.model')}
+              options={MODEL_OPTIONS}
+              value={newAgentModel}
+              onValueChange={setNewAgentModel}
+            />
 
-            <View style={styles.formField}>
-              <Text variant="sectionTitle" style={{ marginBottom: theme.spacing.xs }}>
-                {t('agentManagement.emoji')}
-              </Text>
-              <TextInput
-                style={[styles.input, { width: 80 }]}
-                value={newAgentEmoji}
-                onChangeText={(text) => setNewAgentEmoji(text.slice(0, 4))}
-                placeholder="🤖"
-                placeholderTextColor={theme.colors.text.secondary}
-                maxLength={4}
-              />
-            </View>
+            <EmojiPicker
+              label={t('agentManagement.emoji')}
+              value={newAgentEmoji}
+              onValueChange={setNewAgentEmoji}
+            />
 
             <View
               style={{ flexDirection: 'row', gap: theme.spacing.sm, marginTop: theme.spacing.md }}

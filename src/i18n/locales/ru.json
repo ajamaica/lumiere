@@ -14,7 +14,8 @@
     "skip": "Пропустить",
     "confirm": "Подтвердить",
     "active": "Активно",
-    "beta": "Бета"
+    "beta": "Бета",
+    "clear": "Очистить"
   },
   "settings": {
     "title": "Настройки",
@@ -276,6 +277,15 @@
     "updated": "Обновлён",
     "openClawOnly": "Только OpenClaw",
     "openClawOnlyDescription": "Навыки доступны только для серверов OpenClaw.",
+    "installed": {
+      "title": "Установленные навыки",
+      "description": "Навыки, установленные на вашем агенте.",
+      "noSkills": "Нет установленных навыков",
+      "enabled": "Включён",
+      "disabled": "Отключён",
+      "bundled": "Встроенный",
+      "refresh": "Обновить"
+    },
     "clawHub": {
       "title": "ClawHub",
       "description": "Ищите навыки сообщества на ClawHub и устанавливайте их для вашего агента.",
@@ -464,6 +474,14 @@
     "navigating": "Навигация...",
     "evaluating": "Выполнение скрипта...",
     "snapshotting": "Создание снимка..."
+  },
+  "emojiPicker": {
+    "categories": {
+      "agents": "Агенты",
+      "people": "Люди",
+      "animals": "Животные",
+      "objects": "Объекты"
+    }
   },
   "agentManagement": {
     "title": "Агенты",

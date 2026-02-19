@@ -14,7 +14,8 @@
     "skip": "Passer",
     "confirm": "Confirmer",
     "active": "Actif",
-    "beta": "Bêta"
+    "beta": "Bêta",
+    "clear": "Effacer"
   },
   "settings": {
     "title": "Paramètres",
@@ -276,6 +277,15 @@
     "updated": "Mise à jour",
     "openClawOnly": "OpenClaw uniquement",
     "openClawOnlyDescription": "Les compétences ne sont disponibles que pour les serveurs OpenClaw.",
+    "installed": {
+      "title": "Skills installées",
+      "description": "Skills actuellement installées sur votre agent.",
+      "noSkills": "Aucune skill installée",
+      "enabled": "Activée",
+      "disabled": "Désactivée",
+      "bundled": "Intégrée",
+      "refresh": "Actualiser"
+    },
     "clawHub": {
       "title": "ClawHub",
       "description": "Recherchez des compétences communautaires sur ClawHub et installez-les sur votre agent.",
@@ -464,6 +474,14 @@
     "navigating": "Navigation...",
     "evaluating": "Évaluation du script...",
     "snapshotting": "Capture en cours..."
+  },
+  "emojiPicker": {
+    "categories": {
+      "agents": "Agents",
+      "people": "Personnes",
+      "animals": "Animaux",
+      "objects": "Objets"
+    }
   },
   "agentManagement": {
     "title": "Agents",
