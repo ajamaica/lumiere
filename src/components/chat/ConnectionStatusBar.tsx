@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   ActivityIndicator,
@@ -16,15 +16,19 @@ import Animated, {
   useSharedValue,
   withRepeat,
   withSequence,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated'
 
 import { useExtensionDisplayMode } from '../../hooks/useExtensionDisplayMode'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { Theme, useTheme } from '../../theme'
 import { useDeviceType, useFoldState } from '../../utils/device'
 import { GlassView, isLiquidGlassAvailable } from '../../utils/glassEffect'
 import { Message } from './ChatMessage'
 import { ThinkingIndicator } from './ThinkingIndicator'
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
 interface ConnectionStatusBarProps {
   connecting: boolean
@@ -136,6 +140,39 @@ export function ConnectionStatusBar({
     setTimeout(() => setIsSearchOpen(false), 200)
   }
 
+  // Bounce animation for action buttons
+  const reducedMotion = useReducedMotion()
+  const settingsScale = useSharedValue(1)
+  const searchScale = useSharedValue(1)
+
+  const settingsAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: settingsScale.value }],
+  }))
+
+  const searchAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: searchScale.value }],
+  }))
+
+  const handleSettingsPressIn = useCallback(() => {
+    if (reducedMotion) return
+    settingsScale.value = withTiming(0.85, { duration: 100, easing: Easing.out(Easing.ease) }) // eslint-disable-line react-hooks/immutability
+  }, [settingsScale, reducedMotion])
+
+  const handleSettingsPressOut = useCallback(() => {
+    if (reducedMotion) return
+    settingsScale.value = withSpring(1, { damping: 12, stiffness: 400 }) // eslint-disable-line react-hooks/immutability
+  }, [settingsScale, reducedMotion])
+
+  const handleSearchPressIn = useCallback(() => {
+    if (reducedMotion) return
+    searchScale.value = withTiming(0.85, { duration: 100, easing: Easing.out(Easing.ease) }) // eslint-disable-line react-hooks/immutability
+  }, [searchScale, reducedMotion])
+
+  const handleSearchPressOut = useCallback(() => {
+    if (reducedMotion) return
+    searchScale.value = withSpring(1, { damping: 12, stiffness: 400 }) // eslint-disable-line react-hooks/immutability
+  }, [searchScale, reducedMotion])
+
   // Hide settings button on tablets/foldables since it's in the sidebar
   const showSettingsButton = deviceType === 'phone'
 
@@ -174,17 +211,20 @@ export function ConnectionStatusBar({
         </TouchableOpacity>
       )}
       {showSettingsButton && (
-        <TouchableOpacity
+        <AnimatedTouchableOpacity
           testID="settings-button"
           onPress={onOpenSettings}
+          onPressIn={handleSettingsPressIn}
+          onPressOut={handleSettingsPressOut}
           activeOpacity={0.7}
           accessibilityRole="button"
           accessibilityLabel={t('settings.title')}
+          style={settingsAnimatedStyle}
         >
           <ActionButtonContainer {...actionButtonProps}>
             <Ionicons name="settings-outline" size={24} color={theme.colors.text.secondary} />
           </ActionButtonContainer>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       )}
     </>
   )
@@ -279,16 +319,19 @@ export function ConnectionStatusBar({
                 </ActionButtonContainer>
               </TouchableOpacity>
             )}
-            <TouchableOpacity
+            <AnimatedTouchableOpacity
               onPress={handleToggleSearch}
+              onPressIn={handleSearchPressIn}
+              onPressOut={handleSearchPressOut}
               activeOpacity={0.7}
               accessibilityRole="button"
               accessibilityLabel={isSearchOpen ? t('common.close') : 'Search messages'}
+              style={searchAnimatedStyle}
             >
               <ActionButtonContainer {...actionButtonProps}>
                 <Ionicons name="search" size={22} color={theme.colors.text.secondary} />
               </ActionButtonContainer>
-            </TouchableOpacity>
+            </AnimatedTouchableOpacity>
             {renderExtensionButtons()}
           </View>
         </Animated.View>
