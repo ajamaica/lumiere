@@ -12,7 +12,7 @@ const TABLET_MIN_WIDTH = 768
  */
 export function isTablet(): boolean {
   if (isIOS) {
-    return Platform.isPad === true
+    return (Platform as { isPad?: boolean }).isPad === true
   }
   const { width, height } = Dimensions.get('window')
   // On web, use viewport width directly since the browser window isn't rotated
