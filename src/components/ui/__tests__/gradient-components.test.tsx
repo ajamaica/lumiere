@@ -7,7 +7,7 @@ import { GradientBackground, GradientText } from '../'
 
 // Mock expo-linear-gradient
 jest.mock('expo-linear-gradient', () => ({
-  LinearGradient: ({ children, ...props }: any) => {
+  LinearGradient: ({ children, ...props }: Record<string, unknown>) => {
     const MockedLinearGradient = require('react-native').View // eslint-disable-line @typescript-eslint/no-require-imports
     return <MockedLinearGradient {...props}>{children}</MockedLinearGradient>
   },
@@ -15,7 +15,7 @@ jest.mock('expo-linear-gradient', () => ({
 
 // Mock @react-native-masked-view/masked-view
 jest.mock('@react-native-masked-view/masked-view', () => {
-  const MockedMaskedView = ({ children, maskElement }: any) => {
+  const MockedMaskedView = ({ children, maskElement }: Record<string, unknown>) => {
     const MockedView = require('react-native').View // eslint-disable-line @typescript-eslint/no-require-imports
     return (
       <MockedView>

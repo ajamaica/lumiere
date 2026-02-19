@@ -36,7 +36,7 @@ import {
 } from '../src/store'
 import { jotaiStorage } from '../src/store/storage'
 import { useTheme } from '../src/theme'
-import { MAX_CONTENT_WIDTH, useContentContainerStyle, useDeviceType } from '../src/utils/device'
+import { useContentContainerStyle, useDeviceType } from '../src/utils/device'
 import { GlassView } from '../src/utils/glassEffect'
 import { logger } from '../src/utils/logger'
 

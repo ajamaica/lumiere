@@ -6,7 +6,7 @@ import { AnimatedGradient, GradientBubble, GradientButton } from '../'
 
 // Mock expo-linear-gradient
 jest.mock('expo-linear-gradient', () => ({
-  LinearGradient: ({ children, ...props }: any) => {
+  LinearGradient: ({ children, ...props }: Record<string, unknown>) => {
     const MockedLinearGradient = require('react-native').View // eslint-disable-line @typescript-eslint/no-require-imports
     return (
       <MockedLinearGradient testID="linear-gradient" {...props}>
@@ -22,7 +22,7 @@ jest.mock('react-native-reanimated', () => {
   const Reanimated = require('react-native-reanimated/mock')
 
   // Add missing mocks
-  Reanimated.default.createAnimatedComponent = (component: any) => component
+  Reanimated.default.createAnimatedComponent = (component: unknown) => component
   Reanimated.default.Easing = {
     out: jest.fn(() => jest.fn()),
     inOut: jest.fn(() => jest.fn()),
