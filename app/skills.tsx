@@ -6,7 +6,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
-import { getClawHubSkillContent, searchClawHubSkills } from '../src/services/clawhub/api'
+import {
+  getClawHubSkillContent,
+  getClawHubSkillDetail,
+  searchClawHubSkills,
+} from '../src/services/clawhub/api'
 import { useMoltGateway } from '../src/services/molt'
 import { ClawHubSkill } from '../src/services/molt/types'
 import { useTheme } from '../src/theme'
@@ -56,15 +60,37 @@ export default function SkillsScreen() {
     setClawHubSearched(false)
     try {
       const results = await searchClawHubSkills(clawHubQuery.trim())
-      setClawHubResults(
-        results.map((r) => ({
-          slug: r.slug,
-          name: r.name,
-          description: r.description,
-          content: r.content,
-        })),
-      )
+      const initialResults = results.map((r) => ({
+        slug: r.slug,
+        name: r.name,
+        description: r.description,
+        content: r.content,
+        author: r.author,
+        installs: r.installs,
+      }))
+      setClawHubResults(initialResults)
       setClawHubSearched(true)
+
+      // Enrich results with detail data (author, installs) in the background
+      for (const skill of initialResults) {
+        getClawHubSkillDetail(skill.slug)
+          .then((detail) => {
+            setClawHubResults((prev) =>
+              prev.map((s) =>
+                s.slug === skill.slug
+                  ? {
+                      ...s,
+                      author: detail.owner?.displayName || detail.owner?.handle || s.author,
+                      installs: detail.skill.stats?.installs ?? s.installs,
+                    }
+                  : s,
+              ),
+            )
+          })
+          .catch((err) => {
+            skillsLogger.logError(`Failed to fetch detail for ${skill.slug}`, err)
+          })
+      }
     } catch (err) {
       skillsLogger.logError('ClawHub search failed', err)
       Alert.alert(t('common.error'), t('skills.clawHub.searchError'))
@@ -219,7 +245,7 @@ export default function SkillsScreen() {
           )}
 
           {clawHubResults.map((skill) => (
-            <Card key={skill.name} style={{ marginTop: theme.spacing.md }}>
+            <Card key={skill.slug} style={{ marginTop: theme.spacing.md }}>
               <Text variant="heading3" style={{ marginBottom: theme.spacing.xs }}>
                 {skill.name}
               </Text>
