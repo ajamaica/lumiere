@@ -299,11 +299,11 @@ export function useMarkdownRules() {
         _parent: unknown,
         styles: { list_item: ViewStyle },
       ) => (
-        <View key={node.key} style={styles.list_item}>
+        <Text key={node.key} style={styles.list_item}>
           {React.Children.map(children, (child) =>
             typeof child === 'string' ? <Text selectable={true}>{child}</Text> : child,
           )}
-        </View>
+        </Text>
       ),
       blockquote: (
         node: { key: string },
