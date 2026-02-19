@@ -341,7 +341,8 @@
     "speakMessage": "Nachricht vorlesen",
     "stopSpeaking": "Vorlesen beenden",
     "messagesQueued": "{{count}} Nachricht(en) in Warteschlange",
-    "messageInputHint": "Geben Sie hier Ihre Nachricht ein"
+    "messageInputHint": "Geben Sie hier Ihre Nachricht ein",
+    "stopResponse": "Antwort stoppen"
   },
   "missions": {
     "title": "Missionszentrale",

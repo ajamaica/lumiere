@@ -25,6 +25,8 @@ import { SlashCommandAutocomplete } from './SlashCommandAutocomplete'
 
 interface ChatInputProps {
   onSend: (text: string, attachments?: MessageAttachment[]) => void
+  onStop?: () => void
+  isAgentResponding?: boolean
   onOpenSessionMenu?: () => void
   disabled?: boolean
   queueCount?: number
@@ -39,6 +41,8 @@ interface ChatInputProps {
 
 export function ChatInput({
   onSend,
+  onStop,
+  isAgentResponding = false,
   onOpenSessionMenu,
   disabled = false,
   queueCount = 0,
@@ -173,11 +177,13 @@ export function ChatInput({
                 disabled={disabled}
                 hasContent={hasContent}
                 isBusy={isBusy}
+                isAgentResponding={isAgentResponding}
                 showMic={showMic}
                 queueCount={queueCount}
                 onOpenSessionMenu={onOpenSessionMenu}
                 onOpenAttachmentMenu={() => attach.setShowMenu(true)}
                 onSend={handleSend}
+                onStop={onStop}
                 onMicPress={handleMicPress}
                 supportsImageAttachments={supportsImageAttachments}
               />

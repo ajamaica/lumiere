@@ -341,7 +341,8 @@
     "speakMessage": "Lire le message à voix haute",
     "stopSpeaking": "Arrêter la lecture",
     "messagesQueued": "{{count}} message(s) en attente",
-    "messageInputHint": "Tapez votre message ici"
+    "messageInputHint": "Tapez votre message ici",
+    "stopResponse": "Arrêter la réponse"
   },
   "missions": {
     "title": "Centre de Missions",

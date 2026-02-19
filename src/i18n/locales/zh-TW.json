@@ -341,7 +341,8 @@
     "speakMessage": "朗讀訊息",
     "stopSpeaking": "停止朗讀",
     "messagesQueued": "{{count}} 則訊息排隊中",
-    "messageInputHint": "在此輸入您的訊息"
+    "messageInputHint": "在此輸入您的訊息",
+    "stopResponse": "停止回覆"
   },
   "missions": {
     "title": "任務控制中心",

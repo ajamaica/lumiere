@@ -341,7 +341,8 @@
     "speakMessage": "संदेश ज़ोर से पढ़ें",
     "stopSpeaking": "पढ़ना बंद करें",
     "messagesQueued": "{{count}} संदेश कतार में",
-    "messageInputHint": "अपना संदेश यहाँ टाइप करें"
+    "messageInputHint": "अपना संदेश यहाँ टाइप करें",
+    "stopResponse": "प्रतिक्रिया रोकें"
   },
   "missions": {
     "title": "मिशन नियंत्रण",

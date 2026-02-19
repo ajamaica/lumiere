@@ -89,6 +89,7 @@ function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
     setHistoryReady,
     handleSend,
     isAgentResponding,
+    stopResponse,
     queueCount,
     hasScrolledOnLoadRef,
     shouldAutoScrollRef,
@@ -283,6 +284,8 @@ function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
           />
           <ChatInput
             onSend={handleSend}
+            onStop={stopResponse}
+            isAgentResponding={isAgentResponding}
             onOpenSessionMenu={deviceType === 'phone' ? handleOpenSessionMenu : undefined}
             disabled={!connected}
             queueCount={queueCount}

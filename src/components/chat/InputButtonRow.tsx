@@ -9,11 +9,13 @@ interface InputButtonRowProps {
   disabled: boolean
   hasContent: boolean
   isBusy: boolean
+  isAgentResponding: boolean
   showMic: boolean
   queueCount: number
   onOpenSessionMenu?: () => void
   onOpenAttachmentMenu: () => void
   onSend: () => void
+  onStop?: () => void
   onMicPress: () => void
   supportsImageAttachments: boolean
 }
@@ -22,11 +24,13 @@ export function InputButtonRow({
   disabled,
   hasContent,
   isBusy,
+  isAgentResponding,
   showMic,
   queueCount,
   onOpenSessionMenu,
   onOpenAttachmentMenu,
   onSend,
+  onStop,
   onMicPress,
   supportsImageAttachments,
 }: InputButtonRowProps) {
@@ -73,6 +77,17 @@ export function InputButtonRow({
           >
             <Text style={styles.queueText}>{queueCount}</Text>
           </View>
+        )}
+        {isAgentResponding && onStop && (
+          <TouchableOpacity
+            testID="stop-button"
+            style={[styles.sendButton, styles.stopButton]}
+            onPress={onStop}
+            accessibilityRole="button"
+            accessibilityLabel={t('accessibility.stopResponse')}
+          >
+            <Ionicons name="stop" size={16} color={theme.colors.text.inverse} />
+          </TouchableOpacity>
         )}
         {showMic ? (
           <IconButton
@@ -189,6 +204,10 @@ const createStyles = (theme: Theme) =>
     },
     sendButtonInactive: {
       backgroundColor: theme.colors.surface,
+    },
+    stopButton: {
+      backgroundColor: theme.colors.text.secondary,
+      marginRight: theme.spacing.xs,
     },
     queueBadge: {
       backgroundColor: theme.colors.primary,
