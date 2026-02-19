@@ -250,7 +250,7 @@ const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       alignSelf: 'flex-start',
-      maxWidth: '80%',
+      maxWidth: '92%',
       paddingVertical: theme.spacing.sm,
       paddingHorizontal: theme.spacing.md,
       marginVertical: theme.spacing.xs,
