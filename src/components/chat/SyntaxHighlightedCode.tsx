@@ -1,6 +1,6 @@
+import { Highlight, themes } from 'prism-react-renderer'
 import React, { useMemo } from 'react'
 import { ScrollView, Text, TextStyle, View } from 'react-native'
-import { Highlight, themes } from 'prism-react-renderer'
 
 import { useTheme } from '../../theme'
 import { createCodeBlockStyles } from './ChatMessage.styles'
@@ -77,17 +77,17 @@ export function SyntaxHighlightedCode({
   return (
     <Highlight theme={prismTheme} code={code} language={prismLanguage}>
       {({ tokens }) => (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={codeStyles.codeBlockScrollView}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={codeStyles.codeBlockScrollView}
+        >
           <View style={codeStyles.codeContent}>
             {tokens.map((line, lineIndex) => (
               <View key={lineIndex} style={codeStyles.codeLine}>
                 {showLineNumbers && (
                   <Text
-                    style={[
-                      baseTextStyle,
-                      codeStyles.lineNumber,
-                      { width: gutterWidth },
-                    ]}
+                    style={[baseTextStyle, codeStyles.lineNumber, { width: gutterWidth }]}
                     selectable={false}
                   >
                     {lineIndex + 1}
@@ -97,7 +97,9 @@ export function SyntaxHighlightedCode({
                   {line.map((token, tokenIndex) => (
                     <Text
                       key={tokenIndex}
-                      style={token.empty ? undefined : { color: getTokenColor(token.types, prismTheme) }}
+                      style={
+                        token.empty ? undefined : { color: getTokenColor(token.types, prismTheme) }
+                      }
                     >
                       {token.content}
                     </Text>
@@ -115,7 +117,10 @@ export function SyntaxHighlightedCode({
 /** Resolve the color for a token by matching its types against the Prism theme styles. */
 function getTokenColor(
   types: string[],
-  prismTheme: { plain: { color?: string }; styles: Array<{ types: string[]; style: { color?: string } }> },
+  prismTheme: {
+    plain: { color?: string }
+    styles: Array<{ types: string[]; style: { color?: string } }>
+  },
 ): string | undefined {
   // Walk theme styles in reverse so later (more specific) entries win
   for (let i = prismTheme.styles.length - 1; i >= 0; i--) {
