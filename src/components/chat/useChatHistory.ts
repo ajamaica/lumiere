@@ -195,7 +195,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     return () => {
       cancelled = true
     }
-  }, [providerConfig.serverId, currentSessionKey])
+  }, [providerConfig.serverId, currentSessionKey, showToolEvents])
 
   // Load chat history on mount or server switch.
   const loadChatHistory = useCallback(async () => {

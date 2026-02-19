@@ -1,13 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
-import {
-  Dimensions,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native'
+import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated'
 import { SvgProps } from 'react-native-svg'
 
@@ -95,7 +88,6 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
   // Responsive sizing
   const isSmallScreen = screenWidth < 380
   const isTablet = screenWidth >= 768
-  const isWeb = Platform.OS === 'web'
 
   const phoneWidth = isTablet ? 260 : isSmallScreen ? 200 : 230
   const phoneHeight = phoneWidth * 1.6
