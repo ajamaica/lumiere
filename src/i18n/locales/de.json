@@ -178,6 +178,8 @@
     "loadingSessions": "Sitzungen werden geladen...",
     "noSessions": "Noch keine Sitzungen",
     "noSessionsMessage": "Senden Sie eine Nachricht, um Ihre erste Sitzung zu starten",
+    "selectAgentTitle": "Agent auswählen",
+    "selectAgentDescription": "Wähle den Agenten für die neue Sitzung aus",
     "messagesCount": "{{count}} Nachrichten",
     "justNow": "Gerade eben",
     "minutesAgo": "vor {{count}}m",

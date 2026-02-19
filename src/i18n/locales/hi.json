@@ -178,6 +178,8 @@
     "loadingSessions": "सत्र लोड हो रहे हैं...",
     "noSessions": "अभी तक कोई सत्र नहीं",
     "noSessionsMessage": "अपना पहला सत्र शुरू करने के लिए एक संदेश भेजें",
+    "selectAgentTitle": "एजेंट चुनें",
+    "selectAgentDescription": "नया सत्र किस एजेंट के साथ शुरू करना है, चुनें",
     "messagesCount": "{{count}} संदेश",
     "justNow": "अभी",
     "minutesAgo": "{{count}}मि पहले",

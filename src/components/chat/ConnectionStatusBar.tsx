@@ -44,6 +44,7 @@ interface ConnectionStatusBarProps {
   allMessages: Message[]
   searchQuery: string
   onSearchQueryChange: (query: string) => void
+  currentAgentEmoji?: string
 }
 
 export function ConnectionStatusBar({
@@ -60,6 +61,7 @@ export function ConnectionStatusBar({
   allMessages,
   searchQuery,
   onSearchQueryChange,
+  currentAgentEmoji,
 }: ConnectionStatusBarProps) {
   const { theme } = useTheme()
   const { t } = useTranslation()
@@ -315,7 +317,11 @@ export function ConnectionStatusBar({
                 accessibilityLabel={t('agents.selectAgent')}
               >
                 <ActionButtonContainer {...actionButtonProps}>
-                  <Ionicons name="people" size={20} color={theme.colors.primary} />
+                  {currentAgentEmoji ? (
+                    <Text style={styles.agentEmoji}>{currentAgentEmoji}</Text>
+                  ) : (
+                    <Ionicons name="people" size={20} color={theme.colors.primary} />
+                  )}
                 </ActionButtonContainer>
               </TouchableOpacity>
             )}
@@ -526,6 +532,9 @@ const createStatusBarStyles = (
       color: theme.colors.text.inverse,
       fontSize: theme.typography.fontSize.sm,
       fontWeight: theme.typography.fontWeight.semibold,
+    },
+    agentEmoji: {
+      fontSize: 20,
     },
   })
 }

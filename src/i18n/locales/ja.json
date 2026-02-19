@@ -178,6 +178,8 @@
     "loadingSessions": "セッションを読み込み中...",
     "noSessions": "セッションはまだありません",
     "noSessionsMessage": "メッセージを送信して最初のセッションを開始してください",
+    "selectAgentTitle": "エージェントを選択",
+    "selectAgentDescription": "新しいセッションを開始するエージェントを選択してください",
     "messagesCount": "{{count}} メッセージ",
     "justNow": "たった今",
     "minutesAgo": "{{count}}分前",

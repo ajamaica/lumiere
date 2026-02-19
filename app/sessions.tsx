@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { useAtom } from 'jotai'
+import { useAtom, useSetAtom } from 'jotai'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -19,7 +19,7 @@ import {
   Text,
 } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
-import { useMoltGateway } from '../src/services/molt'
+import { AgentConfig, useMoltGateway } from '../src/services/molt'
 import {
   buildCacheKey,
   deleteSessionData,
@@ -29,7 +29,9 @@ import {
   writeSessionIndex,
 } from '../src/services/providers'
 import {
+  agentConfigsAtom,
   createSessionKey,
+  currentAgentIdAtom,
   currentSessionKeyAtom,
   isMissionSession,
   sessionAliasesAtom,
@@ -59,9 +61,13 @@ export default function SessionsScreen() {
   const [sessionAliases] = useAtom(sessionAliasesAtom)
   const [config, setConfig] = useState<ProviderConfig | null>(null)
 
+  const [, setCurrentAgentId] = useAtom(currentAgentIdAtom)
+  const setGlobalAgentConfigs = useSetAtom(agentConfigsAtom)
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
   const [menuSessionKey, setMenuSessionKey] = useState<string | null>(null)
+  const [agentPickerVisible, setAgentPickerVisible] = useState(false)
+  const [agentConfigs, setAgentConfigs] = useState<Record<string, AgentConfig>>({})
 
   // Molt provider uses server-side sessions via WebSocket gateway
   const isMoltProvider = config?.type === 'molt'
@@ -74,11 +80,19 @@ export default function SessionsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connected, connect, disconnect, listSessions, deleteSession, resetSession } =
-    useMoltGateway({
-      url: config?.url || '',
-      token: config?.token || '',
-    })
+  const {
+    connected,
+    connect,
+    disconnect,
+    listSessions,
+    deleteSession,
+    resetSession,
+    health,
+    getServerConfig,
+  } = useMoltGateway({
+    url: config?.url || '',
+    token: config?.token || '',
+  })
 
   useEffect(() => {
     if (config && isMoltProvider) {
@@ -91,6 +105,24 @@ export default function SessionsScreen() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config, isMoltProvider])
+
+  // Fetch agent configs (with identity/emoji) when connected to Molt
+  useEffect(() => {
+    if (!connected || !isMoltProvider) return
+
+    const fetchAgentConfigs = async () => {
+      try {
+        const response = await getServerConfig()
+        if (response?.config?.agents?.list) {
+          setAgentConfigs(response.config.agents.list)
+          setGlobalAgentConfigs(response.config.agents.list)
+        }
+      } catch (err) {
+        sessionsLogger.logError('Failed to fetch agent configs', err)
+      }
+    }
+    fetchAgentConfigs()
+  }, [connected, isMoltProvider, getServerConfig, setGlobalAgentConfigs])
 
   const loadMoltSessions = useCallback(async () => {
     if (!connected || !isMoltProvider) return
@@ -135,8 +167,23 @@ export default function SessionsScreen() {
     }
   }, [loadMoltSessions, loadLocalSessions, isMoltProvider])
 
+  const agentIds = health?.agents ? Object.keys(health.agents) : []
+  const hasMultipleAgents = isMoltProvider && agentIds.length > 1
+
   const handleNewSession = () => {
+    if (hasMultipleAgents) {
+      setAgentPickerVisible(true)
+      return
+    }
     const newSessionKey = createSessionKey('main', `${Date.now()}`)
+    setCurrentSessionKey(newSessionKey)
+    router.back()
+  }
+
+  const handleSelectAgentForNewSession = (agentId: string) => {
+    setAgentPickerVisible(false)
+    setCurrentAgentId(agentId)
+    const newSessionKey = createSessionKey(agentId, `${Date.now()}`)
     setCurrentSessionKey(newSessionKey)
     router.back()
   }
@@ -357,6 +404,49 @@ export default function SessionsScreen() {
       borderTopWidth: StyleSheet.hairlineWidth,
       borderTopColor: theme.colors.divider,
     },
+
+    // Agent picker
+    agentPickerGlass: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.xl,
+      paddingVertical: theme.spacing.lg,
+    },
+    agentPickerHeader: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingBottom: theme.spacing.lg,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: theme.colors.divider,
+    },
+    agentPickerGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      paddingHorizontal: theme.spacing.lg,
+      paddingTop: theme.spacing.lg,
+      gap: theme.spacing.lg,
+    },
+    agentPickerItem: {
+      alignItems: 'center',
+      gap: theme.spacing.xs,
+      width: 80,
+    },
+    agentPickerCircle: {
+      width: 56,
+      height: 56,
+      borderRadius: 28,
+      backgroundColor: theme.colors.surfaceVariant,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 2,
+      borderColor: 'transparent',
+    },
+    agentPickerCircleSelected: {
+      borderColor: theme.colors.primary,
+      backgroundColor: theme.colors.primary + '15',
+    },
+    agentPickerEmoji: {
+      fontSize: 24,
+    },
   })
 
   if (!config) {
@@ -572,6 +662,46 @@ export default function SessionsScreen() {
           <TouchableOpacity style={styles.menuCancelItem} onPress={() => setMenuSessionKey(null)}>
             <Text style={styles.menuItemText}>{t('common.cancel')}</Text>
           </TouchableOpacity>
+        </GlassView>
+      </ModalOverlay>
+
+      {/* Agent selection for new session */}
+      <ModalOverlay
+        visible={agentPickerVisible}
+        onClose={() => setAgentPickerVisible(false)}
+        width={deviceType === 'phone' ? '85%' : '50%'}
+      >
+        <GlassView style={styles.agentPickerGlass}>
+          <View style={styles.agentPickerHeader}>
+            <Text variant="heading3">{t('sessions.selectAgentTitle')}</Text>
+            <Text variant="caption" color="secondary" style={{ marginTop: theme.spacing.xs }}>
+              {t('sessions.selectAgentDescription')}
+            </Text>
+          </View>
+          <View style={styles.agentPickerGrid}>
+            {agentIds.map((agentId) => {
+              const agentConfig = agentConfigs[agentId]
+              const emoji = agentConfig?.identity?.emoji || '🤖'
+              const name = agentConfig?.identity?.name || agentId
+              return (
+                <TouchableOpacity
+                  key={agentId}
+                  style={styles.agentPickerItem}
+                  onPress={() => handleSelectAgentForNewSession(agentId)}
+                  activeOpacity={0.7}
+                  accessibilityRole="button"
+                  accessibilityLabel={name}
+                >
+                  <View style={styles.agentPickerCircle}>
+                    <Text style={styles.agentPickerEmoji}>{emoji}</Text>
+                  </View>
+                  <Text variant="caption" numberOfLines={1}>
+                    {name}
+                  </Text>
+                </TouchableOpacity>
+              )
+            })}
+          </View>
         </GlassView>
       </ModalOverlay>
     </SafeAreaView>

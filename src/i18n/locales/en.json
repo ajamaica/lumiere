@@ -178,6 +178,8 @@
     "loadingSessions": "Loading sessions...",
     "noSessions": "No sessions yet",
     "noSessionsMessage": "Send a message to start your first session",
+    "selectAgentTitle": "Choose an Agent",
+    "selectAgentDescription": "Select which agent to start the new session with",
     "messagesCount": "{{count}} messages",
     "justNow": "Just now",
     "minutesAgo": "{{count}}m ago",

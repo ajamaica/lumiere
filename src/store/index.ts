@@ -47,7 +47,7 @@ export {
 } from './sessionAtoms'
 
 // ─── Server atoms ────────────────────────────────────────
-export { currentServerIdAtom, serversAtom } from './serverAtoms'
+export { agentConfigsAtom, currentServerIdAtom, serversAtom } from './serverAtoms'
 
 // ─── UI atoms ────────────────────────────────────────────
 export {

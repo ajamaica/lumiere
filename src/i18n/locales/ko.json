@@ -178,6 +178,8 @@
     "loadingSessions": "세션 로딩 중...",
     "noSessions": "아직 세션이 없습니다",
     "noSessionsMessage": "메시지를 보내 첫 번째 세션을 시작하세요",
+    "selectAgentTitle": "에이전트 선택",
+    "selectAgentDescription": "새 세션을 시작할 에이전트를 선택하세요",
     "messagesCount": "{{count}} 메시지",
     "justNow": "방금",
     "minutesAgo": "{{count}}분 전",

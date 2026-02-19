@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { FlashList, FlashListRef } from '@shopify/flash-list'
 import { useRouter } from 'expo-router'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, Keyboard, Pressable, Text, View } from 'react-native'
@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useResponseSuggestions } from '../../hooks/useResponseSuggestions'
 import { ProviderConfig } from '../../services/providers'
 import {
+  agentConfigsAtom,
   createSessionKey,
   currentAgentIdAtom,
   currentSessionKeyAtom,
@@ -53,6 +54,8 @@ function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
   const router = useRouter()
   const [currentSessionKey, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const [currentAgentId, setCurrentAgentId] = useAtom(currentAgentIdAtom)
+  const agentConfigs = useAtomValue(agentConfigsAtom)
+  const currentAgentEmoji = agentConfigs[currentAgentId]?.identity?.emoji
   const [isAgentPickerOpen, setIsAgentPickerOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const isMoltProvider = providerConfig.type === 'molt'
@@ -309,6 +312,7 @@ function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
         allMessages={allMessages}
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
+        currentAgentEmoji={currentAgentEmoji}
       />
       {isMoltProvider && (
         <AgentPicker

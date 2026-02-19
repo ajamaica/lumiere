@@ -178,6 +178,8 @@
     "loadingSessions": "Загрузка сессий...",
     "noSessions": "Сессий пока нет",
     "noSessionsMessage": "Отправьте сообщение, чтобы начать первую сессию",
+    "selectAgentTitle": "Выберите агента",
+    "selectAgentDescription": "Выберите агента для новой сессии",
     "messagesCount": "{{count}} сообщений",
     "justNow": "Только что",
     "minutesAgo": "{{count}}м назад",
