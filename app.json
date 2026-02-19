@@ -19,6 +19,7 @@
       },
       "supportsTablet": true,
       "bundleIdentifier": "bot.lumiere.app",
+      "appleTeamId": "N8R9NFD23H",
       "buildNumber": "3",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
@@ -90,6 +91,7 @@
       "react-native-compressor",
       "expo-background-task",
       "expo-quick-actions",
+      "@bacons/apple-targets",
       [
         "expo-share-intent",
         {
