@@ -62,6 +62,7 @@ export const GatewayMethods = {
   CONFIG_PATCH: 'config.patch',
   SKILLS_STATUS: 'skills.status',
   CRON_GET: 'cron.get',
+  CANVAS_RESULT: 'canvas.result',
 } as const
 
 /** Well-known gateway event names. */

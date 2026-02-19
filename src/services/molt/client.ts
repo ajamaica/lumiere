@@ -18,6 +18,7 @@ import {
   AgentEvent,
   AgentEventCallback,
   AgentParams,
+  CanvasResultParams,
   ChatAttachmentPayload,
   ChatSendResponse,
   ConfigGetResponse,
@@ -435,6 +436,16 @@ export class MoltGatewayClient {
 
   async getCronJobDetail(jobId: string): Promise<CronJobDetail | null> {
     return this.request<CronJobDetail | null>(GatewayMethods.CRON_GET, { jobId })
+  }
+
+  // ─── Canvas Methods ────────────────────────────────────────────────────────
+
+  /**
+   * Report the result of a canvas action (present, navigate, eval, snapshot)
+   * back to the gateway so the agent can consume the output.
+   */
+  async sendCanvasResult(params: CanvasResultParams): Promise<void> {
+    await this.request(GatewayMethods.CANVAS_RESULT, params, 10_000)
   }
 
   // ─── Agent Request ──────────────────────────────────────────────────────────

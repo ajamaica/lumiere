@@ -61,6 +61,7 @@ export class OpenAIChatProvider implements ChatProvider {
     scheduler: false,
     gatewaySnapshot: false,
     skills: false,
+    canvas: false,
   }
 
   private baseUrl: string

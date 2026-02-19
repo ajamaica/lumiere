@@ -456,7 +456,11 @@
     "title": "Canvas",
     "close": "Cerrar canvas",
     "clear": "Limpiar canvas",
-    "tapToOpen": "Toca para ver el canvas"
+    "tapToOpen": "Toca para ver el canvas",
+    "presenting": "Presentando contenido...",
+    "navigating": "Navegando...",
+    "evaluating": "Evaluando script...",
+    "snapshotting": "Tomando captura..."
   },
   "agentManagement": {
     "title": "Agentes",

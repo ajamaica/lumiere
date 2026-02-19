@@ -25,6 +25,7 @@ export class EchoChatProvider implements ChatProvider {
     scheduler: false,
     gatewaySnapshot: false,
     skills: false,
+    canvas: false,
   }
 
   private connected = false

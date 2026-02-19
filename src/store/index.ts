@@ -85,8 +85,21 @@ export {
 export { activeMissionIdAtom, missionMessagesAtom, missionsAtom } from './missionAtoms'
 
 // ─── Canvas atoms ───────────────────────────────────────
-export type { CanvasContent } from './canvasAtoms'
-export { canvasContentAtom, canvasVisibleAtom } from './canvasAtoms'
+export type {
+  CanvasAction,
+  CanvasActionType,
+  CanvasContent,
+  CanvasEvalResult,
+  CanvasSnapshot,
+  CanvasSourceType,
+} from './canvasAtoms'
+export {
+  canvasActionQueueAtom,
+  canvasContentAtom,
+  canvasEvalResultAtom,
+  canvasSnapshotAtom,
+  canvasVisibleAtom,
+} from './canvasAtoms'
 
 // ─── ThinkLumiere atoms ─────────────────────────────────
 export {

@@ -100,6 +100,8 @@ export interface ProviderCapabilities {
   gatewaySnapshot: boolean
   /** Skills management (teach, list, remove) */
   skills: boolean
+  /** Interactive canvas with eval, navigate, present, and snapshot */
+  canvas: boolean
 }
 
 /**

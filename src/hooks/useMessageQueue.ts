@@ -5,6 +5,7 @@ import { MessageAttachment } from '../components/chat/ChatMessage'
 import type { Message } from '../components/chat/chatMessageTypes'
 import { ChatProviderEvent, SendMessageParams as ProviderSendParams } from '../services/providers'
 import {
+  canvasActionQueueAtom,
   canvasContentAtom,
   canvasVisibleAtom,
   messageQueueAtom,
@@ -60,6 +61,7 @@ export function useMessageQueue({
   const showToolEvents = useAtomValue(showToolEventsInChatAtom)
   const setCanvasContent = useSetAtom(canvasContentAtom)
   const setCanvasVisible = useSetAtom(canvasVisibleAtom)
+  const setCanvasActionQueue = useSetAtom(canvasActionQueueAtom)
   const showToolEventsRef = useRef(showToolEvents)
   useEffect(() => {
     showToolEventsRef.current = showToolEvents
@@ -139,15 +141,61 @@ export function useMessageQueue({
 
               // Extract canvas content from canvas tool events
               if (toolName === 'canvas' && event.toolInput) {
-                const html = event.toolInput.html as string | undefined
-                if (html && typeof html === 'string') {
-                  setCanvasContent({
-                    html,
-                    title: (event.toolInput.title as string) || undefined,
-                    updatedAt: Date.now(),
-                  })
-                  if (event.toolStatus === 'completed') {
-                    setCanvasVisible(true)
+                const action = (event.toolInput.action as string) || 'present'
+                const actionId = event.toolCallId || generateId('canvas')
+
+                switch (action) {
+                  case 'present': {
+                    const html = event.toolInput.html as string | undefined
+                    const url = event.toolInput.url as string | undefined
+                    if (html && typeof html === 'string') {
+                      setCanvasContent({
+                        html,
+                        source: 'html',
+                        title: (event.toolInput.title as string) || undefined,
+                        updatedAt: Date.now(),
+                      })
+                    } else if (url && typeof url === 'string') {
+                      setCanvasContent({
+                        url,
+                        source: 'url',
+                        title: (event.toolInput.title as string) || undefined,
+                        updatedAt: Date.now(),
+                      })
+                    }
+                    if (event.toolStatus === 'completed') {
+                      setCanvasVisible(true)
+                    }
+                    break
+                  }
+                  case 'navigate': {
+                    const url = event.toolInput.url as string | undefined
+                    if (url && typeof url === 'string') {
+                      setCanvasActionQueue((prev) => [
+                        ...prev,
+                        { id: actionId, type: 'navigate', url, queuedAt: Date.now() },
+                      ])
+                      setCanvasVisible(true)
+                    }
+                    break
+                  }
+                  case 'eval': {
+                    const script = event.toolInput.script as string | undefined
+                    if (script && typeof script === 'string') {
+                      setCanvasActionQueue((prev) => [
+                        ...prev,
+                        { id: actionId, type: 'eval', script, queuedAt: Date.now() },
+                      ])
+                      setCanvasVisible(true)
+                    }
+                    break
+                  }
+                  case 'snapshot': {
+                    setCanvasActionQueue((prev) => [
+                      ...prev,
+                      { id: actionId, type: 'snapshot', queuedAt: Date.now() },
+                    ])
+                    break
                   }
                 }
               }
@@ -192,6 +240,7 @@ export function useMessageQueue({
       systemMessage,
       setCanvasContent,
       setCanvasVisible,
+      setCanvasActionQueue,
     ],
   )
 
