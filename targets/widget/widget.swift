@@ -30,51 +30,29 @@ struct LumiereProvider: TimelineProvider {
 
 struct LumiereWidgetSmallView: View {
     var body: some View {
-        ZStack {
-            LinearGradient(
-                colors: [Color(hex: 0x1a5276), Color(hex: 0x2980b9)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+        VStack(spacing: 8) {
+            Image(systemName: "bubble.left.and.bubble.right.fill")
+                .font(.system(size: 32))
+                .foregroundStyle(.white)
 
-            VStack(spacing: 8) {
-                Image(systemName: "bubble.left.and.bubble.right.fill")
-                    .font(.system(size: 32))
-                    .foregroundStyle(.white)
-
-                Text("Lumiere")
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-                    .foregroundStyle(.white)
-            }
+            Text("Chat with Lumiere")
+                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.center)
         }
     }
 }
 
 struct LumierWidgetMediumView: View {
     var body: some View {
-        ZStack {
-            LinearGradient(
-                colors: [Color(hex: 0x1a5276), Color(hex: 0x2980b9)],
-                startPoint: .leading,
-                endPoint: .trailing
-            )
+        HStack(spacing: 16) {
+            Image(systemName: "bubble.left.and.bubble.right.fill")
+                .font(.system(size: 36))
+                .foregroundStyle(.white)
 
-            HStack(spacing: 16) {
-                Image(systemName: "bubble.left.and.bubble.right.fill")
-                    .font(.system(size: 36))
-                    .foregroundStyle(.white)
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Lumiere")
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                        .foregroundStyle(.white)
-
-                    Text("Tap to open chat")
-                        .font(.system(size: 13, weight: .regular))
-                        .foregroundStyle(.white.opacity(0.8))
-                }
-            }
-            .padding(.horizontal)
+            Text("Chat with Lumiere")
+                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                .foregroundStyle(.white)
         }
     }
 }
@@ -95,13 +73,20 @@ struct LumiereWidgetEntryView: View {
 
 // MARK: - Widget Configuration
 
+@main
 struct LumiereWidget: Widget {
     let kind: String = "LumiereWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: LumiereProvider()) { entry in
             LumiereWidgetEntryView(entry: entry)
-                .containerBackground(.clear, for: .widget)
+                .containerBackground(
+                    LinearGradient(
+                        colors: [Color(hex: 0x06B6D4), Color(hex: 0x22D3EE)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ), for: .widget
+                )
                 .widgetURL(URL(string: "lumiere://")!)
         }
         .configurationDisplayName("Lumiere")
