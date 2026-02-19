@@ -341,7 +341,8 @@
     "speakMessage": "Прочитать сообщение вслух",
     "stopSpeaking": "Остановить чтение",
     "messagesQueued": "{{count}} сообщение(й) в очереди",
-    "messageInputHint": "Введите ваше сообщение здесь"
+    "messageInputHint": "Введите ваше сообщение здесь",
+    "stopResponse": "Остановить ответ"
   },
   "missions": {
     "title": "Центр миссий",

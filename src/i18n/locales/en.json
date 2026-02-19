@@ -341,7 +341,8 @@
     "speakMessage": "Read message aloud",
     "stopSpeaking": "Stop reading",
     "messagesQueued": "{{count}} message(s) queued",
-    "messageInputHint": "Type your message here"
+    "messageInputHint": "Type your message here",
+    "stopResponse": "Stop response"
   },
   "missions": {
     "title": "Mission Control",

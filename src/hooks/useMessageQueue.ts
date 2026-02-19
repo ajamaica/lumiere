@@ -63,6 +63,8 @@ export function useMessageQueue({
   const setCanvasVisible = useSetAtom(canvasVisibleAtom)
   const setCanvasActionQueue = useSetAtom(canvasActionQueueAtom)
   const showToolEventsRef = useRef(showToolEvents)
+  const accumulatedTextRef = useRef('')
+  const stoppedRef = useRef(false)
   useEffect(() => {
     showToolEventsRef.current = showToolEvents
   }, [showToolEvents])
@@ -82,6 +84,8 @@ export function useMessageQueue({
       setFailedMessage(null)
       onAgentMessageUpdate('')
       onSendStart?.()
+      stoppedRef.current = false
+      accumulatedTextRef.current = ''
 
       let accumulatedText = ''
 
@@ -101,8 +105,10 @@ export function useMessageQueue({
             systemMessage: systemMessage || undefined,
           },
           (event: ChatProviderEvent) => {
+            if (stoppedRef.current) return
             if (event.type === 'delta' && event.delta) {
               accumulatedText += event.delta
+              accumulatedTextRef.current = accumulatedText
               onAgentMessageUpdate(accumulatedText)
             } else if (event.type === 'lifecycle' && event.phase === 'start') {
               if (showToolEventsRef.current) {
@@ -244,6 +250,23 @@ export function useMessageQueue({
     ],
   )
 
+  const stopResponse = useCallback(() => {
+    if (!isAgentResponding) return
+    stoppedRef.current = true
+    const text = accumulatedTextRef.current
+    if (text) {
+      onAgentMessageComplete({
+        id: generateId('msg'),
+        text,
+        sender: 'agent',
+        timestamp: new Date(),
+      })
+    } else {
+      onAgentMessageUpdate('')
+    }
+    setIsAgentResponding(false)
+  }, [isAgentResponding, onAgentMessageComplete, onAgentMessageUpdate])
+
   const retryFailedMessage = useCallback(() => {
     if (!failedMessage) return
     const { text, attachments } = failedMessage
@@ -287,6 +310,7 @@ export function useMessageQueue({
   return {
     handleSend,
     isAgentResponding,
+    stopResponse,
     queueCount: messageQueue.length,
     failedMessage,
     retryFailedMessage,

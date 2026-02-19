@@ -341,7 +341,8 @@
     "speakMessage": "メッセージを読み上げる",
     "stopSpeaking": "読み上げを停止",
     "messagesQueued": "{{count}}件のメッセージがキューに入っています",
-    "messageInputHint": "ここにメッセージを入力"
+    "messageInputHint": "ここにメッセージを入力",
+    "stopResponse": "応答を停止"
   },
   "missions": {
     "title": "ミッションコントロール",

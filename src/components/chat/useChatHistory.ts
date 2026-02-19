@@ -137,7 +137,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     return resolveSystemMessageVariables(parts.join('\n\n'))
   }, [sessionSystemMessage, activeWebsite])
 
-  const { handleSend, isAgentResponding, queueCount } = useMessageQueue({
+  const { handleSend, isAgentResponding, stopResponse, queueCount } = useMessageQueue({
     sendMessage,
     currentSessionKey,
     onMessageAdd: (message) =>
@@ -350,6 +350,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     // Messaging
     handleSend,
     isAgentResponding,
+    stopResponse,
     queueCount,
 
     // Scroll tracking refs
