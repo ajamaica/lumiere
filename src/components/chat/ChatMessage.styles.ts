@@ -262,6 +262,7 @@ export const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
     list_item: {
       color: textColor,
       marginVertical: theme.spacing.xs / 2,
+      marginTop: theme.spacing.xs,
     },
     bullet_list_icon: {
       color: textColor,

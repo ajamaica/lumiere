@@ -299,9 +299,15 @@ export function useMarkdownRules() {
         _parent: unknown,
         styles: { list_item: ViewStyle },
       ) => (
-        <View key={node.key} style={styles.list_item}>
+        <View key={node.key}>
           {React.Children.map(children, (child) =>
-            typeof child === 'string' ? <Text selectable={true}>{child}</Text> : child,
+            typeof child === 'string' ? (
+              <Text selectable={true} style={styles.list_item}>
+                {child}
+              </Text>
+            ) : (
+              child
+            ),
           )}
         </View>
       ),
