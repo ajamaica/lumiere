@@ -1,4 +1,5 @@
-import { API_CONFIG, DEFAULT_MODELS } from '../../constants'
+import { API_CONFIG, DEFAULT_MODELS, HTTP_CONFIG } from '../../constants'
+import { fetchWithRetry } from '../../utils/httpRetry'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -80,12 +81,16 @@ export class OpenAIChatProvider implements ChatProvider {
 
   async connect(): Promise<void> {
     try {
-      const response = await fetch(`${this.baseUrl}/v1/models`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${this.apiKey}`,
+      const response = await fetchWithRetry(
+        `${this.baseUrl}/v1/models`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${this.apiKey}`,
+          },
         },
-      })
+        { timeoutMs: HTTP_CONFIG.CONNECT_TIMEOUT_MS },
+      )
 
       if (!response.ok && response.status !== 401) {
         throw new Error(`API returned status ${response.status}`)
@@ -182,6 +187,7 @@ export class OpenAIChatProvider implements ChatProvider {
     return new Promise<void>((resolve, reject) => {
       const xhr = new XMLHttpRequest()
       this.activeXhr = xhr
+      xhr.timeout = HTTP_CONFIG.STREAM_TIMEOUT_MS
 
       let fullResponse = ''
       let lastIndex = 0
@@ -245,6 +251,12 @@ export class OpenAIChatProvider implements ChatProvider {
         this.activeXhr = null
         onEvent({ type: 'lifecycle', phase: 'end' })
         resolve()
+      }
+
+      xhr.ontimeout = () => {
+        this.activeXhr = null
+        onEvent({ type: 'lifecycle', phase: 'end' })
+        reject(new Error('Request timed out'))
       }
 
       // Build API messages, prepending system message if provided
@@ -312,12 +324,16 @@ export class OpenAIChatProvider implements ChatProvider {
 
   async getHealth(): Promise<HealthStatus> {
     try {
-      const response = await fetch(`${this.baseUrl}/v1/models`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${this.apiKey}`,
+      const response = await fetchWithRetry(
+        `${this.baseUrl}/v1/models`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${this.apiKey}`,
+          },
         },
-      })
+        { timeoutMs: HTTP_CONFIG.CONNECT_TIMEOUT_MS },
+      )
 
       if (response.ok) {
         return { status: 'healthy' }

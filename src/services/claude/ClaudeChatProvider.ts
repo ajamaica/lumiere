@@ -1,4 +1,5 @@
-import { API_CONFIG, DEFAULT_MODELS } from '../../constants'
+import { API_CONFIG, DEFAULT_MODELS, HTTP_CONFIG } from '../../constants'
+import { fetchWithRetry } from '../../utils/httpRetry'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -82,20 +83,24 @@ export class ClaudeChatProvider implements ChatProvider {
 
   async connect(): Promise<void> {
     try {
-      // Verify connection by making a simple request
-      const response = await fetch(`${this.baseUrl}/v1/messages`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': this.apiKey,
-          'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
+      // Verify connection by making a simple request with timeout and retry
+      const response = await fetchWithRetry(
+        `${this.baseUrl}/v1/messages`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': this.apiKey,
+            'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
+          },
+          body: JSON.stringify({
+            model: this.model,
+            max_tokens: 1,
+            messages: [{ role: 'user', content: 'hi' }],
+          }),
         },
-        body: JSON.stringify({
-          model: this.model,
-          max_tokens: 1,
-          messages: [{ role: 'user', content: 'hi' }],
-        }),
-      })
+        { timeoutMs: HTTP_CONFIG.CONNECT_TIMEOUT_MS },
+      )
 
       if (!response.ok && response.status !== 400) {
         const errorBody = await response.text().catch(() => 'Unable to read error response')
@@ -228,6 +233,7 @@ export class ClaudeChatProvider implements ChatProvider {
     return new Promise<void>((resolve, reject) => {
       const xhr = new XMLHttpRequest()
       this.activeXhr = xhr
+      xhr.timeout = HTTP_CONFIG.STREAM_TIMEOUT_MS
 
       let fullResponse = ''
       let lastIndex = 0
@@ -291,6 +297,12 @@ export class ClaudeChatProvider implements ChatProvider {
         resolve()
       }
 
+      xhr.ontimeout = () => {
+        this.activeXhr = null
+        onEvent({ type: 'lifecycle', phase: 'end' })
+        reject(new Error('Request timed out'))
+      }
+
       // Build the request body, including optional system message
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const requestBody: Record<string, any> = {
@@ -350,19 +362,23 @@ export class ClaudeChatProvider implements ChatProvider {
 
   async getHealth(): Promise<HealthStatus> {
     try {
-      const response = await fetch(`${this.baseUrl}/v1/messages`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': this.apiKey,
-          'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
+      const response = await fetchWithRetry(
+        `${this.baseUrl}/v1/messages`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': this.apiKey,
+            'anthropic-version': API_CONFIG.ANTHROPIC_VERSION,
+          },
+          body: JSON.stringify({
+            model: this.model,
+            max_tokens: 1,
+            messages: [{ role: 'user', content: 'ping' }],
+          }),
         },
-        body: JSON.stringify({
-          model: this.model,
-          max_tokens: 1,
-          messages: [{ role: 'user', content: 'ping' }],
-        }),
-      })
+        { timeoutMs: HTTP_CONFIG.CONNECT_TIMEOUT_MS },
+      )
 
       if (response.ok || response.status === 400) {
         return { status: 'healthy' }

@@ -1,4 +1,5 @@
-import { API_CONFIG, DEFAULT_MODELS } from '../../constants'
+import { API_CONFIG, DEFAULT_MODELS, HTTP_CONFIG } from '../../constants'
+import { fetchWithRetry } from '../../utils/httpRetry'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -74,9 +75,11 @@ export class GeminiChatProvider implements ChatProvider {
 
   async connect(): Promise<void> {
     try {
-      const response = await fetch(`${this.baseUrl}/v1beta/models?key=${this.apiKey}`, {
-        method: 'GET',
-      })
+      const response = await fetchWithRetry(
+        `${this.baseUrl}/v1beta/models?key=${this.apiKey}`,
+        { method: 'GET' },
+        { timeoutMs: HTTP_CONFIG.CONNECT_TIMEOUT_MS },
+      )
 
       if (!response.ok && response.status !== 401) {
         throw new Error(`API returned status ${response.status}`)
@@ -168,6 +171,7 @@ export class GeminiChatProvider implements ChatProvider {
     return new Promise<void>((resolve, reject) => {
       const xhr = new XMLHttpRequest()
       this.activeXhr = xhr
+      xhr.timeout = HTTP_CONFIG.STREAM_TIMEOUT_MS
 
       let fullResponse = ''
       let lastIndex = 0
@@ -232,6 +236,12 @@ export class GeminiChatProvider implements ChatProvider {
         resolve()
       }
 
+      xhr.ontimeout = () => {
+        this.activeXhr = null
+        onEvent({ type: 'lifecycle', phase: 'end' })
+        reject(new Error('Request timed out'))
+      }
+
       // Build request body, including system_instruction if provided
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const requestBody: Record<string, any> = {
@@ -285,9 +295,11 @@ export class GeminiChatProvider implements ChatProvider {
 
   async getHealth(): Promise<HealthStatus> {
     try {
-      const response = await fetch(`${this.baseUrl}/v1beta/models?key=${this.apiKey}`, {
-        method: 'GET',
-      })
+      const response = await fetchWithRetry(
+        `${this.baseUrl}/v1beta/models?key=${this.apiKey}`,
+        { method: 'GET' },
+        { timeoutMs: HTTP_CONFIG.CONNECT_TIMEOUT_MS },
+      )
 
       if (response.ok) {
         return { status: 'healthy' }

@@ -529,9 +529,10 @@ describe('CachedChatProvider', () => {
     it('listSessions returns indexed sessions sorted by lastActivity', async () => {
       // Pre-populate the session index with known timestamps to avoid timing issues
       const indexKey = buildSessionIndexKey('srv-idx')
+      const now = Date.now()
       const preEntries: SessionIndexEntry[] = [
-        { key: 'session-old', messageCount: 2, lastActivity: 1000 },
-        { key: 'session-new', messageCount: 2, lastActivity: 2000 },
+        { key: 'session-old', messageCount: 2, lastActivity: now - 1000 },
+        { key: 'session-new', messageCount: 2, lastActivity: now },
       ]
       await jotaiStorage.setItem(indexKey, preEntries)
 
