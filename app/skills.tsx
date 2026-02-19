@@ -1,10 +1,18 @@
 import { useRouter } from 'expo-router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, Alert, ScrollView, StyleSheet, TextInput, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Badge, Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
+import { Badge, Button, Card, ScreenHeader, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import {
   getClawHubSkillContent,
@@ -19,6 +27,8 @@ import { logger } from '../src/utils/logger'
 
 const skillsLogger = logger.create('Skills')
 
+type TabKey = 'installed' | 'clawhub'
+
 export default function SkillsScreen() {
   const { theme } = useTheme()
   const contentContainerStyle = useContentContainerStyle()
@@ -26,6 +36,7 @@ export default function SkillsScreen() {
   const { t } = useTranslation()
   const { getProviderConfig, currentServerId, currentServer } = useServers()
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
+  const [activeTab, setActiveTab] = useState<TabKey>('installed')
 
   const [clawHubQuery, setClawHubQuery] = useState('')
   const [clawHubResults, setClawHubResults] = useState<ClawHubSkill[]>([])
@@ -202,6 +213,29 @@ export default function SkillsScreen() {
       paddingHorizontal: theme.spacing.sm,
       paddingVertical: 2,
     },
+    tabs: {
+      flexDirection: 'row',
+      paddingHorizontal: theme.spacing.lg,
+      gap: theme.spacing.xs,
+      marginBottom: theme.spacing.md,
+    },
+    tab: {
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
+      borderRadius: theme.borderRadius.sm,
+      backgroundColor: theme.colors.surface,
+    },
+    tabActive: {
+      backgroundColor: theme.colors.primary,
+    },
+    tabText: {
+      fontSize: 13,
+      fontWeight: '600' as const,
+      color: theme.colors.text.secondary,
+    },
+    tabTextActive: {
+      color: theme.colors.text.inverse,
+    },
   })
 
   if (currentServer?.providerType !== 'molt') {
@@ -252,143 +286,166 @@ export default function SkillsScreen() {
     )
   }
 
+  const tabs: { key: TabKey; label: string }[] = [
+    { key: 'installed', label: t('skills.installed.title') },
+    { key: 'clawhub', label: t('skills.clawHub.title') },
+  ]
+
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader title={t('skills.title')} subtitle={t('skills.subtitle')} showBack />
 
-      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
-        <Section title={t('skills.installed.title')}>
-          <Text variant="bodySmall" color="secondary" style={{ marginBottom: theme.spacing.md }}>
-            {t('skills.installed.description')}
-          </Text>
-
-          {installedLoading && (
-            <View style={{ alignItems: 'center', marginTop: theme.spacing.lg }}>
-              <ActivityIndicator color={theme.colors.primary} />
-            </View>
-          )}
-
-          {installedLoaded && !installedLoading && installedSkills.length === 0 && (
-            <Text color="secondary" center style={{ marginTop: theme.spacing.lg }}>
-              {t('skills.installed.noSkills')}
+      <View style={styles.tabs}>
+        {tabs.map((tab) => (
+          <TouchableOpacity
+            key={tab.key}
+            style={[styles.tab, activeTab === tab.key && styles.tabActive]}
+            onPress={() => setActiveTab(tab.key)}
+          >
+            <Text style={[styles.tabText, activeTab === tab.key && styles.tabTextActive]}>
+              {tab.label}
             </Text>
-          )}
+          </TouchableOpacity>
+        ))}
+      </View>
 
-          {installedSkills.map((skill) => (
-            <Card key={skill.key ?? skill.name} style={{ marginTop: theme.spacing.md }}>
-              <View style={styles.skillHeader}>
-                {skill.emoji && <Text variant="heading3">{skill.emoji}</Text>}
-                <Text variant="heading3">{skill.name}</Text>
+      <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
+        {activeTab === 'installed' && (
+          <>
+            <Text variant="bodySmall" color="secondary" style={{ marginBottom: theme.spacing.md }}>
+              {t('skills.installed.description')}
+            </Text>
+
+            {installedLoading && (
+              <View style={{ alignItems: 'center', marginTop: theme.spacing.lg }}>
+                <ActivityIndicator color={theme.colors.primary} />
               </View>
-              {skill.description && (
+            )}
+
+            {installedLoaded && !installedLoading && installedSkills.length === 0 && (
+              <Text color="secondary" center style={{ marginTop: theme.spacing.lg }}>
+                {t('skills.installed.noSkills')}
+              </Text>
+            )}
+
+            {installedSkills.map((skill) => (
+              <Card key={skill.key ?? skill.name} style={{ marginTop: theme.spacing.md }}>
+                <View style={styles.skillHeader}>
+                  {skill.emoji && <Text variant="heading3">{skill.emoji}</Text>}
+                  <Text variant="heading3">{skill.name}</Text>
+                </View>
+                {skill.description && (
+                  <Text variant="bodySmall" color="secondary">
+                    {skill.description}
+                  </Text>
+                )}
+                <View style={styles.skillBadges}>
+                  <Badge
+                    label={
+                      skill.enabled ? t('skills.installed.enabled') : t('skills.installed.disabled')
+                    }
+                    variant={skill.enabled ? 'success' : 'default'}
+                  />
+                  {skill.bundled && <Badge label={t('skills.installed.bundled')} variant="info" />}
+                  {skill.source && <Badge label={skill.source} variant="primary" />}
+                </View>
+                {skill.triggers && skill.triggers.length > 0 && (
+                  <View style={styles.skillTriggers}>
+                    {skill.triggers.map((trigger) => (
+                      <View key={trigger} style={styles.triggerChip}>
+                        <Text variant="caption" color="tertiary">
+                          {trigger}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                )}
+              </Card>
+            ))}
+
+            {installedLoaded && (
+              <Button
+                title={t('skills.installed.refresh')}
+                variant="secondary"
+                size="sm"
+                onPress={fetchInstalledSkills}
+                style={{ marginTop: theme.spacing.md, alignSelf: 'flex-start' }}
+              />
+            )}
+          </>
+        )}
+
+        {activeTab === 'clawhub' && (
+          <>
+            <Text variant="bodySmall" color="secondary" style={{ marginBottom: theme.spacing.md }}>
+              {t('skills.clawHub.description')}
+            </Text>
+            <View style={styles.searchRow}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder={t('skills.clawHub.searchPlaceholder')}
+                placeholderTextColor={theme.colors.text.secondary}
+                value={clawHubQuery}
+                onChangeText={setClawHubQuery}
+                onSubmitEditing={handleClawHubSearch}
+                returnKeyType="search"
+                autoCapitalize="none"
+              />
+              <Button
+                title={t('skills.clawHub.search')}
+                onPress={handleClawHubSearch}
+                disabled={clawHubSearching || !clawHubQuery.trim()}
+              />
+            </View>
+
+            {clawHubSearching && (
+              <View style={{ alignItems: 'center', marginTop: theme.spacing.lg }}>
+                <ActivityIndicator color={theme.colors.primary} />
+              </View>
+            )}
+
+            {clawHubSearched && !clawHubSearching && clawHubResults.length === 0 && (
+              <Text color="secondary" center style={{ marginTop: theme.spacing.lg }}>
+                {t('skills.clawHub.noResults')}
+              </Text>
+            )}
+
+            {clawHubResults.map((skill) => (
+              <Card key={skill.slug} style={{ marginTop: theme.spacing.md }}>
+                <Text variant="heading3" style={{ marginBottom: theme.spacing.xs }}>
+                  {skill.name}
+                </Text>
                 <Text variant="bodySmall" color="secondary">
                   {skill.description}
                 </Text>
-              )}
-              <View style={styles.skillBadges}>
-                <Badge
-                  label={
-                    skill.enabled ? t('skills.installed.enabled') : t('skills.installed.disabled')
-                  }
-                  variant={skill.enabled ? 'success' : 'default'}
-                />
-                {skill.bundled && <Badge label={t('skills.installed.bundled')} variant="info" />}
-                {skill.source && <Badge label={skill.source} variant="primary" />}
-              </View>
-              {skill.triggers && skill.triggers.length > 0 && (
-                <View style={styles.skillTriggers}>
-                  {skill.triggers.map((trigger) => (
-                    <View key={trigger} style={styles.triggerChip}>
-                      <Text variant="caption" color="tertiary">
-                        {trigger}
-                      </Text>
-                    </View>
-                  ))}
+                <View style={styles.clawHubMeta}>
+                  {skill.author && (
+                    <Text variant="caption" color="tertiary">
+                      {t('skills.clawHub.author')}: {skill.author}
+                    </Text>
+                  )}
+                  {skill.installs != null && (
+                    <Text variant="caption" color="tertiary">
+                      {t('skills.clawHub.installs')}: {skill.installs}
+                    </Text>
+                  )}
                 </View>
-              )}
-            </Card>
-          ))}
-
-          {installedLoaded && (
-            <Button
-              title={t('skills.installed.refresh')}
-              variant="secondary"
-              size="sm"
-              onPress={fetchInstalledSkills}
-              style={{ marginTop: theme.spacing.md, alignSelf: 'flex-start' }}
-            />
-          )}
-        </Section>
-
-        <Section title={t('skills.clawHub.title')}>
-          <Text variant="bodySmall" color="secondary" style={{ marginBottom: theme.spacing.md }}>
-            {t('skills.clawHub.description')}
-          </Text>
-          <View style={styles.searchRow}>
-            <TextInput
-              style={styles.searchInput}
-              placeholder={t('skills.clawHub.searchPlaceholder')}
-              placeholderTextColor={theme.colors.text.secondary}
-              value={clawHubQuery}
-              onChangeText={setClawHubQuery}
-              onSubmitEditing={handleClawHubSearch}
-              returnKeyType="search"
-              autoCapitalize="none"
-            />
-            <Button
-              title={t('skills.clawHub.search')}
-              onPress={handleClawHubSearch}
-              disabled={clawHubSearching || !clawHubQuery.trim()}
-            />
-          </View>
-
-          {clawHubSearching && (
-            <View style={{ alignItems: 'center', marginTop: theme.spacing.lg }}>
-              <ActivityIndicator color={theme.colors.primary} />
-            </View>
-          )}
-
-          {clawHubSearched && !clawHubSearching && clawHubResults.length === 0 && (
-            <Text color="secondary" center style={{ marginTop: theme.spacing.lg }}>
-              {t('skills.clawHub.noResults')}
-            </Text>
-          )}
-
-          {clawHubResults.map((skill) => (
-            <Card key={skill.slug} style={{ marginTop: theme.spacing.md }}>
-              <Text variant="heading3" style={{ marginBottom: theme.spacing.xs }}>
-                {skill.name}
-              </Text>
-              <Text variant="bodySmall" color="secondary">
-                {skill.description}
-              </Text>
-              <View style={styles.clawHubMeta}>
-                {skill.author && (
-                  <Text variant="caption" color="tertiary">
-                    {t('skills.clawHub.author')}: {skill.author}
-                  </Text>
-                )}
-                {skill.installs != null && (
-                  <Text variant="caption" color="tertiary">
-                    {t('skills.clawHub.installs')}: {skill.installs}
-                  </Text>
-                )}
-              </View>
-              <View style={styles.skillActions}>
-                <Button
-                  title={
-                    installingSkill === skill.name
-                      ? t('common.loading')
-                      : t('skills.clawHub.install')
-                  }
-                  size="sm"
-                  onPress={() => handleInstallClawHubSkill(skill)}
-                  disabled={installingSkill === skill.name}
-                />
-              </View>
-            </Card>
-          ))}
-        </Section>
+                <View style={styles.skillActions}>
+                  <Button
+                    title={
+                      installingSkill === skill.name
+                        ? t('common.loading')
+                        : t('skills.clawHub.install')
+                    }
+                    size="sm"
+                    onPress={() => handleInstallClawHubSkill(skill)}
+                    disabled={installingSkill === skill.name}
+                  />
+                </View>
+              </Card>
+            ))}
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   )
