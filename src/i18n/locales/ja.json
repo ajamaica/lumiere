@@ -274,6 +274,15 @@
     "updated": "更新日",
     "openClawOnly": "OpenClaw専用",
     "openClawOnlyDescription": "スキルはOpenClawサーバーでのみ利用可能です。",
+    "installed": {
+      "title": "インストール済みスキル",
+      "description": "エージェントに現在インストールされているスキル。",
+      "noSkills": "インストール済みのスキルはありません",
+      "enabled": "有効",
+      "disabled": "無効",
+      "bundled": "組み込み",
+      "refresh": "更新"
+    },
     "clawHub": {
       "title": "ClawHub",
       "description": "ClawHubでコミュニティスキルを検索し、エージェントにインストールします。",

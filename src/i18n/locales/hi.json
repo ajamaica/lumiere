@@ -274,6 +274,15 @@
     "updated": "अपडेट किया गया",
     "openClawOnly": "केवल OpenClaw",
     "openClawOnlyDescription": "कौशल केवल OpenClaw सर्वर के लिए उपलब्ध हैं।",
+    "installed": {
+      "title": "इंस्टॉल किए गए स्किल्स",
+      "description": "आपके एजेंट पर वर्तमान में इंस्टॉल किए गए स्किल्स।",
+      "noSkills": "कोई स्किल इंस्टॉल नहीं है",
+      "enabled": "सक्रिय",
+      "disabled": "निष्क्रिय",
+      "bundled": "बंडल",
+      "refresh": "रीफ्रेश"
+    },
     "clawHub": {
       "title": "ClawHub",
       "description": "ClawHub पर सामुदायिक कौशल खोजें और उन्हें अपने एजेंट में इंस्टॉल करें।",

@@ -274,6 +274,15 @@
     "updated": "Atualizada",
     "openClawOnly": "Apenas OpenClaw",
     "openClawOnlyDescription": "Habilidades estão disponíveis apenas para servidores OpenClaw.",
+    "installed": {
+      "title": "Skills Instaladas",
+      "description": "Skills atualmente instaladas no seu agente.",
+      "noSkills": "Nenhuma skill instalada",
+      "enabled": "Ativada",
+      "disabled": "Desativada",
+      "bundled": "Incluída",
+      "refresh": "Atualizar"
+    },
     "clawHub": {
       "title": "ClawHub",
       "description": "Pesquise habilidades da comunidade no ClawHub e instale-as no seu agente.",

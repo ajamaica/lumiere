@@ -274,6 +274,15 @@
     "updated": "Обновлён",
     "openClawOnly": "Только OpenClaw",
     "openClawOnlyDescription": "Навыки доступны только для серверов OpenClaw.",
+    "installed": {
+      "title": "Установленные навыки",
+      "description": "Навыки, установленные на вашем агенте.",
+      "noSkills": "Нет установленных навыков",
+      "enabled": "Включён",
+      "disabled": "Отключён",
+      "bundled": "Встроенный",
+      "refresh": "Обновить"
+    },
     "clawHub": {
       "title": "ClawHub",
       "description": "Ищите навыки сообщества на ClawHub и устанавливайте их для вашего агента.",

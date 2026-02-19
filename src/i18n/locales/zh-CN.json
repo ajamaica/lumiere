@@ -274,6 +274,15 @@
     "updated": "更新时间",
     "openClawOnly": "仅限 OpenClaw",
     "openClawOnlyDescription": "技能仅适用于 OpenClaw 服务器。",
+    "installed": {
+      "title": "已安装技能",
+      "description": "当前安装在代理上的技能。",
+      "noSkills": "没有已安装的技能",
+      "enabled": "已启用",
+      "disabled": "已禁用",
+      "bundled": "内置",
+      "refresh": "刷新"
+    },
     "clawHub": {
       "title": "ClawHub",
       "description": "在 ClawHub 搜索社区技能并安装到您的代理。",
