@@ -1,15 +1,11 @@
-Novidades 1.1.0:
+Novidades 1.2.0:
 
-• Suporte para web e extensão Chrome
-• Provedor compatível com OpenAI
-• Gerenciamento de sessões — editar, redefinir, excluir
-• Compartilhamento de outros apps
-• Modo fluxo de trabalho para chat com documentos
-• Troca de agente para OpenClaw/Molt
-• Busca de habilidades ClawHub
-• Bloqueio por senha para web
-• Importação de backup
-• Raciocínio da IA
-• Integração simplificada
-• 11 idiomas
-• Correções e melhorias
+• Destaque de sintaxe e números de linha em blocos de código
+• Suporte a tablets e dispositivos dobráveis
+• Menu plus com Câmera, Fotos e Arquivos
+• Retry HTTP/timeout, TTL de cache, reenvio de mensagens, exportação de dados
+• Tela de configuração redesenhada
+• Correção de listas aninhadas e markdown no chat
+• Correção de eventos de ferramentas em chat em tempo real
+• Correção de cards de habilidades na busca
+• Dependências atualizadas e melhorias

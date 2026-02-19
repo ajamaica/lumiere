@@ -1,16 +1,14 @@
-Novidades na versão 1.1.0:
+Novidades na versão 1.2.0:
 
-• Suporte para web e extensão do Chrome — use o Lumiere no navegador
-• Provedor compatível com OpenAI — conecte-se a qualquer API compatível com OpenAI
-• Gerenciamento de sessões — editar, redefinir, excluir e alternar entre sessões
-• Extensão de compartilhamento — envie conteúdo de outros apps diretamente para o Lumiere
-• Modo de fluxo de trabalho — sessões de chat baseadas em documentos
-• Troca de agente para servidores OpenClaw/Molt
-• Busca de habilidades no ClawHub
-• Logs de gateway para servidores OpenClaw/Molt
-• Tela de bloqueio por senha para web com armazenamento criptografado
-• Opção de importação de backup durante a configuração
-• Exibição de raciocínio e pensamento da IA
-• Experiência de integração simplificada
-• 11 idiomas disponíveis
-• Correções de bugs e melhorias de desempenho
+• Widget de tela inicial do iOS — acesso rápido ao Lumiere direto da tela inicial
+• Suporte a Sugestões da Siri — Lumiere aparece nas sugestões da Siri
+• Destaque de sintaxe e números de linha em blocos de código para melhor legibilidade
+• Suporte a tablets e dispositivos dobráveis — layouts otimizados em todas as telas
+• Menu plus com opções de Câmera, Fotos e Arquivos para anexar facilmente
+• Retry HTTP/timeout, TTL de cache, reenvio de mensagens e exportação completa de dados
+• Tela de configuração redesenhada com visuais de integração aprimorados
+• Correção do problema de re-renderização do iPad ao trocar sessões
+• Correção da renderização de listas aninhadas e markdown bruto em mensagens de chat
+• Correção de eventos de ferramentas não exibidos durante chat em tempo real
+• Correção da renderização de cards de habilidades nos resultados de busca
+• Dependências atualizadas e melhorias de desempenho

@@ -1,15 +1,11 @@
-Neu in 1.1.0:
+Neu in 1.2.0:
 
-• Web- und Chrome-Erweiterung
-• OpenAI-kompatibler Anbieter
-• Sitzungsverwaltung — bearbeiten, zurücksetzen, löschen
-• Teilen-Erweiterung für andere Apps
-• Workflow-Modus für dokumentenbasierte Chats
-• Agentenwechsel für OpenClaw/Molt
-• ClawHub-Skill-Suche
-• Passwort-Sperre für Web
-• Backup-Import
-• KI-Denkprozess-Anzeige
-• Vereinfachtes Onboarding
-• 11 Sprachen
-• Fehlerbehebungen und Verbesserungen
+• Syntaxhervorhebung und Zeilennummern in Codeblöcken
+• Tablet- und Faltgeräte-Unterstützung
+• Plus-Menü mit Kamera, Fotos und Dateien
+• HTTP-Retry/Timeout, Cache-TTL, Nachrichtenwiederholung, Datenexport
+• Neugestalteter Einrichtungsbildschirm
+• Darstellung verschachtelter Listen und Markdown behoben
+• Tool-Events im Echtzeit-Chat behoben
+• Skill-Karten in Suchergebnissen behoben
+• Aktualisierte Abhängigkeiten und Verbesserungen
