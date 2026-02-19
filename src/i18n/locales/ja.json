@@ -14,7 +14,8 @@
     "skip": "スキップ",
     "confirm": "確認",
     "active": "有効",
-    "beta": "ベータ"
+    "beta": "ベータ",
+    "clear": "クリア"
   },
   "settings": {
     "title": "設定",
@@ -471,6 +472,14 @@
     "navigating": "ナビゲーション中...",
     "evaluating": "スクリプトを実行中...",
     "snapshotting": "スナップショットを取得中..."
+  },
+  "emojiPicker": {
+    "categories": {
+      "agents": "エージェント",
+      "people": "人物",
+      "animals": "動物",
+      "objects": "オブジェクト"
+    }
   },
   "agentManagement": {
     "title": "エージェント",

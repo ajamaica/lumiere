@@ -14,7 +14,8 @@
     "skip": "छोड़ें",
     "confirm": "पुष्टि करें",
     "active": "सक्रिय",
-    "beta": "बीटा"
+    "beta": "बीटा",
+    "clear": "हटाएं"
   },
   "settings": {
     "title": "सेटिंग्स",
@@ -471,6 +472,14 @@
     "navigating": "नेविगेट हो रहा है...",
     "evaluating": "स्क्रिप्ट का मूल्यांकन हो रहा है...",
     "snapshotting": "स्नैपशॉट लिया जा रहा है..."
+  },
+  "emojiPicker": {
+    "categories": {
+      "agents": "एजेंट",
+      "people": "लोग",
+      "animals": "जानवर",
+      "objects": "वस्तुएं"
+    }
   },
   "agentManagement": {
     "title": "एजेंट",

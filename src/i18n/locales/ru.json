@@ -14,7 +14,8 @@
     "skip": "Пропустить",
     "confirm": "Подтвердить",
     "active": "Активно",
-    "beta": "Бета"
+    "beta": "Бета",
+    "clear": "Очистить"
   },
   "settings": {
     "title": "Настройки",
@@ -471,6 +472,14 @@
     "navigating": "Навигация...",
     "evaluating": "Выполнение скрипта...",
     "snapshotting": "Создание снимка..."
+  },
+  "emojiPicker": {
+    "categories": {
+      "agents": "Агенты",
+      "people": "Люди",
+      "animals": "Животные",
+      "objects": "Объекты"
+    }
   },
   "agentManagement": {
     "title": "Агенты",

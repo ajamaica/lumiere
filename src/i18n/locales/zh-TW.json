@@ -14,7 +14,8 @@
     "skip": "略過",
     "confirm": "確認",
     "active": "活躍",
-    "beta": "測試版"
+    "beta": "測試版",
+    "clear": "清除"
   },
   "settings": {
     "title": "設定",
@@ -471,6 +472,14 @@
     "navigating": "正在導航...",
     "evaluating": "正在執行腳本...",
     "snapshotting": "正在截取快照..."
+  },
+  "emojiPicker": {
+    "categories": {
+      "agents": "代理",
+      "people": "人物",
+      "animals": "動物",
+      "objects": "物品"
+    }
   },
   "agentManagement": {
     "title": "代理",
