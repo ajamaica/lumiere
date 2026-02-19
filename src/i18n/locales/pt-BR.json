@@ -567,5 +567,11 @@
       "groupPolicy": "Política de Grupo",
       "historyLimit": "Limite de Histórico"
     }
+  },
+  "updates": {
+    "title": "Atualização disponível",
+    "message": "Uma nova versão do Lumiere está disponível. Reinicie agora para aplicar a atualização.",
+    "restart": "Reiniciar agora",
+    "later": "Mais tarde"
   }
 }

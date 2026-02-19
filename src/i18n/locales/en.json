@@ -567,5 +567,11 @@
       "groupPolicy": "Group Policy",
       "historyLimit": "History Limit"
     }
+  },
+  "updates": {
+    "title": "Update Available",
+    "message": "A new version of Lumiere is available. Restart now to apply the update.",
+    "restart": "Restart Now",
+    "later": "Later"
   }
 }

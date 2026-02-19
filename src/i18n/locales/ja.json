@@ -567,5 +567,11 @@
       "groupPolicy": "グループポリシー",
       "historyLimit": "履歴制限"
     }
+  },
+  "updates": {
+    "title": "アップデートがあります",
+    "message": "Lumiereの新しいバージョンが利用可能です。今すぐ再起動してアップデートを適用してください。",
+    "restart": "今すぐ再起動",
+    "later": "あとで"
   }
 }
