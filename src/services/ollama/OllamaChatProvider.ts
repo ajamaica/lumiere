@@ -33,6 +33,7 @@ export class OllamaChatProvider implements ChatProvider {
     scheduler: false,
     gatewaySnapshot: false,
     skills: false,
+    canvas: false,
   }
 
   private client: Ollama

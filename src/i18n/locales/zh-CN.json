@@ -456,7 +456,11 @@
     "title": "画布",
     "close": "关闭画布",
     "clear": "清除画布",
-    "tapToOpen": "点击查看画布"
+    "tapToOpen": "点击查看画布",
+    "presenting": "正在展示内容...",
+    "navigating": "正在导航...",
+    "evaluating": "正在执行脚本...",
+    "snapshotting": "正在截取快照..."
   },
   "agentManagement": {
     "title": "代理",

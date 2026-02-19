@@ -35,6 +35,7 @@ export class GeminiNanoChatProvider implements ChatProvider {
     scheduler: false,
     gatewaySnapshot: false,
     skills: false,
+    canvas: false,
   }
 
   private connected = false

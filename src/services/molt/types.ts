@@ -546,3 +546,23 @@ export type GatewayEvent =
   | { event: 'shutdown'; payload: { restartIn?: number } }
   | { event: 'health'; payload: HealthStatus }
   | { event: 'seq.gap'; payload: { expected: number; received: number } }
+
+// ─── Canvas Types ──────────────────────────────────────────────────────────────
+
+/** Parameters for `canvas.result` — report a canvas action result back to the gateway. */
+export interface CanvasResultParams {
+  /** The action ID (toolCallId) this result corresponds to */
+  actionId: string
+  /** The canvas action type that was executed */
+  action: 'present' | 'navigate' | 'eval' | 'snapshot'
+  /** Whether the action succeeded */
+  success: boolean
+  /** Return value for eval, HTML for snapshot */
+  value?: string
+  /** Error message if the action failed */
+  error?: string
+  /** Current page title */
+  title?: string
+  /** Current page URL */
+  url?: string
+}

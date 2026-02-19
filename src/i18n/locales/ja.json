@@ -456,7 +456,11 @@
     "title": "キャンバス",
     "close": "キャンバスを閉じる",
     "clear": "キャンバスをクリア",
-    "tapToOpen": "タップしてキャンバスを表示"
+    "tapToOpen": "タップしてキャンバスを表示",
+    "presenting": "コンテンツを表示中...",
+    "navigating": "ナビゲーション中...",
+    "evaluating": "スクリプトを実行中...",
+    "snapshotting": "スナップショットを取得中..."
   },
   "agentManagement": {
     "title": "エージェント",

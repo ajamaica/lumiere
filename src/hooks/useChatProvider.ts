@@ -24,6 +24,7 @@ const DEFAULT_CAPABILITIES: ProviderCapabilities = {
   scheduler: false,
   gatewaySnapshot: false,
   skills: false,
+  canvas: false,
 }
 
 export interface UseChatProviderResult {

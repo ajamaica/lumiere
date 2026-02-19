@@ -25,6 +25,7 @@ export class MoltChatProvider implements ChatProvider {
     scheduler: true,
     gatewaySnapshot: true,
     skills: true,
+    canvas: true,
   }
 
   private client: MoltGatewayClient
