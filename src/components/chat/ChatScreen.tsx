@@ -47,7 +47,7 @@ interface ChatScreenProps {
  * key for the current server, returning a default value ('agent:main:main')
  * if none exists. This ensures a valid session key is always available.
  */
-export function ChatScreen({ providerConfig }: ChatScreenProps) {
+function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
   const { theme } = useTheme()
   const { t } = useTranslation()
   const router = useRouter()
@@ -320,3 +320,5 @@ export function ChatScreen({ providerConfig }: ChatScreenProps) {
     </SafeAreaView>
   )
 }
+
+export const ChatScreen = React.memo(ChatScreenComponent)

@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import Animated, {
   Easing,
@@ -89,38 +89,42 @@ export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
     left: shouldShowSidebar ? sidebarWidthAnim.value + 10 : 10,
   }))
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: 'row',
-      backgroundColor: theme.colors.background,
-    },
-    sidebar: {
-      backgroundColor: theme.colors.surface,
-      borderRightWidth: 1,
-      borderRightColor: theme.colors.border,
-      overflow: 'hidden',
-    },
-    content: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
-    toggleButton: {
-      position: 'absolute',
-      top: insets.top + 15,
-      zIndex: 1000,
-      backgroundColor: theme.colors.surface,
-      borderRadius: 20,
-      padding: 8,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      shadowColor: theme.colors.shadow,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
-    },
-  })
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          flex: 1,
+          flexDirection: 'row',
+          backgroundColor: theme.colors.background,
+        },
+        sidebar: {
+          backgroundColor: theme.colors.surface,
+          borderRightWidth: 1,
+          borderRightColor: theme.colors.border,
+          overflow: 'hidden',
+        },
+        content: {
+          flex: 1,
+          backgroundColor: theme.colors.background,
+        },
+        toggleButton: {
+          position: 'absolute',
+          top: insets.top + 15,
+          zIndex: 1000,
+          backgroundColor: theme.colors.surface,
+          borderRadius: 20,
+          padding: 8,
+          borderWidth: 1,
+          borderColor: theme.colors.border,
+          shadowColor: theme.colors.shadow,
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
+          elevation: 3,
+        },
+      }),
+    [theme, insets.top],
+  )
 
   if (!shouldShowSidebar) {
     // On phones, just show content (sidebar accessible via modal)
