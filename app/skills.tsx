@@ -1,10 +1,10 @@
 import { useRouter } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
+import { Badge, Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
 import {
   getClawHubSkillContent,
@@ -12,7 +12,7 @@ import {
   searchClawHubSkills,
 } from '../src/services/clawhub/api'
 import { useMoltGateway } from '../src/services/molt'
-import { ClawHubSkill } from '../src/services/molt/types'
+import { ClawHubSkill, InstalledSkill } from '../src/services/molt/types'
 import { useTheme } from '../src/theme'
 import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
@@ -33,6 +33,10 @@ export default function SkillsScreen() {
   const [clawHubSearched, setClawHubSearched] = useState(false)
   const [installingSkill, setInstallingSkill] = useState<string | null>(null)
 
+  const [installedSkills, setInstalledSkills] = useState<InstalledSkill[]>([])
+  const [installedLoading, setInstalledLoading] = useState(false)
+  const [installedLoaded, setInstalledLoaded] = useState(false)
+
   useEffect(() => {
     const loadConfig = async () => {
       const providerConfig = await getProviderConfig()
@@ -41,7 +45,7 @@ export default function SkillsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connect, sendAgentRequest } = useMoltGateway({
+  const { connect, connected, sendAgentRequest, getSkillsStatus } = useMoltGateway({
     url: config?.url || '',
     token: config?.token || '',
   })
@@ -52,6 +56,25 @@ export default function SkillsScreen() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
+
+  const fetchInstalledSkills = useCallback(async () => {
+    setInstalledLoading(true)
+    try {
+      const response = await getSkillsStatus()
+      setInstalledSkills(response.skills)
+      setInstalledLoaded(true)
+    } catch (err) {
+      skillsLogger.logError('Failed to fetch installed skills', err)
+    } finally {
+      setInstalledLoading(false)
+    }
+  }, [getSkillsStatus])
+
+  useEffect(() => {
+    if (connected && !installedLoaded) {
+      fetchInstalledSkills()
+    }
+  }, [connected, installedLoaded, fetchInstalledSkills])
 
   const handleClawHubSearch = async () => {
     if (!clawHubQuery.trim()) return
@@ -155,6 +178,30 @@ export default function SkillsScreen() {
       gap: theme.spacing.md,
       marginTop: theme.spacing.xs,
     },
+    skillHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.sm,
+      marginBottom: theme.spacing.xs,
+    },
+    skillBadges: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: theme.spacing.xs,
+      marginTop: theme.spacing.sm,
+    },
+    skillTriggers: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: theme.spacing.xs,
+      marginTop: theme.spacing.sm,
+    },
+    triggerChip: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.sm,
+      paddingHorizontal: theme.spacing.sm,
+      paddingVertical: 2,
+    },
   })
 
   if (currentServer?.providerType !== 'molt') {
@@ -210,6 +257,69 @@ export default function SkillsScreen() {
       <ScreenHeader title={t('skills.title')} subtitle={t('skills.subtitle')} showBack />
 
       <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
+        <Section title={t('skills.installed.title')}>
+          <Text variant="bodySmall" color="secondary" style={{ marginBottom: theme.spacing.md }}>
+            {t('skills.installed.description')}
+          </Text>
+
+          {installedLoading && (
+            <View style={{ alignItems: 'center', marginTop: theme.spacing.lg }}>
+              <ActivityIndicator color={theme.colors.primary} />
+            </View>
+          )}
+
+          {installedLoaded && !installedLoading && installedSkills.length === 0 && (
+            <Text color="secondary" center style={{ marginTop: theme.spacing.lg }}>
+              {t('skills.installed.noSkills')}
+            </Text>
+          )}
+
+          {installedSkills.map((skill) => (
+            <Card key={skill.key ?? skill.name} style={{ marginTop: theme.spacing.md }}>
+              <View style={styles.skillHeader}>
+                {skill.emoji && <Text variant="heading3">{skill.emoji}</Text>}
+                <Text variant="heading3">{skill.name}</Text>
+              </View>
+              {skill.description && (
+                <Text variant="bodySmall" color="secondary">
+                  {skill.description}
+                </Text>
+              )}
+              <View style={styles.skillBadges}>
+                <Badge
+                  label={
+                    skill.enabled ? t('skills.installed.enabled') : t('skills.installed.disabled')
+                  }
+                  variant={skill.enabled ? 'success' : 'default'}
+                />
+                {skill.bundled && <Badge label={t('skills.installed.bundled')} variant="info" />}
+                {skill.source && <Badge label={skill.source} variant="primary" />}
+              </View>
+              {skill.triggers && skill.triggers.length > 0 && (
+                <View style={styles.skillTriggers}>
+                  {skill.triggers.map((trigger) => (
+                    <View key={trigger} style={styles.triggerChip}>
+                      <Text variant="caption" color="tertiary">
+                        {trigger}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              )}
+            </Card>
+          ))}
+
+          {installedLoaded && (
+            <Button
+              title={t('skills.installed.refresh')}
+              variant="secondary"
+              size="sm"
+              onPress={fetchInstalledSkills}
+              style={{ marginTop: theme.spacing.md, alignSelf: 'flex-start' }}
+            />
+          )}
+        </Section>
+
         <Section title={t('skills.clawHub.title')}>
           <Text variant="bodySmall" color="secondary" style={{ marginBottom: theme.spacing.md }}>
             {t('skills.clawHub.description')}

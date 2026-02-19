@@ -274,6 +274,15 @@
     "updated": "수정일",
     "openClawOnly": "OpenClaw 전용",
     "openClawOnlyDescription": "스킬은 OpenClaw 서버에서만 사용할 수 있습니다.",
+    "installed": {
+      "title": "설치된 스킬",
+      "description": "에이전트에 현재 설치된 스킬입니다.",
+      "noSkills": "설치된 스킬이 없습니다",
+      "enabled": "활성",
+      "disabled": "비활성",
+      "bundled": "기본 제공",
+      "refresh": "새로고침"
+    },
     "clawHub": {
       "title": "ClawHub",
       "description": "ClawHub에서 커뮤니티 스킬을 검색하고 에이전트에 설치하세요.",
