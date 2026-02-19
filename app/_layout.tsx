@@ -13,6 +13,7 @@ import { useAppleShortcuts } from '../src/hooks/useAppleShortcuts'
 import { useDeepLinking } from '../src/hooks/useDeepLinking'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useNotifications } from '../src/hooks/useNotifications'
+import { useOTAUpdates } from '../src/hooks/useOTAUpdates'
 import { useQuickActions } from '../src/hooks/useQuickActions'
 import { useShareExtension } from '../src/hooks/useShareIntent'
 import { useSiriSuggestions } from '../src/hooks/useSiriSuggestions'
@@ -102,6 +103,7 @@ function AppContent() {
   const isLocked = biometricLockEnabled && !isUnlocked
   useDeepLinking(isLocked, onboardingCompleted)
   useNotifications()
+  useOTAUpdates()
   useQuickActions()
   useAppleShortcuts()
   useSiriSuggestions()
