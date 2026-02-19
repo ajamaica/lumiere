@@ -90,6 +90,7 @@
       "react-native-compressor",
       "expo-background-task",
       "expo-quick-actions",
+      "@bacons/apple-targets",
       [
         "expo-share-intent",
         {
