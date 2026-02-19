@@ -14,7 +14,8 @@
     "skip": "건너뛰기",
     "confirm": "확인",
     "active": "활성",
-    "beta": "베타"
+    "beta": "베타",
+    "clear": "지우기"
   },
   "settings": {
     "title": "설정",
@@ -462,6 +463,14 @@
     "navigating": "탐색 중...",
     "evaluating": "스크립트 실행 중...",
     "snapshotting": "스냅샷 촬영 중..."
+  },
+  "emojiPicker": {
+    "categories": {
+      "agents": "에이전트",
+      "people": "사람",
+      "animals": "동물",
+      "objects": "사물"
+    }
   },
   "agentManagement": {
     "title": "에이전트",

@@ -14,7 +14,8 @@
     "skip": "Omitir",
     "confirm": "Confirmar",
     "active": "Activo",
-    "beta": "Beta"
+    "beta": "Beta",
+    "clear": "Borrar"
   },
   "settings": {
     "title": "Ajustes",
@@ -462,6 +463,14 @@
     "navigating": "Navegando...",
     "evaluating": "Evaluando script...",
     "snapshotting": "Tomando captura..."
+  },
+  "emojiPicker": {
+    "categories": {
+      "agents": "Agentes",
+      "people": "Personas",
+      "animals": "Animales",
+      "objects": "Objetos"
+    }
   },
   "agentManagement": {
     "title": "Agentes",
