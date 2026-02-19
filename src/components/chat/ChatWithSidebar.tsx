@@ -139,7 +139,6 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     supportsServerSessions,
     providerConfig?.serverId,
     currentSessionKey,
-    currentServerId,
     setCurrentSessionKey,
   ])
 
