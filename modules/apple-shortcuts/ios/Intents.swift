@@ -4,13 +4,20 @@ import Foundation
 import AppIntents
 #endif
 
-// MARK: - Codable model stored in UserDefaults
+// MARK: - Codable models stored in UserDefaults
 
 /// Lightweight representation written by JS via `syncTriggers`.
 struct ShortcutTriggerItem: Codable {
   let id: String
   let name: String
   let serverName: String
+}
+
+/// Lightweight representation written by JS via `syncServers`.
+struct ShortcutServerItem: Codable {
+  let id: String
+  let name: String
+  let providerType: String
 }
 
 // MARK: - Helpers
@@ -20,6 +27,16 @@ func loadTriggerItems() -> [ShortcutTriggerItem] {
   guard let json = UserDefaults.standard.string(forKey: AppleShortcutsModule.triggersKey),
         let data = json.data(using: .utf8),
         let items = try? JSONDecoder().decode([ShortcutTriggerItem].self, from: data) else {
+    return []
+  }
+  return items
+}
+
+/// Reads the servers array from UserDefaults (written by `AppleShortcutsModule`).
+func loadServerItems() -> [ShortcutServerItem] {
+  guard let json = UserDefaults.standard.string(forKey: AppleShortcutsModule.serversKey),
+        let data = json.data(using: .utf8),
+        let items = try? JSONDecoder().decode([ShortcutServerItem].self, from: data) else {
     return []
   }
   return items
@@ -84,6 +101,57 @@ struct TriggerEntityQuery: EntityQuery, EntityStringQuery {
 }
 
 // ──────────────────────────────────────────────
+// ServerEntity – represents a server for Siri
+// ──────────────────────────────────────────────
+
+@available(iOS 16.0, *)
+struct ServerEntity: AppEntity {
+  var id: String
+  var name: String
+  var providerType: String
+
+  static var typeDisplayRepresentation: TypeDisplayRepresentation = "Server"
+
+  static var defaultQuery = ServerEntityQuery()
+
+  var displayRepresentation: DisplayRepresentation {
+    DisplayRepresentation(
+      title: "\(name)",
+      subtitle: "\(providerType)"
+    )
+  }
+}
+
+// ──────────────────────────────────────────────
+// ServerEntityQuery – provides server options
+// ──────────────────────────────────────────────
+
+@available(iOS 16.0, *)
+struct ServerEntityQuery: EntityQuery, EntityStringQuery {
+  func entities(for identifiers: [ServerEntity.ID]) async throws -> [ServerEntity] {
+    let all = Self.allEntities()
+    return all.filter { identifiers.contains($0.id) }
+  }
+
+  func suggestedEntities() async throws -> [ServerEntity] {
+    return Self.allEntities()
+  }
+
+  func entities(matching string: String) async throws -> [ServerEntity] {
+    let lower = string.lowercased()
+    return Self.allEntities().filter {
+      $0.name.lowercased().contains(lower) || $0.providerType.lowercased().contains(lower)
+    }
+  }
+
+  private static func allEntities() -> [ServerEntity] {
+    return loadServerItems().map {
+      ServerEntity(id: $0.id, name: $0.name, providerType: $0.providerType)
+    }
+  }
+}
+
+// ──────────────────────────────────────────────
 // RunTriggerIntent – the Shortcuts action
 // ──────────────────────────────────────────────
 
@@ -116,8 +184,83 @@ struct RunTriggerIntent: AppIntent {
 }
 
 // ──────────────────────────────────────────────
-// LumiereShortcuts – makes the action appear in
-// the Shortcuts app gallery automatically.
+// OpenChatIntent – open a chat with a specific
+// server (appears as a Siri Suggestion)
+// ──────────────────────────────────────────────
+
+@available(iOS 16.0, *)
+struct OpenChatIntent: AppIntent {
+  static var title: LocalizedStringResource = "Open Chat"
+  static var description: IntentDescription = IntentDescription(
+    "Opens a chat with a specific AI server in Lumiere.",
+    categoryName: "Chat"
+  )
+
+  static var openAppWhenRun: Bool = true
+
+  @Parameter(title: "Server")
+  var server: ServerEntity
+
+  func perform() async throws -> some IntentResult {
+    let payload: [String: String] = [
+      "serverId": server.id,
+      "serverName": server.name,
+    ]
+
+    if let data = try? JSONSerialization.data(withJSONObject: payload),
+       let json = String(data: data, encoding: .utf8) {
+      UserDefaults.standard.set(json, forKey: AppleShortcutsModule.pendingActivityKey)
+    }
+
+    await MainActor.run {
+      NotificationCenter.default.post(name: .appleShortcutActivityPending, object: nil)
+    }
+
+    return .result()
+  }
+}
+
+// ──────────────────────────────────────────────
+// StartNewChatIntent – start a fresh chat session
+// ──────────────────────────────────────────────
+
+@available(iOS 16.0, *)
+struct StartNewChatIntent: AppIntent {
+  static var title: LocalizedStringResource = "Start New Chat"
+  static var description: IntentDescription = IntentDescription(
+    "Starts a new chat session in Lumiere.",
+    categoryName: "Chat"
+  )
+
+  static var openAppWhenRun: Bool = true
+
+  @Parameter(title: "Server")
+  var server: ServerEntity?
+
+  func perform() async throws -> some IntentResult {
+    var payload: [String: String] = ["newSession": "true"]
+
+    if let server = server {
+      payload["serverId"] = server.id
+      payload["serverName"] = server.name
+    }
+
+    if let data = try? JSONSerialization.data(withJSONObject: payload),
+       let json = String(data: data, encoding: .utf8) {
+      UserDefaults.standard.set(json, forKey: AppleShortcutsModule.pendingActivityKey)
+    }
+
+    await MainActor.run {
+      NotificationCenter.default.post(name: .appleShortcutActivityPending, object: nil)
+    }
+
+    return .result()
+  }
+}
+
+// ──────────────────────────────────────────────
+// LumiereShortcuts – makes actions appear in
+// the Shortcuts app gallery and Siri Suggestions.
 // ──────────────────────────────────────────────
 
 @available(iOS 16.0, *)
@@ -132,6 +275,27 @@ struct LumiereShortcuts: AppShortcutsProvider {
       ],
       shortTitle: "Run Trigger",
       systemImageName: "bolt.fill"
+    )
+
+    AppShortcut(
+      intent: OpenChatIntent(),
+      phrases: [
+        "Open \(\.$server) in \(.applicationName)",
+        "Chat with \(\.$server) in \(.applicationName)",
+        "Talk to \(\.$server) using \(.applicationName)",
+      ],
+      shortTitle: "Open Chat",
+      systemImageName: "bubble.left.fill"
+    )
+
+    AppShortcut(
+      intent: StartNewChatIntent(),
+      phrases: [
+        "Start a new chat in \(.applicationName)",
+        "New conversation in \(.applicationName)",
+      ],
+      shortTitle: "New Chat",
+      systemImageName: "plus.bubble.fill"
     )
   }
 }

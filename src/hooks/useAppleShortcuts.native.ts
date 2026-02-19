@@ -3,9 +3,13 @@ import { getDefaultStore, useAtomValue } from 'jotai'
 import { useCallback, useEffect } from 'react'
 
 import {
+  addActivityListener,
   addTriggerListener,
+  consumePendingActivity,
   consumePendingTrigger,
   isAvailable,
+  type SiriActivityEvent,
+  syncServers,
   syncTriggers,
 } from '../../modules/apple-shortcuts'
 import {
@@ -13,17 +17,16 @@ import {
   currentSessionKeyAtom,
   pendingTriggerMessageAtom,
   serversAtom,
+  type ServersDict,
   type TriggerConfig,
   triggersAtom,
 } from '../store'
 
 /**
- * Resolves the triggers atom value, handling the Promise that
+ * Resolves an atom value, handling the Promise that
  * atomWithStorage may return before hydration completes.
  */
-async function resolveTriggers(
-  raw: Record<string, TriggerConfig> | Promise<Record<string, TriggerConfig>>,
-): Promise<Record<string, TriggerConfig>> {
+async function resolveAtom<T>(raw: T | Promise<T>): Promise<T> {
   return raw instanceof Promise ? await raw : raw
 }
 
@@ -33,7 +36,7 @@ async function resolveTriggers(
  */
 async function executeTrigger(slug: string) {
   const store = getDefaultStore()
-  const triggers = await resolveTriggers(store.get(triggersAtom))
+  const triggers = await resolveAtom(store.get(triggersAtom))
   const trigger = triggers[slug]
   if (!trigger) return
 
@@ -43,8 +46,23 @@ async function executeTrigger(slug: string) {
 }
 
 /**
- * Syncs user-created triggers to Apple Shortcuts (iOS 16+ via AppIntents)
- * and handles shortcut executions.
+ * Handles a Siri Suggestion activity by switching to the target server.
+ */
+function handleActivity(event: SiriActivityEvent) {
+  const store = getDefaultStore()
+
+  if (event.serverId) {
+    store.set(currentServerIdAtom, event.serverId)
+  }
+  if (event.sessionKey) {
+    store.set(currentSessionKeyAtom, event.sessionKey)
+  }
+}
+
+/**
+ * Syncs user-created triggers to Apple Shortcuts (iOS 16+ via AppIntents),
+ * syncs servers for Siri Suggestions, and handles shortcut executions and
+ * Siri Suggestion activities.
  *
  * Call once in the root layout alongside useQuickActions.
  */
@@ -58,8 +76,8 @@ export function useAppleShortcuts() {
     if (!isAvailable()) return
 
     async function sync() {
-      const resolved = await resolveTriggers(triggers)
-      const resolvedServers = servers instanceof Promise ? await servers : servers
+      const resolved = await resolveAtom<Record<string, TriggerConfig>>(triggers)
+      const resolvedServers = await resolveAtom<ServersDict>(servers)
 
       const items = Object.values(resolved)
         .sort((a, b) => b.createdAt - a.createdAt)
@@ -75,9 +93,40 @@ export function useAppleShortcuts() {
     sync()
   }, [triggers, servers])
 
+  // Sync servers → native module for Siri Suggestions intents
+  useEffect(() => {
+    if (!isAvailable()) return
+
+    async function sync() {
+      const resolvedServers = await resolveAtom<ServersDict>(servers)
+
+      const items = Object.values(resolvedServers).map((s) => ({
+        id: s.id,
+        name: s.name,
+        providerType: s.providerType,
+      }))
+
+      await syncServers(items)
+    }
+
+    sync()
+  }, [servers])
+
   const handleTrigger = useCallback(
     async (slug: string) => {
       await executeTrigger(slug)
+
+      // Dismiss open modals to reveal the chat screen
+      if (router.canDismiss()) {
+        router.dismissAll()
+      }
+    },
+    [router],
+  )
+
+  const handleSiriActivity = useCallback(
+    (event: SiriActivityEvent) => {
+      handleActivity(event)
 
       // Dismiss open modals to reveal the chat screen
       if (router.canDismiss()) {
@@ -97,6 +146,16 @@ export function useAppleShortcuts() {
     }
   }, [handleTrigger])
 
+  // On mount: check for a cold-start pending Siri Suggestion activity
+  useEffect(() => {
+    if (!isAvailable()) return
+
+    const activity = consumePendingActivity()
+    if (activity) {
+      handleSiriActivity(activity)
+    }
+  }, [handleSiriActivity])
+
   // Listen for trigger events while the app is running
   useEffect(() => {
     if (!isAvailable()) return
@@ -107,4 +166,15 @@ export function useAppleShortcuts() {
 
     return cleanup
   }, [handleTrigger])
+
+  // Listen for Siri Suggestion activity events while the app is running
+  useEffect(() => {
+    if (!isAvailable()) return
+
+    const cleanup = addActivityListener((event) => {
+      handleSiriActivity(event)
+    })
+
+    return cleanup
+  }, [handleSiriActivity])
 }

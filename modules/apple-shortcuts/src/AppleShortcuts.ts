@@ -8,13 +8,29 @@
 interface AppleShortcutsNativeModule {
   isAvailable(): boolean
   syncTriggers(triggersJson: string): Promise<void>
+  syncServers(serversJson: string): Promise<void>
   consumePendingTrigger(): string | null
+  consumePendingActivity(): string | null
+  donateOpenChatActivity(
+    serverId: string,
+    serverName: string,
+    sessionKey: string,
+    sessionName: string,
+  ): Promise<void>
+  deleteAllDonatedActivities(): Promise<void>
   addListener(eventName: string): void
   removeListeners(count: number): void
 }
 
 interface ShortcutTriggerEvent {
   slug: string
+}
+
+export interface SiriActivityEvent {
+  serverId?: string
+  serverName?: string
+  sessionKey?: string
+  newSession?: string
 }
 
 let nativeModule: AppleShortcutsNativeModule | null = null
@@ -64,6 +80,20 @@ export async function syncTriggers(
 }
 
 /**
+ * Sync the current list of servers to the native module so they appear
+ * as options in Siri Suggestions and the Shortcuts app.
+ *
+ * @param servers Array of { id, name, providerType } objects.
+ */
+export async function syncServers(
+  servers: Array<{ id: string; name: string; providerType: string }>,
+): Promise<void> {
+  const mod = getModule()
+  if (!mod) return
+  await mod.syncServers(JSON.stringify(servers))
+}
+
+/**
  * Check for a trigger slug that was set by a shortcut execution before
  * the JS bridge was ready (cold start). Returns the slug and clears it,
  * or null if none is pending.
@@ -74,6 +104,44 @@ export function consumePendingTrigger(): string | null {
   } catch {
     return null
   }
+}
+
+/**
+ * Check for a pending Siri Suggestion activity from a cold start.
+ * Returns the parsed activity data or null.
+ */
+export function consumePendingActivity(): SiriActivityEvent | null {
+  try {
+    const json = getModule()?.consumePendingActivity() ?? null
+    if (!json) return null
+    return JSON.parse(json) as SiriActivityEvent
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Donate an "open chat" activity to Siri so it can learn usage patterns
+ * and suggest the action in Spotlight, the lock screen, and Siri Suggestions.
+ */
+export async function donateOpenChatActivity(
+  serverId: string,
+  serverName: string,
+  sessionKey: string,
+  sessionName: string,
+): Promise<void> {
+  const mod = getModule()
+  if (!mod) return
+  await mod.donateOpenChatActivity(serverId, serverName, sessionKey, sessionName)
+}
+
+/**
+ * Remove all donated Siri Suggestions activities.
+ */
+export async function deleteAllDonatedActivities(): Promise<void> {
+  const mod = getModule()
+  if (!mod) return
+  await mod.deleteAllDonatedActivities()
 }
 
 /**
@@ -92,6 +160,24 @@ export function addTriggerListener(callback: (slug: string) => void): () => void
     if (event.slug) {
       callback(event.slug)
     }
+  })
+
+  return () => subscription.remove()
+}
+
+/**
+ * Listen for Siri Suggestion activity events (e.g. user tapped "Open Chat"
+ * from Siri Suggestions or Spotlight).
+ *
+ * @returns Cleanup function that removes the listener.
+ */
+export function addActivityListener(callback: (event: SiriActivityEvent) => void): () => void {
+  const mod = getModule()
+  if (!mod) return () => {}
+
+  const emitter = createEventEmitter(mod)
+  const subscription = emitter.addListener('onContinueActivity', (event: SiriActivityEvent) => {
+    callback(event)
   })
 
   return () => subscription.remove()

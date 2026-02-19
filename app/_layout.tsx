@@ -15,6 +15,7 @@ import { useLanguage } from '../src/hooks/useLanguage'
 import { useNotifications } from '../src/hooks/useNotifications'
 import { useQuickActions } from '../src/hooks/useQuickActions'
 import { useShareExtension } from '../src/hooks/useShareIntent'
+import { useSiriSuggestions } from '../src/hooks/useSiriSuggestions'
 import { OnboardingFlow } from '../src/screens/OnboardingFlow'
 import { isPasswordConfigured } from '../src/services/webCrypto'
 import {
@@ -103,6 +104,7 @@ function AppContent() {
   useNotifications()
   useQuickActions()
   useAppleShortcuts()
+  useSiriSuggestions()
   useShareExtension()
   useLanguage() // Initialize language sync
 
