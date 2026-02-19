@@ -88,6 +88,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
   const hasCacheRef = useRef(false)
   const hasScrolledOnLoadRef = useRef(false)
   const shouldAutoScrollRef = useRef(true)
+  const loadChatHistoryRef = useRef<() => Promise<void>>(() => Promise.resolve())
 
   const {
     connected,
@@ -136,6 +137,12 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
     onAgentMessageComplete: (message) => {
       setMessages((prev) => [...prev, message])
       setCurrentAgentMessage('')
+      // Reload history after the agent finishes so that tool events
+      // (which the server only exposes via chat.history, not as real-time
+      // WebSocket events) are picked up and displayed inline.
+      if (showToolEvents) {
+        loadChatHistoryRef.current()
+      }
     },
     onSendStart: () => {
       shouldAutoScrollRef.current = true
@@ -219,6 +226,10 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
       setIsLoadingHistory(false)
     }
   }, [getChatHistory, currentSessionKey, showToolEvents])
+
+  useEffect(() => {
+    loadChatHistoryRef.current = loadChatHistory
+  }, [loadChatHistory])
 
   useEffect(() => {
     if (connected) {
