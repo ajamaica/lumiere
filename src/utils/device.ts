@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react'
-import { Dimensions, ScaledSize } from 'react-native'
+import { Dimensions, Platform, ScaledSize } from 'react-native'
 
 import { isAndroid, isIOS, isWeb } from './platform'
 
 const TABLET_MIN_WIDTH = 768
 
 /**
- * Check if the current device is a tablet based on screen dimensions
+ * Check if the current device is a tablet based on screen dimensions.
+ * On iOS, uses Platform.isPad for reliable detection of all iPad models
+ * (including iPad Mini whose 744pt portrait width falls below the 768 threshold).
  */
 export function isTablet(): boolean {
+  if (isIOS) {
+    return (Platform as { isPad?: boolean }).isPad === true
+  }
   const { width, height } = Dimensions.get('window')
   // On web, use viewport width directly since the browser window isn't rotated
   if (isWeb) {
@@ -96,6 +101,10 @@ export function useDeviceType(): DeviceType {
   const [deviceType, setDeviceType] = useState<DeviceType>(getDeviceType())
 
   useEffect(() => {
+    // On iOS, Platform.isPad is a static value that doesn't change with dimensions,
+    // so the device type is fixed at initialization — no listener needed.
+    if (isIOS) return
+
     const subscription = Dimensions.addEventListener(
       'change',
       ({ window }: { window: ScaledSize }) => {
