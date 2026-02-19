@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { DEFAULT_SESSION_KEY } from '../../constants'
 import { useServers } from '../../hooks/useServers'
@@ -196,23 +196,37 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
     }
   }
 
+  const sidebarElement = useMemo(
+    () => (
+      <SessionSidebar
+        onNewSession={handleNewSession}
+        onSelectSession={handleSelectSession}
+        sessions={sessions}
+        currentSessionKey={currentSessionKey}
+        sessionAliases={sessionAliases}
+        supportsServerSessions={supportsServerSessions}
+        servers={serversList}
+        currentServerId={currentServerId}
+        onSwitchServer={handleSwitchServer}
+        loadingSessions={loadingSessions}
+      />
+    ),
+    [
+      handleNewSession,
+      handleSelectSession,
+      sessions,
+      currentSessionKey,
+      sessionAliases,
+      supportsServerSessions,
+      serversList,
+      currentServerId,
+      handleSwitchServer,
+      loadingSessions,
+    ],
+  )
+
   return (
-    <SidebarLayout
-      sidebar={
-        <SessionSidebar
-          onNewSession={handleNewSession}
-          onSelectSession={handleSelectSession}
-          sessions={sessions}
-          currentSessionKey={currentSessionKey}
-          sessionAliases={sessionAliases}
-          supportsServerSessions={supportsServerSessions}
-          servers={serversList}
-          currentServerId={currentServerId}
-          onSwitchServer={handleSwitchServer}
-          loadingSessions={loadingSessions}
-        />
-      }
-    >
+    <SidebarLayout sidebar={sidebarElement}>
       <ChatScreen providerConfig={providerConfig} />
     </SidebarLayout>
   )
