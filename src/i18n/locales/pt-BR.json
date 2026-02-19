@@ -177,6 +177,8 @@
     "loadingSessions": "Carregando sessões...",
     "noSessions": "Nenhuma sessão ainda",
     "noSessionsMessage": "Envie uma mensagem para iniciar sua primeira sessão",
+    "selectAgentTitle": "Escolher um Agente",
+    "selectAgentDescription": "Selecione com qual agente iniciar a nova sessão",
     "messagesCount": "{{count}} mensagens",
     "justNow": "Agora mesmo",
     "minutesAgo": "{{count}}m atrás",

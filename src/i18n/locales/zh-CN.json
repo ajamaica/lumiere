@@ -177,6 +177,8 @@
     "loadingSessions": "正在加载会话...",
     "noSessions": "暂无会话",
     "noSessionsMessage": "发送消息以开始您的第一个会话",
+    "selectAgentTitle": "选择代理",
+    "selectAgentDescription": "选择要用于新会话的代理",
     "messagesCount": "{{count}} 条消息",
     "justNow": "刚刚",
     "minutesAgo": "{{count}}分钟前",

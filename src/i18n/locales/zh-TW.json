@@ -177,6 +177,8 @@
     "loadingSessions": "正在載入工作階段...",
     "noSessions": "目前沒有工作階段",
     "noSessionsMessage": "傳送訊息以開始您的第一個工作階段",
+    "selectAgentTitle": "選擇代理",
+    "selectAgentDescription": "選擇要用於新會話的代理",
     "messagesCount": "{{count}} 則訊息",
     "justNow": "剛剛",
     "minutesAgo": "{{count}}分鐘前",
