@@ -1,6 +1,7 @@
 import { MoltGatewayClient } from '../molt/client'
 import { AgentEvent, ChatAttachmentPayload, ConnectionState } from '../molt/types'
 import {
+  ChatHistoryMessage,
   ChatHistoryResponse,
   ChatProvider,
   ChatProviderEvent,
@@ -9,6 +10,44 @@ import {
   ProviderConfig,
   SendMessageParams,
 } from './types'
+
+const METADATA_MARKER = 'Conversation info (untrusted metadata):'
+
+/**
+ * Strip the "Conversation info (untrusted metadata)" block the gateway
+ * prepends/appends to user messages so it never leaks into the UI or the
+ * local cache. The block spans from the marker through a `[timestamp]` line.
+ */
+function stripMetadataFromText(text: string): string {
+  const startIdx = text.indexOf(METADATA_MARKER)
+  if (startIdx === -1) return text
+
+  // Walk past the JSON `}` → opening `[` → closing `]` of the timestamp line
+  const closingBrace = text.indexOf('}', startIdx)
+  if (closingBrace === -1) return text.substring(0, startIdx).trimEnd()
+
+  const openBracket = text.indexOf('[', closingBrace)
+  if (openBracket === -1) return text.substring(0, startIdx).trimEnd()
+
+  const closeBracket = text.indexOf(']', openBracket)
+  if (closeBracket === -1) return text.substring(0, startIdx).trimEnd()
+
+  const before = text.substring(0, startIdx)
+  const after = text.substring(closeBracket + 1)
+  return (before + after).trim()
+}
+
+function stripHistoryMessageMetadata(msg: ChatHistoryMessage): ChatHistoryMessage {
+  return {
+    ...msg,
+    content: msg.content.map((block) => {
+      if (block.type !== 'text' || !block.text) return block
+      const cleaned = stripMetadataFromText(block.text)
+      if (cleaned === block.text) return block
+      return { ...block, text: cleaned }
+    }),
+  }
+}
 
 /**
  * Adapter that wraps MoltGatewayClient to conform to the ChatProvider interface.
@@ -125,7 +164,8 @@ export class MoltChatProvider implements ChatProvider {
   async getChatHistory(sessionKey: string, limit?: number): Promise<ChatHistoryResponse> {
     const result = await this.client.getChatHistory(sessionKey, limit)
     const response = result as ChatHistoryResponse | undefined
-    return { messages: response?.messages ?? [] }
+    const messages = response?.messages ?? []
+    return { messages: messages.map(stripHistoryMessageMetadata) }
   }
 
   async resetSession(sessionKey: string): Promise<void> {
