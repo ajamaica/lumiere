@@ -8,8 +8,8 @@ import { Theme, useTheme } from '../../theme'
 interface AttachmentMenuProps {
   visible: boolean
   onClose: () => void
+  onTakePhoto: () => void
   onPickImage: () => void
-  onPickVideo: () => void
   onPickFile: () => void
   supportsFileAttachments: boolean
 }
@@ -17,8 +17,8 @@ interface AttachmentMenuProps {
 export function AttachmentMenu({
   visible,
   onClose,
+  onTakePhoto,
   onPickImage,
-  onPickVideo,
   onPickFile,
   supportsFileAttachments,
 }: AttachmentMenuProps) {
@@ -33,25 +33,25 @@ export function AttachmentMenu({
           <View style={styles.menu}>
             <TouchableOpacity
               style={styles.option}
-              onPress={onPickImage}
+              onPress={onTakePhoto}
               accessibilityRole="button"
-              accessibilityLabel={t('chat.attachPicture')}
+              accessibilityLabel={t('chat.attachCamera')}
             >
-              <View style={styles.iconContainer}>
-                <Ionicons name="image" size={24} color={theme.colors.primary} />
+              <View style={[styles.iconContainer, { backgroundColor: '#007AFF' }]}>
+                <Ionicons name="camera" size={22} color="#FFFFFF" />
               </View>
-              <Text style={styles.optionText}>{t('chat.picture')}</Text>
+              <Text style={styles.optionText}>{t('chat.camera')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.option}
-              onPress={onPickVideo}
+              onPress={onPickImage}
               accessibilityRole="button"
-              accessibilityLabel={t('chat.attachVideo')}
+              accessibilityLabel={t('chat.attachPhotos')}
             >
-              <View style={styles.iconContainer}>
-                <Ionicons name="videocam" size={24} color={theme.colors.primary} />
+              <View style={[styles.iconContainer, { backgroundColor: '#AF52DE' }]}>
+                <Ionicons name="image" size={22} color="#FFFFFF" />
               </View>
-              <Text style={styles.optionText}>{t('chat.video')}</Text>
+              <Text style={styles.optionText}>{t('chat.photos')}</Text>
             </TouchableOpacity>
             {supportsFileAttachments && (
               <TouchableOpacity
@@ -60,10 +60,10 @@ export function AttachmentMenu({
                 accessibilityRole="button"
                 accessibilityLabel={t('chat.attachFile')}
               >
-                <View style={styles.iconContainer}>
-                  <Ionicons name="document" size={24} color={theme.colors.primary} />
+                <View style={[styles.iconContainer, { backgroundColor: '#34C759' }]}>
+                  <Ionicons name="folder" size={22} color="#FFFFFF" />
                 </View>
-                <Text style={styles.optionText}>{t('chat.file')}</Text>
+                <Text style={styles.optionText}>{t('chat.files')}</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -100,7 +100,6 @@ const createStyles = (theme: Theme) =>
       width: 40,
       height: 40,
       borderRadius: 20,
-      backgroundColor: theme.colors.background,
       alignItems: 'center',
       justifyContent: 'center',
       marginRight: theme.spacing.md,

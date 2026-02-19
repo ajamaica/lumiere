@@ -25,6 +25,42 @@ export function useAttachments({ disabled, supportsImageAttachments }: UseAttach
     setAttachments((prev) => [...prev, ...newAttachments])
   }, [])
 
+  const handleTakePhoto = useCallback(async () => {
+    setShowMenu(false)
+    await new Promise<void>((resolve) => setTimeout(resolve, 500))
+    try {
+      const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ['images'],
+        quality: 1,
+      })
+
+      if (!result.canceled && result.assets.length > 0) {
+        setCompressing(true)
+        setCompressionProgress(0)
+        try {
+          const asset = result.assets[0]
+          const compressed = await compressImageToJpeg(asset.uri)
+          setAttachments((prev) => [
+            ...prev,
+            {
+              type: 'image' as const,
+              uri: compressed.uri,
+              base64: compressed.base64,
+              mimeType: compressed.mimeType,
+              name: asset.fileName ?? undefined,
+            },
+          ])
+          setCompressionProgress(1)
+        } finally {
+          setCompressing(false)
+          setCompressionProgress(0)
+        }
+      }
+    } catch (error) {
+      attachmentLogger.error('Failed to take photo', error)
+    }
+  }, [])
+
   const handlePickImage = useCallback(async () => {
     setShowMenu(false)
     // Wait for modal dismiss animation to complete before presenting system picker.
@@ -32,7 +68,7 @@ export function useAttachments({ disabled, supportsImageAttachments }: UseAttach
     await new Promise<void>((resolve) => setTimeout(resolve, 500))
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images'],
+        mediaTypes: ['images', 'videos'],
         allowsMultipleSelection: true,
         quality: 1,
       })
@@ -45,62 +81,33 @@ export function useAttachments({ disabled, supportsImageAttachments }: UseAttach
           const newAttachments: MessageAttachment[] = []
           for (let i = 0; i < total; i++) {
             const asset = result.assets[i]
-            const compressed = await compressImageToJpeg(asset.uri)
-            newAttachments.push({
-              type: 'image' as const,
-              uri: compressed.uri,
-              base64: compressed.base64,
-              mimeType: compressed.mimeType,
-              name: asset.fileName ?? undefined,
-            })
-            setCompressionProgress((i + 1) / total)
-          }
-          setAttachments((prev) => [...prev, ...newAttachments])
-        } finally {
-          setCompressing(false)
-          setCompressionProgress(0)
-        }
-      }
-    } catch (error) {
-      attachmentLogger.error('Failed to pick image', error)
-    }
-  }, [])
+            const isVideo = asset.type === 'video'
 
-  const handlePickVideo = useCallback(async () => {
-    setShowMenu(false)
-    await new Promise<void>((resolve) => setTimeout(resolve, 500))
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['videos'],
-        allowsMultipleSelection: true,
-        quality: 1,
-      })
-
-      if (!result.canceled && result.assets.length > 0) {
-        setCompressing(true)
-        setCompressionProgress(0)
-        try {
-          const total = result.assets.length
-          const newAttachments: MessageAttachment[] = []
-          for (let i = 0; i < total; i++) {
-            const asset = result.assets[i]
-            let uri = asset.uri
-            const mimeType = asset.mimeType ?? 'video/mp4'
-
-            // Compress videos on native platforms
-            if (!isWeb) {
-              const compressed = await compressVideo(uri, (progress) => {
-                setCompressionProgress((i + progress) / total)
+            if (isVideo) {
+              let uri = asset.uri
+              const mimeType = asset.mimeType ?? 'video/mp4'
+              if (!isWeb) {
+                const compressed = await compressVideo(uri, (progress) => {
+                  setCompressionProgress((i + progress) / total)
+                })
+                uri = compressed.uri
+              }
+              newAttachments.push({
+                type: 'video' as const,
+                uri,
+                mimeType,
+                name: asset.fileName ?? undefined,
               })
-              uri = compressed.uri
+            } else {
+              const compressed = await compressImageToJpeg(asset.uri)
+              newAttachments.push({
+                type: 'image' as const,
+                uri: compressed.uri,
+                base64: compressed.base64,
+                mimeType: compressed.mimeType,
+                name: asset.fileName ?? undefined,
+              })
             }
-
-            newAttachments.push({
-              type: 'video' as const,
-              uri,
-              mimeType,
-              name: asset.fileName ?? undefined,
-            })
             setCompressionProgress((i + 1) / total)
           }
           setAttachments((prev) => [...prev, ...newAttachments])
@@ -110,7 +117,7 @@ export function useAttachments({ disabled, supportsImageAttachments }: UseAttach
         }
       }
     } catch (error) {
-      attachmentLogger.error('Failed to pick video', error)
+      attachmentLogger.error('Failed to pick media', error)
     }
   }, [])
 
@@ -153,8 +160,8 @@ export function useAttachments({ disabled, supportsImageAttachments }: UseAttach
     compressing,
     compressionProgress,
     handleFilesReceived,
+    handleTakePhoto,
     handlePickImage,
-    handlePickVideo,
     handlePickFile,
     handleRemoveAttachment,
     clearAttachments,

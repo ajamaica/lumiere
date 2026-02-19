@@ -116,8 +116,8 @@ export function ChatInput({
       <AttachmentMenu
         visible={attach.showMenu}
         onClose={() => attach.setShowMenu(false)}
+        onTakePhoto={attach.handleTakePhoto}
         onPickImage={attach.handlePickImage}
-        onPickVideo={attach.handlePickVideo}
         onPickFile={attach.handlePickFile}
         supportsFileAttachments={supportsFileAttachments}
       />
