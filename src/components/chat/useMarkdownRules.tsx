@@ -1,11 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Pressable, ScrollView, Text, TextStyle, View, ViewStyle } from 'react-native'
+import { Pressable, Text, TextStyle, View, ViewStyle } from 'react-native'
 
 import { copyToClipboard, openBrowser } from '../../services/intents'
 import { useTheme } from '../../theme'
 import { logger } from '../../utils/logger'
 import { createCodeBlockStyles } from './ChatMessage.styles'
+import { SyntaxHighlightedCode } from './SyntaxHighlightedCode'
 
 const chatLogger = logger.create('ChatMessage')
 
@@ -181,18 +182,7 @@ export function useMarkdownRules() {
               <Text style={codeStyles.codeBlockLanguage}>{language || 'Code'}</Text>
               <CodeBlockCopyButton content={content} />
             </View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={codeStyles.codeBlockScrollView}
-            >
-              <Text
-                style={[styles.fence, { marginVertical: 0, borderRadius: 0 }]}
-                selectable={true}
-              >
-                {content}
-              </Text>
-            </ScrollView>
+            <SyntaxHighlightedCode code={content} language={node.sourceInfo} />
           </View>
         )
       },
@@ -220,18 +210,7 @@ export function useMarkdownRules() {
               <Text style={codeStyles.codeBlockLanguage}>Code</Text>
               <CodeBlockCopyButton content={content} />
             </View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={codeStyles.codeBlockScrollView}
-            >
-              <Text
-                style={[styles.code_block, { marginVertical: 0, borderRadius: 0 }]}
-                selectable={true}
-              >
-                {content}
-              </Text>
-            </ScrollView>
+            <SyntaxHighlightedCode code={content} showLineNumbers={false} />
           </View>
         )
       },

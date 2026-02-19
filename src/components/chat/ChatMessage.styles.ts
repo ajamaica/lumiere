@@ -46,6 +46,18 @@ export const createCodeBlockStyles = (theme: Theme) =>
     codeBlockScrollView: {
       flexGrow: 0,
     },
+    codeContent: {
+      padding: theme.spacing.md,
+    },
+    codeLine: {
+      flexDirection: 'row',
+    },
+    lineNumber: {
+      color: theme.colors.text.tertiary,
+      textAlign: 'right',
+      paddingRight: theme.spacing.md,
+      opacity: 0.5,
+    },
   })
 
 export const createStyles = (theme: Theme) =>
