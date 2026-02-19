@@ -20,6 +20,27 @@ import { Message } from './ChatMessage'
 
 const chatHistoryLogger = logger.create('ChatHistory')
 
+const METADATA_MARKER = 'Conversation info (untrusted metadata):'
+
+/** Strip the gateway metadata block from message text. */
+function stripMessageMetadata(text: string): string {
+  const startIdx = text.indexOf(METADATA_MARKER)
+  if (startIdx === -1) return text
+
+  const closingBrace = text.indexOf('}', startIdx)
+  if (closingBrace === -1) return text.substring(0, startIdx).trimEnd()
+
+  const openBracket = text.indexOf('[', closingBrace)
+  if (openBracket === -1) return text.substring(0, startIdx).trimEnd()
+
+  const closeBracket = text.indexOf(']', openBracket)
+  if (closeBracket === -1) return text.substring(0, startIdx).trimEnd()
+
+  const before = text.substring(0, startIdx)
+  const after = text.substring(closeBracket + 1)
+  return (before + after).trim()
+}
+
 /** Raw history entry from the gateway — extends the base shape with tool result fields. */
 interface RawHistoryMessage {
   role: string
@@ -56,7 +77,7 @@ function historyToMessages(msgs: RawHistoryMessage[], showToolEvents: boolean): 
       }
 
       const textContent = msg.content.find((c) => c.type === 'text')
-      const text = textContent?.text || ''
+      const text = textContent?.text ? stripMessageMetadata(textContent.text) : ''
       if (!text) return null
       return {
         id: `history-${msg.timestamp}-${index}`,
