@@ -392,15 +392,15 @@ export function SetupScreen() {
           ? localUrl.trim().length > 0
           : true
 
-  // Theme-aware gradient background (purple-tinted for setup)
+  // Theme-aware gradient background (matches onboarding welcome screen)
   const gradientColors = theme.isDark
-    ? ([theme.colors.background, '#0A1628', 'rgba(168, 85, 247, 0.03)'] as const)
-    : ([theme.colors.background, '#E5E0F2', 'rgba(168, 85, 247, 0.06)'] as const)
+    ? (['#050A18', '#0A1628', '#0F1D32'] as const)
+    : (['#F0F4F8', '#E8EDF4', '#E0E8F0'] as const)
 
   return (
     <View style={styles.container}>
       {/* Background gradient */}
-      <LinearGradient colors={gradientColors} locations={[0, 0.7, 1]} style={styles.gradient} />
+      <LinearGradient colors={gradientColors} locations={[0, 0.5, 1]} style={styles.gradient} />
 
       <KeyboardAvoidingView behavior={keyboardAvoidingBehavior} style={styles.keyboardView}>
         <ScrollView
