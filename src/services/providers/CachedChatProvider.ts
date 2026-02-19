@@ -267,9 +267,29 @@ export class CachedChatProvider implements ChatProvider {
     }
 
     // For all other providers, return the locally tracked session index
+    // and prune sessions that have expired according to the TTL
     const entries = await readSessionIndex(this.serverId)
+    const now = Date.now()
+    const active: SessionIndexEntry[] = []
+    const expired: SessionIndexEntry[] = []
+
+    for (const entry of entries) {
+      if (now - entry.lastActivity > CACHE_CONFIG.SESSION_TTL_MS) {
+        expired.push(entry)
+      } else {
+        active.push(entry)
+      }
+    }
+
+    // Clean up expired sessions in the background
+    if (expired.length > 0) {
+      this.pruneExpiredSessions(expired).catch(() => {
+        // Silently ignore cleanup failures
+      })
+    }
+
     return {
-      sessions: entries.sort((a, b) => b.lastActivity - a.lastActivity),
+      sessions: active.sort((a, b) => b.lastActivity - a.lastActivity),
     }
   }
 
@@ -355,6 +375,27 @@ export class CachedChatProvider implements ChatProvider {
       entry.messageCount = messages.length
       entry.lastActivity = Date.now()
       await this.writeIndex(entries)
+    }
+  }
+
+  /**
+   * Remove expired session data (cache + index entries) in the background.
+   */
+  private async pruneExpiredSessions(expired: SessionIndexEntry[]): Promise<void> {
+    // Remove cached messages for each expired session
+    for (const entry of expired) {
+      const cacheKey = buildCacheKey(this.serverId, entry.key)
+      await jotaiStorage.removeItem(cacheKey)
+    }
+
+    // Rewrite the index without the expired entries
+    const expiredKeys = new Set(expired.map((e) => e.key))
+    const allEntries = await this.readIndex()
+    const remaining = allEntries.filter((e) => !expiredKeys.has(e.key))
+    await this.writeIndex(remaining)
+
+    if (__DEV__) {
+      cacheLogger.info(`Pruned ${expired.length} expired session(s)`)
     }
   }
 }

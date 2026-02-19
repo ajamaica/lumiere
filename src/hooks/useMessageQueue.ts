@@ -21,6 +21,12 @@ interface QueuedMessage {
   attachments?: MessageAttachment[]
 }
 
+interface FailedMessage {
+  text: string
+  attachments?: MessageAttachment[]
+  error: string
+}
+
 interface UseMessageQueueProps {
   sendMessage: (
     params: ProviderSendParams,
@@ -50,6 +56,7 @@ export function useMessageQueue({
 }: UseMessageQueueProps) {
   const [messageQueue, setMessageQueue] = useAtom(messageQueueAtom)
   const [isAgentResponding, setIsAgentResponding] = useState(false)
+  const [failedMessage, setFailedMessage] = useState<FailedMessage | null>(null)
   const showToolEvents = useAtomValue(showToolEventsInChatAtom)
   const setCanvasContent = useSetAtom(canvasContentAtom)
   const setCanvasVisible = useSetAtom(canvasVisibleAtom)
@@ -70,6 +77,7 @@ export function useMessageQueue({
 
       onMessageAdd(userMessage)
       setIsAgentResponding(true)
+      setFailedMessage(null)
       onAgentMessageUpdate('')
       onSendStart?.()
 
@@ -165,6 +173,12 @@ export function useMessageQueue({
         queueLogger.logError('Failed to send message', err)
         setIsAgentResponding(false)
         onAgentMessageUpdate('')
+        // Store the failed message so the user can retry
+        setFailedMessage({
+          text,
+          attachments,
+          error: err instanceof Error ? err.message : 'Unknown error',
+        })
       }
     },
     [
@@ -180,6 +194,17 @@ export function useMessageQueue({
       setCanvasVisible,
     ],
   )
+
+  const retryFailedMessage = useCallback(() => {
+    if (!failedMessage) return
+    const { text, attachments } = failedMessage
+    setFailedMessage(null)
+    sendMessage(text, attachments)
+  }, [failedMessage, sendMessage])
+
+  const dismissFailedMessage = useCallback(() => {
+    setFailedMessage(null)
+  }, [])
 
   const handleSend = useCallback(
     async (text: string, attachments?: MessageAttachment[]) => {
@@ -214,5 +239,8 @@ export function useMessageQueue({
     handleSend,
     isAgentResponding,
     queueCount: messageQueue.length,
+    failedMessage,
+    retryFailedMessage,
+    dismissFailedMessage,
   }
 }

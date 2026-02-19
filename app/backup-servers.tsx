@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { File, Paths } from 'expo-file-system'
 import * as Sharing from 'expo-sharing'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native'
@@ -9,8 +9,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader } from '../src/components/ui'
 import { getProviderIcon } from '../src/config/providerOptions'
-import { serversAtom } from '../src/store'
+import { favoritesAtom, serversAtom, sessionAliasesAtom, triggersAtom } from '../src/store'
 import { useTheme } from '../src/theme'
+import { buildFullBackup } from '../src/utils/dataExport'
 import { useContentContainerStyle } from '../src/utils/device'
 
 export default function BackupServersScreen() {
@@ -18,30 +19,30 @@ export default function BackupServersScreen() {
   const contentContainerStyle = useContentContainerStyle()
   const { t } = useTranslation()
   const [servers] = useAtom(serversAtom)
+  const favorites = useAtomValue(favoritesAtom)
+  const triggers = useAtomValue(triggersAtom)
+  const sessionAliases = useAtomValue(sessionAliasesAtom)
   const [exporting, setExporting] = useState(false)
 
   const serversList = Object.values(servers).sort((a, b) => a.createdAt - b.createdAt)
+  const favoritesCount = favorites.length
+  const triggersCount = Object.keys(triggers).length
+  const aliasesCount = Object.keys(sessionAliases).length
+  const hasData = serversList.length > 0 || favoritesCount > 0 || triggersCount > 0
 
   const handleExport = async () => {
-    if (serversList.length === 0) return
+    if (!hasData) return
 
     setExporting(true)
     try {
-      const backup = {
-        version: 1,
-        exportedAt: new Date().toISOString(),
-        servers: serversList.map(({ id, name, url, clientId, providerType, model, createdAt }) => ({
-          id,
-          name,
-          url,
-          clientId,
-          providerType,
-          model,
-          createdAt,
-        })),
-      }
+      const backup = buildFullBackup({
+        servers,
+        favorites,
+        triggers,
+        sessionAliases,
+      })
 
-      const fileName = `lumiere-servers-backup-${new Date().toISOString().slice(0, 10)}.json`
+      const fileName = `lumiere-backup-${new Date().toISOString().slice(0, 10)}.json`
       const file = new File(Paths.cache, fileName)
       file.create({ overwrite: true })
       file.write(JSON.stringify(backup, null, 2))
@@ -79,6 +80,14 @@ export default function BackupServersScreen() {
     serverCount: {
       fontSize: theme.typography.fontSize.sm,
       color: theme.colors.text.tertiary,
+      marginBottom: theme.spacing.md,
+    },
+    dataSummary: {
+      fontSize: theme.typography.fontSize.sm,
+      color: theme.colors.text.tertiary,
+      marginBottom: theme.spacing.xs,
+    },
+    dataSummaryContainer: {
       marginBottom: theme.spacing.md,
     },
     serverCard: {
@@ -126,16 +135,33 @@ export default function BackupServersScreen() {
       <ScrollView contentContainerStyle={[styles.scrollContent, contentContainerStyle]}>
         <Text style={styles.description}>{t('backupServers.description')}</Text>
 
-        {serversList.length === 0 ? (
+        {!hasData ? (
           <View style={styles.emptyContainer}>
             <Ionicons name="server-outline" size={48} color={theme.colors.text.tertiary} />
             <Text style={styles.emptyText}>{t('backupServers.noServers')}</Text>
           </View>
         ) : (
           <>
-            <Text style={styles.serverCount}>
-              {t('backupServers.serverCount', { count: serversList.length })}
-            </Text>
+            <View style={styles.dataSummaryContainer}>
+              <Text style={styles.dataSummary}>
+                {t('backupServers.serverCount', { count: serversList.length })}
+              </Text>
+              {favoritesCount > 0 && (
+                <Text style={styles.dataSummary}>
+                  {t('backupServers.favoritesCount', { count: favoritesCount })}
+                </Text>
+              )}
+              {triggersCount > 0 && (
+                <Text style={styles.dataSummary}>
+                  {t('backupServers.triggersCount', { count: triggersCount })}
+                </Text>
+              )}
+              {aliasesCount > 0 && (
+                <Text style={styles.dataSummary}>
+                  {t('backupServers.aliasesCount', { count: aliasesCount })}
+                </Text>
+              )}
+            </View>
 
             {serversList.map((server) => (
               <View key={server.id} style={styles.serverCard}>

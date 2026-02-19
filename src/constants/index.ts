@@ -44,6 +44,20 @@ export const API_CONFIG = {
 } as const
 
 /**
+ * HTTP request configuration constants.
+ */
+export const HTTP_CONFIG = {
+  /** Default timeout for connection-check requests (ms) */
+  CONNECT_TIMEOUT_MS: 15_000,
+  /** Default timeout for streaming message requests (ms) — 5 minutes */
+  STREAM_TIMEOUT_MS: 300_000,
+  /** Maximum number of retries for transient failures during connect/health checks */
+  MAX_RETRIES: 2,
+  /** Base delay between retries (ms). Actual delay uses exponential backoff. */
+  RETRY_BASE_DELAY_MS: 1_000,
+} as const
+
+/**
  * Cache configuration constants.
  */
 export const CACHE_CONFIG = {
@@ -53,4 +67,6 @@ export const CACHE_CONFIG = {
   CACHE_KEY_PREFIX: 'chat_cache:',
   /** AsyncStorage key prefix for tracking known session keys per server */
   SESSION_INDEX_PREFIX: 'session_index:',
+  /** Time-to-live for cached sessions with no activity (ms) — 30 days */
+  SESSION_TTL_MS: 30 * 24 * 60 * 60 * 1000,
 } as const
