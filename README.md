@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Lumiere" width="120" />
+  <a href="https://lumiere.chat">
+    <img src="assets/icon.png" alt="Lumiere" width="120" />
+  </a>
 </p>
 
 <h1 align="center">Lumiere</h1>
@@ -9,6 +11,7 @@
 </p>
 
 <p align="center">
+  <a href="https://lumiere.chat">Website</a> •
   <a href="#features">Features</a> •
   <a href="#ai-providers">AI Providers</a> •
   <a href="#screens">Screens</a> •
