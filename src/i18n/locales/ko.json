@@ -55,6 +55,7 @@
     "gatewayLogs": "게이트웨이 로그",
     "mcpServers": "MCP 서버",
     "missions": "미션",
+    "hapticFeedback": "햅틱 피드백",
     "showToolEventsInChat": "채팅에서 도구 이벤트 표시",
     "agents": "에이전트",
     "serverConfiguration": "서버 구성"

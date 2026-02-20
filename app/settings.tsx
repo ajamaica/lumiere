@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Badge, ScreenHeader, Section, SettingRow } from '../src/components/ui'
 import { getProviderIcon } from '../src/config/providerOptions'
+import { useHaptics } from '../src/hooks/useHaptics'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
 import { backgroundCheckTask } from '../src/services/notifications'
@@ -22,6 +23,7 @@ import {
   biometricLockEnabledAtom,
   clearSessionCryptoKey,
   currentServerIdAtom,
+  hapticFeedbackEnabledAtom,
   onboardingCompletedAtom,
   secureServersAtom,
   secureStoreHydratedAtom,
@@ -54,6 +56,8 @@ export default function SettingsScreen() {
     backgroundNotificationsEnabledAtom,
   )
   const [showToolEventsInChat, setShowToolEventsInChat] = useAtom(showToolEventsInChatAtom)
+  const [hapticFeedbackEnabled, setHapticFeedbackEnabled] = useAtom(hapticFeedbackEnabledAtom)
+  const haptics = useHaptics()
 
   const handleBiometricToggle = async (value: boolean) => {
     if (isWeb) {
@@ -94,6 +98,7 @@ export default function SettingsScreen() {
   }
 
   const handleLogout = () => {
+    haptics.warning()
     Alert.alert(t('settings.logoutConfirmTitle'), t('settings.logoutConfirmMessage'), [
       {
         text: t('common.cancel'),
@@ -199,6 +204,7 @@ export default function SettingsScreen() {
                     if (isActive) {
                       router.push(`/edit-server?id=${server.id}`)
                     } else {
+                      haptics.medium()
                       switchToServer(server.id)
                     }
                   }}
@@ -281,6 +287,14 @@ export default function SettingsScreen() {
               label={t('settings.biometrics')}
               switchValue={biometricLockEnabled}
               onSwitchChange={handleBiometricToggle}
+            />
+          )}
+          {!isWeb && (
+            <SettingRow
+              icon="pulse-outline"
+              label={t('settings.hapticFeedback')}
+              switchValue={hapticFeedbackEnabled}
+              onSwitchChange={setHapticFeedbackEnabled}
             />
           )}
           <SettingRow

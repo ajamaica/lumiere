@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
 import { getBasicProviderOptions, getProviderIcon } from '../src/config/providerOptions'
+import { useHaptics } from '../src/hooks/useHaptics'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
@@ -16,11 +17,13 @@ export default function ServersScreen() {
   const contentContainerStyle = useContentContainerStyle()
   const router = useRouter()
   const { serversList, currentServerId, removeServer, switchToServer } = useServers()
+  const haptics = useHaptics()
 
   const handleRemoveServer = (id: string) => {
     const server = serversList.find((s) => s.id === id)
     if (!server) return
 
+    haptics.warning()
     Alert.alert('Remove Server', `Are you sure you want to remove "${server.name}"?`, [
       { text: 'Cancel', style: 'cancel' },
       {
@@ -33,6 +36,7 @@ export default function ServersScreen() {
 
   const handleSwitchServer = (id: string) => {
     if (id === currentServerId) return
+    haptics.medium()
     switchToServer(id)
     router.back()
   }

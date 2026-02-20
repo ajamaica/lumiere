@@ -24,6 +24,7 @@ import {
   Text,
 } from '../src/components/ui'
 import { DEFAULT_MODELS } from '../src/constants'
+import { useHaptics } from '../src/hooks/useHaptics'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import {
@@ -63,6 +64,7 @@ export default function AgentsScreen() {
   const { t } = useTranslation()
   const { getProviderConfig, currentServerId, currentServer } = useServers()
   const [config, setConfig] = useState<{ url: string; token: string } | null>(null)
+  const haptics = useHaptics()
 
   const [viewMode, setViewMode] = useState<ViewMode>('dashboard')
   const [agents, setAgents] = useState<AgentInfo[]>([])
@@ -697,7 +699,10 @@ export default function AgentsScreen() {
                 <Button
                   title={t('agentManagement.deleteAgent')}
                   variant="danger"
-                  onPress={() => setShowDeleteConfirm(true)}
+                  onPress={() => {
+                    haptics.warning()
+                    setShowDeleteConfirm(true)
+                  }}
                 />
               )}
             </View>

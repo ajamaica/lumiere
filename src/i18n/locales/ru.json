@@ -55,6 +55,7 @@
     "gatewayLogs": "Журналы шлюза",
     "mcpServers": "MCP серверы",
     "missions": "Миссии",
+    "hapticFeedback": "Тактильная отдача",
     "showToolEventsInChat": "Показывать события инструментов в чате",
     "agents": "Агенты",
     "serverConfiguration": "Конфигурация сервера"

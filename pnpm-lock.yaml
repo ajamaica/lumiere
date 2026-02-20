@@ -62,6 +62,9 @@ importers:
       expo-glass-effect:
         specifier: ^0.1.9
         version: 0.1.9(expo@54.0.33)(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.2.14)(react@19.1.0))(react@19.1.0)
+      expo-haptics:
+        specifier: ^15.0.8
+        version: 15.0.8(expo@54.0.33)
       expo-image-manipulator:
         specifier: ^14.0.8
         version: 14.0.8(expo@54.0.33)
@@ -3028,6 +3031,11 @@ packages:
       expo: '*'
       react: '*'
       react-native: '*'
+
+  expo-haptics@15.0.8:
+    resolution: {integrity: sha512-lftutojy8Qs8zaDzzjwM3gKHFZ8bOOEZDCkmh2Ddpe95Ra6kt2izeOfOfKuP/QEh0MZ1j9TfqippyHdRd1ZM9g==}
+    peerDependencies:
+      expo: '*'
 
   expo-image-loader@6.0.0:
     resolution: {integrity: sha512-nKs/xnOGw6ACb4g26xceBD57FKLFkSwEUTDXEDF3Gtcu3MqF3ZIYd3YM+sSb1/z9AKV1dYT7rMSGVNgsveXLIQ==}
@@ -9794,6 +9802,10 @@ snapshots:
       expo: 54.0.33(@babel/core@7.28.6)(@expo/metro-runtime@6.1.2)(expo-router@6.0.23)(react-native-webview@13.16.0(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.2.14)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.2.14)(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-native: 0.81.5(@babel/core@7.28.6)(@types/react@19.2.14)(react@19.1.0)
+
+  expo-haptics@15.0.8(expo@54.0.33):
+    dependencies:
+      expo: 54.0.33(@babel/core@7.28.6)(@expo/metro-runtime@6.1.2)(expo-router@6.0.23)(react-native-webview@13.16.0(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.2.14)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.2.14)(react@19.1.0))(react@19.1.0)
 
   expo-image-loader@6.0.0(expo@54.0.33):
     dependencies:
