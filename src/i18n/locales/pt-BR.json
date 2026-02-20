@@ -84,7 +84,8 @@
     "lifecycleEnd": "Concluído"
   },
   "connection": {
-    "awaitingApproval": "Aprove este dispositivo no seu gateway"
+    "awaitingApprovalTitle": "Aguardando aprovação",
+    "awaitingApprovalHint": "Acesse seu servidor e aprove este dispositivo para conectar"
   },
   "addServer": {
     "title": "Adicionar Servidor",

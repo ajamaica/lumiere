@@ -239,9 +239,14 @@ export function ConnectionStatusBar({
       <View style={styles.statusBarContainer} accessibilityLiveRegion="polite">
         <StatusBubbleContainer {...approvalBubbleProps}>
           <ActivityIndicator size="small" color={theme.colors.status.warning} />
-          <Text style={styles.approvalText} numberOfLines={2}>
-            {t('connection.awaitingApproval')}
-          </Text>
+          <View style={styles.approvalTextContainer}>
+            <Text style={styles.approvalTitle} numberOfLines={1}>
+              {t('connection.awaitingApprovalTitle')}
+            </Text>
+            <Text style={styles.approvalHint} numberOfLines={2}>
+              {t('connection.awaitingApprovalHint')}
+            </Text>
+          </View>
         </StatusBubbleContainer>
         <View style={styles.statusActions}>{renderExtensionButtons()}</View>
       </View>
@@ -485,11 +490,20 @@ const createStatusBarStyles = (
     approvalBubble: {
       backgroundColor: theme.colors.status.warning + (theme.isDark ? '30' : '20'),
     },
-    approvalText: {
-      fontSize: theme.typography.fontSize.sm,
-      color: theme.colors.status.warning,
+    approvalTextContainer: {
       marginLeft: theme.spacing.sm,
       flexShrink: 1,
+    },
+    approvalTitle: {
+      fontSize: theme.typography.fontSize.sm,
+      fontWeight: theme.typography.fontWeight.semibold,
+      color: theme.colors.status.warning,
+    },
+    approvalHint: {
+      fontSize: theme.typography.fontSize.xs,
+      color: theme.colors.status.warning,
+      opacity: 0.85,
+      marginTop: 1,
     },
     errorBubble: {
       backgroundColor: theme.colors.status.error + (theme.isDark ? '30' : '20'),

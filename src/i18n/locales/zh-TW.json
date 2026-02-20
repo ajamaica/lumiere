@@ -84,7 +84,8 @@
     "lifecycleEnd": "完成"
   },
   "connection": {
-    "awaitingApproval": "請在閘道器上批准此設備"
+    "awaitingApprovalTitle": "等待批准",
+    "awaitingApprovalHint": "前往伺服器批准此裝置以完成連線"
   },
   "addServer": {
     "title": "新增伺服器",

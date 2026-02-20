@@ -84,7 +84,8 @@
     "lifecycleEnd": "Готово"
   },
   "connection": {
-    "awaitingApproval": "Подтвердите это устройство на вашем шлюзе"
+    "awaitingApprovalTitle": "Ожидание подтверждения",
+    "awaitingApprovalHint": "Перейдите на сервер и подтвердите это устройство для подключения"
   },
   "addServer": {
     "title": "Добавить сервер",

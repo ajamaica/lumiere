@@ -84,7 +84,8 @@
     "lifecycleEnd": "完了"
   },
   "connection": {
-    "awaitingApproval": "ゲートウェイでこのデバイスを承認してください"
+    "awaitingApprovalTitle": "承認待ち",
+    "awaitingApprovalHint": "サーバーにアクセスして、このデバイスの接続を承認してください"
   },
   "addServer": {
     "title": "サーバーを追加",

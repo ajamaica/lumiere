@@ -84,7 +84,8 @@
     "lifecycleEnd": "Terminé"
   },
   "connection": {
-    "awaitingApproval": "Approuvez cet appareil sur votre passerelle"
+    "awaitingApprovalTitle": "En attente d'approbation",
+    "awaitingApprovalHint": "Accédez à votre serveur et approuvez cet appareil pour vous connecter"
   },
   "addServer": {
     "title": "Ajouter un serveur",

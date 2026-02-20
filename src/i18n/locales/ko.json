@@ -84,7 +84,8 @@
     "lifecycleEnd": "완료"
   },
   "connection": {
-    "awaitingApproval": "게이트웨이에서 이 기기를 승인해 주세요"
+    "awaitingApprovalTitle": "승인 대기 중",
+    "awaitingApprovalHint": "서버로 이동하여 이 기기의 연결을 승인해 주세요"
   },
   "addServer": {
     "title": "서버 추가",

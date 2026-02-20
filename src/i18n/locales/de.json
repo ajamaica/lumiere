@@ -84,7 +84,8 @@
     "lifecycleEnd": "Fertig"
   },
   "connection": {
-    "awaitingApproval": "Genehmigen Sie dieses Gerät auf Ihrem Gateway"
+    "awaitingApprovalTitle": "Warte auf Genehmigung",
+    "awaitingApprovalHint": "Öffnen Sie Ihren Server und genehmigen Sie dieses Gerät"
   },
   "addServer": {
     "title": "Server hinzufügen",

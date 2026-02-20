@@ -84,7 +84,8 @@
     "lifecycleEnd": "पूर्ण"
   },
   "connection": {
-    "awaitingApproval": "अपने गेटवे पर इस डिवाइस को स्वीकृत करें"
+    "awaitingApprovalTitle": "स्वीकृति की प्रतीक्षा",
+    "awaitingApprovalHint": "अपने सर्वर पर जाएं और इस डिवाइस को कनेक्ट करने के लिए स्वीकृत करें"
   },
   "addServer": {
     "title": "सर्वर जोड़ें",

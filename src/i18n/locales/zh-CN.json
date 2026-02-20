@@ -84,7 +84,8 @@
     "lifecycleEnd": "完成"
   },
   "connection": {
-    "awaitingApproval": "请在网关上批准此设备"
+    "awaitingApprovalTitle": "等待批准",
+    "awaitingApprovalHint": "前往服务器批准此设备以完成连接"
   },
   "addServer": {
     "title": "添加服务器",
