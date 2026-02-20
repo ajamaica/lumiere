@@ -50,8 +50,11 @@ export {
 export { agentConfigsAtom, currentServerIdAtom, serversAtom } from './serverAtoms'
 
 // ─── UI atoms ────────────────────────────────────────────
+export type { ChatFontFamily, ChatFontSize } from './uiAtoms'
 export {
   biometricLockEnabledAtom,
+  chatFontFamilyAtom,
+  chatFontSizeAtom,
   colorThemeAtom,
   languageAtom,
   onboardingCompletedAtom,

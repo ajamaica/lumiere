@@ -19,6 +19,8 @@ import { useSpeech } from '../../hooks/useSpeech'
 import { useUrlMetadata } from '../../hooks/useUrlMetadata'
 import { copyToClipboard, executeIntent } from '../../services/intents'
 import {
+  chatFontFamilyAtom,
+  chatFontSizeAtom,
   clearMessagesAtom,
   currentSessionKeyAtom,
   favoritesAtom,
@@ -121,6 +123,9 @@ function ChatMessageComponent({ message }: { message: Message }) {
   const setSessionAliases = useSetAtom(sessionAliasesAtom)
   const setClearMessages = useSetAtom(clearMessagesAtom)
 
+  const [chatFontSize] = useAtom(chatFontSizeAtom)
+  const [chatFontFamily] = useAtom(chatFontFamilyAtom)
+
   const { status: speechStatus, speak, stop: stopSpeech } = useSpeech()
 
   // Animation values
@@ -189,7 +194,10 @@ function ChatMessageComponent({ message }: { message: Message }) {
   }, [isSpeaking, stopSpeech, speak, message.text])
 
   const styles = useMemo(() => createStyles(theme), [theme])
-  const markdownStyles = useMemo(() => createMarkdownStyles(theme, isUser), [theme, isUser])
+  const markdownStyles = useMemo(
+    () => createMarkdownStyles(theme, isUser, chatFontSize, chatFontFamily),
+    [theme, isUser, chatFontSize, chatFontFamily],
+  )
   const { markdownRules, handleLinkPress } = useMarkdownRules()
 
   const handleCopy = async () => {
