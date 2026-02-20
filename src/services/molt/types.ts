@@ -269,6 +269,7 @@ export interface UpdateSkillParams {
   name: string
   description?: string
   content?: string
+  enabled?: boolean
 }
 
 export interface Skill {

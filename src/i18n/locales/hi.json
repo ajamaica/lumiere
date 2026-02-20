@@ -284,7 +284,10 @@
       "enabled": "सक्रिय",
       "disabled": "निष्क्रिय",
       "bundled": "बंडल",
-      "refresh": "रीफ्रेश"
+      "refresh": "रीफ्रेश",
+      "enable": "सक्रिय करें",
+      "disable": "निष्क्रिय करें",
+      "toggleError": "स्किल की स्थिति बदलने में विफल।"
     },
     "clawHub": {
       "title": "ClawHub",

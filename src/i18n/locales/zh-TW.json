@@ -284,7 +284,10 @@
       "enabled": "已啟用",
       "disabled": "已停用",
       "bundled": "內建",
-      "refresh": "重新整理"
+      "refresh": "重新整理",
+      "enable": "啟用",
+      "disable": "停用",
+      "toggleError": "切換技能狀態失敗。"
     },
     "clawHub": {
       "title": "ClawHub",

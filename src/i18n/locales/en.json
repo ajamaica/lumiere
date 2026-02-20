@@ -251,7 +251,10 @@
       "enabled": "Enabled",
       "disabled": "Disabled",
       "bundled": "Bundled",
-      "refresh": "Refresh"
+      "refresh": "Refresh",
+      "enable": "Enable",
+      "disable": "Disable",
+      "toggleError": "Failed to toggle skill."
     },
     "clawHub": {
       "title": "ClawHub",
