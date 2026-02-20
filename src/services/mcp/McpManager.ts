@@ -196,33 +196,62 @@ export class McpManager {
     return () => this.stateListeners.delete(callback)
   }
 
-  // ─── Skill Generation ───────────────────────────────────────────────────────
+  // ─── Manifest Generation ────────────────────────────────────────────────────
 
   /**
-   * Generate a Molt skill description that teaches the agent about
-   * available MCP tools. This is used to bridge MCP tools into the
-   * Molt agent's awareness.
+   * Generate a message-based instruction block that teaches the agent how to
+   * request MCP tool calls.
+   *
+   * Because MCP tools are executed client-side (not on the gateway), the
+   * agent cannot invoke them directly. Instead the agent embeds a structured
+   * `<mcp_call>` tag inside its response text. The Lumiere client parses
+   * these tags after the response ends, executes the calls, and sends the
+   * results back as follow-up messages.
+   *
+   * The format is:
+   * ```
+   * <mcp_call tool="qualifiedName">
+   * {"param1": "value1"}
+   * </mcp_call>
+   * ```
    */
   generateToolManifest(): string {
     const tools = this.getAllTools()
     if (tools.length === 0) return ''
 
     const lines = [
-      'The following external MCP tools are available. To use one, output a tool call with the qualified name.',
+      'You have access to external MCP (Model Context Protocol) tools provided by the user.',
+      'These tools run on the client device, not on the server.',
+      '',
+      'To call an MCP tool, include ONE OR MORE <mcp_call> blocks anywhere in your response:',
+      '',
+      '<mcp_call tool="TOOL_NAME">',
+      '{"param1": "value1", "param2": "value2"}',
+      '</mcp_call>',
+      '',
+      'The client will execute each call and send the results back as a follow-up message.',
+      "You SHOULD use these tools whenever they are relevant to the user's request.",
+      'You may include normal text before or after <mcp_call> blocks.',
+      '',
+      '--- Available MCP Tools ---',
       '',
     ]
 
     for (const tool of tools) {
-      lines.push(`## ${tool.qualifiedName}`)
+      lines.push(`### ${tool.qualifiedName}`)
       if (tool.description) {
         lines.push(tool.description)
       }
       if (tool.inputSchema?.properties) {
-        lines.push('Parameters:')
+        const params: string[] = []
         for (const [name, schema] of Object.entries(tool.inputSchema.properties)) {
-          const required = tool.inputSchema.required?.includes(name) ? ' (required)' : ''
-          const desc = schema.description ? ` - ${schema.description}` : ''
-          lines.push(`  - ${name}: ${schema.type}${required}${desc}`)
+          const req = tool.inputSchema.required?.includes(name) ? ' (required)' : ''
+          const desc = schema.description ? ` — ${schema.description}` : ''
+          params.push(`  ${name}: ${schema.type}${req}${desc}`)
+        }
+        if (params.length > 0) {
+          lines.push('Parameters:')
+          lines.push(...params)
         }
       }
       lines.push('')
