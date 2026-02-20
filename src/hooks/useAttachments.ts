@@ -29,6 +29,12 @@ export function useAttachments({ disabled, supportsImageAttachments }: UseAttach
     setShowMenu(false)
     await new Promise<void>((resolve) => setTimeout(resolve, 500))
     try {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync()
+      if (status !== 'granted') {
+        attachmentLogger.error('Camera permission denied')
+        return
+      }
+
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ['images'],
         quality: 1,
