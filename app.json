@@ -25,6 +25,7 @@
         "ITSAppUsesNonExemptEncryption": false,
         "NSMicrophoneUsageDescription": "Lumiere needs access to your microphone to transcribe voice messages.",
         "NSSpeechRecognitionUsageDescription": "Lumiere uses speech recognition to convert your voice to text.",
+        "NSCameraUsageDescription": "Lumiere needs access to your camera to take photos and attach them to messages.",
         "NSCalendarsUsageDescription": "Lumiere needs access to your calendar to create and store events.",
         "UIRequiresFullScreen": false,
         "UISupportedInterfaceOrientations~ipad": [
@@ -58,7 +59,7 @@
         }
       ],
       "package": "bot.lumiere.app",
-      "permissions": ["android.permission.RECORD_AUDIO"]
+      "permissions": ["android.permission.RECORD_AUDIO", "android.permission.CAMERA"]
     },
     "platforms": ["ios", "android", "web"],
     "web": {
@@ -86,6 +87,13 @@
         {
           "icon": "./assets/icon.png",
           "color": "#ffffff"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Lumiere needs access to your camera to take photos and attach them to messages.",
+          "photosPermission": "Lumiere needs access to your photo library to attach images and videos to messages."
         }
       ],
       "react-native-compressor",
