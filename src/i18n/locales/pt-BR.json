@@ -285,7 +285,10 @@
       "enabled": "Ativada",
       "disabled": "Desativada",
       "bundled": "Incluída",
-      "refresh": "Atualizar"
+      "refresh": "Atualizar",
+      "enable": "Ativar",
+      "disable": "Desativar",
+      "toggleError": "Falha ao alternar o estado da skill."
     },
     "clawHub": {
       "title": "ClawHub",
@@ -309,7 +312,17 @@
   },
   "colors": {
     "appearance": "Aparência",
-    "colorTheme": "Tema de Cor"
+    "colorTheme": "Tema de Cor",
+    "chatText": "Texto do Chat",
+    "chatTextDescription": "Estas configurações se aplicam apenas ao texto do chat, não aos blocos de código.",
+    "fontSize": "Tamanho da Fonte",
+    "fontSize_small": "Pequeno",
+    "fontSize_medium": "Médio",
+    "fontSize_large": "Grande",
+    "fontFamily": "Fonte",
+    "fontFamily_system": "Padrão do Sistema",
+    "fontFamily_serif": "Serifada",
+    "fontFamily_monospace": "Monoespaçada"
   },
   "agents": {
     "selectAgent": "Selecionar Agente",

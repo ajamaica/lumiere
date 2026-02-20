@@ -41,6 +41,17 @@ function stripMessageMetadata(text: string): string {
   return (before + after).trim()
 }
 
+/**
+ * Strip the `[System: …]` prefix that the Molt provider prepends to carry
+ * session system messages through the gateway.
+ */
+function stripSystemMessagePrefix(text: string): string {
+  if (!text.startsWith('[System: ')) return text
+  const closingBracket = text.indexOf(']\n\n')
+  if (closingBracket === -1) return text
+  return text.substring(closingBracket + 3)
+}
+
 /** Raw history entry from the gateway — extends the base shape with tool result fields. */
 interface RawHistoryMessage {
   role: string
@@ -77,7 +88,8 @@ function historyToMessages(msgs: RawHistoryMessage[], showToolEvents: boolean): 
       }
 
       const textContent = msg.content.find((c) => c.type === 'text')
-      const text = textContent?.text ? stripMessageMetadata(textContent.text) : ''
+      const rawText = textContent?.text ? stripMessageMetadata(textContent.text) : ''
+      const text = stripSystemMessagePrefix(rawText)
       if (!text) return null
       return {
         id: `history-${msg.timestamp}-${index}`,
@@ -156,7 +168,13 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
       }),
     onAgentMessageUpdate: (text) => setCurrentAgentMessage(text),
     onAgentMessageComplete: (message) => {
-      setMessages((prev) => [...prev, message])
+      // Only append the message when it contains text. Gateway-only slash
+      // commands (e.g. /help, /model) produce no streamed deltas, so the
+      // message text is empty — adding it would flash a blank bubble before
+      // the history reload replaces the list.
+      if (message.text) {
+        setMessages((prev) => [...prev, message])
+      }
       setCurrentAgentMessage('')
       // Always reload history after the agent finishes so that server-side
       // responses (slash commands, tool events) that are not fully streamed

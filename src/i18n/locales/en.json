@@ -252,7 +252,10 @@
       "enabled": "Enabled",
       "disabled": "Disabled",
       "bundled": "Bundled",
-      "refresh": "Refresh"
+      "refresh": "Refresh",
+      "enable": "Enable",
+      "disable": "Disable",
+      "toggleError": "Failed to toggle skill."
     },
     "clawHub": {
       "title": "ClawHub",
@@ -309,7 +312,17 @@
   },
   "colors": {
     "appearance": "Appearance",
-    "colorTheme": "Color Theme"
+    "colorTheme": "Color Theme",
+    "chatText": "Chat Text",
+    "chatTextDescription": "These settings apply to chat text only, not code blocks.",
+    "fontSize": "Font Size",
+    "fontSize_small": "Small",
+    "fontSize_medium": "Medium",
+    "fontSize_large": "Large",
+    "fontFamily": "Font",
+    "fontFamily_system": "System Default",
+    "fontFamily_serif": "Serif",
+    "fontFamily_monospace": "Monospace"
   },
   "agents": {
     "selectAgent": "Select Agent",

@@ -1,7 +1,30 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 
+import type { ChatFontFamily, ChatFontSize } from '../../store'
 import { Theme } from '../../theme'
 import { webStyle } from '../../utils/platform'
+
+/** Map chat font size preference to a pixel value */
+const CHAT_FONT_SIZES: Record<ChatFontSize, number> = {
+  small: 14,
+  medium: 16,
+  large: 20,
+}
+
+/** Map chat font family preference to a platform font name */
+const CHAT_FONT_FAMILIES: Record<ChatFontFamily, string> = {
+  system: 'System',
+  serif: Platform.OS === 'ios' ? 'Georgia' : 'serif',
+  monospace: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+}
+
+export function getChatFontSize(size: ChatFontSize): number {
+  return CHAT_FONT_SIZES[size]
+}
+
+export function getChatFontFamily(family: ChatFontFamily): string {
+  return CHAT_FONT_FAMILIES[family]
+}
 
 export const createCodeBlockStyles = (theme: Theme) =>
   StyleSheet.create({
@@ -170,55 +193,71 @@ export const createStyles = (theme: Theme) =>
     },
   })
 
-export const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
+export const createMarkdownStyles = (
+  theme: Theme,
+  isUser: boolean,
+  chatFontSize: ChatFontSize = 'medium',
+  chatFontFamily: ChatFontFamily = 'system',
+) => {
   const textColor = isUser ? theme.colors.message.userText : theme.colors.message.agentText
+  const fontSize = getChatFontSize(chatFontSize)
+  const fontFamily = getChatFontFamily(chatFontFamily)
+  const fontFamilyStyle = chatFontFamily !== 'system' ? { fontFamily } : {}
 
   return {
     body: {
       color: textColor,
-      fontSize: theme.typography.fontSize.base,
-      lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
+      fontSize,
+      lineHeight: fontSize * theme.typography.lineHeight.normal,
       flexShrink: 1,
+      ...fontFamilyStyle,
       ...webStyle({ userSelect: 'text' as const }),
     },
     text: {
       color: textColor,
+      ...fontFamilyStyle,
     },
     heading1: {
       color: textColor,
-      fontSize: theme.typography.fontSize.xl,
+      fontSize: fontSize + 4,
       fontWeight: theme.typography.fontWeight.bold,
       marginTop: theme.spacing.md,
       marginBottom: theme.spacing.sm,
+      ...fontFamilyStyle,
     },
     heading2: {
       color: textColor,
-      fontSize: theme.typography.fontSize.lg,
+      fontSize: fontSize + 2,
       fontWeight: theme.typography.fontWeight.bold,
       marginTop: theme.spacing.md,
       marginBottom: theme.spacing.sm,
+      ...fontFamilyStyle,
     },
     heading3: {
       color: textColor,
-      fontSize: theme.typography.fontSize.base,
+      fontSize,
       fontWeight: theme.typography.fontWeight.bold,
       marginTop: theme.spacing.sm,
       marginBottom: theme.spacing.xs,
+      ...fontFamilyStyle,
     },
     paragraph: {
       marginTop: 0,
       marginBottom: theme.spacing.sm,
       color: textColor,
-      fontSize: theme.typography.fontSize.base,
-      lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
+      fontSize,
+      lineHeight: fontSize * theme.typography.lineHeight.normal,
+      ...fontFamilyStyle,
     },
     strong: {
       fontWeight: theme.typography.fontWeight.bold,
       color: textColor,
+      ...fontFamilyStyle,
     },
     em: {
       fontStyle: 'italic' as const,
       color: textColor,
+      ...fontFamilyStyle,
     },
     code_inline: {
       backgroundColor: isUser
@@ -275,6 +314,7 @@ export const createMarkdownStyles = (theme: Theme, isUser: boolean) => {
       color: textColor,
       marginVertical: theme.spacing.xs / 2,
       marginTop: theme.spacing.xs,
+      ...fontFamilyStyle,
     },
     bullet_list_icon: {
       color: textColor,

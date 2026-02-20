@@ -285,7 +285,10 @@
       "enabled": "有効",
       "disabled": "無効",
       "bundled": "組み込み",
-      "refresh": "更新"
+      "refresh": "更新",
+      "enable": "有効にする",
+      "disable": "無効にする",
+      "toggleError": "スキルの切り替えに失敗しました。"
     },
     "clawHub": {
       "title": "ClawHub",
@@ -309,7 +312,17 @@
   },
   "colors": {
     "appearance": "外観",
-    "colorTheme": "カラーテーマ"
+    "colorTheme": "カラーテーマ",
+    "chatText": "チャットテキスト",
+    "chatTextDescription": "これらの設定はチャットテキストにのみ適用され、コードブロックには適用されません。",
+    "fontSize": "フォントサイズ",
+    "fontSize_small": "小",
+    "fontSize_medium": "中",
+    "fontSize_large": "大",
+    "fontFamily": "フォント",
+    "fontFamily_system": "システムデフォルト",
+    "fontFamily_serif": "セリフ",
+    "fontFamily_monospace": "等幅"
   },
   "agents": {
     "selectAgent": "エージェントを選択",

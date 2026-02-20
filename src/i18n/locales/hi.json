@@ -285,7 +285,10 @@
       "enabled": "सक्रिय",
       "disabled": "निष्क्रिय",
       "bundled": "बंडल",
-      "refresh": "रीफ्रेश"
+      "refresh": "रीफ्रेश",
+      "enable": "सक्रिय करें",
+      "disable": "निष्क्रिय करें",
+      "toggleError": "स्किल की स्थिति बदलने में विफल।"
     },
     "clawHub": {
       "title": "ClawHub",
@@ -309,7 +312,17 @@
   },
   "colors": {
     "appearance": "दिखावट",
-    "colorTheme": "रंग थीम"
+    "colorTheme": "रंग थीम",
+    "chatText": "चैट टेक्स्ट",
+    "chatTextDescription": "ये सेटिंग्स केवल चैट टेक्स्ट पर लागू होती हैं, कोड ब्लॉक पर नहीं।",
+    "fontSize": "फ़ॉन्ट आकार",
+    "fontSize_small": "छोटा",
+    "fontSize_medium": "मध्यम",
+    "fontSize_large": "बड़ा",
+    "fontFamily": "फ़ॉन्ट",
+    "fontFamily_system": "सिस्टम डिफ़ॉल्ट",
+    "fontFamily_serif": "सेरिफ़",
+    "fontFamily_monospace": "मोनोस्पेस"
   },
   "agents": {
     "selectAgent": "एजेंट चुनें",

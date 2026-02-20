@@ -285,7 +285,10 @@
       "enabled": "已啟用",
       "disabled": "已停用",
       "bundled": "內建",
-      "refresh": "重新整理"
+      "refresh": "重新整理",
+      "enable": "啟用",
+      "disable": "停用",
+      "toggleError": "切換技能狀態失敗。"
     },
     "clawHub": {
       "title": "ClawHub",
@@ -309,7 +312,17 @@
   },
   "colors": {
     "appearance": "外觀",
-    "colorTheme": "顏色主題"
+    "colorTheme": "顏色主題",
+    "chatText": "聊天文字",
+    "chatTextDescription": "這些設定僅適用於聊天文字，不適用於程式碼區塊。",
+    "fontSize": "字體大小",
+    "fontSize_small": "小",
+    "fontSize_medium": "中",
+    "fontSize_large": "大",
+    "fontFamily": "字體",
+    "fontFamily_system": "系統預設",
+    "fontFamily_serif": "襯線體",
+    "fontFamily_monospace": "等寬字體"
   },
   "agents": {
     "selectAgent": "選擇代理",

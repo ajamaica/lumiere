@@ -35,3 +35,15 @@ export const showToolEventsInChatAtom = atomWithStorage<boolean>(
   false,
   storage,
 )
+
+/** Chat font size preference (applies to chat text only, not code blocks) */
+export type ChatFontSize = 'small' | 'medium' | 'large'
+export const chatFontSizeAtom = atomWithStorage<ChatFontSize>('chatFontSize', 'medium', storage)
+
+/** Chat font family preference (applies to chat text only, not code blocks) */
+export type ChatFontFamily = 'system' | 'serif' | 'monospace'
+export const chatFontFamilyAtom = atomWithStorage<ChatFontFamily>(
+  'chatFontFamily',
+  'system',
+  storage,
+)
