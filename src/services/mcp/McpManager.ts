@@ -23,6 +23,8 @@ export interface McpRegisteredTool extends McpTool {
   serverId: string
   /** Name of the MCP server. */
   serverName: string
+  /** URL of the MCP server. */
+  serverUrl: string
   /** Prefixed name to avoid collisions: `mcp_{serverName}_{toolName}`. */
   qualifiedName: string
 }
@@ -219,6 +221,14 @@ export class McpManager {
     const tools = this.getAllTools()
     if (tools.length === 0) return ''
 
+    // Group tools by server so we can show the URL once per server block
+    const byServer = new Map<string, McpRegisteredTool[]>()
+    for (const tool of tools) {
+      const key = tool.serverId
+      if (!byServer.has(key)) byServer.set(key, [])
+      byServer.get(key)!.push(tool)
+    }
+
     const lines = [
       'You have access to external MCP (Model Context Protocol) tools provided by the user.',
       'These tools run on the client device, not on the server.',
@@ -237,24 +247,30 @@ export class McpManager {
       '',
     ]
 
-    for (const tool of tools) {
-      lines.push(`### ${tool.qualifiedName}`)
-      if (tool.description) {
-        lines.push(tool.description)
-      }
-      if (tool.inputSchema?.properties) {
-        const params: string[] = []
-        for (const [name, schema] of Object.entries(tool.inputSchema.properties)) {
-          const req = tool.inputSchema.required?.includes(name) ? ' (required)' : ''
-          const desc = schema.description ? ` — ${schema.description}` : ''
-          params.push(`  ${name}: ${schema.type}${req}${desc}`)
-        }
-        if (params.length > 0) {
-          lines.push('Parameters:')
-          lines.push(...params)
-        }
-      }
+    for (const [, serverTools] of byServer) {
+      const first = serverTools[0]
+      lines.push(`## Server: ${first.serverName} (${first.serverUrl})`)
       lines.push('')
+
+      for (const tool of serverTools) {
+        lines.push(`### ${tool.qualifiedName}`)
+        if (tool.description) {
+          lines.push(tool.description)
+        }
+        if (tool.inputSchema?.properties) {
+          const params: string[] = []
+          for (const [name, schema] of Object.entries(tool.inputSchema.properties)) {
+            const req = tool.inputSchema.required?.includes(name) ? ' (required)' : ''
+            const desc = schema.description ? ` — ${schema.description}` : ''
+            params.push(`  ${name}: ${schema.type}${req}${desc}`)
+          }
+          if (params.length > 0) {
+            lines.push('Parameters:')
+            lines.push(...params)
+          }
+        }
+        lines.push('')
+      }
     }
 
     return lines.join('\n')
@@ -270,6 +286,7 @@ export class McpManager {
       ...tool,
       serverId: config.id,
       serverName: config.name,
+      serverUrl: config.url,
       qualifiedName,
     }
 
