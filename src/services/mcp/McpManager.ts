@@ -232,6 +232,8 @@ export class McpManager {
     const lines = [
       'You have access to external MCP (Model Context Protocol) tools provided by the user.',
       'These tools run on the client device, not on the server.',
+      'IMPORTANT: You CANNOT call MCP server URLs directly via HTTP, web_fetch, or any other tool.',
+      'The ONLY way to use an MCP tool is through the <mcp_call> tag described below.',
       '',
       'To call an MCP tool, include ONE OR MORE <mcp_call> blocks anywhere in your response:',
       '',
