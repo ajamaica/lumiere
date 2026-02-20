@@ -1,6 +1,6 @@
 import { getMcpManager } from '../mcp'
-import { MoltGatewayClient } from '../molt/client'
-import { AgentEvent, ChatAttachmentPayload, ConnectionState } from '../molt/types'
+import { generateIdempotencyKey, MoltGatewayClient } from '../molt/client'
+import { AgentEvent, Attachment, ConnectionState } from '../molt/types'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -39,9 +39,10 @@ function stripMetadataFromText(text: string): string {
 }
 
 /**
- * Strip the `[System: …]` prefix that sendMessage prepends to carry the
- * session system message through the Molt gateway.  The prefix always sits
- * at the very start of the text and is followed by two newlines.
+ * Strip the `[System: …]` prefix from messages in existing chat history.
+ * The old sendMessage implementation prepended system messages as a text
+ * prefix; we now use `extraSystemPrompt` via the `agent` RPC instead, but
+ * older history entries may still contain the prefix.
  */
 function stripSystemMessagePrefix(text: string): string {
   if (!text.startsWith('[System: ')) return text
@@ -121,48 +122,40 @@ export class MoltChatProvider implements ChatProvider {
     params: SendMessageParams,
     onEvent: (event: ChatProviderEvent) => void,
   ): Promise<void> {
-    // Convert provider attachments to the wire-format ChatAttachmentPayload
-    let attachments: ChatAttachmentPayload[] | undefined
+    // Convert provider attachments to the Attachment format used by the agent RPC
+    let attachments: Attachment[] | undefined
     if (params.attachments?.length) {
       attachments = params.attachments
         .filter((a) => a.data) // only include attachments with actual content
         .map((a) => ({
-          type: a.type,
+          type: a.type as Attachment['type'],
           mimeType: a.mimeType || 'application/octet-stream',
           fileName: a.name || 'attachment',
-          content: a.data!,
+          data: a.data!,
         }))
       if (attachments.length === 0) attachments = undefined
     }
 
-    // Inject MCP tool manifest into the system message when MCP tools are
-    // available. The manifest tells the agent about available MCP servers and
-    // tools so it can call them directly via HTTP/web_fetch.
+    // Build the extraSystemPrompt from the session system message and MCP tools.
+    // This uses the gateway's native `extraSystemPrompt` parameter on the `agent`
+    // RPC method, which injects context directly into the server-side system prompt
+    // instead of the old approach of embedding it as a [System: …] prefix in the
+    // user message text.
     const mcpManager = getMcpManager()
     const mcpManifest = mcpManager.generateToolManifest()
-    let systemMessage = params.systemMessage ?? ''
+    let extraSystemPrompt = params.systemMessage ?? ''
     if (mcpManifest) {
       const mcpContext = `[Available MCP Tools]\n${mcpManifest}`
-      systemMessage = systemMessage ? `${systemMessage}\n\n${mcpContext}` : mcpContext
+      extraSystemPrompt = extraSystemPrompt ? `${extraSystemPrompt}\n\n${mcpContext}` : mcpContext
     }
 
-    // Prepend system message as context for Molt gateway
-    const message = systemMessage
-      ? `[System: ${systemMessage}]\n\n${params.message}`
-      : params.message
-
-    // Subscribe to agent events for streaming before sending.
-    // Filter by sessionKey so that events from other sessions are ignored.
-    const unsubscribe = this.client.onAgentEvent((event: AgentEvent) => {
+    const eventHandler = (event: AgentEvent) => {
       if (event.sessionKey !== params.sessionKey) return
 
       if (event.stream === 'assistant' && event.data.delta) {
         onEvent({ type: 'delta', delta: event.data.delta })
       } else if (event.stream === 'lifecycle') {
         onEvent({ type: 'lifecycle', phase: event.data.phase })
-        if (event.data.phase === 'end') {
-          unsubscribe()
-        }
       } else if (event.stream === 'tool' || event.stream === 'subagent') {
         if (event.data.toolName) {
           onEvent({
@@ -174,16 +167,18 @@ export class MoltChatProvider implements ChatProvider {
           })
         }
       }
-    })
-
-    try {
-      await this.client.chatSend(params.sessionKey, message, {
-        attachments,
-      })
-    } catch (err) {
-      unsubscribe()
-      throw err
     }
+
+    await this.client.sendAgentRequest(
+      {
+        message: params.message,
+        sessionKey: params.sessionKey,
+        attachments,
+        extraSystemPrompt: extraSystemPrompt || undefined,
+        idempotencyKey: generateIdempotencyKey(),
+      },
+      eventHandler,
+    )
   }
 
   async getChatHistory(sessionKey: string, limit?: number): Promise<ChatHistoryResponse> {

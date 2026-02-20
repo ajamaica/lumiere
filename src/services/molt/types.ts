@@ -232,6 +232,10 @@ export interface AgentParams {
   sessionKey?: string
   model?: string
   attachments?: Attachment[]
+  /** Additional system prompt injected into the agent's system prompt via the
+   *  gateway's native `extraSystemPrompt` mechanism. Preferred over embedding
+   *  instructions inside the user message. */
+  extraSystemPrompt?: string
 }
 
 export type AgentEvent = {
