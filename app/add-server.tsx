@@ -42,7 +42,9 @@ export default function AddServerScreen() {
     providerType === 'claude' ||
     providerType === 'openai' ||
     providerType === 'openai-compatible' ||
-    providerType === 'openrouter'
+    providerType === 'openrouter' ||
+    providerType === 'gemini' ||
+    providerType === 'kimi'
 
   const handleAdd = async () => {
     if (providerType === 'molt' && url.trim() && token.trim()) {
@@ -106,6 +108,26 @@ export default function AddServerScreen() {
         },
         token.trim(),
       )
+    } else if (providerType === 'gemini' && token.trim()) {
+      await addServer(
+        {
+          name: name.trim() || 'My Gemini',
+          url: url.trim() || 'https://generativelanguage.googleapis.com',
+          providerType: 'gemini',
+          model: model.trim() || undefined,
+        },
+        token.trim(),
+      )
+    } else if (providerType === 'kimi' && token.trim()) {
+      await addServer(
+        {
+          name: name.trim() || 'My Kimi',
+          url: url.trim() || 'https://api.moonshot.cn',
+          providerType: 'kimi',
+          model: model.trim() || undefined,
+        },
+        token.trim(),
+      )
     } else if (providerType === 'echo') {
       await addServer(
         {
@@ -144,7 +166,9 @@ export default function AddServerScreen() {
           'Error',
           providerType === 'claude' ||
             providerType === 'openai' ||
-            providerType === 'openai-compatible'
+            providerType === 'openai-compatible' ||
+            providerType === 'gemini' ||
+            providerType === 'kimi'
             ? 'API Key is required'
             : 'Token is required',
         )
@@ -218,7 +242,11 @@ export default function AddServerScreen() {
                               ? 'My OpenAI Compatible'
                               : providerType === 'openrouter'
                                 ? 'My OpenRouter'
-                                : 'My Server'
+                                : providerType === 'gemini'
+                                  ? 'My Gemini'
+                                  : providerType === 'kimi'
+                                    ? 'My Kimi'
+                                    : 'My Server'
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -404,6 +432,56 @@ export default function AddServerScreen() {
                   value={model}
                   onChangeText={setModel}
                   placeholder="openai/gpt-4o"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+            </>
+          )}
+
+          {providerType === 'gemini' && (
+            <>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="API Key"
+                  value={token}
+                  onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="Model"
+                  value={model}
+                  onChangeText={setModel}
+                  placeholder="gemini-2.0-flash"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+            </>
+          )}
+
+          {providerType === 'kimi' && (
+            <>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="API Key"
+                  value={token}
+                  onChangeText={setToken}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  label="Model"
+                  value={model}
+                  onChangeText={setModel}
+                  placeholder="moonshot-v1-8k"
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
