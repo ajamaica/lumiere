@@ -23,3 +23,13 @@ export const gatewayLastSeenTimestampAtom = atomWithStorage<GatewayLastSeenMap>(
   {},
   storage,
 )
+
+/** Cached Expo push token for this device */
+export const expoPushTokenAtom = atomWithStorage<string | null>('expoPushToken', null, storage)
+
+/** Tracks which servers have been registered with the current push token (serverId → token) */
+export const pushTokenRegistrationsAtom = atomWithStorage<Record<string, string>>(
+  'pushTokenRegistrations',
+  {},
+  storage,
+)

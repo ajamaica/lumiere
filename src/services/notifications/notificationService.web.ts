@@ -24,3 +24,24 @@ export function configureNotificationHandler(): void {
 export async function requestNotificationPermissions(): Promise<boolean> {
   return false
 }
+
+export async function getExpoPushToken(): Promise<string | null> {
+  return null
+}
+
+export async function registerPushTokenWithServer(
+  _serverId: string,
+  _serverUrl: string,
+  _authToken: string,
+  _pushToken: string,
+): Promise<boolean> {
+  return false
+}
+
+export async function registerPushTokenWithAllServers(): Promise<void> {
+  // No-op on web
+}
+
+export async function clearPushTokenRegistrations(): Promise<void> {
+  // No-op on web
+}

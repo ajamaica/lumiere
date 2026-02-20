@@ -548,6 +548,44 @@ export type GatewayEvent =
   | { event: 'health'; payload: HealthStatus }
   | { event: 'seq.gap'; payload: { expected: number; received: number } }
 
+// ─── Push Notification Types ──────────────────────────────────────────────────
+
+/** Parameters for `push.register` — register an Expo push token with the gateway. */
+export interface PushRegisterParams {
+  /** Expo push token string (e.g. "ExponentPushToken[...]") */
+  pushToken: string
+  /** Token provider — always "expo" for Expo push tokens */
+  provider: 'expo'
+  /** Platform identifier (ios | android) */
+  platform: string
+}
+
+/** Response from `push.register`. */
+export interface PushRegisterResult {
+  ok: boolean
+}
+
+/** Parameters for `push.test` — send a test push notification. */
+export interface PushTestParams {
+  /** Target node ID or device ID */
+  nodeId: string
+  /** Optional notification title */
+  title?: string
+  /** Optional notification body */
+  body?: string
+}
+
+/** Response from `push.test`. */
+export interface PushTestResult {
+  ok: boolean
+  status: number
+  apnsId?: string
+  reason?: string
+  tokenSuffix: string
+  topic: string
+  environment: string
+}
+
 // ─── Canvas Types ──────────────────────────────────────────────────────────────
 
 /** Parameters for `canvas.result` — report a canvas action result back to the gateway. */

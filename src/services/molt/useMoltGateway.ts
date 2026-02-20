@@ -17,6 +17,10 @@ import {
   GatewaySnapshot,
   HealthStatus,
   MoltConfig,
+  PushRegisterParams,
+  PushRegisterResult,
+  PushTestParams,
+  PushTestResult,
   SendMessageParams,
   SessionsSpawnParams,
   SessionsSpawnResponse,
@@ -84,6 +88,8 @@ export interface UseMoltGatewayResult {
   patchServerConfig: (params: ConfigPatchParams) => Promise<unknown>
   getSkillsStatus: () => Promise<SkillsStatusResponse>
   getCronJobDetail: (jobId: string) => Promise<CronJobDetail | null>
+  registerPushToken: (params: PushRegisterParams) => Promise<PushRegisterResult>
+  testPushNotification: (params: PushTestParams) => Promise<PushTestResult>
 }
 
 /** Derive boolean flags from the ConnectionState enum. */
@@ -273,6 +279,10 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
         requireClient(client).patchServerConfig(params),
       getSkillsStatus: () => requireClient(client).getSkillsStatus(),
       getCronJobDetail: (jobId: string) => requireClient(client).getCronJobDetail(jobId),
+      registerPushToken: (params: PushRegisterParams) =>
+        requireClient(client).registerPushToken(params),
+      testPushNotification: (params: PushTestParams) =>
+        requireClient(client).testPushNotification(params),
     }),
     [client],
   )

@@ -63,6 +63,8 @@ export const GatewayMethods = {
   SKILLS_STATUS: 'skills.status',
   CRON_GET: 'cron.get',
   CANVAS_RESULT: 'canvas.result',
+  PUSH_REGISTER: 'push.register',
+  PUSH_TEST: 'push.test',
 } as const
 
 /** Well-known gateway event names. */

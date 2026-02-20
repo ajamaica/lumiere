@@ -38,6 +38,10 @@ import {
   HealthStatus,
   MoltConfig,
   PendingRequest,
+  PushRegisterParams,
+  PushRegisterResult,
+  PushTestParams,
+  PushTestResult,
   RequestFrame,
   ResponseFrame,
   SendMessageParams,
@@ -454,6 +458,23 @@ export class MoltGatewayClient {
    */
   async sendCanvasResult(params: CanvasResultParams): Promise<void> {
     await this.request(GatewayMethods.CANVAS_RESULT, params, 10_000)
+  }
+
+  // ─── Push Notification Methods ──────────────────────────────────────────────
+
+  /**
+   * Register an Expo push token with the gateway so it can send
+   * push notifications to this device.
+   */
+  async registerPushToken(params: PushRegisterParams): Promise<PushRegisterResult> {
+    return this.request<PushRegisterResult>(GatewayMethods.PUSH_REGISTER, params)
+  }
+
+  /**
+   * Send a test push notification to verify the push setup is working.
+   */
+  async testPushNotification(params: PushTestParams): Promise<PushTestResult> {
+    return this.request<PushTestResult>(GatewayMethods.PUSH_TEST, params)
   }
 
   // ─── Agent Request ──────────────────────────────────────────────────────────

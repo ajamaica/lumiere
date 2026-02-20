@@ -1,19 +1,25 @@
 import * as BackgroundTask from 'expo-background-task'
 import * as Notifications from 'expo-notifications'
 import * as TaskManager from 'expo-task-manager'
+import { Platform } from 'react-native'
 
 import {
   backgroundNotificationsEnabledAtom,
   currentSessionKeyAtom,
+  expoPushTokenAtom,
   type GatewayLastSeenMap,
   gatewayLastSeenTimestampAtom,
   getStore,
+  pushTokenRegistrationsAtom,
   serversAtom,
   serverSessionsAtom,
 } from '../../store'
+import { logger } from '../../utils/logger'
 import { toHttpUrl } from '../molt/url'
 import type { ChatHistoryMessage } from '../providers/types'
 import { getServerToken } from '../secureTokenStorage'
+
+const pushLogger = logger.create('PushNotifications')
 
 export const BACKGROUND_FETCH_TASK = 'background-server-check'
 
@@ -253,4 +259,117 @@ export async function requestNotificationPermissions(): Promise<boolean> {
   }
 
   return finalStatus === 'granted'
+}
+
+// ─── Push Token Registration ─────────────────────────────────────────────────
+
+const EXPO_PROJECT_ID = '24d55021-5419-4ad2-b491-7aad43cbbdec'
+
+/**
+ * Get the Expo push token for this device. The token is cached in the
+ * Jotai store so subsequent calls don't hit the Expo API again.
+ * @returns The Expo push token string, or null if unavailable
+ */
+export async function getExpoPushToken(): Promise<string | null> {
+  try {
+    const store = getStore()
+    const cached = await resolveAtom(store.get(expoPushTokenAtom))
+    if (cached) return cached
+
+    const tokenResponse = await Notifications.getExpoPushTokenAsync({
+      projectId: EXPO_PROJECT_ID,
+    })
+
+    const token = tokenResponse.data
+    store.set(expoPushTokenAtom, token)
+    pushLogger.info('Obtained Expo push token', { tokenSuffix: token.slice(-8) })
+    return token
+  } catch (error) {
+    pushLogger.logError('Failed to get Expo push token', error)
+    return null
+  }
+}
+
+/**
+ * Register the Expo push token with a single Molt gateway via HTTP RPC.
+ * This allows the server to send push notifications to this device.
+ */
+export async function registerPushTokenWithServer(
+  serverId: string,
+  serverUrl: string,
+  authToken: string,
+  pushToken: string,
+): Promise<boolean> {
+  try {
+    const response = await fetch(`${toHttpUrl(serverUrl)}/api/rpc`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({
+        method: 'push.register',
+        params: {
+          pushToken,
+          provider: 'expo',
+          platform: Platform.OS,
+        },
+      }),
+    })
+
+    if (!response.ok) {
+      pushLogger.error(`push.register failed for server ${serverId}: HTTP ${response.status}`)
+      return false
+    }
+
+    // Track that this server has been registered with the current push token
+    const store = getStore()
+    const registrations = await resolveAtom(store.get(pushTokenRegistrationsAtom))
+    store.set(pushTokenRegistrationsAtom, { ...registrations, [serverId]: pushToken })
+
+    pushLogger.info(`Push token registered with server ${serverId}`)
+    return true
+  } catch (error) {
+    pushLogger.logError(`Failed to register push token with server ${serverId}`, error)
+    return false
+  }
+}
+
+/**
+ * Register the Expo push token with all connected Molt servers.
+ * Skips servers that are already registered with the current token.
+ */
+export async function registerPushTokenWithAllServers(): Promise<void> {
+  const store = getStore()
+  const notificationsEnabled = await resolveAtom(store.get(backgroundNotificationsEnabledAtom))
+  if (!notificationsEnabled) return
+
+  const pushToken = await getExpoPushToken()
+  if (!pushToken) return
+
+  const servers = await resolveAtom(store.get(serversAtom))
+  const registrations = await resolveAtom(store.get(pushTokenRegistrationsAtom))
+
+  for (const serverId of Object.keys(servers)) {
+    const server = servers[serverId]
+    if (server.providerType !== 'molt') continue
+
+    // Skip if already registered with the same token
+    if (registrations[serverId] === pushToken) continue
+
+    const authToken = await getServerToken(serverId)
+    if (!authToken) continue
+
+    await registerPushTokenWithServer(serverId, server.url, authToken, pushToken)
+  }
+}
+
+/**
+ * Clear cached push token and registrations. Called when the user
+ * disables notifications so the token is re-fetched on next enable.
+ */
+export async function clearPushTokenRegistrations(): Promise<void> {
+  const store = getStore()
+  store.set(expoPushTokenAtom, null)
+  store.set(pushTokenRegistrationsAtom, {})
 }

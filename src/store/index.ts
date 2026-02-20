@@ -81,7 +81,9 @@ export { favoritesAtom, triggersAtom } from './userDataAtoms'
 export {
   backgroundFetchIntervalAtom,
   backgroundNotificationsEnabledAtom,
+  expoPushTokenAtom,
   gatewayLastSeenTimestampAtom,
+  pushTokenRegistrationsAtom,
 } from './notificationAtoms'
 
 // ─── Mission atoms ──────────────────────────────────────

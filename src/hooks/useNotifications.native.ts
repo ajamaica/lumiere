@@ -4,8 +4,10 @@ import { useAtom } from 'jotai'
 import { useEffect, useRef } from 'react'
 
 import {
+  clearPushTokenRegistrations,
   configureNotificationHandler,
   registerBackgroundFetch,
+  registerPushTokenWithAllServers,
   requestNotificationPermissions,
   unregisterBackgroundFetch,
 } from '../services/notifications'
@@ -14,18 +16,21 @@ import {
   backgroundNotificationsEnabledAtom,
   currentServerIdAtom,
   currentSessionKeyAtom,
+  serversAtom,
 } from '../store'
 
 /**
  * Hook that manages the full notification lifecycle:
  * - Requests permissions when background notifications are enabled
  * - Registers/unregisters the background fetch task
+ * - Registers Expo push token with all Molt servers for real-time push
  * - Handles notification taps (navigates to the correct server/session)
  */
 export function useNotifications() {
   const router = useRouter()
   const [enabled] = useAtom(backgroundNotificationsEnabledAtom)
   const [interval] = useAtom(backgroundFetchIntervalAtom)
+  const [servers] = useAtom(serversAtom)
   const [, setCurrentServerId] = useAtom(currentServerIdAtom)
   const [, setCurrentSessionKey] = useAtom(currentSessionKeyAtom)
   const responseListener = useRef<Notifications.EventSubscription | null>(null)
@@ -51,11 +56,26 @@ export function useNotifications() {
         }
       })()
     } else {
-      unregisterBackgroundFetch().catch((error) => {
-        console.error('[useNotifications] Failed to unregister background task:', error)
-      })
+      ;(async () => {
+        try {
+          await unregisterBackgroundFetch()
+          await clearPushTokenRegistrations()
+        } catch (error) {
+          console.error('[useNotifications] Failed to unregister background task:', error)
+        }
+      })()
     }
   }, [enabled, interval])
+
+  // Register push token with all Molt servers when notifications are enabled
+  // or when the server list changes (e.g. new server added)
+  useEffect(() => {
+    if (!enabled) return
+
+    registerPushTokenWithAllServers().catch((err: unknown) => {
+      console.error('[useNotifications] Failed to register push token:', err)
+    })
+  }, [enabled, servers])
 
   // Handle notification taps — switch to the server/session from the notification
   useEffect(() => {
