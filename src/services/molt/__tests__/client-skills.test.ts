@@ -86,11 +86,12 @@ describe('MoltGatewayClient — skill methods', () => {
   describe('updateSkill', () => {
     it('calls request with SKILLS_UPDATE method and params', async () => {
       const params = {
-        name: 'summarize',
+        skillKey: 'summarize',
         description: 'Updated description',
         content: 'Updated instructions',
       }
       const mockSkill = {
+        name: 'summarize',
         ...params,
         createdAtMs: 1700000000,
         updatedAtMs: 1700000002,
@@ -105,7 +106,7 @@ describe('MoltGatewayClient — skill methods', () => {
 
     it('supports partial updates (description only)', async () => {
       const params = {
-        name: 'summarize',
+        skillKey: 'summarize',
         description: 'New description only',
       }
       requestSpy.mockResolvedValueOnce({
