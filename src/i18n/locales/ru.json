@@ -53,6 +53,7 @@
     "contribute": "Внести вклад",
     "skills": "Навыки",
     "gatewayLogs": "Журналы шлюза",
+    "mcpServers": "MCP серверы",
     "missions": "Миссии",
     "showToolEventsInChat": "Показывать события инструментов в чате",
     "agents": "Агенты",
@@ -580,6 +581,28 @@
       "groupPolicy": "Групповая политика",
       "historyLimit": "Лимит истории"
     }
+  },
+  "mcp": {
+    "title": "MCP серверы",
+    "servers": "Серверы",
+    "summary": "{{servers}} сервер(ов), {{tools}} инструмент(ов) доступно",
+    "noServers": "MCP серверы не настроены",
+    "addServer": "Добавить MCP сервер",
+    "serverName": "Имя сервера",
+    "serverNamePlaceholder": "Мой MCP сервер",
+    "serverUrl": "URL сервера",
+    "transport": "Транспорт",
+    "apiKey": "API ключ",
+    "apiKeyPlaceholder": "Опциональный Bearer-токен",
+    "add": "Добавить",
+    "connected": "Подключено",
+    "connecting": "Подключение...",
+    "disconnected": "Отключено",
+    "error": "Ошибка",
+    "toolCount": "{{count}} инструмент(ов)",
+    "removeTitle": "Удалить MCP сервер",
+    "removeMessage": "Вы уверены, что хотите удалить \"{{name}}\"?",
+    "errorNameUrlRequired": "Имя и URL обязательны."
   },
   "updates": {
     "title": "Доступно обновление",

@@ -1,3 +1,4 @@
+import { getMcpManager } from '../mcp'
 import { MoltGatewayClient } from '../molt/client'
 import { AgentEvent, ChatAttachmentPayload, ConnectionState } from '../molt/types'
 import {
@@ -134,9 +135,20 @@ export class MoltChatProvider implements ChatProvider {
       if (attachments.length === 0) attachments = undefined
     }
 
+    // Inject MCP tool manifest into the system message when MCP tools are
+    // available. The manifest tells the agent about available MCP servers and
+    // tools so it can call them directly via HTTP/web_fetch.
+    const mcpManager = getMcpManager()
+    const mcpManifest = mcpManager.generateToolManifest()
+    let systemMessage = params.systemMessage ?? ''
+    if (mcpManifest) {
+      const mcpContext = `[Available MCP Tools]\n${mcpManifest}`
+      systemMessage = systemMessage ? `${systemMessage}\n\n${mcpContext}` : mcpContext
+    }
+
     // Prepend system message as context for Molt gateway
-    const message = params.systemMessage
-      ? `[System: ${params.systemMessage}]\n\n${params.message}`
+    const message = systemMessage
+      ? `[System: ${systemMessage}]\n\n${params.message}`
       : params.message
 
     // Subscribe to agent events for streaming before sending.

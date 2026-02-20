@@ -66,6 +66,9 @@ const TOOL_ICONS: Record<string, string> = {
   search: 'search-outline',
 }
 
+/** Icon for MCP tools (matched by `mcp_` prefix). */
+const MCP_TOOL_ICON = 'extension-puzzle-outline'
+
 const DEFAULT_ICON = 'build-outline'
 
 /** Keys to look for in toolInput to display as a detail subtitle, in priority order per tool. */
@@ -138,7 +141,9 @@ export function ToolEventBubble({ message }: ToolEventBubbleProps) {
   const setCanvasVisible = useSetAtom(canvasVisibleAtom)
   const [expanded, setExpanded] = useState(false)
 
-  const iconName = TOOL_ICONS[message.toolName] ?? DEFAULT_ICON
+  const iconName =
+    TOOL_ICONS[message.toolName] ??
+    (message.toolName.startsWith('mcp_') ? MCP_TOOL_ICON : DEFAULT_ICON)
   const detail = getToolDetail(message.toolName, message.toolInput)
 
   const isRunning = message.status === 'running'

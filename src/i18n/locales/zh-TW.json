@@ -53,6 +53,7 @@
     "contribute": "貢獻",
     "skills": "技能",
     "gatewayLogs": "閘道日誌",
+    "mcpServers": "MCP 伺服器",
     "missions": "任務",
     "showToolEventsInChat": "在聊天中顯示工具事件",
     "agents": "代理",
@@ -580,6 +581,28 @@
       "groupPolicy": "群組政策",
       "historyLimit": "歷史紀錄限制"
     }
+  },
+  "mcp": {
+    "title": "MCP 伺服器",
+    "servers": "伺服器",
+    "summary": "{{servers}} 個伺服器，{{tools}} 個工具可用",
+    "noServers": "未設定 MCP 伺服器",
+    "addServer": "新增 MCP 伺服器",
+    "serverName": "伺服器名稱",
+    "serverNamePlaceholder": "我的 MCP 伺服器",
+    "serverUrl": "伺服器 URL",
+    "transport": "傳輸協定",
+    "apiKey": "API 金鑰",
+    "apiKeyPlaceholder": "選填的 Bearer 權杖",
+    "add": "新增",
+    "connected": "已連線",
+    "connecting": "連線中...",
+    "disconnected": "已斷線",
+    "error": "錯誤",
+    "toolCount": "{{count}} 個工具",
+    "removeTitle": "移除 MCP 伺服器",
+    "removeMessage": "確定要移除 \"{{name}}\" 嗎？",
+    "errorNameUrlRequired": "名稱和 URL 為必填欄位。"
   },
   "updates": {
     "title": "有可用更新",

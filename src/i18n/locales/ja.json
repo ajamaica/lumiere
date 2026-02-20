@@ -53,6 +53,7 @@
     "contribute": "コントリビュート",
     "skills": "スキル",
     "gatewayLogs": "ゲートウェイログ",
+    "mcpServers": "MCPサーバー",
     "missions": "ミッション",
     "showToolEventsInChat": "チャットにツールイベントを表示",
     "agents": "エージェント",
@@ -580,6 +581,28 @@
       "groupPolicy": "グループポリシー",
       "historyLimit": "履歴制限"
     }
+  },
+  "mcp": {
+    "title": "MCPサーバー",
+    "servers": "サーバー",
+    "summary": "{{servers}}個のサーバー、{{tools}}個のツールが利用可能",
+    "noServers": "MCPサーバーが設定されていません",
+    "addServer": "MCPサーバーを追加",
+    "serverName": "サーバー名",
+    "serverNamePlaceholder": "マイMCPサーバー",
+    "serverUrl": "サーバーURL",
+    "transport": "トランスポート",
+    "apiKey": "APIキー",
+    "apiKeyPlaceholder": "オプションのBearerトークン",
+    "add": "追加",
+    "connected": "接続済み",
+    "connecting": "接続中...",
+    "disconnected": "切断",
+    "error": "エラー",
+    "toolCount": "{{count}}個のツール",
+    "removeTitle": "MCPサーバーを削除",
+    "removeMessage": "\"{{name}}\"を削除してもよろしいですか？",
+    "errorNameUrlRequired": "名前とURLは必須です。"
   },
   "updates": {
     "title": "アップデートがあります",

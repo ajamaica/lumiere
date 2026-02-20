@@ -53,6 +53,7 @@
     "contribute": "Contribuer",
     "skills": "Compétences",
     "gatewayLogs": "Journaux du Gateway",
+    "mcpServers": "Serveurs MCP",
     "missions": "Missions",
     "showToolEventsInChat": "Afficher les événements d'outils dans le chat",
     "agents": "Agents",
@@ -580,6 +581,28 @@
       "groupPolicy": "Politique de Groupe",
       "historyLimit": "Limite d'Historique"
     }
+  },
+  "mcp": {
+    "title": "Serveurs MCP",
+    "servers": "Serveurs",
+    "summary": "{{servers}} serveur(s), {{tools}} outil(s) disponible(s)",
+    "noServers": "Aucun serveur MCP configuré",
+    "addServer": "Ajouter un serveur MCP",
+    "serverName": "Nom du serveur",
+    "serverNamePlaceholder": "Mon serveur MCP",
+    "serverUrl": "URL du serveur",
+    "transport": "Transport",
+    "apiKey": "Clé API",
+    "apiKeyPlaceholder": "Jeton porteur optionnel",
+    "add": "Ajouter",
+    "connected": "Connecté",
+    "connecting": "Connexion...",
+    "disconnected": "Déconnecté",
+    "error": "Erreur",
+    "toolCount": "{{count}} outil(s)",
+    "removeTitle": "Supprimer le serveur MCP",
+    "removeMessage": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ?",
+    "errorNameUrlRequired": "Le nom et l'URL sont obligatoires."
   },
   "updates": {
     "title": "Mise à jour disponible",

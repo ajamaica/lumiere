@@ -254,6 +254,11 @@ export default function SettingsScreen() {
               onPress={() => router.push('/missions')}
             />
             <SettingRow
+              icon="extension-puzzle-outline"
+              label={t('settings.mcpServers')}
+              onPress={() => router.push('/mcp-servers')}
+            />
+            <SettingRow
               icon="document-text-outline"
               label={t('settings.gatewayLogs')}
               onPress={() => router.push('/gateway-logs')}

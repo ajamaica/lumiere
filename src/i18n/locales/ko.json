@@ -53,6 +53,7 @@
     "contribute": "기여하기",
     "skills": "스킬",
     "gatewayLogs": "게이트웨이 로그",
+    "mcpServers": "MCP 서버",
     "missions": "미션",
     "showToolEventsInChat": "채팅에서 도구 이벤트 표시",
     "agents": "에이전트",
@@ -580,6 +581,28 @@
       "groupPolicy": "그룹 정책",
       "historyLimit": "기록 제한"
     }
+  },
+  "mcp": {
+    "title": "MCP 서버",
+    "servers": "서버",
+    "summary": "{{servers}}개 서버, {{tools}}개 도구 사용 가능",
+    "noServers": "구성된 MCP 서버가 없습니다",
+    "addServer": "MCP 서버 추가",
+    "serverName": "서버 이름",
+    "serverNamePlaceholder": "내 MCP 서버",
+    "serverUrl": "서버 URL",
+    "transport": "전송 방식",
+    "apiKey": "API 키",
+    "apiKeyPlaceholder": "선택적 Bearer 토큰",
+    "add": "추가",
+    "connected": "연결됨",
+    "connecting": "연결 중...",
+    "disconnected": "연결 해제됨",
+    "error": "오류",
+    "toolCount": "{{count}}개 도구",
+    "removeTitle": "MCP 서버 제거",
+    "removeMessage": "\"{{name}}\"을(를) 제거하시겠습니까?",
+    "errorNameUrlRequired": "이름과 URL은 필수입니다."
   },
   "updates": {
     "title": "업데이트 가능",
