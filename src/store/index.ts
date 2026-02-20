@@ -101,6 +101,14 @@ export {
   canvasVisibleAtom,
 } from './canvasAtoms'
 
+// ─── MCP atoms ──────────────────────────────────────────
+export {
+  mcpConnectionErrorsAtom,
+  mcpConnectionStatesAtom,
+  mcpServersAtom,
+  mcpServerToolsAtom,
+} from './mcpAtoms'
+
 // ─── ThinkLumiere atoms ─────────────────────────────────
 export {
   instanceAtom,

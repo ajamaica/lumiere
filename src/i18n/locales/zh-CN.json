@@ -53,6 +53,7 @@
     "contribute": "贡献",
     "skills": "技能",
     "gatewayLogs": "网关日志",
+    "mcpServers": "MCP 服务器",
     "missions": "任务",
     "showToolEventsInChat": "在聊天中显示工具事件",
     "agents": "代理",
@@ -567,6 +568,28 @@
       "groupPolicy": "群组策略",
       "historyLimit": "历史记录限制"
     }
+  },
+  "mcp": {
+    "title": "MCP 服务器",
+    "servers": "服务器",
+    "summary": "{{servers}} 个服务器，{{tools}} 个工具可用",
+    "noServers": "未配置 MCP 服务器",
+    "addServer": "添加 MCP 服务器",
+    "serverName": "服务器名称",
+    "serverNamePlaceholder": "我的 MCP 服务器",
+    "serverUrl": "服务器 URL",
+    "transport": "传输协议",
+    "apiKey": "API 密钥",
+    "apiKeyPlaceholder": "可选的 Bearer 令牌",
+    "add": "添加",
+    "connected": "已连接",
+    "connecting": "连接中...",
+    "disconnected": "已断开",
+    "error": "错误",
+    "toolCount": "{{count}} 个工具",
+    "removeTitle": "移除 MCP 服务器",
+    "removeMessage": "确定要移除 \"{{name}}\" 吗？",
+    "errorNameUrlRequired": "名称和 URL 为必填项。"
   },
   "updates": {
     "title": "有可用更新",

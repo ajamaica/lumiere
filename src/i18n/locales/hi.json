@@ -53,6 +53,7 @@
     "contribute": "योगदान करें",
     "skills": "कौशल",
     "gatewayLogs": "गेटवे लॉग",
+    "mcpServers": "MCP सर्वर",
     "missions": "मिशन",
     "showToolEventsInChat": "चैट में टूल इवेंट दिखाएं",
     "agents": "एजेंट",
@@ -567,6 +568,28 @@
       "groupPolicy": "समूह नीति",
       "historyLimit": "इतिहास सीमा"
     }
+  },
+  "mcp": {
+    "title": "MCP सर्वर",
+    "servers": "सर्वर",
+    "summary": "{{servers}} सर्वर, {{tools}} टूल उपलब्ध",
+    "noServers": "कोई MCP सर्वर कॉन्फ़िगर नहीं है",
+    "addServer": "MCP सर्वर जोड़ें",
+    "serverName": "सर्वर का नाम",
+    "serverNamePlaceholder": "मेरा MCP सर्वर",
+    "serverUrl": "सर्वर URL",
+    "transport": "ट्रांसपोर्ट",
+    "apiKey": "API कुंजी",
+    "apiKeyPlaceholder": "वैकल्पिक बेयरर टोकन",
+    "add": "जोड़ें",
+    "connected": "कनेक्टेड",
+    "connecting": "कनेक्ट हो रहा है...",
+    "disconnected": "डिस्कनेक्टेड",
+    "error": "त्रुटि",
+    "toolCount": "{{count}} टूल",
+    "removeTitle": "MCP सर्वर हटाएं",
+    "removeMessage": "क्या आप \"{{name}}\" को हटाना चाहते हैं?",
+    "errorNameUrlRequired": "नाम और URL आवश्यक हैं।"
   },
   "updates": {
     "title": "अपडेट उपलब्ध",

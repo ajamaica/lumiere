@@ -53,6 +53,7 @@
     "restoreServers": "Restore Servers",
     "contribute": "Contribute",
     "gatewayLogs": "Gateway Logs",
+    "mcpServers": "MCP Servers",
     "missions": "Missions",
     "showToolEventsInChat": "Show Tool Events in Chat",
     "agents": "Agents",
@@ -567,6 +568,28 @@
       "groupPolicy": "Group Policy",
       "historyLimit": "History Limit"
     }
+  },
+  "mcp": {
+    "title": "MCP Servers",
+    "servers": "Servers",
+    "summary": "{{servers}} server(s), {{tools}} tool(s) available",
+    "noServers": "No MCP servers configured",
+    "addServer": "Add MCP Server",
+    "serverName": "Server Name",
+    "serverNamePlaceholder": "My MCP Server",
+    "serverUrl": "Server URL",
+    "transport": "Transport",
+    "apiKey": "API Key",
+    "apiKeyPlaceholder": "Optional bearer token",
+    "add": "Add",
+    "connected": "Connected",
+    "connecting": "Connecting...",
+    "disconnected": "Disconnected",
+    "error": "Error",
+    "toolCount": "{{count}} tool(s)",
+    "removeTitle": "Remove MCP Server",
+    "removeMessage": "Are you sure you want to remove \"{{name}}\"?",
+    "errorNameUrlRequired": "Name and URL are required."
   },
   "updates": {
     "title": "Update Available",

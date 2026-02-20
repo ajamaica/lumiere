@@ -1,3 +1,5 @@
+import type { McpToolResult } from '../mcp'
+import { getMcpManager } from '../mcp'
 import { MoltGatewayClient } from '../molt/client'
 import { AgentEvent, ChatAttachmentPayload, ConnectionState } from '../molt/types'
 import {
@@ -121,10 +123,23 @@ export class MoltChatProvider implements ChatProvider {
       if (attachments.length === 0) attachments = undefined
     }
 
+    // Inject MCP tool manifest into the system message when MCP tools are
+    // available. This makes the Molt agent aware of external MCP tools.
+    const mcpManager = getMcpManager()
+    const mcpManifest = mcpManager.generateToolManifest()
+    let systemMessage = params.systemMessage ?? ''
+    if (mcpManifest) {
+      const mcpContext = `[Available MCP Tools]\n${mcpManifest}`
+      systemMessage = systemMessage ? `${systemMessage}\n\n${mcpContext}` : mcpContext
+    }
+
     // Prepend system message as context for Molt gateway
-    const message = params.systemMessage
-      ? `[System: ${params.systemMessage}]\n\n${params.message}`
+    const message = systemMessage
+      ? `[System: ${systemMessage}]\n\n${params.message}`
       : params.message
+
+    // Track pending MCP tool calls for client-side execution
+    const pendingMcpCalls = new Map<string, { toolName: string; input: Record<string, unknown> }>()
 
     // Subscribe to agent events for streaming before sending.
     // Filter by sessionKey so that events from other sessions are ignored.
@@ -137,13 +152,26 @@ export class MoltChatProvider implements ChatProvider {
         onEvent({ type: 'lifecycle', phase: event.data.phase })
         if (event.data.phase === 'end') {
           unsubscribe()
+          // Execute any pending MCP tool calls after the agent run completes
+          this.executePendingMcpCalls(pendingMcpCalls, params.sessionKey, onEvent)
         }
       } else if (event.stream === 'tool' || event.stream === 'subagent') {
         if (event.data.toolName) {
+          const toolName = event.data.toolName
+          const toolCallId = event.data.toolCallId ?? ''
+
+          // Check if this is an MCP tool call starting
+          if (mcpManager.isMcpTool(toolName) && event.data.toolStatus === 'running' && toolCallId) {
+            pendingMcpCalls.set(toolCallId, {
+              toolName,
+              input: event.data.toolInput ?? {},
+            })
+          }
+
           onEvent({
             type: 'tool_event',
-            toolName: event.data.toolName,
-            toolCallId: event.data.toolCallId,
+            toolName,
+            toolCallId,
             toolInput: event.data.toolInput,
             toolStatus: event.data.toolStatus,
           })
@@ -159,6 +187,75 @@ export class MoltChatProvider implements ChatProvider {
       unsubscribe()
       throw err
     }
+  }
+
+  /**
+   * Execute pending MCP tool calls client-side and send results back
+   * to the Molt gateway as follow-up messages.
+   */
+  private async executePendingMcpCalls(
+    pendingCalls: Map<string, { toolName: string; input: Record<string, unknown> }>,
+    sessionKey: string,
+    onEvent: (event: ChatProviderEvent) => void,
+  ): Promise<void> {
+    if (pendingCalls.size === 0) return
+
+    const mcpManager = getMcpManager()
+
+    for (const [toolCallId, { toolName, input }] of pendingCalls) {
+      try {
+        // Emit a running event for the client-side execution
+        onEvent({
+          type: 'tool_event',
+          toolName: `${toolName} (executing)`,
+          toolCallId: `${toolCallId}-exec`,
+          toolInput: input,
+          toolStatus: 'running',
+        })
+
+        const result: McpToolResult = await mcpManager.callTool(toolName, input)
+
+        // Format the result as text
+        const resultText = formatMcpResult(result)
+
+        // Emit completion event
+        onEvent({
+          type: 'tool_event',
+          toolName: `${toolName} (executing)`,
+          toolCallId: `${toolCallId}-exec`,
+          toolInput: input,
+          toolStatus: result.isError ? 'error' : 'completed',
+        })
+
+        // Send the MCP tool result back as a follow-up message
+        await this.client.chatSend(
+          sessionKey,
+          `[MCP Tool Result for ${toolName} (call ${toolCallId})]:\n${resultText}`,
+        )
+      } catch (err) {
+        const errorMsg = err instanceof Error ? err.message : String(err)
+
+        onEvent({
+          type: 'tool_event',
+          toolName: `${toolName} (executing)`,
+          toolCallId: `${toolCallId}-exec`,
+          toolInput: input,
+          toolStatus: 'error',
+        })
+
+        // Send error result back so the agent knows the tool failed
+        await this.client
+          .chatSend(
+            sessionKey,
+            `[MCP Tool Error for ${toolName} (call ${toolCallId})]: ${errorMsg}`,
+          )
+          .catch(() => {
+            // Ignore send errors for error reporting
+          })
+      }
+    }
+
+    pendingCalls.clear()
   }
 
   async getChatHistory(sessionKey: string, limit?: number): Promise<ChatHistoryResponse> {
@@ -184,4 +281,17 @@ export class MoltChatProvider implements ChatProvider {
   getMoltClient(): MoltGatewayClient {
     return this.client
   }
+}
+
+/** Format an MCP tool result into a human-readable string for the agent. */
+function formatMcpResult(result: McpToolResult): string {
+  return result.content
+    .map((item) => {
+      if (item.type === 'text' && item.text) return item.text
+      if (item.type === 'image') return '[image data]'
+      if (item.type === 'resource') return item.text ?? '[resource]'
+      return ''
+    })
+    .filter(Boolean)
+    .join('\n')
 }
