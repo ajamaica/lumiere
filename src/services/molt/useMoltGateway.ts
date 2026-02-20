@@ -73,6 +73,8 @@ export interface UseMoltGatewayResult {
   listSkills: () => Promise<SkillsListResponse>
   removeSkill: (name: string) => Promise<unknown>
   updateSkill: (params: UpdateSkillParams) => Promise<Skill>
+  enableSkill: (name: string) => Promise<Skill>
+  disableSkill: (name: string) => Promise<Skill>
   getLogs: (params?: GatewayLogsParams) => Promise<GatewayLogsResponse>
   spawnSubagent: (params: SessionsSpawnParams) => Promise<SessionsSpawnResponse>
   listSubagents: (sessionKey?: string) => Promise<SubagentsListResponse>
@@ -258,6 +260,8 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       listSkills: () => requireClient(client).listSkills(),
       removeSkill: (name: string) => requireClient(client).removeSkill(name),
       updateSkill: (params: UpdateSkillParams) => requireClient(client).updateSkill(params),
+      enableSkill: (name: string) => requireClient(client).enableSkill(name),
+      disableSkill: (name: string) => requireClient(client).disableSkill(name),
       getLogs: (params?: GatewayLogsParams) => requireClient(client).getLogs(params),
       spawnSubagent: (params: SessionsSpawnParams) => requireClient(client).spawnSubagent(params),
       listSubagents: (sessionKey?: string) => requireClient(client).listSubagents(sessionKey),

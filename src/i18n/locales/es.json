@@ -284,7 +284,10 @@
       "enabled": "Activo",
       "disabled": "Inactivo",
       "bundled": "Incluido",
-      "refresh": "Actualizar"
+      "refresh": "Actualizar",
+      "enable": "Habilitar",
+      "disable": "Deshabilitar",
+      "toggleError": "Error al cambiar el estado del skill."
     },
     "clawHub": {
       "title": "ClawHub",

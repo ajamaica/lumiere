@@ -284,7 +284,10 @@
       "enabled": "활성",
       "disabled": "비활성",
       "bundled": "기본 제공",
-      "refresh": "새로고침"
+      "refresh": "새로고침",
+      "enable": "활성화",
+      "disable": "비활성화",
+      "toggleError": "스킬 상태 변경에 실패했습니다."
     },
     "clawHub": {
       "title": "ClawHub",

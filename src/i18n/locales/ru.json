@@ -284,7 +284,10 @@
       "enabled": "Включён",
       "disabled": "Отключён",
       "bundled": "Встроенный",
-      "refresh": "Обновить"
+      "refresh": "Обновить",
+      "enable": "Включить",
+      "disable": "Отключить",
+      "toggleError": "Не удалось переключить навык."
     },
     "clawHub": {
       "title": "ClawHub",

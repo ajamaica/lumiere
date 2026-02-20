@@ -284,7 +284,10 @@
       "enabled": "有効",
       "disabled": "無効",
       "bundled": "組み込み",
-      "refresh": "更新"
+      "refresh": "更新",
+      "enable": "有効にする",
+      "disable": "無効にする",
+      "toggleError": "スキルの切り替えに失敗しました。"
     },
     "clawHub": {
       "title": "ClawHub",

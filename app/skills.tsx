@@ -56,10 +56,13 @@ export default function SkillsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connect, connected, sendAgentRequest, getSkillsStatus } = useMoltGateway({
-    url: config?.url || '',
-    token: config?.token || '',
-  })
+  const [togglingSkill, setTogglingSkill] = useState<string | null>(null)
+
+  const { connect, connected, sendAgentRequest, getSkillsStatus, enableSkill, disableSkill } =
+    useMoltGateway({
+      url: config?.url || '',
+      token: config?.token || '',
+    })
 
   useEffect(() => {
     if (config) {
@@ -86,6 +89,27 @@ export default function SkillsScreen() {
       fetchInstalledSkills()
     }
   }, [connected, installedLoaded, fetchInstalledSkills])
+
+  const handleToggleSkill = useCallback(
+    async (skill: InstalledSkill) => {
+      const name = skill.key ?? skill.name
+      setTogglingSkill(name)
+      try {
+        if (skill.enabled) {
+          await disableSkill(name)
+        } else {
+          await enableSkill(name)
+        }
+        await fetchInstalledSkills()
+      } catch (err) {
+        skillsLogger.logError('Failed to toggle skill', err)
+        Alert.alert(t('common.error'), t('skills.installed.toggleError'))
+      } finally {
+        setTogglingSkill(null)
+      }
+    },
+    [disableSkill, enableSkill, fetchInstalledSkills, t],
+  )
 
   const handleClawHubSearch = async () => {
     if (!clawHubQuery.trim()) return
@@ -360,6 +384,20 @@ export default function SkillsScreen() {
                     ))}
                   </View>
                 )}
+                <Button
+                  title={
+                    togglingSkill === (skill.key ?? skill.name)
+                      ? t('common.loading')
+                      : skill.enabled
+                        ? t('skills.installed.disable')
+                        : t('skills.installed.enable')
+                  }
+                  variant={skill.enabled ? 'secondary' : 'primary'}
+                  size="sm"
+                  onPress={() => handleToggleSkill(skill)}
+                  disabled={togglingSkill === (skill.key ?? skill.name)}
+                  style={{ marginTop: theme.spacing.md, alignSelf: 'flex-start' }}
+                />
               </Card>
             ))}
 
