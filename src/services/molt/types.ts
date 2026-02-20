@@ -270,7 +270,7 @@ export interface TeachSkillParams {
 }
 
 export interface UpdateSkillParams {
-  name: string
+  skillKey: string
   description?: string
   content?: string
   enabled?: boolean

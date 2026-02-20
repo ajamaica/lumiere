@@ -92,15 +92,21 @@ export default function SkillsScreen() {
 
   const handleToggleSkill = useCallback(
     async (skill: InstalledSkill) => {
-      const name = skill.key ?? skill.name
-      setTogglingSkill(name)
+      const skillKey = skill.key ?? skill.name
+      const newEnabled = !skill.enabled
+      setTogglingSkill(skillKey)
       try {
         if (skill.enabled) {
-          await disableSkill(name)
+          await disableSkill(skillKey)
         } else {
-          await enableSkill(name)
+          await enableSkill(skillKey)
         }
-        await fetchInstalledSkills()
+        // Optimistically update the UI immediately
+        setInstalledSkills((prev) =>
+          prev.map((s) =>
+            (s.key ?? s.name) === skillKey ? { ...s, enabled: newEnabled } : s,
+          ),
+        )
       } catch (err) {
         skillsLogger.logError('Failed to toggle skill', err)
         Alert.alert(t('common.error'), t('skills.installed.toggleError'))
@@ -108,7 +114,7 @@ export default function SkillsScreen() {
         setTogglingSkill(null)
       }
     },
-    [disableSkill, enableSkill, fetchInstalledSkills, t],
+    [disableSkill, enableSkill, t],
   )
 
   const handleClawHubSearch = async () => {

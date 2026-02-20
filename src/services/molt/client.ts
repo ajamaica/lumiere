@@ -390,12 +390,12 @@ export class MoltGatewayClient {
     return this.request<Skill>(GatewayMethods.SKILLS_UPDATE, params)
   }
 
-  async enableSkill(name: string): Promise<Skill> {
-    return this.request<Skill>(GatewayMethods.SKILLS_UPDATE, { name, enabled: true })
+  async enableSkill(skillKey: string): Promise<Skill> {
+    return this.request<Skill>(GatewayMethods.SKILLS_UPDATE, { skillKey, enabled: true })
   }
 
-  async disableSkill(name: string): Promise<Skill> {
-    return this.request<Skill>(GatewayMethods.SKILLS_UPDATE, { name, enabled: false })
+  async disableSkill(skillKey: string): Promise<Skill> {
+    return this.request<Skill>(GatewayMethods.SKILLS_UPDATE, { skillKey, enabled: false })
   }
 
   async getLogs(params?: GatewayLogsParams): Promise<GatewayLogsResponse> {
