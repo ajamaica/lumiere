@@ -1,22 +1,6 @@
-Lumiere is a unified AI chat client that brings all your favorite AI models together in one app. Connect to Claude, ChatGPT, Gemini, Ollama, and more — all from a single, beautifully designed interface. With OpenClaw protocol support, unlock advanced AI orchestration including skills, missions, and scheduled automation.
+Lumiere is an AI orchestration client powered by the OpenClaw protocol. Manage skills, run missions, schedule tasks, and spawn sub-agents — all from a beautifully designed interface. Also connects to Claude, ChatGPT, Gemini, Ollama, and other popular AI providers.
 
-CONNECT TO ANY AI
-• Chat with Claude, ChatGPT, Google Gemini, OpenRouter, Ollama, and other providers
-• Use on-device AI with Apple Intelligence (iOS 18+)
-• Switch between models and servers instantly
-• Configure multiple agents with custom identities, models, and workspaces
-• Manage multiple AI backends with easy server configuration
-
-POWERFUL CHAT EXPERIENCE
-• Real-time streaming responses with rich markdown rendering
-• Voice input with native speech recognition
-• Image and file attachments for multimodal conversations
-• Built-in tools: web search, web fetch, and code execution
-• 38+ slash commands for power users
-• Message favoriting to save important responses
-• Multi-session support with custom aliases
-
-OPENCLAW PROTOCOL
+OPENCLAW PROTOCOL — YOUR AI COMMAND CENTER
 • Skills marketplace — browse, install, and manage AI skills from ClawHub
 • Teach custom skills to your AI with code and natural language
 • Mission control — plan and execute complex multi-step tasks with AI-driven subtask decomposition
@@ -25,6 +9,24 @@ OPENCLAW PROTOCOL
 • Cron scheduler — create, manage, and monitor recurring automated jobs
 • Gateway monitoring — real-time logs, health status, and server configuration
 • MCP server integration — extend AI capabilities with Model Context Protocol tools
+
+INTELLIGENT AGENTS
+• Configure multiple agents with custom identities, models, and workspaces
+• Built-in tools: web search, web fetch, and code execution
+• Real-time streaming responses with rich markdown rendering
+• Multi-session support with custom aliases
+
+POWERFUL CHAT EXPERIENCE
+• Voice input with native speech recognition
+• Image and file attachments for multimodal conversations
+• 38+ slash commands for power users
+• Message favoriting to save important responses
+
+WORKS WITH YOUR FAVORITE AI
+• Connects to Claude, ChatGPT, Google Gemini, OpenRouter, Ollama, Kimi, and more
+• Use on-device AI with Apple Intelligence (iOS 18+)
+• Switch between models and servers instantly
+• Manage multiple AI backends with easy server configuration
 
 AUTOMATE YOUR WORKFLOW
 • Create triggers with deep links for one-tap prompts
@@ -49,4 +51,4 @@ BUILT FOR IPAD
 • Form sheet modals for natural multitasking
 • Full landscape and portrait support
 
-Whether you're a developer orchestrating AI agents, a power user automating complex workflows, or anyone who wants unified access to the best AI models — Lumiere puts it all in your pocket.
+Whether you're orchestrating AI agents with OpenClaw, automating complex workflows, or chatting with your favorite AI — Lumiere puts it all in your pocket.

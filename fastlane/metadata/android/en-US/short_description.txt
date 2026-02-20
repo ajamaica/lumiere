@@ -1,1 +1,1 @@
-Chat with Claude, ChatGPT, Gemini & more. AI skills, missions, and automation in one app.
+AI orchestration with OpenClaw. Skills, missions, sub-agents & cron in one app.

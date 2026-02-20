@@ -1,1 +1,1 @@
-Chatea con Claude, ChatGPT, Gemini y mas. Skills, misiones y automatizacion en una app.
+Orquestacion IA con OpenClaw. Skills, misiones, sub-agentes y cron en una app.

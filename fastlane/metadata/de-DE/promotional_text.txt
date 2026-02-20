@@ -1,1 +1,1 @@
-Eine App für alle Ihre KI-Modelle. Chatten Sie mit Claude, ChatGPT, Gemini und mehr. Skills, Missionen und geplante Automatisierung mit OpenClaw-Protokoll.
+KI-Orchestrierung mit OpenClaw. Skills-Marktplatz, Missionskontrolle, Cron-Planung, Sub-Agenten und Canvas. Verbindet sich auch mit ChatGPT, Claude und Gemini.

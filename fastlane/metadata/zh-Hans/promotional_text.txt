@@ -1,1 +1,1 @@
-一个应用，畅聊所有 AI 模型。与 Claude、ChatGPT、Gemini 等自由对话。通过 OpenClaw 协议解锁技能、任务和定时自动化。
+基于 OpenClaw 协议的 AI 编排客户端。技能市场、任务控制、Cron 调度、子智能体与交互式画布。同时连接 ChatGPT、Claude 和 Gemini。

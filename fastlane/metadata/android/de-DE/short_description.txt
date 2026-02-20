@@ -1,1 +1,1 @@
-Chatten Sie mit Claude, ChatGPT, Gemini & mehr. KI-Skills, Missionen und Automatisierung.
+KI-Orchestrierung mit OpenClaw. Skills, Missionen, Sub-Agenten & Cron.

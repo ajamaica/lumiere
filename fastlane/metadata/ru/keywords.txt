@@ -1,1 +1,1 @@
-ИИ,чат,ChatGPT,Claude,Gemini,Ollama,LLM,навыки,OpenClaw,агенты,миссии,автоматизация
+OpenClaw,ИИ,навыки,агенты,миссии,автоматизация,чат,ChatGPT,Claude,Gemini,LLM

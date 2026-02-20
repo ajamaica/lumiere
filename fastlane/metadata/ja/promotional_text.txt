@@ -1,1 +1,1 @@
-すべてのAIモデルをひとつのアプリで。Claude、ChatGPT、Geminiなどと対話。OpenClawプロトコルでスキル、ミッション、定期自動化を実現。
+OpenClawプロトコルによるAIオーケストレーション。スキルマーケットプレイス、ミッションコントロール、cronスケジューリング、サブエージェント、キャンバス。ChatGPT、Claude、Geminiにも接続。

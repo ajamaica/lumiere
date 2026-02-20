@@ -1,1 +1,1 @@
-Um app para todos os seus modelos de IA. Converse com Claude, ChatGPT, Gemini e mais. Desbloqueie skills, missões e automação agendada com o protocolo OpenClaw.
+Orquestração de IA com OpenClaw. Marketplace de skills, controle de missões, agendamento cron, sub-agentes e canvas. Também conecta ao ChatGPT, Claude e Gemini.

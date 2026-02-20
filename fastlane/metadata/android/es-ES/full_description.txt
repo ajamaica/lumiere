@@ -1,22 +1,6 @@
-Lumiere es un cliente de chat de IA unificado que reune todos tus modelos de inteligencia artificial favoritos en una sola aplicacion. Conectate a Claude, ChatGPT, Gemini, Ollama y mas, todo desde una interfaz elegante y cuidadosamente disenada. Con soporte del protocolo OpenClaw, desbloquea la orquestacion avanzada de IA con skills, misiones y automatizacion programada.
+Lumiere es un cliente de orquestacion de IA impulsado por el protocolo OpenClaw. Gestiona skills, ejecuta misiones, programa tareas y lanza sub-agentes, todo desde una interfaz cuidadosamente disenada. Tambien conecta con Claude, ChatGPT, Gemini, Ollama y otros proveedores de IA populares.
 
-<b>Conectate a cualquier IA</b>
-- Chatea con Claude, ChatGPT, Google Gemini, OpenRouter, Ollama y otros proveedores
-- Usa IA en el dispositivo con Gemini Nano para total privacidad
-- Cambia entre modelos y servidores al instante
-- Configura multiples agentes con identidades, modelos y espacios de trabajo personalizados
-- Gestiona multiples backends de IA con una configuracion de servidores sencilla
-
-<b>Experiencia de chat potente</b>
-- Respuestas en tiempo real con streaming y renderizado de markdown enriquecido
-- Entrada por voz con reconocimiento de habla
-- Adjuntos de imagenes y archivos para conversaciones multimodales
-- Herramientas integradas: busqueda web, captura web y ejecucion de codigo
-- Mas de 38 comandos rapidos para usuarios avanzados
-- Guarda mensajes importantes en favoritos
-- Soporte multisesion con alias personalizados
-
-<b>Protocolo OpenClaw</b>
+<b>Protocolo OpenClaw — Tu centro de mando de IA</b>
 - Marketplace de skills: explora, instala y gestiona skills de IA desde ClawHub
 - Ensena skills personalizados a tu IA con codigo y lenguaje natural
 - Control de misiones: planifica y ejecuta tareas complejas de multiples pasos con descomposicion de subtareas impulsada por IA
@@ -26,9 +10,27 @@ Lumiere es un cliente de chat de IA unificado que reune todos tus modelos de int
 - Monitoreo de gateway: registros en tiempo real, estado de salud y configuracion del servidor
 - Integracion con servidores MCP: amplia las capacidades de la IA con herramientas del Model Context Protocol
 
+<b>Agentes inteligentes</b>
+- Configura multiples agentes con identidades, modelos y espacios de trabajo personalizados
+- Herramientas integradas: busqueda web, captura web y ejecucion de codigo
+- Respuestas en tiempo real con streaming y renderizado de markdown enriquecido
+- Soporte multisesion con alias personalizados
+
+<b>Experiencia de chat potente</b>
+- Entrada por voz con reconocimiento de habla
+- Adjuntos de imagenes y archivos para conversaciones multimodales
+- Mas de 38 comandos rapidos para usuarios avanzados
+- Guarda mensajes importantes en favoritos
+
+<b>Compatible con tu IA favorita</b>
+- Conecta con Claude, ChatGPT, Google Gemini, OpenRouter, Ollama, Kimi y mas
+- Usa IA en el dispositivo con Gemini Nano para privacidad total
+- Cambia entre modelos y servidores al instante
+- Gestiona multiples backends de IA con una configuracion de servidores sencilla
+
 <b>Automatiza tu flujo de trabajo</b>
 - Crea triggers con deep links para prompts de un solo toque
-- Acciones rapidas en la pantalla de inicio para un acceso inmediato
+- Acciones rapidas en la pantalla de inicio
 - Programa tareas recurrentes con el programador cron integrado
 
 <b>Personaliza tu experiencia</b>
@@ -40,7 +42,7 @@ Lumiere es un cliente de chat de IA unificado que reune todos tus modelos de int
 - Autenticacion biometrica con huella dactilar
 - Almacenamiento cifrado de claves API mediante Android KeyStore
 - Identidad criptografica del dispositivo con autenticacion basada en nonce
-- Opciones de IA en el dispositivo para total privacidad
+- Opciones de IA en el dispositivo para privacidad total
 - Sin telemetria ni recopilacion remota de datos
 
-Ya seas desarrollador orquestando agentes de IA, un profesional automatizando flujos de trabajo complejos, o simplemente quieras acceso unificado a los mejores modelos, Lumiere lo pone todo en tu bolsillo.
+Ya sea que estes orquestando agentes de IA con OpenClaw, automatizando flujos de trabajo complejos o chateando con tu IA favorita, Lumiere lo pone todo en tu bolsillo.

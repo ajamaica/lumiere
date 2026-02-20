@@ -1,1 +1,1 @@
-AI,채팅,ChatGPT,Claude,Gemini,Ollama,LLM,스킬,OpenClaw,에이전트,미션,자동화
+OpenClaw,AI,스킬,에이전트,미션,자동화,채팅,ChatGPT,Claude,Gemini,LLM

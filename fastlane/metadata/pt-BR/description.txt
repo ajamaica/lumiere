@@ -1,22 +1,6 @@
-Lumiere é um cliente de chat de IA unificado que reúne todos os seus modelos de IA favoritos em um único app. Conecte-se ao Claude, ChatGPT, Gemini, Ollama e muito mais — tudo a partir de uma interface única e lindamente projetada. Com suporte ao protocolo OpenClaw, desbloqueie orquestração avançada de IA incluindo skills, missões e automação agendada.
+Lumiere é um cliente de orquestração de IA alimentado pelo protocolo OpenClaw. Gerencie skills, execute missões, agende tarefas e crie sub-agentes — tudo a partir de uma interface lindamente projetada. Também conecta ao Claude, ChatGPT, Gemini, Ollama e outros provedores populares de IA.
 
-CONECTE-SE A QUALQUER IA
-- Converse com Claude, ChatGPT, Google Gemini, OpenRouter, Ollama e outros provedores
-- Use IA no dispositivo com Apple Intelligence (iOS 18+)
-- Alterne entre modelos e servidores instantaneamente
-- Configure múltiplos agentes com identidades, modelos e espaços de trabalho personalizados
-- Gerencie múltiplos backends de IA com configuração fácil de servidores
-
-EXPERIÊNCIA DE CHAT PODEROSA
-- Respostas em tempo real com streaming e renderização rica de markdown
-- Entrada por voz com reconhecimento de fala nativo
-- Anexos de imagens e arquivos para conversas multimodais
-- Ferramentas integradas: busca na web, consulta web e execução de código
-- Mais de 38 comandos slash para usuários avançados
-- Salve respostas importantes nos favoritos
-- Suporte a múltiplas sessões com aliases personalizados
-
-PROTOCOLO OPENCLAW
+PROTOCOLO OPENCLAW — SEU CENTRO DE COMANDO IA
 - Marketplace de skills — navegue, instale e gerencie skills de IA do ClawHub
 - Ensine skills personalizadas à sua IA com código e linguagem natural
 - Controle de missões — planeje e execute tarefas complexas em múltiplas etapas com decomposição de subtarefas orientada por IA
@@ -26,9 +10,27 @@ PROTOCOLO OPENCLAW
 - Monitoramento de gateway — logs em tempo real, status de saúde e configuração do servidor
 - Integração com servidores MCP — expanda as capacidades da IA com ferramentas do Model Context Protocol
 
+AGENTES INTELIGENTES
+- Configure múltiplos agentes com identidades, modelos e espaços de trabalho personalizados
+- Ferramentas integradas: busca na web, consulta web e execução de código
+- Respostas em tempo real com streaming e renderização rica de markdown
+- Suporte a múltiplas sessões com aliases personalizados
+
+EXPERIÊNCIA DE CHAT PODEROSA
+- Entrada por voz com reconhecimento de fala nativo
+- Anexos de imagens e arquivos para conversas multimodais
+- Mais de 38 comandos slash para usuários avançados
+- Salve respostas importantes nos favoritos
+
+FUNCIONA COM SUA IA FAVORITA
+- Conecta ao Claude, ChatGPT, Google Gemini, OpenRouter, Ollama, Kimi e mais
+- Use IA no dispositivo com Apple Intelligence (iOS 18+)
+- Alterne entre modelos e servidores instantaneamente
+- Gerencie múltiplos backends de IA com configuração fácil de servidores
+
 AUTOMATIZE SEU FLUXO DE TRABALHO
 - Crie gatilhos com deep links para prompts com um toque
-- Ações rápidas na tela inicial para acesso rápido
+- Ações rápidas na tela inicial para acesso imediato
 - Integração com Atalhos da Apple para automação completa
 - Agende tarefas recorrentes com o agendador cron integrado
 
@@ -49,4 +51,4 @@ FEITO PARA iPad
 - Modais em formato de formulário para multitarefa natural
 - Suporte completo para paisagem e retrato
 
-Seja você um desenvolvedor orquestrando agentes de IA, um usuário avançado automatizando fluxos de trabalho complexos, ou qualquer pessoa que queira acesso unificado aos melhores modelos de IA — o Lumiere coloca tudo no seu bolso.
+Seja para orquestrar agentes de IA com OpenClaw, automatizar fluxos de trabalho complexos ou conversar com sua IA favorita — o Lumiere coloca tudo no seu bolso.

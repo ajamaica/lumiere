@@ -1,1 +1,1 @@
-Claude, ChatGPT, Gemini 등과 대화. AI 스킬, 미션, 자동화를 하나의 앱에서.
+OpenClaw로 AI 오케스트레이션. 스킬, 미션, 서브 에이전트 & 크론을 하나의 앱에서.
