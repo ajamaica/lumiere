@@ -88,6 +88,7 @@ export function useMessageQueue({
       accumulatedTextRef.current = ''
 
       let accumulatedText = ''
+      let completed = false
 
       // Convert MessageAttachments to the provider-agnostic format
       const providerAttachments = attachments?.length
@@ -105,7 +106,7 @@ export function useMessageQueue({
             systemMessage: systemMessage || undefined,
           },
           (event: ChatProviderEvent) => {
-            if (stoppedRef.current) return
+            if (stoppedRef.current || completed) return
             if (event.type === 'delta' && event.delta) {
               accumulatedText += event.delta
               accumulatedTextRef.current = accumulatedText
@@ -122,6 +123,7 @@ export function useMessageQueue({
                 })
               }
             } else if (event.type === 'lifecycle' && event.phase === 'end') {
+              completed = true
               const agentMessage: Message = {
                 id: generateId('msg'),
                 text: accumulatedText,
@@ -223,6 +225,22 @@ export function useMessageQueue({
             }
           },
         )
+
+        // When no lifecycle 'end' event was received (e.g. gateway-only slash
+        // commands like /help, /model, /status that don't trigger an agent run),
+        // manually complete so we reset isAgentResponding and reload history to
+        // pick up the server-side response.
+        if (!completed && !stoppedRef.current) {
+          completed = true
+          const agentMessage: Message = {
+            id: generateId('msg'),
+            text: accumulatedText,
+            sender: 'agent',
+            timestamp: new Date(),
+          }
+          onAgentMessageComplete(agentMessage)
+          setIsAgentResponding(false)
+        }
       } catch (err) {
         queueLogger.logError('Failed to send message', err)
         setIsAgentResponding(false)
