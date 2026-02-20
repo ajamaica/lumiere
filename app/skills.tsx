@@ -103,9 +103,7 @@ export default function SkillsScreen() {
         }
         // Optimistically update the UI immediately
         setInstalledSkills((prev) =>
-          prev.map((s) =>
-            (s.key ?? s.name) === skillKey ? { ...s, enabled: newEnabled } : s,
-          ),
+          prev.map((s) => ((s.key ?? s.name) === skillKey ? { ...s, enabled: newEnabled } : s)),
         )
       } catch (err) {
         skillsLogger.logError('Failed to toggle skill', err)
