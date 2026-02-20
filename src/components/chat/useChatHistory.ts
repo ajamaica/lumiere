@@ -168,13 +168,7 @@ export function useChatHistory({ providerConfig }: UseChatHistoryOptions) {
       }),
     onAgentMessageUpdate: (text) => setCurrentAgentMessage(text),
     onAgentMessageComplete: (message) => {
-      // Only append the message when it contains text. Gateway-only slash
-      // commands (e.g. /help, /model) produce no streamed deltas, so the
-      // message text is empty — adding it would flash a blank bubble before
-      // the history reload replaces the list.
-      if (message.text) {
-        setMessages((prev) => [...prev, message])
-      }
+      setMessages((prev) => [...prev, message])
       setCurrentAgentMessage('')
       // Always reload history after the agent finishes so that server-side
       // responses (slash commands, tool events) that are not fully streamed
