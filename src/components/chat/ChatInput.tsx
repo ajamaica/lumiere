@@ -1,8 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native'
 
 import { useAttachments } from '../../hooks/useAttachments'
+import { useChatDraft } from '../../hooks/useChatDraft'
 import { useFileDropPaste } from '../../hooks/useFileDropPaste'
 import { useHaptics } from '../../hooks/useHaptics'
 import { usePendingShare } from '../../hooks/usePendingShare'
@@ -53,7 +54,7 @@ export function ChatInput({
 }: ChatInputProps) {
   const { theme } = useTheme()
   const { t } = useTranslation()
-  const [text, setText] = useState('')
+  const { text, setText, clearDraft } = useChatDraft()
   const glassAvailable = isLiquidGlassAvailable()
   const styles = useMemo(() => createStyles(theme, glassAvailable), [theme, glassAvailable])
 
@@ -84,21 +85,24 @@ export function ChatInput({
     if ((text.trim() || attach.attachments.length > 0) && !isBusy) {
       haptics.light()
       onSend(text.trim(), attach.attachments.length > 0 ? attach.attachments : undefined)
-      setText('')
+      clearDraft()
       attach.clearAttachments()
     }
-  }, [text, attach, isBusy, onSend, haptics])
+  }, [text, attach, isBusy, onSend, haptics, clearDraft])
 
-  const handleSelectCommand = useCallback((command: string) => {
-    setText(command + ' ')
-  }, [])
+  const handleSelectCommand = useCallback(
+    (command: string) => {
+      setText(command + ' ')
+    },
+    [setText],
+  )
 
   const handleStopRecording = useCallback(async () => {
     const finalText = await voice.stop()
     if (finalText.trim()) {
       setText((prev) => (prev ? prev + ' ' + finalText.trim() : finalText.trim()))
     }
-  }, [voice])
+  }, [voice, setText])
 
   const handleCancelRecording = useCallback(async () => {
     await voice.cancel()
