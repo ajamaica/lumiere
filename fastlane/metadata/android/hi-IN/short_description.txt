@@ -1,1 +1,1 @@
-Claude, ChatGPT, Gemini, Ollama और अन्य AI मॉडल के साथ एक ऐप में चैट करें।
+Claude, ChatGPT, Gemini और अन्य से चैट करें। AI स्किल्स, मिशन और ऑटोमेशन एक ऐप में।

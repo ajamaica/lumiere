@@ -1,1 +1,1 @@
-一個 App 暢聊 Claude、ChatGPT、Gemini、Ollama 等多種 AI 模型。
+與 Claude、ChatGPT、Gemini 等暢聊。AI 技能、任務與自動化集於一身。

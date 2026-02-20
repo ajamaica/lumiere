@@ -1,33 +1,46 @@
-Lumiere is a unified AI chat client that brings all your favorite AI models together in one app. Connect to Claude, ChatGPT, Gemini, Ollama, and more — all from a single, beautifully designed interface.
+Lumiere is a unified AI chat client that brings all your favorite AI models together in one app. Connect to Claude, ChatGPT, Gemini, Ollama, and more — all from a single, beautifully designed interface. With OpenClaw protocol support, unlock advanced AI orchestration including skills, missions, and scheduled automation.
 
 CONNECT TO ANY AI
 • Chat with Claude, ChatGPT, Google Gemini, OpenRouter, Ollama, and other providers
 • Use on-device AI with Apple Intelligence (iOS 18+)
 • Switch between models and servers instantly
+• Configure multiple agents with custom identities, models, and workspaces
 • Manage multiple AI backends with easy server configuration
 
 POWERFUL CHAT EXPERIENCE
 • Real-time streaming responses with rich markdown rendering
 • Voice input with native speech recognition
-• Image attachments for multimodal conversations
+• Image and file attachments for multimodal conversations
+• Built-in tools: web search, web fetch, and code execution
 • 38+ slash commands for power users
 • Message favoriting to save important responses
 • Multi-session support with custom aliases
+
+OPENCLAW PROTOCOL
+• Skills marketplace — browse, install, and manage AI skills from ClawHub
+• Teach custom skills to your AI with code and natural language
+• Mission control — plan and execute complex multi-step tasks with AI-driven subtask decomposition
+• Sub-agents — spawn parallel workers for distributed task execution
+• Interactive canvas — rich HTML/JavaScript UI components powered by AI
+• Cron scheduler — create, manage, and monitor recurring automated jobs
+• Gateway monitoring — real-time logs, health status, and server configuration
+• MCP server integration — extend AI capabilities with Model Context Protocol tools
 
 AUTOMATE YOUR WORKFLOW
 • Create triggers with deep links for one-tap prompts
 • Home screen quick actions for fast access
 • Apple Shortcuts integration for seamless automation
-• Schedule recurring tasks with cron jobs
+• Schedule recurring tasks with the built-in cron scheduler
 
 PERSONALIZE YOUR EXPERIENCE
 • 8 stunning color themes: Default, Pink, Green, Red, Blue, Purple, Orange, and Glass
 • Light and dark mode with automatic system detection
-• Available in English, Spanish, French, Japanese, and Chinese
+• Available in 11 languages
 
 SECURITY FIRST
 • Face ID and Touch ID biometric authentication
 • Encrypted API key storage using iOS Keychain
+• Cryptographic device identity with nonce-based authentication
 • On-device AI options for complete privacy
 • No telemetry or remote data collection
 
@@ -36,4 +49,4 @@ BUILT FOR IPAD
 • Form sheet modals for natural multitasking
 • Full landscape and portrait support
 
-Whether you're a developer managing AI agents, a professional using AI daily, or anyone who wants unified access to the best AI models — Lumiere puts it all in your pocket.
+Whether you're a developer orchestrating AI agents, a power user automating complex workflows, or anyone who wants unified access to the best AI models — Lumiere puts it all in your pocket.

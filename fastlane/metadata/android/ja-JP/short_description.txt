@@ -1,1 +1,1 @@
-Claude、ChatGPT、Geminiなど複数のAIモデルにひとつのアプリで接続。
+Claude、ChatGPT、Geminiなどと対話。AIスキル、ミッション、自動化をひとつのアプリで。

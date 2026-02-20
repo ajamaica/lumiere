@@ -1,1 +1,1 @@
-KI,Chat,ChatGPT,Claude,Gemini,Ollama,LLM,Assistent,Chatbot,OpenAI
+KI,Chat,ChatGPT,Claude,Gemini,Ollama,LLM,Skills,OpenClaw,Agenten,Missionen,Automatisierung

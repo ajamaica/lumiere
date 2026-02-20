@@ -1,33 +1,46 @@
-Lumiere est un client de chat IA unifié qui rassemble tous vos modèles d'intelligence artificielle préférés dans une seule application. Connectez-vous à Claude, ChatGPT, Gemini, Ollama et bien d'autres, le tout depuis une interface unique au design soigné.
+Lumiere est un client de chat IA unifié qui rassemble tous vos modèles d'intelligence artificielle préférés dans une seule application. Connectez-vous à Claude, ChatGPT, Gemini, Ollama et bien d'autres, le tout depuis une interface unique au design soigné. Grâce au protocole OpenClaw, accédez à une orchestration IA avancée : skills, missions et automatisation programmée.
 
 <b>Connectez-vous à n'importe quelle IA</b>
 • Discutez avec Claude, ChatGPT, Google Gemini, OpenRouter, Ollama et d'autres fournisseurs
 • Utilisez l'IA embarquée Gemini Nano pour une confidentialité totale
 • Basculez entre les modèles et les serveurs en un instant
+• Configurez plusieurs agents avec des identités, modèles et espaces de travail personnalisés
 • Gérez plusieurs backends IA grâce à une configuration serveur simple et intuitive
 
 <b>Une expérience de chat puissante</b>
 • Réponses en temps réel avec streaming et rendu Markdown enrichi
 • Saisie vocale avec reconnaissance de la parole
-• Pièces jointes images pour des conversations multimodales
+• Pièces jointes images et fichiers pour des conversations multimodales
+• Outils intégrés : recherche web, récupération web et exécution de code
 • Plus de 38 commandes slash pour les utilisateurs avancés
 • Mise en favoris des messages pour retrouver les réponses importantes
 • Sessions multiples avec alias personnalisés
 
+<b>Protocole OpenClaw</b>
+• Marketplace de skills — parcourez, installez et gérez des skills IA depuis ClawHub
+• Enseignez des skills personnalisés à votre IA avec du code et du langage naturel
+• Centre de missions — planifiez et exécutez des tâches complexes multi-étapes avec décomposition en sous-tâches pilotée par l'IA
+• Sub-agents — lancez des agents parallèles pour une exécution distribuée des tâches
+• Canvas interactif — composants d'interface HTML/JavaScript riches générés par l'IA
+• Planificateur cron — créez, gérez et surveillez des tâches automatisées récurrentes
+• Surveillance du gateway — journaux en temps réel, état de santé et configuration serveur
+• Intégration de serveurs MCP — étendez les capacités de l'IA avec les outils Model Context Protocol
+
 <b>Automatisez votre quotidien</b>
 • Créez des déclencheurs via des liens profonds pour des prompts en un seul geste
 • Actions rapides sur l'écran d'accueil pour un accès instantané
-• Planifiez des tâches récurrentes avec des tâches cron
+• Planifiez des tâches récurrentes avec le planificateur cron intégré
 
 <b>Personnalisez votre expérience</b>
 • 8 magnifiques thèmes de couleurs : Défaut, Rose, Vert, Rouge, Bleu, Violet, Orange et Verre
 • Modes clair et sombre avec détection automatique du système
-• Disponible en anglais, espagnol, français, japonais et chinois
+• Disponible en 11 langues
 
 <b>Sécurité avant tout</b>
 • Authentification biométrique par empreinte digitale
 • Stockage chiffré des clés API via Android KeyStore
+• Identité cryptographique de l'appareil avec authentification par nonce
 • Options d'IA embarquée pour une confidentialité totale
 • Aucune télémétrie ni collecte de données à distance
 
-Que vous soyez développeur gérant des agents IA, professionnel utilisant l'IA au quotidien, ou simplement à la recherche d'un accès unifié aux meilleurs modèles d'IA — Lumiere met tout cela dans votre poche.
+Que vous soyez développeur orchestrant des agents IA, utilisateur avancé automatisant des workflows complexes, ou simplement à la recherche d'un accès unifié aux meilleurs modèles d'IA — Lumiere met tout cela dans votre poche.

@@ -1,33 +1,46 @@
-Lumiere est un client de chat IA unifié qui rassemble tous vos modèles d'intelligence artificielle préférés dans une seule application. Connectez-vous à Claude, ChatGPT, Gemini, Ollama et bien d'autres, le tout depuis une interface unique au design soigné.
+Lumiere est un client de chat IA unifié qui rassemble tous vos modèles d'intelligence artificielle préférés dans une seule application. Connectez-vous à Claude, ChatGPT, Gemini, Ollama et bien d'autres, le tout depuis une interface unique au design soigné. Grâce au protocole OpenClaw, accédez à une orchestration IA avancée : skills, missions et automatisation programmée.
 
 CONNECTEZ-VOUS À N'IMPORTE QUELLE IA
 • Discutez avec Claude, ChatGPT, Google Gemini, OpenRouter, Ollama et d'autres fournisseurs
 • Utilisez l'IA embarquée avec Apple Intelligence (iOS 18+)
 • Basculez instantanément entre les modèles et les serveurs
+• Configurez plusieurs agents avec des identités, modèles et espaces de travail personnalisés
 • Gérez plusieurs backends d'IA grâce à une configuration serveur simplifiée
 
 UNE EXPÉRIENCE DE CHAT PUISSANTE
 • Réponses en streaming en temps réel avec rendu markdown enrichi
 • Saisie vocale avec reconnaissance vocale native
-• Pièces jointes images pour des conversations multimodales
+• Pièces jointes images et fichiers pour des conversations multimodales
+• Outils intégrés : recherche web, récupération web et exécution de code
 • Plus de 38 commandes slash pour les utilisateurs avancés
 • Mise en favoris des messages pour sauvegarder les réponses importantes
 • Support multi-sessions avec alias personnalisés
+
+PROTOCOLE OPENCLAW
+• Marketplace de skills — parcourez, installez et gérez des skills IA depuis ClawHub
+• Enseignez des skills personnalisés à votre IA avec du code et du langage naturel
+• Centre de missions — planifiez et exécutez des tâches complexes multi-étapes avec décomposition en sous-tâches pilotée par l'IA
+• Sub-agents — lancez des agents parallèles pour une exécution distribuée des tâches
+• Canvas interactif — composants d'interface HTML/JavaScript riches générés par l'IA
+• Planificateur cron — créez, gérez et surveillez des tâches automatisées récurrentes
+• Surveillance du gateway — journaux en temps réel, état de santé et configuration serveur
+• Intégration de serveurs MCP — étendez les capacités de l'IA avec les outils Model Context Protocol
 
 AUTOMATISEZ VOS TÂCHES
 • Créez des déclencheurs avec des liens profonds pour des prompts en un seul geste
 • Actions rapides sur l'écran d'accueil pour un accès immédiat
 • Intégration avec les Raccourcis Apple pour une automatisation fluide
-• Planifiez des tâches récurrentes avec des tâches cron
+• Planifiez des tâches récurrentes avec le planificateur cron intégré
 
 PERSONNALISEZ VOTRE EXPÉRIENCE
 • 8 thèmes de couleurs : Défaut, Rose, Vert, Rouge, Bleu, Violet, Orange et Verre
 • Mode clair et sombre avec détection automatique du système
-• Disponible en anglais, espagnol, français, japonais et chinois
+• Disponible en 11 langues
 
 SÉCURITÉ AVANT TOUT
 • Authentification biométrique par Face ID et Touch ID
 • Stockage chiffré des clés API via le trousseau iOS
+• Identité cryptographique de l'appareil avec authentification par nonce
 • Options d'IA embarquée pour une confidentialité totale
 • Aucune télémétrie ni collecte de données à distance
 
@@ -36,4 +49,4 @@ CONÇU POUR L'IPAD
 • Fenêtres modales intégrées pour un multitâche naturel
 • Support complet en mode paysage et portrait
 
-Que vous soyez développeur gérant des agents IA, professionnel utilisant l'IA au quotidien, ou simplement à la recherche d'un accès unifié aux meilleurs modèles d'IA, Lumiere met tout cela dans votre poche.
+Que vous soyez développeur orchestrant des agents IA, utilisateur avancé automatisant des workflows complexes, ou simplement à la recherche d'un accès unifié aux meilleurs modèles d'IA — Lumiere met tout cela dans votre poche.
