@@ -41,6 +41,17 @@ function stripMessageMetadata(text: string): string {
   return (before + after).trim()
 }
 
+/**
+ * Strip the `[System: …]` prefix that the Molt provider prepends to carry
+ * session system messages through the gateway.
+ */
+function stripSystemMessagePrefix(text: string): string {
+  if (!text.startsWith('[System: ')) return text
+  const closingBracket = text.indexOf(']\n\n')
+  if (closingBracket === -1) return text
+  return text.substring(closingBracket + 3)
+}
+
 /** Raw history entry from the gateway — extends the base shape with tool result fields. */
 interface RawHistoryMessage {
   role: string
@@ -77,7 +88,8 @@ function historyToMessages(msgs: RawHistoryMessage[], showToolEvents: boolean): 
       }
 
       const textContent = msg.content.find((c) => c.type === 'text')
-      const text = textContent?.text ? stripMessageMetadata(textContent.text) : ''
+      const rawText = textContent?.text ? stripMessageMetadata(textContent.text) : ''
+      const text = stripSystemMessagePrefix(rawText)
       if (!text) return null
       return {
         id: `history-${msg.timestamp}-${index}`,
