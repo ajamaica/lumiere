@@ -1,1 +1,1 @@
-Claude, ChatGPT, Gemini, Ollama 등 AI 모델과 하나의 앱에서 대화하세요.
+OpenClaw로 AI 오케스트레이션. 스킬, 미션, 서브 에이전트 & 크론을 하나의 앱에서.

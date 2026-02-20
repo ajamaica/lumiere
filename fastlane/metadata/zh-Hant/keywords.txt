@@ -1,1 +1,1 @@
-AI,聊天,ChatGPT,Claude,Gemini,Ollama,人工智慧,助理,對話,語言模型
+OpenClaw,AI,技能,代理,任務,自動化,聊天,ChatGPT,Claude,Gemini,LLM

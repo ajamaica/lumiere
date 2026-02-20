@@ -1,1 +1,1 @@
-Una app para todos tus modelos de IA. Chatea con Claude, ChatGPT, Gemini y mas desde una sola interfaz, con total privacidad y sin telemetria.
+Orquestacion de IA con OpenClaw. Marketplace de skills, control de misiones, programacion cron, sub-agentes y canvas. Tambien conecta con ChatGPT, Claude y Gemini.

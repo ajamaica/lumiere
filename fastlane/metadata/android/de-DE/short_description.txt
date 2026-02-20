@@ -1,1 +1,1 @@
-Chatten Sie mit Claude, ChatGPT, Gemini, Ollama und mehr KI-Modellen in einer App.
+KI-Orchestrierung mit OpenClaw. Skills, Missionen, Sub-Agenten & Cron.

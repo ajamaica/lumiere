@@ -1,1 +1,1 @@
-모든 AI 모델을 위한 하나의 앱. 하나의 아름다운 인터페이스에서 Claude, ChatGPT, Gemini 등과 대화하세요.
+OpenClaw로 구동되는 AI 오케스트레이션. 스킬 마켓플레이스, 미션 컨트롤, 크론 스케줄링, 서브 에이전트, 캔버스. ChatGPT, Claude, Gemini에도 연결됩니다.

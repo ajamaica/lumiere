@@ -1,1 +1,1 @@
-Claude、ChatGPT、Geminiなど複数のAIモデルにひとつのアプリで接続。
+OpenClawによるAIオーケストレーション。スキル、ミッション、サブエージェント、cronをひとつのアプリで。

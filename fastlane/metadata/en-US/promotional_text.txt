@@ -1,1 +1,1 @@
-One app for all your AI models. Chat with Claude, ChatGPT, Gemini, and more from a single beautiful interface.
+AI orchestration powered by OpenClaw. Skills marketplace, mission control, cron scheduling, sub-agents, and canvas. Also connects to ChatGPT, Claude, and Gemini.

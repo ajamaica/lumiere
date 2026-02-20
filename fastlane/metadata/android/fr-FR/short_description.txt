@@ -1,1 +1,1 @@
-Discutez avec Claude, ChatGPT, Gemini, Ollama et d'autres IA en une appli.
+Orchestration IA avec OpenClaw. Skills, missions, sub-agents et cron en une app.

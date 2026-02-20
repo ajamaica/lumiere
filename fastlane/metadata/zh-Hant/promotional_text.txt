@@ -1,1 +1,1 @@
-一款應用整合所有 AI 模型。在精美的單一介面中與 Claude、ChatGPT、Gemini 等暢聊，支援語音輸入、自動化工作流程與生物辨識安全防護。
+由 OpenClaw 驅動的 AI 編排平台。技能市集、任務控制、Cron 排程、子代理與互動畫布。同時連接 ChatGPT、Claude 及 Gemini。

@@ -1,39 +1,54 @@
-Lumiere est un client de chat IA unifié qui rassemble tous vos modèles d'intelligence artificielle préférés dans une seule application. Connectez-vous à Claude, ChatGPT, Gemini, Ollama et bien d'autres, le tout depuis une interface unique au design soigné.
+Lumiere est un client d'orchestration IA propulse par le protocole OpenClaw. Gerez des skills, executez des missions, planifiez des taches et lancez des sub-agents — le tout depuis une interface au design soigne. Se connecte egalement a Claude, ChatGPT, Gemini, Ollama et d'autres fournisseurs d'IA populaires.
 
-CONNECTEZ-VOUS À N'IMPORTE QUELLE IA
-• Discutez avec Claude, ChatGPT, Google Gemini, OpenRouter, Ollama et d'autres fournisseurs
-• Utilisez l'IA embarquée avec Apple Intelligence (iOS 18+)
-• Basculez instantanément entre les modèles et les serveurs
-• Gérez plusieurs backends d'IA grâce à une configuration serveur simplifiée
+PROTOCOLE OPENCLAW — VOTRE CENTRE DE COMMANDE IA
+• Marketplace de skills — parcourez, installez et gerez des skills IA depuis ClawHub
+• Enseignez des skills personnalises a votre IA avec du code et du langage naturel
+• Centre de missions — planifiez et executez des taches complexes multi-etapes avec decomposition en sous-taches pilotee par l'IA
+• Sub-agents — lancez des agents paralleles pour une execution distribuee des taches
+• Canvas interactif — composants d'interface HTML/JavaScript riches generes par l'IA
+• Planificateur cron — creez, gerez et surveillez des taches automatisees recurrentes
+• Surveillance du gateway — journaux en temps reel, etat de sante et configuration serveur
+• Integration de serveurs MCP — etendez les capacites de l'IA avec les outils Model Context Protocol
 
-UNE EXPÉRIENCE DE CHAT PUISSANTE
-• Réponses en streaming en temps réel avec rendu markdown enrichi
+AGENTS INTELLIGENTS
+• Configurez plusieurs agents avec des identites, modeles et espaces de travail personnalises
+• Outils integres : recherche web, recuperation web et execution de code
+• Reponses en streaming en temps reel avec rendu markdown enrichi
+• Support multi-sessions avec alias personnalises
+
+EXPERIENCE DE CHAT PUISSANTE
 • Saisie vocale avec reconnaissance vocale native
-• Pièces jointes images pour des conversations multimodales
-• Plus de 38 commandes slash pour les utilisateurs avancés
-• Mise en favoris des messages pour sauvegarder les réponses importantes
-• Support multi-sessions avec alias personnalisés
+• Pieces jointes images et fichiers pour des conversations multimodales
+• Plus de 38 commandes slash pour les utilisateurs avances
+• Mise en favoris des messages pour sauvegarder les reponses importantes
 
-AUTOMATISEZ VOS TÂCHES
-• Créez des déclencheurs avec des liens profonds pour des prompts en un seul geste
-• Actions rapides sur l'écran d'accueil pour un accès immédiat
-• Intégration avec les Raccourcis Apple pour une automatisation fluide
-• Planifiez des tâches récurrentes avec des tâches cron
+FONCTIONNE AVEC VOS IA PREFEREES
+• Se connecte a Claude, ChatGPT, Google Gemini, OpenRouter, Ollama, Kimi et d'autres
+• Utilisez l'IA embarquee avec Apple Intelligence (iOS 18+)
+• Basculez instantanement entre les modeles et les serveurs
+• Gerez plusieurs backends d'IA grace a une configuration serveur simplifiee
 
-PERSONNALISEZ VOTRE EXPÉRIENCE
-• 8 thèmes de couleurs : Défaut, Rose, Vert, Rouge, Bleu, Violet, Orange et Verre
-• Mode clair et sombre avec détection automatique du système
-• Disponible en anglais, espagnol, français, japonais et chinois
+AUTOMATISEZ VOS TACHES
+• Creez des declencheurs avec des liens profonds pour des prompts en un seul geste
+• Actions rapides sur l'ecran d'accueil pour un acces immediat
+• Integration avec les Raccourcis Apple pour une automatisation fluide
+• Planifiez des taches recurrentes avec le planificateur cron integre
 
-SÉCURITÉ AVANT TOUT
-• Authentification biométrique par Face ID et Touch ID
-• Stockage chiffré des clés API via le trousseau iOS
-• Options d'IA embarquée pour une confidentialité totale
-• Aucune télémétrie ni collecte de données à distance
+PERSONNALISEZ VOTRE EXPERIENCE
+• 8 themes de couleurs : Defaut, Rose, Vert, Rouge, Bleu, Violet, Orange et Verre
+• Mode clair et sombre avec detection automatique du systeme
+• Disponible en 11 langues
 
-CONÇU POUR L'IPAD
-• Mises en page adaptatives optimisées pour les grands écrans
-• Fenêtres modales intégrées pour un multitâche naturel
+SECURITE AVANT TOUT
+• Authentification biometrique par Face ID et Touch ID
+• Stockage chiffre des cles API via le trousseau iOS
+• Identite cryptographique de l'appareil avec authentification par nonce
+• Options d'IA embarquee pour une confidentialite totale
+• Aucune telemetrie ni collecte de donnees a distance
+
+CONCU POUR L'IPAD
+• Mises en page adaptatives optimisees pour les grands ecrans
+• Fenetres modales integrees pour un multitache naturel
 • Support complet en mode paysage et portrait
 
-Que vous soyez développeur gérant des agents IA, professionnel utilisant l'IA au quotidien, ou simplement à la recherche d'un accès unifié aux meilleurs modèles d'IA, Lumiere met tout cela dans votre poche.
+Que vous orchestriez des agents IA avec OpenClaw, automatisiez des workflows complexes ou discutiez avec votre IA preferee — Lumiere met toute la puissance de l'orchestration IA dans votre poche.

@@ -1,33 +1,48 @@
-Lumiere es un cliente de chat de IA unificado que reúne todos tus modelos de inteligencia artificial favoritos en una sola aplicación. Conéctate a Claude, ChatGPT, Gemini, Ollama y muchos más desde una interfaz única y cuidadosamente diseñada.
+Lumiere es un cliente de orquestacion de IA impulsado por el protocolo OpenClaw. Gestiona skills, ejecuta misiones, programa tareas y lanza sub-agentes, todo desde una interfaz cuidadosamente disenada. Tambien conecta con Claude, ChatGPT, Gemini, Ollama y otros proveedores de IA populares.
 
-<b>Conéctate a cualquier IA</b>
-• Chatea con Claude, ChatGPT, Google Gemini, OpenRouter, Ollama y otros proveedores
-• Usa IA en el dispositivo con Gemini Nano para total privacidad
-• Cambia entre modelos y servidores al instante
-• Gestiona múltiples backends de IA con una configuración de servidores sencilla
+<b>Protocolo OpenClaw — Tu centro de mando de IA</b>
+- Marketplace de skills: explora, instala y gestiona skills de IA desde ClawHub
+- Ensena skills personalizados a tu IA con codigo y lenguaje natural
+- Control de misiones: planifica y ejecuta tareas complejas de multiples pasos con descomposicion de subtareas impulsada por IA
+- Sub-agentes: lanza trabajadores en paralelo para la ejecucion distribuida de tareas
+- Canvas interactivo: componentes de interfaz HTML/JavaScript potenciados por IA
+- Programador cron: crea, gestiona y monitoriza trabajos automatizados recurrentes
+- Monitoreo de gateway: registros en tiempo real, estado de salud y configuracion del servidor
+- Integracion con servidores MCP: amplia las capacidades de la IA con herramientas del Model Context Protocol
 
-<b>Una experiencia de chat potente</b>
-• Respuestas en tiempo real con streaming y renderizado enriquecido de markdown
-• Entrada de voz con reconocimiento de habla
-• Adjunta imágenes para conversaciones multimodales
-• Más de 38 comandos rápidos (slash commands) para usuarios avanzados
-• Guarda mensajes importantes en favoritos
-• Soporte multisesión con alias personalizados
+<b>Agentes inteligentes</b>
+- Configura multiples agentes con identidades, modelos y espacios de trabajo personalizados
+- Herramientas integradas: busqueda web, captura web y ejecucion de codigo
+- Respuestas en tiempo real con streaming y renderizado de markdown enriquecido
+- Soporte multisesion con alias personalizados
+
+<b>Experiencia de chat potente</b>
+- Entrada por voz con reconocimiento de habla
+- Adjuntos de imagenes y archivos para conversaciones multimodales
+- Mas de 38 comandos rapidos para usuarios avanzados
+- Guarda mensajes importantes en favoritos
+
+<b>Compatible con tu IA favorita</b>
+- Conecta con Claude, ChatGPT, Google Gemini, OpenRouter, Ollama, Kimi y mas
+- Usa IA en el dispositivo con Gemini Nano para privacidad total
+- Cambia entre modelos y servidores al instante
+- Gestiona multiples backends de IA con una configuracion de servidores sencilla
 
 <b>Automatiza tu flujo de trabajo</b>
-• Crea disparadores con deep links para prompts con un solo toque
-• Acciones rápidas en la pantalla de inicio para un acceso inmediato
-• Programa tareas recurrentes con trabajos cron
+- Crea triggers con deep links para prompts de un solo toque
+- Acciones rapidas en la pantalla de inicio
+- Programa tareas recurrentes con el programador cron integrado
 
 <b>Personaliza tu experiencia</b>
-• 8 temas de color impresionantes: Predeterminado, Rosa, Verde, Rojo, Azul, Púrpura, Naranja y Cristal
-• Modo claro y oscuro con detección automática del sistema
-• Disponible en inglés, español, francés, japonés y chino
+- 8 temas de color: Predeterminado, Rosa, Verde, Rojo, Azul, Morado, Naranja y Cristal
+- Modo claro y oscuro con deteccion automatica del sistema
+- Disponible en 11 idiomas
 
-<b>La seguridad es lo primero</b>
-• Autenticación biométrica con huella dactilar
-• Almacenamiento cifrado de claves API mediante Android KeyStore
-• Opciones de IA en el dispositivo para total privacidad
-• Sin telemetría ni recopilación remota de datos
+<b>Seguridad ante todo</b>
+- Autenticacion biometrica con huella dactilar
+- Almacenamiento cifrado de claves API mediante Android KeyStore
+- Identidad criptografica del dispositivo con autenticacion basada en nonce
+- Opciones de IA en el dispositivo para privacidad total
+- Sin telemetria ni recopilacion remota de datos
 
-Ya seas un desarrollador que gestiona agentes de IA, un profesional que usa la inteligencia artificial a diario, o simplemente alguien que quiere acceso unificado a los mejores modelos de IA, Lumiere lo pone todo en tu bolsillo.
+Ya sea que estes orquestando agentes de IA con OpenClaw, automatizando flujos de trabajo complejos o chateando con tu IA favorita, Lumiere lo pone todo en tu bolsillo.

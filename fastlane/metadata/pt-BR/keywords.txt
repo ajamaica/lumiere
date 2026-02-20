@@ -1,1 +1,1 @@
-IA,chat,ChatGPT,Claude,Gemini,Ollama,LLM,assistente,chatbot,OpenAI
+OpenClaw,IA,skills,agentes,missões,automação,chat,ChatGPT,Claude,Gemini,LLM
