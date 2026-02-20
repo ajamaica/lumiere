@@ -55,6 +55,7 @@
     "gatewayLogs": "ゲートウェイログ",
     "mcpServers": "MCPサーバー",
     "missions": "ミッション",
+    "hapticFeedback": "触覚フィードバック",
     "showToolEventsInChat": "チャットにツールイベントを表示",
     "agents": "エージェント",
     "serverConfiguration": "サーバー設定"

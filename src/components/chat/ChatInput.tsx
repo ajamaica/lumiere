@@ -4,6 +4,7 @@ import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-nati
 
 import { useAttachments } from '../../hooks/useAttachments'
 import { useFileDropPaste } from '../../hooks/useFileDropPaste'
+import { useHaptics } from '../../hooks/useHaptics'
 import { usePendingShare } from '../../hooks/usePendingShare'
 import { useSlashCommands } from '../../hooks/useSlashCommands'
 import { useVoiceTranscription } from '../../hooks/useVoiceTranscription'
@@ -66,6 +67,8 @@ export function ChatInput({
     enabled: attach.dropPasteEnabled,
   })
 
+  const haptics = useHaptics()
+
   usePendingShare(attach.handleFilesReceived, setText)
 
   // --- derived state -------------------------------------------------------
@@ -79,11 +82,12 @@ export function ChatInput({
 
   const handleSend = useCallback(() => {
     if ((text.trim() || attach.attachments.length > 0) && !isBusy) {
+      haptics.light()
       onSend(text.trim(), attach.attachments.length > 0 ? attach.attachments : undefined)
       setText('')
       attach.clearAttachments()
     }
-  }, [text, attach, isBusy, onSend])
+  }, [text, attach, isBusy, onSend, haptics])
 
   const handleSelectCommand = useCallback((command: string) => {
     setText(command + ' ')

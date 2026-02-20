@@ -18,6 +18,7 @@ import {
   Section,
   Text,
 } from '../src/components/ui'
+import { useHaptics } from '../src/hooks/useHaptics'
 import { useServers } from '../src/hooks/useServers'
 import { AgentConfig, useMoltGateway } from '../src/services/molt'
 import {
@@ -68,6 +69,8 @@ export default function SessionsScreen() {
   const [menuSessionKey, setMenuSessionKey] = useState<string | null>(null)
   const [agentPickerVisible, setAgentPickerVisible] = useState(false)
   const [agentConfigs, setAgentConfigs] = useState<Record<string, AgentConfig>>({})
+
+  const haptics = useHaptics()
 
   // Molt provider uses server-side sessions via WebSocket gateway
   const isMoltProvider = config?.type === 'molt'
@@ -222,6 +225,7 @@ export default function SessionsScreen() {
   }
 
   const handleResetSession = () => {
+    haptics.warning()
     Alert.alert(t('sessions.resetConfirmTitle'), t('sessions.resetConfirmMessage'), [
       { text: t('common.cancel'), style: 'cancel' },
       {
@@ -261,6 +265,7 @@ export default function SessionsScreen() {
 
   const handleDeleteSession = (sessionKey: string) => {
     setMenuSessionKey(null)
+    haptics.warning()
     Alert.alert(t('sessions.deleteConfirmTitle'), t('sessions.deleteConfirmMessage'), [
       { text: t('common.cancel'), style: 'cancel' },
       {

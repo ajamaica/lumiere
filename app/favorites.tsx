@@ -5,6 +5,7 @@ import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ScreenHeader } from '../src/components/ui'
+import { useHaptics } from '../src/hooks/useHaptics'
 import { FavoriteItem, favoritesAtom } from '../src/store'
 import { useTheme } from '../src/theme'
 import { useContentContainerStyle } from '../src/utils/device'
@@ -13,8 +14,10 @@ export default function FavoritesScreen() {
   const { theme } = useTheme()
   const contentContainerStyle = useContentContainerStyle()
   const [favorites, setFavorites] = useAtom(favoritesAtom)
+  const haptics = useHaptics()
 
   const handleRemove = (id: string) => {
+    haptics.warning()
     Alert.alert('Remove Favorite', 'Are you sure you want to remove this from favorites?', [
       { text: 'Cancel', style: 'cancel' },
       {

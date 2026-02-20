@@ -55,6 +55,7 @@
     "gatewayLogs": "Gateway Logs",
     "mcpServers": "MCP Servers",
     "missions": "Missions",
+    "hapticFeedback": "Haptic Feedback",
     "showToolEventsInChat": "Show Tool Events in Chat",
     "agents": "Agents",
     "serverConfiguration": "Server Configuration"

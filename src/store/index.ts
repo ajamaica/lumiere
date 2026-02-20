@@ -56,6 +56,7 @@ export {
   chatFontFamilyAtom,
   chatFontSizeAtom,
   colorThemeAtom,
+  hapticFeedbackEnabledAtom,
   languageAtom,
   onboardingCompletedAtom,
   showToolEventsInChatAtom,

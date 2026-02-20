@@ -13,6 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Button, ScreenHeader, Text, TextInput } from '../src/components/ui'
+import { useHaptics } from '../src/hooks/useHaptics'
 import { useServers } from '../src/hooks/useServers'
 import { currentSessionKeyAtom, TriggerConfig, triggersAtom } from '../src/store'
 import { useTheme } from '../src/theme'
@@ -61,6 +62,7 @@ export default function TriggersScreen() {
   const { currentServer, currentServerId } = useServers()
   const [triggers, setTriggers] = useAtom(triggersAtom)
   const [currentSessionKey] = useAtom(currentSessionKeyAtom)
+  const haptics = useHaptics()
 
   const [isCreating, setIsCreating] = useState(false)
   const [newMessage, setNewMessage] = useState('')
@@ -109,6 +111,7 @@ export default function TriggersScreen() {
 
   const handleDelete = useCallback(
     (slug: string) => {
+      haptics.warning()
       Alert.alert('Delete Trigger', 'Are you sure you want to delete this trigger?', [
         { text: 'Cancel', style: 'cancel' },
         {
@@ -122,7 +125,7 @@ export default function TriggersScreen() {
         },
       ])
     },
-    [triggers, setTriggers],
+    [triggers, setTriggers, haptics],
   )
 
   const handleCopyLink = useCallback((slug: string) => {

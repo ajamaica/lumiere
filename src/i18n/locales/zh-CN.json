@@ -55,6 +55,7 @@
     "gatewayLogs": "网关日志",
     "mcpServers": "MCP 服务器",
     "missions": "任务",
+    "hapticFeedback": "触觉反馈",
     "showToolEventsInChat": "在聊天中显示工具事件",
     "agents": "代理",
     "serverConfiguration": "服务器配置"

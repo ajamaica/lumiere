@@ -4,6 +4,7 @@ import { Alert, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Badge, Button, Card, ScreenHeader, Section, StatCard, Text } from '../src/components/ui'
+import { useHaptics } from '../src/hooks/useHaptics'
 import { useServers } from '../src/hooks/useServers'
 import { useMoltGateway } from '../src/services/molt'
 import { useTheme } from '../src/theme'
@@ -52,6 +53,7 @@ export default function SchedulerScreen() {
   const [schedulerStatus, setSchedulerStatus] = useState<SchedulerStatus | null>(null)
   const [cronJobs, setCronJobs] = useState<CronJob[]>([])
   const [busyJobIds, setBusyJobIds] = useState<Set<string>>(new Set())
+  const haptics = useHaptics()
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -153,6 +155,7 @@ export default function SchedulerScreen() {
 
   const handleRemoveJob = async (job: CronJob) => {
     if (busyJobIds.has(job.id)) return
+    haptics.warning()
     Alert.alert('Remove Job', `Are you sure you want to remove the job "${job.name}"?`, [
       { text: 'Cancel', style: 'cancel' },
       {

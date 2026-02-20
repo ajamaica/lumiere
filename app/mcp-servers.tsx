@@ -21,6 +21,7 @@ import {
   Text,
   TextInput,
 } from '../src/components/ui'
+import { useHaptics } from '../src/hooks/useHaptics'
 import { useMcpServers } from '../src/hooks/useMcpServers'
 import type { McpConnectionState, McpTransport } from '../src/services/mcp'
 import { useTheme } from '../src/theme'
@@ -48,6 +49,7 @@ export default function McpServersScreen() {
     disconnectServer,
     reconnectServer,
   } = useMcpServers()
+  const haptics = useHaptics()
 
   // Form state for adding a new server
   const [showForm, setShowForm] = useState(false)
@@ -81,6 +83,7 @@ export default function McpServersScreen() {
 
   const handleRemove = useCallback(
     (id: string, serverName: string) => {
+      haptics.warning()
       Alert.alert(t('mcp.removeTitle'), t('mcp.removeMessage', { name: serverName }), [
         { text: t('common.cancel'), style: 'cancel' },
         {
@@ -90,7 +93,7 @@ export default function McpServersScreen() {
         },
       ])
     },
-    [removeServer, t],
+    [removeServer, t, haptics],
   )
 
   const getStateColor = (state: McpConnectionState | undefined) => {

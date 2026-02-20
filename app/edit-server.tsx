@@ -23,6 +23,7 @@ import {
 } from '../src/components/ui'
 import { getBasicProviderOptions } from '../src/config/providerOptions'
 import { useClaudeModels } from '../src/hooks/useClaudeModels'
+import { useHaptics } from '../src/hooks/useHaptics'
 import { useServers } from '../src/hooks/useServers'
 import { ProviderType } from '../src/services/providers'
 import { useTheme } from '../src/theme'
@@ -38,6 +39,7 @@ export default function EditServerScreen() {
   const { servers, updateServer, removeServer } = useServers()
   const providerOptions = getBasicProviderOptions(theme.colors.text.primary)
 
+  const haptics = useHaptics()
   const server = id ? servers[id] : null
 
   const [name, setName] = useState(server?.name ?? '')
@@ -110,6 +112,7 @@ export default function EditServerScreen() {
   const handleDelete = () => {
     if (!id || !server) return
 
+    haptics.warning()
     Alert.alert('Delete Server', `Are you sure you want to delete "${server.name}"?`, [
       { text: 'Cancel', style: 'cancel' },
       {

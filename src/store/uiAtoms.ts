@@ -47,3 +47,10 @@ export const chatFontFamilyAtom = atomWithStorage<ChatFontFamily>(
   'system',
   storage,
 )
+
+/** Haptic feedback on native (on by default) */
+export const hapticFeedbackEnabledAtom = atomWithStorage<boolean>(
+  'hapticFeedbackEnabled',
+  true,
+  storage,
+)
