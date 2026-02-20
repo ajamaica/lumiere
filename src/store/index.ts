@@ -68,6 +68,7 @@ export { gatewayConnectedAtom, gatewayConnectingAtom, gatewayErrorAtom } from '.
 
 // ─── Messaging atoms ─────────────────────────────────────
 export {
+  chatDraftsAtom,
   clearMessagesAtom,
   messageQueueAtom,
   pendingShareMediaAtom,
