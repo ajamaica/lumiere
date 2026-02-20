@@ -37,12 +37,25 @@ function stripMetadataFromText(text: string): string {
   return (before + after).trim()
 }
 
+/**
+ * Strip the `[System: …]` prefix that sendMessage prepends to carry the
+ * session system message through the Molt gateway.  The prefix always sits
+ * at the very start of the text and is followed by two newlines.
+ */
+function stripSystemMessagePrefix(text: string): string {
+  if (!text.startsWith('[System: ')) return text
+  const closingBracket = text.indexOf(']\n\n')
+  if (closingBracket === -1) return text
+  return text.substring(closingBracket + 3)
+}
+
 function stripHistoryMessageMetadata(msg: ChatHistoryMessage): ChatHistoryMessage {
   return {
     ...msg,
     content: msg.content.map((block) => {
       if (block.type !== 'text' || !block.text) return block
-      const cleaned = stripMetadataFromText(block.text)
+      let cleaned = stripMetadataFromText(block.text)
+      cleaned = stripSystemMessagePrefix(cleaned)
       if (cleaned === block.text) return block
       return { ...block, text: cleaned }
     }),
