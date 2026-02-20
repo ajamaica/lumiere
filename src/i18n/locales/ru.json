@@ -308,7 +308,17 @@
   },
   "colors": {
     "appearance": "Внешний вид",
-    "colorTheme": "Цветовая тема"
+    "colorTheme": "Цветовая тема",
+    "chatText": "Текст чата",
+    "chatTextDescription": "Эти настройки применяются только к тексту чата, а не к блокам кода.",
+    "fontSize": "Размер шрифта",
+    "fontSize_small": "Маленький",
+    "fontSize_medium": "Средний",
+    "fontSize_large": "Большой",
+    "fontFamily": "Шрифт",
+    "fontFamily_system": "Системный",
+    "fontFamily_serif": "С засечками",
+    "fontFamily_monospace": "Моноширинный"
   },
   "agents": {
     "selectAgent": "Выбрать агента",

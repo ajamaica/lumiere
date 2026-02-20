@@ -308,7 +308,17 @@
   },
   "colors": {
     "appearance": "외관",
-    "colorTheme": "색상 테마"
+    "colorTheme": "색상 테마",
+    "chatText": "채팅 텍스트",
+    "chatTextDescription": "이 설정은 채팅 텍스트에만 적용되며 코드 블록에는 적용되지 않습니다.",
+    "fontSize": "글꼴 크기",
+    "fontSize_small": "작게",
+    "fontSize_medium": "보통",
+    "fontSize_large": "크게",
+    "fontFamily": "글꼴",
+    "fontFamily_system": "시스템 기본값",
+    "fontFamily_serif": "세리프",
+    "fontFamily_monospace": "고정폭"
   },
   "agents": {
     "selectAgent": "에이전트 선택",

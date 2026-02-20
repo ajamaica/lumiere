@@ -308,7 +308,17 @@
   },
   "colors": {
     "appearance": "外観",
-    "colorTheme": "カラーテーマ"
+    "colorTheme": "カラーテーマ",
+    "chatText": "チャットテキスト",
+    "chatTextDescription": "これらの設定はチャットテキストにのみ適用され、コードブロックには適用されません。",
+    "fontSize": "フォントサイズ",
+    "fontSize_small": "小",
+    "fontSize_medium": "中",
+    "fontSize_large": "大",
+    "fontFamily": "フォント",
+    "fontFamily_system": "システムデフォルト",
+    "fontFamily_serif": "セリフ",
+    "fontFamily_monospace": "等幅"
   },
   "agents": {
     "selectAgent": "エージェントを選択",

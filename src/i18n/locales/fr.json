@@ -308,7 +308,17 @@
   },
   "colors": {
     "appearance": "Apparence",
-    "colorTheme": "Thème de Couleur"
+    "colorTheme": "Thème de Couleur",
+    "chatText": "Texte du Chat",
+    "chatTextDescription": "Ces paramètres s'appliquent uniquement au texte du chat, pas aux blocs de code.",
+    "fontSize": "Taille de Police",
+    "fontSize_small": "Petit",
+    "fontSize_medium": "Moyen",
+    "fontSize_large": "Grand",
+    "fontFamily": "Police",
+    "fontFamily_system": "Par Défaut du Système",
+    "fontFamily_serif": "Serif",
+    "fontFamily_monospace": "Monospace"
   },
   "agents": {
     "selectAgent": "Sélectionner un Agent",

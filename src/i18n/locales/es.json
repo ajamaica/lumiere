@@ -308,7 +308,17 @@
   },
   "colors": {
     "appearance": "Apariencia",
-    "colorTheme": "Tema de Color"
+    "colorTheme": "Tema de Color",
+    "chatText": "Texto del Chat",
+    "chatTextDescription": "Estos ajustes se aplican solo al texto del chat, no a los bloques de código.",
+    "fontSize": "Tamaño de Fuente",
+    "fontSize_small": "Pequeño",
+    "fontSize_medium": "Mediano",
+    "fontSize_large": "Grande",
+    "fontFamily": "Fuente",
+    "fontFamily_system": "Predeterminada del Sistema",
+    "fontFamily_serif": "Serif",
+    "fontFamily_monospace": "Monoespaciada"
   },
   "agents": {
     "selectAgent": "Seleccionar Agente",

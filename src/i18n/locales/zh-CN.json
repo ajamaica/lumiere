@@ -308,7 +308,17 @@
   },
   "colors": {
     "appearance": "外观",
-    "colorTheme": "颜色主题"
+    "colorTheme": "颜色主题",
+    "chatText": "聊天文本",
+    "chatTextDescription": "这些设置仅适用于聊天文本，不适用于代码块。",
+    "fontSize": "字体大小",
+    "fontSize_small": "小",
+    "fontSize_medium": "中",
+    "fontSize_large": "大",
+    "fontFamily": "字体",
+    "fontFamily_system": "系统默认",
+    "fontFamily_serif": "衬线体",
+    "fontFamily_monospace": "等宽字体"
   },
   "agents": {
     "selectAgent": "选择代理",

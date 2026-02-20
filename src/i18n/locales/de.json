@@ -308,7 +308,17 @@
   },
   "colors": {
     "appearance": "Erscheinungsbild",
-    "colorTheme": "Farbthema"
+    "colorTheme": "Farbthema",
+    "chatText": "Chat-Text",
+    "chatTextDescription": "Diese Einstellungen gelten nur für Chat-Text, nicht für Codeblöcke.",
+    "fontSize": "Schriftgröße",
+    "fontSize_small": "Klein",
+    "fontSize_medium": "Mittel",
+    "fontSize_large": "Groß",
+    "fontFamily": "Schriftart",
+    "fontFamily_system": "Systemstandard",
+    "fontFamily_serif": "Serif",
+    "fontFamily_monospace": "Monospace"
   },
   "agents": {
     "selectAgent": "Agent auswählen",
