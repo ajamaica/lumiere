@@ -201,21 +201,12 @@ export class McpManager {
   // ─── Manifest Generation ────────────────────────────────────────────────────
 
   /**
-   * Generate a message-based instruction block that teaches the agent how to
-   * request MCP tool calls.
+   * Generate an instruction block that teaches the agent about available MCP
+   * tools and how to call them via HTTP/web_fetch.
    *
-   * Because MCP tools are executed client-side (not on the gateway), the
-   * agent cannot invoke them directly. Instead the agent embeds a structured
-   * `<mcp_call>` tag inside its response text. The Lumiere client parses
-   * these tags after the response ends, executes the calls, and sends the
-   * results back as follow-up messages.
-   *
-   * The format is:
-   * ```
-   * <mcp_call tool="qualifiedName">
-   * {"param1": "value1"}
-   * </mcp_call>
-   * ```
+   * The agent is encouraged to call MCP server URLs directly using HTTP
+   * (e.g. via web_fetch) following the MCP JSON-RPC protocol. The tool
+   * listing includes server URLs so the agent can construct the requests.
    */
   generateToolManifest(): string {
     const tools = this.getAllTools()
@@ -231,19 +222,25 @@ export class McpManager {
 
     const lines = [
       'You have access to external MCP (Model Context Protocol) tools provided by the user.',
-      'These tools run on the client device, not on the server.',
-      'IMPORTANT: You CANNOT call MCP server URLs directly via HTTP, web_fetch, or any other tool.',
-      'The ONLY way to use an MCP tool is through the <mcp_call> tag described below.',
+      'You are encouraged to call these MCP servers directly via HTTP using web_fetch or any available HTTP tool.',
       '',
-      'To call an MCP tool, include ONE OR MORE <mcp_call> blocks anywhere in your response:',
+      'To call an MCP tool, send a POST request to the server URL with a JSON-RPC body:',
       '',
-      '<mcp_call tool="TOOL_NAME">',
-      '{"param1": "value1", "param2": "value2"}',
-      '</mcp_call>',
+      'POST <SERVER_URL>',
+      'Content-Type: application/json',
       '',
-      'The client will execute each call and send the results back as a follow-up message.',
+      '{',
+      '  "jsonrpc": "2.0",',
+      '  "id": 1,',
+      '  "method": "tools/call",',
+      '  "params": {',
+      '    "name": "<TOOL_NAME>",',
+      '    "arguments": { ... }',
+      '  }',
+      '}',
+      '',
+      'If the tool is not available as a native tool, use HTTP web_fetch to call the MCP server directly.',
       "You SHOULD use these tools whenever they are relevant to the user's request.",
-      'You may include normal text before or after <mcp_call> blocks.',
       '',
       '--- Available MCP Tools ---',
       '',
@@ -251,11 +248,12 @@ export class McpManager {
 
     for (const [, serverTools] of byServer) {
       const first = serverTools[0]
-      lines.push(`## Server: ${first.serverName} (${first.serverUrl})`)
+      lines.push(`## Server: ${first.serverName}`)
+      lines.push(`URL: ${first.serverUrl}`)
       lines.push('')
 
       for (const tool of serverTools) {
-        lines.push(`### ${tool.qualifiedName}`)
+        lines.push(`### ${tool.name}`)
         if (tool.description) {
           lines.push(tool.description)
         }
