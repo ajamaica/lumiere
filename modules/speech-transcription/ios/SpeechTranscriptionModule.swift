@@ -119,5 +119,7 @@ public class SpeechTranscriptionModule: Module {
     recognitionRequest = nil
     recognitionTask = nil
     speechRecognizer = nil
+
+    try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
   }
 }
