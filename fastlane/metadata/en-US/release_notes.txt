@@ -1,4 +1,4 @@
-What's New in 1.2.0:
+What's New in 1.2.1:
 
 • iOS home screen widget — quick access to Lumiere right from your home screen
 • Siri Suggestions support — Lumiere appears in Siri suggestions for faster access

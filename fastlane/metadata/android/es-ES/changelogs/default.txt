@@ -1,4 +1,4 @@
-Novedades en 1.2.0:
+Novedades en 1.2.1:
 
 • Resaltado de sintaxis y números de línea en bloques de código
 • Soporte para tabletas y dispositivos plegables

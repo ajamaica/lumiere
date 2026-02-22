@@ -1,4 +1,4 @@
-Nouveautés de la version 1.2.0 :
+Nouveautés de la version 1.2.1 :
 
 • Widget d'écran d'accueil iOS — accès rapide à Lumiere depuis votre écran d'accueil
 • Prise en charge des Suggestions Siri — Lumiere apparaît dans les suggestions Siri

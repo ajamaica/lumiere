@@ -2,7 +2,7 @@
   "expo": {
     "name": "lumiere",
     "slug": "lumiere",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -18,7 +18,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "bot.lumiere.app",
       "appleTeamId": "N8R9NFD23H",
-      "buildNumber": "3",
+      "buildNumber": "4",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSMicrophoneUsageDescription": "Lumiere needs access to your microphone to transcribe voice messages.",
@@ -41,7 +41,7 @@
         "monochromeImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#11344a"
       },
-      "versionCode": 3,
+      "versionCode": 4,
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "intentFilters": [
