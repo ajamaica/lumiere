@@ -29,10 +29,41 @@ import { AgentPicker } from './AgentPicker'
 import { CanvasViewer } from './CanvasViewer'
 import { ChatInput } from './ChatInput'
 import { ChatMessage, Message } from './ChatMessage'
+import type { ChatListItem } from './chatMessageTypes'
 import { createChatScreenStyles } from './ChatScreen.styles'
 import { ConnectionStatusBar } from './ConnectionStatusBar'
+import { DateSeparator } from './DateSeparator'
 import { SuggestionChips } from './SuggestionChips'
 import { useChatHistory } from './useChatHistory'
+
+function isSameDay(a: Date, b: Date): boolean {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  )
+}
+
+function insertDateSeparators(messages: Message[]): ChatListItem[] {
+  if (messages.length === 0) return []
+
+  const result: ChatListItem[] = []
+  let lastDate: Date | null = null
+
+  for (const msg of messages) {
+    if (!lastDate || !isSameDay(lastDate, msg.timestamp)) {
+      result.push({
+        id: `date-sep-${msg.timestamp.toISOString().slice(0, 10)}-${msg.id}`,
+        type: 'date_separator',
+        date: msg.timestamp,
+      })
+      lastDate = msg.timestamp
+    }
+    result.push(msg)
+  }
+
+  return result
+}
 
 interface ChatScreenProps {
   providerConfig: ProviderConfig
@@ -59,7 +90,7 @@ function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
   const [isAgentPickerOpen, setIsAgentPickerOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const isMoltProvider = providerConfig.type === 'molt'
-  const flatListRef = useRef<FlashListRef<Message>>(null)
+  const flatListRef = useRef<FlashListRef<ChatListItem>>(null)
   const isNearBottom = useSharedValue(true)
 
   // Device & layout
@@ -186,10 +217,13 @@ function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
     [currentSessionKey, setCurrentAgentId, setCurrentSessionKey],
   )
 
-  // Filter messages by search query
-  const filteredMessages = searchQuery
-    ? allMessages.filter((m) => m.text.toLowerCase().includes(searchQuery.toLowerCase()))
-    : allMessages
+  // Filter messages by search query and insert date separators
+  const filteredMessages = useMemo(() => {
+    const msgs = searchQuery
+      ? allMessages.filter((m) => m.text.toLowerCase().includes(searchQuery.toLowerCase()))
+      : allMessages
+    return insertDateSeparators(msgs)
+  }, [allMessages, searchQuery])
 
   // Animate scroll-to-bottom button on the UI thread to avoid re-renders during scroll
   const scrollButtonStyle = useAnimatedStyle(() => {
@@ -220,7 +254,14 @@ function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
             ref={flatListRef}
             data={filteredMessages}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <ChatMessage message={item} />}
+            renderItem={({ item }) =>
+              item.type === 'date_separator' ? (
+                <DateSeparator item={item} />
+              ) : (
+                <ChatMessage message={item} />
+              )
+            }
+            getItemType={(item) => (item.type === 'date_separator' ? 'separator' : 'message')}
             contentContainerStyle={[styles.messageList, contentContainerStyle]}
             keyboardDismissMode="interactive"
             onContentSizeChange={() => {

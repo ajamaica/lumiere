@@ -38,3 +38,11 @@ export interface LifecycleEventMessage {
 }
 
 export type Message = TextMessage | ToolEventMessage | LifecycleEventMessage
+
+export interface DateSeparatorItem {
+  id: string
+  type: 'date_separator'
+  date: Date
+}
+
+export type ChatListItem = Message | DateSeparatorItem

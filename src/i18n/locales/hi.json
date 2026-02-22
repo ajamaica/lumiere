@@ -82,7 +82,9 @@
     "generatingSuggestions": "जवाब सोच रहा है...",
     "useSuggestion": "भेजें: {{text}}",
     "lifecycleStart": "सोच रहा है",
-    "lifecycleEnd": "पूर्ण"
+    "lifecycleEnd": "पूर्ण",
+    "dateToday": "आज",
+    "dateYesterday": "कल"
   },
   "connection": {
     "awaitingApproval": "अपने गेटवे पर इस डिवाइस को स्वीकृत करें"

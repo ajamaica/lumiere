@@ -82,7 +82,9 @@
     "generatingSuggestions": "Подбираю ответы...",
     "useSuggestion": "Отправить: {{text}}",
     "lifecycleStart": "Думает",
-    "lifecycleEnd": "Готово"
+    "lifecycleEnd": "Готово",
+    "dateToday": "Сегодня",
+    "dateYesterday": "Вчера"
   },
   "connection": {
     "awaitingApproval": "Подтвердите это устройство на вашем шлюзе"

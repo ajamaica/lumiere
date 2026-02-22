@@ -82,7 +82,9 @@
     "generatingSuggestions": "正在思考回覆...",
     "useSuggestion": "傳送：{{text}}",
     "lifecycleStart": "思考中",
-    "lifecycleEnd": "完成"
+    "lifecycleEnd": "完成",
+    "dateToday": "今天",
+    "dateYesterday": "昨天"
   },
   "connection": {
     "awaitingApproval": "請在閘道器上批准此設備"
