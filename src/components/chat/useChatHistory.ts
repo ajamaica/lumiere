@@ -42,7 +42,7 @@ function stripMessageMetadata(text: string): string {
 }
 
 /**
- * Strip the `[System: …]` prefix that the Molt provider prepends to carry
+ * Strip the `[System: …]` prefix that the OpenCraw provider prepends to carry
  * session system messages through the gateway.
  */
 function stripSystemMessagePrefix(text: string): string {

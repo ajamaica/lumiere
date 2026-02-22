@@ -1,6 +1,6 @@
 import { atom } from 'jotai'
 
-/** Whether the Molt gateway is connected */
+/** Whether the OpenCraw gateway is connected */
 export const gatewayConnectedAtom = atom<boolean>(false)
 
 /** Whether a gateway connection is in progress */

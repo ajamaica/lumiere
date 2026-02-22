@@ -68,18 +68,18 @@ EAS Build profiles for different environments:
 
 Each provider declares its capabilities via `ProviderCapabilities`. These act as implicit feature flags:
 
-| Capability          | Description            | Molt | Claude | Ollama | OpenAI | OpenRouter | Apple | Gemini |
-| ------------------- | ---------------------- | ---- | ------ | ------ | ------ | ---------- | ----- | ------ |
-| `chat`              | Basic chat messaging   | yes  | yes    | yes    | yes    | yes        | yes   | yes    |
-| `imageAttachments`  | Image upload support   | no   | yes    | no     | no     | no         | no    | no     |
-| `serverSessions`    | Server-side sessions   | yes  | no     | no     | no     | no         | no    | no     |
-| `persistentHistory` | Remote history storage | yes  | no     | no     | no     | no         | no    | no     |
-| `scheduler`         | Cron job scheduling    | yes  | no     | no     | no     | no         | no    | no     |
-| `gatewaySnapshot`   | Health snapshots       | yes  | no     | no     | no     | no         | no    | no     |
+| Capability          | Description            | OpenCraw | Claude | Ollama | OpenAI | OpenRouter | Apple | Gemini |
+| ------------------- | ---------------------- | -------- | ------ | ------ | ------ | ---------- | ----- | ------ |
+| `chat`              | Basic chat messaging   | yes      | yes    | yes    | yes    | yes        | yes   | yes    |
+| `imageAttachments`  | Image upload support   | no       | yes    | no     | no     | no         | no    | no     |
+| `serverSessions`    | Server-side sessions   | yes      | no     | no     | no     | no         | no    | no     |
+| `persistentHistory` | Remote history storage | yes      | no     | no     | no     | no         | no    | no     |
+| `scheduler`         | Cron job scheduling    | yes      | no     | no     | no     | no         | no    | no     |
+| `gatewaySnapshot`   | Health snapshots       | yes      | no     | no     | no     | no         | no    | no     |
 
 > Note: `CachedChatProvider` adds local caching to all providers regardless of their declared `persistentHistory` capability.
 
-## Molt Gateway Configuration
+## OpenCraw Gateway Configuration
 
 Defined in `src/config/gateway.config.ts`:
 
@@ -165,7 +165,7 @@ Each server is stored as a `ServerConfig` object in the `serversAtom`:
   id: string           // UUID
   name: string         // Display name
   url: string          // Server URL (HTTPS for remote, HTTP for local)
-  type: ProviderType   // 'molt' | 'claude' | 'ollama' | 'openai' | 'openrouter' | ...
+  type: ProviderType   // 'opencraw' | 'claude' | 'ollama' | 'openai' | 'openrouter' | ...
   model?: string       // Selected model (provider-specific)
   // Token stored separately in secure storage
 }

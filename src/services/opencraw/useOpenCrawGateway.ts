@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { logger } from '../../utils/logger'
-import { MoltGatewayClient } from './client'
+import { OpenCrawGatewayClient } from './client'
 import {
   AgentEvent,
   AgentParams,
@@ -16,7 +16,7 @@ import {
   GatewayLogsResponse,
   GatewaySnapshot,
   HealthStatus,
-  MoltConfig,
+  OpenCrawConfig,
   SendMessageParams,
   SessionsSpawnParams,
   SessionsSpawnResponse,
@@ -29,10 +29,10 @@ import {
   UpdateSkillParams,
 } from './types'
 
-const gatewayLogger = logger.create('MoltGateway')
+const gatewayLogger = logger.create('OpenCrawGateway')
 
-export interface UseMoltGatewayResult {
-  client: MoltGatewayClient | null
+export interface UseOpenCrawGatewayResult {
+  client: OpenCrawGatewayClient | null
   connected: boolean
   connecting: boolean
   reconnecting: boolean
@@ -100,13 +100,13 @@ function deriveStateFlags(state: ConnectionState) {
  * Require a connected client, throwing a descriptive error if null.
  * Used as a guard before every RPC call.
  */
-function requireClient(client: MoltGatewayClient | null): MoltGatewayClient {
+function requireClient(client: OpenCrawGatewayClient | null): OpenCrawGatewayClient {
   if (!client) throw new Error('Client not connected')
   return client
 }
 
-export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
-  const [client, setClient] = useState<MoltGatewayClient | null>(null)
+export function useOpenCrawGateway(config: OpenCrawConfig): UseOpenCrawGatewayResult {
+  const [client, setClient] = useState<OpenCrawGatewayClient | null>(null)
   const [connected, setConnected] = useState(false)
   const [connecting, setConnecting] = useState(false)
   const [reconnecting, setReconnecting] = useState(false)
@@ -115,7 +115,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
   const [health, setHealth] = useState<HealthStatus | null>(null)
   const [snapshot, setSnapshot] = useState<GatewaySnapshot | null>(null)
   const [connectResponse, setConnectResponse] = useState<ConnectResponse | null>(null)
-  const clientRef = useRef<MoltGatewayClient | null>(null)
+  const clientRef = useRef<OpenCrawGatewayClient | null>(null)
   const connectingRef = useRef(false)
 
   const connect = useCallback(async () => {
@@ -130,7 +130,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
     setError(null)
 
     try {
-      const newClient = new MoltGatewayClient(config)
+      const newClient = new OpenCrawGatewayClient(config)
       clientRef.current = newClient
 
       // Subscribe to connection state changes BEFORE connect() so we
@@ -160,7 +160,7 @@ export function useMoltGateway(config: MoltConfig): UseMoltGatewayResult {
       })
 
       const response = await newClient.connect()
-      gatewayLogger.info('Connected to Molt Gateway', response)
+      gatewayLogger.info('Connected to OpenCraw Gateway', response)
 
       setClient(newClient)
       setConnected(true)

@@ -4,7 +4,7 @@ Lumiere is a React Native mobile application that provides a unified client for 
 
 ## Core Capabilities
 
-- **Multi-provider support** — Chat with Claude, OpenAI, Ollama, OpenRouter, Apple Intelligence, Gemini Nano, and Molt Gateway from a single app
+- **Multi-provider support** — Chat with Claude, OpenAI, Ollama, OpenRouter, Apple Intelligence, Gemini Nano, and OpenCraw Gateway from a single app
 - **Real-time streaming** — Server-Sent Events and WebSocket-based streaming for all providers
 - **Biometric authentication** — Face ID / Touch ID lock screen
 - **Session management** — Persistent and stateless sessions with aliasing
@@ -33,7 +33,7 @@ Lumiere is a React Native mobile application that provides a unified client for 
 | Routing         | Expo Router 6 (file-based)              |
 | State           | Jotai 2.17 + AsyncStorage               |
 | Styling         | React Native StyleSheet + Reanimated 4  |
-| Networking      | Fetch (SSE), WebSocket (Molt)           |
+| Networking      | Fetch (SSE), WebSocket (OpenCraw)       |
 | Secure Storage  | expo-secure-store (Keychain / KeyStore) |
 | Testing         | Jest 29 + Testing Library               |
 | CI/CD           | GitHub Actions + EAS Build              |

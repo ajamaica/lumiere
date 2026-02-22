@@ -117,12 +117,12 @@ export default function ServersScreen() {
                       <View style={styles.providerRow}>
                         <View style={styles.providerIcon}>
                           {getProviderIcon(
-                            server.providerType || 'molt',
+                            server.providerType || 'opencraw',
                             theme.colors.text.tertiary,
                           )}
                         </View>
                         <Text style={styles.providerBadge}>
-                          {providerLabel(server.providerType || 'molt')}
+                          {providerLabel(server.providerType || 'opencraw')}
                           {server.model ? ` - ${server.model}` : ''}
                         </Text>
                       </View>

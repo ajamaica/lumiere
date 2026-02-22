@@ -165,7 +165,7 @@ export default function BackupServersScreen() {
 
             {serversList.map((server) => (
               <View key={server.id} style={styles.serverCard}>
-                {getProviderIcon(server.providerType || 'molt', theme.colors.text.secondary)}
+                {getProviderIcon(server.providerType || 'opencraw', theme.colors.text.secondary)}
                 <View style={styles.serverInfo}>
                   <Text style={styles.serverName}>{server.name}</Text>
                   <Text style={styles.serverUrl} numberOfLines={1}>

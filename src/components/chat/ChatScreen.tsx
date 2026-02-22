@@ -58,7 +58,7 @@ function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
   const currentAgentEmoji = agentConfigs[currentAgentId]?.identity?.emoji
   const [isAgentPickerOpen, setIsAgentPickerOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const isMoltProvider = providerConfig.type === 'molt'
+  const isOpenCrawProvider = providerConfig.type === 'opencraw'
   const flatListRef = useRef<FlashListRef<Message>>(null)
   const isNearBottom = useSharedValue(true)
 
@@ -306,7 +306,7 @@ function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
         health={health}
         retry={retry}
         isAgentResponding={isAgentResponding}
-        isMoltProvider={isMoltProvider}
+        isOpenCrawProvider={isOpenCrawProvider}
         onOpenSettings={handleOpenSettings}
         onOpenAgentPicker={() => setIsAgentPickerOpen(true)}
         allMessages={allMessages}
@@ -314,7 +314,7 @@ function ChatScreenComponent({ providerConfig }: ChatScreenProps) {
         onSearchQueryChange={setSearchQuery}
         currentAgentEmoji={currentAgentEmoji}
       />
-      {isMoltProvider && (
+      {isOpenCrawProvider && (
         <AgentPicker
           visible={isAgentPickerOpen}
           onClose={() => setIsAgentPickerOpen(false)}

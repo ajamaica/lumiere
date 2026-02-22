@@ -188,7 +188,7 @@ export function useServers(): UseServersResult {
   const getProviderConfig = useCallback(async (): Promise<ProviderConfig | null> => {
     if (!currentServer) return null
     const token = await getServerToken(currentServer.id)
-    // Ollama, Echo, and Apple don't require a token, Molt does
+    // Ollama, Echo, and Apple don't require a token, OpenCraw does
     if (
       !token &&
       currentServer.providerType !== 'ollama' &&
@@ -198,7 +198,7 @@ export function useServers(): UseServersResult {
       return null
     const password = await getServerPassword(currentServer.id)
     return {
-      type: currentServer.providerType || 'molt',
+      type: currentServer.providerType || 'opencraw',
       url: currentServer.url,
       token: token || '',
       password: password || undefined,
@@ -223,7 +223,7 @@ export function useServers(): UseServersResult {
         return null
       const password = await getServerPassword(id)
       return {
-        type: server.providerType || 'molt',
+        type: server.providerType || 'opencraw',
         url: server.url,
         token: token || '',
         password: password || undefined,

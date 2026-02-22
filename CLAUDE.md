@@ -2,7 +2,7 @@
 
 ## Overview
 
-Lumiere is a cross-platform AI chat client built with **React Native** (Expo SDK 54) and **TypeScript**. It connects to 12+ AI providers (OpenClaw/Molt, Claude, OpenAI, OpenRouter, Gemini, Ollama, Kimi, Apple Intelligence, and more) through a unified provider abstraction. The app runs on **iOS, Android, Web, Desktop (Electron), and Chrome Extension**.
+Lumiere is a cross-platform AI chat client built with **React Native** (Expo SDK 54) and **TypeScript**. It connects to 12+ AI providers (OpenClaw/OpenCraw, Claude, OpenAI, OpenRouter, Gemini, Ollama, Kimi, Apple Intelligence, and more) through a unified provider abstraction. The app runs on **iOS, Android, Web, Desktop (Electron), and Chrome Extension**.
 
 ## Quick Reference
 
@@ -65,8 +65,8 @@ lumiere/
 │   ├── missions.tsx        # Mission list (beta)
 │   ├── create-mission.tsx  # Mission creation
 │   ├── mission-detail.tsx  # Mission execution view
-│   ├── scheduler.tsx       # Cron job management (Molt only)
-│   ├── skills.tsx          # Skills marketplace (Molt only)
+│   ├── scheduler.tsx       # Cron job management (OpenCraw only)
+│   ├── skills.tsx          # Skills marketplace (OpenCraw only)
 │   └── ...                 # Other screens (colors, language, triggers, etc.)
 │
 ├── src/
@@ -83,7 +83,7 @@ lumiere/
 │   │   │   ├── types.ts    # ChatProvider interface, ProviderType, capabilities
 │   │   │   ├── createProvider.ts  # Factory function
 │   │   │   └── CachedChatProvider.ts  # Caching wrapper
-│   │   ├── molt/           # OpenClaw WebSocket client (protocol v3)
+│   │   ├── opencraw/           # OpenClaw WebSocket client (protocol v3)
 │   │   ├── claude/         # Anthropic API client
 │   │   ├── openai/         # OpenAI API client
 │   │   ├── openrouter/     # OpenRouter SDK wrapper
@@ -182,7 +182,7 @@ All AI backends implement the `ChatProvider` interface (`src/services/providers/
 - **Caching**: Every provider is wrapped with `CachedChatProvider` for offline message persistence (max 200 messages per session via AsyncStorage)
 - **Hook**: `useChatProvider()` manages provider lifecycle, auto-connects on config change, and tracks connection state
 
-**Provider types**: `molt`, `claude`, `openai`, `openai-compatible`, `openrouter`, `gemini`, `gemini-nano`, `kimi`, `ollama`, `apple`, `echo`
+**Provider types**: `opencraw`, `claude`, `openai`, `openai-compatible`, `openrouter`, `gemini`, `gemini-nano`, `kimi`, `ollama`, `apple`, `echo`
 
 ### State Management (Jotai)
 

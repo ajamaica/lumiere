@@ -53,14 +53,14 @@ describe('getCommandsForProvider', () => {
     expect(getCommandsForProvider(undefined)).toEqual(SLASH_COMMANDS)
   })
 
-  it('returns molt commands for molt provider', () => {
-    const moltCommands = getCommandsForProvider('molt')
-    expect(moltCommands.length).toBeGreaterThan(0)
-    // All current commands are tagged as molt, so molt should get all of them
-    const moltTagged = SLASH_COMMANDS.filter(
-      (cmd) => !cmd.providers || cmd.providers.includes('molt'),
+  it('returns opencraw commands for opencraw provider', () => {
+    const opencrawCommands = getCommandsForProvider('opencraw')
+    expect(opencrawCommands.length).toBeGreaterThan(0)
+    // All current commands are tagged as opencraw, so opencraw should get all of them
+    const opencrawTagged = SLASH_COMMANDS.filter(
+      (cmd) => !cmd.providers || cmd.providers.includes('opencraw'),
     )
-    expect(moltCommands).toEqual(moltTagged)
+    expect(opencrawCommands).toEqual(opencrawTagged)
   })
 
   it('returns empty list for providers with no matching commands', () => {
@@ -72,8 +72,8 @@ describe('getCommandsForProvider', () => {
 
   it('includes universal commands for any provider', () => {
     // Add a universal command scenario: commands without providers field
-    // are available to all providers. Currently all commands are molt-only,
-    // so non-molt providers get an empty list.
+    // are available to all providers. Currently all commands are opencraw-only,
+    // so non-opencraw providers get an empty list.
     const claudeCommands = getCommandsForProvider('claude')
     claudeCommands.forEach((cmd) => {
       expect(cmd.providers).toBeUndefined()
@@ -94,31 +94,31 @@ describe('useSlashCommands', () => {
     expect(result.hasInput).toBe(true)
   })
 
-  it('returns only molt commands for just "/" with molt provider', () => {
-    const result = useSlashCommands('/', 'molt')
-    const moltCommands = SLASH_COMMANDS.filter(
-      (cmd) => !cmd.providers || cmd.providers.includes('molt'),
+  it('returns only opencraw commands for just "/" with opencraw provider', () => {
+    const result = useSlashCommands('/', 'opencraw')
+    const opencrawCommands = SLASH_COMMANDS.filter(
+      (cmd) => !cmd.providers || cmd.providers.includes('opencraw'),
     )
-    expect(result.suggestions).toEqual(moltCommands)
+    expect(result.suggestions).toEqual(opencrawCommands)
   })
 
   it('returns no commands for just "/" with ollama provider', () => {
     const result = useSlashCommands('/', 'ollama')
-    // All current commands are molt-only, so ollama gets none
+    // All current commands are opencraw-only, so ollama gets none
     const universalCommands = SLASH_COMMANDS.filter((cmd) => !cmd.providers)
     expect(result.suggestions).toEqual(universalCommands)
   })
 
   it('filters commands by prefix', () => {
-    const result = useSlashCommands('/he', 'molt')
+    const result = useSlashCommands('/he', 'opencraw')
     expect(result.suggestions.length).toBeGreaterThanOrEqual(1)
     result.suggestions.forEach((cmd) => {
       expect(cmd.command.toLowerCase()).toMatch(/^\/he/)
     })
   })
 
-  it('returns /help for "/help" with molt provider', () => {
-    const result = useSlashCommands('/help', 'molt')
+  it('returns /help for "/help" with opencraw provider', () => {
+    const result = useSlashCommands('/help', 'opencraw')
     expect(result.suggestions).toEqual(
       expect.arrayContaining([expect.objectContaining({ command: '/help' })]),
     )
@@ -132,19 +132,19 @@ describe('useSlashCommands', () => {
   })
 
   it('is case-insensitive', () => {
-    const lower = useSlashCommands('/he', 'molt')
-    const upper = useSlashCommands('/HE', 'molt')
+    const lower = useSlashCommands('/he', 'opencraw')
+    const upper = useSlashCommands('/HE', 'opencraw')
     expect(lower.suggestions.length).toBe(upper.suggestions.length)
   })
 
   it('returns empty for non-matching prefix', () => {
-    const result = useSlashCommands('/zzzzz', 'molt')
+    const result = useSlashCommands('/zzzzz', 'opencraw')
     expect(result.suggestions).toEqual([])
   })
 
   it('exposes provider-filtered commands list', () => {
-    const moltResult = useSlashCommands('', 'molt')
+    const opencrawResult = useSlashCommands('', 'opencraw')
     const ollamaResult = useSlashCommands('', 'ollama')
-    expect(moltResult.commands.length).toBeGreaterThanOrEqual(ollamaResult.commands.length)
+    expect(opencrawResult.commands.length).toBeGreaterThanOrEqual(ollamaResult.commands.length)
   })
 })

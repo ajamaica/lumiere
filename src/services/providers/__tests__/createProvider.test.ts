@@ -2,8 +2,8 @@ import { CachedChatProvider } from '../CachedChatProvider'
 import { createChatProvider } from '../createProvider'
 
 // Mock heavy providers to avoid importing their dependencies
-jest.mock('../MoltChatProvider', () => ({
-  MoltChatProvider: jest.fn().mockImplementation(() => ({ type: 'molt-mock' })),
+jest.mock('../OpenCrawChatProvider', () => ({
+  OpenCrawChatProvider: jest.fn().mockImplementation(() => ({ type: 'opencraw-mock' })),
 }))
 jest.mock('../../ollama/OllamaChatProvider', () => ({
   OllamaChatProvider: jest.fn().mockImplementation(() => ({ type: 'ollama-mock' })),
@@ -32,9 +32,9 @@ describe('createChatProvider', () => {
     expect(provider.capabilities.chat).toBe(true)
   })
 
-  it('creates a CachedChatProvider wrapping molt for molt type', () => {
+  it('creates a CachedChatProvider wrapping opencraw for opencraw type', () => {
     const provider = createChatProvider({
-      type: 'molt',
+      type: 'opencraw',
       url: 'wss://example.com',
       token: 'test-token',
     })

@@ -194,7 +194,7 @@ export default function SettingsScreen() {
               >
                 <SettingRow
                   customIcon={getProviderIcon(
-                    server.providerType || 'molt',
+                    server.providerType || 'opencraw',
                     isActive ? theme.colors.primary : theme.colors.text.secondary,
                   )}
                   label={server.name}
@@ -225,8 +225,8 @@ export default function SettingsScreen() {
 
         <View style={styles.spacer} />
 
-        {/* Server Config - only available for OpenClaw (Molt) servers */}
-        {currentServer?.providerType === 'molt' && (
+        {/* Server Config - only available for OpenClaw (OpenCraw) servers */}
+        {currentServer?.providerType === 'opencraw' && (
           <Section title={t('settings.serverConfig')} showDivider>
             <SettingRow
               icon="grid-outline"

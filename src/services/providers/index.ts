@@ -9,7 +9,7 @@ export {
   writeSessionIndex,
 } from './CachedChatProvider'
 export { createChatProvider } from './createProvider'
-export { MoltChatProvider } from './MoltChatProvider'
+export { OpenCrawChatProvider } from './OpenCrawChatProvider'
 export type {
   AgentInfo,
   ChatHistoryMessage,

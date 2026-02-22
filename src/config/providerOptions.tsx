@@ -23,7 +23,7 @@ function ProviderIcon({ Icon, color }: { Icon: React.FC<SvgProps>; color: string
 
 export function getProviderIcon(type: ProviderType, color: string): React.ReactNode {
   const icons: Partial<Record<ProviderType, React.FC<SvgProps>>> = {
-    molt: OpenClawIcon,
+    opencraw: OpenClawIcon,
     ollama: OllamaIcon,
     claude: ClaudeIcon,
     openai: OpenAIIcon,
@@ -42,7 +42,7 @@ export function getProviderIcon(type: ProviderType, color: string): React.ReactN
 
 export function getAllProviderOptions(color: string) {
   const options: { value: ProviderType; label: string; icon: React.ReactNode }[] = [
-    { value: 'molt', label: 'OpenClaw', icon: getProviderIcon('molt', color) },
+    { value: 'opencraw', label: 'OpenClaw', icon: getProviderIcon('opencraw', color) },
     { value: 'ollama', label: 'Ollama', icon: getProviderIcon('ollama', color) },
     { value: 'claude', label: 'Claude', icon: getProviderIcon('claude', color) },
     { value: 'openai', label: 'OpenAI', icon: getProviderIcon('openai', color) },
@@ -79,7 +79,11 @@ export function getAllProviderOptions(color: string) {
 
 export function getBasicProviderOptions(color: string) {
   return [
-    { value: 'molt' as ProviderType, label: 'OpenClaw', icon: getProviderIcon('molt', color) },
+    {
+      value: 'opencraw' as ProviderType,
+      label: 'OpenClaw',
+      icon: getProviderIcon('opencraw', color),
+    },
     {
       value: 'ollama' as ProviderType,
       label: 'Ollama',

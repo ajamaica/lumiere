@@ -1,7 +1,7 @@
 /**
- * Molt URL utilities.
+ * OpenCraw URL utilities.
  *
- * Molt servers expose both a WebSocket endpoint (wss://) and an HTTP RPC
+ * OpenCraw servers expose both a WebSocket endpoint (wss://) and an HTTP RPC
  * endpoint (https://).  Users may enter either scheme — these helpers
  * normalise to the correct one depending on context.
  *

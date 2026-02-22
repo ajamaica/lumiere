@@ -1,20 +1,20 @@
 import { GatewayMethods } from '../../../config/gateway.config'
-import { MoltGatewayClient } from '../client'
+import { OpenCrawGatewayClient } from '../client'
 
 // We test that the skill RPC methods delegate to `request()` with the
 // correct gateway method name and parameters. To avoid needing a real
 // WebSocket connection we spy on the `request` method.
 
-function createClient(): MoltGatewayClient {
-  return new MoltGatewayClient({
+function createClient(): OpenCrawGatewayClient {
+  return new OpenCrawGatewayClient({
     url: 'wss://test.example.com',
     token: 'test-token',
     autoReconnect: false,
   })
 }
 
-describe('MoltGatewayClient — skill methods', () => {
-  let client: MoltGatewayClient
+describe('OpenCrawGatewayClient — skill methods', () => {
+  let client: OpenCrawGatewayClient
   let requestSpy: jest.SpyInstance
 
   beforeEach(() => {

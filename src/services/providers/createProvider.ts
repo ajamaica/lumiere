@@ -8,7 +8,7 @@ import { OllamaChatProvider } from '../ollama/OllamaChatProvider'
 import { OpenAIChatProvider } from '../openai/OpenAIChatProvider'
 import { OpenRouterChatProvider } from '../openrouter/OpenRouterChatProvider'
 import { CachedChatProvider } from './CachedChatProvider'
-import { MoltChatProvider } from './MoltChatProvider'
+import { OpenCrawChatProvider } from './OpenCrawChatProvider'
 import { ChatProvider, ProviderConfig } from './types'
 
 /**
@@ -23,8 +23,8 @@ export function createChatProvider(config: ProviderConfig): ChatProvider {
   let inner: ChatProvider
 
   switch (config.type) {
-    case 'molt':
-      inner = new MoltChatProvider(config)
+    case 'opencraw':
+      inner = new OpenCrawChatProvider(config)
       break
     case 'ollama':
       inner = new OllamaChatProvider(config)

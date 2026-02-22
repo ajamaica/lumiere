@@ -11,10 +11,10 @@ lumiere/
 │   ├── servers.tsx             # Server list management
 │   ├── add-server.tsx          # Add new server flow
 │   ├── edit-server.tsx         # Edit server configuration
-│   ├── sessions.tsx            # Session switching (Molt-only)
+│   ├── sessions.tsx            # Session switching (OpenCraw-only)
 │   ├── edit-session.tsx        # Session aliasing
 │   ├── overview.tsx            # Gateway health dashboard
-│   ├── scheduler.tsx           # Cron job scheduler (Molt)
+│   ├── scheduler.tsx           # Cron job scheduler (OpenCraw)
 │   ├── favorites.tsx           # Saved messages
 │   ├── triggers.tsx            # Automation triggers
 │   ├── colors.tsx              # Theme selection
@@ -45,10 +45,10 @@ lumiere/
 │   │   │   ├── types.ts            # ChatProvider interface
 │   │   │   ├── createProvider.ts   # Factory function
 │   │   │   └── CachedChatProvider.ts # Caching decorator
-│   │   ├── molt/               # Molt Gateway WebSocket client
-│   │   │   ├── client.ts           # MoltGatewayClient
+│   │   ├── opencraw/               # OpenCraw Gateway WebSocket client
+│   │   │   ├── client.ts           # OpenCrawGatewayClient
 │   │   │   ├── types.ts            # Protocol types
-│   │   │   └── useMoltGateway.ts   # React hook wrapper
+│   │   │   └── useOpenCrawGateway.ts   # React hook wrapper
 │   │   ├── claude/             # Anthropic Claude API
 │   │   ├── ollama/             # Local Ollama HTTP client
 │   │   ├── openai/             # OpenAI API
@@ -84,7 +84,7 @@ lumiere/
 │   │   └── useStyles.ts            # Theme access hook
 │   │
 │   ├── config/                 # App configuration
-│   │   ├── gateway.config.ts       # Molt protocol config
+│   │   ├── gateway.config.ts       # OpenCraw protocol config
 │   │   └── providerOptions.tsx     # Provider UI metadata
 │   │
 │   ├── constants/              # Shared constants
@@ -158,7 +158,7 @@ All chat providers implement a shared `ChatProvider` interface defined in `src/s
 │  getHealth(): Promise<HealthStatus>         │
 ├─────────────────────────────────────────────┤
 │  Implementations:                           │
-│  ├── MoltChatProvider     (WebSocket)       │
+│  ├── OpenCrawChatProvider     (WebSocket)       │
 │  ├── ClaudeChatProvider   (REST + SSE)      │
 │  ├── OllamaChatProvider   (REST + SSE)      │
 │  ├── OpenAIChatProvider   (REST + SSE)      │
@@ -225,7 +225,7 @@ Provider Event (message stream)
 
 | Provider           | Protocol      | Streaming Method            |
 | ------------------ | ------------- | --------------------------- |
-| Molt Gateway       | WebSocket     | WebSocket frames (JSON-RPC) |
+| OpenCraw Gateway   | WebSocket     | WebSocket frames (JSON-RPC) |
 | Claude             | HTTPS         | Server-Sent Events (SSE)    |
 | OpenAI             | HTTPS         | Server-Sent Events (SSE)    |
 | Ollama             | HTTP          | Server-Sent Events (SSE)    |
@@ -248,7 +248,7 @@ Provider Event (message stream)
 - `POST /api/chat` — Chat with local model
 - `GET /api/tags` — List available models
 
-**Molt Gateway**:
+**OpenCraw Gateway**:
 
 - WebSocket connection with JSON-RPC protocol (protocol version 3)
 - Supports: `agent.send`, `history.get`, `session.reset`, `sessions.list`, `gateway.health`, `gateway.snapshot`, `scheduler.create`

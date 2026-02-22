@@ -32,26 +32,26 @@ export default function AddServerScreen() {
   const [token, setToken] = useState('')
   const [password, setPassword] = useState('')
   const [clientId, setClientId] = useState('lumiere-mobile')
-  const [providerType, setProviderType] = useState<ProviderType>('molt')
+  const [providerType, setProviderType] = useState<ProviderType>('opencraw')
   const [model, setModel] = useState('')
 
   const needsUrl =
-    providerType === 'molt' || providerType === 'ollama' || providerType === 'openai-compatible'
+    providerType === 'opencraw' || providerType === 'ollama' || providerType === 'openai-compatible'
   const needsToken =
-    providerType === 'molt' ||
+    providerType === 'opencraw' ||
     providerType === 'claude' ||
     providerType === 'openai' ||
     providerType === 'openai-compatible' ||
     providerType === 'openrouter'
 
   const handleAdd = async () => {
-    if (providerType === 'molt' && url.trim() && token.trim()) {
+    if (providerType === 'opencraw' && url.trim() && token.trim()) {
       await addServer(
         {
           name: name.trim() || 'My Server',
           url: url.trim(),
           clientId: clientId.trim() || 'lumiere-mobile',
-          providerType: 'molt',
+          providerType: 'opencraw',
         },
         token.trim(),
         password.trim() || undefined,
@@ -263,7 +263,7 @@ export default function AddServerScreen() {
             </View>
           )}
 
-          {providerType === 'molt' && (
+          {providerType === 'opencraw' && (
             <>
               <View style={styles.formRow}>
                 <TextInput

@@ -1,4 +1,4 @@
-// Molt Gateway Protocol Types
+// OpenCraw Gateway Protocol Types
 
 // ─── Connection ─────────────────────────────────────────────────────────────────
 
@@ -9,7 +9,7 @@ export type ConnectionState =
   | 'reconnecting'
   | 'awaitingApproval'
 
-export interface MoltConfig {
+export interface OpenCrawConfig {
   url: string
   token: string
   password?: string

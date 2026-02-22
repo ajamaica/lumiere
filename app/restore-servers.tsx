@@ -240,7 +240,7 @@ export default function RestoreServersScreen() {
             {importedData.servers.map((server) => (
               <View key={server.id} style={styles.serverCard}>
                 {getProviderIcon(
-                  (server.providerType as ProviderType) || 'molt',
+                  (server.providerType as ProviderType) || 'opencraw',
                   theme.colors.text.secondary,
                 )}
                 <View style={styles.serverInfo}>

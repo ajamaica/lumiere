@@ -19,8 +19,8 @@ import {
   getClawHubSkillDetail,
   searchClawHubSkills,
 } from '../src/services/clawhub/api'
-import { useMoltGateway } from '../src/services/molt'
-import { ClawHubSkill, InstalledSkill } from '../src/services/molt/types'
+import { useOpenCrawGateway } from '../src/services/opencraw'
+import { ClawHubSkill, InstalledSkill } from '../src/services/opencraw/types'
 import { useTheme } from '../src/theme'
 import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
@@ -59,7 +59,7 @@ export default function SkillsScreen() {
   const [togglingSkill, setTogglingSkill] = useState<string | null>(null)
 
   const { connect, connected, sendAgentRequest, getSkillsStatus, enableSkill, disableSkill } =
-    useMoltGateway({
+    useOpenCrawGateway({
       url: config?.url || '',
       token: config?.token || '',
     })
@@ -266,7 +266,7 @@ export default function SkillsScreen() {
     },
   })
 
-  if (currentServer?.providerType !== 'molt') {
+  if (currentServer?.providerType !== 'opencraw') {
     return (
       <SafeAreaView style={styles.container}>
         <ScreenHeader title={t('skills.title')} showBack />

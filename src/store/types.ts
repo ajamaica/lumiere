@@ -7,7 +7,7 @@ export interface ServerConfig {
   name: string // User-friendly name
   url: string
   clientId?: string
-  providerType: ProviderType // 'molt' | 'ollama'
+  providerType: ProviderType // 'opencraw' | 'ollama'
   model?: string // Model name for Ollama (e.g., 'llama3.2', 'mistral')
   createdAt: number
 }

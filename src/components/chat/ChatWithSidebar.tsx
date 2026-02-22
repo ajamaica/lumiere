@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { DEFAULT_SESSION_KEY } from '../../constants'
 import { useServers } from '../../hooks/useServers'
-import { useMoltGateway } from '../../services/molt'
+import { useOpenCrawGateway } from '../../services/opencraw'
 import { ProviderConfig, readSessionIndex } from '../../services/providers'
 import {
   createSessionKey,
@@ -38,25 +38,25 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   // Track last session per server
   const serverSessionsRef = useRef<Record<string, string>>({})
 
-  const isMoltProvider = providerConfig?.type === 'molt'
+  const isOpenCrawProvider = providerConfig?.type === 'opencraw'
   // Providers that support session management (server-side or locally managed)
-  const supportsServerSessions = isMoltProvider || providerConfig?.type === 'echo'
+  const supportsServerSessions = isOpenCrawProvider || providerConfig?.type === 'echo'
 
-  const { connected, connect, disconnect, listSessions } = useMoltGateway({
+  const { connected, connect, disconnect, listSessions } = useOpenCrawGateway({
     url: providerConfig?.url || '',
     token: providerConfig?.token || '',
   })
 
   useEffect(() => {
-    // Only connect to gateway for Molt providers (WebSocket-based sessions)
-    if (providerConfig && isMoltProvider) {
+    // Only connect to gateway for OpenCraw providers (WebSocket-based sessions)
+    if (providerConfig && isOpenCrawProvider) {
       connect()
     }
     return () => {
       disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [providerConfig, isMoltProvider, currentServerId])
+  }, [providerConfig, isOpenCrawProvider, currentServerId])
 
   const loadSessions = useCallback(async () => {
     // Increment load ID so any in-flight request from a previous server
@@ -70,8 +70,8 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       return
     }
 
-    // Molt: load sessions from WebSocket gateway
-    if (isMoltProvider) {
+    // OpenCraw: load sessions from WebSocket gateway
+    if (isOpenCrawProvider) {
       // When disconnected (e.g. during a server switch), show a loader
       // instead of resetting to a fallback.
       if (!connected) {
@@ -114,7 +114,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       return
     }
 
-    // Non-Molt providers with session support (e.g. echo): load from local index
+    // Non-OpenCraw providers with session support (e.g. echo): load from local index
     setLoadingSessions(true)
     try {
       const entries = await readSessionIndex(providerConfig?.serverId)
@@ -135,7 +135,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
   }, [
     connected,
     listSessions,
-    isMoltProvider,
+    isOpenCrawProvider,
     supportsServerSessions,
     providerConfig?.serverId,
     currentSessionKey,
@@ -185,7 +185,7 @@ export function ChatWithSidebar({ providerConfig }: ChatWithSidebarProps) {
       if (lastSession) {
         // Restore previous session for this server
         setCurrentSessionKey(lastSession)
-      } else if (server?.providerType === 'molt' || server?.providerType === 'echo') {
+      } else if (server?.providerType === 'opencraw' || server?.providerType === 'echo') {
         // For providers with session support without a saved session,
         // clear the key so loadSessions picks the first one
         setCurrentSessionKey('')

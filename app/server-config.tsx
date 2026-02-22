@@ -15,8 +15,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Badge, Button, Card, ScreenHeader, Section, Text } from '../src/components/ui'
 import { useServers } from '../src/hooks/useServers'
-import { useMoltGateway } from '../src/services/molt'
-import { AgentDefaults, ChannelConfig, ServerConfig, ToolsConfig } from '../src/services/molt/types'
+import { useOpenCrawGateway } from '../src/services/opencraw'
+import {
+  AgentDefaults,
+  ChannelConfig,
+  ServerConfig,
+  ToolsConfig,
+} from '../src/services/opencraw/types'
 import { useTheme } from '../src/theme'
 import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
@@ -185,7 +190,7 @@ export default function ServerConfigScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connected, connect, getServerConfig, patchServerConfig } = useMoltGateway({
+  const { connected, connect, getServerConfig, patchServerConfig } = useOpenCrawGateway({
     url: config?.url || '',
     token: config?.token || '',
   })
@@ -326,8 +331,8 @@ export default function ServerConfigScreen() {
     },
   })
 
-  // Guard: Molt only
-  if (currentServer?.providerType !== 'molt') {
+  // Guard: OpenCraw only
+  if (currentServer?.providerType !== 'opencraw') {
     return (
       <SafeAreaView style={styles.container}>
         <ScreenHeader title={t('serverConfig.title')} showBack />

@@ -47,7 +47,7 @@ export default function EditServerScreen() {
   const [token, setToken] = useState('')
   const [password, setPassword] = useState('')
   const [clientId, setClientId] = useState(server?.clientId || 'lumiere-mobile')
-  const [providerType, setProviderType] = useState<ProviderType>(server?.providerType || 'molt')
+  const [providerType, setProviderType] = useState<ProviderType>(server?.providerType || 'opencraw')
   const [model, setModel] = useState(server?.model ?? '')
 
   const {
@@ -63,7 +63,7 @@ export default function EditServerScreen() {
   const handleSave = async () => {
     if (!id) return
 
-    if (providerType === 'molt' && !url.trim()) {
+    if (providerType === 'opencraw' && !url.trim()) {
       Alert.alert('Error', 'URL is required')
       return
     }
@@ -240,7 +240,7 @@ export default function EditServerScreen() {
             />
           </View>
 
-          {(providerType === 'molt' ||
+          {(providerType === 'opencraw' ||
             providerType === 'ollama' ||
             providerType === 'openai-compatible') && (
             <View style={styles.formRow}>
@@ -262,7 +262,7 @@ export default function EditServerScreen() {
             </View>
           )}
 
-          {providerType === 'molt' && (
+          {providerType === 'opencraw' && (
             <>
               <View style={styles.formRow}>
                 <TextInput

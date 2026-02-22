@@ -55,7 +55,7 @@ export const serverSessionsAtom = atomWithStorage<ServerSessions>('serverSession
 /** Display names for session keys */
 export const sessionAliasesAtom = atomWithStorage<SessionAliases>('sessionAliases', {}, storage)
 
-/** Current agent ID for OpenClaw (Molt) provider */
+/** Current agent ID for OpenClaw (OpenCraw) provider */
 export const currentAgentIdAtom = atomWithStorage<string>('currentAgentId', 'main', storage)
 
 /** Per-session system message (hidden context) */

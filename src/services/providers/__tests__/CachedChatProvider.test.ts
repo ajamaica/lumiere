@@ -428,7 +428,7 @@ describe('CachedChatProvider', () => {
       const key = buildCacheKey('srv', 'session-1')
       await jotaiStorage.setItem(key, cachedMessages)
 
-      // Inner provider has persistentHistory: true (like Molt)
+      // Inner provider has persistentHistory: true (like OpenCraw)
       // Server says session is empty - we should trust it
       const inner = createMockProvider({
         getChatHistory: jest.fn().mockResolvedValue({ messages: [] } as ChatHistoryResponse),

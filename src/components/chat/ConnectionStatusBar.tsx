@@ -38,7 +38,7 @@ interface ConnectionStatusBarProps {
   health: { agents?: Record<string, unknown> } | null
   retry: () => void
   isAgentResponding: boolean
-  isMoltProvider: boolean
+  isOpenCrawProvider: boolean
   onOpenSettings: () => void
   onOpenAgentPicker: () => void
   allMessages: Message[]
@@ -55,7 +55,7 @@ export function ConnectionStatusBar({
   health,
   retry,
   isAgentResponding,
-  isMoltProvider,
+  isOpenCrawProvider,
   onOpenSettings,
   onOpenAgentPicker,
   allMessages,
@@ -309,7 +309,7 @@ export function ConnectionStatusBar({
             )}
           </StatusBubbleContainer>
           <View style={styles.statusActions}>
-            {isMoltProvider && health?.agents && Object.keys(health.agents).length > 1 && (
+            {isOpenCrawProvider && health?.agents && Object.keys(health.agents).length > 1 && (
               <TouchableOpacity
                 onPress={onOpenAgentPicker}
                 activeOpacity={0.7}

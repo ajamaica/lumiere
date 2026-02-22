@@ -104,7 +104,7 @@ Deep links use the `lumiere://` scheme. The handler:
 | OpenRouter         | HTTPS         | TLS                    |
 | Ollama (remote)    | Configurable  | HTTP or HTTPS          |
 | Ollama (local)     | HTTP          | Localhost only         |
-| Molt Gateway       | WSS           | TLS (WebSocket Secure) |
+| OpenCraw Gateway   | WSS           | TLS (WebSocket Secure) |
 | Apple Intelligence | Native bridge | N/A (on-device)        |
 | Gemini Nano        | Native bridge | N/A (on-device)        |
 
@@ -112,7 +112,7 @@ Deep links use the `lumiere://` scheme. The handler:
 
 - **Claude**: Sent as `x-api-key` header
 - **OpenAI / OpenRouter**: Sent as `Authorization: Bearer {token}` header
-- **Molt**: Sent during WebSocket handshake as part of the client identification
+- **OpenCraw**: Sent during WebSocket handshake as part of the client identification
 - **Ollama**: Optional token, sent as header if configured
 
 ### On-Device Providers

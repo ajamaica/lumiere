@@ -26,13 +26,13 @@ import {
 import { DEFAULT_MODELS } from '../src/constants'
 import { useHaptics } from '../src/hooks/useHaptics'
 import { useServers } from '../src/hooks/useServers'
-import { useMoltGateway } from '../src/services/molt'
+import { useOpenCrawGateway } from '../src/services/opencraw'
 import {
   AgentConfig,
   AgentIdentity,
   AgentInfo,
   ConfigGetResponse,
-} from '../src/services/molt/types'
+} from '../src/services/opencraw/types'
 import { useTheme } from '../src/theme'
 import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
@@ -112,7 +112,7 @@ export default function AgentsScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const { connected, connect, getServerConfig, patchServerConfig, health } = useMoltGateway({
+  const { connected, connect, getServerConfig, patchServerConfig, health } = useOpenCrawGateway({
     url: config?.url || '',
     token: config?.token || '',
   })
@@ -416,8 +416,8 @@ export default function AgentsScreen() {
     },
   })
 
-  // Guard: Molt only
-  if (currentServer?.providerType !== 'molt') {
+  // Guard: OpenCraw only
+  if (currentServer?.providerType !== 'opencraw') {
     return (
       <SafeAreaView style={styles.container}>
         <ScreenHeader title={t('agentManagement.title')} showBack />

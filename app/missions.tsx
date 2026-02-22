@@ -73,7 +73,7 @@ export default function MissionsScreen() {
     },
   })
 
-  if (currentServer?.providerType !== 'molt') {
+  if (currentServer?.providerType !== 'opencraw') {
     return (
       <SafeAreaView style={styles.container}>
         <ScreenHeader title={t('missions.title')} showBack />

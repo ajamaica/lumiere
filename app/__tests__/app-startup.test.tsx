@@ -126,9 +126,9 @@ jest.mock('jotai', () => ({
   },
 }))
 
-// Mock molt gateway
-jest.mock('../../src/services/molt', () => ({
-  useMoltGateway: () => ({
+// Mock opencraw gateway
+jest.mock('../../src/services/opencraw', () => ({
+  useOpenCrawGateway: () => ({
     connected: false,
     connecting: false,
     error: null,

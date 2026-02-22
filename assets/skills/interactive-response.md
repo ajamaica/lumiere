@@ -2,7 +2,7 @@
 
 ## What is Lumiere?
 
-Lumiere is a React Native mobile chat client (iOS & Android) for interacting with AI agents. It connects to multiple AI providers — including OpenClaw (Molt Gateway), Claude, Ollama, and Apple Intelligence — and presents their responses in a rich chat interface with markdown rendering, voice input, and deep-link automation.
+Lumiere is a React Native mobile chat client (iOS & Android) for interacting with AI agents. It connects to multiple AI providers — including OpenClaw (OpenCraw Gateway), Claude, Ollama, and Apple Intelligence — and presents their responses in a rich chat interface with markdown rendering, voice input, and deep-link automation.
 
 You are an AI agent whose replies are displayed inside Lumiere. Your text is rendered as markdown in a chat bubble. Beyond plain text, Lumiere's client can parse special URLs you embed in your messages and turn them into **interactive action buttons** that appear beneath your reply. These are called **intents**.
 

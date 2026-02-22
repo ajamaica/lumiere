@@ -2,15 +2,15 @@
 
 ## Overview
 
-Lumiere uses sessions to organize conversations. Session behavior varies significantly between providers — Molt Gateway supports full server-side sessions, while other providers use local-only session tracking with cached history.
+Lumiere uses sessions to organize conversations. Session behavior varies significantly between providers — OpenCraw Gateway supports full server-side sessions, while other providers use local-only session tracking with cached history.
 
 ## Session Types
 
-### Server-Side Sessions (Molt Gateway)
+### Server-Side Sessions (OpenCraw Gateway)
 
-Molt is the only provider with native server-side session support. Sessions are:
+OpenCraw is the only provider with native server-side session support. Sessions are:
 
-- **Persistent** — Stored on the Molt gateway server
+- **Persistent** — Stored on the OpenCraw gateway server
 - **Identifiable** — Formatted as `agent:{agentId}:{sessionName}` (e.g., `agent:main:main`)
 - **Listable** — Users can list, switch between, and reset sessions via the provider API
 - **Multi-agent** — Different agent IDs can have independent sessions
@@ -112,7 +112,7 @@ Example: `chat_cache:abc-123:agent:main:main`
 5. Chat screen displays cached messages
 ```
 
-### Switching Sessions (Molt)
+### Switching Sessions (OpenCraw)
 
 ```
 1. User opens Sessions screen (app/sessions.tsx)
@@ -129,7 +129,7 @@ Example: `chat_cache:abc-123:agent:main:main`
 ```
 1. User triggers reset (settings or session management)
 2. Provider.resetSession(sessionKey) called
-   - Molt: Server-side history cleared
+   - OpenCraw: Server-side history cleared
    - Others: No-op on provider, local-only
 3. CachedChatProvider clears local cache for that session
 4. Chat screen shows empty conversation

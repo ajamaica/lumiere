@@ -1,6 +1,6 @@
-# Molt WebSocket Protocol — Chat Stream Reference
+# OpenCraw WebSocket Protocol — Chat Stream Reference
 
-This document describes the OpenClaw Molt Gateway Protocol v3 as it flows through the Lumiere chat stream. It covers the WebSocket frame types, the agent event lifecycle, and how each protocol event maps to UI elements in the chat.
+This document describes the OpenClaw OpenCraw Gateway Protocol v3 as it flows through the Lumiere chat stream. It covers the WebSocket frame types, the agent event lifecycle, and how each protocol event maps to UI elements in the chat.
 
 ---
 
@@ -27,7 +27,7 @@ This document describes the OpenClaw Molt Gateway Protocol v3 as it flows throug
 
 ## Protocol Overview
 
-Lumiere communicates with the Molt gateway over a single WebSocket connection using JSON frames. The protocol uses three frame types (`req`, `res`, `event`) and supports streaming agent responses through sequenced events.
+Lumiere communicates with the OpenCraw gateway over a single WebSocket connection using JSON frames. The protocol uses three frame types (`req`, `res`, `event`) and supports streaming agent responses through sequenced events.
 
 | Property         | Value                     |
 | ---------------- | ------------------------- |
@@ -364,7 +364,7 @@ This section summarizes how protocol events translate to visual elements in the 
 
 ### Provider Event Translation
 
-The `MoltChatProvider` translates raw `AgentEvent` objects into provider-agnostic `ChatProviderEvent` objects:
+The `OpenCrawChatProvider` translates raw `AgentEvent` objects into provider-agnostic `ChatProviderEvent` objects:
 
 | AgentEvent stream | AgentEvent data      | ChatProviderEvent type | ChatProviderEvent fields                          |
 | ----------------- | -------------------- | ---------------------- | ------------------------------------------------- |
@@ -411,7 +411,7 @@ The chat renders two message types:
 
 ## Available Tools
 
-The Molt gateway exposes the following tools to the agent. When used, they appear as tool events in the chat stream.
+The OpenCraw gateway exposes the following tools to the agent. When used, they appear as tool events in the chat stream.
 
 ### File Operations
 

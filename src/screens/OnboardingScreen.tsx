@@ -62,7 +62,7 @@ export function OnboardingScreen() {
           name: 'My Server',
           url: localUrl.trim(),
           clientId: localClientId.trim(),
-          providerType: 'molt',
+          providerType: 'opencraw',
         },
         localToken.trim(),
       )

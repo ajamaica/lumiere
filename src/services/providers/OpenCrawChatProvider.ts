@@ -1,6 +1,6 @@
 import { getMcpManager } from '../mcp'
-import { generateIdempotencyKey, MoltGatewayClient } from '../molt/client'
-import { AgentEvent, Attachment, ConnectionState } from '../molt/types'
+import { generateIdempotencyKey, OpenCrawGatewayClient } from '../opencraw/client'
+import { AgentEvent, Attachment, ConnectionState } from '../opencraw/types'
 import {
   ChatHistoryMessage,
   ChatHistoryResponse,
@@ -65,11 +65,11 @@ function stripHistoryMessageMetadata(msg: ChatHistoryMessage): ChatHistoryMessag
 }
 
 /**
- * Adapter that wraps MoltGatewayClient to conform to the ChatProvider interface.
- * This preserves all existing Molt Gateway functionality while allowing the
+ * Adapter that wraps OpenCrawGatewayClient to conform to the ChatProvider interface.
+ * This preserves all existing OpenCraw Gateway functionality while allowing the
  * UI layer to work with any provider.
  */
-export class MoltChatProvider implements ChatProvider {
+export class OpenCrawChatProvider implements ChatProvider {
   readonly capabilities: ProviderCapabilities = {
     chat: true,
     imageAttachments: true,
@@ -82,10 +82,10 @@ export class MoltChatProvider implements ChatProvider {
     canvas: true,
   }
 
-  private client: MoltGatewayClient
+  private client: OpenCrawGatewayClient
 
   constructor(config: ProviderConfig) {
-    this.client = new MoltGatewayClient({
+    this.client = new OpenCrawGatewayClient({
       url: config.url,
       token: config.token,
       password: config.password,
@@ -200,8 +200,8 @@ export class MoltChatProvider implements ChatProvider {
     return await this.client.getHealth()
   }
 
-  /** Expose the underlying client for Molt-specific features (cron, scheduler, etc.) */
-  getMoltClient(): MoltGatewayClient {
+  /** Expose the underlying client for OpenCraw-specific features (cron, scheduler, etc.) */
+  getOpenCrawClient(): OpenCrawGatewayClient {
     return this.client
   }
 }

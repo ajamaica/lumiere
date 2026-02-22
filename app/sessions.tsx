@@ -20,7 +20,7 @@ import {
 } from '../src/components/ui'
 import { useHaptics } from '../src/hooks/useHaptics'
 import { useServers } from '../src/hooks/useServers'
-import { AgentConfig, useMoltGateway } from '../src/services/molt'
+import { AgentConfig, useOpenCrawGateway } from '../src/services/opencraw'
 import {
   buildCacheKey,
   deleteSessionData,
@@ -72,8 +72,8 @@ export default function SessionsScreen() {
 
   const haptics = useHaptics()
 
-  // Molt provider uses server-side sessions via WebSocket gateway
-  const isMoltProvider = config?.type === 'molt'
+  // OpenCraw provider uses server-side sessions via WebSocket gateway
+  const isOpenCrawProvider = config?.type === 'opencraw'
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -92,13 +92,13 @@ export default function SessionsScreen() {
     resetSession,
     health,
     getServerConfig,
-  } = useMoltGateway({
+  } = useOpenCrawGateway({
     url: config?.url || '',
     token: config?.token || '',
   })
 
   useEffect(() => {
-    if (config && isMoltProvider) {
+    if (config && isOpenCrawProvider) {
       connect()
     } else if (config) {
       setLoading(false)
@@ -107,11 +107,11 @@ export default function SessionsScreen() {
       disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config, isMoltProvider])
+  }, [config, isOpenCrawProvider])
 
-  // Fetch agent configs (with identity/emoji) when connected to Molt
+  // Fetch agent configs (with identity/emoji) when connected to OpenCraw
   useEffect(() => {
-    if (!connected || !isMoltProvider) return
+    if (!connected || !isOpenCrawProvider) return
 
     const fetchAgentConfigs = async () => {
       try {
@@ -125,10 +125,10 @@ export default function SessionsScreen() {
       }
     }
     fetchAgentConfigs()
-  }, [connected, isMoltProvider, getServerConfig, setGlobalAgentConfigs])
+  }, [connected, isOpenCrawProvider, getServerConfig, setGlobalAgentConfigs])
 
-  const loadMoltSessions = useCallback(async () => {
-    if (!connected || !isMoltProvider) return
+  const loadOpenCrawSessions = useCallback(async () => {
+    if (!connected || !isOpenCrawProvider) return
 
     try {
       const sessionData = (await listSessions()) as { sessions?: Session[] }
@@ -140,10 +140,10 @@ export default function SessionsScreen() {
     } finally {
       setLoading(false)
     }
-  }, [connected, listSessions, isMoltProvider])
+  }, [connected, listSessions, isOpenCrawProvider])
 
   const loadLocalSessions = useCallback(async () => {
-    if (!config || isMoltProvider) return
+    if (!config || isOpenCrawProvider) return
 
     try {
       const entries: SessionIndexEntry[] = await readSessionIndex(config.serverId)
@@ -160,18 +160,18 @@ export default function SessionsScreen() {
     } finally {
       setLoading(false)
     }
-  }, [config, isMoltProvider])
+  }, [config, isOpenCrawProvider])
 
   useEffect(() => {
-    if (isMoltProvider) {
-      loadMoltSessions()
+    if (isOpenCrawProvider) {
+      loadOpenCrawSessions()
     } else {
       loadLocalSessions()
     }
-  }, [loadMoltSessions, loadLocalSessions, isMoltProvider])
+  }, [loadOpenCrawSessions, loadLocalSessions, isOpenCrawProvider])
 
   const agentIds = health?.agents ? Object.keys(health.agents) : []
-  const hasMultipleAgents = isMoltProvider && agentIds.length > 1
+  const hasMultipleAgents = isOpenCrawProvider && agentIds.length > 1
 
   const handleNewSession = () => {
     if (hasMultipleAgents) {
@@ -232,8 +232,8 @@ export default function SessionsScreen() {
         text: t('sessions.reset'),
         style: 'destructive',
         onPress: async () => {
-          // Reset the server-side session if connected to a Molt provider
-          if (isMoltProvider && connected) {
+          // Reset the server-side session if connected to a OpenCraw provider
+          if (isOpenCrawProvider && connected) {
             try {
               await resetSession(currentSessionKey)
             } catch (err) {
@@ -272,7 +272,7 @@ export default function SessionsScreen() {
         text: t('common.delete'),
         style: 'destructive',
         onPress: async () => {
-          if (isMoltProvider && connected) {
+          if (isOpenCrawProvider && connected) {
             try {
               await deleteSession(sessionKey)
             } catch (err) {

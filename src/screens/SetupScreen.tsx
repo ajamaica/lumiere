@@ -50,7 +50,7 @@ export function SetupScreen() {
     ? allOptions
     : allOptions.filter((o) => o.value !== 'apple')
 
-  const [providerType, setProviderType] = useState<ProviderType>('molt')
+  const [providerType, setProviderType] = useState<ProviderType>('opencraw')
   const [localUrl, setLocalUrl] = useState('')
   const [localToken, setLocalToken] = useState('')
   const [localClientId, setLocalClientId] = useState('lumiere-mobile')
@@ -131,9 +131,9 @@ export function SetupScreen() {
   })
 
   const needsUrl =
-    providerType === 'molt' || providerType === 'ollama' || providerType === 'openai-compatible'
+    providerType === 'opencraw' || providerType === 'ollama' || providerType === 'openai-compatible'
   const needsToken =
-    providerType === 'molt' ||
+    providerType === 'opencraw' ||
     providerType === 'claude' ||
     providerType === 'openai' ||
     providerType === 'openai-compatible' ||
@@ -190,13 +190,13 @@ export function SetupScreen() {
   }
 
   const handleComplete = async () => {
-    if (providerType === 'molt' && localUrl.trim() && localToken.trim()) {
+    if (providerType === 'opencraw' && localUrl.trim() && localToken.trim()) {
       const serverId = await addServer(
         {
           name: 'My Server',
           url: localUrl.trim(),
           clientId: localClientId.trim(),
-          providerType: 'molt',
+          providerType: 'opencraw',
         },
         localToken.trim(),
       )
@@ -381,7 +381,7 @@ export function SetupScreen() {
   }
 
   const isValid =
-    providerType === 'molt' || providerType === 'openai-compatible'
+    providerType === 'opencraw' || providerType === 'openai-compatible'
       ? localUrl.trim().length > 0 && localToken.trim().length > 0
       : providerType === 'claude' ||
           providerType === 'openai' ||
@@ -532,7 +532,7 @@ export function SetupScreen() {
               />
             )}
 
-            {providerType === 'molt' && (
+            {providerType === 'opencraw' && (
               <>
                 <TouchableOpacity
                   style={styles.advancedToggle}

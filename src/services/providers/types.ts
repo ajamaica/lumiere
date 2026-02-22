@@ -1,8 +1,8 @@
 // Abstract Chat Provider types
-// Shared interface that all chat providers (Molt, Ollama, etc.) must implement
+// Shared interface that all chat providers (OpenCraw, Ollama, etc.) must implement
 
 export type ProviderType =
-  | 'molt'
+  | 'opencraw'
   | 'ollama'
   | 'echo'
   | 'apple'
@@ -17,8 +17,8 @@ export type ProviderType =
 export interface ProviderConfig {
   type: ProviderType
   url: string
-  token: string // Molt requires token; Ollama may not
-  password?: string // Optional gateway password for Molt
+  token: string // OpenCraw requires token; Ollama may not
+  password?: string // Optional gateway password for OpenCraw
   clientId?: string
   model?: string // Ollama model name (e.g., 'llama3', 'mistral')
   serverId?: string // Server UUID for cache isolation
@@ -107,7 +107,7 @@ export interface ProviderCapabilities {
 /**
  * Abstract interface for any chat provider.
  *
- * Both Molt Gateway (WebSocket) and Ollama (HTTP streaming) implement this
+ * Both OpenCraw Gateway (WebSocket) and Ollama (HTTP streaming) implement this
  * interface, allowing the UI layer to be provider-agnostic.
  */
 export interface ChatProvider {

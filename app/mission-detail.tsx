@@ -27,8 +27,8 @@ import { stripMissionMarkers, useMissionEventParser } from '../src/hooks/useMiss
 import { useMissionList } from '../src/hooks/useMissionList'
 import { useMissionMessages } from '../src/hooks/useMissionMessages'
 import { useServers } from '../src/hooks/useServers'
-import { useMoltGateway } from '../src/services/molt'
-import type { AgentEvent, SubagentEvent } from '../src/services/molt/types'
+import { useOpenCrawGateway } from '../src/services/opencraw'
+import type { AgentEvent, SubagentEvent } from '../src/services/opencraw/types'
 import type { ChatHistoryMessage, ChatHistoryResponse } from '../src/services/providers/types'
 import type { SerializedMessage, SubtaskSubagent } from '../src/store/missionTypes'
 import { useTheme } from '../src/theme'
@@ -147,7 +147,7 @@ export default function MissionDetailScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const gateway = useMoltGateway({
+  const gateway = useOpenCrawGateway({
     url: config?.url || '',
     token: config?.token || '',
   })
@@ -907,7 +907,7 @@ export default function MissionDetailScreen() {
 
         {/* Input bar */}
         {isActive && (
-          <ChatInput onSend={handleChatInputSend} disabled={isStreaming} providerType="molt" />
+          <ChatInput onSend={handleChatInputSend} disabled={isStreaming} providerType="opencraw" />
         )}
       </KeyboardAvoidingView>
     </SafeAreaView>

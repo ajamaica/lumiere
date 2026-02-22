@@ -19,7 +19,7 @@ import { SubtaskTimeline } from '../src/components/missions/SubtaskTimeline'
 import { Button, Card, GradientButton, ScreenHeader, Text } from '../src/components/ui'
 import { useMissionActions } from '../src/hooks/useMissionActions'
 import { useServers } from '../src/hooks/useServers'
-import { useMoltGateway } from '../src/services/molt'
+import { useOpenCrawGateway } from '../src/services/opencraw'
 import { useTheme } from '../src/theme'
 import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
@@ -212,7 +212,7 @@ export default function CreateMissionScreen() {
     loadConfig()
   }, [getProviderConfig, currentServerId])
 
-  const gateway = useMoltGateway({
+  const gateway = useOpenCrawGateway({
     url: config?.url || '',
     token: config?.token || '',
   })

@@ -1,5 +1,5 @@
 /**
- * MoltGatewayClient — full protocol v3 WebSocket client.
+ * OpenCrawGatewayClient — full protocol v3 WebSocket client.
  *
  * Handles connect handshake, request/response with timeouts,
  * event subscriptions, auto-reconnect with exponential backoff + jitter,
@@ -36,7 +36,7 @@ import {
   GatewayLogsParams,
   GatewayLogsResponse,
   HealthStatus,
-  MoltConfig,
+  OpenCrawConfig,
   PendingRequest,
   RequestFrame,
   ResponseFrame,
@@ -57,9 +57,9 @@ const wsLogger = logger.create('WebSocket')
 
 // ─── Client ─────────────────────────────────────────────────────────────────────
 
-export class MoltGatewayClient {
+export class OpenCrawGatewayClient {
   private ws: WebSocket | null = null
-  private config: MoltConfig
+  private config: OpenCrawConfig
 
   // Connection state machine
   private _connectionState: ConnectionState = 'disconnected'
@@ -93,7 +93,7 @@ export class MoltGatewayClient {
   private connectPromiseReject: ((reason: Error) => void) | null = null
   private connectResponse: ConnectResponse | null = null
 
-  constructor(config: MoltConfig) {
+  constructor(config: OpenCrawConfig) {
     this.config = {
       clientId: 'lumiere-mobile',
       autoReconnect: true,

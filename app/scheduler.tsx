@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Badge, Button, Card, ScreenHeader, Section, StatCard, Text } from '../src/components/ui'
 import { useHaptics } from '../src/hooks/useHaptics'
 import { useServers } from '../src/hooks/useServers'
-import { useMoltGateway } from '../src/services/molt'
+import { useOpenCrawGateway } from '../src/services/opencraw'
 import { useTheme } from '../src/theme'
 import { useContentContainerStyle } from '../src/utils/device'
 import { logger } from '../src/utils/logger'
@@ -72,7 +72,7 @@ export default function SchedulerScreen() {
     enableCronJob,
     runCronJob,
     removeCronJob,
-  } = useMoltGateway({
+  } = useOpenCrawGateway({
     url: config?.url || '',
     token: config?.token || '',
   })
@@ -234,7 +234,7 @@ export default function SchedulerScreen() {
     },
   })
 
-  if (currentServer?.providerType !== 'molt') {
+  if (currentServer?.providerType !== 'opencraw') {
     return (
       <SafeAreaView style={styles.container}>
         <ScreenHeader title="Scheduler" showBack />

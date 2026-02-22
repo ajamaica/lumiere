@@ -11,7 +11,7 @@ import {
   serversAtom,
   serverSessionsAtom,
 } from '../../store'
-import { toHttpUrl } from '../molt/url'
+import { toHttpUrl } from '../opencraw/url'
 import type { ChatHistoryMessage } from '../providers/types'
 import { getServerToken } from '../secureTokenStorage'
 
@@ -109,7 +109,7 @@ async function resolveAtom<T>(value: T | Promise<T>): Promise<T> {
 }
 
 /**
- * Fetch all session keys for a Molt server via the HTTP RPC endpoint.
+ * Fetch all session keys for a OpenCraw server via the HTTP RPC endpoint.
  * Falls back to the provided default session key on failure.
  */
 async function listServerSessions(
@@ -142,7 +142,7 @@ async function listServerSessions(
 
 /**
  * The background task that runs periodically. It reads server configs from
- * Jotai store, fetches chat history from each Molt server gateway, compares
+ * Jotai store, fetches chat history from each OpenCraw server gateway, compares
  * against the last seen message timestamp, and fires a local notification
  * when new assistant messages are found.
  */
@@ -162,8 +162,8 @@ export async function backgroundCheckTask(): Promise<BackgroundTask.BackgroundTa
     for (const serverId of Object.keys(servers)) {
       const server = servers[serverId]
 
-      // Only Molt servers expose the /api/rpc endpoint for background polling
-      if (server.providerType !== 'molt') continue
+      // Only OpenCraw servers expose the /api/rpc endpoint for background polling
+      if (server.providerType !== 'opencraw') continue
 
       const token = await getServerToken(serverId)
       if (!token) continue

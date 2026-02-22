@@ -131,7 +131,7 @@ describe('useQuickActions', () => {
           id: 'server-1',
           name: 'My Server',
           url: 'ws://localhost',
-          providerType: 'molt',
+          providerType: 'opencraw',
           createdAt: 0,
         },
         'server-2': {
