@@ -82,7 +82,9 @@
     "generatingSuggestions": "Antworten werden überlegt...",
     "useSuggestion": "Senden: {{text}}",
     "lifecycleStart": "Denkt nach",
-    "lifecycleEnd": "Fertig"
+    "lifecycleEnd": "Fertig",
+    "dateToday": "Heute",
+    "dateYesterday": "Gestern"
   },
   "connection": {
     "awaitingApproval": "Genehmigen Sie dieses Gerät auf Ihrem Gateway"

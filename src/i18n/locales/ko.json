@@ -82,7 +82,9 @@
     "generatingSuggestions": "답장을 생각하는 중...",
     "useSuggestion": "보내기: {{text}}",
     "lifecycleStart": "생각 중",
-    "lifecycleEnd": "완료"
+    "lifecycleEnd": "완료",
+    "dateToday": "오늘",
+    "dateYesterday": "어제"
   },
   "connection": {
     "awaitingApproval": "게이트웨이에서 이 기기를 승인해 주세요"

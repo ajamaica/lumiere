@@ -82,7 +82,9 @@
     "generatingSuggestions": "Thinking of replies...",
     "useSuggestion": "Send: {{text}}",
     "lifecycleStart": "Thinking",
-    "lifecycleEnd": "Done"
+    "lifecycleEnd": "Done",
+    "dateToday": "Today",
+    "dateYesterday": "Yesterday"
   },
   "connection": {
     "awaitingApproval": "Approve this device on your gateway"

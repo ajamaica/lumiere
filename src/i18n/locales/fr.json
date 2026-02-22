@@ -82,7 +82,9 @@
     "generatingSuggestions": "Réflexion en cours...",
     "useSuggestion": "Envoyer : {{text}}",
     "lifecycleStart": "Réflexion",
-    "lifecycleEnd": "Terminé"
+    "lifecycleEnd": "Terminé",
+    "dateToday": "Aujourd'hui",
+    "dateYesterday": "Hier"
   },
   "connection": {
     "awaitingApproval": "Approuvez cet appareil sur votre passerelle"

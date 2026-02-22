@@ -82,7 +82,9 @@
     "generatingSuggestions": "返信を考えています...",
     "useSuggestion": "送信: {{text}}",
     "lifecycleStart": "思考中",
-    "lifecycleEnd": "完了"
+    "lifecycleEnd": "完了",
+    "dateToday": "今日",
+    "dateYesterday": "昨日"
   },
   "connection": {
     "awaitingApproval": "ゲートウェイでこのデバイスを承認してください"
