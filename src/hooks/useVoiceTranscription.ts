@@ -20,6 +20,7 @@ export function useVoiceTranscription(): UseVoiceTranscriptionResult {
   const moduleRef = useRef<
     typeof import('../../modules/speech-transcription').SpeechTranscriptionModule | null
   >(null)
+  const stoppingRef = useRef(false)
 
   useEffect(() => {
     if (!isNative) return
@@ -53,7 +54,9 @@ export function useVoiceTranscription(): UseVoiceTranscriptionResult {
     })
 
     const errorSub = mod.addErrorListener(() => {
-      setStatus('error')
+      if (!stoppingRef.current) {
+        setStatus('error')
+      }
     })
 
     return () => {
@@ -66,6 +69,7 @@ export function useVoiceTranscription(): UseVoiceTranscriptionResult {
     const mod = moduleRef.current
     if (!mod) return
 
+    stoppingRef.current = false
     setStatus('requesting')
     try {
       const granted = await mod.requestPermissions()
@@ -85,6 +89,7 @@ export function useVoiceTranscription(): UseVoiceTranscriptionResult {
     const mod = moduleRef.current
     if (!mod) return ''
 
+    stoppingRef.current = true
     try {
       const finalText = await mod.stopTranscription()
       setStatus('idle')
@@ -92,6 +97,10 @@ export function useVoiceTranscription(): UseVoiceTranscriptionResult {
     } catch {
       setStatus('error')
       return transcribedText
+    } finally {
+      setTimeout(() => {
+        stoppingRef.current = false
+      }, 300)
     }
   }, [transcribedText])
 
@@ -99,11 +108,15 @@ export function useVoiceTranscription(): UseVoiceTranscriptionResult {
     const mod = moduleRef.current
     if (!mod) return
 
+    stoppingRef.current = true
     try {
       await mod.cancelTranscription()
     } finally {
       setTranscribedText('')
       setStatus('idle')
+      setTimeout(() => {
+        stoppingRef.current = false
+      }, 300)
     }
   }, [])
 

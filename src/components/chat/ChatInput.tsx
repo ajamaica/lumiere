@@ -109,7 +109,7 @@ export function ChatInput({
   }, [voice])
 
   const handleMicPress = useCallback(async () => {
-    if (voice.status === 'idle') {
+    if (voice.status === 'idle' || voice.status === 'error') {
       await voice.start()
     }
   }, [voice])
