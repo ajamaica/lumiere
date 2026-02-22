@@ -1,4 +1,4 @@
-Neu in 1.2.0:
+Neu in 1.2.1:
 
 • Syntaxhervorhebung und Zeilennummern in Codeblöcken
 • Tablet- und Faltgeräte-Unterstützung

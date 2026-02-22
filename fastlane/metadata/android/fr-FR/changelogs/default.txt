@@ -1,4 +1,4 @@
-Nouveautés 1.2.0 :
+Nouveautés 1.2.1 :
 
 • Coloration syntaxique et numéros de ligne dans les blocs de code
 • Support des tablettes et appareils pliables

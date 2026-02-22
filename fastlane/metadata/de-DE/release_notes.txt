@@ -1,4 +1,4 @@
-Neuigkeiten in 1.2.0:
+Neuigkeiten in 1.2.1:
 
 • iOS-Startbildschirm-Widget — schneller Zugriff auf Lumiere direkt vom Startbildschirm
 • Siri-Vorschläge-Unterstützung — Lumiere erscheint in den Siri-Vorschlägen
