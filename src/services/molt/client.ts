@@ -516,6 +516,18 @@ export class MoltGatewayClient {
           this.handleHelloOk(response)
         })
         .catch((err) => {
+          // If the connect response error indicates pairing is required,
+          // enter awaitingApproval and keep retrying instead of failing.
+          if (this.isPairingError(err)) {
+            this.connectPromiseReject = null
+            if (this._connectionState !== 'awaitingApproval') {
+              this.setConnectionState('awaitingApproval')
+            }
+            if (this.config.autoReconnect && !this.reconnectTimer) {
+              this.scheduleReconnect()
+            }
+            return
+          }
           this.handleConnectFailure(err instanceof Error ? err : new Error(String(err)))
         })
     }
@@ -590,13 +602,24 @@ export class MoltGatewayClient {
       nonce: challenge?.nonce,
     })
 
+    // Include a human-readable device name so the gateway can display it
+    // on the pairing approval page (e.g. "Lumiere iOS", "Lumiere Android").
+    const platformNames: Record<string, string> = {
+      ios: 'iOS',
+      android: 'Android',
+      web: 'Web',
+      macos: 'macOS',
+      windows: 'Windows',
+    }
+    const deviceName = `Lumiere ${platformNames[clientConfig.platform] ?? clientConfig.platform}`
+
     const params = {
       minProtocol: protocolConfig.minProtocol,
       maxProtocol: protocolConfig.maxProtocol,
       client: clientConfig,
       role,
       scopes,
-      device,
+      device: { ...device, name: deviceName },
       caps: [],
       auth,
     }
@@ -665,7 +688,11 @@ export class MoltGatewayClient {
       this.connectPromiseResolve = null
       this.connectPromiseReject = null
     }
-    this.setConnectionState('disconnected')
+    // Don't overwrite awaitingApproval — the pairing reconnect flow manages
+    // its own state transitions via handleClose / handleHelloOk.
+    if (this._connectionState !== 'awaitingApproval') {
+      this.setConnectionState('disconnected')
+    }
   }
 
   // ─── Private: Message Handling ─────────────────────────────────────────────
@@ -756,6 +783,22 @@ export class MoltGatewayClient {
         })
         break
 
+      case GatewayEvents.DEVICE_PAIR_REQUESTED:
+        // The gateway is asking the user to approve this device on the
+        // dashboard. Enter awaitingApproval so the UI shows the pairing
+        // prompt instead of an error.
+        wsLogger.info('Device pairing requested by gateway', payload)
+        if (this._connectionState !== 'awaitingApproval') {
+          this.setConnectionState('awaitingApproval')
+        }
+        break
+
+      case GatewayEvents.DEVICE_PAIR_RESOLVED:
+        // The device was approved on the gateway dashboard. If we're
+        // still connected, the next reconnect will succeed.
+        wsLogger.info('Device pairing resolved')
+        break
+
       case GatewayEvents.SHUTDOWN:
         wsLogger.info('Gateway shutdown event received')
         break
@@ -784,6 +827,12 @@ export class MoltGatewayClient {
     this.ws = null
     this.clearTickTimer()
 
+    // Detect pairing-required close before processing pending requests.
+    // Code 1008 (policy violation) or "pairing" anywhere in the reason/code
+    // signals the gateway requires device approval before allowing access.
+    const isPairingRequired =
+      code === 1008 || /pairing/i.test(reason) || /pairing/i.test(String(code))
+
     // Reject all pending requests
     for (const [id, pending] of this.pendingRequests) {
       clearTimeout(pending.timer)
@@ -796,19 +845,28 @@ export class MoltGatewayClient {
       return
     }
 
+    // When pairing is required, enter awaitingApproval and keep retrying.
+    // Null out connectPromiseReject so the async handshake rejection (from
+    // the pending request cleanup above) doesn't call handleConnectFailure
+    // and overwrite awaitingApproval or reject the original connect() promise.
+    // Keep connectPromiseResolve alive so a successful reconnect (after the
+    // user approves the device on the gateway dashboard) can resolve it.
+    if (isPairingRequired && this.config.autoReconnect) {
+      this.connectPromiseReject = null
+      this.setConnectionState('awaitingApproval')
+      this.scheduleReconnect()
+      return
+    }
+
     // If still in the initial connect(), reject if autoReconnect is off
     if (this.connectPromiseReject && !this.config.autoReconnect) {
       this.handleConnectFailure(new Error(`WebSocket closed during connect: ${code} ${reason}`))
       return
     }
 
-    // Detect pairing-required close (code 1008 or "pairing" in reason)
-    const isPairingRequired =
-      code === 1008 || /pairing/i.test(reason) || /pairing/i.test(String(code))
-
     // Auto-reconnect
     if (this.config.autoReconnect) {
-      this.setConnectionState(isPairingRequired ? 'awaitingApproval' : 'reconnecting')
+      this.setConnectionState('reconnecting')
       this.scheduleReconnect()
     } else {
       this.setConnectionState('disconnected')
@@ -934,6 +992,25 @@ export class MoltGatewayClient {
 
   private nextRequestId(): string {
     return `lum-${++this.requestIdCounter}-${Date.now().toString(36)}`
+  }
+
+  /**
+   * Check if an error from the gateway indicates device pairing is required.
+   * The gateway may respond to the connect handshake with a structured error
+   * instead of (or before) closing the connection with code 1008.
+   */
+  private isPairingError(error: unknown): boolean {
+    if (error instanceof GatewayError) {
+      const code = error.code.toLowerCase()
+      const message = error.message.toLowerCase()
+      return (
+        code.includes('pair') ||
+        message.includes('pair') ||
+        code === 'device_not_approved' ||
+        message.includes('device not approved')
+      )
+    }
+    return false
   }
 
   private setConnectionState(state: ConnectionState): void {
