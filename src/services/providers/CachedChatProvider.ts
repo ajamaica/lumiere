@@ -165,7 +165,7 @@ export class CachedChatProvider implements ChatProvider {
   }
 
   onConnectionStateChange(
-    listener: (connected: boolean, reconnecting: boolean) => void,
+    listener: (connected: boolean, reconnecting: boolean, awaitingApproval?: boolean) => void,
   ): () => void {
     return this.inner.onConnectionStateChange(listener)
   }
