@@ -794,9 +794,21 @@ export class MoltGatewayClient {
         break
 
       case GatewayEvents.DEVICE_PAIR_RESOLVED:
-        // The device was approved on the gateway dashboard. If we're
-        // still connected, the next reconnect will succeed.
-        wsLogger.info('Device pairing resolved')
+        // The device was approved on the gateway dashboard. Trigger an
+        // immediate reconnect so the user doesn't have to wait for the
+        // next scheduled reconnect timer to fire.
+        wsLogger.info('Device pairing resolved — reconnecting immediately')
+        this.clearReconnectTimer()
+        this.reconnectAttempt = 0
+        // Close the current WebSocket so the onclose handler fires and
+        // attemptReconnect picks up a fresh handshake.
+        if (this.ws) {
+          try {
+            this.ws.close(1000, 'Pairing resolved')
+          } catch {
+            // ignore close errors
+          }
+        }
         break
 
       case GatewayEvents.SHUTDOWN:

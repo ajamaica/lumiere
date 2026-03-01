@@ -10,6 +10,7 @@
  * Storage: expo-secure-store (native) / localStorage (web)
  */
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Crypto from 'expo-crypto'
 import { getRandomBytes } from 'expo-crypto'
 import nacl from 'tweetnacl'
@@ -30,6 +31,15 @@ nacl.setPRNG((x: Uint8Array, n: number) => {
 const identityLogger = logger.create('DeviceIdentity')
 
 const IDENTITY_STORAGE_KEY = 'openclaw_device_identity'
+
+/**
+ * AsyncStorage key that acts as a "pairing sync marker". This value is written
+ * alongside the SecureStore identity but, unlike Keychain data, is deleted when
+ * the app is uninstalled on iOS. By comparing the two on startup we can detect
+ * a reinstall and regenerate the device identity so the gateway creates a fresh
+ * pairing request on the dashboard.
+ */
+const PAIRING_SYNC_KEY = 'openclaw_pairing_sync'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -165,14 +175,74 @@ async function loadStoredIdentity(): Promise<StoredIdentity | null> {
   return null
 }
 
+// ─── Pairing sync marker ──────────────────────────────────────────────────────
+// AsyncStorage is wiped on iOS app uninstall while Keychain (SecureStore) is
+// not. Writing a marker to both lets us detect a reinstall.
+
+async function writePairingSyncMarker(deviceId: string): Promise<void> {
+  try {
+    await AsyncStorage.setItem(PAIRING_SYNC_KEY, deviceId)
+  } catch {
+    // Non-critical — worst case is an unnecessary identity regeneration.
+  }
+}
+
+async function readPairingSyncMarker(): Promise<string | null> {
+  try {
+    return await AsyncStorage.getItem(PAIRING_SYNC_KEY)
+  } catch {
+    return null
+  }
+}
+
+async function removePairingSyncMarker(): Promise<void> {
+  try {
+    await AsyncStorage.removeItem(PAIRING_SYNC_KEY)
+  } catch {
+    // best-effort
+  }
+}
+
 // ─── Identity lifecycle ───────────────────────────────────────────────────────
 
 /** Cached identity so we only generate / load once per session. */
 let cachedIdentity: DeviceIdentity | null = null
 
 /**
+ * Clear the persisted device identity and in-memory cache.
+ * Call this on logout or when a stale pairing needs to be reset.
+ */
+export async function clearDeviceIdentity(): Promise<void> {
+  cachedIdentity = null
+
+  if (isWeb) {
+    try {
+      localStorage.removeItem(IDENTITY_STORAGE_KEY)
+    } catch {
+      // best-effort
+    }
+  } else {
+    try {
+      const SecureStore = await import('expo-secure-store')
+      await SecureStore.deleteItemAsync(IDENTITY_STORAGE_KEY)
+    } catch {
+      // best-effort
+    }
+  }
+
+  await removePairingSyncMarker()
+  identityLogger.info('Device identity cleared')
+}
+
+/**
  * Load or create the device Ed25519 identity. The keypair is persisted
  * in secure storage so subsequent launches reuse the same device ID.
+ *
+ * On native platforms the identity lives in Keychain/Keystore (via
+ * expo-secure-store) which survives app reinstalls on iOS. A companion
+ * marker in AsyncStorage (which *is* wiped on reinstall) lets us detect
+ * this scenario and regenerate the identity so the gateway sees a fresh
+ * device and creates a new pairing request on the dashboard.
  */
 export async function getDeviceIdentity(): Promise<DeviceIdentity> {
   if (cachedIdentity) return cachedIdentity
@@ -180,6 +250,22 @@ export async function getDeviceIdentity(): Promise<DeviceIdentity> {
   // Try loading from storage
   const stored = await loadStoredIdentity()
   if (stored) {
+    // On native, check for the AsyncStorage sync marker. If the identity
+    // exists in SecureStore but the marker is missing, the app was
+    // reinstalled — regenerate to avoid the "phantom pairing" bug where
+    // the gateway recognises the old deviceId but never shows a new
+    // pairing request on the dashboard.
+    if (!isWeb) {
+      const marker = await readPairingSyncMarker()
+      if (marker !== stored.deviceId) {
+        identityLogger.info('Pairing sync marker missing or mismatched — regenerating identity', {
+          storedDeviceId: stored.deviceId,
+        })
+        await clearDeviceIdentity()
+        return generateAndStoreIdentity()
+      }
+    }
+
     const publicKey = base64Decode(stored.publicKeyB64)
     const secretKey = base64Decode(stored.secretKeyB64)
 
@@ -192,7 +278,11 @@ export async function getDeviceIdentity(): Promise<DeviceIdentity> {
     return cachedIdentity
   }
 
-  // Generate new keypair
+  return generateAndStoreIdentity()
+}
+
+/** Generate a fresh Ed25519 keypair, persist it, and write the sync marker. */
+async function generateAndStoreIdentity(): Promise<DeviceIdentity> {
   const keyPair = nacl.sign.keyPair()
   const deviceId = await sha256Hex(keyPair.publicKey)
 
@@ -202,13 +292,16 @@ export async function getDeviceIdentity(): Promise<DeviceIdentity> {
     secretKey: keyPair.secretKey,
   }
 
-  // Persist
   await storeIdentity({
     version: 1,
     deviceId,
     publicKeyB64: base64Encode(keyPair.publicKey),
     secretKeyB64: base64Encode(keyPair.secretKey),
   })
+
+  if (!isWeb) {
+    await writePairingSyncMarker(deviceId)
+  }
 
   identityLogger.info('Generated new device identity', { deviceId })
   return cachedIdentity

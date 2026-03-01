@@ -13,6 +13,7 @@ import { getProviderIcon } from '../src/config/providerOptions'
 import { useHaptics } from '../src/hooks/useHaptics'
 import { useLanguage } from '../src/hooks/useLanguage'
 import { useServers } from '../src/hooks/useServers'
+import { clearDeviceIdentity } from '../src/services/molt/deviceIdentity'
 import { backgroundCheckTask } from '../src/services/notifications'
 import { deleteServerToken } from '../src/services/secureTokenStorage'
 import { deleteInstanceToken } from '../src/services/thinklumiere/instanceToken'
@@ -126,6 +127,10 @@ export default function SettingsScreen() {
             setSecureServers({})
             setSecureStoreHydrated(false)
           }
+
+          // Clear the device identity so the next login triggers a fresh
+          // pairing flow on the gateway dashboard.
+          await clearDeviceIdentity()
 
           // Reset all atoms to their default values using Jotai's RESET symbol
           setServers(RESET)
