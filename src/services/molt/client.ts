@@ -13,7 +13,7 @@ import {
   protocolConfig,
 } from '../../config/gateway.config'
 import { logger } from '../../utils/logger'
-import { buildSignedDevice, getDeviceIdentity } from './deviceIdentity'
+import { buildSignedDevice, clearDeviceIdentity, getDeviceIdentity } from './deviceIdentity'
 import {
   AgentEvent,
   AgentEventCallback,
@@ -519,6 +519,10 @@ export class MoltGatewayClient {
           // If the connect response error indicates pairing is required,
           // enter awaitingApproval and keep retrying instead of failing.
           if (this.isPairingError(err)) {
+            // Clear the stale device identity so the next reconnect
+            // attempt generates a fresh keypair and the gateway creates
+            // a brand-new pairing request on the dashboard.
+            clearDeviceIdentity().catch(() => {})
             this.connectPromiseReject = null
             if (this._connectionState !== 'awaitingApproval') {
               this.setConnectionState('awaitingApproval')
@@ -864,6 +868,9 @@ export class MoltGatewayClient {
     // Keep connectPromiseResolve alive so a successful reconnect (after the
     // user approves the device on the gateway dashboard) can resolve it.
     if (isPairingRequired && this.config.autoReconnect) {
+      // Clear the stale device identity so the next reconnect uses a
+      // fresh keypair and the gateway creates a new pairing request.
+      clearDeviceIdentity().catch(() => {})
       this.connectPromiseReject = null
       this.setConnectionState('awaitingApproval')
       this.scheduleReconnect()
