@@ -1,14 +1,21 @@
 Neuigkeiten in 1.2.1:
 
-• iOS-Startbildschirm-Widget — schneller Zugriff auf Lumiere direkt vom Startbildschirm
-• Siri-Vorschläge-Unterstützung — Lumiere erscheint in den Siri-Vorschlägen
-• Syntaxhervorhebung und Zeilennummern in Codeblöcken für bessere Lesbarkeit
-• Tablet- und Faltgeräte-Unterstützung — optimierte Layouts auf allen Bildschirmen
-• Plus-Menü mit Kamera-, Foto- und Dateioptionen zum einfachen Anhängen
-• HTTP-Retry/Timeout, Cache-TTL, Nachrichtenwiederholung und vollständiger Datenexport
+• iOS-Startbildschirm-Widget und Siri-Vorschläge für schnelleren Zugriff
+• Interaktiver Canvas mit Eval-, Navigations-, Präsentations- und Snapshot-Unterstützung
+• Agenten-Erstellung mit Emoji-Avataren, Modellauswahl und Autovervollständigung
+• Stopp-Taste zum Anhalten laufender KI-Antworten
+• Automatisches Speichern von Chat-Eingabeentwürfen pro Sitzung
+• Anpassung von Chat-Schriftgröße und Schriftfamilie
+• Datumstrenner zwischen Nachrichten verschiedener Tage
+• Client-seitige MCP-Brücke für OpenClaw-Server
+• Syntaxhervorhebung und Zeilennummern in Codeblöcken
+• Tablet- und Faltgeräte-Unterstützung auf allen Bildschirmen
+• Skills-Marktplatz mit installiertem Bereich und Ein-/Aus-Schalter
+• Haptisches Feedback bei wichtigen Interaktionen und Over-the-Air-Updates
+• Plus-Menü mit Kamera-, Foto- und Dateioptionen
+• HTTP-Retry/Timeout, Cache-TTL, Nachrichtenwiederholung und Datenexport
 • Neugestalteter Einrichtungsbildschirm mit verfeinertem Onboarding-Design
-• Behebung des iPad-Neurender-Problems beim Sitzungswechsel
-• Behebung der Darstellung verschachtelter Listen und Rohmarkdown in Chat-Nachrichten
-• Behebung von nicht angezeigten Tool-Events während des Echtzeit-Chats
-• Behebung der Darstellung von Skill-Karten in Suchergebnissen
+• Verbesserte Zuverlässigkeit des Pairing-Ablaufs und Geräteidentitätssynchronisierung
+• Behebung von Spracheingabe-, Kameraberechtigungs- und iPad-Neurender-Problemen
+• Behebung der Darstellung verschachtelter Listen, Tool-Events und Skill-Karten
 • Aktualisierte Abhängigkeiten und Leistungsverbesserungen

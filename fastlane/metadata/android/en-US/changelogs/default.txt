@@ -1,11 +1,14 @@
 What's New in 1.2.1:
 
+• Interactive canvas with eval, navigate, and snapshot
+• Agent creation with emoji avatars and model picker
+• Stop button to halt AI responses mid-generation
+• Auto-save chat drafts and date separators in chat
+• Chat font size and font family customization
+• Client-side MCP bridge for OpenClaw servers
 • Syntax highlighting and line numbers in code blocks
-• Tablet and foldable device support across all screens
-• Plus menu with Camera, Photos, and Files options
-• HTTP retry/timeout, cache TTL, message retry, full data export
-• Redesigned setup screen with polished onboarding visuals
-• Fixed nested list rendering and raw markdown in chat
-• Fixed tool events during real-time chat
-• Fixed skills card rendering in search results
+• Tablet and foldable device support
+• Skills enable/disable toggle and installed section
+• Haptic feedback and over-the-air updates
+• Fixed pairing, voice input, and camera issues
 • Updated dependencies and improvements

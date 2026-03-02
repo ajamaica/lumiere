@@ -1,14 +1,21 @@
 Nouveautés de la version 1.2.1 :
 
-• Widget d'écran d'accueil iOS — accès rapide à Lumiere depuis votre écran d'accueil
-• Prise en charge des Suggestions Siri — Lumiere apparaît dans les suggestions Siri
-• Coloration syntaxique et numéros de ligne dans les blocs de code pour une meilleure lisibilité
-• Support des tablettes et appareils pliables — mises en page optimisées sur tous les écrans
-• Menu plus avec options Caméra, Photos et Fichiers pour joindre facilement
-• Retry HTTP/timeout, TTL du cache, renvoi de messages et export complet des données
+• Widget d'écran d'accueil iOS et Suggestions Siri pour un accès plus rapide
+• Canvas interactif avec support eval, navigation, présentation et capture
+• Création d'agents avec avatars emoji, sélecteur de modèle et autocomplétion
+• Bouton d'arrêt pour interrompre les réponses IA en cours
+• Sauvegarde automatique des brouillons de saisie par session
+• Personnalisation de la taille et famille de police du chat
+• Séparateurs de date entre les messages de jours différents
+• Pont MCP côté client pour les serveurs OpenClaw
+• Coloration syntaxique et numéros de ligne dans les blocs de code
+• Support des tablettes et appareils pliables sur tous les écrans
+• Marketplace de compétences avec section installée et activation/désactivation
+• Retour haptique sur les interactions clés et mises à jour OTA
+• Menu plus avec options Caméra, Photos et Fichiers
+• Retry HTTP/timeout, TTL du cache, renvoi de messages et export de données
 • Écran de configuration repensé avec un visuel d'accueil soigné
-• Correction du problème de re-rendu sur iPad lors du changement de session
-• Correction du rendu des listes imbriquées et du markdown brut dans les messages
-• Correction des événements d'outils non affichés pendant le chat en temps réel
-• Correction du rendu des cartes de compétences dans les résultats de recherche
+• Correction de la fiabilité du flux d'appairage et synchronisation d'identité
+• Correction de la saisie vocale, des permissions caméra et du re-rendu iPad
+• Correction du rendu des listes imbriquées, événements d'outils et cartes de compétences
 • Dépendances mises à jour et améliorations de performance

@@ -1,11 +1,14 @@
 Novedades en 1.2.1:
 
+• Canvas interactivo con eval, navegación y captura
+• Creación de agentes con avatares emoji y selector de modelo
+• Botón de detención para interrumpir respuestas de IA
+• Guardado automático de borradores y separadores de fecha
+• Personalización de tamaño y familia de fuente del chat
+• Puente MCP del lado del cliente para servidores OpenClaw
 • Resaltado de sintaxis y números de línea en bloques de código
 • Soporte para tabletas y dispositivos plegables
-• Menú plus con Cámara, Fotos y Archivos
-• Reintento HTTP/timeout, TTL de caché, reintento de mensajes, exportación de datos
-• Pantalla de configuración rediseñada
-• Corrección de listas anidadas y markdown en chat
-• Corrección de eventos de herramientas en chat en tiempo real
-• Corrección de tarjetas de habilidades en búsqueda
+• Toggle de habilidades y sección instalada
+• Retroalimentación háptica y actualizaciones OTA
+• Corrección de emparejamiento, voz y cámara
 • Dependencias actualizadas y mejoras

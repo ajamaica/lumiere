@@ -1,14 +1,21 @@
 What's New in 1.2.1:
 
-• iOS home screen widget — quick access to Lumiere right from your home screen
-• Siri Suggestions support — Lumiere appears in Siri suggestions for faster access
-• Syntax highlighting and line numbers in code blocks for better readability
-• Tablet and foldable device support — optimized layouts across all screens
-• Plus menu with Camera, Photos, and Files options for easy attachments
+• iOS home screen widget and Siri Suggestions for faster access
+• Interactive canvas with eval, navigate, present, and snapshot support
+• Agent creation with emoji avatars, model picker, and autocomplete
+• Stop button to halt AI responses mid-generation
+• Auto-save chat input drafts per session
+• Chat font size and font family customization
+• Date separators between messages from different days
+• Client-side MCP bridge for OpenClaw servers
+• Syntax highlighting and line numbers in code blocks
+• Tablet and foldable device support across all screens
+• Skills marketplace with installed section and enable/disable toggle
+• Haptic feedback on key interactions and over-the-air updates
+• Plus menu with Camera, Photos, and Files options
 • HTTP retry/timeout, cache TTL, message retry, and full data export
 • Redesigned setup screen with polished onboarding visuals
-• Fixed iPad re-render issue when switching sessions
-• Fixed nested list rendering and raw markdown display in chat messages
-• Fixed tool events not displaying during real-time chat
-• Fixed skills card rendering in search results
+• Fixed pairing flow reliability and device identity sync
+• Fixed voice input, camera permissions, and iPad re-render issues
+• Fixed nested list rendering, tool events, and skills card display
 • Updated dependencies and performance improvements

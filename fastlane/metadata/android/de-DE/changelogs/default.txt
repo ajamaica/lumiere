@@ -1,11 +1,14 @@
 Neu in 1.2.1:
 
+• Interaktiver Canvas mit Eval, Navigation und Snapshot
+• Agenten-Erstellung mit Emoji-Avataren und Modellauswahl
+• Stopp-Taste zum Anhalten von KI-Antworten
+• Auto-Speichern von Chat-Entwürfen und Datumstrenner
+• Chat-Schriftgröße und Schriftfamilie anpassbar
+• Client-seitige MCP-Brücke für OpenClaw-Server
 • Syntaxhervorhebung und Zeilennummern in Codeblöcken
 • Tablet- und Faltgeräte-Unterstützung
-• Plus-Menü mit Kamera, Fotos und Dateien
-• HTTP-Retry/Timeout, Cache-TTL, Nachrichtenwiederholung, Datenexport
-• Neugestalteter Einrichtungsbildschirm
-• Darstellung verschachtelter Listen und Markdown behoben
-• Tool-Events im Echtzeit-Chat behoben
-• Skill-Karten in Suchergebnissen behoben
+• Skills Ein-/Aus-Schalter und installierter Bereich
+• Haptisches Feedback und Over-the-Air-Updates
+• Pairing-, Spracheingabe- und Kameraprobleme behoben
 • Aktualisierte Abhängigkeiten und Verbesserungen

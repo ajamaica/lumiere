@@ -1,11 +1,14 @@
 Nouveautés 1.2.1 :
 
-• Coloration syntaxique et numéros de ligne dans les blocs de code
-• Support des tablettes et appareils pliables
-• Menu plus avec Caméra, Photos et Fichiers
-• Retry HTTP/timeout, TTL du cache, renvoi de messages, export de données
-• Écran de configuration repensé
-• Correction des listes imbriquées et du markdown dans les messages
-• Correction des événements d'outils en chat temps réel
-• Correction des cartes de compétences dans les résultats
+• Canvas interactif avec eval, navigation et capture
+• Création d'agents avec avatars emoji et sélecteur de modèle
+• Bouton d'arrêt pour interrompre les réponses IA
+• Sauvegarde auto des brouillons et séparateurs de date
+• Taille et famille de police du chat personnalisables
+• Pont MCP côté client pour serveurs OpenClaw
+• Coloration syntaxique et numéros de ligne dans le code
+• Support tablettes et appareils pliables
+• Activation/désactivation des compétences et section installée
+• Retour haptique et mises à jour OTA
+• Correction appairage, saisie vocale et caméra
 • Dépendances mises à jour et améliorations

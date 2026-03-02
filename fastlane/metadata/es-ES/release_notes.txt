@@ -1,14 +1,21 @@
 Novedades en 1.2.1:
 
-• Widget de pantalla de inicio en iOS — acceso rápido a Lumiere desde tu pantalla de inicio
-• Soporte para Sugerencias de Siri — Lumiere aparece en las sugerencias de Siri
-• Resaltado de sintaxis y números de línea en bloques de código para mejor legibilidad
-• Soporte para tabletas y dispositivos plegables — diseños optimizados en todas las pantallas
-• Menú plus con opciones de Cámara, Fotos y Archivos para adjuntar fácilmente
-• Reintento HTTP/timeout, TTL de caché, reintento de mensajes y exportación completa de datos
-• Pantalla de configuración rediseñada con un aspecto visual de bienvenida mejorado
-• Corrección del problema de re-renderizado del iPad al cambiar sesiones
-• Corrección del renderizado de listas anidadas y markdown en mensajes de chat
-• Corrección de eventos de herramientas que no se mostraban en chat en tiempo real
-• Corrección del renderizado de tarjetas de habilidades en resultados de búsqueda
+• Widget de pantalla de inicio en iOS y Sugerencias de Siri para un acceso más rápido
+• Canvas interactivo con soporte para eval, navegación, presentación y captura
+• Creación de agentes con avatares emoji, selector de modelo y autocompletado
+• Botón de detención para interrumpir respuestas de IA en curso
+• Guardado automático de borradores de entrada del chat por sesión
+• Personalización del tamaño y familia de fuente del chat
+• Separadores de fecha entre mensajes de diferentes días
+• Puente MCP del lado del cliente para servidores OpenClaw
+• Resaltado de sintaxis y números de línea en bloques de código
+• Soporte para tabletas y dispositivos plegables en todas las pantallas
+• Marketplace de habilidades con sección instalada y control de activación
+• Retroalimentación háptica en interacciones clave y actualizaciones OTA
+• Menú plus con opciones de Cámara, Fotos y Archivos
+• Reintento HTTP/timeout, TTL de caché, reintento de mensajes y exportación de datos
+• Pantalla de configuración rediseñada con aspecto visual de bienvenida mejorado
+• Corrección de la fiabilidad del flujo de emparejamiento y sincronización de identidad
+• Corrección de entrada de voz, permisos de cámara y re-renderizado en iPad
+• Corrección de renderizado de listas anidadas, eventos de herramientas y tarjetas de habilidades
 • Dependencias actualizadas y mejoras de rendimiento
