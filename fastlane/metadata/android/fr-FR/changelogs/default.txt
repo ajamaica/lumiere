@@ -1,11 +1,4 @@
 Nouveautés 1.2.1 :
 
-• Coloration syntaxique et numéros de ligne dans les blocs de code
-• Support des tablettes et appareils pliables
-• Menu plus avec Caméra, Photos et Fichiers
-• Retry HTTP/timeout, TTL du cache, renvoi de messages, export de données
-• Écran de configuration repensé
-• Correction des listes imbriquées et du markdown dans les messages
-• Correction des événements d'outils en chat temps réel
-• Correction des cartes de compétences dans les résultats
-• Dépendances mises à jour et améliorations
+• Correction du bug d'analyse
+• Compatible avec les dernières modifications de sécurité d'OpenClaw

@@ -1,14 +1,4 @@
 Novidades na versão 1.2.1:
 
-• Widget de tela inicial do iOS — acesso rápido ao Lumiere direto da tela inicial
-• Suporte a Sugestões da Siri — Lumiere aparece nas sugestões da Siri
-• Destaque de sintaxe e números de linha em blocos de código para melhor legibilidade
-• Suporte a tablets e dispositivos dobráveis — layouts otimizados em todas as telas
-• Menu plus com opções de Câmera, Fotos e Arquivos para anexar facilmente
-• Retry HTTP/timeout, TTL de cache, reenvio de mensagens e exportação completa de dados
-• Tela de configuração redesenhada com visuais de integração aprimorados
-• Correção do problema de re-renderização do iPad ao trocar sessões
-• Correção da renderização de listas aninhadas e markdown bruto em mensagens de chat
-• Correção de eventos de ferramentas não exibidos durante chat em tempo real
-• Correção da renderização de cards de habilidades nos resultados de busca
-• Dependências atualizadas e melhorias de desempenho
+• Correção de bug de análise
+• Compatível com as últimas alterações de segurança do OpenClaw

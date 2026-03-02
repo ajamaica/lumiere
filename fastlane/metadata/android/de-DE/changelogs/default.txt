@@ -1,11 +1,4 @@
 Neu in 1.2.1:
 
-• Syntaxhervorhebung und Zeilennummern in Codeblöcken
-• Tablet- und Faltgeräte-Unterstützung
-• Plus-Menü mit Kamera, Fotos und Dateien
-• HTTP-Retry/Timeout, Cache-TTL, Nachrichtenwiederholung, Datenexport
-• Neugestalteter Einrichtungsbildschirm
-• Darstellung verschachtelter Listen und Markdown behoben
-• Tool-Events im Echtzeit-Chat behoben
-• Skill-Karten in Suchergebnissen behoben
-• Aktualisierte Abhängigkeiten und Verbesserungen
+• Parsing-Fehler behoben
+• Kompatibel mit den neuesten OpenClaw-Sicherheitsänderungen

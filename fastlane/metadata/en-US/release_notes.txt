@@ -1,14 +1,4 @@
 What's New in 1.2.1:
 
-• iOS home screen widget — quick access to Lumiere right from your home screen
-• Siri Suggestions support — Lumiere appears in Siri suggestions for faster access
-• Syntax highlighting and line numbers in code blocks for better readability
-• Tablet and foldable device support — optimized layouts across all screens
-• Plus menu with Camera, Photos, and Files options for easy attachments
-• HTTP retry/timeout, cache TTL, message retry, and full data export
-• Redesigned setup screen with polished onboarding visuals
-• Fixed iPad re-render issue when switching sessions
-• Fixed nested list rendering and raw markdown display in chat messages
-• Fixed tool events not displaying during real-time chat
-• Fixed skills card rendering in search results
-• Updated dependencies and performance improvements
+• Fix parsing bug
+• Compatible with latest OpenClaw security changes

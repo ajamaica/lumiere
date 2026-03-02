@@ -1,11 +1,4 @@
 What's New in 1.2.1:
 
-• Syntax highlighting and line numbers in code blocks
-• Tablet and foldable device support across all screens
-• Plus menu with Camera, Photos, and Files options
-• HTTP retry/timeout, cache TTL, message retry, full data export
-• Redesigned setup screen with polished onboarding visuals
-• Fixed nested list rendering and raw markdown in chat
-• Fixed tool events during real-time chat
-• Fixed skills card rendering in search results
-• Updated dependencies and improvements
+• Fix parsing bug
+• Compatible with latest OpenClaw security changes
