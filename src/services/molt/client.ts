@@ -626,7 +626,7 @@ export class MoltGatewayClient {
       client: clientConfig,
       role,
       scopes,
-      device: { ...device, name: deviceName },
+      device,
       caps: [],
       auth,
     }
@@ -883,7 +883,9 @@ export class MoltGatewayClient {
       }
       this.connectPromiseReject = null
       this.setConnectionState('awaitingApproval')
-      this.scheduleReconnect()
+      if (!this.reconnectTimer) {
+        this.scheduleReconnect()
+      }
       return
     }
 
@@ -940,7 +942,14 @@ export class MoltGatewayClient {
   private attemptReconnect(): void {
     if (this.intentionalClose) return
 
-    this.setConnectionState('connecting')
+    // Preserve awaitingApproval state during pairing reconnects. If we
+    // overwrite it with 'connecting', the pairing guard in the handshake
+    // catch block thinks this is a fresh pairing entry and clears the
+    // device identity again — generating a new keypair on every attempt
+    // and creating an infinite loop of pairing requests on the dashboard.
+    if (this._connectionState !== 'awaitingApproval') {
+      this.setConnectionState('connecting')
+    }
 
     // Keep original promise callbacks if reconnecting from a failed initial connect.
     // Otherwise set no-op handlers for transparent reconnection.
