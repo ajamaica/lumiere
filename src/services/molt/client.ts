@@ -13,7 +13,7 @@ import {
   protocolConfig,
 } from '../../config/gateway.config'
 import { logger } from '../../utils/logger'
-import { buildSignedDevice, clearDeviceIdentity, getDeviceIdentity } from './deviceIdentity'
+import { buildSignedDevice, getDeviceIdentity } from './deviceIdentity'
 import {
   AgentEvent,
   AgentEventCallback,
@@ -519,14 +519,7 @@ export class MoltGatewayClient {
           // If the connect response error indicates pairing is required,
           // enter awaitingApproval and keep retrying instead of failing.
           if (this.isPairingError(err)) {
-            // Only clear the device identity when FIRST entering the
-            // pairing flow. This generates a fresh keypair so the gateway
-            // creates a new pairing request on the dashboard. On subsequent
-            // reconnect attempts we must reuse the same identity — otherwise
-            // the user approves identity X on the dashboard but the client
-            // has already moved on to identity Y, creating an infinite loop.
             if (this._connectionState !== 'awaitingApproval') {
-              clearDeviceIdentity().catch(() => {})
               this.setConnectionState('awaitingApproval')
             }
             this.connectPromiseReject = null
@@ -874,13 +867,6 @@ export class MoltGatewayClient {
     // Keep connectPromiseResolve alive so a successful reconnect (after the
     // user approves the device on the gateway dashboard) can resolve it.
     if (isPairingRequired && this.config.autoReconnect) {
-      // Only clear the device identity when first entering the pairing
-      // flow. Subsequent reconnect attempts must reuse the same identity
-      // so the pairing request the user approves on the dashboard matches
-      // the identity the client reconnects with.
-      if (this._connectionState !== 'awaitingApproval') {
-        clearDeviceIdentity().catch(() => {})
-      }
       this.connectPromiseReject = null
       this.setConnectionState('awaitingApproval')
       if (!this.reconnectTimer) {
