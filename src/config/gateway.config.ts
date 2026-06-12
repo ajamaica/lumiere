@@ -23,7 +23,7 @@ export const clientConfig = {
 
 export const protocolConfig = {
   minProtocol: 3,
-  maxProtocol: 3,
+  maxProtocol: 4,
 } as const
 
 export const agentConfig = {
